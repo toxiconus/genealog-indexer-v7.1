@@ -959,6 +959,7 @@
                 <label>Typ aktu: 
                     <select id="modalType">
                         <option value="urodzenia">Urodzenia</option>
+                        <option value="chrzest">Chrzest</option>
                         <option value="malzenstwa">Małżeństwa</option>
                         <option value="zgony">Zgony</option>
                         <option value="inne">Inne</option>
@@ -2215,14 +2216,15 @@
             document.getElementById('modalParish').value = prevData.parish || 'Brak';
             document.getElementById('modalType').value = prevData.type || 'urodzenia';
             
-            const prevActs = app.imageActs.filter(a => a.imageIdx === app.currentImageIdx - 1) || []; // Poprzednia strona
+            const prevActs = app.imageActs.filter(a => a.imageIdx === app.currentImageIdx - 1).sort((a,b) => (a.nr || 0) - (b.nr || 0)) || []; // Poprzednia strona, sortowane po nr
             const lastPrevNr = prevActs.length > 0 ? prevActs[prevActs.length - 1].nr || 0 : 0;
-            const defaultFirst = prevData.continuation ? lastPrevNr + 1 : 1;
+            const hasPrev = prevActs.length > 0;
+            const defaultFirst = hasPrev ? lastPrevNr + 1 : 1;
             const defaultLast = defaultFirst + (prevActs.length || 10) - 1; // + tyle co poprzednio
 
             document.getElementById('modalFirstNr').value = defaultFirst;
             document.getElementById('modalLastNr').value = defaultLast;
-            document.getElementById('modalContinuation').checked = !!prevData.continuation;
+            document.getElementById('modalContinuation').checked = hasPrev || !!prevData.continuation;
             document.getElementById('modalIncomplete').checked = !!prevData.incomplete;
             document.getElementById('modalPlusIndex').checked = !!prevData.plusIndex;
 
