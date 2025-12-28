@@ -2,6 +2,7 @@
 
 **Profesjonalne narzędzie do indeksacji i edycji genealogicznych aktów metryki z OCR i post-processingiem.**
 
+[![GitHub](https://img.shields.io/badge/GitHub-toxiconus/genealog--indexer--v7.1-blue)](https://github.com/toxiconus/genealog-indexer-v7.1)
 ![Status](https://img.shields.io/badge/status-production-brightgreen)
 ![Version](https://img.shields.io/badge/version-7.1.0-blue)
 ![License](https://img.shields.io/badge/license-MIT-green)
@@ -63,8 +64,9 @@
 ### Instalacja
 
 ```bash
-# 1. Klonuj lub pobierz projekt
-cd "j:\projekt 2025\projekt-akta-v2"
+# 1. Klonuj projekt z GitHub
+git clone https://github.com/toxiconus/genealog-indexer-v7.1.git
+cd genealog-indexer-v7.1
 
 # 2. Zainstaluj zależności
 npm install
@@ -75,6 +77,18 @@ npm run dev
 # 4. Otwórz w przeglądarce
 # Główna wersja: http://localhost:5173/public/viewer-osd-v7.html
 # Stabilna wersja: http://localhost:5173/public/viewer-osd-v5.html
+```
+
+### Synchronizacja z GitHub
+
+```bash
+# Po wprowadzeniu zmian:
+git add .
+git commit -m "Opis zmian"
+git push origin master
+
+# Pobranie najnowszych zmian:
+git pull origin master
 ```
 
 ### Pierwsze Kroki
@@ -356,8 +370,8 @@ copies or substantial portions of the Software.
 ## 📞 Kontakt & Support
 
 - 📧 Email: (available upon request)
-- 🐙 GitHub: (coming soon)
-- 📝 Issues: (use GitHub Issues)
+- 🐙 **GitHub:** [toxiconus/genealog-indexer-v7.1](https://github.com/toxiconus/genealog-indexer-v7.1)
+- 📝 **Issues:** [Report Bug](https://github.com/toxiconus/genealog-indexer-v7.1/issues)
 - 💬 Discussions: (planned)
 
 ---
