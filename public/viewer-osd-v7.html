@@ -955,7 +955,6 @@
             <div style="background:rgba(20,20,30,0.95); padding:20px; border-radius:8px; width:400px; pointer-events:auto;">
                 <h3>Dodaj akty do strony</h3>
                 <label>Rok: <input id="modalYear" type="number" value="1900"></label><br>
-                <label>Data zgłoszenia: <input id="modalDate" type="text" value="1900-01-01"></label><br>
                 <label>Parafia: <input id="modalParish" type="text" value="Brak"></label><br>
                 <label>Województwo: <input id="modalWoj" type="text" value="LUB"></label><br>
                 <label>Typ aktu: 
@@ -2266,7 +2265,6 @@ Output ONLY the ID string, nothing else.`;
             // Ładuj pamiętane wartości z localStorage (z poprzedniej strony)
             const prevData = JSON.parse(localStorage.getItem('lastActSettings')) || {};
             document.getElementById('modalYear').value = prevData.year || new Date().getFullYear() - 100;
-            document.getElementById('modalDate').value = prevData.date || '1900-01-01';
             document.getElementById('modalParish').value = prevData.parish || 'Brak';
             document.getElementById('modalWoj').value = prevData.woj || 'LUB';
             document.getElementById('modalType').value = prevData.type || 'urodzenia';
@@ -2279,7 +2277,7 @@ Output ONLY the ID string, nothing else.`;
 
             document.getElementById('modalFirstNr').value = defaultFirst;
             document.getElementById('modalLastNr').value = defaultLast;
-            document.getElementById('modalContinuation').checked = hasPrev || !!prevData.continuation;
+            document.getElementById('modalContinuation').checked = !!prevData.continuation;
             document.getElementById('modalIncomplete').checked = !!prevData.incomplete;
             document.getElementById('modalPlusIndex').checked = !!prevData.plusIndex;
 
@@ -2288,7 +2286,6 @@ Output ONLY the ID string, nothing else.`;
             document.getElementById('modalOK').onclick = async () => {
                 const data = {
                     year: parseInt(document.getElementById('modalYear').value),
-                    date: document.getElementById('modalDate').value,
                     parish: document.getElementById('modalParish').value,
                     woj: document.getElementById('modalWoj').value,
                     type: document.getElementById('modalType').value,
@@ -2308,7 +2305,6 @@ Output ONLY the ID string, nothing else.`;
                         actNum: i + 1, // actNum to numer aktu na stronie, nie globalny nr
                         nr: data.firstNr + i, // Globalny nr aktu
                         year: data.year,
-                        date: data.date,
                         parish: data.parish,
                         woj: data.woj,
                         type: data.type,
@@ -2328,7 +2324,7 @@ Output ONLY the ID string, nothing else.`;
                         typ: act.type,
                         woj: act.woj,
                         parafia: act.parish,
-                        data_zgl: act.date,
+                        data_zgl: `${act.year}-01-01`,
                         nr_aktu: act.nr,
                         is_copy: false
                     };
@@ -2352,7 +2348,6 @@ Output ONLY the ID string, nothing else.`;
                 }
                 const data = {
                     year: parseInt(document.getElementById('modalYear').value),
-                    date: document.getElementById('modalDate').value,
                     parish: document.getElementById('modalParish').value,
                     woj: document.getElementById('modalWoj').value,
                     type: document.getElementById('modalType').value,
@@ -2370,7 +2365,6 @@ Output ONLY the ID string, nothing else.`;
                         actNum: index + 1,
                         nr: currentNr + index,
                         year: data.year,
-                        date: data.date,
                         parish: data.parish,
                         woj: data.woj,
                         type: data.type,
@@ -2390,7 +2384,7 @@ Output ONLY the ID string, nothing else.`;
                         typ: act.type,
                         woj: act.woj,
                         parafia: act.parish,
-                        data_zgl: act.date,
+                        data_zgl: `${act.year}-01-01`,
                         nr_aktu: act.nr,
                         is_copy: false
                     };

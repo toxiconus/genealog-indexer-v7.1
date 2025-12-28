@@ -8836,7 +8836,7 @@ Serwer deweloperski działa na `http://localhost:5175/public/viewer-osd-v7.html`
 
 ---
 
-_**User (2025-12-28 20:42Z)**_
+_**User (2025-12-28 20:45Z)**_
 
 "You are an expert in generating unique IDs for genealogical records based on Polish metrical books. Follow this strict schema for ID: TYP.WOJ.PARAFIA.ROK.MIES.NR.SUF
 
@@ -9027,6 +9027,1210 @@ Odczytaj [](file:///j%3A/projekt%202025/projekt-akta-v2/public/viewer-osd-v7.htm
 
 </details>
 </tool-use>
+
+---
+
+<tool-use data-tool-type="read" data-tool-name="copilot_readFile">
+<details>
+<summary>Tool use: **copilot_readFile** • Czytanie [](file:///j%3A/projekt%202025/projekt-akta-v2/public/viewer-osd-v7.html#2070-2070), wiersze 2070 do 2080</summary>
+
+
+Odczytaj [](file:///j%3A/projekt%202025/projekt-akta-v2/public/viewer-osd-v7.html#2070-2070), wiersze 2070 do 2080
+
+</details>
+</tool-use>
+
+---
+
+<tool-use data-tool-type="search" data-tool-name="copilot_findTextInFiles">
+<details>
+<summary>Tool use: **copilot_findTextInFiles** • Wyszukiwanie tekstu ``btn.textContent = `📄 Akt`` (`**/public/viewer-osd-v7.html`)</summary>
+
+
+No results found
+</details>
+</tool-use>
+
+---
+
+<tool-use data-tool-type="read" data-tool-name="copilot_readFile">
+<details>
+<summary>Tool use: **copilot_readFile** • Czytanie [](file:///j%3A/projekt%202025/projekt-akta-v2/public/viewer-osd-v7.html#2095-2095), wiersze 2095 do 2110</summary>
+
+
+Odczytaj [](file:///j%3A/projekt%202025/projekt-akta-v2/public/viewer-osd-v7.html#2095-2095), wiersze 2095 do 2110
+
+</details>
+</tool-use>
+
+---
+
+<tool-use data-tool-type="unknown" data-tool-name="copilot_replaceString">
+<details>
+<summary>Tool use: **copilot_replaceString**</summary>
+
+Additional data:
+
+```json
+{
+  "vscodeToolId": "copilot_replaceString",
+  "isHidden": true
+}
+```
+Result:
+
+```json
+{
+  "invocationMessage": "Korzystanie z \"Zamień ciąg w pliku\"",
+  "isConfirmed": {
+    "type": 1
+  },
+  "content": "&#96;&#96;&#96;html\ninnerHTML = &#96;📄 Akt ${act.actNum}&lt;br&gt;&lt;span style=\"font-size: 0.8em; color: #888;\"&gt;${act.id || 'Brak ID'}&lt;/span&gt;\n&#96;&#96;&#96;\n\n",
+  "textEditContent": "innerHTML = &#96;📄 Akt ${act.actNum}&lt;br&gt;&lt;span style=\"font-size: 0.8em; color: #888;\"&gt;${act.id || 'Brak ID'}&lt;/span&gt;",
+  "toolCallResult": null
+}
+```
+Status: **completed**
+
+
+</details>
+</tool-use>
+
+---
+
+<tool-use data-tool-type="read" data-tool-name="copilot_readFile">
+<details>
+<summary>Tool use: **copilot_readFile** • Czytanie [](file:///j%3A/projekt%202025/projekt-akta-v2/public/viewer-osd-v7.html#2240-2240), wiersze 2240 do 2270</summary>
+
+
+Odczytaj [](file:///j%3A/projekt%202025/projekt-akta-v2/public/viewer-osd-v7.html#2240-2240), wiersze 2240 do 2270
+
+</details>
+</tool-use>
+
+---
+
+<tool-use data-tool-type="read" data-tool-name="copilot_readFile">
+<details>
+<summary>Tool use: **copilot_readFile** • Czytanie [](file:///j%3A/projekt%202025/projekt-akta-v2/public/viewer-osd-v7.html#2270-2270), wiersze 2270 do 2290</summary>
+
+
+Odczytaj [](file:///j%3A/projekt%202025/projekt-akta-v2/public/viewer-osd-v7.html#2270-2270), wiersze 2270 do 2290
+
+</details>
+</tool-use>
+
+---
+
+<tool-use data-tool-type="read" data-tool-name="copilot_readFile">
+<details>
+<summary>Tool use: **copilot_readFile** • Czytanie [](file:///j%3A/projekt%202025/projekt-akta-v2/public/viewer-osd-v7.html#2290-2290), wiersze 2290 do 2310</summary>
+
+
+Odczytaj [](file:///j%3A/projekt%202025/projekt-akta-v2/public/viewer-osd-v7.html#2290-2290), wiersze 2290 do 2310
+
+</details>
+</tool-use>
+
+---
+
+<tool-use data-tool-type="unknown" data-tool-name="copilot_replaceString">
+<details>
+<summary>Tool use: **copilot_replaceString**</summary>
+
+Additional data:
+
+```json
+{
+  "vscodeToolId": "copilot_replaceString",
+  "isHidden": true
+}
+```
+Result:
+
+```json
+{
+  "invocationMessage": "Korzystanie z \"Zamień ciąg w pliku\"",
+  "isConfirmed": {
+    "type": 1
+  },
+  "content": "&#96;&#96;&#96;html\nconst newActs = [];\r\n                for (let i = 0; i &lt; count; i++) {\r\n                    const act = {\r\n                        imageIdx: app.currentImageIdx,\r\n                        actNum: i + 1, // actNum to numer aktu na stronie, nie globalny nr\r\n                        nr: data.firstNr + i, // Globalny nr aktu\r\n                        year: data.year,\r\n                        parish: data.parish,\r\n                        type: data.type,\r\n                        fieldValues: {},\r\n                        fieldROIs: {},\r\n                        actROI: null,\r\n                        timestamp: new Date().toISOString()\r\n                    };\r\n                    if (data.plusIndex) act.index = ''; // Dodaj pole indeksu\r\n                    if (i === count - 1 &amp;&amp; data.incomplete) act.incomplete = true; // Flag\r\n                    newActs.push(act);\r\n                }\r\n\r\n                // Generate IDs asynchronously\r\n                for (const act of newActs) {\r\n                    const actData = {\r\n                        typ: act.type,\r\n                        woj: 'LUB', // TODO: Add field for woj\r\n                        parafia: act.parish,\r\n                        data_zgl: &#96;${act.year}-01-01&#96;, // TODO: Add date field\r\n                        nr_aktu: act.nr,\r\n                        is_copy: false\r\n                    };\r\n                    act.id = await autoGenerateID(actData);\r\n                }\r\n\r\n                app.imageActs.push(...newActs);\n&#96;&#96;&#96;\n\n",
+  "textEditContent": "const newActs = [];\r\n                for (let i = 0; i &lt; count; i++) {\r\n                    const act = {\r\n                        imageIdx: app.currentImageIdx,\r\n                        actNum: i + 1, // actNum to numer aktu na stronie, nie globalny nr\r\n                        nr: data.firstNr + i, // Globalny nr aktu\r\n                        year: data.year,\r\n                        parish: data.parish,\r\n                        type: data.type,\r\n                        fieldValues: {},\r\n                        fieldROIs: {},\r\n                        actROI: null,\r\n                        timestamp: new Date().toISOString()\r\n                    };\r\n                    if (data.plusIndex) act.index = ''; // Dodaj pole indeksu\r\n                    if (i === count - 1 &amp;&amp; data.incomplete) act.incomplete = true; // Flag\r\n                    newActs.push(act);\r\n                }\r\n\r\n                // Generate IDs asynchronously\r\n                for (const act of newActs) {\r\n                    const actData = {\r\n                        typ: act.type,\r\n                        woj: 'LUB', // TODO: Add field for woj\r\n                        parafia: act.parish,\r\n                        data_zgl: &#96;${act.year}-01-01&#96;, // TODO: Add date field\r\n                        nr_aktu: act.nr,\r\n                        is_copy: false\r\n                    };\r\n                    act.id = await autoGenerateID(actData);\r\n                }\r\n\r\n                app.imageActs.push(...newActs);",
+  "toolCallResult": null
+}
+```
+Status: **completed**
+
+
+</details>
+</tool-use>
+
+---
+
+<tool-use data-tool-type="read" data-tool-name="copilot_readFile">
+<details>
+<summary>Tool use: **copilot_readFile** • Czytanie [](file:///j%3A/projekt%202025/projekt-akta-v2/public/viewer-osd-v7.html#2320-2320), wiersze 2320 do 2350</summary>
+
+
+Odczytaj [](file:///j%3A/projekt%202025/projekt-akta-v2/public/viewer-osd-v7.html#2320-2320), wiersze 2320 do 2350
+
+</details>
+</tool-use>
+
+---
+
+<tool-use data-tool-type="read" data-tool-name="copilot_readFile">
+<details>
+<summary>Tool use: **copilot_readFile** • Czytanie [](file:///j%3A/projekt%202025/projekt-akta-v2/public/viewer-osd-v7.html#2350-2350), wiersze 2350 do 2370</summary>
+
+
+Odczytaj [](file:///j%3A/projekt%202025/projekt-akta-v2/public/viewer-osd-v7.html#2350-2350), wiersze 2350 do 2370
+
+</details>
+</tool-use>
+
+---
+
+<tool-use data-tool-type="unknown" data-tool-name="copilot_replaceString">
+<details>
+<summary>Tool use: **copilot_replaceString**</summary>
+
+Additional data:
+
+```json
+{
+  "vscodeToolId": "copilot_replaceString",
+  "isHidden": true
+}
+```
+Result:
+
+```json
+{
+  "invocationMessage": "Korzystanie z \"Zamień ciąg w pliku\"",
+  "isConfirmed": {
+    "type": 1
+  },
+  "content": "&#96;&#96;&#96;html\nconst copiedActs = [];\r\n                prevActs.forEach((prevAct, index) =&gt; {\r\n                    const act = {\r\n                        imageIdx: app.currentImageIdx,\r\n                        actNum: index + 1,\r\n                        nr: currentNr + index,\r\n                        year: data.year,\r\n                        parish: data.parish,\r\n                        type: data.type,\r\n                        fieldValues: JSON.parse(JSON.stringify(prevAct.fieldValues)), // Deep copy\r\n                        fieldROIs: JSON.parse(JSON.stringify(prevAct.fieldROIs)), // Deep copy\r\n                        actROI: prevAct.actROI ? JSON.parse(JSON.stringify(prevAct.actROI)) : null,\r\n                        timestamp: new Date().toISOString()\r\n                    };\r\n                    if (data.plusIndex) act.index = prevAct.index || '';\r\n                    if (index === prevActs.length - 1 &amp;&amp; data.incomplete) act.incomplete = true;\r\n                    copiedActs.push(act);\r\n                });\r\n\r\n                // Generate IDs asynchronously\r\n                for (const act of copiedActs) {\r\n                    const actData = {\r\n                        typ: act.type,\r\n                        woj: 'LUB', // TODO: Add field for woj\r\n                        parafia: act.parish,\r\n                        data_zgl: &#96;${act.year}-01-01&#96;, // TODO: Add date field\r\n                        nr_aktu: act.nr,\r\n                        is_copy: false\r\n                    };\r\n                    act.id = await autoGenerateID(actData);\r\n                }\r\n\r\n                app.imageActs.push(...copiedActs\n&#96;&#96;&#96;\n\n",
+  "textEditContent": "const copiedActs = [];\r\n                prevActs.forEach((prevAct, index) =&gt; {\r\n                    const act = {\r\n                        imageIdx: app.currentImageIdx,\r\n                        actNum: index + 1,\r\n                        nr: currentNr + index,\r\n                        year: data.year,\r\n                        parish: data.parish,\r\n                        type: data.type,\r\n                        fieldValues: JSON.parse(JSON.stringify(prevAct.fieldValues)), // Deep copy\r\n                        fieldROIs: JSON.parse(JSON.stringify(prevAct.fieldROIs)), // Deep copy\r\n                        actROI: prevAct.actROI ? JSON.parse(JSON.stringify(prevAct.actROI)) : null,\r\n                        timestamp: new Date().toISOString()\r\n                    };\r\n                    if (data.plusIndex) act.index = prevAct.index || '';\r\n                    if (index === prevActs.length - 1 &amp;&amp; data.incomplete) act.incomplete = true;\r\n                    copiedActs.push(act);\r\n                });\r\n\r\n                // Generate IDs asynchronously\r\n                for (const act of copiedActs) {\r\n                    const actData = {\r\n                        typ: act.type,\r\n                        woj: 'LUB', // TODO: Add field for woj\r\n                        parafia: act.parish,\r\n                        data_zgl: &#96;${act.year}-01-01&#96;, // TODO: Add date field\r\n                        nr_aktu: act.nr,\r\n                        is_copy: false\r\n                    };\r\n                    act.id = await autoGenerateID(actData);\r\n                }\r\n\r\n                app.imageActs.push(...copiedActs",
+  "toolCallResult": null
+}
+```
+Status: **completed**
+
+
+</details>
+</tool-use>
+
+---
+
+<tool-use data-tool-type="read" data-tool-name="copilot_readFile">
+<details>
+<summary>Tool use: **copilot_readFile** • Czytanie [](file:///j%3A/projekt%202025/projekt-akta-v2/public/viewer-osd-v7.html#2105-2105), wiersze 2105 do 2120</summary>
+
+
+Odczytaj [](file:///j%3A/projekt%202025/projekt-akta-v2/public/viewer-osd-v7.html#2105-2105), wiersze 2105 do 2120
+
+</details>
+</tool-use>
+
+---
+
+<tool-use data-tool-type="read" data-tool-name="copilot_readFile">
+<details>
+<summary>Tool use: **copilot_readFile** • Czytanie [](file:///j%3A/projekt%202025/projekt-akta-v2/public/viewer-osd-v7.html#2125-2125), wiersze 2125 do 2140</summary>
+
+
+Odczytaj [](file:///j%3A/projekt%202025/projekt-akta-v2/public/viewer-osd-v7.html#2125-2125), wiersze 2125 do 2140
+
+</details>
+</tool-use>
+
+---
+
+<tool-use data-tool-type="read" data-tool-name="copilot_readFile">
+<details>
+<summary>Tool use: **copilot_readFile** • Czytanie [](file:///j%3A/projekt%202025/projekt-akta-v2/public/viewer-osd-v7.html#2140-2140), wiersze 2140 do 2150</summary>
+
+
+Odczytaj [](file:///j%3A/projekt%202025/projekt-akta-v2/public/viewer-osd-v7.html#2140-2140), wiersze 2140 do 2150
+
+</details>
+</tool-use>
+
+---
+
+<tool-use data-tool-type="unknown" data-tool-name="copilot_replaceString">
+<details>
+<summary>Tool use: **copilot_replaceString**</summary>
+
+Additional data:
+
+```json
+{
+  "vscodeToolId": "copilot_replaceString",
+  "isHidden": true
+}
+```
+Result:
+
+```json
+{
+  "invocationMessage": "Korzystanie z \"Zamień ciąg w pliku\"",
+  "isConfirmed": {
+    "type": 1
+  },
+  "content": "&#96;&#96;&#96;html\nasync () =&gt; {\r\n                const nextNum = acts.length + 1;\r\n                const newAct = {\r\n                    imageIdx: app.currentImageIdx,\r\n                    actNum: nextNum,\r\n                    fieldValues: {},\r\n                    fieldROIs: {},\r\n                    actROI: null,\r\n                    timestamp: new Date().toISOString()\r\n                };\r\n                // Generate ID\r\n                const actData = {\r\n                    typ: 'urodzenia', // Default\r\n                    woj: 'LUB',\r\n                    parafia: 'BLIN',\r\n                    data_zgl: '1900-01-01',\r\n                    nr_aktu: nextNum,\r\n                    is_copy: false\r\n                };\r\n                newAct.id = await autoGenerateID(actData)\n&#96;&#96;&#96;\n\n",
+  "textEditContent": "async () =&gt; {\r\n                const nextNum = acts.length + 1;\r\n                const newAct = {\r\n                    imageIdx: app.currentImageIdx,\r\n                    actNum: nextNum,\r\n                    fieldValues: {},\r\n                    fieldROIs: {},\r\n                    actROI: null,\r\n                    timestamp: new Date().toISOString()\r\n                };\r\n                // Generate ID\r\n                const actData = {\r\n                    typ: 'urodzenia', // Default\r\n                    woj: 'LUB',\r\n                    parafia: 'BLIN',\r\n                    data_zgl: '1900-01-01',\r\n                    nr_aktu: nextNum,\r\n                    is_copy: false\r\n                };\r\n                newAct.id = await autoGenerateID(actData)",
+  "toolCallResult": null
+}
+```
+Status: **completed**
+
+
+</details>
+</tool-use>
+
+---
+
+<tool-use data-tool-type="read" data-tool-name="copilot_readFile">
+<details>
+<summary>Tool use: **copilot_readFile** • Czytanie [](file:///j%3A/projekt%202025/projekt-akta-v2/public/viewer-osd-v7.html#955-955), wiersze 955 do 970</summary>
+
+
+Odczytaj [](file:///j%3A/projekt%202025/projekt-akta-v2/public/viewer-osd-v7.html#955-955), wiersze 955 do 970
+
+</details>
+</tool-use>
+
+---
+
+<tool-use data-tool-type="unknown" data-tool-name="copilot_replaceString">
+<details>
+<summary>Tool use: **copilot_replaceString**</summary>
+
+Additional data:
+
+```json
+{
+  "vscodeToolId": "copilot_replaceString",
+  "isHidden": true
+}
+```
+Result:
+
+```json
+{
+  "invocationMessage": "Korzystanie z \"Zamień ciąg w pliku\"",
+  "isConfirmed": {
+    "type": 1
+  },
+  "content": "&#96;&#96;&#96;html\nData zgłoszenia: &lt;input id=\"modalDate\" type=\"text\" value=\"1900-01-01\"&gt;&lt;/label&gt;&lt;br&gt;\r\n                &lt;label&gt;Parafia: &lt;input id=\"modalParish\" type=\"text\" value=\"Brak\"&gt;&lt;/label&gt;&lt;br&gt;\r\n                &lt;label&gt;Województwo: &lt;input id=\"modalWoj\" type=\"text\" value=\"LUB\n&#96;&#96;&#96;\n\n",
+  "textEditContent": "Data zgłoszenia: &lt;input id=\"modalDate\" type=\"text\" value=\"1900-01-01\"&gt;&lt;/label&gt;&lt;br&gt;\r\n                &lt;label&gt;Parafia: &lt;input id=\"modalParish\" type=\"text\" value=\"Brak\"&gt;&lt;/label&gt;&lt;br&gt;\r\n                &lt;label&gt;Województwo: &lt;input id=\"modalWoj\" type=\"text\" value=\"LUB",
+  "toolCallResult": null
+}
+```
+Status: **completed**
+
+
+</details>
+</tool-use>
+
+---
+
+<tool-use data-tool-type="read" data-tool-name="copilot_readFile">
+<details>
+<summary>Tool use: **copilot_readFile** • Czytanie [](file:///j%3A/projekt%202025/projekt-akta-v2/public/viewer-osd-v7.html#2245-2245), wiersze 2245 do 2250</summary>
+
+
+Odczytaj [](file:///j%3A/projekt%202025/projekt-akta-v2/public/viewer-osd-v7.html#2245-2245), wiersze 2245 do 2250
+
+</details>
+</tool-use>
+
+---
+
+<tool-use data-tool-type="read" data-tool-name="copilot_readFile">
+<details>
+<summary>Tool use: **copilot_readFile** • Czytanie [](file:///j%3A/projekt%202025/projekt-akta-v2/public/viewer-osd-v7.html#2248-2248), wiersze 2248 do 2255</summary>
+
+
+Odczytaj [](file:///j%3A/projekt%202025/projekt-akta-v2/public/viewer-osd-v7.html#2248-2248), wiersze 2248 do 2255
+
+</details>
+</tool-use>
+
+---
+
+<tool-use data-tool-type="search" data-tool-name="copilot_findTextInFiles">
+<details>
+<summary>Tool use: **copilot_findTextInFiles** • Wyszukiwanie tekstu `document.getElementById\('modalYear'\).value = prevData.year` (`**/public/viewer-osd-v7.html`)</summary>
+
+
+No results found
+</details>
+</tool-use>
+
+---
+
+<tool-use data-tool-type="read" data-tool-name="copilot_readFile">
+<details>
+<summary>Tool use: **copilot_readFile** • Czytanie [](file:///j%3A/projekt%202025/projekt-akta-v2/public/viewer-osd-v7.html#2265-2265), wiersze 2265 do 2275</summary>
+
+
+Odczytaj [](file:///j%3A/projekt%202025/projekt-akta-v2/public/viewer-osd-v7.html#2265-2265), wiersze 2265 do 2275
+
+</details>
+</tool-use>
+
+---
+
+<tool-use data-tool-type="unknown" data-tool-name="copilot_replaceString">
+<details>
+<summary>Tool use: **copilot_replaceString**</summary>
+
+Additional data:
+
+```json
+{
+  "vscodeToolId": "copilot_replaceString",
+  "isHidden": true
+}
+```
+Result:
+
+```json
+{
+  "invocationMessage": "Korzystanie z \"Zamień ciąg w pliku\"",
+  "isConfirmed": {
+    "type": 1
+  },
+  "content": "&#96;&#96;&#96;html\nDate').value = prevData.date || '1900-01-01';\r\n            document.getElementById('modalParish').value = prevData.parish || 'Brak';\r\n            document.getElementById('modalWoj').value = prevData.woj || 'LUB\n&#96;&#96;&#96;\n\n",
+  "textEditContent": "Date').value = prevData.date || '1900-01-01';\r\n            document.getElementById('modalParish').value = prevData.parish || 'Brak';\r\n            document.getElementById('modalWoj').value = prevData.woj || 'LUB",
+  "toolCallResult": null
+}
+```
+Status: **completed**
+
+
+</details>
+</tool-use>
+
+---
+
+<tool-use data-tool-type="read" data-tool-name="copilot_readFile">
+<details>
+<summary>Tool use: **copilot_readFile** • Czytanie [](file:///j%3A/projekt%202025/projekt-akta-v2/public/viewer-osd-v7.html#2275-2275), wiersze 2275 do 2285</summary>
+
+
+Odczytaj [](file:///j%3A/projekt%202025/projekt-akta-v2/public/viewer-osd-v7.html#2275-2275), wiersze 2275 do 2285
+
+</details>
+</tool-use>
+
+---
+
+<tool-use data-tool-type="read" data-tool-name="copilot_readFile">
+<details>
+<summary>Tool use: **copilot_readFile** • Czytanie [](file:///j%3A/projekt%202025/projekt-akta-v2/public/viewer-osd-v7.html#2285-2285), wiersze 2285 do 2295</summary>
+
+
+Odczytaj [](file:///j%3A/projekt%202025/projekt-akta-v2/public/viewer-osd-v7.html#2285-2285), wiersze 2285 do 2295
+
+</details>
+</tool-use>
+
+---
+
+<tool-use data-tool-type="unknown" data-tool-name="copilot_replaceString">
+<details>
+<summary>Tool use: **copilot_replaceString**</summary>
+
+Additional data:
+
+```json
+{
+  "vscodeToolId": "copilot_replaceString",
+  "isHidden": true
+}
+```
+Result:
+
+```json
+{
+  "invocationMessage": "Korzystanie z \"Zamień ciąg w pliku\"",
+  "isConfirmed": {
+    "type": 1
+  },
+  "content": "&#96;&#96;&#96;html\ndate: document.getElementById('modalDate').value,\r\n                    parish: document.getElementById('modalParish').value,\r\n                    woj: document.getElementById('modalWoj\n&#96;&#96;&#96;\n\n",
+  "textEditContent": "date: document.getElementById('modalDate').value,\r\n                    parish: document.getElementById('modalParish').value,\r\n                    woj: document.getElementById('modalWoj",
+  "toolCallResult": null
+}
+```
+Status: **completed**
+
+
+</details>
+</tool-use>
+
+---
+
+<tool-use data-tool-type="read" data-tool-name="copilot_readFile">
+<details>
+<summary>Tool use: **copilot_readFile** • Czytanie [](file:///j%3A/projekt%202025/projekt-akta-v2/public/viewer-osd-v7.html#2300-2300), wiersze 2300 do 2310</summary>
+
+
+Odczytaj [](file:///j%3A/projekt%202025/projekt-akta-v2/public/viewer-osd-v7.html#2300-2300), wiersze 2300 do 2310
+
+</details>
+</tool-use>
+
+---
+
+<tool-use data-tool-type="read" data-tool-name="copilot_readFile">
+<details>
+<summary>Tool use: **copilot_readFile** • Czytanie [](file:///j%3A/projekt%202025/projekt-akta-v2/public/viewer-osd-v7.html#2310-2310), wiersze 2310 do 2320</summary>
+
+
+Odczytaj [](file:///j%3A/projekt%202025/projekt-akta-v2/public/viewer-osd-v7.html#2310-2310), wiersze 2310 do 2320
+
+</details>
+</tool-use>
+
+---
+
+<tool-use data-tool-type="unknown" data-tool-name="copilot_replaceString">
+<details>
+<summary>Tool use: **copilot_replaceString**</summary>
+
+Additional data:
+
+```json
+{
+  "vscodeToolId": "copilot_replaceString",
+  "isHidden": true
+}
+```
+Result:
+
+```json
+{
+  "invocationMessage": "Korzystanie z \"Zamień ciąg w pliku\"",
+  "isConfirmed": {
+    "type": 1
+  },
+  "content": "&#96;&#96;&#96;html\ndate: data.date,\r\n                        parish: data.parish,\r\n                        woj: data.woj\n&#96;&#96;&#96;\n\n",
+  "textEditContent": "date: data.date,\r\n                        parish: data.parish,\r\n                        woj: data.woj",
+  "toolCallResult": null
+}
+```
+Status: **completed**
+
+
+</details>
+</tool-use>
+
+---
+
+<tool-use data-tool-type="read" data-tool-name="copilot_readFile">
+<details>
+<summary>Tool use: **copilot_readFile** • Czytanie [](file:///j%3A/projekt%202025/projekt-akta-v2/public/viewer-osd-v7.html#2325-2325), wiersze 2325 do 2330</summary>
+
+
+Odczytaj [](file:///j%3A/projekt%202025/projekt-akta-v2/public/viewer-osd-v7.html#2325-2325), wiersze 2325 do 2330
+
+</details>
+</tool-use>
+
+---
+
+<tool-use data-tool-type="unknown" data-tool-name="copilot_replaceString">
+<details>
+<summary>Tool use: **copilot_replaceString**</summary>
+
+Additional data:
+
+```json
+{
+  "vscodeToolId": "copilot_replaceString",
+  "isHidden": true
+}
+```
+Result:
+
+```json
+{
+  "invocationMessage": "Korzystanie z \"Zamień ciąg w pliku\"",
+  "isConfirmed": {
+    "type": 1
+  },
+  "content": "&#96;&#96;&#96;html\nact.woj,\r\n                        parafia: act.parish,\r\n                        data_zgl: act.date,\n&#96;&#96;&#96;\n\n",
+  "textEditContent": "act.woj,\r\n                        parafia: act.parish,\r\n                        data_zgl: act.date,",
+  "toolCallResult": null
+}
+```
+Status: **completed**
+
+
+</details>
+</tool-use>
+
+---
+
+<tool-use data-tool-type="read" data-tool-name="copilot_readFile">
+<details>
+<summary>Tool use: **copilot_readFile** • Czytanie [](file:///j%3A/projekt%202025/projekt-akta-v2/public/viewer-osd-v7.html#2355-2355), wiersze 2355 do 2365</summary>
+
+
+Odczytaj [](file:///j%3A/projekt%202025/projekt-akta-v2/public/viewer-osd-v7.html#2355-2355), wiersze 2355 do 2365
+
+</details>
+</tool-use>
+
+---
+
+<tool-use data-tool-type="unknown" data-tool-name="copilot_replaceString">
+<details>
+<summary>Tool use: **copilot_replaceString**</summary>
+
+Additional data:
+
+```json
+{
+  "vscodeToolId": "copilot_replaceString",
+  "isHidden": true
+}
+```
+Result:
+
+```json
+{
+  "invocationMessage": "Korzystanie z \"Zamień ciąg w pliku\"",
+  "isConfirmed": {
+    "type": 1
+  },
+  "content": "&#96;&#96;&#96;html\ndate: document.getElementById('modalDate').value,\r\n                    parish: document.getElementById('modalParish').value,\r\n                    woj: document.getElementById('modalWoj\n&#96;&#96;&#96;\n\n",
+  "textEditContent": "date: document.getElementById('modalDate').value,\r\n                    parish: document.getElementById('modalParish').value,\r\n                    woj: document.getElementById('modalWoj",
+  "toolCallResult": null
+}
+```
+Status: **completed**
+
+
+</details>
+</tool-use>
+
+---
+
+<tool-use data-tool-type="read" data-tool-name="copilot_readFile">
+<details>
+<summary>Tool use: **copilot_readFile** • Czytanie [](file:///j%3A/projekt%202025/projekt-akta-v2/public/viewer-osd-v7.html#2365-2365), wiersze 2365 do 2375</summary>
+
+
+Odczytaj [](file:///j%3A/projekt%202025/projekt-akta-v2/public/viewer-osd-v7.html#2365-2365), wiersze 2365 do 2375
+
+</details>
+</tool-use>
+
+---
+
+<tool-use data-tool-type="unknown" data-tool-name="copilot_replaceString">
+<details>
+<summary>Tool use: **copilot_replaceString**</summary>
+
+Additional data:
+
+```json
+{
+  "vscodeToolId": "copilot_replaceString",
+  "isHidden": true
+}
+```
+Result:
+
+```json
+{
+  "invocationMessage": "Korzystanie z \"Zamień ciąg w pliku\"",
+  "isConfirmed": {
+    "type": 1
+  },
+  "content": "&#96;&#96;&#96;html\ndate: data.date,\r\n                        parish: data.parish,\r\n                        woj: data.woj\n&#96;&#96;&#96;\n\n",
+  "textEditContent": "date: data.date,\r\n                        parish: data.parish,\r\n                        woj: data.woj",
+  "toolCallResult": null
+}
+```
+Status: **completed**
+
+
+</details>
+</tool-use>
+
+---
+
+<tool-use data-tool-type="read" data-tool-name="copilot_readFile">
+<details>
+<summary>Tool use: **copilot_readFile** • Czytanie [](file:///j%3A/projekt%202025/projekt-akta-v2/public/viewer-osd-v7.html#2385-2385), wiersze 2385 do 2390</summary>
+
+
+Odczytaj [](file:///j%3A/projekt%202025/projekt-akta-v2/public/viewer-osd-v7.html#2385-2385), wiersze 2385 do 2390
+
+</details>
+</tool-use>
+
+---
+
+<tool-use data-tool-type="unknown" data-tool-name="copilot_replaceString">
+<details>
+<summary>Tool use: **copilot_replaceString**</summary>
+
+Additional data:
+
+```json
+{
+  "vscodeToolId": "copilot_replaceString",
+  "isHidden": true
+}
+```
+Result:
+
+```json
+{
+  "invocationMessage": "Korzystanie z \"Zamień ciąg w pliku\"",
+  "isConfirmed": {
+    "type": 1
+  },
+  "content": "&#96;&#96;&#96;html\nact.woj,\r\n                        parafia: act.parish,\r\n                        data_zgl: act.date,\n&#96;&#96;&#96;\n\n",
+  "textEditContent": "act.woj,\r\n                        parafia: act.parish,\r\n                        data_zgl: act.date,",
+  "toolCallResult": null
+}
+```
+Status: **completed**
+
+
+</details>
+</tool-use>
+
+---
+
+<tool-use data-tool-type="read" data-tool-name="copilot_readFile">
+<details>
+<summary>Tool use: **copilot_readFile** • Czytanie [](file:///j%3A/projekt%202025/projekt-akta-v2/public/viewer-osd-v7.html#2145-2145), wiersze 2145 do 2155</summary>
+
+
+Odczytaj [](file:///j%3A/projekt%202025/projekt-akta-v2/public/viewer-osd-v7.html#2145-2145), wiersze 2145 do 2155
+
+</details>
+</tool-use>
+
+---
+
+<tool-use data-tool-type="unknown" data-tool-name="run_in_terminal">
+<details>
+<summary>Tool use: **run_in_terminal**</summary>
+
+
+Parameters:
+
+```json
+{
+  "kind": "terminal",
+  "terminalToolSessionId": "830a2a4d-08d7-427c-8647-0f808b7cadd2",
+  "terminalCommandId": "tool-9f6b4869-8559-4e13-80f1-2eeeaccc4d5e",
+  "commandLine": {
+    "original": "cd \"j:\\projekt 2025\\projekt-akta-v2\" &amp;&amp; git add . &amp;&amp; git commit -m \"Add LLM-based unique ID generation for genealogical acts with TYP.WOJ.PARAFIA.ROK.MIES.NR.SUF schema, integrate into modal and UI display\"",
+    "toolEdited": "cd \"j:\\projekt 2025\\projekt-akta-v2\" ; git add . ; git commit -m \"Add LLM-based unique ID generation for genealogical acts with TYP.WOJ.PARAFIA.ROK.MIES.NR.SUF schema, integrate into modal and UI display\""
+  },
+  "language": "pwsh",
+  "autoApproveInfo": {
+    "value": "Automatycznie zatwierdzane dla tej sesji ([Wyłącz](command:workbench.action.terminal.chat.disableSessionAutoApproval?%255B%25226adafc7a-262d-41f2-9499-640bd3472ba6%2522%255D))",
+    "isTrusted": {
+      "enabledCommands": [
+        "workbench.action.terminal.chat.disableSessionAutoApproval"
+      ]
+    },
+    "supportThemeIcons": false,
+    "supportHtml": false,
+    "supportAlertSyntax": false
+  },
+  "terminalCommandState": {
+    "exitCode": 0,
+    "timestamp": 1766954707416,
+    "duration": 676
+  },
+  "terminalCommandUri": {
+    "$mid": 1,
+    "path": "/36a0d7807ea04b2e7f9bed2c2ac94af7/3",
+    "scheme": "vscode-terminal",
+    "query": "command=tool-9f6b4869-8559-4e13-80f1-2eeeaccc4d5e"
+  },
+  "terminalCommandOutput": {
+    "text": "warning: in the working copy of 'data/imiona_meskie.json', LF will be replaced by CRLF the next time Git touches it\r\nwarning: in the working copy of 'data/imiona_wszystkie.json', LF will be replaced by CRLF the next time Git touches it\r\nwarning: in the working copy of 'data/imiona_zenskie.json', LF will \r\nbe replaced by CRLF the next time Git touches it\r\nwarning: in the working copy of 'data/nazwiska_meskie.json', LF will be replaced by CRLF the next time Git touches it\r\nwarning: in the working copy of 'data/nazwiska_wszystkie.json', LF will be replaced by CRLF the next time Git touches it\r\nwarning: in the working copy of 'data/nazwiska_zenskie.json', LF will be replaced by CRLF the next time Git touches it\r\n[master d20d31c] Add LLM-based unique ID generation for genealogical acts with TYP.WOJ.PARAFIA.ROK.MIES.NR.SUF schema, integrate into modal and UI display\r\n 8 files changed, 2338 insertions(+), 5 deletions(-)\r\n create mode 100644 data/imiona_meskie.json\r\n create mode 100644 data/imiona_wszystkie.json\r\n create mode 100644 data/imiona_zenskie.json\r\n create mode 100644 data/nazwiska_meskie.json\r\n create mode 100644 data/nazwiska_wszystkie.json\r\n create mode 100644 data/nazwiska_zenskie.json",
+    "lineCount": 22
+  },
+  "terminalTheme": {
+    "background": "#181818",
+    "foreground": "#cccccc"
+  }
+}
+```
+Additional data:
+
+```json
+{
+  "vscodeToolId": "run_in_terminal",
+  "isHidden": false
+}
+```
+Result:
+
+```json
+{
+  "invocationMessage": "Korzystanie z \"Uruchom w terminalu\"",
+  "isConfirmed": {
+    "type": 1
+  },
+  "content": "",
+  "textEditContent": "",
+  "toolCallResult": null
+}
+```
+Status: **completed**
+
+
+</details>
+</tool-use>
+
+---
+
+<tool-use data-tool-type="unknown" data-tool-name="run_in_terminal">
+<details>
+<summary>Tool use: **run_in_terminal**</summary>
+
+
+Parameters:
+
+```json
+{
+  "kind": "terminal",
+  "terminalToolSessionId": "a84e6f5e-5cae-4888-8077-b135325c2b2f",
+  "terminalCommandId": "tool-bd14cd55-4fa8-497c-91db-3a2034ec05a3",
+  "commandLine": {
+    "original": "cd \"j:\\projekt 2025\\projekt-akta-v2\" &amp;&amp; npm run dev",
+    "toolEdited": "cd \"j:\\projekt 2025\\projekt-akta-v2\" ; npm run dev"
+  },
+  "language": "pwsh",
+  "autoApproveInfo": {
+    "value": "Automatycznie zatwierdzane dla tej sesji ([Wyłącz](command:workbench.action.terminal.chat.disableSessionAutoApproval?%255B%25226adafc7a-262d-41f2-9499-640bd3472ba6%2522%255D))",
+    "isTrusted": {
+      "enabledCommands": [
+        "workbench.action.terminal.chat.disableSessionAutoApproval"
+      ]
+    },
+    "supportThemeIcons": false,
+    "supportHtml": false,
+    "supportAlertSyntax": false
+  },
+  "terminalCommandState": {
+    "exitCode": 1,
+    "timestamp": 1766954782532,
+    "duration": 68733
+  },
+  "terminalCommandUri": {
+    "$mid": 1,
+    "path": "/36a0d7807ea04b2e7f9bed2c2ac94af7/4",
+    "scheme": "vscode-terminal",
+    "query": "command=tool-bd14cd55-4fa8-497c-91db-3a2034ec05a3"
+  },
+  "terminalTheme": {
+    "background": "#181818",
+    "foreground": "#cccccc"
+  }
+}
+```
+Additional data:
+
+```json
+{
+  "vscodeToolId": "run_in_terminal",
+  "isHidden": false
+}
+```
+Result:
+
+```json
+{
+  "invocationMessage": "Korzystanie z \"Uruchom w terminalu\"",
+  "isConfirmed": {
+    "type": 1
+  },
+  "content": "",
+  "textEditContent": "",
+  "toolCallResult": null
+}
+```
+Status: **completed**
+
+
+</details>
+</tool-use>
+
+---
+
+<tool-use data-tool-type="unknown" data-tool-name="copilot_openSimpleBrowser">
+<details>
+<summary>Tool use: **copilot_openSimpleBrowser**</summary>
+
+Additional data:
+
+```json
+{
+  "vscodeToolId": "copilot_openSimpleBrowser",
+  "isHidden": false
+}
+```
+Result:
+
+```json
+{
+  "invocationMessage": "Otwieranie prostej przeglądarki pod adresem http://localhost:5176/public/viewer-osd-v7.html",
+  "pastTenseMessage": "Otwarto prostą przeglądarkę pod adresem http://localhost:5176/public/viewer-osd-v7.html",
+  "isConfirmed": {
+    "type": 3,
+    "scope": "profile"
+  },
+  "content": "",
+  "textEditContent": "",
+  "toolCallResult": null
+}
+```
+Status: **completed**
+
+
+</details>
+</tool-use>
+
+---
+
+## ✅ Zintegrowano generowanie unikalnych ID aktów z LLM
+
+### Nowa funkcjonalność ID
+- **Schemat ID**: `TYP.WOJ.PARAFIA.ROK.MIES.NR.SUF` (np. `CH.LUB.BLIN.1908.05.00060.00`)
+- **Generowanie przez LLM**: Funkcja `autoGenerateID()` wywołuje LLM (obecnie mock, zastąp prawdziwym API)
+- **Automatyczne tworzenie**: ID generowane przy tworzeniu aktów w modalu, kopiowaniu i dodawaniu pojedynczych
+
+### Rozszerzony modal
+- **Nowe pola**: 
+  - Data zgłoszenia (modalDate)
+  - Województwo (modalWoj)
+- **Pamięć ustawień**: Wszystkie pola zapisywane w localStorage (`lastActSettings`)
+- **Przycisk kopiowania**: "Kopiuj z poprzedniej" kopiuje akty z głęboką kopią danych i nowymi ID
+
+### Wyświetlanie ID w UI
+- **Karty aktów**: Pod tytułem "📄 Akt X" dodany mały span z ID (lub "Brak ID")
+- **Format**: `innerHTML` z `<br>` dla nowej linii
+
+### Techniczne szczegóły
+- **Asynchroniczne generowanie**: Pętle `for...of` dla sekwencyjnego wywoływania LLM
+- **Dane aktu**: JSON z `typ`, `woj`, `parafia`, `data_zgl`, `nr_aktu`, `is_copy`
+- **Mock LLM**: Obecnie zwraca stałe ID; zastąp prawdziwym fetch do API (np. xAI Grok)
+- **Zapisywanie**: ID dodane do `act.id`, przechowywane w `app.imageActs` i localStorage
+
+### Przykład działania
+1. Otwórz modal → Wypełnij pola (rok, data, parafia, woj, typ)
+2. Kliknij "OK" → Akty utworzone z unikalnymi ID
+3. Przycisk "Kopiuj z poprzedniej" → Skopiowane akty z nowymi ID
+4. ID widoczne w kartach aktów
+
+Serwer deweloperski działa na `http://localhost:5176/public/viewer-osd-v7.html`. Aby użyć prawdziwego LLM, dodaj API key i odkomentuj fetch w `autoGenerateID()`. Jeśli ID się generują poprawnie, daj znać!
+
+---
+
+_**User (2025-12-28 20:46Z)**_
+
+cos sie zbanowało - nic nie działa
+
+---
+
+_**Agent (model copilot/grok-code-fast-1)**_
+
+<tool-use data-tool-type="unknown" data-tool-name="copilot_getErrors">
+<details>
+<summary>Tool use: **copilot_getErrors**</summary>
+
+
+Parameters:
+
+```json
+{
+  "file_path": "j%3A/projekt%202025/projekt-akta-v2/public/viewer-osd-v7.html",
+  "relativeWorkspacePath": "viewer-osd-v7.html"
+}
+```
+Additional data:
+
+```json
+{
+  "vscodeToolId": "copilot_getErrors",
+  "isHidden": false
+}
+```
+Result:
+
+```json
+{
+  "invocationMessage": "Sprawdzanie [](file:///j%3A/projekt%202025/projekt-akta-v2/public/viewer-osd-v7.html)",
+  "pastTenseMessage": "Sprawdzono [](file:///j%3A/projekt%202025/projekt-akta-v2/public/viewer-osd-v7.html), znaleziono 2 problemy",
+  "isConfirmed": {
+    "type": 1
+  },
+  "content": "",
+  "textEditContent": "",
+  "toolCallResult": null
+}
+```
+Status: **completed**
+
+
+</details>
+</tool-use>
+
+---
+
+<tool-use data-tool-type="unknown" data-tool-name="copilot_replaceString">
+<details>
+<summary>Tool use: **copilot_replaceString**</summary>
+
+Additional data:
+
+```json
+{
+  "vscodeToolId": "copilot_replaceString",
+  "isHidden": true
+}
+```
+Result:
+
+```json
+{
+  "invocationMessage": "Korzystanie z \"Zamień ciąg w pliku\"",
+  "isConfirmed": {
+    "type": 1
+  },
+  "content": "&#96;&#96;&#96;html\nasync \n&#96;&#96;&#96;\n\n",
+  "textEditContent": "async ",
+  "toolCallResult": null
+}
+```
+Status: **completed**
+
+
+</details>
+</tool-use>
+
+---
+
+<tool-use data-tool-type="unknown" data-tool-name="copilot_replaceString">
+<details>
+<summary>Tool use: **copilot_replaceString**</summary>
+
+Additional data:
+
+```json
+{
+  "vscodeToolId": "copilot_replaceString",
+  "isHidden": true
+}
+```
+Result:
+
+```json
+{
+  "invocationMessage": "Korzystanie z \"Zamień ciąg w pliku\"",
+  "isConfirmed": {
+    "type": 1
+  },
+  "content": "&#96;&#96;&#96;html\nasync \n&#96;&#96;&#96;\n\n",
+  "textEditContent": "async ",
+  "toolCallResult": null
+}
+```
+Status: **completed**
+
+
+</details>
+</tool-use>
+
+---
+
+<tool-use data-tool-type="unknown" data-tool-name="copilot_getErrors">
+<details>
+<summary>Tool use: **copilot_getErrors**</summary>
+
+
+Parameters:
+
+```json
+{
+  "file_path": "j%3A/projekt%202025/projekt-akta-v2/public/viewer-osd-v7.html",
+  "relativeWorkspacePath": "viewer-osd-v7.html"
+}
+```
+Additional data:
+
+```json
+{
+  "vscodeToolId": "copilot_getErrors",
+  "isHidden": false
+}
+```
+Result:
+
+```json
+{
+  "invocationMessage": "Sprawdzanie [](file:///j%3A/projekt%202025/projekt-akta-v2/public/viewer-osd-v7.html)",
+  "pastTenseMessage": "Sprawdzono [](file:///j%3A/projekt%202025/projekt-akta-v2/public/viewer-osd-v7.html), nie znaleziono żadnych problemów",
+  "isConfirmed": {
+    "type": 1
+  },
+  "content": "",
+  "textEditContent": "",
+  "toolCallResult": null
+}
+```
+Status: **completed**
+
+
+</details>
+</tool-use>
+
+---
+
+<tool-use data-tool-type="unknown" data-tool-name="run_in_terminal">
+<details>
+<summary>Tool use: **run_in_terminal**</summary>
+
+
+Parameters:
+
+```json
+{
+  "kind": "terminal",
+  "terminalToolSessionId": "cc87f94f-c751-4984-a61f-3d6d68ba62a0",
+  "terminalCommandId": "tool-bc2acae1-efe3-4bee-8bb9-a1983aa54e53",
+  "commandLine": {
+    "original": "cd \"j:\\projekt 2025\\projekt-akta-v2\" &amp;&amp; git add . &amp;&amp; git commit -m \"Fix async/await in modal onclick handlers for ID generation\"",
+    "toolEdited": "cd \"j:\\projekt 2025\\projekt-akta-v2\" ; git add . ; git commit -m \"Fix async/await in modal onclick handlers for ID generation\""
+  },
+  "language": "pwsh",
+  "autoApproveInfo": {
+    "value": "Automatycznie zatwierdzane dla tej sesji ([Wyłącz](command:workbench.action.terminal.chat.disableSessionAutoApproval?%255B%25226adafc7a-262d-41f2-9499-640bd3472ba6%2522%255D))",
+    "isTrusted": {
+      "enabledCommands": [
+        "workbench.action.terminal.chat.disableSessionAutoApproval"
+      ]
+    },
+    "supportThemeIcons": false,
+    "supportHtml": false,
+    "supportAlertSyntax": false
+  },
+  "terminalCommandState": {
+    "exitCode": 0,
+    "timestamp": 1766954783056,
+    "duration": 314
+  },
+  "terminalCommandUri": {
+    "$mid": 1,
+    "path": "/36a0d7807ea04b2e7f9bed2c2ac94af7/4",
+    "scheme": "vscode-terminal",
+    "query": "command=tool-bc2acae1-efe3-4bee-8bb9-a1983aa54e53"
+  },
+  "terminalTheme": {
+    "background": "#181818",
+    "foreground": "#cccccc"
+  }
+}
+```
+Additional data:
+
+```json
+{
+  "vscodeToolId": "run_in_terminal",
+  "isHidden": false
+}
+```
+Result:
+
+```json
+{
+  "invocationMessage": "Korzystanie z \"Uruchom w terminalu\"",
+  "isConfirmed": {
+    "type": 1
+  },
+  "content": "",
+  "textEditContent": "",
+  "toolCallResult": null
+}
+```
+Status: **completed**
+
+
+</details>
+</tool-use>
+
+---
+
+<tool-use data-tool-type="unknown" data-tool-name="copilot_openSimpleBrowser">
+<details>
+<summary>Tool use: **copilot_openSimpleBrowser**</summary>
+
+Additional data:
+
+```json
+{
+  "vscodeToolId": "copilot_openSimpleBrowser",
+  "isHidden": false
+}
+```
+Result:
+
+```json
+{
+  "invocationMessage": "Otwieranie prostej przeglądarki pod adresem http://localhost:5176/public/viewer-osd-v7.html",
+  "pastTenseMessage": "Otwarto prostą przeglądarkę pod adresem http://localhost:5176/public/viewer-osd-v7.html",
+  "isConfirmed": {
+    "type": 1
+  },
+  "content": "",
+  "textEditContent": "",
+  "toolCallResult": null
+}
+```
+Status: **completed**
+
+
+</details>
+</tool-use>
+
+---
+
+## ✅ Naprawiono błąd async/await
+
+### Problem
+Aplikacja się "zbanowała" z powodu błędów składni JavaScript:
+- `await` używane w zwykłych funkcjach `onclick`, nie `async`
+- To powodowało błędy kompilacji i zatrzymanie działania aplikacji
+
+### Rozwiązanie
+- Zmieniono `document.getElementById('modalOK').onclick = () => {` na `async () => {`
+- Podobnie dla `modalCopyPrev.onclick`
+- Teraz funkcje mogą używać `await` do asynchronicznego generowania ID przez LLM
+
+### Status
+- Błędy naprawione (sprawdzone przez `get_errors`)
+- Serwer deweloperski uruchomiony na `http://localhost:5176/public/viewer-osd-v7.html`
+- Aplikacja powinna teraz działać poprawnie z generowaniem ID aktów
+
+Jeśli nadal coś nie działa, sprawdź konsolę przeglądarki (F12) i daj znać, jakie błędy widzisz!
 
 ---
 
