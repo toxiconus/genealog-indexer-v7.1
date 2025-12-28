@@ -1,0 +1,4031 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Genealog Indexer v7.1 - Zaawansowany Indekser Akt z OCR</title>
+    <script src="https://openseadragon.github.io/openseadragon/openseadragon.min.js"></script>
+    <script src="https://unpkg.com/tesseract.js@5.1.0/dist/tesseract.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" integrity="sha512-QWW8KnkLA+k76+1F7kzIlQaY9w+D8tIPc7mojjkIrn2mstAlsJ7JiUUE+txlEjNEVvfS3+cTt03r5SNsND7Dcw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        html, body {
+            width: 100%;
+            height: 100%;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background-color: #0a0a0a;
+            color: #ddd;
+            overflow: hidden;
+        }
+        #app {
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+        }
+        .toolbar {
+            background: linear-gradient(180deg, #1a1a1a 0%, #151515 100%);
+            border-bottom: 1px solid #2a2a2a;
+            padding: 6px 10px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            min-height: 38px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+            z-index: 100;
+            flex-wrap: wrap;
+        }
+        .toolbar-title {
+            font-size: 11px;
+            color: #0078d4;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-right: auto;
+        }
+        .toolbar-btn {
+            background: #252525;
+            border: 1px solid #3a3a3a;
+            color: #bbb;
+            padding: 5px 10px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 11px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            transition: all 0.15s ease;
+            white-space: nowrap;
+        }
+        .toolbar-btn:hover {
+            background: #2d2d2d;
+            border-color: #0078d4;
+            color: #0078d4;
+            transform: translateY(-1px);
+        }
+        .toolbar-btn.active {
+            background: #0078d4;
+            border-color: #0078d4;
+            color: white;
+            box-shadow: 0 0 12px rgba(0,120,212,0.4);
+        }
+        .toolbar-sep {
+            width: 1px;
+            height: 20px;
+            background: #2a2a2a;
+            margin: 0 2px;
+        }
+        .main-content {
+            flex: 1;
+            display: flex;
+            gap: 0;
+            overflow: hidden;
+        }
+        .viewer-panel {
+            flex: 1;
+            background: #000;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+        }
+        .viewer-container {
+            flex: 1;
+            position: relative;
+            overflow: hidden;
+        }
+        #viewer {
+            width: 100%;
+            height: 100%;
+            cursor: grab;
+        }
+        #imageFallback {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            display: none;
+        }
+        #imageFallback.active {
+            display: block;
+        }
+        .viewer-container.drag-over {
+            border: 4px dashed #0078d4 !important;
+            background-color: rgba(0, 120, 212, 0.05) !important;
+        }
+        .rotate-controls {
+            position: absolute;
+            bottom: 15px;
+            right: 15px;
+            display: flex;
+            gap: 6px;
+            z-index: 60;
+        }
+        .rotate-btn {
+            background: #1a1a1a;
+            border: 1px solid #3a3a3a;
+            color: #ddd;
+            width: 36px;
+            height: 36px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s ease;
+        }
+        .rotate-btn:hover {
+            background: #252525;
+            border-color: #0078d4;
+            color: #0078d4;
+        }
+        .roi-info-overlay {
+            position: absolute;
+            bottom: 10px;
+            left: 10px;
+            background: rgba(0,0,0,0.85);
+            color: #0078d4;
+            padding: 8px 12px;
+            border-radius: 4px;
+            font-size: 11px;
+            z-index: 60;
+            display: none;
+            border: 1px solid #0078d4;
+        }
+        .roi-info-overlay.visible {
+            display: block;
+        }
+        .roi-overlay {
+            border: 2px dashed #0078d4;
+            background: rgba(0,120,212,0.15);
+            pointer-events: none;
+        }
+        .roi-overlay.active {
+            border-color: #ff9800;
+            border-width: 3px;
+            background: rgba(255,152,0,0.2);
+        }
+        .act-overlay {
+            border: 3px solid #10b981;
+            background: rgba(16,185,129,0.1);
+            pointer-events: none;
+        }
+        #drawingCanvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            cursor: crosshair !important;
+            z-index: 50;
+            pointer-events: none;
+        }
+        .right-panel {
+            width: 340px;
+            background: linear-gradient(180deg, #1a1a1a 0%, #151515 100%);
+            border-left: 1px solid #2a2a2a;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+        .right-panel.collapsed {
+            width: 0;
+            border: none;
+        }
+        .panel-content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+        .records-sidebar {
+            width: 50px;
+            background: #151515;
+            border-right: 1px solid #2a2a2a;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 10px 0;
+            gap: 8px;
+        }
+        .form-section {
+            padding: 12px;
+            border-bottom: 1px solid #2a2a2a;
+            display: none;
+            flex: 1;
+            overflow-y: auto;
+        }
+        .form-section.active {
+            display: block;
+        }
+        .form-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        .form-header h3 {
+            font-size: 13px;
+            color: #ddd;
+            font-weight: 600;
+        }
+        .record-counter {
+            font-size: 10px;
+            color: #888;
+            background: #252525;
+            padding: 3px 8px;
+            border-radius: 10px;
+        }
+        .form-group {
+            margin-bottom: 12px;
+        }
+        .form-group label {
+            display: block;
+            font-size: 10px;
+            color: #888;
+            margin-bottom: 5px;
+            font-weight: 500;
+            text-transform: uppercase;
+        }
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 8px 10px;
+            background: #0f0f0f;
+            border: 1px solid #3a3a3a;
+            color: #ddd;
+            border-radius: 4px;
+            font-size: 12px;
+            font-family: inherit;
+            transition: all 0.15s ease;
+        }
+        .form-group input:focus,
+        .form-group textarea:focus {
+            border-color: #0078d4;
+            outline: none;
+            background: #1a1a1a;
+            box-shadow: 0 0 0 3px rgba(0,120,212,0.1);
+        }
+        .form-group input.has-roi {
+            border-left: 4px solid #10b981;
+            box-shadow: 0 0 8px rgba(16,185,129,0.3);
+        }
+        /* 🟢 P0: Color-Coded Fields - 3 status indicators */
+        .form-group input.field-complete {
+            border-left: 4px solid #10b981;  /* 🟢 Green - filled */
+            box-shadow: 0 0 8px rgba(16,185,129,0.3);
+        }
+        .form-group input.field-roi-only {
+            border-left: 4px solid #fbbf24;  /* 🟡 Yellow - ROI marked but no value */
+            box-shadow: 0 0 8px rgba(251,191,36,0.3);
+        }
+        .form-group input.field-empty {
+            border-left: 4px solid #ef4444;  /* 🔴 Red - empty & no ROI */
+            box-shadow: 0 0 8px rgba(239,68,68,0.3);
+        }
+        .form-group textarea {
+            resize: vertical;
+            min-height: 60px;
+            font-family: 'Courier New', monospace;
+        }
+        .accordion-item {
+            border: 1px solid #2a2a2a;
+            border-radius: 4px;
+            overflow: hidden;
+            background: #0f0f0f;
+            margin-bottom: 4px;
+        }
+        .accordion-header {
+            background: #1a1a1a;
+            border: none;
+            color: #ddd;
+            padding: 10px 12px;
+            cursor: pointer;
+            font-size: 12px;
+            font-weight: 600;
+            display: flex;
+            justify-content: space-between;
+            width: 100%;
+            text-align: left;
+        }
+        .accordion-header:hover {
+            background: #252525;
+        }
+        .accordion-header.active {
+            background: #0078d4;
+            color: white;
+        }
+        .accordion-content {
+            display: none;
+            padding: 12px;
+            background: #0f0f0f;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+        }
+        .accordion-content.active {
+            display: block;
+            max-height: 500px;
+        }
+        .form-actions {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 6px;
+            margin-top: 12px;
+        }
+        .form-btn {
+            background: #107c10;
+            border: none;
+            color: white;
+            padding: 10px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 11px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+        }
+        .form-btn:hover {
+            background: #0d6a0d;
+        }
+        .form-btn.danger {
+            background: #c42b1c;
+        }
+        .form-btn.danger:hover {
+            background: #a02318;
+        }
+        .thumbnails-bar {
+            height: 100px;
+            background: #0f0f0f;
+            border-top: 1px solid #2a2a2a;
+            display: flex;
+            align-items: center;
+            padding: 8px;
+            gap: 8px;
+            overflow-x: auto;
+        }
+        .thumbnails-bar.collapsed {
+            height: 0;
+            padding: 0;
+            border: none;
+            overflow: hidden;
+        }
+        /* 💡 Suggestions Fan - Wachlarz podpowiedzi */
+        #suggestionsWachlarz {
+            pointer-events: none;
+            display: none;
+        }
+        #suggestionsWachlarz.visible {
+            display: block;
+            pointer-events: auto;
+        }
+        #suggestionsWachlarz .suggestion {
+            background: rgba(20, 20, 40, 0.95);
+            border: 1px solid #0078d4;
+            color: #0078d4;
+            padding: 8px 12px;
+            margin: 4px 0;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 11px;
+            font-weight: 600;
+            transition: all 0.15s ease;
+            transform: translateX(-10px) rotate(-3deg);
+            backdrop-filter: blur(4px);
+            box-shadow: 0 2px 8px rgba(0,120,212,0.2);
+        }
+        #suggestionsWachlarz .suggestion:hover {
+            background: rgba(0, 120, 212, 0.2);
+            border-color: #00ff88;
+            color: #00ff88;
+            transform: translateX(0) rotate(0deg);
+            box-shadow: 0 4px 16px rgba(0,255,136,0.3);
+        }
+        @keyframes fanRotate {
+            from {
+                transform: translateX(-30px) rotate(-15deg) scale(0.8);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(-10px) rotate(-3deg) scale(1);
+                opacity: 1;
+            }
+        }
+        .thumbnail {
+            width: 84px;
+            height: 84px;
+            border: 2px solid #333;
+            border-radius: 4px;
+            cursor: pointer;
+            overflow: hidden;
+            background: #1a1a1a;
+            flex-shrink: 0;
+            transition: all 0.2s ease;
+        }
+        .thumbnail img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        .thumbnail:hover {
+            border-color: #0078d4;
+        }
+        .thumbnail.active {
+            border-color: #0078d4;
+            box-shadow: 0 0 16px rgba(0,120,212,0.6);
+        }
+        .notification {
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            padding: 12px 20px;
+            background: #0078d4;
+            color: white;
+            border-radius: 6px;
+            font-size: 12px;
+            font-weight: 500;
+            z-index: 1000;
+            animation: slideIn 0.3s ease;
+        }
+        .notification.error {
+            background: #c42b1c;
+        }
+        .notification.success {
+            background: #107c10;
+        }
+        @keyframes slideIn {
+            from {
+                transform: translateX(400px);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #0f0f0f;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #3a3a3a;
+            border-radius: 4px;
+        }
+        /* Floating formularz nad obrazem */
+        .floating-form {
+            position: absolute;
+            top: 50px;
+            left: 50px;
+            width: 380px;
+            max-height: 80vh;
+            background: rgba(20, 20, 20, 0.95);
+            border: 1px solid #3a3a3a;
+            border-radius: 8px;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.8);
+            z-index: 100;
+            display: none;
+            flex-direction: column;
+            backdrop-filter: blur(4px);
+            padding: 12px;
+        }
+        .floating-form.visible {
+            display: flex;
+        }
+        .floating-form-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+            color: #0078d4;
+            font-weight: 600;
+        }
+        .floating-form-close {
+            background: none;
+            border: none;
+            color: #ddd;
+            font-size: 18px;
+            cursor: pointer;
+            padding: 4px 8px;
+        }
+        .floating-form-close:hover {
+            color: #0078d4;
+        }
+        .floating-form-content {
+            flex: 1;
+            overflow-y: auto;
+        }
+        .floating-form-actions {
+            margin-top: 12px;
+            display: flex;
+            gap: 8px;
+        }
+        /* Lepsze pin-upy – małe, eleganckie, przesuwalne */
+        .field-pinup {
+            display: none; /* 🔒 Hidden in v7.1 - act-only mode */
+            position: absolute;
+            width: 260px;
+            background: rgba(15, 15, 20, 0.92);
+            border: 1px solid #0078d4;
+            border-radius: 8px;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.6);
+            z-index: 101;
+            padding: 10px;
+            cursor: move;
+            user-select: none;
+            backdrop-filter: blur(8px);
+            transition: all 0.2s ease;
+            font-size: 12px;
+        }
+        .field-pinup:hover {
+            box-shadow: 0 12px 32px rgba(0,120,212,0.3);
+            border-color: #0099ff;
+        }
+        .field-pinup-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 8px;
+            color: #0078d4;
+            font-weight: 600;
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 0.3px;
+        }
+        .field-pinup-close {
+            background: none;
+            border: none;
+            color: #888;
+            font-size: 16px;
+            cursor: pointer;
+            padding: 2px 6px;
+            border-radius: 4px;
+            transition: all 0.15s;
+        }
+        .field-pinup-close:hover {
+            color: #ff6b6b;
+            background: rgba(255,107,107,0.15);
+        }
+        .ocr-btn {
+            background: none;
+            border: none;
+            color: #00ccff;
+            font-size: 14px;
+            cursor: pointer;
+            padding: 2px 6px;
+            border-radius: 4px;
+            transition: all 0.15s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .ocr-btn:hover {
+            color: #00ff88;
+            background: rgba(0,204,255,0.15);
+            transform: scale(1.15);
+        }
+        .ocr-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+        .field-pinup input {
+            width: 100%;
+            padding: 10px 12px;
+            background: rgba(10,10,10,0.8);
+            border: 1px solid #3a3a3a;
+            color: #ddd;
+            border-radius: 6px;
+            font-size: 13px;
+            box-sizing: border-box;
+            transition: all 0.2s ease;
+        }
+        .field-pinup input:focus {
+            border-color: #0078d4;
+            background: rgba(20,20,30,0.9);
+            box-shadow: 0 0 0 3px rgba(0,120,212,0.2);
+            outline: none;
+        }
+        .field-pinup input.has-roi {
+            border-left: 4px solid #10b981;
+        }
+        /* Wizard prompt – instrukcja dla bieżącego pola */
+        .wizard-prompt {
+            position: absolute;
+            top: 60px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(0,120,212,0.92);
+            color: white;
+            padding: 12px 20px;
+            border-radius: 8px;
+            font-size: 13px;
+            z-index: 99;
+            display: none;
+            box-shadow: 0 4px 16px rgba(0,0,0,0.5);
+            max-width: 400px;
+            text-align: center;
+            backdrop-filter: blur(4px);
+        }
+        .wizard-prompt.visible {
+            display: block;
+            animation: slideDown 0.3s ease;
+        }
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateX(-50%) translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(-50%) translateY(0);
+            }
+        }
+        .wizard-prompt button {
+            background: rgba(255,255,255,0.2);
+            border: none;
+            color: white;
+            padding: 6px 12px;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-left: 10px;
+            transition: all 0.15s;
+            font-size: 12px;
+        }
+        .wizard-prompt button:hover {
+            background: rgba(255,255,255,0.3);
+        }
+        .wizard-progress {
+            position: absolute;
+            bottom: 20px;
+            left: 20px;
+            background: rgba(0,120,212,0.85);
+            color: white;
+            padding: 10px 16px;
+            border-radius: 6px;
+            font-size: 12px;
+            z-index: 99;
+            display: none;
+            backdrop-filter: blur(4px);
+        }
+        .wizard-progress.visible {
+            display: block;
+        }
+        .wizard-progress-bar {
+            width: 200px;
+            height: 4px;
+            background: rgba(255,255,255,0.2);
+            border-radius: 2px;
+            margin-top: 6px;
+            overflow: hidden;
+        }
+        .wizard-progress-fill {
+            height: 100%;
+            background: #10b981;
+            transition: width 0.3s ease;
+        }
+        
+        /* ===== POSTPROCESSING PANEL ===== */
+        .postprocess-panel {
+            position: fixed;
+            right: 0;
+            top: 40px;
+            width: 320px;
+            background: linear-gradient(180deg, #1a1a1a 0%, #151515 100%);
+            border-left: 1px solid #2a2a2a;
+            border-radius: 6px 0 0 6px;
+            padding: 12px;
+            box-shadow: -4px 4px 16px rgba(0,0,0,0.6);
+            z-index: 95;
+            display: none;
+            flex-direction: column;
+            gap: 10px;
+            max-height: 85vh;
+            overflow-y: auto;
+        }
+        .postprocess-panel.visible {
+            display: flex;
+        }
+        .postprocess-title {
+            font-size: 12px;
+            color: #0078d4;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+        .postprocess-slider {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+        .postprocess-slider label {
+            font-size: 11px;
+            color: #888;
+            font-weight: 500;
+        }
+        .postprocess-slider input[type="range"] {
+            width: 100%;
+            height: 6px;
+            border-radius: 3px;
+            background: #2a2a2a;
+            outline: none;
+            -webkit-appearance: none;
+            appearance: none;
+        }
+        .postprocess-slider input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            background: #0078d4;
+            cursor: pointer;
+            box-shadow: 0 0 8px rgba(0,120,212,0.5);
+        }
+        .postprocess-slider input[type="range"]::-moz-range-thumb {
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            background: #0078d4;
+            cursor: pointer;
+            border: none;
+            box-shadow: 0 0 8px rgba(0,120,212,0.5);
+        }
+        .postprocess-value {
+            font-size: 10px;
+            color: #0078d4;
+            text-align: center;
+        }
+        .postprocess-buttons {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 6px;
+            margin-top: 10px;
+        }
+        .postprocess-btn {
+            background: #0078d4;
+            border: none;
+            color: white;
+            padding: 8px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 11px;
+            font-weight: 600;
+            transition: all 0.15s;
+        }
+        .postprocess-btn:hover {
+            background: #0099ff;
+        }
+        .postprocess-btn.reset {
+            background: #3a3a3a;
+        }
+        .postprocess-btn.reset:hover {
+            background: #454545;
+        }
+        /* ⭐ P0: Progress Bar - Show field completion status */
+        #progressBar {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-left: 20px;
+            padding: 0 8px;
+            height: 24px;
+        }
+        .progress-container {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+        .progress-bar {
+            width: 100px;
+            height: 6px;
+            background: #1a1a1a;
+            border-radius: 3px;
+            overflow: hidden;
+            border: 1px solid #3a3a3a;
+        }
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #10b981 0%, #0078d4 100%);
+            border-radius: 3px;
+            transition: width 0.3s ease;
+            box-shadow: 0 0 8px rgba(16,185,129,0.4);
+        }
+        .progress-text {
+            font-size: 11px;
+            color: #888;
+            min-width: 35px;
+            text-align: right;
+        }
+    </style>
+</head>
+<body>
+    <div id="app">
+        <div class="toolbar">
+            <span class="toolbar-title"><i class="fas fa-book"></i> Genealog Indexer v7.1 - Akt Mode</span>
+            <span id="imageCounter" style="margin-left: 20px; color: #999; font-size: 13px;"></span>
+            
+            <!-- ⭐ P0: Progress Bar -->
+            <div id="progressBar">
+                <span class="progress-text">Pola:</span>
+                <div class="progress-container">
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="progressFill" style="width: 0%"></div>
+                    </div>
+                    <span class="progress-text" id="progressText">0/0</span>
+                </div>
+            </div>
+            
+            <button class="toolbar-btn" onclick="addImages()" title="Dodaj obrazy (Ctrl+O)">
+                <i class="fas fa-folder-open"></i> Otwórz
+            </button>
+            
+            <button class="toolbar-btn" id="roiBtn" onclick="toggleROI()" title="ROI (Ctrl+R)">
+                <i class="fas fa-crop-alt"></i> ROI
+            </button>
+            
+            <button class="toolbar-btn" id="actBtn" onclick="toggleActMode()" title="Akt (Ctrl+A)">
+                <i class="fas fa-file-alt"></i> Akt
+            </button>
+            
+            <button class="toolbar-btn" onclick="togglePostprocessPanel()" title="Postprocessing - kontrast, jasność, wyostrzenie">
+                <i class="fas fa-sliders-h"></i> Postprocess
+            </button>
+            
+            <div class="toolbar-sep"></div>
+            
+            <button class="toolbar-btn" onclick="zoomReset()" title="Dopasuj widok">
+                <i class="fas fa-expand-arrows-alt"></i> Fit
+            </button>
+            
+            <button class="toolbar-btn" onclick="toggleFullscreen()" title="Pełny ekran">
+                <i class="fas fa-expand"></i> FS
+            </button>
+            
+            <div class="toolbar-sep"></div>
+            
+            <button class="toolbar-btn" onclick="exportData('simple')" title="Eksport">
+                <i class="fas fa-download"></i> Export
+            </button>
+            
+            <button class="toolbar-btn" onclick="importCSV()" title="Import CSV">
+                <i class="fas fa-upload"></i> Import
+            </button>
+            
+            <!-- TASK #3: JSON Import Button -->
+            <button class="toolbar-btn" onclick="importJSON()" title="Import JSON (Ctrl+J)">
+                <i class="fas fa-file-import"></i> JSON
+            </button>
+            
+            <div class="toolbar-sep"></div>
+            
+            <button class="toolbar-btn" onclick="toggleFloatingForm()" title="Pokaż pełny formularz aktu (Enter)">
+                <i class="fas fa-edit"></i> Formularz
+            </button>
+            
+            <button class="toolbar-btn" onclick="showAllPinups()" title="Pokaż wszystkie pola z ROI">
+                <i class="fas fa-thumbtack"></i> Pinupy
+            </button>
+            
+            <button class="toolbar-btn" onclick="clearPinups()" title="Zamknij wszystkie pin-upy">
+                <i class="fas fa-times"></i> Zamknij
+            </button>
+            
+            <div class="toolbar-sep"></div>
+            
+            <!-- TASK #2: Search Input -->
+            <input type="text" id="searchInput" class="toolbar-search" placeholder="🔍 Szukaj w aktach..." title="Wpisz aby wyszukać" style="padding: 8px 12px; border: 1px solid #3a3a3a; background: #1a1a1a; color: #ddd; border-radius: 4px; font-size: 13px; width: 180px;">
+        </div>
+        <div id="actCountModal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 1000;">
+            <div style="position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background: #1a1a1a; border: 1px solid #3a3a3a; border-radius: 8px; padding: 20px; width: 320px; box-shadow: 0 16px 48px rgba(0,0,0,0.95); z-index: 1001;">
+                <h2 style="color: #ddd; margin-bottom: 12px;"><i class="fas fa-calculator"></i> Ile aktów?</h2>
+                <input type="number" id="actCountInput" min="1" max="10" value="1" style="width: 100%; padding: 10px; border: 1px solid #3a3a3a; background: #0a0a0a; color: #ddd; border-radius: 4px; margin-bottom: 12px; box-sizing: border-box;">
+                <div style="display: flex; gap: 8px;">
+                    <button onclick="createActsForImage()" style="flex: 1; padding: 10px; background: #0078d4; color: white; border: none; border-radius: 4px; font-weight: 600; cursor: pointer;">OK</button>
+                    <button onclick="closeActModal()" style="flex: 1; padding: 10px; background: #3a3a3a; color: #ddd; border: none; border-radius: 4px; font-weight: 600; cursor: pointer;">Anuluj</button>
+                </div>
+            </div>
+        </div>
+        <div class="main-content">
+            <div class="records-sidebar" id="recordsSidebar"></div>
+            <div class="viewer-panel">
+                <div class="viewer-container" id="viewerContainer">
+                    <div id="viewer"></div>
+                    <img id="imageFallback" />
+                    <canvas id="drawingCanvas"></canvas>
+                    <div class="roi-info-overlay" id="roiInfo">Tryb ROI</div>
+                    <!-- 💡 Suggestions Fan - Wachlarz podpowiedzi -->
+                    <div id="suggestionsWachlarz" style="position: absolute; z-index: 200; pointer-events: none; display: none;"></div>
+                    <div class="rotate-controls">
+                        <button class="rotate-btn" onclick="rotateImage(-90)" title="Obróć w lewo">
+                            <i class="fas fa-undo-alt"></i>
+                        </button>
+                        <button class="rotate-btn" onclick="rotateImage(90)" title="Obróć w prawo">
+                            <i class="fas fa-redo-alt"></i>
+                        </button>
+                    </div>
+                    <div class="floating-form" id="floatingForm">
+                        <div class="floating-form-header">
+                            <span id="floatingTitle">Akt <span id="floatingActNum">1</span></span>
+                            <button class="floating-form-close" onclick="toggleFloatingForm(false)"><i class="fas fa-times"></i></button>
+                        </div>
+                        <div class="floating-form-content" id="floatingFormContent"></div>
+                        <div class="floating-form-actions">
+                            <button class="form-btn" onclick="saveRecord(); toggleFloatingForm(false)" style="flex: 1;"><i class="fas fa-save"></i> Zapisz</button>
+                            <button class="form-btn" onclick="toggleFloatingForm(false)" style="flex: 1; background: #3a3a3a; color: #ddd;">Anuluj</button>
+                        </div>
+                    </div>
+                    <div id="fieldPinupsContainer"></div>
+                    <div class="wizard-prompt" id="wizardPrompt">
+                        <span id="wizardMessage">Zaznacz ROI dla: Imię dziecka</span>
+                        <button onclick="skipCurrentField()"><i class="fas fa-forward"></i> Pomiń</button>
+                    </div>
+                    <div class="wizard-progress" id="wizardProgress">
+                        <div>Wizard: <span id="wizardStep">1</span>/<span id="wizardTotal">5</span></div>
+                        <div class="wizard-progress-bar">
+                            <div class="wizard-progress-fill" id="wizardProgressFill" style="width: 0%"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="right-panel" id="rightPanel">
+                <div class="panel-content">
+                    <div id="formsContainer"></div>
+                </div>
+            </div>
+        </div>
+        <div class="thumbnails-bar" id="thumbsBar"></div>
+        
+        <!-- Postprocessing Panel -->
+        <div class="postprocess-panel" id="postprocessPanel">
+            <div class="postprocess-title">🎨 Postprocessing</div>
+            
+            <!-- CORE FILTERS -->
+            <div class="postprocess-slider">
+                <label>Poziomy (cień/światło)</label>
+                <input type="range" id="contrastSlider" min="-100" max="100" value="0" step="5">
+                <div class="postprocess-value" id="contrastValue">0</div>
+            </div>
+            
+            <div class="postprocess-slider">
+                <label>Dla starych aktów</label>
+                <input type="range" id="brightnessSlider" min="0" max="100" value="0" step="5">
+                <div class="postprocess-value" id="brightnessValue">0%</div>
+            </div>
+            
+            <div class="postprocess-slider">
+                <label>Usuwanie sitowia</label>
+                <input type="range" id="sharpenSlider" min="0" max="100" value="0" step="5">
+                <div class="postprocess-value" id="sharpenValue">0%</div>
+            </div>
+            
+            <div class="postprocess-slider" style="flex-direction: row; align-items: center;">
+                <label style="flex: 1;">Auto-kontrast</label>
+                <input type="checkbox" id="saturationSlider" style="width: 20px; height: 20px; cursor: pointer;">
+                <div class="postprocess-value" id="saturationValue" style="flex: 0;">OFF</div>
+            </div>
+            
+            <!-- ADVANCED FILTERS -->
+            <div style="margin-top: 15px; padding-top: 10px; border-top: 1px solid rgba(255,255,255,0.1);">
+                <div style="font-size: 9px; text-transform: uppercase; color: #0078d4; margin-bottom: 10px;">Filtry zaawansowane</div>
+                
+                <div class="postprocess-slider">
+                    <label>Żółty/Sepia</label>
+                    <input type="range" id="sepiaSlider" min="0" max="100" value="0" step="5">
+                    <div class="postprocess-value" id="sepiaValue">0%</div>
+                </div>
+                
+                <div class="postprocess-slider">
+                    <label>Odcień (Hue)</label>
+                    <input type="range" id="hueSlider" min="-180" max="180" value="0" step="5">
+                    <div class="postprocess-value" id="hueValue">0°</div>
+                </div>
+                
+                <div class="postprocess-slider">
+                    <label>Nasycenie</label>
+                    <input type="range" id="saturSlider" min="0" max="200" value="100" step="5">
+                    <div class="postprocess-value" id="saturValue">100%</div>
+                </div>
+                
+                <div class="postprocess-slider">
+                    <label>Inwersja (odwrócenie)</label>
+                    <input type="range" id="invertSlider" min="0" max="100" value="0" step="5">
+                    <div class="postprocess-value" id="invertValue">0%</div>
+                </div>
+            </div>
+            
+            <!-- OPENCV ADVANCED FILTERS -->
+            <div style="margin-top: 15px; padding-top: 10px; border-top: 1px solid rgba(255,255,255,0.1);">
+                <div style="font-size: 9px; text-transform: uppercase; color: #10b981; margin-bottom: 10px;">🔬 Filtry OpenCV (zaawansowane)</div>
+                
+                <div class="postprocess-slider">
+                    <label>Adaptive Threshold</label>
+                    <input type="range" id="adaptiveThresholdSlider" min="0" max="100" value="0" step="5">
+                    <div class="postprocess-value" id="adaptiveThresholdValue">OFF</div>
+                </div>
+                
+                <div class="postprocess-slider">
+                    <label>Gaussian Blur (denoise)</label>
+                    <input type="range" id="gaussianBlurSlider" min="0" max="10" value="0" step="1">
+                    <div class="postprocess-value" id="gaussianBlurValue">0</div>
+                </div>
+                
+                <div class="postprocess-slider">
+                    <label>Median Filter (denoise)</label>
+                    <input type="range" id="medianBlurSlider" min="0" max="10" value="0" step="1">
+                    <div class="postprocess-value" id="medianBlurValue">0</div>
+                </div>
+                
+                <div class="postprocess-slider" style="flex-direction: row; align-items: center;">
+                    <label style="flex: 1;">Histogram Equalization</label>
+                    <input type="checkbox" id="histogramEqCheckbox" style="width: 20px; height: 20px; cursor: pointer;">
+                    <div class="postprocess-value" id="histogramEqValue" style="flex: 0;">OFF</div>
+                </div>
+            </div>
+            
+            <div class="postprocess-buttons">
+                <button class="postprocess-btn" onclick="saveProcessedAsNew()" style="grid-column: span 2;">💾 Zapisz przetworzony</button>
+                <button class="postprocess-btn reset" onclick="resetPostprocessing()">↻ Reset</button>
+            </div>
+        </div>
+    </div>
+    <input type="file" id="fileInput" multiple accept="image/*" style="display: none;">
+    <script>
+        const app = {
+            images: [],
+            imageActs: [],
+            currentImageIdx: 0,
+            currentActNum: null,
+            currentTemplate: null,
+            templates: [],
+            viewer: null,
+            roiMode: false,
+            actMode: false,
+            drawingCanvas: null,
+            drawingCtx: null,
+            activeField: null,
+            drawingROI: false,
+            roiStartX: 0,
+            roiStartY: 0,
+            roiOverlays: [],
+            wizardActive: false,
+            wizardCurrentFieldIdx: 0,
+            wizardFields: []
+        };
+        
+        document.addEventListener('DOMContentLoaded', async () => {
+            console.log('📍 DOMContentLoaded start');
+            
+            // Clear old oversized data from localStorage
+            try {
+                const oldData = localStorage.getItem('genealog_data');
+                if (oldData && oldData.length > 1000000) {
+                    console.log('🧹 Clearing oversized localStorage data');
+                    localStorage.removeItem('genealog_data');
+                }
+            } catch(e) {}
+            
+            loadFallbackTemplates();
+            console.log('📍 Templates loaded:', app.templates.length);
+            await initViewer();
+            console.log('📍 Viewer initialized');
+            setupDrawingCanvas();
+            console.log('📍 Canvas setup complete');
+            setupEvents();
+            console.log('📍 Events setup complete');
+            loadStorage();
+            console.log('📍 Storage loaded, images:', app.images.length);
+            renderUI();
+            console.log('📍 UI rendered');
+            setupPostprocessSliders();
+            console.log('📍 Postprocess sliders setup');
+            notify('v7.0 gotowy!', 'success');
+        });
+        
+        function loadFallbackTemplates() {
+            app.templates = [
+                {
+                    id: "birth",
+                    name: "Akt Urodzenia",
+                    sections: [
+                        {
+                            id: "basic",
+                            title: "<i class='fas fa-info-circle'></i> Podstawowe",
+                            expanded: true,
+                            fields: [
+                                {id: "child_first_name", label: "Imię dziecka", type: "text"},
+                                {id: "child_last_name", label: "Nazwisko dziecka", type: "text"}
+                            ]
+                        },
+                        {
+                            id: "parents",
+                            title: "<i class='fas fa-users'></i> Rodzice",
+                            expanded: false,
+                            fields: [
+                                {id: "father_name", label: "Ojciec", type: "text"},
+                                {id: "mother_name", label: "Matka", type: "text"}
+                            ]
+                        }
+                    ]
+                },
+                {
+                    id: "marriage",
+                    name: "Akt Małżeństwa",
+                    sections: [
+                        {
+                            id: "basic",
+                            title: "<i class='fas fa-info-circle'></i> Podstawowe",
+                            expanded: true,
+                            fields: [
+                                {id: "groom_first_name", label: "Imię pana młodego", type: "text"},
+                                {id: "groom_last_name", label: "Nazwisko pana młodego", type: "text"},
+                                {id: "bride_first_name", label: "Imię panny młodej", type: "text"},
+                                {id: "bride_last_name", label: "Nazwisko panny młodej (przed)", type: "text"}
+                            ]
+                        },
+                        {
+                            id: "parents",
+                            title: "<i class='fas fa-users'></i> Rodzice",
+                            expanded: false,
+                            fields: [
+                                {id: "groom_father", label: "Ojciec pana młodego", type: "text"},
+                                {id: "groom_mother", label: "Matka pana młodego", type: "text"},
+                                {id: "bride_father", label: "Ojciec panny młodej", type: "text"},
+                                {id: "bride_mother", label: "Matka panny młodej", type: "text"}
+                            ]
+                        }
+                    ]
+                },
+                {
+                    id: "death",
+                    name: "Akt Zgonu",
+                    sections: [
+                        {
+                            id: "basic",
+                            title: "<i class='fas fa-info-circle'></i> Podstawowe",
+                            expanded: true,
+                            fields: [
+                                {id: "deceased_first_name", label: "Imię zmarłego", type: "text"},
+                                {id: "deceased_last_name", label: "Nazwisko zmarłego", type: "text"},
+                                {id: "age", label: "Wiek", type: "text"},
+                                {id: "death_place", label: "Miejsce zgonu", type: "text"}
+                            ]
+                        },
+                        {
+                            id: "family",
+                            title: "<i class='fas fa-users'></i> Rodzina",
+                            expanded: false,
+                            fields: [
+                                {id: "spouse", label: "Małżonek/małżonka", type: "text"},
+                                {id: "father", label: "Ojciec", type: "text"},
+                                {id: "mother", label: "Matka", type: "text"}
+                            ]
+                        }
+                    ]
+                }
+            ];
+            app.currentTemplate = "birth";
+        }
+        
+        function renderFormSections() {
+            const container = document.getElementById('formsContainer');
+            container.innerHTML = '';
+            
+            // Dodaj przełącznik typu aktu
+            const templateSwitcher = document.createElement('div');
+            templateSwitcher.style.cssText = 'padding: 12px; border-bottom: 1px solid #2a2a2a; display: flex; gap: 6px; flex-wrap: wrap;';
+            
+            app.templates.forEach(t => {
+                const btn = document.createElement('button');
+                btn.className = 'toolbar-btn';
+                btn.textContent = t.name;
+                if (t.id === app.currentTemplate) {
+                    btn.classList.add('active');
+                }
+                btn.onclick = () => {
+                    app.currentTemplate = t.id;
+                    clearForm();
+                    renderFormSections();
+                    renderActButtons();
+                };
+                templateSwitcher.appendChild(btn);
+            });
+            
+            container.appendChild(templateSwitcher);
+            
+            app.templates.forEach((template) => {
+                const section = document.createElement('div');
+                section.id = `form-${template.id}`;
+                section.className = `form-section ${template.id === app.currentTemplate ? 'active' : ''}`;
+                
+                const header = document.createElement('div');
+                header.className = 'form-header';
+                header.innerHTML = `<h3>${template.name}</h3><div class="record-counter" id="recordCounter">Akty: 0</div>`;
+                section.appendChild(header);
+                
+                if (template.sections) {
+                    template.sections.forEach(sectionDef => {
+                        const item = document.createElement('div');
+                        item.className = 'accordion-item';
+                        
+                        const headerBtn = document.createElement('button');
+                        headerBtn.className = `accordion-header ${sectionDef.expanded ? 'active' : ''}`;
+                        headerBtn.innerHTML = sectionDef.title;
+                        
+                        const contentDiv = document.createElement('div');
+                        contentDiv.className = `accordion-content ${sectionDef.expanded ? 'active' : ''}`;
+                        
+                        headerBtn.onclick = () => {
+                            headerBtn.classList.toggle('active');
+                            contentDiv.classList.toggle('active');
+                        };
+                        
+                        sectionDef.fields.forEach(field => {
+                            const group = document.createElement('div');
+                            group.className = 'form-group';
+                            const label = document.createElement('label');
+                            label.textContent = field.label;
+                            const input = document.createElement('input');
+                            input.type = field.type || 'text';
+                            input.className = 'field-input';
+                            input.dataset.field = field.id;
+                            input.placeholder = field.label;
+                            group.appendChild(label);
+                            group.appendChild(input);
+                            contentDiv.appendChild(group);
+                        });
+                        
+                        item.appendChild(headerBtn);
+                        item.appendChild(contentDiv);
+                        section.appendChild(item);
+                    });
+                }
+                
+                const actions = document.createElement('div');
+                actions.className = 'form-actions';
+                actions.innerHTML = `
+                    <button class="form-btn" onclick="saveRecord()"><i class="fas fa-save"></i> Zapisz (S)</button>
+                    <button class="form-btn danger" onclick="deleteCurrentRecord()"><i class="fas fa-trash-alt"></i> Usuń (D)</button>
+                    <button class="form-btn" onclick="copyPreviousActEnhanced()" style="grid-column: span 2;"><i class="fas fa-copy"></i> Duplikuj (C)</button>
+                `;
+                section.appendChild(actions);
+                
+                container.appendChild(section);
+            });
+            
+            setupFormEvents();
+        }
+        
+        function setupFormEvents() {
+            const container = document.getElementById('formsContainer');
+            container.replaceWith(container.cloneNode(true));
+            const newContainer = document.getElementById('formsContainer');
+            
+            newContainer.addEventListener('focusin', (e) => {
+                if (e.target.classList.contains('field-input')) {
+                    app.activeField = e.target;
+                    redrawROIs();
+                    updateFieldStatus();  // 🟢 Update colors when field gets focus
+                    updateProgressBar();  // ⭐ Update progress on focus change
+                    
+                    // ⭐ Auto-zoom to ROI field if exists
+                    const act = getCurrentAct();
+                    if (act && act.fieldROIs) {
+                        const fieldId = e.target.dataset.field;
+                        const roi = act.fieldROIs[fieldId];
+                        if (roi) {
+                            zoomToROI(roi);  // ✨ Use new zoomToROI function
+                            console.log('🔍 AUTO-ZOOM to field ROI:', fieldId);
+                        }
+                    }
+                }
+            });
+            
+            // ⌨️ P0: TAB NAVIGATION - Tab/Shift+Tab moves between fields
+            newContainer.addEventListener('keydown', (e) => {
+                if (!e.target.classList.contains('field-input')) return;
+                
+                if (e.key === 'Tab') {
+                    e.preventDefault();
+                    
+                    // Get all visible inputs
+                    const activeForm = document.querySelector('.form-section.active');
+                    if (!activeForm) return;
+                    
+                    const inputs = Array.from(activeForm.querySelectorAll('.field-input'));
+                    const currentIdx = inputs.indexOf(e.target);
+                    
+                    let nextIdx;
+                    if (e.shiftKey) {
+                        // Shift+Tab: go to previous field
+                        nextIdx = currentIdx > 0 ? currentIdx - 1 : inputs.length - 1;
+                    } else {
+                        // Tab: go to next field
+                        nextIdx = currentIdx < inputs.length - 1 ? currentIdx + 1 : 0;
+                    }
+                    
+                    inputs[nextIdx]?.focus();
+                    console.log('⌨️ Tab navigation:', e.shiftKey ? '⬆️ prev' : '⬇️ next', `(${nextIdx + 1}/${inputs.length})`);
+                }
+                
+                // ⌨️ P0: ENTER KEY - Save record and clear
+                if (e.key === 'Enter') {
+                    e.preventDefault();
+                    saveRecord();
+                    console.log('✅ Record saved, Enter pressed');
+                    clearForm();
+                    // Auto-focus first field for next record
+                    const activeForm = document.querySelector('.form-section.active');
+                    const firstInput = activeForm?.querySelector('.field-input');
+                    if (firstInput) firstInput.focus();
+                }
+                
+                // 🟢 P0: Update field color after any input
+                updateFieldStatus();
+            });
+            
+            // 🟢 P0: Live color update on input change
+            newContainer.addEventListener('input', (e) => {
+                if (!e.target.classList.contains('field-input')) return;
+                updateFieldStatus();
+                updateProgressBar();
+                
+                // 💡 A: Show suggestions fan when typing
+                showSuggestionsForField(e.target);
+            });  // ⭐ Update progress on every keystroke
+        }
+        
+        // ⭐ P0: Update Progress Bar - Show N/M fields complete
+        function updateProgressBar() {
+            const activeForm = document.querySelector('.form-section.active');
+            if (!activeForm) return;
+            
+            const inputs = activeForm.querySelectorAll('.field-input');
+            const completed = Array.from(inputs).filter(input => 
+                input.value?.trim().length > 0
+            ).length;
+            
+            const total = inputs.length;
+            const percent = total > 0 ? (completed / total) * 100 : 0;
+            
+            document.getElementById('progressFill').style.width = percent + '%';
+            document.getElementById('progressText').textContent = `${completed}/${total}`;
+            
+            console.log(`📊 Progress: ${completed}/${total} (${percent.toFixed(0)}%)`);
+        }
+        
+        // TASK #2: Search Handler - Filter acts by field values
+        function setupSearchInput() {
+            const searchInput = document.getElementById('searchInput');
+            if (!searchInput) return;
+            
+            searchInput.addEventListener('input', (e) => {
+                const query = e.target.value.toLowerCase().trim();
+                
+                if (!query) {
+                    // Reset: show all act buttons
+                    renderActButtons();
+                    return;
+                }
+                
+                // Filter acts on current image by field values
+                const currentImageActs = app.imageActs.filter(a => a.imageIdx === app.currentImageIdx);
+                const filtered = currentImageActs.filter(act => {
+                    return Object.values(act.fieldValues || {}).some(val =>
+                        val?.toString().toLowerCase().includes(query)
+                    );
+                });
+                
+                // Highlight matching acts
+                const actBtns = document.querySelectorAll('.act-btn');
+                actBtns.forEach(btn => {
+                    const actNum = parseInt(btn.dataset.actNum);
+                    const isMatched = filtered.some(a => a.actNum === actNum);
+                    btn.style.opacity = isMatched ? '1' : '0.4';
+                    btn.style.borderColor = isMatched ? '#0078d4' : '#3a3a3a';
+                });
+                
+                console.log(`🔍 Search: znaleźliśmy ${filtered.length}/${currentImageActs.length} aktów`);
+            });
+        }
+        
+        // TASK #3: JSON Import - Load records from file
+        function importJSON() {
+            const input = document.createElement('input');
+            input.type = 'file';
+            input.accept = '.json';
+            input.onchange = (e) => {
+                const file = e.target.files[0];
+                if (!file) return;
+                
+                const reader = new FileReader();
+                reader.onload = (ev) => {
+                    try {
+                        const data = JSON.parse(ev.target.result);
+                        
+                        // Validate structure
+                        if (!Array.isArray(data.imageActs)) throw new Error('Brak imageActs array');
+                        
+                        // Import
+                        app.imageActs = data.imageActs || [];
+                        app.images = data.images || app.images; // Keep existing images if not in file
+                        
+                        saveStorage();
+                        renderActButtons();
+                        loadActToForm(getCurrentAct());
+                        updateProgressBar();
+                        
+                        const count = app.imageActs.length;
+                        notify(`✅ Importowano ${count} aktów z JSON`, 'success');
+                        console.log('📥 JSON Import: SUCCESS', data);
+                    } catch (err) {
+                        notify(`❌ Błąd importu JSON: ${err.message}`, 'error');
+                        console.error('❌ JSON Import ERROR:', err);
+                    }
+                };
+                reader.readAsText(file);
+            };
+            input.click();
+        }
+        
+        // TASK #4: Tab Navigation - Enhanced with Shift+Tab
+        function setupTabNavigation() {
+            document.addEventListener('keydown', (e) => {
+                // Tab = next field, Shift+Tab = prev field
+                if (e.key === 'Tab') {
+                    const activeForm = document.querySelector('.form-section.active');
+                    if (!activeForm) return;
+                    
+                    const inputs = Array.from(activeForm.querySelectorAll('.field-input'));
+                    const currentIdx = inputs.indexOf(document.activeElement);
+                    
+                    if (currentIdx === -1) return;
+                    
+                    let nextIdx = e.shiftKey ? currentIdx - 1 : currentIdx + 1;
+                    
+                    // Wrap around
+                    if (nextIdx < 0) nextIdx = inputs.length - 1;
+                    if (nextIdx >= inputs.length) nextIdx = 0;
+                    
+                    e.preventDefault();
+                    inputs[nextIdx].focus();
+                    inputs[nextIdx].select?.();
+                    
+                    console.log(`⌨️ Tab: field ${nextIdx + 1}/${inputs.length}`);
+                }
+            });
+        }
+        
+        // 🟢 P0: Color-Coded Fields - Update visual status of all fields
+        function updateFieldStatus() {
+            const activeForm = document.querySelector('.form-section.active');
+            if (!activeForm) return;
+            
+            const act = getCurrentAct();
+            const inputs = activeForm.querySelectorAll('.field-input');
+            
+            inputs.forEach(input => {
+                const fieldId = input.dataset.field;
+                const hasValue = input.value?.trim().length > 0;
+                const hasROI = act?.fieldROIs?.[fieldId];
+                
+                // Remove all status classes
+                input.classList.remove('field-complete', 'field-roi-only', 'field-empty');
+                
+                // Assign new status
+                if (hasValue) {
+                    input.classList.add('field-complete');  // 🟢 Green
+                } else if (hasROI) {
+                    input.classList.add('field-roi-only');  // 🟡 Yellow
+                } else {
+                    input.classList.add('field-empty');     // 🔴 Red
+                }
+            });
+        }
+        
+        // ⭐ P0: AUTO-ZOOM TO ROI/ACT
+        function zoomToROI(roi) {
+            if (!app.viewer || !roi) return;
+            const item = app.viewer.world.getItemAt(0);
+            if (!item) return;
+            const itemSize = item.getContentSize();
+            const rect = new OpenSeadragon.Rect(
+                roi.x * itemSize.x,
+                roi.y * itemSize.y,
+                roi.w * itemSize.x,
+                roi.h * itemSize.y
+            );
+            const viewportRect = app.viewer.viewport.imageToViewportRectangle(rect);
+            app.viewer.viewport.fitBounds(viewportRect, true);
+            console.log('🔍 AUTO-ZOOM to ROI:', { x: roi.x.toFixed(2), y: roi.y.toFixed(2), w: roi.w.toFixed(2), h: roi.h.toFixed(2) });
+        }
+        
+        function initViewer() {
+            return new Promise((resolve) => {
+                console.log('📍 Creating OpenSeadragon instance...');
+                app.viewer = OpenSeadragon({
+                    id: 'viewer',
+                    prefixUrl: 'https://openseadragon.github.io/openseadragon/images/',
+
+                    // Kontrolki OSD
+                    showNavigationControl: true,
+                    showZoomControl: true,
+                    showHomeControl: true,
+                    showFullPageControl: true,
+                    showRotationControl: true,
+
+                    // Gesty myszą
+                    gestureSettingsMouse: {
+                        scrollToZoom: true,
+                        dragToPan: true,
+                        clickToZoom: true,
+                        dblClickToZoom: false,
+                        flickEnabled: false
+                    },
+
+                    // Zoom
+                    minZoomLevel: 0.5,
+                    maxZoomLevel: 20,
+                    
+                    // Rotacja
+                    rotationIncrement: 90,
+
+                    // Kontrolki UI - wbudowane przyciski OSD (prawy górny róg)
+                    navigationControlAnchor: OpenSeadragon.ControlAnchor.TOP_RIGHT,
+                    showNavigationControl: true,
+                    showZoomControl: true,
+                    showHomeControl: true,
+                    showFullPageControl: false,
+                    showRotationControl: true
+                });
+
+                console.log('📍 OpenSeadragon instance created, viewer:', !!app.viewer);
+                resolve();
+            });
+        }
+        
+        function setupDrawingCanvas() {
+            app.drawingCanvas = document.getElementById('drawingCanvas');
+            app.drawingCtx = app.drawingCanvas.getContext('2d');
+            const container = document.querySelector('.viewer-container');
+            
+            const resize = () => {
+                app.drawingCanvas.width = container.offsetWidth;
+                app.drawingCanvas.height = container.offsetHeight;
+            };
+            resize();
+            window.addEventListener('resize', resize);
+            
+            // Funkcja do aktualizacji pointer-events
+            const updateCanvasInteraction = () => {
+                if (app.roiMode || app.actMode) {
+                    app.drawingCanvas.style.pointerEvents = 'auto';
+                    app.drawingCanvas.style.cursor = 'crosshair';
+                } else {
+                    app.drawingCanvas.style.pointerEvents = 'none';
+                    app.drawingCanvas.style.cursor = 'default';
+                }
+            };
+            
+            updateCanvasInteraction();
+            
+            app.drawingCanvas.addEventListener('mousedown', (e) => {
+                if (!app.roiMode && !app.actMode) return;
+                if (app.roiMode && !app.activeField) { notify('Zaznacz pole w formularzu', 'error'); return; }
+                if (!app.currentActNum) { notify('Zaznacz akt przed rysowaniem', 'error'); return; }
+                
+                e.preventDefault();
+                app.drawingROI = true;
+                app.roiStartX = e.offsetX;
+                app.roiStartY = e.offsetY;
+                updateCanvasInteraction();
+            });
+            
+            app.drawingCanvas.addEventListener('mousemove', (e) => {
+                if (!app.drawingROI) return;
+                app.drawingCtx.clearRect(0, 0, app.drawingCanvas.width, app.drawingCanvas.height);
+                redrawROIs();
+                
+                let x = app.roiStartX, y = app.roiStartY, w = e.offsetX - x, h = e.offsetY - y;
+                if (w < 0) { x += w; w = -w; }
+                if (h < 0) { y += h; h = -h; }
+                
+                app.drawingCtx.strokeStyle = app.roiMode ? '#0078d4' : '#10b981';
+                app.drawingCtx.fillStyle = app.roiMode ? 'rgba(0,120,212,0.15)' : 'rgba(16,185,129,0.1)';
+                app.drawingCtx.setLineDash([5, 5]);
+                app.drawingCtx.strokeRect(x, y, w, h);
+                app.drawingCtx.fillRect(x, y, w, h);
+                app.drawingCtx.setLineDash([]);
+            });
+            
+            app.drawingCanvas.addEventListener('mouseup', (e) => {
+                if (!app.drawingROI) return;
+                app.drawingROI = false;
+                updateCanvasInteraction();
+                
+                let x = Math.min(app.roiStartX, e.offsetX);
+                let y = Math.min(app.roiStartY, e.offsetY);
+                let w = Math.abs(e.offsetX - app.roiStartX);
+                let h = Math.abs(e.offsetY - app.roiStartY);
+                
+                if (w < 10 || h < 10) { app.drawingCtx.clearRect(0, 0, app.drawingCanvas.width, app.drawingCanvas.height); return; }
+                
+                const roi = screenToImageRect(x, y, w, h);
+                if (!roi) return;
+                
+                const act = getCurrentAct();
+                if (!act) return;
+                
+                if (app.roiMode) {
+                    act.fieldROIs[app.activeField.dataset.field] = roi;
+                    app.activeField.classList.add('has-roi');
+                    notify('ROI zapisany', 'success');
+                } else if (app.actMode) {
+                    act.actROI = roi;
+                    notify('Granica aktu zapisana', 'success');
+                    
+                    // Wyłącz tryb rysowania i uruchom wizard
+                    toggleActMode();
+                    setTimeout(() => startWizard(), 200);
+                }
+                
+                saveStorage();
+                app.drawingCtx.clearRect(0, 0, app.drawingCanvas.width, app.drawingCanvas.height);
+                setTimeout(redrawROIs, 50);
+            });
+            
+            app.drawingCanvas.addEventListener('mouseleave', () => {
+                if (app.drawingROI) {
+                    app.drawingROI = false;
+                    updateCanvasInteraction();
+                    app.drawingCtx.clearRect(0, 0, app.drawingCanvas.width, app.drawingCanvas.height);
+                }
+            });
+            
+            // Zapamiętaj funkcję aby mogła być wywołana z toggleROI/toggleActMode
+            app.updateCanvasInteraction = updateCanvasInteraction;
+        }
+        
+        function screenToImageRect(x, y, w, h) {
+            const viewer = app.viewer;
+            const item = viewer.world.getItemAt(0);
+            if (!item) return null;
+            
+            try {
+                const p1 = viewer.viewport.pointFromPixel(new OpenSeadragon.Point(x, y));
+                const p2 = viewer.viewport.pointFromPixel(new OpenSeadragon.Point(x + w, y + h));
+                const img1 = item.viewportToImageCoordinates(p1);
+                const img2 = item.viewportToImageCoordinates(p2);
+                const size = item.getContentSize();
+                
+                return {
+                    x: img1.x / size.x,
+                    y: img1.y / size.y,
+                    w: (img2.x - img1.x) / size.x,
+                    h: (img2.y - img1.y) / size.y
+                };
+            } catch (err) {
+                console.error('Błąd konwersji:', err);
+                return null;
+            }
+        }
+        
+        function redrawROIs() {
+            const viewer = app.viewer;
+            const item = viewer.world.getItemAt(0);
+            if (!item) return;
+            
+            app.roiOverlays.forEach(overlay => viewer.removeOverlay(overlay));
+            app.roiOverlays = [];
+            
+            const size = item.getContentSize();
+            const currentActs = app.imageActs.filter(a => a.imageIdx === app.currentImageIdx);
+            
+            currentActs.forEach(act => {
+                if (!act.actROI) return;
+                
+                const imgRect = new OpenSeadragon.Rect(
+                    act.actROI.x * size.x, act.actROI.y * size.y,
+                    act.actROI.w * size.x, act.actROI.h * size.y
+                );
+                const viewportRect = viewer.viewport.imageToViewportRectangle(imgRect);
+                
+                const div = document.createElement('div');
+                div.className = 'act-overlay';
+                div.style.border = '3px solid #10b981';
+                const label = document.createElement('div');
+                label.textContent = `Akt ${act.actNum}`;
+                label.style.cssText = 'color: white; font-size: 12px; font-weight: bold; padding: 6px; background: rgba(16,185,129,0.8);';
+                div.appendChild(label);
+                
+                viewer.addOverlay({ element: div, location: viewportRect });
+                app.roiOverlays.push(div);
+            });
+            
+            currentActs.forEach(act => {
+                if (!act.fieldROIs) return;
+                Object.entries(act.fieldROIs).forEach(([fieldId, roi]) => {
+                    const imgRect = new OpenSeadragon.Rect(
+                        roi.x * size.x, roi.y * size.y,
+                        roi.w * size.x, roi.h * size.y
+                    );
+                    const viewportRect = viewer.viewport.imageToViewportRectangle(imgRect);
+                    
+                    const div = document.createElement('div');
+                    div.className = 'roi-overlay';
+                    if (act.actNum === app.currentActNum && app.activeField?.dataset.field === fieldId) {
+                        div.classList.add('active');
+                    }
+                    const label = document.createElement('div');
+                    label.textContent = fieldId.substring(0, 15);
+                    label.style.cssText = 'color: white; font-size: 11px; padding: 4px; background: rgba(0,0,0,0.6);';
+                    div.appendChild(label);
+                    
+                    viewer.addOverlay({ element: div, location: viewportRect });
+                    app.roiOverlays.push(div);
+                });
+            });
+        }
+        
+        function setupEvents() {
+            document.getElementById('fileInput').addEventListener('change', (e) => {
+                handleFiles(e.target.files);
+            });
+            
+            const viewerContainer = document.getElementById('viewerContainer');
+            viewerContainer.addEventListener('dragover', (e) => { e.preventDefault(); viewerContainer.classList.add('drag-over'); });
+            viewerContainer.addEventListener('dragleave', () => { viewerContainer.classList.remove('drag-over'); });
+            viewerContainer.addEventListener('drop', (e) => {
+                e.preventDefault();
+                viewerContainer.classList.remove('drag-over');
+                handleFiles(e.dataTransfer.files);
+            });
+            
+            document.addEventListener('keydown', (e) => {
+                // ⭐ Arrow keys to navigate between acts
+                if (e.key === 'ArrowLeft' || e.key === 'ArrowRight') {
+                    const currentActs = app.imageActs.filter(a => a.imageIdx === app.currentImageIdx);
+                    if (currentActs.length === 0) return;
+                    
+                    const currentIdx = currentActs.findIndex(a => a.actNum === app.currentActNum);
+                    let nextIdx = currentIdx;
+                    
+                    if (e.key === 'ArrowLeft') nextIdx = Math.max(0, currentIdx - 1);
+                    if (e.key === 'ArrowRight') nextIdx = Math.min(currentActs.length - 1, currentIdx + 1);
+                    
+                    if (nextIdx !== currentIdx) {
+                        selectAct(currentActs[nextIdx].actNum);
+                        e.preventDefault();
+                    }
+                }
+                
+                if (e.ctrlKey || e.metaKey) {
+                    if (e.key === 'o') { e.preventDefault(); addImages(); }
+                    if (e.key === 'r') { e.preventDefault(); toggleROI(); }
+                    if (e.key === 'a') { e.preventDefault(); toggleActMode(); }
+                    // ⌨️ P0: Ctrl+N = New Record
+                    if (e.key === 'n') { 
+                        e.preventDefault(); 
+                        if (!app.currentImageIdx && app.currentImageIdx !== 0) {
+                            notify('❌ Najpierw dodaj obrazy', 'error');
+                            return;
+                        }
+                        showActCountModal();
+                        console.log('⌨️ Ctrl+N: New act');
+                    }
+                    // ⌨️ P0: Ctrl+S = Save Record
+                    if (e.key === 's') { 
+                        e.preventDefault(); 
+                        saveRecord();
+                        console.log('⌨️ Ctrl+S: Record saved');
+                    }
+                    // ⭐ P0: Ctrl+Shift+V = Copy Previous Record
+                    if (e.key === 'V' && e.shiftKey) {
+                        e.preventDefault();
+                        copyPreviousRecord();
+                        console.log('⌨️ Ctrl+Shift+V: Copy previous');
+                    }
+                }
+                
+                // Otwórz/zamknij duży floating formularz tylko po wciśnięciu Enter (gdy jest wybrany akt)
+                if (e.key === 'Enter' && app.currentActNum) {
+                    e.preventDefault();
+                    toggleFloatingForm();
+                }
+                
+                // ⭐ P0: Escape key - Close pinups / Close floating form
+                if (e.key === 'Escape') {
+                    const floatingForm = document.getElementById('floatingFormPanel');
+                    if (floatingForm?.style.display === 'block') {
+                        floatingForm.style.display = 'none';
+                        console.log('🔌 Escape: Floating form closed');
+                    } else if (app.pinupPositions && Object.keys(app.pinupPositions).length > 0) {
+                        clearPinups();
+                        console.log('🔌 Escape: All pinups cleared');
+                    }
+                }
+            });
+        }
+        
+        function saveRecord() {
+            if (app.currentActNum === null) {
+                notify('Zaznacz akt do zapisania', 'error');
+                return;
+            }
+            const act = getCurrentAct();
+            if (!act) return;
+
+            const form = document.querySelector(`#form-${app.currentTemplate}`);
+            if (!form) return;
+
+            const data = {};
+            form.querySelectorAll('.field-input').forEach(input => {
+                const value = input.value.trim();
+                if (value) {
+                    data[input.dataset.field] = value;
+                }
+            });
+
+            act.fieldValues = data;
+            act.timestamp = new Date().toISOString();
+
+            renderActButtons();
+            updateRecordCounter();
+            redrawROIs();
+            saveStorage();
+
+            notify('Akt zapisany', 'success');
+        }
+
+        // ⭐ P0: Copy Previous Record - Duplicate values from last record
+        function copyPreviousRecord() {
+            if (app.currentActNum === null) {
+                notify('❌ Zaznacz akt najpierw', 'error');
+                return;
+            }
+            
+            const currentActs = app.imageActs.filter(a => a.imageIdx === app.currentImageIdx);
+            const currentIdx = currentActs.findIndex(a => a.actNum === app.currentActNum);
+            
+            if (currentIdx === 0) {
+                notify('⚠️ Brak poprzedniego aktu do skopiowania', 'warning');
+                return;
+            }
+            
+            const previousAct = currentActs[currentIdx - 1];
+            const currentAct = getCurrentAct();
+            if (!currentAct) return;
+            
+            // Copy fieldValues from previous
+            currentAct.fieldValues = { ...previousAct.fieldValues };
+            
+            // Load into form
+            loadActToForm(currentAct);
+            saveStorage();
+            
+            notify(`✨ Skopiowano z Aktu ${previousAct.actNum}`, 'success');
+            console.log(`📋 COPY: Akt ${app.currentActNum} copied from Akt ${previousAct.actNum}`);
+        }
+
+        function deleteCurrentRecord() {
+            if (app.currentActNum === null) {
+                notify('Brak wybranego aktu do usunięcia', 'error');
+                return;
+            }
+
+            if (!confirm('Czy na pewno usunąć ten akt? Tej operacji nie można cofnąć.')) {
+                return;
+            }
+
+            app.imageActs = app.imageActs.filter(a => 
+                !(a.imageIdx === app.currentImageIdx && a.actNum === app.currentActNum)
+            );
+
+            const remainingActs = app.imageActs
+                .filter(a => a.imageIdx === app.currentImageIdx)
+                .sort((a, b) => a.actNum - b.actNum);
+
+            remainingActs.forEach((act, idx) => {
+                act.actNum = idx + 1;
+            });
+
+            app.currentActNum = null;
+            clearForm();
+            renderActButtons();
+            redrawROIs();
+            updateRecordCounter();
+            saveStorage();
+
+            notify('Akt usunięty', 'success');
+        }
+
+        function updateRecordCounter() {
+            const counter = document.getElementById('recordCounter');
+            if (!counter) return;
+
+            const totalActs = app.imageActs.filter(a => a.imageIdx === app.currentImageIdx).length;
+
+            if (app.currentActNum !== null) {
+                counter.textContent = `Akt: #${app.currentActNum} / ${totalActs}`;
+            } else {
+                counter.textContent = totalActs > 0 ? `Akty: ${totalActs}` : 'Brak aktów';
+            }
+        }
+
+        function renderActButtons() {
+            const sidebar = document.getElementById('recordsSidebar');
+
+            const oldButtons = document.getElementById('actsButtonsContainer');
+            if (oldButtons) oldButtons.remove();
+
+            const acts = app.imageActs
+                .filter(a => a.imageIdx === app.currentImageIdx)
+                .sort((a, b) => a.actNum - b.actNum);
+
+            if (acts.length === 0) return;
+
+            const container = document.createElement('div');
+            container.id = 'actsButtonsContainer';
+            container.style.cssText = `
+                display: flex;
+                flex-wrap: wrap;
+                gap: 8px;
+                padding: 12px;
+                border-bottom: 1px solid #2a2a2a;
+                justify-content: center;
+            `;
+
+            acts.forEach(act => {
+                const btn = document.createElement('button');
+                btn.textContent = `📄 Akt ${act.actNum}`;
+                btn.style.cssText = `
+                    width: 100%;
+                    padding: 12px 8px;
+                    margin-bottom: 8px;
+                    background: #0f0f0f;
+                    border: 2px solid #2a2a2a;
+                    border-radius: 8px;
+                    color: #ddd;
+                    font-size: 12px;
+                    font-weight: 600;
+                    cursor: pointer;
+                    transition: all 0.2s ease;
+                    box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+                `;
+                btn.onmouseover = () => {
+                    btn.style.borderColor = '#0078d4';
+                    btn.style.boxShadow = '0 4px 12px rgba(0,120,212,0.3)';
+                };
+                btn.onmouseout = () => {
+                    btn.style.borderColor = act.actNum === app.currentActNum ? '#10b981' : '#2a2a2a';
+                    btn.style.boxShadow = act.actNum === app.currentActNum ? '0 4px 12px rgba(16,185,129,0.3)' : '0 2px 8px rgba(0,0,0,0.3)';
+                };
+                if (act.actNum === app.currentActNum) {
+                    btn.style.borderColor = '#10b981';
+                    btn.style.background = '#0a1a0a';
+                    btn.style.boxShadow = '0 4px 12px rgba(16,185,129,0.3)';
+                }
+                btn.onclick = () => selectAct(act.actNum);
+                container.appendChild(btn);
+            });
+
+            const addBtn = document.createElement('button');
+            addBtn.innerHTML = '<i class="fas fa-plus"></i>';
+            addBtn.className = 'toolbar-btn';
+            addBtn.title = 'Dodaj nowy akt';
+            addBtn.onclick = () => {
+                const nextNum = acts.length + 1;
+                const newAct = {
+                    imageIdx: app.currentImageIdx,
+                    actNum: nextNum,
+                    fieldValues: {},
+                    fieldROIs: {},
+                    actROI: null,
+                    timestamp: new Date().toISOString()
+                };
+                app.imageActs.push(newAct);
+                saveStorage();
+                selectAct(nextNum);
+            };
+            container.appendChild(addBtn);
+
+            sidebar.insertBefore(container, sidebar.firstChild);
+        }
+
+        function getCurrentAct() {
+            if (app.currentActNum === null) return null;
+            return app.imageActs.find(a => 
+                a.imageIdx === app.currentImageIdx && a.actNum === app.currentActNum
+            );
+        }
+
+        function selectAct(actNum) {
+            const act = app.imageActs.find(a => 
+                a.imageIdx === app.currentImageIdx && a.actNum === actNum
+            );
+
+            if (!act) {
+                notify('Akt nie istnieje', 'error');
+                return;
+            }
+
+            clearPinups();
+            app.currentActNum = actNum;
+            loadActToForm(act);
+            renderActButtons();
+            updateRecordCounter();
+            redrawROIs();
+
+            if (act.actROI) {
+                zoomToAct(act.actROI);
+            }
+            
+            // Automatycznie otwórz pin-upy dla wszystkich pól z ROI w tym akcie
+            if (act.fieldROIs && Object.keys(act.fieldROIs).length > 0) {
+                setTimeout(() => {
+                    Object.keys(act.fieldROIs).forEach(fieldId => {
+                        createPinupForField(fieldId);
+                    });
+                }, 300);
+            }
+            
+            // E: Auto-focus pierwszy input w formularzu
+            focusFirstField();
+        }
+
+        function loadActToForm(act) {
+            clearForm();
+            const form = document.querySelector(`#form-${app.currentTemplate}`);
+            if (!form) return;
+
+            form.querySelectorAll('.field-input').forEach(input => {
+                const fieldId = input.dataset.field;
+                const value = act.fieldValues[fieldId] || '';
+                input.value = value;
+
+                if (act.fieldROIs && act.fieldROIs[fieldId]) {
+                    input.classList.add('has-roi');
+                } else {
+                    input.classList.remove('has-roi');
+                }
+            });
+            
+            updateFieldStatus();  // 🟢 Update colors when loading record
+            updateProgressBar();  // ⭐ Update progress when loading record
+            
+            // ⭐ Auto-zoom to act ROI if exists
+            if (act.actROI) {
+                setTimeout(() => zoomToROI(act.actROI), 100);
+            }
+            
+            // ⭐ Auto-focus first field
+            const formEl = document.querySelector(`#form-${app.currentTemplate}`);
+            const firstInput = formEl?.querySelector('.field-input');
+            if (firstInput) {
+                setTimeout(() => firstInput.focus(), 150);
+                console.log('🎯 Auto-focus: first field focused');
+            }
+            
+            // ⭐ Show summary notification
+            const filledFields = Object.keys(act.fieldValues).length;
+            const totalFields = formEl?.querySelectorAll('.field-input').length || 0;
+            const roiCount = Object.keys(act.fieldROIs || {}).length;
+            notify(`📋 Akt ${act.actNum} | ${filledFields}/${totalFields} pól | ${roiCount} ROI`, 'info');
+        }
+
+        function clearForm() {
+            const activeForm = document.querySelector('.form-section.active');
+            if (activeForm) {
+                activeForm.querySelectorAll('.field-input').forEach(input => {
+                    input.value = '';
+                    input.classList.remove('has-roi');
+                });
+            }
+            updateFieldStatus();  // 🟢 Update colors when clearing form
+            updateProgressBar();  // ⭐ Update progress when clearing form
+        }
+
+        function showActCountModal() {
+            document.getElementById('actCountModal').style.display = 'flex';
+            document.getElementById('actCountInput').focus();
+        }
+
+        function closeActModal() {
+            document.getElementById('actCountModal').style.display = 'none';
+        }
+
+        function createActsForImage() {
+            const input = document.getElementById('actCountInput');
+            const count = Math.max(1, parseInt(input.value) || 1);
+
+            closeActModal();
+
+            for (let i = 1; i <= count; i++) {
+                const act = {
+                    imageIdx: app.currentImageIdx,
+                    actNum: i,
+                    fieldValues: {},
+                    fieldROIs: {},
+                    actROI: null,
+                    timestamp: new Date().toISOString()
+                };
+                app.imageActs.push(act);
+            }
+
+            saveStorage();
+            renderActButtons();
+            selectAct(1);
+            updateRecordCounter();
+            notify(`Utworzono ${count} aktów`, 'success');
+        }
+
+        function exportData(type = 'full') {
+            if (app.imageActs.length === 0) {
+                notify('Brak aktów do eksportu', 'error');
+                return;
+            }
+
+            const csv = generateCSV(type);
+            const json = JSON.stringify(app.imageActs, null, 2);
+
+            const suffix = type === 'full' ? '_z_ROI' : '_prosty';
+            downloadFile(csv, `akty${suffix}.csv`, 'text/csv');
+            downloadFile(json, 'akty.json', 'application/json');
+
+            notify(`Eksportowano ${app.imageActs.length} aktów`, 'success');
+        }
+
+        function generateCSV(type = 'full') {
+            let lines = [];
+            const headers = ['Obraz', 'Akt', 'Typ', 'Data utworzenia'];
+            const allFields = new Set();
+
+            app.templates.forEach(t => {
+                t.sections?.forEach(s => {
+                    s.fields.forEach(f => allFields.add(f.label));
+                });
+            });
+
+            allFields.forEach(label => {
+                headers.push(label);
+                if (type === 'full') {
+                    headers.push(`ROI_${label}_X`);
+                    headers.push(`ROI_${label}_Y`);
+                    headers.push(`ROI_${label}_W`);
+                    headers.push(`ROI_${label}_H`);
+                }
+            });
+
+            if (type === 'full') {
+                headers.push('Act_ROI_X', 'Act_ROI_Y', 'Act_ROI_W', 'Act_ROI_H');
+            }
+
+            lines.push(headers.join(','));
+
+            app.imageActs.forEach(act => {
+                const image = app.images[act.imageIdx];
+                const imageName = image?.name || 'Nieznany';
+
+                const row = [
+                    imageName,
+                    act.actNum,
+                    app.currentTemplate,
+                    new Date(act.timestamp).toLocaleString('pl-PL')
+                ];
+
+                allFields.forEach(label => {
+                    const fieldId = [...app.templates.find(t => t.id === app.currentTemplate)?.sections || []]
+                        .flatMap(s => s.fields)
+                        .find(f => f.label === label)?.id || '';
+
+                    const value = act.fieldValues[fieldId] || '';
+                    row.push(value);
+
+                    if (type === 'full') {
+                        const roi = act.fieldROIs[fieldId];
+                        row.push(roi?.x || '');
+                        row.push(roi?.y || '');
+                        row.push(roi?.w || '');
+                        row.push(roi?.h || '');
+                    }
+                });
+
+                if (type === 'full') {
+                    const actROI = act.actROI;
+                    row.push(actROI?.x || '');
+                    row.push(actROI?.y || '');
+                    row.push(actROI?.w || '');
+                    row.push(actROI?.h || '');
+                }
+
+                lines.push(row.map(cell => `"${(cell + '').replace(/"/g, '""')}"`).join(','));
+            });
+
+            return '\uFEFF' + lines.join('\n');
+        }
+
+        function downloadFile(content, filename, type) {
+            const blob = new Blob([content], { type: type + ';charset=utf-8' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = filename;
+            a.click();
+            URL.revokeObjectURL(url);
+        }
+
+        function renderUI() {
+            renderFormSections();
+            renderActButtons();
+            updateRecordCounter();
+        }
+
+        function selectImage(idx) {
+            if (idx < 0 || idx >= app.images.length) return;
+
+            app.currentImageIdx = idx;
+            app.currentActNum = null;
+
+            updateThumbs();
+            updateImageCounter();
+
+            const actsOnImage = app.imageActs.filter(a => a.imageIdx === idx);
+
+            if (actsOnImage.length === 0) {
+                showActCountModal();
+            } else {
+                selectAct(actsOnImage[0].actNum);
+            }
+
+            if (app.images[idx]) {
+                const imageData = app.images[idx].data;
+                console.log('📸 Opening image:', app.images[idx].name);
+                
+                // Zawsze otwieraj przez OpenSeadragon (obsługuje zarówno URL jak i data URL)
+                if (app.viewer) {
+                    app.viewer.open({
+                        type: 'image',
+                        url: imageData
+                    });
+                    console.log('✅ Image loaded in OSD');
+                }
+                
+                // Ukryj fallback img (na wszelki wypadek)
+                document.getElementById('imageFallback').classList.remove('active');
+            }
+
+            redrawROIs();
+        }
+
+        function toggleROI() {
+            app.roiMode = !app.roiMode;
+            document.getElementById('roiBtn').classList.toggle('active', app.roiMode);
+            if (app.updateCanvasInteraction) app.updateCanvasInteraction();
+        }
+
+        function toggleActMode() {
+            app.actMode = !app.actMode;
+            document.getElementById('actBtn').classList.toggle('active', app.actMode);
+            if (app.updateCanvasInteraction) app.updateCanvasInteraction();
+        }
+
+        function zoomToAct(actROI) {
+            if (!actROI) return;
+            const item = app.viewer.world.getItemAt(0);
+            if (!item) return;
+            const itemSize = item.getContentSize();
+            const rect = new OpenSeadragon.Rect(
+                actROI.x * itemSize.x,
+                actROI.y * itemSize.y,
+                actROI.w * itemSize.x,
+                actROI.h * itemSize.y
+            );
+            const viewportRect = app.viewer.viewport.imageToViewportRectangle(rect);
+            app.viewer.viewport.fitBounds(viewportRect, true);
+        }
+
+        function rotateImage(degrees) {
+            if (!app.viewer) return;
+            const current = app.viewer.viewport.getRotation();
+            app.viewer.viewport.setRotation((current + degrees + 360) % 360);
+        }
+
+        function zoomReset() {
+            if (app.viewer && app.viewer.world.getItemAt(0)) {
+                app.viewer.viewport.fitBounds(app.viewer.world.getItemAt(0).getBounds());
+            }
+        }
+
+        function toggleFullscreen() {
+            if (!document.fullscreenElement) {
+                document.documentElement.requestFullscreen().catch(err => {
+                    notify(`Błąd fullscreen: ${err.message}`, 'error');
+                });
+            } else {
+                document.exitFullscreen();
+            }
+        }
+
+        function addImages() {
+            document.getElementById('fileInput').click();
+        }
+
+        function handleFiles(files) {
+            const imageFiles = Array.from(files).filter(f => f.type?.startsWith('image/'));
+            let loaded = 0;
+
+            imageFiles.forEach(file => {
+                const reader = new FileReader();
+                reader.onload = (e) => {
+                    app.images.push({
+                        name: file.name,
+                        path: file.webkitRelativePath || file.name,
+                        data: e.target.result
+                    });
+                    loaded++;
+                    updateThumbs();
+                    if (app.images.length === 1) selectImage(0);
+                    if (loaded === imageFiles.length) {
+                        notify(`Wczytano ${imageFiles.length} obraz(y)`, 'success');
+                    }
+                };
+                reader.readAsDataURL(file);
+            });
+        }
+
+        function updateThumbs() {
+            const bar = document.getElementById('thumbsBar');
+            bar.innerHTML = '';
+            app.images.forEach((img, i) => {
+                const div = document.createElement('div');
+                div.className = 'thumbnail' + (i === app.currentImageIdx ? ' active' : '');
+                div.onclick = () => selectImage(i);
+                const imgEl = document.createElement('img');
+                imgEl.src = img.data;
+                div.appendChild(imgEl);
+                bar.appendChild(div);
+            });
+            updateImageCounter();
+        }
+
+        function updateImageCounter() {
+            const counter = document.getElementById('imageCounter');
+            if (!counter || !app.images.length) return;
+            const current = app.currentImageIdx + 1;
+            const total = app.images.length;
+            counter.textContent = `${current}/${total} obrazów`;
+        }
+
+        function importCSV() {
+            const input = document.createElement('input');
+            input.type = 'file';
+            input.accept = '.csv,.json';
+            input.onchange = (e) => {
+                const file = e.target.files[0];
+                if (!file) return;
+                const reader = new FileReader();
+                reader.onload = (ev) => {
+                    try {
+                        const data = JSON.parse(ev.target.result);
+                        if (Array.isArray(data)) {
+                            app.imageActs = data;
+                            saveStorage();
+                            renderUI();
+                            notify(`Zaimportowano ${data.length} aktów`, 'success');
+                        }
+                    } catch (err) {
+                        notify(`Błąd importu: ${err.message}`, 'error');
+                    }
+                };
+                reader.readAsText(file);
+            };
+            input.click();
+        }
+
+        function notify(message, type = 'info') {
+            const notification = document.createElement('div');
+            notification.className = `notification ${type}`;
+            notification.textContent = message;
+            document.body.appendChild(notification);
+            setTimeout(() => notification.remove(), 3000);
+        }
+
+        function saveStorage() {
+            // Don't save images - they're too large and stay in RAM
+            // Only save acts and settings
+            localStorage.setItem('genealog_data', JSON.stringify({
+                imageActs: app.imageActs,
+                currentTemplate: app.currentTemplate
+            }));
+            console.log('💾 Storage saved (acts only, images kept in RAM)');
+        }
+
+        function loadStorage() {
+            const stored = localStorage.getItem('genealog_data');
+            if (stored) {
+                const data = JSON.parse(stored);
+                app.imageActs = data.imageActs || [];
+                app.currentTemplate = data.currentTemplate || 'birth';
+                console.log('📂 Loaded acts:', app.imageActs.length);
+                updateThumbs();
+                if (app.images.length > 0) selectImage(0);
+            }
+        }
+        
+        function toggleFloatingForm(show = null) {
+            const form = document.getElementById('floatingForm');
+            const current = form.classList.contains('visible');
+            const target = show === null ? !current : show;
+            
+            if (target) {
+                form.classList.add('visible');
+                document.getElementById('floatingActNum').textContent = app.currentActNum || '?';
+                renderFloatingForm();
+                positionFloatingFormNearAct();
+            } else {
+                form.classList.remove('visible');
+            }
+        }
+        
+        function renderFloatingForm() {
+            const content = document.getElementById('floatingFormContent');
+            content.innerHTML = '';
+            
+            const template = app.templates.find(t => t.id === app.currentTemplate);
+            if (!template || !app.currentActNum) return;
+            
+            const act = getCurrentAct();
+            if (!act) return;
+            
+            template.sections.forEach(sectionDef => {
+                const section = document.createElement('div');
+                section.style.marginBottom = '16px';
+                
+                const title = document.createElement('div');
+                title.innerHTML = sectionDef.title;
+                title.style.color = '#0078d4';
+                title.style.fontWeight = '600';
+                title.style.fontSize = '12px';
+                title.style.marginBottom = '8px';
+                section.appendChild(title);
+                
+                sectionDef.fields.forEach(field => {
+                    const group = document.createElement('div');
+                    group.className = 'form-group';
+                    group.style.marginBottom = '10px';
+                    
+                    const label = document.createElement('label');
+                    label.textContent = field.label;
+                    label.style.fontSize = '10px';
+                    
+                    const input = document.createElement('input');
+                    input.type = field.type || 'text';
+                    input.className = 'field-input';
+                    input.dataset.field = field.id;
+                    input.placeholder = field.label;
+                    input.value = act.fieldValues[field.id] || '';
+                    
+                    if (act.fieldROIs && act.fieldROIs[field.id]) {
+                        input.classList.add('has-roi');
+                    }
+                    
+                    group.appendChild(label);
+                    group.appendChild(input);
+                    section.appendChild(group);
+                });
+                
+                content.appendChild(section);
+            });
+            
+            // Focus na pierwsze pole
+            content.querySelector('.field-input')?.focus();
+        }
+        
+        function positionFloatingFormNearAct() {
+            const form = document.getElementById('floatingForm');
+            const act = getCurrentAct();
+            if (!act?.actROI || !app.viewer) {
+                form.style.top = '50px';
+                form.style.left = '50px';
+                return;
+            }
+            
+            const item = app.viewer.world.getItemAt(0);
+            if (!item) return;
+            
+            try {
+                const size = item.getContentSize();
+                const centerX = (act.actROI.x + act.actROI.w / 2) * size.x;
+                const centerY = (act.actROI.y + act.actROI.h / 2) * size.y;
+                
+                const point = item.imageToViewportCoordinates(centerX, centerY);
+                const pixel = app.viewer.viewport.viewportToViewerElementCoordinates(point);
+                
+                form.style.top = `${Math.max(20, pixel.y - 200)}px`;
+                form.style.left = `${Math.max(20, pixel.x + 20)}px`;
+            } catch (err) {
+                // Fallback do domyślnej pozycji
+                form.style.top = '50px';
+                form.style.left = '50px';
+            }
+        }
+        
+        function createPinupForField(fieldId) {
+            const act = getCurrentAct();
+            if (!act?.fieldROIs || !act.fieldROIs[fieldId]) return;
+
+            const roi = act.fieldROIs[fieldId];
+            const item = app.viewer.world.getItemAt(0);
+            if (!item) return;
+
+            try {
+                const size = item.getContentSize();
+                // Środek dolnej krawędzi ROI – najlepsze miejsce na pin-up
+                const centerX = (roi.x + roi.w / 2) * size.x;
+                const bottomY = (roi.y + roi.h) * size.y;
+
+                const point = item.imageToViewportCoordinates(centerX, bottomY);
+                const pixel = app.viewer.viewport.viewportToViewerElementCoordinates(point);
+
+                // Szukaj labela pola
+                let fieldLabel = fieldId;
+                const template = app.templates.find(t => t.id === app.currentTemplate);
+                if (template) {
+                    for (let sec of template.sections) {
+                        const f = sec.fields.find(fld => fld.id === fieldId);
+                        if (f) { fieldLabel = f.label; break; }
+                    }
+                }
+
+                const container = document.getElementById('fieldPinupsContainer');
+                let pinup = container.querySelector(`[data-field="${fieldId}"]`);
+                
+                if (pinup) {
+                    // Jeśli już istnieje – tylko przesuń i zaznacz
+                    pinup.style.top = `${pixel.y + 15}px`;
+                    pinup.style.left = `${Math.max(10, pixel.x - 130)}px`;
+                    pinup.querySelector('input').focus();
+                    pinup.querySelector('input').select();
+                    return;
+                }
+
+                pinup = document.createElement('div');
+                pinup.className = 'field-pinup';
+                pinup.dataset.field = fieldId;
+
+                // Pozycjonowanie: pod ROI, wyśrodkowany
+                pinup.style.top = `${pixel.y + 15}px`;
+                pinup.style.left = `${Math.max(10, pixel.x - 130)}px`;
+
+                pinup.innerHTML = `
+                    <div class="field-pinup-header">
+                        <span>${fieldLabel}</span>
+                        <div style="display:flex; gap:6px; align-items:center;">
+                            <button class="ocr-btn" title="OCR – spróbuj odczytać tekst z ROI" 
+                                    onclick="runOCRForPinup(this.closest('.field-pinup'))">
+                                <i class="fas fa-wand-magic-sparkles"></i>
+                            </button>
+                            <button class="field-pinup-close" onclick="this.closest('.field-pinup').remove()">&times;</button>
+                        </div>
+                    </div>
+                    <input type="text" 
+                           value="${(act.fieldValues[fieldId] || '').replace(/"/g, '&quot;')}" 
+                           placeholder="${fieldLabel}"
+                           data-field="${fieldId}"
+                           ${act.fieldROIs[fieldId] ? 'class="has-roi"' : ''}>
+                    <div class="ocr-suggestions" style="margin-top:6px; font-size:11px; color:#aaa; display:none;"></div>
+                `;
+
+                makeElementDraggable(pinup);
+
+                const input = pinup.querySelector('input');
+                input.addEventListener('input', (e) => {
+                    act.fieldValues[fieldId] = e.target.value.trim();
+                    saveStorage();
+
+                    // Aktualizuj pole w prawym panelu i floating form
+                    document.querySelectorAll(`.field-input[data-field="${fieldId}"]`).forEach(inp => {
+                        inp.value = e.target.value;
+                    });
+                });
+
+                input.addEventListener('keydown', (e) => {
+                    if (e.key === 'Enter') {
+                        e.preventDefault();
+                        notify('Zapisano', 'success');
+                    }
+                });
+
+                container.appendChild(pinup);
+                input.focus();
+                input.select(); // zaznacz całą treść
+            } catch (err) {
+                console.error('Błąd pin-up:', err);
+            }
+        }
+        
+        function makeElementDraggable(element) {
+            let offsetX = 0, offsetY = 0;
+            
+            element.addEventListener('mousedown', (e) => {
+                // Nie przeciągaj jeśli klikasz na input
+                if (e.target.tagName === 'INPUT') return;
+                
+                offsetX = e.clientX - element.offsetLeft;
+                offsetY = e.clientY - element.offsetTop;
+                
+                const moveFn = (moveEvent) => {
+                    element.style.left = `${moveEvent.clientX - offsetX}px`;
+                    element.style.top = `${moveEvent.clientY - offsetY}px`;
+                };
+                
+                const upFn = () => {
+                    document.removeEventListener('mousemove', moveFn);
+                    document.removeEventListener('mouseup', upFn);
+                };
+                
+                document.addEventListener('mousemove', moveFn);
+                document.addEventListener('mouseup', upFn);
+            });
+        }
+        
+        function clearPinups() {
+            const container = document.getElementById('fieldPinupsContainer');
+            container.innerHTML = '';
+        }
+        
+        function startWizard() {
+            if (!app.currentActNum || app.wizardActive) return;
+
+            const template = app.templates.find(t => t.id === app.currentTemplate);
+            if (!template) return;
+
+            // Zbierz wszystkie pola z szablonu
+            app.wizardFields = template.sections.flatMap(sec => sec.fields);
+            app.wizardCurrentFieldIdx = 0;
+            app.wizardActive = true;
+
+            // Pokaż progress bar
+            const progress = document.getElementById('wizardProgress');
+            progress.classList.add('visible');
+            document.getElementById('wizardTotal').textContent = app.wizardFields.length;
+
+            clearPinups();
+            processNextField();
+        }
+        
+        function processNextField() {
+            if (app.wizardCurrentFieldIdx >= app.wizardFields.length) {
+                endWizard();
+                return;
+            }
+
+            const field = app.wizardFields[app.wizardCurrentFieldIdx];
+            app.activeField = { dataset: { field: field.id } };
+
+            // Włącz tryb ROI jeśli wyłączony
+            if (!app.roiMode) toggleROI();
+
+            // Pokaż prompt
+            const prompt = document.getElementById('wizardPrompt');
+            document.getElementById('wizardMessage').textContent = `Zaznacz ROI dla: ${field.label}`;
+            prompt.classList.add('visible');
+
+            // Aktualizuj progress
+            document.getElementById('wizardStep').textContent = app.wizardCurrentFieldIdx + 1;
+            const progress = (app.wizardCurrentFieldIdx + 1) / app.wizardFields.length * 100;
+            document.getElementById('wizardProgressFill').style.width = `${progress}%`;
+
+            // Czekaj na zaznaczenie ROI - użyj addEventListener zamiast nadpisywania onmouseup
+            const waitForROI = (e) => {
+                if (app.drawingROI) return; // jeszcze rysuje
+
+                const act = getCurrentAct();
+                if (!act || !act.fieldROIs || !act.fieldROIs[field.id]) return;
+
+                // Usuń listener - już mamy ROI
+                app.drawingCanvas.removeEventListener('mouseup', waitForROI);
+
+                prompt.classList.remove('visible');
+
+                // Otwórz pin-up do wpisania danych
+                setTimeout(() => {
+                    createPinupForField(field.id);
+                    
+                    const pinupInput = document.querySelector(`.field-pinup[data-field="${field.id}"] input`);
+                    if (pinupInput) {
+                        // Przejdź do następnego pola po blur (opuszczeniu input)
+                        pinupInput.addEventListener('blur', () => {
+                            app.wizardCurrentFieldIdx++;
+                            processNextField();
+                        }, { once: true });
+                    }
+                }, 100);
+            };
+
+            // Dodaj listener dla tego pola
+            app.drawingCanvas.addEventListener('mouseup', waitForROI);
+        }
+        
+        function skipCurrentField() {
+            document.getElementById('wizardPrompt').classList.remove('visible');
+            app.wizardCurrentFieldIdx++;
+            processNextField();
+            notify('Pole pominięte', 'info');
+        }
+
+        function endWizard() {
+            app.wizardActive = false;
+            
+            // Wyłącz ROI i progress bar
+            if (app.roiMode) toggleROI();
+            document.getElementById('wizardPrompt').classList.remove('visible');
+            document.getElementById('wizardProgress').classList.remove('visible');
+            
+            saveRecord();
+            notify(`Wizard zakończony – ${app.wizardFields.length} pól zindeksowane!`, 'success');
+        }
+        
+        function showAllPinups() {
+            const act = getCurrentAct();
+            if (!act?.fieldROIs || Object.keys(act.fieldROIs).length === 0) {
+                notify('Brak pól z ROI', 'error');
+                return;
+            }
+
+            clearPinups();
+            Object.keys(act.fieldROIs).forEach(fieldId => {
+                createPinupForField(fieldId);
+            });
+            notify(`Otworzono ${Object.keys(act.fieldROIs).length} pin-upów`, 'success');
+        }
+
+        async function runOCRForPinup(pinupEl) {
+            const fieldId = pinupEl.dataset.field;
+            const act = getCurrentAct();
+            if (!act || !act.fieldROIs || !act.fieldROIs[fieldId]) {
+                notify('Brak ROI dla tego pola', 'error');
+                return;
+            }
+
+            const btn = pinupEl.querySelector('.ocr-btn');
+            const suggestionsDiv = pinupEl.querySelector('.ocr-suggestions');
+            btn.disabled = true;
+            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i>';
+            suggestionsDiv.style.display = 'none';
+            suggestionsDiv.innerHTML = '';
+
+            try {
+                // Ładujemy Tesseract tylko przy pierwszym użyciu
+                if (!window.tesseractWorker) {
+                    notify('Ładuję moduł OCR (tylko raz)...', 'info');
+                    const { createWorker } = Tesseract;
+                    const worker = await createWorker({
+                        workerPath: 'https://unpkg.com/tesseract.js@5.1.0/dist/worker.min.js',
+                        corePath: 'https://unpkg.com/tesseract.js-core@5.1.0/tesseract-core.wasm.js',
+                        langPath: 'https://tessdata.projectnaptha.com/4.0.0_best',
+                        logger: m => console.log('🔍 OCR:', m.progress)
+                    });
+                    await worker.load();
+                    await worker.loadLanguage('pol+eng');
+                    await worker.initialize('pol+eng');
+                    window.tesseractWorker = worker;
+                    notify('OCR gotowy!', 'success');
+                }
+
+                // Pobieramy fragment obrazu z ROI
+                const roi = act.fieldROIs[fieldId];
+                const item = app.viewer.world.getItemAt(0);
+                if (!item) throw new Error('Brak obrazu');
+
+                const canvas = document.createElement('canvas');
+                const size = item.getContentSize();
+                canvas.width = roi.w * size.x;
+                canvas.height = roi.h * size.y;
+
+                const ctx = canvas.getContext('2d');
+                const imageObj = new Image();
+                imageObj.src = app.images[app.currentImageIdx].data;
+                imageObj.crossOrigin = 'anonymous';
+
+                await new Promise(resolve => { imageObj.onload = resolve; });
+
+                ctx.drawImage(
+                    imageObj,
+                    roi.x * size.x, roi.y * size.y,
+                    roi.w * size.x, roi.h * size.y,
+                    0, 0, canvas.width, canvas.height
+                );
+
+                // OCR
+                const { data: { text, confidence } } = await window.tesseractWorker.recognize(canvas);
+                const cleanedText = text.trim().replace(/\s+/g, ' ');
+
+                if (cleanedText && confidence > 30) {
+                    suggestionsDiv.style.display = 'block';
+                    suggestionsDiv.innerHTML = `
+                        <div style="margin-bottom:4px; color:#10b981; font-weight:bold;">OCR (${Math.round(confidence)}%): <span>${cleanedText}</span></div>
+                        <button style="font-size:10px; padding:3px 8px; margin-right:4px; background:#10b981; color:white; border:none; border-radius:3px; cursor:pointer;" 
+                                onclick="applyOCRToField('${fieldId}', '${cleanedText.replace(/'/g, "\\'")}')">\u2713 Użyj</button>
+                        <button style="font-size:10px; padding:3px 8px; background:#3a3a3a; color:#ddd; border:none; border-radius:3px; cursor:pointer;" 
+                                onclick="this.parentElement.style.display='none'">\u2715 Zamknij</button>
+                    `;
+                } else {
+                    suggestionsDiv.style.display = 'block';
+                    suggestionsDiv.innerHTML = '<div style="color:#c42b1c;">\u26a0 OCR nie rozpoznał tekstu (za niskie zaufanie)</div>';
+                }
+
+            } catch (err) {
+                console.error('OCR Error:', err);
+                notify('Błąd OCR: ' + err.message, 'error');
+                suggestionsDiv.innerHTML = '<div style="color:#c42b1c;">❌ Błąd OCR</div>';
+                suggestionsDiv.style.display = 'block';
+            } finally {
+                btn.disabled = false;
+                btn.innerHTML = '<i class="fas fa-magic"></i>';
+            }
+        }
+
+        function applyOCRToField(fieldId, text) {
+            const act = getCurrentAct();
+            if (!act) return;
+
+            act.fieldValues[fieldId] = text;
+            saveStorage();
+
+            // Aktualizuj wszystkie inputy i pin-upy
+            document.querySelectorAll(`.field-input[data-field="${fieldId}"], .field-pinup[data-field="${fieldId}"] input`).forEach(inp => {
+                inp.value = text;
+            });
+
+            const suggestionsDiv = document.querySelector(`.field-pinup[data-field="${fieldId}"] .ocr-suggestions`);
+            if (suggestionsDiv) suggestionsDiv.style.display = 'none';
+
+            notify('\u2713 OCR zastosowany', 'success');
+        }
+        
+        // ===== POSTPROCESSING SYSTEM =====
+        // ===== POSTPROCESSING SYSTEM - Genealogy Optimized with Advanced OpenCV Filters =====
+        const postprocessState = {
+            levels: 0,               // -100 to 100 (shadows/highlights)
+            autoContrast: false,     // Auto histogram equalization
+            archival: 0,             // 0-100 (dedykowany dla wyblakłych dokumentów)
+            descreen: 0,             // 0-100 (removes halftone patterns)
+            sepia: 0,                // 0-100 (żółty/sepia filtr dla starych aktów)
+            hue: 0,                  // -180 to 180 (rotacja barwy)
+            saturation: 100,         // 0-200 (nasycenie kolorów)
+            invert: 0,               // 0-100 (inwersja, pomaga przy ciemnym tle)
+            adaptiveThreshold: 0,    // 0-100 (adaptive thresholding strength)
+            gaussianBlur: 0,         // 0-10 (Gaussian blur kernel)
+            medianBlur: 0,           // 0-10 (Median denoise)
+            histogramEq: false,      // boolean (histogram equalization)
+            backgroundSubtraction: 0,// 0-100 (background leveling - NOWE!)
+            morphologyClose: 0,      // 0-100 (connecting broken strokes - NOWE!)
+            autoInvert: false        // boolean (auto-detect and invert - NOWE!)
+        };
+        
+        // Presets dla typowych genealogicznych dokumentów - rozszerzone
+        const presets = {
+            'archival': { 
+                levels: 20, autoContrast: true, archival: 50, descreen: 20,
+                sepia: 30, hue: 0, saturation: 80, invert: 0,
+                adaptiveThreshold: 0, gaussianBlur: 0, medianBlur: 0, histogramEq: false,
+                backgroundSubtraction: 0, morphologyClose: 0, autoInvert: false
+            },
+            'faded': { 
+                levels: 30, autoContrast: true, archival: 70, descreen: 30,
+                sepia: 20, hue: 10, saturation: 90, invert: 0,
+                adaptiveThreshold: 0, gaussianBlur: 0, medianBlur: 2, histogramEq: true,
+                backgroundSubtraction: 0, morphologyClose: 0, autoInvert: false
+            },
+            'dark': { 
+                levels: -30, autoContrast: true, archival: 40, descreen: 10,
+                sepia: 0, hue: 0, saturation: 70, invert: 0,
+                adaptiveThreshold: 0, gaussianBlur: 0, medianBlur: 0, histogramEq: false,
+                backgroundSubtraction: 0, morphologyClose: 0, autoInvert: false
+            },
+            'bright': { 
+                levels: 20, autoContrast: false, archival: 20, descreen: 0,
+                sepia: 0, hue: 0, saturation: 100, invert: 0,
+                adaptiveThreshold: 0, gaussianBlur: 0, medianBlur: 0, histogramEq: false,
+                backgroundSubtraction: 0, morphologyClose: 0, autoInvert: false
+            },
+            'typewriter': { 
+                levels: 10, autoContrast: true, archival: 30, descreen: 50,
+                sepia: 0, hue: 0, saturation: 0, invert: 0,
+                adaptiveThreshold: 50, gaussianBlur: 0, medianBlur: 0, histogramEq: false,
+                backgroundSubtraction: 0, morphologyClose: 0, autoInvert: false
+            },
+            'ink': {
+                levels: 15, autoContrast: true, archival: 45, descreen: 25,
+                sepia: 50, hue: -10, saturation: 70, invert: 0,
+                adaptiveThreshold: 0, gaussianBlur: 0, medianBlur: 1, histogramEq: true,
+                backgroundSubtraction: 0, morphologyClose: 0, autoInvert: false
+            },
+            'genealogy-pro': {
+                levels: 25, autoContrast: true, archival: 60, descreen: 35,
+                sepia: 25, hue: 0, saturation: 75, invert: 0,
+                adaptiveThreshold: 30, gaussianBlur: 2, medianBlur: 1, histogramEq: true,
+                backgroundSubtraction: 0, morphologyClose: 0, autoInvert: false
+            },
+            'faded-advanced': {
+                levels: 35, autoContrast: true, archival: 80, descreen: 40,
+                sepia: 15, hue: 5, saturation: 80, invert: 0,
+                adaptiveThreshold: 40, gaussianBlur: 3, medianBlur: 2, histogramEq: true,
+                backgroundSubtraction: 0, morphologyClose: 0, autoInvert: false
+            },
+            'text-extraction': {
+                levels: 20, autoContrast: true, archival: 50, descreen: 30,
+                sepia: 0, hue: 0, saturation: 0, invert: 0,
+                adaptiveThreshold: 60, gaussianBlur: 1, medianBlur: 2, histogramEq: true,
+                backgroundSubtraction: 0, morphologyClose: 0, autoInvert: false
+            },
+            'heavy-duty': {
+                levels: 40, autoContrast: true, archival: 100, descreen: 50,
+                sepia: 10, hue: 0, saturation: 70, invert: 0,
+                adaptiveThreshold: 80, gaussianBlur: 1, medianBlur: 3, histogramEq: true,
+                backgroundSubtraction: 50, morphologyClose: 50, autoInvert: true
+            }
+        };
+        
+        let previewTimeout = null;
+        let isProcessing = false;
+        
+        function togglePostprocessPanel() {
+            const panel = document.getElementById('postprocessPanel');
+            panel.classList.toggle('visible');
+        }
+        
+        function setupPostprocessSliders() {
+            // Levels slider
+            document.getElementById('contrastSlider').addEventListener('input', (e) => {
+                postprocessState.levels = parseInt(e.target.value);
+                document.getElementById('contrastValue').textContent = e.target.value;
+                debouncePreview();
+            });
+            
+            // Archival documents slider
+            document.getElementById('brightnessSlider').addEventListener('input', (e) => {
+                postprocessState.archival = parseInt(e.target.value);
+                document.getElementById('brightnessValue').textContent = e.target.value + '%';
+                debouncePreview();
+            });
+            
+            // Descreen slider
+            document.getElementById('sharpenSlider').addEventListener('input', (e) => {
+                postprocessState.descreen = parseInt(e.target.value);
+                document.getElementById('sharpenValue').textContent = e.target.value + '%';
+                debouncePreview();
+            });
+            
+            // Auto-contrast checkbox
+            const autoContrastEl = document.getElementById('saturationSlider');
+            if (autoContrastEl) {
+                autoContrastEl.addEventListener('change', (e) => {
+                    postprocessState.autoContrast = e.target.checked;
+                    document.getElementById('saturationValue').textContent = e.target.checked ? 'ON' : 'OFF';
+                    debouncePreview();
+                });
+            }
+            
+            // === ADVANCED FILTERS ===
+            // Sepia slider
+            document.getElementById('sepiaSlider').addEventListener('input', (e) => {
+                postprocessState.sepia = parseInt(e.target.value);
+                document.getElementById('sepiaValue').textContent = e.target.value + '%';
+                debouncePreview();
+            });
+            
+            // Hue slider
+            document.getElementById('hueSlider').addEventListener('input', (e) => {
+                postprocessState.hue = parseInt(e.target.value);
+                document.getElementById('hueValue').textContent = e.target.value + '°';
+                debouncePreview();
+            });
+            
+            // Saturation slider
+            document.getElementById('saturSlider').addEventListener('input', (e) => {
+                postprocessState.saturation = parseInt(e.target.value);
+                document.getElementById('saturValue').textContent = e.target.value + '%';
+                debouncePreview();
+            });
+            
+            // Invert slider
+            document.getElementById('invertSlider').addEventListener('input', (e) => {
+                postprocessState.invert = parseInt(e.target.value);
+                document.getElementById('invertValue').textContent = e.target.value + '%';
+                debouncePreview();
+            });
+            
+            // === OPENCV ADVANCED FILTERS ===
+            // Adaptive Threshold slider
+            document.getElementById('adaptiveThresholdSlider').addEventListener('input', (e) => {
+                postprocessState.adaptiveThreshold = parseInt(e.target.value);
+                document.getElementById('adaptiveThresholdValue').textContent = e.target.value > 0 ? 'ON (' + e.target.value + '%)' : 'OFF';
+                debouncePreview();
+            });
+            
+            // Gaussian Blur slider
+            document.getElementById('gaussianBlurSlider').addEventListener('input', (e) => {
+                postprocessState.gaussianBlur = parseInt(e.target.value);
+                document.getElementById('gaussianBlurValue').textContent = e.target.value;
+                debouncePreview();
+            });
+            
+            // Median Blur slider
+            document.getElementById('medianBlurSlider').addEventListener('input', (e) => {
+                postprocessState.medianBlur = parseInt(e.target.value);
+                document.getElementById('medianBlurValue').textContent = e.target.value;
+                debouncePreview();
+            });
+            
+            // Histogram Equalization checkbox
+            document.getElementById('histogramEqCheckbox').addEventListener('change', (e) => {
+                postprocessState.histogramEq = e.target.checked;
+                document.getElementById('histogramEqValue').textContent = e.target.checked ? 'ON' : 'OFF';
+                debouncePreview();
+            });
+            
+            // Presets - dodaj przycisk dla każdego presetu
+            const presetsContainer = document.querySelector('.postprocess-buttons');
+            if (presetsContainer && !presetsContainer.querySelector('.preset-buttons')) {
+                const presetsDiv = document.createElement('div');
+                presetsDiv.className = 'preset-buttons';
+                presetsDiv.style.gridColumn = 'span 2';
+                presetsDiv.style.display = 'grid';
+                presetsDiv.style.gridTemplateColumns = '1fr 1fr';
+                presetsDiv.style.gap = '6px';
+                presetsDiv.style.marginBottom = '10px';
+                
+                const presetTooltips = {
+                    'heavy-duty': '🔧 Dla najtrudniejszych: wyrównanie tła + morfologia + auto-invert'
+                };
+                
+                Object.keys(presets).forEach(name => {
+                    const btn = document.createElement('button');
+                    btn.className = 'postprocess-btn preset-btn';
+                    btn.textContent = name.charAt(0).toUpperCase() + name.slice(1);
+                    btn.style.fontSize = '10px';
+                    if (presetTooltips[name]) {
+                        btn.title = presetTooltips[name];
+                    }
+                    btn.onclick = () => applyPreset(name);
+                    presetsDiv.appendChild(btn);
+                });
+                
+                presetsContainer.insertBefore(presetsDiv, presetsContainer.firstChild);
+            }
+        }
+        
+        function debouncePreview() {
+            if (previewTimeout) clearTimeout(previewTimeout);
+            previewTimeout = setTimeout(() => {
+                updateProcessedPreview();
+            }, 300);
+        }
+        
+        function updateProcessedPreview() {
+            if (isProcessing || !app.images[app.currentImageIdx] || !app.images[app.currentImageIdx].data) return;
+            if (!app.viewer) return;
+            
+            isProcessing = true;
+            const original = app.images[app.currentImageIdx];
+            const img = new Image();
+            img.src = original.data;
+            
+            img.onload = () => {
+                try {
+                    const canvas = document.createElement('canvas');
+                    canvas.width = img.width;
+                    canvas.height = img.height;
+                    const ctx = canvas.getContext('2d');
+                    ctx.drawImage(img, 0, 0);
+                    
+                    applyPostprocessFilters(canvas, postprocessState);
+                    const processed = canvas.toDataURL('image/jpeg', 0.95);
+                    
+                    app.viewer.open({
+                        type: 'image',
+                        url: processed
+                    });
+                    console.log('✅ Preview updated');
+                } catch (e) {
+                    console.error('❌ Preview error:', e);
+                } finally {
+                    isProcessing = false;
+                }
+            };
+            
+            img.onerror = () => {
+                console.error('❌ Failed to load preview');
+                isProcessing = false;
+            };
+        }
+        
+        function applyPreset(presetName) {
+            const preset = presets[presetName];
+            if (!preset) return;
+            
+            postprocessState.levels = preset.levels;
+            postprocessState.autoContrast = preset.autoContrast;
+            postprocessState.archival = preset.archival;
+            postprocessState.descreen = preset.descreen;
+            postprocessState.sepia = preset.sepia || 0;
+            postprocessState.hue = preset.hue || 0;
+            postprocessState.saturation = preset.saturation || 100;
+            postprocessState.invert = preset.invert || 0;
+            postprocessState.adaptiveThreshold = preset.adaptiveThreshold || 0;
+            postprocessState.gaussianBlur = preset.gaussianBlur || 0;
+            postprocessState.medianBlur = preset.medianBlur || 0;
+            postprocessState.histogramEq = preset.histogramEq || false;
+            postprocessState.backgroundSubtraction = preset.backgroundSubtraction || 0;
+            postprocessState.morphologyClose = preset.morphologyClose || 0;
+            postprocessState.autoInvert = preset.autoInvert || false;
+            
+            // Update sliders
+            document.getElementById('contrastSlider').value = preset.levels;
+            document.getElementById('contrastValue').textContent = preset.levels;
+            document.getElementById('brightnessSlider').value = preset.archival;
+            document.getElementById('brightnessValue').textContent = preset.archival + '%';
+            document.getElementById('sharpenSlider').value = preset.descreen;
+            document.getElementById('sharpenValue').textContent = preset.descreen + '%';
+            document.getElementById('saturationSlider').checked = preset.autoContrast;
+            document.getElementById('saturationValue').textContent = preset.autoContrast ? 'ON' : 'OFF';
+            
+            // Update advanced filters
+            document.getElementById('sepiaSlider').value = preset.sepia || 0;
+            document.getElementById('sepiaValue').textContent = (preset.sepia || 0) + '%';
+            document.getElementById('hueSlider').value = preset.hue || 0;
+            document.getElementById('hueValue').textContent = (preset.hue || 0) + '°';
+            document.getElementById('saturSlider').value = preset.saturation || 100;
+            document.getElementById('saturValue').textContent = (preset.saturation || 100) + '%';
+            document.getElementById('invertSlider').value = preset.invert || 0;
+            document.getElementById('invertValue').textContent = (preset.invert || 0) + '%';
+            
+            // Update OpenCV filters
+            document.getElementById('adaptiveThresholdSlider').value = preset.adaptiveThreshold || 0;
+            document.getElementById('adaptiveThresholdValue').textContent = (preset.adaptiveThreshold || 0) > 0 ? 'ON (' + (preset.adaptiveThreshold || 0) + '%)' : 'OFF';
+            document.getElementById('gaussianBlurSlider').value = preset.gaussianBlur || 0;
+            document.getElementById('gaussianBlurValue').textContent = (preset.gaussianBlur || 0);
+            document.getElementById('medianBlurSlider').value = preset.medianBlur || 0;
+            document.getElementById('medianBlurValue').textContent = (preset.medianBlur || 0);
+            document.getElementById('histogramEqCheckbox').checked = preset.histogramEq || false;
+            document.getElementById('histogramEqValue').textContent = (preset.histogramEq || false) ? 'ON' : 'OFF';
+            
+            debouncePreview();
+            notify(`📋 Preset: ${presetName}`, 'success');
+        }
+        
+        function applyPostprocessFilters(canvas, state) {
+            const ctx = canvas.getContext('2d');
+            
+            // === STEP 1: Canvas Filters (GPU-accelerated, szybko) ===
+            let filterString = '';
+            
+            // Levels (shadows/highlights)
+            const levels = state.levels || 0;
+            if (levels > 0) {
+                filterString += `brightness(${1 + (levels / 100)}) `;
+            } else if (levels < 0) {
+                filterString += `brightness(${1 + (levels / 100)}) `;
+            }
+            
+            // Auto-contrast using brightness adjustment
+            if (state.autoContrast) {
+                filterString += 'contrast(1.3) ';
+            }
+            
+            // Sepia filter
+            if (state.sepia > 0) {
+                filterString += `sepia(${state.sepia / 100}) `;
+            }
+            
+            // Hue rotation
+            if (state.hue !== 0) {
+                filterString += `hue-rotate(${state.hue}deg) `;
+            }
+            
+            // Saturation
+            if (state.saturation !== 100) {
+                filterString += `saturate(${state.saturation}%) `;
+            }
+            
+            // Invert
+            if (state.invert > 0) {
+                filterString += `invert(${state.invert / 100}) `;
+            }
+            
+            // Apply Canvas filters (szybkie, GPU-accelerated)
+            if (filterString) {
+                ctx.filter = filterString;
+                ctx.drawImage(canvas, 0, 0);
+                ctx.filter = 'none';
+            }
+            
+            // === STEP 2: Histogram Equalization (OpenCV) ===
+            if (state.histogramEq) {
+                let imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+                imageData = histogramEqualization(imageData);
+                ctx.putImageData(imageData, 0, 0);
+                console.log('✅ Histogram Equalization applied');
+            }
+            
+            // === STEP 3: Background Subtraction (Wyrównanie tła) - NOWE ===
+            if (state.backgroundSubtraction > 0) {
+                let imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+                const kernelSize = Math.floor(state.backgroundSubtraction / 10) * 2 + 11;  // 0-100 → 11-111
+                imageData = backgroundSubtraction(imageData, kernelSize);
+                ctx.putImageData(imageData, 0, 0);
+                console.log('✅ Background Subtraction applied (kernel: ' + kernelSize + ')');
+            }
+            
+            // === STEP 4: Gaussian Blur (OpenCV - denoising) ===
+            if (state.gaussianBlur > 0) {
+                let imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+                const kernelSize = state.gaussianBlur * 2 + 1;  // Konwersja 0-10 na kernel size
+                imageData = gaussianBlurFilter(imageData, kernelSize, 1.0);
+                ctx.putImageData(imageData, 0, 0);
+                console.log('✅ Gaussian Blur applied (kernel: ' + kernelSize + ')');
+            }
+            
+            // === STEP 5: Median Blur (OpenCV - denoising) ===
+            if (state.medianBlur > 0) {
+                let imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+                const kernelSize = state.medianBlur * 2 + 1;
+                imageData = medianBlurFilter(imageData, kernelSize);
+                ctx.putImageData(imageData, 0, 0);
+                console.log('✅ Median Blur applied (kernel: ' + kernelSize + ')');
+            }
+            
+            // === STEP 6: Archival document enhancement (pixel-level, ale szybszy) ===
+            if (state.archival > 0) {
+                const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+                const data = imageData.data;
+                const strength = state.archival / 100;
+                
+                for (let i = 0; i < data.length; i += 4) {
+                    let r = data[i], g = data[i+1], b = data[i+2];
+                    
+                    // Boost contrast dla wyblakłych dokumentów
+                    const avg = (r + g + b) / 3;
+                    const factor = 1 + strength * 0.5;
+                    
+                    r = Math.max(0, Math.min(255, (r - avg) * factor + avg));
+                    g = Math.max(0, Math.min(255, (g - avg) * factor + avg));
+                    b = Math.max(0, Math.min(255, (b - avg) * factor + avg));
+                    
+                    data[i] = r;
+                    data[i+1] = g;
+                    data[i+2] = b;
+                }
+                
+                ctx.putImageData(imageData, 0, 0);
+            }
+            
+            // === STEP 7: Descreen (removes halftone) ===
+            if (state.descreen > 0) {
+                const strength = state.descreen / 100 * 0.3;
+                if (state.descreen > 30) {
+                    ctx.filter = `blur(${strength}px)`;
+                    ctx.drawImage(canvas, 0, 0);
+                    ctx.filter = 'none';
+                }
+            }
+            
+            // === STEP 8: Adaptive Threshold (OpenCV - binaryzacja) ===
+            if (state.adaptiveThreshold > 0) {
+                if (opencvReady) {
+                    let imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+                    const blockSize = Math.max(3, Math.floor(state.adaptiveThreshold / 20) * 2 + 1);  // Konwersja 0-100 na blockSize
+                    const constant = Math.max(-50, Math.min(50, Math.floor((state.adaptiveThreshold - 50) / 2)));
+                    
+                    imageData = adaptiveThresholdFilter(imageData, blockSize, constant);
+                    ctx.putImageData(imageData, 0, 0);
+                    console.log('✅ Adaptive Threshold applied (blockSize: ' + blockSize + ', constant: ' + constant + ')');
+                } else {
+                    console.warn('⚠️ OpenCV.js nie jest jeszcze załadowany - Adaptive Threshold pominięty');
+                }
+            }
+            
+            // === STEP 9: Morphology Close (OpenCV - Połączenie przerwanych kresek) - NOWE ===
+            if (state.morphologyClose > 0) {
+                if (opencvReady) {
+                    let imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+                    const kernelSize = Math.floor(state.morphologyClose / 20) * 2 + 1;  // 0-100 → 1-11
+                    imageData = morphologyClose(imageData, kernelSize);
+                    ctx.putImageData(imageData, 0, 0);
+                    console.log('✅ Morphology Close applied (kernel: ' + kernelSize + ')');
+                } else {
+                    console.warn('⚠️ OpenCV.js nie jest jeszcze załadowany - Morphology Close pominięty');
+                }
+            }
+            
+            // === STEP 10: Auto-Invert (Detekcja i inwersja tekstu białego) - NOWE ===
+            if (state.autoInvert) {
+                let imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+                const shouldInvert = autoInvert(imageData);
+                if (shouldInvert) {
+                    imageData = invertColors(imageData);
+                    ctx.putImageData(imageData, 0, 0);
+                    console.log('✅ Auto-Invert applied (tekst był biały na czarnym)');
+                } else {
+                    console.log('ℹ️ Auto-Invert: Nie trzeba - tekst jest czarny');
+                }
+            }
+        }
+        
+        function saveProcessedAsNew() {
+            if (!app.images[app.currentImageIdx]) {
+                notify('Załaduj obraz', 'error');
+                return;
+            }
+            
+            const hasChanges = postprocessState.levels !== 0 || 
+                               postprocessState.autoContrast !== false || 
+                               postprocessState.archival !== 0 || 
+                               postprocessState.descreen !== 0 ||
+                               postprocessState.sepia !== 0 ||
+                               postprocessState.hue !== 0 ||
+                               postprocessState.saturation !== 100 ||
+                               postprocessState.invert !== 0 ||
+                               postprocessState.adaptiveThreshold !== 0 ||
+                               postprocessState.gaussianBlur !== 0 ||
+                               postprocessState.medianBlur !== 0 ||
+                               postprocessState.histogramEq !== false;
+            
+            if (!hasChanges) {
+                notify('⚠️ Nie ma zmian do zapisania', 'warning');
+                return;
+            }
+            
+            const original = app.images[app.currentImageIdx];
+            notify('⏳ Przetwarzanie...', 'info');
+            
+            setTimeout(() => {
+                const img = new Image();
+                img.src = original.data;
+                img.onload = () => {
+                    const canvas = document.createElement('canvas');
+                    canvas.width = img.width;
+                    canvas.height = img.height;
+                    const ctx = canvas.getContext('2d');
+                    ctx.drawImage(img, 0, 0);
+                    
+                    applyPostprocessFilters(canvas, postprocessState);
+                    const processedDataUrl = canvas.toDataURL('image/jpeg', 0.95);
+                    
+                    const timestamp = new Date().toISOString().slice(0, 19).replace(/T/, '_').replace(/:/g, '');
+                    const newImage = {
+                        name: original.name.replace(/\\.[^/.]+$/, '') + '_processed_' + timestamp,
+                        data: processedDataUrl
+                    };
+                    
+                    app.images.push(newImage);
+                    saveStorage();
+                    updateThumbs();
+                    
+                    notify('✅ Zapisano: ' + newImage.name, 'success');
+                    selectImage(app.images.length - 1);
+                };
+            }, 100);
+        }
+        
+        function resetPostprocessing() {
+            document.getElementById('contrastSlider').value = 0;
+            document.getElementById('brightnessSlider').value = 0;
+            document.getElementById('sharpenSlider').value = 0;
+            document.getElementById('saturationSlider').checked = false;
+            
+            // Reset advanced filters
+            document.getElementById('sepiaSlider').value = 0;
+            document.getElementById('hueSlider').value = 0;
+            document.getElementById('saturSlider').value = 100;
+            document.getElementById('invertSlider').value = 0;
+            
+            // Reset OpenCV filters
+            document.getElementById('adaptiveThresholdSlider').value = 0;
+            document.getElementById('gaussianBlurSlider').value = 0;
+            document.getElementById('medianBlurSlider').value = 0;
+            document.getElementById('histogramEqCheckbox').checked = false;
+            
+            postprocessState.levels = 0;
+            postprocessState.autoContrast = false;
+            postprocessState.archival = 0;
+            postprocessState.descreen = 0;
+            postprocessState.sepia = 0;
+            postprocessState.hue = 0;
+            postprocessState.saturation = 100;
+            postprocessState.invert = 0;
+            postprocessState.adaptiveThreshold = 0;
+            postprocessState.gaussianBlur = 0;
+            postprocessState.medianBlur = 0;
+            postprocessState.histogramEq = false;
+            postprocessState.backgroundSubtraction = 0;
+            postprocessState.morphologyClose = 0;
+            postprocessState.autoInvert = false;
+            
+            document.getElementById('contrastValue').textContent = '0';
+            document.getElementById('brightnessValue').textContent = '0%';
+            document.getElementById('sharpenValue').textContent = '0%';
+            document.getElementById('saturationValue').textContent = 'OFF';
+            document.getElementById('sepiaValue').textContent = '0%';
+            document.getElementById('hueValue').textContent = '0°';
+            document.getElementById('saturValue').textContent = '100%';
+            document.getElementById('invertValue').textContent = '0%';
+            document.getElementById('adaptiveThresholdValue').textContent = 'OFF';
+            document.getElementById('gaussianBlurValue').textContent = '0';
+            document.getElementById('medianBlurValue').textContent = '0';
+            document.getElementById('histogramEqValue').textContent = 'OFF';
+            
+            if (app.images[app.currentImageIdx] && app.images[app.currentImageIdx].data) {
+                const original = app.images[app.currentImageIdx];
+                if (app.viewer) {
+                    app.viewer.open({
+                        type: 'image',
+                        url: original.data
+                    });
+                }
+            }
+            
+            notify('↻ Reset - oryginalny obraz', 'info');
+        }
+        
+        // ===== ADVANCED FILTERS WITH OPENCV.JS =====
+        let opencvReady = false;
+        
+        function onOpenCvReady() {
+            opencvReady = true;
+            console.log('✅ OpenCV.js załadowany i gotowy');
+        }
+        
+        function adaptiveThresholdFilter(imageData, blockSize = 11, constant = 2) {
+            if (!opencvReady) {
+                console.warn('⚠️ OpenCV.js nie jest jeszcze załadowany');
+                return imageData;
+            }
+            
+            try {
+                let src = cv.matFromImageData(imageData);
+                let dst = new cv.Mat();
+                let gray = new cv.Mat();
+                
+                // Konwersja do skali szarości
+                cv.cvtColor(src, gray, cv.COLOR_RGBA2GRAY);
+                
+                // Adaptive Thresholding
+                cv.adaptiveThreshold(gray, dst, 255, cv.ADAPTIVE_THRESH_GAUSSIAN_C, cv.THRESH_BINARY, blockSize, constant);
+                
+                // Konwersja z powrotem do RGBA
+                cv.cvtColor(dst, src, cv.COLOR_GRAY2RGBA);
+                
+                // Kopiowanie wyników do ImageData
+                let outputImageData = new ImageData(
+                    new Uint8ClampedArray(src.data),
+                    src.cols,
+                    src.rows
+                );
+                
+                // Czyszczenie pamięci
+                src.delete();
+                dst.delete();
+                gray.delete();
+                
+                return outputImageData;
+            } catch (e) {
+                console.error('❌ Błąd Adaptive Threshold:', e);
+                return imageData;
+            }
+        }
+        
+        function gaussianBlurFilter(imageData, kernelSize = 5, sigma = 1.0) {
+            if (!opencvReady) return imageData;
+            
+            try {
+                let src = cv.matFromImageData(imageData);
+                let dst = new cv.Mat();
+                
+                // Gaussian Blur
+                let ksize = new cv.Size(kernelSize, kernelSize);
+                cv.GaussianBlur(src, dst, ksize, sigma, sigma, cv.BORDER_DEFAULT);
+                
+                let outputImageData = new ImageData(
+                    new Uint8ClampedArray(dst.data),
+                    dst.cols,
+                    dst.rows
+                );
+                
+                src.delete();
+                dst.delete();
+                
+                return outputImageData;
+            } catch (e) {
+                console.error('❌ Błąd Gaussian Blur:', e);
+                return imageData;
+            }
+        }
+        
+        function medianBlurFilter(imageData, kernelSize = 5) {
+            if (!opencvReady) return imageData;
+            
+            try {
+                let src = cv.matFromImageData(imageData);
+                let dst = new cv.Mat();
+                
+                // Median Blur (dla denoising)
+                cv.medianBlur(src, dst, kernelSize);
+                
+                let outputImageData = new ImageData(
+                    new Uint8ClampedArray(dst.data),
+                    dst.cols,
+                    dst.rows
+                );
+                
+                src.delete();
+                dst.delete();
+                
+                return outputImageData;
+            } catch (e) {
+                console.error('❌ Błąd Median Blur:', e);
+                return imageData;
+            }
+        }
+        
+        function histogramEqualization(imageData) {
+            if (!opencvReady) return imageData;
+            
+            try {
+                let src = cv.matFromImageData(imageData);
+                let gray = new cv.Mat();
+                let dst = new cv.Mat();
+                
+                // Konwersja do szarości
+                cv.cvtColor(src, gray, cv.COLOR_RGBA2GRAY);
+                
+                // Equalization
+                cv.equalizeHist(gray, dst);
+                
+                // Konwersja z powrotem
+                cv.cvtColor(dst, src, cv.COLOR_GRAY2RGBA);
+                
+                let outputImageData = new ImageData(
+                    new Uint8ClampedArray(src.data),
+                    src.cols,
+                    src.rows
+                );
+                
+                src.delete();
+                gray.delete();
+                dst.delete();
+                
+                return outputImageData;
+            } catch (e) {
+                console.error('❌ Błąd Histogram Equalization:', e);
+                return imageData;
+            }
+        }
+        
+        // ===== HEAVY-DUTY FILTER FUNCTIONS =====
+        
+        function backgroundSubtraction(imageData, kernelSize = 21) {
+            if (!opencvReady) return imageData;
+            
+            try {
+                console.log('🎨 Background Subtraction: Wyrównanie nierównego tła...');
+                let src = cv.matFromImageData(imageData);
+                let gray = new cv.Mat();
+                let background = new cv.Mat();
+                let result = new cv.Mat();
+                
+                // 1. Konwersja do szarości
+                cv.cvtColor(src, gray, cv.COLOR_RGBA2GRAY);
+                
+                // 2. Estimacja tła za pomocą morphology (opening)
+                let kernel = cv.getStructuringElement(cv.MORPH_ELLIPSE, new cv.Size(kernelSize, kernelSize));
+                cv.morphologyEx(gray, background, cv.MORPH_OPEN, kernel);
+                
+                // 3. Odejmij tło od oryginału (contrast boost)
+                cv.subtract(gray, background, result);
+                
+                // 4. Normalizuj wynik
+                let minVal = new cv.Mat();
+                let maxVal = new cv.Mat();
+                cv.normalize(result, result, 0, 255, cv.NORM_MINMAX);
+                
+                // 5. Konwersja z powrotem na RGBA
+                cv.cvtColor(result, src, cv.COLOR_GRAY2RGBA);
+                
+                let outputImageData = new ImageData(
+                    new Uint8ClampedArray(src.data),
+                    src.cols,
+                    src.rows
+                );
+                
+                kernel.delete();
+                src.delete();
+                gray.delete();
+                background.delete();
+                result.delete();
+                
+                return outputImageData;
+            } catch (e) {
+                console.error('❌ Błąd Background Subtraction:', e);
+                return imageData;
+            }
+        }
+        
+        function morphologyClose(imageData, kernelSize = 5) {
+            if (!opencvReady) return imageData;
+            
+            try {
+                console.log('🎨 Morphology Close: Połączenie przerwanych kresek...');
+                let src = cv.matFromImageData(imageData);
+                let gray = new cv.Mat();
+                let kernel = cv.getStructuringElement(cv.MORPH_ELLIPSE, new cv.Size(kernelSize, kernelSize));
+                let result = new cv.Mat();
+                
+                // Konwersja do szarości
+                cv.cvtColor(src, gray, cv.COLOR_RGBA2GRAY);
+                
+                // Morphology Close: dylatacja + erozja (zamyka małe otwory)
+                cv.morphologyEx(gray, result, cv.MORPH_CLOSE, kernel);
+                
+                // Konwersja z powrotem
+                cv.cvtColor(result, src, cv.COLOR_GRAY2RGBA);
+                
+                let outputImageData = new ImageData(
+                    new Uint8ClampedArray(src.data),
+                    src.cols,
+                    src.rows
+                );
+                
+                kernel.delete();
+                src.delete();
+                gray.delete();
+                result.delete();
+                
+                return outputImageData;
+            } catch (e) {
+                console.error('❌ Błąd Morphology Close:', e);
+                return imageData;
+            }
+        }
+        
+        function autoInvert(imageData) {
+            // Detekuj czy tekst jest jasny na ciemnym tle
+            const ctx = document.createElement('canvas').getContext('2d');
+            const data = imageData.data;
+            let darkPixels = 0;
+            
+            for (let i = 0; i < data.length; i += 4) {
+                const brightness = (data[i] + data[i+1] + data[i+2]) / 3;
+                if (brightness < 128) darkPixels++;
+            }
+            
+            const darkRatio = darkPixels / (data.length / 4);
+            console.log(`🎨 Auto-Invert: ${(darkRatio * 100).toFixed(1)}% ciemnych pikseli - ${darkRatio > 0.7 ? 'INWERTUJ' : 'pozostaw'}`);
+            
+            // Jeśli >70% pikseli jest ciemnych, obrócić (tekst biały na czarnym)
+            return darkRatio > 0.7;
+        }
+        
+        function invertColors(imageData) {
+            const data = imageData.data;
+            for (let i = 0; i < data.length; i += 4) {
+                data[i] = 255 - data[i];        // R
+                data[i+1] = 255 - data[i+1];    // G
+                data[i+2] = 255 - data[i+2];    // B
+                // A nie zmieniamy
+            }
+            return imageData;
+        }
+        
+        // ═════════════════════════════════════════════════════════════════
+        // 🚀 V7.1 ENHANCEMENTS - Features A, B, C, D, E
+        // ═════════════════════════════════════════════════════════════════
+        
+        // 💡 A: SUGGESTIONS FAN (Wachlarz podpowiedzi)
+        function showSuggestionsForField(inputEl) {
+            const fieldId = inputEl.dataset.field;
+            const currentValue = inputEl.value.toLowerCase().trim();
+            
+            // Jeśli mniej niż 2 znaki, ukryj sugestie
+            if (currentValue.length < 2) {
+                hideSuggestions();
+                return;
+            }
+            
+            // Zbierz wszystkie wartości tego pola z aktów tej strony
+            const suggestions = new Set();
+            const currentActList = app.imageActs.filter(a => a.imageIdx === app.currentImageIdx);
+            
+            currentActList.forEach(act => {
+                if (act.fieldValues && act.fieldValues[fieldId]) {
+                    const val = act.fieldValues[fieldId].toString().toLowerCase();
+                    // Jeśli zawiera to co piszt i nie jest identyczne
+                    if (val.includes(currentValue) && val !== currentValue) {
+                        suggestions.add(act.fieldValues[fieldId]);
+                    }
+                }
+            });
+            
+            if (suggestions.size === 0) {
+                hideSuggestions();
+                return;
+            }
+            
+            // Pozycjonuj wachlarz wokół input'a
+            const rect = inputEl.getBoundingClientRect();
+            const container = document.querySelector('.viewer-container');
+            const containerRect = container.getBoundingClientRect();
+            const wachlarz = document.getElementById('suggestionsWachlarz');
+            
+            wachlarz.style.left = (rect.left - containerRect.left - 220) + 'px';
+            wachlarz.style.top = (rect.top - containerRect.top + rect.height + 5) + 'px';
+            wachlarz.innerHTML = '';
+            
+            // Dodaj sugestie (max 5)
+            Array.from(suggestions).slice(0, 5).forEach((suggestion, idx) => {
+                const div = document.createElement('div');
+                div.className = 'suggestion';
+                div.textContent = suggestion.substring(0, 30);
+                div.title = suggestion;
+                div.style.animation = `fanRotate 0.4s ease-out ${idx * 0.08}s backwards`;
+                div.onclick = (e) => {
+                    e.stopPropagation();
+                    inputEl.value = suggestion;
+                    inputEl.focus();
+                    hideSuggestions();
+                    updateFieldStatus();
+                    updateProgressBar();
+                    inputEl.dispatchEvent(new Event('change'));
+                };
+                div.onmouseenter = () => {
+                    div.style.transform = 'translateX(10px) rotate(0deg) scale(1.05)';
+                    div.style.color = '#00ff88';
+                };
+                div.onmouseleave = () => {
+                    div.style.transform = 'translateX(-10px) rotate(-3deg) scale(1)';
+                    div.style.color = 'inherit';
+                };
+                wachlarz.appendChild(div);
+            });
+            
+            wachlarz.classList.add('visible');
+            console.log(`💡 A: Wachlarz ${suggestions.size} sugestii dla "${fieldId}"`);
+        }
+        
+        function hideSuggestions() {
+            const wachlarz = document.getElementById('suggestionsWachlarz');
+            wachlarz.classList.remove('visible');
+            setTimeout(() => { wachlarz.innerHTML = ''; }, 300);
+        }
+        
+        // 📊 C: STATISTICS - Aktualizuj pasek postępu
+        function updateProgressBar() {
+            const activeForm = document.querySelector('.form-section.active');
+            if (!activeForm) return;
+            
+            const inputs = activeForm.querySelectorAll('.field-input');
+            const completed = Array.from(inputs).filter(input => 
+                input.value?.trim().length > 0
+            ).length;
+            
+            const total = inputs.length;
+            const percent = total > 0 ? (completed / total) * 100 : 0;
+            
+            const progressFill = document.getElementById('progressFill');
+            const progressText = document.getElementById('progressText');
+            
+            if (progressFill) {
+                progressFill.style.width = percent + '%';
+                progressFill.style.backgroundColor = percent === 100 ? '#10b981' : '#0078d4';
+            }
+            if (progressText) progressText.textContent = `${completed}/${total}`;
+            
+            // 📊 Pokaż statystyki w toolbar'u
+            updateActStatistics();
+        }
+        
+        function updateActStatistics() {
+            const activeForm = document.querySelector('.form-section.active');
+            if (!activeForm) return;
+            
+            const act = getCurrentAct();
+            if (!act) return;
+            
+            const inputs = activeForm.querySelectorAll('.field-input');
+            const filledCount = Array.from(inputs).filter(inp => inp.value?.trim().length > 0).length;
+            const roiCount = Object.keys(act.fieldROIs || {}).length;
+            
+            // Pokaż w statusu
+            const stats = `📊 ${filledCount}/${inputs.length} pól | 🎨 ${roiCount} ROI`;
+            const existingStats = document.getElementById('actStatistics');
+            if (existingStats) {
+                existingStats.textContent = stats;
+            }
+        }
+        
+        // E: AUTO-FOCUS pierwszy input gdy wybieramy akt
+        function focusFirstField() {
+            const activeForm = document.querySelector('.form-section.active');
+            if (!activeForm) return;
+            
+            const firstInput = activeForm.querySelector('.field-input');
+            if (firstInput) {
+                setTimeout(() => {
+                    firstInput.focus();
+                    firstInput.select?.();
+                }, 100);
+            }
+        }
+        
+        // B: KEYBOARD SHORTCUTS (Skróty klawiszowe)
+        function setupKeyboardShortcuts() {
+            document.addEventListener('keydown', (e) => {
+                // Ignoruj jeśli wpisujemy w textaree (chyba że Ctrl/Cmd)
+                const isTextarea = e.target.tagName === 'TEXTAREA';
+                const isInput = e.target.tagName === 'INPUT';
+                const hasCtrlCmd = e.ctrlKey || e.metaKey;
+                
+                // Ctrl+S = Zapisz akt
+                if (e.key === 's' || e.key === 'S') {
+                    if (hasCtrlCmd) {
+                        e.preventDefault();
+                        saveRecord();
+                        console.log('⌨️ B: Ctrl+S → Zapisz');
+                        return;
+                    }
+                }
+                
+                // Ctrl+D = Usuń akt
+                if (e.key === 'd' || e.key === 'D') {
+                    if (hasCtrlCmd) {
+                        e.preventDefault();
+                        if (confirm('🗑️  Usunąć bieżący akt?')) {
+                            deleteCurrentRecord();
+                        }
+                        console.log('⌨️ B: Ctrl+D → Usuń');
+                        return;
+                    }
+                }
+                
+                // Ctrl+C = Duplikuj poprzedni (przy focus na input, pamiętaj!)
+                if (e.key === 'c' || e.key === 'C') {
+                    if (hasCtrlCmd && !isTextarea) { // W textarea, Ctrl+C to zwykły copy
+                        e.preventDefault();
+                        copyPreviousActEnhanced();
+                        console.log('⌨️ B: Ctrl+C → Copy Previous');
+                        return;
+                    }
+                }
+                
+                // Ctrl+A = Toggle Act ROI drawing mode (TASK #1)
+                if (e.key === 'a' || e.key === 'A') {
+                    if (hasCtrlCmd && !isInput && !isTextarea) {
+                        e.preventDefault();
+                        toggleActMode();
+                        console.log('⌨️ B: Ctrl+A → Act Mode Toggle');
+                        return;
+                    }
+                }
+                
+                // Ctrl+N = Nowy akt
+                if (e.key === 'n' || e.key === 'N') {
+                    if (hasCtrlCmd) {
+                        e.preventDefault();
+                        const count = prompt('📋 Ile aktów dodać?', '1');
+                        if (!count) return;
+                        
+                        const numToAdd = Math.max(1, parseInt(count) || 1);
+                        for (let i = 0; i < numToAdd; i++) {
+                            const currentActList = app.imageActs.filter(a => a.imageIdx === app.currentImageIdx);
+                            const newActNum = (currentActList.length || 0) + 1 + i;
+                            
+                            const newAct = {
+                                actNum: newActNum,
+                                imageIdx: app.currentImageIdx,
+                                fieldValues: {},
+                                fieldROIs: {},
+                                actROI: null,
+                                timestamp: new Date().toISOString()
+                            };
+                            app.imageActs.push(newAct);
+                        }
+                        
+                        saveStorage();
+                        renderActButtons();
+                        
+                        // Zaznacz ostatnio dodany
+                        const currentActList = app.imageActs.filter(a => a.imageIdx === app.currentImageIdx);
+                        selectAct(currentActList[currentActList.length - numToAdd].actNum);
+                        
+                        notify(`✨ Dodano ${numToAdd} aktów`, 'success');
+                        console.log(`⌨️ B: Ctrl+N → +${numToAdd} aktów`);
+                    }
+                }
+                
+                // Arrow Left/Right = poprzedni/następny akt
+                if (e.key === 'ArrowLeft' || e.key === 'ArrowRight') {
+                    if (isInput || isTextarea) return; // Nie w polu tekstowym
+                    
+                    const currentActList = app.imageActs.filter(a => a.imageIdx === app.currentImageIdx);
+                    const currentAct = getCurrentAct();
+                    if (!currentAct) return;
+                    
+                    const currentIdx = currentActList.findIndex(a => a.actNum === currentAct.actNum);
+                    let nextIdx = currentIdx;
+                    
+                    if (e.key === 'ArrowLeft' && currentIdx > 0) {
+                        nextIdx = currentIdx - 1;
+                    } else if (e.key === 'ArrowRight' && currentIdx < currentActList.length - 1) {
+                        nextIdx = currentIdx + 1;
+                    }
+                    
+                    if (nextIdx !== currentIdx) {
+                        selectAct(currentActList[nextIdx].actNum);
+                        console.log(`⌨️ Nawigacja: Akt ${currentActList[nextIdx].actNum}`);
+                    }
+                }
+                
+                // TASK #3: Ctrl+J = Import JSON
+                if (e.key === 'j' || e.key === 'J') {
+                    if (hasCtrlCmd) {
+                        e.preventDefault();
+                        importJSON();
+                        console.log('⌨️ B: Ctrl+J → JSON Import');
+                        return;
+                    }
+                }
+            });
+        }
+        
+        // D: ENHANCED COPY PREVIOUS
+        function copyPreviousActEnhanced() {
+            if (app.currentActNum === null || app.currentActNum === undefined) {
+                notify('❌ Najpierw wybierz akt', 'error');
+                return;
+            }
+            
+            const currentActList = app.imageActs.filter(a => a.imageIdx === app.currentImageIdx);
+            const currentIdx = currentActList.findIndex(a => a.actNum === app.currentActNum);
+            
+            if (currentIdx === 0) {
+                notify('ℹ️ Brak poprzedniego aktu do skopiowania', 'info');
+                return;
+            }
+            
+            const previousAct = currentActList[currentIdx - 1];
+            const currentAct = getCurrentAct();
+            if (!currentAct) return;
+            
+            // Kopiuj wartości pól
+            currentAct.fieldValues = { ...previousAct.fieldValues };
+            loadActToForm(currentAct);
+            
+            // Kopiuj ROI'e jeśli istnieją
+            if (previousAct.fieldROIs && Object.keys(previousAct.fieldROIs).length > 0) {
+                currentAct.fieldROIs = JSON.parse(JSON.stringify(previousAct.fieldROIs));
+                redrawROIs();
+            }
+            
+            saveStorage();
+            updateProgressBar();
+            updateFieldStatus();
+            focusFirstField();
+            
+            notify(`✨ Skopiowano z Aktu ${previousAct.actNum}`, 'success');
+            console.log(`📋 D: Copy Previous - Akt ${app.currentActNum} ← Akt ${previousAct.actNum}`);
+        }
+        
+        // Inicjalizuj skróty przy starcie
+        setupKeyboardShortcuts();
+        
+        // TASK #2: Initialize search
+        setupSearchInput();
+        
+        // TASK #4: Initialize tab navigation
+        setupTabNavigation();
+        
+        // Dodaj focus event do wachlarza
+        document.addEventListener('click', (e) => {
+            if (!e.target.classList.contains('suggestion')) {
+                hideSuggestions();
+            }
+        });
+    </script>
+    
+    <!-- OpenCV.js - Asynchroniczne załadowanie -->
+    <script async src="https://docs.opencv.org/4.8.0/opencv.js"></script>
+    <script>
+        // Callback gdy OpenCV jest gotowy
+        if (typeof cv !== 'undefined') {
+            cv.onRuntimeInitialized = onOpenCvReady;
+        }
+    </script>
+</body>
+</html>

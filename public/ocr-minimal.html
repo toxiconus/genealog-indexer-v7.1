@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Minimalny OCR v7 – Online + Offline (100% CDN)</title>
+    <!-- Tesseract.js 100% z CDN - najpewniejsze -->
+    <script src="https://cdn.jsdelivr.net/npm/tesseract.js@5.1.0/dist/tesseract.min.js"></script>
+    <style>
+        body { font-family: Arial, sans-serif; background: #111; color: #eee; margin: 0; padding: 20px; }
+        h1 { color: #0078d4; text-align: center; }
+        #container { max-width: 1200px; margin: 0 auto; display: flex; flex-direction: column; gap: 20px; }
+        #imageContainer { position: relative; display: inline-block; border: 2px dashed #333; background: #000; }
+        #imageContainer img { max-width: 100%; display: block; }
+        #selectionBox { position: absolute; border: 3px solid #00ff00; background: rgba(0,255,0,0.1); pointer-events: none; display: none; }
+        #controls { text-align: center; padding: 15px; background: #222; border-radius: 8px; }
+        button { padding: 12px 24px; font-size: 16px; margin: 10px; background: #0078d4; color: white; border: none; border-radius: 6px; cursor: pointer; }
+        button:hover { background: #0099ff; }
+        button:disabled { background: #444; cursor: not-allowed; }
+        #progressContainer { background: #222; padding: 15px; border-radius: 8px; text-align: center; }
+        #progressText { margin-bottom: 10px; font-weight: bold; color: #0d6a0d; }
+        progress { width: 80%; height: 30px; border-radius: 15px; background: #333; }
+        progress::-webkit-progress-bar { background: #333; border-radius: 15px; }
+        progress::-webkit-progress-value { background: #0078d4; border-radius: 15px; }
+        progress::-moz-progress-bar { background: #0078d4; border-radius: 15px; }
+        #result { background: #1a1a1a; padding: 20px; border-radius: 8px; white-space: pre-wrap; min-height: 120px; border: 1px solid #333; }
+        #fileInput { display: block; margin: 20px auto; padding: 12px; background: #222; color: #eee; border-radius: 6px; border: 1px solid #333; width: fit-content; }
+    </style>
+</head>
+<body>
+    <div id="container">
+        <h1>🔤 Minimalny OCR v7 – Online + Offline (pol + rus + łacina)</h1>
+        
+        <input type="file" id="fileInput" accept="image/*">
+        
+        <div id="imageContainer">
+            <img id="image" alt="Załaduj obraz">
+            <div id="selectionBox"></div>
+        </div>
+        
+        <div id="controls">
+            <button id="ocrBtn" disabled>▶ Uruchom OCR</button>
+            <button id="clearBtn">✕ Wyczyść zaznaczenie</button>
+            <button id="previewBtn" disabled style="background:#666;">👁️ Podgląd (preprocessing)</button>
+            <button id="toggleBtn" style="background:#555;">⚙️ Preprocessing: ON</button>
+            <select id="engineSelect" style="padding:12px; margin:10px; background:#333; color:#eee; border:1px solid #555; border-radius:6px; font-size:16px;">
+                <option value="tesseract">💻 Tesseract (offline, szybkie)</option>
+                <option value="ocrspace">☁️ OCR.space (online, precyzyjne)</option>
+            </select>
+            <select id="langSelect" style="padding:12px; margin:10px; background:#333; color:#eee; border:1px solid #555; border-radius:6px; font-size:16px;">
+                <option value="pol">🇵🇱 Polski</option>
+                <option value="pol+rus">🇵🇱🇷🇺 Polski + Rosyjski</option>
+                <option value="rus">🇷🇺 Rosyjski</option>
+                <option value="eng">🇬🇧 Angielski</option>
+                <option value="deu">🇩🇪 Niemiecki</option>
+                <option value="fra">🇫🇷 Francuski</option>
+                <option value="pol+eng">🇵🇱🇬🇧 Polski + Angielski</option>
+                <option value="lat">🏛️ Łacina</option>
+            </select>
+        </div>
+        
+        <div id="progressContainer">
+            <div id="progressText">Gotowy do pracy – załaduj obraz</div>
+            <progress id="progressBar" value="0" max="100" style="display:none;"></progress>
+        </div>
+        
+        <div id="result">Wynik OCR pojawi się tutaj...</div>
+    </div>
+
+    <script>
+        const image = document.getElementById('image');
+        const fileInput = document.getElementById('fileInput');
+        const imageContainer = document.getElementById('imageContainer');
+        const selectionBox = document.getElementById('selectionBox');
+        const ocrBtn = document.getElementById('ocrBtn');
+        const clearBtn = document.getElementById('clearBtn');
+        const previewBtn = document.getElementById('previewBtn');
+        const result = document.getElementById('result');
+        const progressText = document.getElementById('progressText');
+        const progressBar = document.getElementById('progressBar');
+
+        let isSelecting = false;
+        let startX = 0, startY = 0;
+        let worker = null;
+        let selectedLanguage = 'pol+rus';
+        let selectedEngine = 'tesseract';
+
+        const engineSelect = document.getElementById('engineSelect');
+        engineSelect.addEventListener('change', (e) => {
+            selectedEngine = e.target.value;
+            if (selectedEngine === 'ocrspace') {
+                progressText.textContent = '☁️ Przełączono na OCR.space (online) - dokładniejsze dla starych dokumentów';
+            } else {
+                progressText.textContent = '💻 Przełączono na Tesseract (offline) - szybsze, ale mniej dokładne';
+            }
+        });
+
+        const langSelect = document.getElementById('langSelect');
+        langSelect.addEventListener('change', (e) => {
+            selectedLanguage = e.target.value;
+            if (worker && selectedEngine === 'tesseract') {
+                progressText.textContent = '⚠️ Język zmieniony - będzie załadowany nowy model przy następnym OCR';
+                worker = null;
+            }
+        });
+
+        fileInput.addEventListener('change', (e) => {
+            const file = e.target.files[0];
+            if (!file) return;
+            const url = URL.createObjectURL(file);
+            image.src = url;
+            image.onload = () => {
+                result.textContent = 'Obraz załadowany. Zaznacz fragment i kliknij OCR.';
+                clearSelection();
+            };
+        });
+
+        // Zaznaczanie – stabilne
+        imageContainer.addEventListener('mousedown', (e) => {
+            if (!image.src || e.button !== 0) return;
+            e.preventDefault();
+
+            isSelecting = true;
+            const rect = imageContainer.getBoundingClientRect();
+            startX = e.clientX - rect.left;
+            startY = e.clientY - rect.top;
+
+            selectionBox.style.display = 'block';
+            selectionBox.style.left = startX + 'px';
+            selectionBox.style.top = startY + 'px';
+            selectionBox.style.width = '0px';
+            selectionBox.style.height = '0px';
+
+            const onMove = (e) => {
+                if (!isSelecting) return;
+                const rect = imageContainer.getBoundingClientRect();
+                const x = Math.min(startX, e.clientX - rect.left);
+                const y = Math.min(startY, e.clientY - rect.top);
+                const w = Math.abs(e.clientX - rect.left - startX);
+                const h = Math.abs(e.clientY - rect.top - startY);
+
+                selectionBox.style.left = x + 'px';
+                selectionBox.style.top = y + 'px';
+                selectionBox.style.width = w + 'px';
+                selectionBox.style.height = h + 'px';
+            };
+
+            const onUp = () => {
+                isSelecting = false;
+                document.removeEventListener('mousemove', onMove);
+                document.removeEventListener('mouseup', onUp);
+
+                const w = parseFloat(selectionBox.style.width);
+                const h = parseFloat(selectionBox.style.height);
+                ocrBtn.disabled = (w < 20 || h < 20);
+                previewBtn.disabled = (w < 20 || h < 20);
+            };
+
+            document.addEventListener('mousemove', onMove);
+            document.addEventListener('mouseup', onUp);
+        });
+
+        let usePreprocessing = true;
+
+        clearBtn.addEventListener('click', clearSelection);
+        previewBtn.addEventListener('click', showPreview);
+        
+        const toggleBtn = document.getElementById('toggleBtn');
+        toggleBtn.addEventListener('click', () => {
+            usePreprocessing = !usePreprocessing;
+            toggleBtn.textContent = `⚙️ Preprocessing: ${usePreprocessing ? 'ON' : 'OFF'}`;
+            toggleBtn.style.background = usePreprocessing ? '#555' : '#444';
+            progressText.textContent = usePreprocessing ? '✅ Preprocessing włączony' : '⚠️ Preprocessing wyłączony - czyta oryginał';
+        });
+
+        function clearSelection() {
+            selectionBox.style.display = 'none';
+            selectionBox.style.width = '0px';
+            selectionBox.style.height = '0px';
+            ocrBtn.disabled = true;
+            previewBtn.disabled = true;
+        }
+
+        // OCR.space API mapping dla języków
+        function mapLanguageToOCRSpace(lang) {
+            const mapping = {
+                'pol': 'pol',
+                'pol+rus': 'pol',
+                'rus': 'rus',
+                'eng': 'eng',
+                'deu': 'deu',
+                'fra': 'fra',
+                'pol+eng': 'pol',
+                'lat': 'lat'
+            };
+            return mapping[lang] || 'eng';
+        }
+
+        async function recognizeWithOCRSpace(canvas) {
+            const base64 = canvas.toDataURL('image/jpeg').split(',')[1];
+            const lang = mapLanguageToOCRSpace(selectedLanguage);
+            
+            progressText.textContent = 'Wysyłanie do OCR.space...';
+            progressBar.value = 80;
+
+            const formData = new FormData();
+            formData.append('base64Image', 'data:image/jpeg;base64,' + base64);
+            formData.append('language', lang);
+            formData.append('apikey', 'K87898142');
+
+            const response = await fetch('https://api.ocr.space/parse/image', {
+                method: 'POST',
+                body: formData
+            });
+
+            const result = await response.json();
+            
+            if (!result.IsErroredOnProcessing) {
+                return {
+                    text: result.ParsedText || '',
+                    confidence: 85 // OCR.space nie zwraca confidence
+                };
+            } else {
+                throw new Error(result.ErrorMessage || 'OCR.space błąd');
+            }
+        }
+
+        // Preprocessing - polepszenie kontrastu, jasności itp.
+        function preprocessCanvas(sourceCanvas) {
+            const canvas = document.createElement('canvas');
+            canvas.width = sourceCanvas.width;
+            canvas.height = sourceCanvas.height;
+            const ctx = canvas.getContext('2d');
+            
+            // Rysuj źródło na nowy canvas
+            ctx.drawImage(sourceCanvas, 0, 0);
+            
+            const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+            const data = imageData.data;
+
+            // Słabszy preprocessing - 1.2 kontrast, +10 jasność
+            const contrast = 1.2;
+            const brightness = 10;
+
+            for (let i = 0; i < data.length; i += 4) {
+                data[i] = Math.max(0, Math.min(255, data[i] * contrast + brightness));     // R
+                data[i + 1] = Math.max(0, Math.min(255, data[i + 1] * contrast + brightness)); // G
+                data[i + 2] = Math.max(0, Math.min(255, data[i + 2] * contrast + brightness)); // B
+            }
+
+            ctx.putImageData(imageData, 0, 0);
+            return canvas;
+        }
+
+        function showPreview() {
+            const w = parseFloat(selectionBox.style.width);
+            const h = parseFloat(selectionBox.style.height);
+            if (w < 20 || h < 20) return;
+
+            // WAŻNE: Uwzględnij skalowanie obrazu na ekranie
+            const displayWidth = image.width;   // Rozmiar wyświetlany
+            const displayHeight = image.height;
+            const realWidth = image.naturalWidth;   // Rzeczywisty rozmiar pliku
+            const realHeight = image.naturalHeight;
+            
+            const scaleX = realWidth / displayWidth;
+            const scaleY = realHeight / displayHeight;
+
+            // Współrzędne zaznaczenia w pikselach rzeczywistego obrazu
+            const left = parseFloat(selectionBox.style.left) * scaleX;
+            const top = parseFloat(selectionBox.style.top) * scaleY;
+            const width = w * scaleX;
+            const height = h * scaleY;
+
+            const originalCanvas = document.createElement('canvas');
+            const ctx = originalCanvas.getContext('2d');
+            originalCanvas.width = width;
+            originalCanvas.height = height;
+            ctx.drawImage(image, left, top, width, height, 0, 0, width, height);
+
+            const processedCanvas = preprocessCanvas(originalCanvas);
+
+            // Pokaż side-by-side
+            result.innerHTML = `
+                <strong style="color:#888;">📊 Porównanie - oryginał (L) vs preprocessing (P):</strong><br><br>
+                <div style="display:flex; gap:20px; justify-content:center; flex-wrap:wrap;">
+                    <div style="text-align:center;">
+                        <small style="color:#666;">Oryginał (${Math.round(width)}x${Math.round(height)}px)</small><br>
+                        <img src="${originalCanvas.toDataURL()}" style="max-width:400px; border:1px solid #555; border-radius:6px;">
+                    </div>
+                    <div style="text-align:center;">
+                        <small style="color:#666;">Preprocessing</small><br>
+                        <img src="${processedCanvas.toDataURL()}" style="max-width:400px; border:1px solid #555; border-radius:6px;">
+                    </div>
+                </div>
+                <small style="display:block; margin-top:15px; color:#888; text-align:center;">
+                    ✓ Przycisk "⚙️ Preprocessing" wyłącza/włącza (aktualnie: ${usePreprocessing ? 'ON' : 'OFF'})<br>
+                    Kliknij OCR - będzie czytać wersję ${usePreprocessing ? '<strong>z polepszeniem</strong>' : '<strong>oryginalne</strong>'}.
+                </small>
+            `;
+            progressText.textContent = '👁️ Podgląd - porównaj obie wersje';
+        }
+
+        // OCR z paskiem postępu
+        ocrBtn.addEventListener('click', async () => {
+            const w = parseFloat(selectionBox.style.width);
+            const h = parseFloat(selectionBox.style.height);
+            if (w < 20 || h < 20) return;
+
+            ocrBtn.disabled = true;
+            progressBar.style.display = 'block';
+            progressBar.value = 0;
+            progressText.textContent = 'Inicjalizacja OCR...';
+            result.textContent = '';
+
+            try {
+                // Wycinanie z POPRAWNYM skalowaniem
+                const displayWidth = image.width;
+                const displayHeight = image.height;
+                const realWidth = image.naturalWidth;
+                const realHeight = image.naturalHeight;
+                
+                const scaleX = realWidth / displayWidth;
+                const scaleY = realHeight / displayHeight;
+
+                const w = parseFloat(selectionBox.style.width);
+                const h = parseFloat(selectionBox.style.height);
+                const left = parseFloat(selectionBox.style.left) * scaleX;
+                const top = parseFloat(selectionBox.style.top) * scaleY;
+                const width = w * scaleX;
+                const height = h * scaleY;
+
+                const originalCanvas = document.createElement('canvas');
+                const ctx = originalCanvas.getContext('2d');
+                originalCanvas.width = width;
+                originalCanvas.height = height;
+                ctx.drawImage(image, left, top, width, height, 0, 0, width, height);
+
+                // Preprocessing jeśli włączony
+                const recognizeCanvas = usePreprocessing ? preprocessCanvas(originalCanvas) : originalCanvas;
+
+                let text, confidence;
+
+                if (selectedEngine === 'ocrspace') {
+                    // OCR.space (online)
+                    const result = await recognizeWithOCRSpace(recognizeCanvas);
+                    text = result.text;
+                    confidence = result.confidence;
+                    progressBar.value = 95;
+                } else {
+                    // Tesseract (offline)
+                    if (!worker) {
+                        const { createWorker } = Tesseract;
+                        
+                        progressText.textContent = 'Tworzenie workera...';
+                        progressBar.value = 10;
+                        
+                        worker = await createWorker();
+
+                        progressText.textContent = 'Ładowanie rdzenia...';
+                        progressBar.value = 30;
+                        await worker.load();
+
+                        progressText.textContent = 'Pobieranie modeli (' + selectedLanguage + ')...';
+                        progressBar.value = 50;
+                        await worker.loadLanguage(selectedLanguage);
+
+                        progressText.textContent = 'Inicjalizacja silnika...';
+                        progressBar.value = 75;
+                        await worker.initialize(selectedLanguage);
+
+                        progressText.textContent = '✅ OCR gotowy! (następne razy błyskawiczne)';
+                        progressBar.value = 100;
+                    } else {
+                        progressText.textContent = 'OCR już załadowany – rozpoznawanie...';
+                        progressBar.value = 90;
+                    }
+
+                    progressText.textContent = 'Rozpoznawanie tekstu...';
+                    progressBar.value = 95;
+                    const ocrResult = await worker.recognize(recognizeCanvas);
+                    text = ocrResult.data.text;
+                    confidence = ocrResult.data.confidence;
+                }
+
+                progressBar.value = 100;
+                progressText.textContent = 'Gotowe! ✅';
+
+                const cleaned = text.trim().replace(/\s+/g, ' ').replace(/\n+/g, '\n');
+                const engine = selectedEngine === 'ocrspace' ? '☁️ OCR.space' : '💻 Tesseract';
+                
+                result.innerHTML = `
+                    <strong style="color:#0d6a0d;">✅ Rozpoznano (pewność: ${Math.round(confidence)}%) | Engine: ${engine} | Język: ${selectedLanguage}</strong><br><br>
+                    <div style="display:flex; gap:20px; justify-content:center; flex-wrap:wrap;">
+                        <div style="flex:1; min-width:300px;">
+                            <small style="color:#666; display:block; margin-bottom:10px;">📊 Preprocessing (przed OCR)</small>
+                            <img src="${recognizeCanvas.toDataURL()}" style="max-width:100%; border:1px solid #555; border-radius:6px;">
+                        </div>
+                        <div style="flex:1; min-width:300px;">
+                            <small style="color:#666; display:block; margin-bottom:10px;">📝 Rozpoznany tekst</small>
+                            <pre style="background:#000;padding:15px;border-radius:6px; overflow-x:auto; max-height:400px;">${cleaned}</pre>
+                        </div>
+                    </div>
+                    <small style="display:block; margin-top:15px; color:#888;">(Ctrl+C z tekstu do skopiowania)</small>
+                `;
+
+            } catch (err) {
+                console.error('OCR Error:', err);
+                progressText.textContent = '❌ Błąd OCR';
+                result.textContent = 'Błąd: ' + err.message + '\n\nSpróbuj:\n1. Zmień engine (offline vs online)\n2. Wyłącz Tracking Prevention (Edge)\n3. Odśwież stronę';
+                progressBar.value = 0;
+            } finally {
+                ocrBtn.disabled = false;
+            }
+        });
+    </script>
+</body>
+</html>

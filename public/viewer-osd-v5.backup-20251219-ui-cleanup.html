@@ -1,0 +1,1686 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Genealog Indexer v5.0 - Hierarchia Aktów + Canvas Fix</title>
+    <script src="https://openseadragon.github.io/openseadragon/openseadragon.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        /* Oryginalny styl + nowe dla drzewa sidebar */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        html, body {
+            width: 100%;
+            height: 100%;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background-color: #0a0a0a;
+            color: #ddd;
+            overflow: hidden;
+        }
+        #app {
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+        }
+        .toolbar {
+            background: linear-gradient(180deg, #1a1a1a 0%, #151515 100%);
+            border-bottom: 1px solid #2a2a2a;
+            padding: 6px 10px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            min-height: 38px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+            z-index: 100;
+            flex-wrap: wrap;
+        }
+        .toolbar-title {
+            font-size: 11px;
+            color: #0078d4;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-right: auto;
+        }
+        .toolbar-search {
+            background: #0f0f0f;
+            border: 1px solid #3a3a3a;
+            color: #bbb;
+            padding: 5px 10px;
+            border-radius: 4px;
+            width: 150px;
+            font-size: 11px;
+            transition: all 0.15s ease;
+        }
+        .toolbar-search:focus {
+            border-color: #0078d4;
+            outline: none;
+            background: #1a1a1a;
+            box-shadow: 0 0 0 3px rgba(0,120,212,0.1);
+        }
+        .toolbar-btn {
+            background: #252525;
+            border: 1px solid #3a3a3a;
+            color: #bbb;
+            padding: 5px 10px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 11px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            transition: all 0.15s ease;
+            white-space: nowrap;
+        }
+        .toolbar-btn:hover {
+            background: #2d2d2d;
+            border-color: #0078d4;
+            color: #0078d4;
+            transform: translateY(-1px);
+        }
+        .toolbar-btn.active {
+            background: #0078d4;
+            border-color: #0078d4;
+            color: white;
+            box-shadow: 0 0 12px rgba(0,120,212,0.4);
+        }
+        .toolbar-sep {
+            width: 1px;
+            height: 20px;
+            background: #2a2a2a;
+            margin: 0 2px;
+        }
+        .main-content {
+            flex: 1;
+            display: flex;
+            gap: 0;
+            overflow: hidden;
+            position: relative;
+        }
+        .viewer-panel {
+            flex: 1;
+            background: #000;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+        .viewer-container {
+            flex: 1;
+            position: relative;
+            overflow: hidden;
+        }
+        #viewer {
+            width: 100%;
+            height: 100%;
+            cursor: grab;
+        }
+        #viewer.grabbing {
+            cursor: grabbing;
+        }
+        .viewer-container.drag-over {
+            border: 4px dashed #0078d4 !important;
+            background-color: rgba(0, 120, 212, 0.05) !important;
+        }
+        .rotate-controls {
+            position: absolute;
+            bottom: 15px;
+            right: 15px;
+            display: flex;
+            gap: 6px;
+            z-index: 60;
+        }
+        .rotate-btn {
+            background: #1a1a1a;
+            border: 1px solid #3a3a3a;
+            color: #ddd;
+            width: 36px;
+            height: 36px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s ease;
+        }
+        .rotate-btn:hover {
+            background: #252525;
+            border-color: #0078d4;
+            color: #0078d4;
+        }
+        .rotate-btn:active {
+            transform: scale(0.95);
+        }
+        .roi-info-overlay {
+            position: absolute;
+            bottom: 10px;
+            left: 10px;
+            background: rgba(0,0,0,0.85);
+            color: #0078d4;
+            padding: 8px 12px;
+            border-radius: 4px;
+            font-size: 11px;
+            z-index: 60;
+            display: none;
+            border: 1px solid #0078d4;
+        }
+        .roi-info-overlay.visible {
+            display: block;
+        }
+        /* OSD OVERLAY - ROI BOX */
+        .roi-overlay {
+            border: 2px dashed #0078d4;
+            background: rgba(0,120,212,0.15);
+            pointer-events: none;
+            position: absolute;
+        }
+        .roi-overlay.active {
+            border-color: #ff9800;
+            border-width: 3px;
+            background: rgba(255,152,0,0.2);
+        }
+        .roi-overlay.highlight {
+            border-color: #ffb300;
+            border-width: 3px;
+            background: rgba(255,179,0,0.2);
+        }
+        /* Act ROI - większa ramka */
+        .act-overlay {
+            border: 3px solid #10b981;
+            background: rgba(16,185,129,0.1);
+            pointer-events: none;
+        }
+        /* Canvas tymczasowy do rysowania */
+        #drawingCanvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            cursor: crosshair !important;
+            z-index: 50;
+            pointer-events: none; /* domyślnie przezroczysty dla myszy */
+        }
+        #drawingCanvas.hidden {
+            display: none;
+        }
+        .right-panel {
+            width: 340px;
+            background: linear-gradient(180deg, #1a1a1a 0%, #151515 100%);
+            border-left: 1px solid #2a2a2a;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            transition: width 0.3s ease;
+            box-shadow: -4px 0 16px rgba(0,0,0,0.3);
+        }
+        .right-panel.collapsed {
+            width: 0;
+            border: none;
+        }
+        .panel-content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+        .records-sidebar {
+            width: 50px;
+            background: #151515;
+            border-right: 1px solid #2a2a2a;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 10px 0;
+            gap: 8px;
+        }
+        .record-pill {
+            width: 36px;
+            height: 36px;
+            border-radius: 18px;
+            background: #252525;
+            border: 2px solid #3a3a3a;
+            color: #bbb;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            position: relative;
+        }
+        .record-pill:hover {
+            border-color: #0078d4;
+            transform: scale(1.1);
+        }
+        .record-pill.active {
+            background: #0078d4;
+            border-color: #0078d4;
+            color: white;
+            box-shadow: 0 0 12px rgba(0,120,212,0.6);
+        }
+        .record-pill.new {
+            background: transparent;
+            border: 2px dashed #3a3a3a;
+            color: #666;
+            font-size: 20px;
+        }
+        .record-pill.new:hover {
+            border-color: #107c10;
+            color: #107c10;
+        }
+        .templates-section {
+            padding: 12px;
+            border-bottom: 1px solid #2a2a2a;
+        }
+        .section-title {
+            font-size: 10px;
+            color: #888;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 10px;
+        }
+        .form-section {
+            padding: 12px;
+            border-bottom: 1px solid #2a2a2a;
+            display: none;
+            flex: 1;
+            overflow-y: auto;
+        }
+        .form-section.active {
+            display: block;
+        }
+        .form-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        .form-header h3 {
+            font-size: 13px;
+            color: #ddd;
+            font-weight: 600;
+        }
+        .record-counter {
+            font-size: 10px;
+            color: #888;
+            background: #252525;
+            padding: 3px 8px;
+            border-radius: 10px;
+        }
+        .form-group {
+            margin-bottom: 12px;
+        }
+        .form-group label {
+            display: block;
+            font-size: 10px;
+            color: #888;
+            margin-bottom: 5px;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.3px;
+        }
+        .form-group.required label::after {
+            content: " *";
+            color: #c42b1c;
+        }
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 8px 10px;
+            background: #0f0f0f;
+            border: 1px solid #3a3a3a;
+            color: #ddd;
+            border-radius: 4px;
+            font-size: 12px;
+            font-family: inherit;
+            transition: all 0.15s ease;
+        }
+        .form-group input:focus,
+        .form-group textarea:focus {
+            border-color: #0078d4;
+            outline: none;
+            background: #1a1a1a;
+            box-shadow: 0 0 0 3px rgba(0,120,212,0.1);
+        }
+        .form-group input.has-roi {
+            border-left: 4px solid #10b981;
+            box-shadow: 0 0 8px rgba(16,185,129,0.3);
+        }
+        .form-group textarea {
+            resize: vertical;
+            min-height: 60px;
+            font-family: 'Courier New', monospace;
+        }
+        /* SMART DEFAULTS BAR */
+        .smart-defaults-bar {
+            background: linear-gradient(180deg, #1a1a1a 0%, #0f0f0f 100%);
+            border-bottom: 2px solid #0078d4;
+            padding: 10px;
+            margin-bottom: 12px;
+            border-radius: 6px;
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 10px;
+            align-items: center;
+        }
+        .smart-defaults-bar label {
+            font-size: 9px;
+            color: #888;
+            text-transform: uppercase;
+            letter-spacing: 0.4px;
+            margin-bottom: 3px;
+            display: block;
+        }
+        .smart-defaults-bar select {
+            width: 100%;
+            padding: 6px 8px;
+            background: #0f0f0f;
+            border: 1px solid #3a3a3a;
+            color: #ddd;
+            border-radius: 4px;
+            font-size: 11px;
+            cursor: pointer;
+            transition: all 0.15s ease;
+        }
+        .smart-defaults-bar select:hover {
+            border-color: #0078d4;
+        }
+        .smart-defaults-bar select:focus {
+            outline: none;
+            border-color: #0078d4;
+            background: #1a1a1a;
+            box-shadow: 0 0 0 3px rgba(0,120,212,0.1);
+        }
+        .smart-defaults-checkboxes {
+            grid-column: 1 / -1;
+            display: flex;
+            gap: 15px;
+            font-size: 11px;
+            align-items: center;
+        }
+        .smart-defaults-checkboxes label {
+            margin-bottom: 0;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            cursor: pointer;
+        }
+        .smart-defaults-checkboxes input[type="checkbox"] {
+            cursor: pointer;
+            accent-color: #0078d4;
+            width: 16px;
+            height: 16px;
+        }
+        .form-actions {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 6px;
+            margin-top: 12px;
+        }
+        .form-btn {
+            background: #107c10;
+            border: none;
+            color: white;
+            padding: 10px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 11px;
+            font-weight: 600;
+            transition: all 0.15s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+        }
+        .form-btn:hover {
+            background: #0d6a0d;
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(16,124,16,0.3);
+        }
+        .form-btn.danger {
+            background: #c42b1c;
+        }
+        .form-btn.danger:hover {
+            background: #a02318;
+            box-shadow: 0 4px 12px rgba(196,43,28,0.3);
+        }
+        .thumbnails-bar {
+            height: 100px;
+            background: #0f0f0f;
+            border-top: 1px solid #2a2a2a;
+            display: flex;
+            align-items: center;
+            padding: 8px;
+            gap: 8px;
+            overflow-x: auto;
+            overflow-y: hidden;
+            transition: height 0.3s ease;
+            box-shadow: 0 -2px 8px rgba(0,0,0,0.3);
+        }
+        .thumbnails-bar.collapsed {
+            height: 0;
+            padding: 0;
+            border: none;
+            box-shadow: none;
+            overflow: hidden;
+        }
+        .thumbnail {
+            width: 84px;
+            height: 84px;
+            border: 2px solid #333;
+            border-radius: 4px;
+            cursor: pointer;
+            overflow: hidden;
+            background: #1a1a1a;
+            flex-shrink: 0;
+            transition: all 0.2s ease;
+            position: relative;
+        }
+        .thumbnail img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        .thumbnail:hover {
+            border-color: #0078d4;
+            transform: scale(1.05);
+        }
+        .thumbnail.active {
+            border-color: #0078d4;
+            box-shadow: 0 0 16px rgba(0,120,212,0.6);
+        }
+        .thumbnail-number {
+            position: absolute;
+            top: 2px;
+            left: 2px;
+            background: rgba(0,0,0,0.7);
+            color: #fff;
+            font-size: 10px;
+            padding: 2px 5px;
+            border-radius: 2px;
+            font-weight: 600;
+        }
+        .thumbnail-count {
+            position: absolute;
+            bottom: 2px;
+            right: 2px;
+            background: rgba(0,120,212,0.8);
+            color: white;
+            font-size: 9px;
+            padding: 1px 4px;
+            border-radius: 2px;
+            font-weight: 600;
+        }
+        .notification {
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            padding: 12px 20px;
+            background: #0078d4;
+            color: white;
+            border-radius: 6px;
+            font-size: 12px;
+            font-weight: 500;
+            z-index: 1000;
+            animation: slideIn 0.3s ease;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.4);
+        }
+        .notification.error {
+            background: #c42b1c;
+        }
+        .notification.success {
+            background: #107c10;
+        }
+        @keyframes slideIn {
+            from {
+                transform: translateX(400px);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #0f0f0f;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #3a3a3a;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #4a4a4a;
+        }
+        @media (max-width: 1024px) {
+            .right-panel {
+                width: 300px;
+            }
+        }
+        @media (max-width: 768px) {
+            .main-content {
+                flex-direction: column;
+            }
+            .right-panel {
+                width: 100%;
+                max-height: 250px;
+                border-left: none;
+                border-top: 1px solid #2a2a2a;
+            }
+            .thumbnails-bar {
+                height: 80px;
+            }
+            .template-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div id="app">
+        <!-- TOOLBAR -->
+        <div class="toolbar">
+            <span class="toolbar-title">📚 Genealog Indexer</span>
+            <button class="toolbar-btn" onclick="addImages()" title="Dodaj obrazy (Ctrl+O)">
+                <i class="fas fa-folder-open"></i> Otwórz
+            </button>
+            <button class="toolbar-btn" id="roiBtn" onclick="toggleROI()" title="ROI: Zaznaczanie pól (Ctrl+R)">
+                <i class="fas fa-crop"></i> ROI
+            </button>
+            <button class="toolbar-btn" id="actBtn" onclick="toggleActMode()" title="Akt: Cały dokument (Ctrl+A)">
+                <i class="fas fa-square-full"></i> Akt
+            </button>
+            <div class="toolbar-sep"></div>
+            <button class="toolbar-btn" onclick="zoomReset()" title="Zoom: Reset (Ctrl+0)">
+                <i class="fas fa-compress"></i> Fit
+            </button>
+            <button class="toolbar-btn" onclick="toggleFullscreen()" title="Pełny ekran (F)">
+                <i class="fas fa-expand"></i> Fullscreen
+            </button>
+            <div class="toolbar-sep"></div>
+            <button class="toolbar-btn" onclick="togglePanel('right')" title="Formularz (Ctrl+F)">
+                <i class="fas fa-list"></i> Formularz
+            </button>
+            <button class="toolbar-btn" onclick="togglePanel('thumbs')" title="Miniatury (Ctrl+M)">
+                <i class="fas fa-images"></i> Miniatury
+            </button>
+            <button class="toolbar-btn" onclick="exportData()" title="Eksport (Ctrl+E)">
+                <i class="fas fa-download"></i> Eksport
+            </button>
+        </div>
+        <!-- MAIN CONTENT -->
+        <div class="main-content">
+            <!-- RECORDS SIDEBAR -->
+            <div class="records-sidebar" id="recordsSidebar"></div>
+            <!-- VIEWER -->
+            <div class="viewer-panel">
+                <div class="viewer-container" id="viewerContainer">
+                    <div id="viewer"></div>
+                    <canvas id="drawingCanvas"></canvas>
+                    <div class="roi-info-overlay" id="roiInfo">Tryb ROI aktywny: Zaznacz obszar na obrazie</div>
+                    <!-- ROTATE CONTROLS -->
+                    <div class="rotate-controls">
+                        <button class="rotate-btn" onclick="rotateImage(-90)" title="Obrót -90° (←)">
+                            <i class="fas fa-redo"></i>
+                        </button>
+                        <button class="rotate-btn" onclick="rotateImage(90)" title="Obrót +90° (→)">
+                            <i class="fas fa-undo"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <!-- RIGHT PANEL -->
+            <div class="right-panel" id="rightPanel">
+                <div class="panel-content">
+                    <!-- FORM SECTIONS -->
+                    <div id="formsContainer"></div>
+                </div>
+            </div>
+        </div>
+        <!-- THUMBNAILS BAR -->
+        <div class="thumbnails-bar" id="thumbsBar"></div>
+    </div>
+    <input type="file" id="fileInput" multiple accept="image/*" style="display: none;" title="Wybierz obrazy do zaindeksowania">
+    <script>
+        const app = {
+            images: [],
+            records: [],
+            currentImageIdx: 0,
+            currentRecordId: null,
+            currentTemplate: null,
+            templates: [],
+            viewer: null,
+            roiMode: false,
+            actMode: false, // nowy: tryb zaznaczania aktu
+            drawingCanvas: null,
+            drawingCtx: null,
+            activeField: null,
+            drawingROI: false,
+            roiStartX: 0,
+            roiStartY: 0,
+            roiOverlays: [] // OSD overlays (nie canvas!)
+        };
+        // INITIALIZATION
+        document.addEventListener('DOMContentLoaded', async () => {
+            loadFallbackTemplates();
+            initViewer();
+            setupDrawingCanvas();
+            setupEvents();
+            renderRecordsSidebar();
+            loadStorage();
+            notify('System gotowy', 'success');
+        });
+        // FALLBACK TEMPLATES
+        function loadFallbackTemplates() {
+            app.templates = [
+                {
+                    id: "birth",
+                    name: "Akt Urodzenia",
+                    icon: "fa-baby",
+                    fields: [
+                        {id: "child_first_name", label: "Imię dziecka", type: "text", required: true},
+                        {id: "child_last_name", label: "Nazwisko dziecka", type: "text", required: true},
+                        {id: "birth_date", label: "Data urodzenia", type: "date", required: false},
+                        {id: "birth_place", label: "Miejsce urodzenia", type: "text", required: false},
+                        {id: "father_name", label: "Imię ojca", type: "text", required: false},
+                        {id: "mother_name", label: "Imię matki", type: "text", required: false},
+                        {id: "notes", label: "Uwagi", type: "textarea", required: false}
+                    ]
+                },
+                {
+                    id: "marriage",
+                    name: "Akt Małżeństwa",
+                    icon: "fa-ring",
+                    fields: [
+                        {id: "groom_first_name", label: "Imię pana młodego", type: "text", required: true},
+                        {id: "groom_last_name", label: "Nazwisko pana młodego", type: "text", required: true},
+                        {id: "bride_first_name", label: "Imię panny młodej", type: "text", required: true},
+                        {id: "bride_last_name", label: "Nazwisko panny młodej", type: "text", required: true},
+                        {id: "marriage_date", label: "Data małżeństwa", type: "date", required: false},
+                        {id: "marriage_place", label: "Miejsce małżeństwa", type: "text", required: false},
+                        {id: "notes", label: "Uwagi", type: "textarea", required: false}
+                    ]
+                },
+                {
+                    id: "death",
+                    name: "Akt Zgonu",
+                    icon: "fa-cross",
+                    fields: [
+                        {id: "deceased_first_name", label: "Imię zmarłego", type: "text", required: true},
+                        {id: "deceased_last_name", label: "Nazwisko zmarłego", type: "text", required: true},
+                        {id: "death_date", label: "Data zgonu", type: "date", required: false},
+                        {id: "death_place", label: "Miejsce zgonu", type: "text", required: false},
+                        {id: "age", label: "Wiek (lata)", type: "number", required: false},
+                        {id: "notes", label: "Uwagi", type: "textarea", required: false}
+                    ]
+                }
+            ];
+            app.currentTemplate = app.templates[0].id;
+            renderFormSections();
+        }
+        // RENDER FORM SECTIONS
+        function renderFormSections() {
+            const container = document.getElementById('formsContainer');
+            container.innerHTML = '';
+            app.templates.forEach((template) => {
+                const section = document.createElement('div');
+                section.id = `form-${template.id}`;
+                section.className = `form-section ${template.id === app.currentTemplate ? 'active' : ''}`;
+                section.innerHTML = `
+                    <div class="form-header">
+                        <h3>${template.name}</h3>
+                        <div class="record-counter" id="recordCounter">Rekord: #0</div>
+                    </div>
+                    <div class="smart-defaults-bar">
+                        <div>
+                            <label for="defaultParish">⛪ Parafia</label>
+                            <select id="defaultParish" class="default-parish-select" onchange="saveSmartDefaults()">
+                                <option value="">-- Wybierz paraffię --</option>
+                                <option value="Wniebowzięcia">Wniebowzięcia</option>
+                                <option value="Świętego Michała">Świętego Michała</option>
+                                <option value="Świętego Józefa">Świętego Józefa</option>
+                                <option value="Świętej Barbary">Świętej Barbary</option>
+                                <option value="Karmelitów">Karmelitów</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label for="defaultYear">📅 Rok</label>
+                            <input type="number" id="defaultYear" class="default-year-input" placeholder="YYYY" min="1500" max="2050" onchange="saveSmartDefaults()" style="width:100%; padding:6px 8px; background:#0f0f0f; border:1px solid #3a3a3a; color:#ddd; border-radius:4px; font-size:11px;">
+                        </div>
+                        <div>
+                            <label for="defaultActType">📋 Typ Aktu</label>
+                            <select id="defaultActType" class="default-act-type-select" onchange="saveSmartDefaults(); selectTemplateFromDefault()">
+                                <option value="birth">Akt Urodzenia</option>
+                                <option value="marriage">Akt Małżeństwa</option>
+                                <option value="death">Akt Zgonu</option>
+                                <option value="mixed">Mieszane</option>
+                                <option value="other">Inne</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label for="defaultLang">🌐 Język</label>
+                            <select id="defaultLang" class="default-lang-select" onchange="saveSmartDefaults()">
+                                <option value="PL">Polski (PL)</option>
+                                <option value="RU">Rosyjski (RU)</option>
+                                <option value="LA">Łaciński (LA)</option>
+                            </select>
+                        </div>
+                        <div class="smart-defaults-checkboxes">
+                            <label><input type="checkbox" id="copyFromPrevious" class="copy-previous-check"> Kopiuj z poprzedniego</label>
+                            <label><input type="checkbox" id="autoIncrementYear" class="auto-increment-check"> Auto-inkrementuj rok</label>
+                        </div>
+                    </div>
+                `;
+                template.fields.forEach(field => {
+                    const group = document.createElement('div');
+                    group.className = `form-group ${field.required ? 'required' : ''}`;
+                    const label = document.createElement('label');
+                    label.textContent = field.label;
+                    let input;
+                    if (field.type === 'textarea') {
+                        input = document.createElement('textarea');
+                    } else {
+                        input = document.createElement('input');
+                        input.type = field.type;
+                    }
+                    input.className = 'field-input';
+                    input.dataset.field = field.id;
+                    input.dataset.templateId = template.id;
+                    input.title = field.label;
+                    input.placeholder = field.label;
+                    if (field.required) {
+                        input.required = true;
+                    }
+                    group.appendChild(label);
+                    group.appendChild(input);
+                    section.appendChild(group);
+                });
+                const actions = document.createElement('div');
+                actions.className = 'form-actions';
+                actions.innerHTML = `
+                    <button class="form-btn" onclick="createNewRecord()">
+                        <i class="fas fa-plus"></i> Nowy
+                    </button>
+                    <button class="form-btn" onclick="saveRecord()">
+                        <i class="fas fa-save"></i> Zapisz
+                    </button>
+                    <button class="form-btn danger" onclick="deleteCurrentRecord()">
+                        <i class="fas fa-trash"></i> Usuń
+                    </button>
+                `;
+                section.appendChild(actions);
+                container.appendChild(section);
+            });
+            setupFormEvents();
+            loadSmartDefaults(); // ← Wczytaj defaults po wyrenderowaniu
+        }
+        // SETUP FORM EVENTS (delegacja zdarzeń na kontenerze)
+        function setupFormEvents() {
+            const formsContainer = document.getElementById('formsContainer');
+            if (!formsContainer) return;
+            // Usuń stare delegowane listenery (cloneNode trick)
+            formsContainer.replaceWith(formsContainer.cloneNode(true));
+            const newContainer = document.getElementById('formsContainer');
+            // Delegacja zdarzeń – focusin (propaguje, w przeciwieństwie do focus)
+            newContainer.addEventListener('focusin', (e) => {
+                if (e.target.classList.contains('field-input')) {
+                    app.activeField = e.target;
+                    console.log('🔵 Focus: pole aktywne', e.target.dataset.field);
+                    redrawROIs();
+                    // Zoom do ROI jeśli istnieje
+                    if (app.currentRecordId) {
+                        const record = app.records.find(r => r.id === app.currentRecordId);
+                        if (record && record.rois && record.rois[e.target.dataset.field]) {
+                            zoomToROI(record.rois[e.target.dataset.field]);
+                        }
+                    }
+                }
+            });
+            // Mouseenter - podświetlenie pola przy najechaniu
+            newContainer.addEventListener('mouseenter', (e) => {
+                if (e.target.classList.contains('field-input')) {
+                    const fieldId = e.target.dataset.field;
+                    if (app.currentRecordId) {
+                        const record = app.records.find(r => r.id === app.currentRecordId);
+                        if (record && record.rois && record.rois[fieldId]) {
+                            redrawROIs(fieldId); // podświetlenie tylko tego pola
+                        }
+                    }
+                }
+            }, true);
+            // Mouseleave - powrót do normalnego rysowania
+            newContainer.addEventListener('mouseleave', (e) => {
+                if (e.target.classList.contains('field-input')) {
+                    redrawROIs(); // wróć do normalnego rysowania
+                }
+            }, true);
+            // Keydown - Enter przechodzi do następnego pola
+            newContainer.addEventListener('keydown', (e) => {
+                if (e.target.classList.contains('field-input') && e.key === 'Enter' && e.target.tagName !== 'TEXTAREA') {
+                    e.preventDefault();
+                    const form = e.target.closest('.form-section');
+                    const inputs = Array.from(form.querySelectorAll('.field-input'));
+                    const idx = inputs.indexOf(e.target);
+                    if (idx < inputs.length - 1) {
+                        inputs[idx + 1].focus();
+                    } else {
+                        saveRecord();
+                    }
+                }
+            });
+            console.log('✅ Form events delegated on container');
+        }
+        // VIEWER INIT (bez canvas, tylko OSD)
+        function initViewer() {
+            app.viewer = OpenSeadragon({
+                id: 'viewer',
+                prefixUrl: 'https://openseadragon.github.io/openseadragon/images/',
+                minZoomLevel: 0.5,
+                maxZoomLevel: 20,
+                visibilityRatio: 0.5,
+                constrainDuringPan: true,
+                showNavigator: true,
+                navigatorPosition: 'BOTTOM_RIGHT',
+                gestureSettingsMouse: {
+                    scrollToZoom: true,
+                    clickToZoom: false
+                }
+            });
+            // Dodaj listenery - przy zoom/pan/rotate OSD automatycznie skaluje overlays!
+            app.viewer.addHandler('animation', () => {
+                // OSD automatycznie redrawuje overlays
+            });
+            app.viewer.addHandler('resize', () => {
+                resizeDrawingCanvas();
+            });
+            // Dodaj handler do resetu overlays przy załadowaniu nowego obrazu
+            app.viewer.addHandler('open', () => {
+                app.roiOverlays = [];
+                redrawROIs();
+            });
+        }
+        // SETUP DRAWING CANVAS (do rysowania, nie do wyświetlania!)
+        function setupDrawingCanvas() {
+            app.drawingCanvas = document.getElementById('drawingCanvas');
+            if (!app.drawingCanvas) {
+                console.error('Drawing Canvas element not found');
+                return;
+            }
+            app.drawingCtx = app.drawingCanvas.getContext('2d', { willReadFrequently: true });
+            const container = document.querySelector('.viewer-container');
+            if (!container) {
+                console.error('Viewer container not found');
+                return;
+            }
+            const resize = () => {
+                app.drawingCanvas.width = container.offsetWidth;
+                app.drawingCanvas.height = container.offsetHeight;
+            };
+            resize();
+            window.addEventListener('resize', resize);
+            function resizeDrawingCanvas() {
+                app.drawingCanvas.width = container.offsetWidth;
+                app.drawingCanvas.height = container.offsetHeight;
+            }
+            window.resizeDrawingCanvas = resizeDrawingCanvas;
+            console.log('✅ Drawing Canvas Setup complete');
+            // MOUSE EVENTS - rysowanie tymczasowe na canvas
+            app.drawingCanvas.addEventListener('mousedown', (e) => {
+                // TRYB ROI - dla pojedynczych pól
+                if (app.roiMode) {
+                    // Jeśli brak rekordu, pokaż błąd
+                    if (!app.currentRecordId) {
+                        notify('❌ Utwórz rekord przed ROI', 'error');
+                        return;
+                    }
+                    // Jeśli brak zaznaczonego pola, pokaż błąd
+                    if (!app.activeField) {
+                        notify('❌ Zaznacz pole w formularzu', 'error');
+                        return;
+                    }
+                }
+                
+                // TRYB AKT - dla całego dokumentu
+                if (app.actMode) {
+                    // Jeśli brak rekordu, pokaż błąd
+                    if (!app.currentRecordId) {
+                        notify('❌ Utwórz rekord przed zaznaczaniem aktu', 'error');
+                        return;
+                    }
+                }
+                
+                // Jeśli żaden tryb nie jest włączony, wyjdź
+                if (!app.roiMode && !app.actMode) {
+                    console.warn('Neither ROI nor Act mode enabled');
+                    return;
+                }
+                
+                // Wszystko OK - rozpoczęcie rysowania
+                e.preventDefault();
+                e.stopPropagation();
+                app.drawingROI = true;
+                app.roiStartX = e.offsetX;
+                app.roiStartY = e.offsetY;
+                
+                if (app.roiMode) {
+                    console.log('🎨 ROI START:', { x: app.roiStartX, y: app.roiStartY, field: app.activeField.dataset.field });
+                } else if (app.actMode) {
+                    console.log('📑 ACT START:', { x: app.roiStartX, y: app.roiStartY, recordId: app.currentRecordId });
+                }
+            });
+            app.drawingCanvas.addEventListener('mousemove', (e) => {
+                if (!app.drawingROI) return;
+                e.preventDefault();
+                e.stopPropagation();
+                app.drawingCtx.clearRect(0, 0, app.drawingCanvas.width, app.drawingCanvas.height);
+                redrawROIs(); // zachowaj istniejące overlays
+                let x = app.roiStartX;
+                let y = app.roiStartY;
+                let w = e.offsetX - app.roiStartX;
+                let h = e.offsetY - app.roiStartY;
+                // Obsługa rysowania w dowolnym kierunku
+                if (w < 0) { x += w; w = -w; }
+                if (h < 0) { y += h; h = -h; }
+                
+                // Różne kolory dla ROI vs ACT
+                if (app.roiMode) {
+                    app.drawingCtx.strokeStyle = '#0078d4';  // Niebieski dla ROI
+                    app.drawingCtx.fillStyle = 'rgba(0,120,212,0.15)';
+                } else if (app.actMode) {
+                    app.drawingCtx.strokeStyle = '#10b981';  // Zielony dla ACT
+                    app.drawingCtx.fillStyle = 'rgba(16,185,129,0.1)';
+                }
+                
+                app.drawingCtx.lineWidth = 2;
+                app.drawingCtx.setLineDash([5, 5]);
+                app.drawingCtx.strokeRect(x, y, w, h);
+                app.drawingCtx.fillRect(x, y, w, h);
+                app.drawingCtx.setLineDash([]);
+            });
+            app.drawingCanvas.addEventListener('mouseup', (e) => {
+                if (!app.drawingROI) return;
+                e.preventDefault();
+                e.stopPropagation();
+                app.drawingROI = false;
+                let startX = app.roiStartX;
+                let startY = app.roiStartY;
+                let endX = e.offsetX;
+                let endY = e.offsetY;
+                let x = Math.min(startX, endX);
+                let y = Math.min(startY, endY);
+                let w = Math.abs(endX - startX);
+                let h = Math.abs(endY - startY);
+                
+                if (app.roiMode) {
+                    console.log('🖱️ ROI final size:', { x, y, w, h });
+                } else if (app.actMode) {
+                    console.log('📑 ACT final size:', { x, y, w, h });
+                }
+                
+                if (w < 10 || h < 10) {
+                    console.log('⚠️ Selection too small, cancelled');
+                    app.drawingCtx.clearRect(0, 0, app.drawingCanvas.width, app.drawingCanvas.height);
+                    redrawROIs();
+                    return;
+                }
+                // Konwersja do współrzędnych obrazu – użyj lewy-górny róg + dodatnie w/h
+                const roi = screenToImageRect(x, y, w, h);
+                if (!roi) {
+                    notify('❌ Błąd konwersji zaznaczenia', 'error');
+                    app.drawingCtx.clearRect(0, 0, app.drawingCanvas.width, app.drawingCanvas.height);
+                    redrawROIs();
+                    return;
+                }
+                
+                const record = app.records.find(r => r.id === app.currentRecordId);
+                if (!record) return;
+                
+                // TRYB ROI - zapisz do pola
+                if (app.roiMode) {
+                    if (!record.rois) record.rois = {};
+                    const fieldId = app.activeField.dataset.field;
+                    record.rois[fieldId] = roi;
+                    app.activeField.classList.add('has-roi');
+                    const label = app.activeField.previousElementSibling?.textContent?.trim() || fieldId;
+                    notify(`✅ ROI zapisany dla: ${label}`, 'success');
+                }
+                // TRYB AKT - zapisz granicę aktu
+                else if (app.actMode) {
+                    record.actROI = roi;
+                    notify(`✅ Granica aktu zapisana`, 'success');
+                    console.log('📑 Act ROI saved:', roi);
+                }
+                
+                saveStorage();
+                app.drawingCtx.clearRect(0, 0, app.drawingCanvas.width, app.drawingCanvas.height);
+                setTimeout(redrawROIs, 50);
+            });
+            // Globalny mouseup (gdy puścisz mysz poza canvasem)
+            document.addEventListener('mouseup', () => {
+                if (app.drawingROI) {
+                    app.drawingROI = false;
+                    app.drawingCtx.clearRect(0, 0, app.drawingCanvas.width, app.drawingCanvas.height);
+                    redrawROIs();
+                }
+            });
+        }
+        // SCREEN TO IMAGE COORDINATES
+        function screenToImageRect(x, y, w, h) {
+            const viewer = app.viewer;
+            if (!viewer) {
+                notify('❌ Viewer not initialized', 'error');
+                return null;
+            }
+            const item = viewer.world.getItemAt(0);
+            if (!item) {
+                notify('❌ No image loaded', 'error');
+                return null;
+            }
+            try {
+                const p1 = viewer.viewport.pointFromPixel(new OpenSeadragon.Point(x, y));
+                const p2 = viewer.viewport.pointFromPixel(new OpenSeadragon.Point(x + w, y + h));
+                const img1 = item.viewportToImageCoordinates(p1);
+                const img2 = item.viewportToImageCoordinates(p2);
+                const size = item.getContentSize();
+                return {
+                    x: img1.x / size.x,
+                    y: img1.y / size.y,
+                    w: (img2.x - img1.x) / size.x,
+                    h: (img2.y - img1.y) / size.y
+                };
+            } catch (err) {
+                console.error('Error converting ROI coordinates:', err);
+                notify('❌ Błąd konwersji ROI', 'error');
+                return null;
+            }
+        }
+        // REDRAW ROIs - TERAZ UŻYWAMY OSD OVERLAYS!
+        function redrawROIs(highlightField = null) {
+            const viewer = app.viewer;
+            const item = viewer.world.getItemAt(0);
+            if (!item) {
+                console.warn('No image loaded');
+                return;
+            }
+            // Usuń stare overlays
+            app.roiOverlays.forEach(overlay => {
+                viewer.removeOverlay(overlay);
+            });
+            app.roiOverlays = [];
+            const size = item.getContentSize();
+            const currentImageRecords = app.records.filter(r => r.imageIdx === app.currentImageIdx);
+            let roiCount = 0;
+            
+            // RYSUJ ACT OVERLAYS (granice całych aktów) - ZIELONE
+            currentImageRecords.forEach(record => {
+                if (!record.actROI) return;
+                try {
+                    const actROI = record.actROI;
+                    const imgRect = new OpenSeadragon.Rect(
+                        actROI.x * size.x,
+                        actROI.y * size.y,
+                        actROI.w * size.x,
+                        actROI.h * size.y
+                    );
+                    const viewportRect = viewer.viewport.imageToViewportRectangle(imgRect);
+                    
+                    // Utwórz div overlay dla aktu
+                    const overlayDiv = document.createElement('div');
+                    overlayDiv.className = 'act-overlay';
+                    if (record.id === app.currentRecordId) {
+                        overlayDiv.classList.add('active');
+                    }
+                    
+                    // Dodaj label
+                    const label = document.createElement('div');
+                    label.style.cssText = 'color: white; font-size: 12px; font-weight: bold; padding: 6px; background: rgba(16,185,129,0.8); border-radius: 2px;';
+                    const templateName = app.templates.find(t => t.id === record.template)?.name || record.template;
+                    label.textContent = `📑 ${templateName}`;
+                    overlayDiv.appendChild(label);
+                    
+                    // Dodaj overlay do OSD
+                    viewer.addOverlay({
+                        element: overlayDiv,
+                        location: viewportRect
+                    });
+                    app.roiOverlays.push(overlayDiv);
+                    roiCount++;
+                    console.log('📑 Act overlay drawn:', record.id);
+                } catch (err) {
+                    console.warn(`Act overlay error for record ${record.id}:`, err);
+                }
+            });
+            
+            // RYSUJ ROI OVERLAYS (pola w akcie) - NIEBIESKIE
+            currentImageRecords.forEach(record => {
+                if (!record.rois) return;
+                Object.entries(record.rois).forEach(([fieldId, roi]) => {
+                    if (highlightField && (fieldId !== highlightField || record.id !== app.currentRecordId)) return;
+                    try {
+                        // Konwersja ROI z obrazu → viewport rectangle
+                        const imgRect = new OpenSeadragon.Rect(
+                            roi.x * size.x,
+                            roi.y * size.y,
+                            roi.w * size.x,
+                            roi.h * size.y
+                        );
+                        const viewportRect = viewer.viewport.imageToViewportRectangle(imgRect);
+                        // Utwórz div overlay
+                        const overlayDiv = document.createElement('div');
+                        overlayDiv.className = 'roi-overlay';
+                        const isCurrent = record.id === app.currentRecordId;
+                        const isActive = isCurrent && app.activeField && app.activeField.dataset.field === fieldId;
+                        const isHighlight = fieldId === highlightField;
+                        if (isActive) {
+                            overlayDiv.classList.add('active');
+                        } else if (isHighlight) {
+                            overlayDiv.classList.add('highlight');
+                        }
+                        // Dodaj label
+                        const label = document.createElement('div');
+                        label.style.cssText = 'color: white; font-size: 11px; font-weight: bold; padding: 4px; background: rgba(0,0,0,0.6); border-radius: 2px;';
+                        label.textContent = fieldId.substring(0, 15);
+                        overlayDiv.appendChild(label);
+                        // Dodaj overlay do OSD
+                        viewer.addOverlay({
+                            element: overlayDiv,
+                            location: viewportRect
+                        });
+                        app.roiOverlays.push(overlayDiv);
+                        roiCount++;
+                    } catch (err) {
+                        console.warn(`ROI overlay error for ${fieldId}:`, err);
+                    }
+                });
+            });
+            if (roiCount > 0) {
+                console.log(`✅ redrawROIs: narysowano ${roiCount} overlays (ACT + ROI)`);
+            }
+        }
+        // ZOOM TO ROI
+        function zoomToROI(roi) {
+            if (!app.viewer || !app.viewer.world.getItemAt(0)) return;
+            const item = app.viewer.world.getItemAt(0);
+            const itemSize = item.getContentSize();
+            const rect = new OpenSeadragon.Rect(
+                roi.x * itemSize.x,
+                roi.y * itemSize.y,
+                roi.w * itemSize.x,
+                roi.h * itemSize.y
+            );
+            const viewportRect = app.viewer.viewport.imageToViewportRectangle(rect);
+            app.viewer.viewport.fitBounds(viewportRect, true);
+        }
+        // SETUP EVENTS
+        function setupEvents() {
+            document.getElementById('fileInput').addEventListener('change', (e) => {
+                handleFiles(e.target.files);
+            });
+            const viewerContainer = document.getElementById('viewerContainer');
+            if (viewerContainer) {
+                viewerContainer.addEventListener('dragover', (e) => {
+                    e.preventDefault();
+                    viewerContainer.classList.add('drag-over');
+                });
+                viewerContainer.addEventListener('dragleave', () => {
+                    viewerContainer.classList.remove('drag-over');
+                });
+                viewerContainer.addEventListener('drop', (e) => {
+                    e.preventDefault();
+                    viewerContainer.classList.remove('drag-over');
+                    if (e.dataTransfer.files.length) {
+                        handleFiles(e.dataTransfer.files);
+                    }
+                });
+            }
+            document.addEventListener('keydown', (e) => {
+                if (e.ctrlKey || e.metaKey) {
+                    if (e.key === 'o') { e.preventDefault(); addImages(); }
+                    if (e.key === 'r') { e.preventDefault(); toggleROI(); }
+                    if (e.key === 's') { e.preventDefault(); exportData(); }
+                    if (e.key === '0') { e.preventDefault(); zoomReset(); }
+                    if (e.key === 'n') { e.preventDefault(); createNewRecord(); }
+                }
+            });
+        }
+        // RECORDS MANAGEMENT
+        // SMART DEFAULTS SYSTEM
+        function loadSmartDefaults() {
+            const saved = localStorage.getItem('genealog_defaults');
+            if (saved) {
+                const defaults = JSON.parse(saved);
+                const parish = document.querySelector('.default-parish-select');
+                const year = document.querySelector('.default-year-input');
+                const lang = document.querySelector('.default-lang-select');
+                const actType = document.querySelector('.default-act-type-select');
+                const copy = document.querySelector('.copy-previous-check');
+                const autoInc = document.querySelector('.auto-increment-check');
+                
+                if (parish) parish.value = defaults.parish || '';
+                if (year) year.value = defaults.year || new Date().getFullYear();
+                if (lang) lang.value = defaults.lang || 'PL';
+                if (actType) actType.value = defaults.actType || 'birth';
+                if (copy) copy.checked = defaults.copyPrevious !== false;
+                if (autoInc) autoInc.checked = defaults.autoIncrement !== false;
+                
+                // Automatycznie zmień typ aktu jeśli wybrany
+                if (defaults.actType && defaults.actType !== 'mixed' && defaults.actType !== 'other') {
+                    selectTemplate(defaults.actType);
+                }
+            }
+        }
+        function saveSmartDefaults() {
+            const parish = document.querySelector('.default-parish-select')?.value || '';
+            const year = document.querySelector('.default-year-input')?.value || '';
+            const lang = document.querySelector('.default-lang-select')?.value || 'PL';
+            const actType = document.querySelector('.default-act-type-select')?.value || 'birth';
+            const copy = document.querySelector('.copy-previous-check')?.checked || false;
+            const autoInc = document.querySelector('.auto-increment-check')?.checked || false;
+            
+            localStorage.setItem('genealog_defaults', JSON.stringify({
+                parish, year, lang, actType, copyPrevious: copy, autoIncrement: autoInc
+            }));
+            console.log('💾 Smart Defaults zapisane');
+        }
+        function applySmartDefaults() {
+            const copyCheckbox = document.querySelector('.copy-previous-check');
+            const autoIncCheckbox = document.querySelector('.auto-increment-check');
+            const yearInput = document.querySelector('.default-year-input');
+            
+            if (copyCheckbox?.checked && app.records.length > 0) {
+                // Skopiuj ostatni rekord
+                const lastRecord = app.records[app.records.length - 1];
+                const form = document.querySelector(`#form-${app.currentTemplate}`);
+                Object.entries(lastRecord.data).forEach(([field, value]) => {
+                    const input = form.querySelector(`[data-field="${field}"]`);
+                    if (input) input.value = value;
+                });
+                notify('📋 Dane skopiowane z poprzedniego rekordu', 'success');
+            }
+            
+            if (autoIncCheckbox?.checked && yearInput?.value) {
+                // Inkrementuj rok
+                const currentYear = parseInt(yearInput.value);
+                yearInput.value = currentYear + 1;
+                saveSmartDefaults();
+                console.log(`📅 Rok auto-inkrementowany: ${currentYear + 1}`);
+            }
+        }
+        function createNewRecord() {
+            const recordId = Date.now();
+            const record = {
+                id: recordId,
+                template: app.currentTemplate,
+                data: {},
+                rois: {},
+                imageIdx: app.currentImageIdx,
+                imageName: app.images[app.currentImageIdx]?.name,
+                timestamp: new Date().toISOString()
+            };
+            app.records.push(record);
+            app.currentRecordId = recordId;
+            clearForm();
+            applySmartDefaults(); // ← Zastosuj smart defaults!
+            renderRecordsSidebar();
+            redrawROIs();
+            updateRecordCounter();
+            notify('✨ Nowy rekord utworzony + Smart Defaults zastosowane', 'success');
+            saveStorage();
+        }
+        function selectRecord(recordId) {
+            app.currentRecordId = recordId;
+            const record = app.records.find(r => r.id === recordId);
+            if (record) {
+                if (record.template !== app.currentTemplate) {
+                    selectTemplate(record.template);
+                }
+                setTimeout(() => {
+                    const form = document.querySelector(`#form-${record.template}`);
+                    Object.entries(record.data).forEach(([field, value]) => {
+                        const input = form.querySelector(`[data-field="${field}"]`);
+                        if (input) {
+                            input.value = value;
+                            if (record.rois && record.rois[field]) {
+                                input.classList.add('has-roi');
+                            }
+                        }
+                    });
+                    setupFormEvents();
+                    updateRecordCounter();
+                    redrawROIs();
+                }, 100);
+            }
+        }
+        function saveRecord() {
+            if (!app.currentRecordId) {
+                createNewRecord();
+                return;
+            }
+            const recordIndex = app.records.findIndex(r => r.id === app.currentRecordId);
+            if (recordIndex === -1) return;
+            const form = document.querySelector(`#form-${app.currentTemplate}`);
+            const data = {};
+            form.querySelectorAll('.field-input').forEach(input => {
+                data[input.dataset.field] = input.value;
+            });
+            if (!Object.values(data).some(v => v)) {
+                notify('Uzupełnij przynajmniej jedno pole', 'error');
+                return;
+            }
+            app.records[recordIndex].data = data;
+            app.records[recordIndex].timestamp = new Date().toISOString();
+            renderRecordsSidebar();
+            notify('Rekord zapisany!', 'success');
+            saveStorage();
+        }
+        function deleteCurrentRecord() {
+            if (!app.currentRecordId) return;
+            if (confirm('Usunąć ten rekord?')) {
+                const idToDelete = app.currentRecordId;
+                app.records = app.records.filter(r => r.id !== idToDelete);
+                app.currentRecordId = null;
+                clearForm();
+                renderRecordsSidebar();
+                redrawROIs();
+                updateRecordCounter();
+                notify('Rekord usunięty', 'success');
+                saveStorage();
+            }
+        }
+        function updateRecordCounter() {
+            const counter = document.getElementById('recordCounter');
+            if (app.currentRecordId) {
+                const recordNum = app.records.filter(r => r.imageIdx === app.currentImageIdx)
+                    .findIndex(r => r.id === app.currentRecordId) + 1;
+                counter.textContent = `Rekord: #${recordNum}`;
+            } else {
+                counter.textContent = 'Rekord: brak';
+            }
+        }
+        function renderRecordsSidebar() {
+            const sidebar = document.getElementById('recordsSidebar');
+            sidebar.innerHTML = '';
+            const newBtn = document.createElement('div');
+            newBtn.className = 'record-pill new';
+            newBtn.innerHTML = '+';
+            newBtn.title = 'Nowy rekord (Ctrl+N)';
+            newBtn.onclick = createNewRecord;
+            sidebar.appendChild(newBtn);
+            const currentRecords = app.records.filter(r => r.imageIdx === app.currentImageIdx);
+            currentRecords.forEach((record, idx) => {
+                const pill = document.createElement('div');
+                pill.className = `record-pill ${record.id === app.currentRecordId ? 'active' : ''}`;
+                pill.textContent = idx + 1;
+                pill.title = `Rekord ${idx + 1}: ${record.template}`;
+                pill.onclick = () => selectRecord(record.id);
+                sidebar.appendChild(pill);
+            });
+        }
+        // IMAGES MANAGEMENT
+        function addImages() {
+            document.getElementById('fileInput').click();
+        }
+        function handleFiles(files) {
+            const imageFiles = Array.from(files).filter(f => f.type && f.type.startsWith('image/'));
+            if (imageFiles.length === 0) {
+                notify('Nie znaleziono obrazów', 'error');
+                return;
+            }
+            let loaded = 0;
+            imageFiles.forEach(file => {
+                const reader = new FileReader();
+                reader.onload = (e) => {
+                    app.images.push({
+                        name: file.name,
+                        data: e.target.result
+                    });
+                    loaded++;
+                    updateThumbs();
+                    if (app.images.length === 1) selectImage(0);
+                    if (loaded === imageFiles.length) {
+                        notify(`✅ Wczytano ${imageFiles.length} obraz(y)`, 'success');
+                    }
+                };
+                reader.readAsDataURL(file);
+            });
+        }
+        function updateThumbs() {
+            const bar = document.getElementById('thumbsBar');
+            bar.innerHTML = '';
+            app.images.forEach((img, i) => {
+                const div = document.createElement('div');
+                div.className = 'thumbnail' + (i === app.currentImageIdx ? ' active' : '');
+                div.onclick = () => selectImage(i);
+                const num = document.createElement('div');
+                num.className = 'thumbnail-number';
+                num.textContent = i + 1;
+                const count = document.createElement('div');
+                count.className = 'thumbnail-count';
+                const recordCount = app.records.filter(r => r.imageIdx === i).length;
+                count.textContent = `${recordCount} akt`;
+                const imgEl = document.createElement('img');
+                imgEl.src = img.data;
+                imgEl.alt = img.name;
+                div.appendChild(num);
+                div.appendChild(imgEl);
+                div.appendChild(count);
+                bar.appendChild(div);
+            });
+        }
+        function selectImage(i) {
+            if (i < 0 || i >= app.images.length) return;
+            app.currentImageIdx = i;
+            app.currentRecordId = null;
+            app.activeField = null;
+            updateThumbs();
+            renderRecordsSidebar();
+            clearForm();
+            if (app.viewer && app.images[i]) {
+                app.viewer.addOnceHandler('open', () => {
+                    setTimeout(() => redrawROIs(), 100);
+                });
+                app.viewer.open({
+                    type: 'image',
+                    url: app.images[i].data
+                });
+            }
+            redrawROIs();
+            updateRecordCounter();
+        }
+        // ROI MODE
+        function toggleROI() {
+            app.roiMode = !app.roiMode;
+            document.getElementById('roiBtn').classList.toggle('active', app.roiMode);
+            const canvas = document.getElementById('drawingCanvas');
+            canvas.classList.toggle('hidden', !app.roiMode);
+           
+            // Canvas MUSI odbierać zdarzenia myszy w ROI mode
+            // stopPropagation() zapobiegnie budzeniu OSD
+            if (app.roiMode) {
+                canvas.style.pointerEvents = 'auto'; // odbieraj myszy do rysowania
+                console.log('🎨 Canvas: pointer-events = auto (gotów do rysowania)');
+            } else {
+                canvas.style.pointerEvents = 'none'; // nie potrzeba gdy ROI off
+                console.log('🔓 Canvas: pointer-events = none (OSD w pełni aktywny)');
+            }
+            document.getElementById('roiInfo').classList.toggle('visible', app.roiMode);
+            if (app.roiMode) {
+                if (!app.activeField) {
+                    notify('❌ Najpierw kliknij w pole formularza (np. Imię dziecka)', 'error');
+                    toggleROI(); // wyłącz
+                    return;
+                }
+                const label = app.activeField.previousElementSibling?.textContent?.trim() || 'pole';
+                document.getElementById('roiInfo').textContent = `ROI dla: ${label}`;
+                notify('✏️ Rysuj ROI na obrazie (możesz zoomować/przesuwać)', 'success');
+            } else {
+                document.getElementById('roiInfo').textContent = 'Tryb ROI aktywny: Zaznacz obszar na obrazie';
+                app.drawingCtx?.clearRect(0, 0, app.drawingCanvas.width, app.drawingCanvas.height);
+            }
+        }
+        // ACT MODE - zaznaczanie całego aktu
+        function toggleActMode() {
+            app.actMode = !app.actMode;
+            document.getElementById('actBtn').classList.toggle('active', app.actMode);
+            const canvas = document.getElementById('drawingCanvas');
+            canvas.classList.toggle('hidden', !app.actMode);
+            
+            // Canvas MUSI odbierać zdarzenia myszy w ACT mode
+            if (app.actMode) {
+                canvas.style.pointerEvents = 'auto'; // odbieraj myszy do rysowania
+                document.getElementById('roiInfo').textContent = '📑 ACT MODE: Zaznacz granicę całego dokumentu (aktu)';
+                document.getElementById('roiInfo').classList.add('visible');
+                console.log('📑 Canvas: pointer-events = auto (tryb Akt - gotów do rysowania)');
+                
+                if (!app.currentRecordId) {
+                    notify('❌ Najpierw utwórz rekord aby zaznaczać akt', 'error');
+                    toggleActMode(); // wyłącz
+                    return;
+                }
+                notify('📑 Rysuj granicę aktu na obrazie (możesz zoomować/przesuwać)', 'success');
+            } else {
+                canvas.style.pointerEvents = 'none'; // nie potrzeba gdy ACT off
+                document.getElementById('roiInfo').classList.remove('visible');
+                app.drawingCtx?.clearRect(0, 0, app.drawingCanvas.width, app.drawingCanvas.height);
+                console.log('🔓 Canvas: pointer-events = none (OSD w pełni aktywny)');
+            }
+        }
+        // ROTATE
+        function rotateImage(degrees) {
+            if (!app.viewer) return;
+            const current = app.viewer.viewport.getRotation();
+            app.viewer.viewport.setRotation((current + degrees + 360) % 360);
+        }
+        // ZOOM
+        function zoomReset() {
+            if (app.viewer && app.viewer.world.getItemAt(0)) {
+                app.viewer.viewport.fitBounds(app.viewer.world.getItemAt(0).getBounds());
+            }
+        }
+        // FULLSCREEN
+        function toggleFullscreen() {
+            if (!document.fullscreenElement) {
+                document.documentElement.requestFullscreen().catch(err => {
+                    notify(`❌ Fullscreen: ${err.message}`, 'error');
+                });
+            } else {
+                document.exitFullscreen();
+            }
+        }
+        // PANELS
+        function togglePanel(panel) {
+            if (panel === 'right') {
+                const rightPanel = document.getElementById('rightPanel');
+                rightPanel.classList.toggle('collapsed');
+            } else if (panel === 'thumbs') {
+                const thumbsBar = document.getElementById('thumbsBar');
+                thumbsBar.classList.toggle('collapsed');
+            }
+        }
+        // EXPORT
+        function exportData() {
+            if (app.records.length === 0) {
+                notify('❌ Brak rekordów do eksportu', 'error');
+                return;
+            }
+            const csv = convertToCSV(app.records);
+            const json = JSON.stringify(app.records, null, 2);
+            downloadFile(csv, 'records.csv', 'text/csv');
+            downloadFile(json, 'records.json', 'application/json');
+            notify(`✅ Eksportowano ${app.records.length} rekordów`, 'success');
+        }
+        function convertToCSV(records) {
+            let csv = 'ID,Template,Obraz,Data\n';
+            records.forEach(record => {
+                const timestamp = new Date(record.timestamp).toLocaleString('pl-PL');
+                csv += `"${record.id}","${record.template}","${record.imageName}","${timestamp}"\n`;
+                Object.entries(record.data).forEach(([field, value]) => {
+                    csv += `,"${field}","${value}"\n`;
+                });
+            });
+            return csv;
+        }
+        function downloadFile(content, filename, mimetype) {
+            const blob = new Blob([content], { type: mimetype });
+            const link = document.createElement('a');
+            link.href = URL.createObjectURL(blob);
+            link.download = filename;
+            link.click();
+            URL.revokeObjectURL(link.href);
+        }
+        // UTILITIES
+        function clearForm() {
+            const form = document.querySelector(`#form-${app.currentTemplate}`);
+            if (form) {
+                form.querySelectorAll('.field-input').forEach(input => {
+                    input.value = '';
+                    input.classList.remove('has-roi');
+                });
+            }
+        }
+        function selectTemplate(templateId) {
+            app.currentTemplate = templateId;
+            document.querySelectorAll('.template-btn').forEach((btn, idx) => {
+                btn.classList.toggle('active', app.templates[idx].id === templateId);
+            });
+            document.querySelectorAll('.form-section').forEach(section => {
+                section.classList.toggle('active', section.id === `form-${templateId}`);
+            });
+            setupFormEvents();
+            updateRecordCounter();
+        }
+        function selectTemplateFromDefault() {
+            const dropdown = document.getElementById('defaultActType');
+            if (dropdown) {
+                const templateId = dropdown.value;
+                if (templateId !== 'mixed' && templateId !== 'other') {
+                    selectTemplate(templateId);
+                    // Update dropdown in other form sections too
+                    document.querySelectorAll('.default-act-type-select').forEach(el => {
+                        el.value = templateId;
+                    });
+                }
+            }
+        }
+        function notify(message, type = 'info') {
+            const notification = document.createElement('div');
+            notification.className = `notification ${type}`;
+            notification.textContent = message;
+            document.body.appendChild(notification);
+            setTimeout(() => {
+                notification.remove();
+            }, 3000);
+        }
+        function saveStorage() {
+            localStorage.setItem('genealog_data', JSON.stringify({
+                records: app.records,
+                images: app.images,
+                currentTemplate: app.currentTemplate
+            }));
+        }
+        function loadStorage() {
+            const stored = localStorage.getItem('genealog_data');
+            if (stored) {
+                const data = JSON.parse(stored);
+                app.records = data.records || [];
+                app.images = data.images || [];
+                app.currentTemplate = data.currentTemplate || app.templates[0].id;
+                updateThumbs();
+                loadSmartDefaults(); // ← Wczytaj Smart Defaults
+                if (app.images.length > 0) {
+                    selectImage(0);
+                }
+            }
+        }
+    </script>
+</body>
+</html>

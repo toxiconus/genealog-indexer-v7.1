@@ -1,0 +1,2546 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Genealog Indexer v5.0 - Hierarchia Aktów + Canvas Fix</title>
+    <script src="https://openseadragon.github.io/openseadragon/openseadragon.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        /* Oryginalny styl + nowe dla drzewa sidebar */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        html, body {
+            width: 100%;
+            height: 100%;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background-color: #0a0a0a;
+            color: #ddd;
+            overflow: hidden;
+        }
+        #app {
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+        }
+        .toolbar {
+            background: linear-gradient(180deg, #1a1a1a 0%, #151515 100%);
+            border-bottom: 1px solid #2a2a2a;
+            padding: 6px 10px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            min-height: 38px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+            z-index: 100;
+            flex-wrap: wrap;
+        }
+        .toolbar-title {
+            font-size: 11px;
+            color: #0078d4;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-right: auto;
+        }
+        .toolbar-search {
+            background: #0f0f0f;
+            border: 1px solid #3a3a3a;
+            color: #bbb;
+            padding: 5px 10px;
+            border-radius: 4px;
+            width: 150px;
+            font-size: 11px;
+            transition: all 0.15s ease;
+        }
+        .toolbar-search:focus {
+            border-color: #0078d4;
+            outline: none;
+            background: #1a1a1a;
+            box-shadow: 0 0 0 3px rgba(0,120,212,0.1);
+        }
+        .toolbar-btn {
+            background: #252525;
+            border: 1px solid #3a3a3a;
+            color: #bbb;
+            padding: 5px 10px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 11px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            transition: all 0.15s ease;
+            white-space: nowrap;
+        }
+        .toolbar-btn:hover {
+            background: #2d2d2d;
+            border-color: #0078d4;
+            color: #0078d4;
+            transform: translateY(-1px);
+        }
+        .toolbar-btn.active {
+            background: #0078d4;
+            border-color: #0078d4;
+            color: white;
+            box-shadow: 0 0 12px rgba(0,120,212,0.4);
+        }
+        .toolbar-sep {
+            width: 1px;
+            height: 20px;
+            background: #2a2a2a;
+            margin: 0 2px;
+        }
+        .main-content {
+            flex: 1;
+            display: flex;
+            gap: 0;
+            overflow: hidden;
+            position: relative;
+        }
+        .viewer-panel {
+            flex: 1;
+            background: #000;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+        .viewer-container {
+            flex: 1;
+            position: relative;
+            overflow: hidden;
+        }
+        #viewer {
+            width: 100%;
+            height: 100%;
+            cursor: grab;
+        }
+        #viewer.grabbing {
+            cursor: grabbing;
+        }
+        .viewer-container.drag-over {
+            border: 4px dashed #0078d4 !important;
+            background-color: rgba(0, 120, 212, 0.05) !important;
+        }
+        .rotate-controls {
+            position: absolute;
+            bottom: 15px;
+            right: 15px;
+            display: flex;
+            gap: 6px;
+            z-index: 60;
+        }
+        .rotate-btn {
+            background: #1a1a1a;
+            border: 1px solid #3a3a3a;
+            color: #ddd;
+            width: 36px;
+            height: 36px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s ease;
+        }
+        .rotate-btn:hover {
+            background: #252525;
+            border-color: #0078d4;
+            color: #0078d4;
+        }
+        .rotate-btn:active {
+            transform: scale(0.95);
+        }
+        .roi-info-overlay {
+            position: absolute;
+            bottom: 10px;
+            left: 10px;
+            background: rgba(0,0,0,0.85);
+            color: #0078d4;
+            padding: 8px 12px;
+            border-radius: 4px;
+            font-size: 11px;
+            z-index: 60;
+            display: none;
+            border: 1px solid #0078d4;
+        }
+        .roi-info-overlay.visible {
+            display: block;
+        }
+        /* OSD OVERLAY - ROI BOX */
+        .roi-overlay {
+            border: 2px dashed #0078d4;
+            background: rgba(0,120,212,0.15);
+            pointer-events: none;
+            position: absolute;
+        }
+        .roi-overlay.active {
+            border-color: #ff9800;
+            border-width: 3px;
+            background: rgba(255,152,0,0.2);
+        }
+        .roi-overlay.highlight {
+            border-color: #ffb300;
+            border-width: 3px;
+            background: rgba(255,179,0,0.2);
+        }
+        /* Act ROI - większa ramka */
+        .act-overlay {
+            border: 3px solid #10b981;
+            background: rgba(16,185,129,0.1);
+            pointer-events: none;
+        }
+        /* Popovers - etykiety na obrazie */
+        .popover {
+            position: absolute;
+            background: #fff;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            padding: 6px 10px;
+            font-size: 11px;
+            font-weight: 500;
+            color: #222;
+            white-space: nowrap;
+            pointer-events: none;
+            z-index: 100;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+            opacity: 0;
+            transition: opacity 0.2s ease-in-out;
+        }
+        .popover.show {
+            opacity: 1;
+        }
+        /* Canvas tymczasowy do rysowania */
+        #drawingCanvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            cursor: crosshair !important;
+            z-index: 50;
+            pointer-events: none; /* domyślnie przezroczysty dla myszy */
+        }
+        #drawingCanvas.hidden {
+            display: none;
+        }
+        .right-panel {
+            width: 340px;
+            background: linear-gradient(180deg, #1a1a1a 0%, #151515 100%);
+            border-left: 1px solid #2a2a2a;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            transition: width 0.3s ease;
+            box-shadow: -4px 0 16px rgba(0,0,0,0.3);
+        }
+        .right-panel.collapsed {
+            width: 0;
+            border: none;
+        }
+        .panel-content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+        .records-sidebar {
+            width: 50px;
+            background: #151515;
+            border-right: 1px solid #2a2a2a;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 10px 0;
+            gap: 8px;
+        }
+        .record-pill {
+            width: 36px;
+            height: 36px;
+            border-radius: 18px;
+            background: #252525;
+            border: 2px solid #3a3a3a;
+            color: #bbb;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            position: relative;
+        }
+        .record-pill:hover {
+            border-color: #0078d4;
+            transform: scale(1.1);
+        }
+        .record-pill.active {
+            background: #0078d4;
+            border-color: #0078d4;
+            color: white;
+            box-shadow: 0 0 12px rgba(0,120,212,0.6);
+        }
+        .record-pill.dragging {
+            opacity: 0.5;
+            transform: scale(0.9);
+        }
+        .record-pill.drag-over {
+            border-color: #ffc107;
+            box-shadow: 0 0 8px rgba(255,193,7,0.8);
+        }
+        .record-pill.new {
+            background: transparent;
+            border: 2px dashed #3a3a3a;
+            color: #666;
+            font-size: 20px;
+        }
+        .record-pill.new:hover {
+            border-color: #107c10;
+            color: #107c10;
+        }
+        /* Kolory dla typów aktów */
+        .record-pill.birth {
+            border-left: 4px solid #10b981 !important;
+        }
+        .record-pill.marriage {
+            border-left: 4px solid #f59e0b !important;
+        }
+        .record-pill.death {
+            border-left: 4px solid #ef4444 !important;
+        }
+        .record-pill.birth:hover, .record-pill.marriage:hover, .record-pill.death:hover {
+            transform: scale(1.15) translateX(4px);
+        }
+        .templates-section {
+            padding: 12px;
+            border-bottom: 1px solid #2a2a2a;
+        }
+        .section-title {
+            font-size: 10px;
+            color: #888;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 10px;
+        }
+        .form-section {
+            padding: 12px;
+            border-bottom: 1px solid #2a2a2a;
+            display: none;
+            flex: 1;
+            overflow-y: auto;
+        }
+        .form-section.active {
+            display: block;
+        }
+        .form-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        .form-header h3 {
+            font-size: 13px;
+            color: #ddd;
+            font-weight: 600;
+        }
+        .record-counter {
+            font-size: 10px;
+            color: #888;
+            background: #252525;
+            padding: 3px 8px;
+            border-radius: 10px;
+        }
+        .form-group {
+            margin-bottom: 12px;
+        }
+        .form-group label {
+            display: block;
+            font-size: 10px;
+            color: #888;
+            margin-bottom: 5px;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.3px;
+        }
+        .form-group.required label::after {
+            content: " *";
+            color: #c42b1c;
+        }
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 8px 10px;
+            background: #0f0f0f;
+            border: 1px solid #3a3a3a;
+            color: #ddd;
+            border-radius: 4px;
+            font-size: 12px;
+            font-family: inherit;
+            transition: all 0.15s ease;
+        }
+        .form-group input:focus,
+        .form-group textarea:focus {
+            border-color: #0078d4;
+            outline: none;
+            background: #1a1a1a;
+            box-shadow: 0 0 0 3px rgba(0,120,212,0.1);
+        }
+        .form-group input.has-roi {
+            border-left: 4px solid #10b981;
+            box-shadow: 0 0 8px rgba(16,185,129,0.3);
+        }
+        .form-group textarea {
+            resize: vertical;
+            min-height: 60px;
+            font-family: 'Courier New', monospace;
+        }
+        /* SMART DEFAULTS BAR */
+        .smart-defaults-bar {
+            background: linear-gradient(180deg, #1a1a1a 0%, #0f0f0f 100%);
+            border-bottom: 2px solid #0078d4;
+            padding: 10px;
+            margin-bottom: 12px;
+            border-radius: 6px;
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr 1fr;
+            gap: 10px;
+            align-items: center;
+        }
+        .smart-defaults-bar label {
+            font-size: 9px;
+            color: #888;
+            text-transform: uppercase;
+            letter-spacing: 0.4px;
+            margin-bottom: 3px;
+            display: block;
+        }
+        .smart-defaults-bar select {
+            width: 100%;
+            padding: 6px 8px;
+            background: #0f0f0f;
+            border: 1px solid #3a3a3a;
+            color: #ddd;
+            border-radius: 4px;
+            font-size: 11px;
+            cursor: pointer;
+            transition: all 0.15s ease;
+        }
+        .smart-defaults-bar select:hover {
+            border-color: #0078d4;
+        }
+        .smart-defaults-bar select:focus {
+            outline: none;
+            border-color: #0078d4;
+            background: #1a1a1a;
+            box-shadow: 0 0 0 3px rgba(0,120,212,0.1);
+        }
+        .smart-defaults-checkboxes {
+            grid-column: 1 / -1;
+            display: flex;
+            gap: 15px;
+            font-size: 11px;
+            align-items: center;
+        }
+        .smart-defaults-checkboxes label {
+            margin-bottom: 0;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            cursor: pointer;
+        }
+        .smart-defaults-checkboxes input[type="checkbox"] {
+            cursor: pointer;
+            accent-color: #0078d4;
+            width: 16px;
+            height: 16px;
+        }
+        /* ACCORDION SEKCJE */
+        .form-accordion {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+            margin-bottom: 12px;
+        }
+        .accordion-item {
+            border: 1px solid #2a2a2a;
+            border-radius: 4px;
+            overflow: hidden;
+            background: #0f0f0f;
+        }
+        .accordion-header {
+            background: #1a1a1a;
+            border: none;
+            color: #ddd;
+            padding: 10px 12px;
+            cursor: pointer;
+            font-size: 12px;
+            font-weight: 600;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.2s ease;
+            width: 100%;
+            text-align: left;
+        }
+        .accordion-header:hover {
+            background: #252525;
+            border-left: 3px solid #0078d4;
+            padding-left: 10px;
+        }
+        .accordion-header.active {
+            background: #0078d4;
+            color: white;
+        }
+        .accordion-icon {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 20px;
+            height: 20px;
+            transition: transform 0.2s ease;
+        }
+        .accordion-header.active .accordion-icon {
+            transform: rotate(180deg);
+        }
+        .accordion-content {
+            display: none;
+            padding: 12px;
+            background: #0f0f0f;
+            border-top: 1px solid #2a2a2a;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease, opacity 0.3s ease;
+            opacity: 0;
+        }
+        .accordion-content.active {
+            display: block;
+            max-height: 500px;
+            opacity: 1;
+        }
+        .accordion-fields {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+        }
+        .accordion-fields.full {
+            grid-template-columns: 1fr;
+        }
+        .form-actions {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 6px;
+            margin-top: 12px;
+        }
+        .form-btn {
+            background: #107c10;
+            border: none;
+            color: white;
+            padding: 10px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 11px;
+            font-weight: 600;
+            transition: all 0.15s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+        }
+        .form-btn:hover {
+            background: #0d6a0d;
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(16,124,16,0.3);
+        }
+        .form-btn.danger {
+            background: #c42b1c;
+        }
+        .form-btn.danger:hover {
+            background: #a02318;
+            box-shadow: 0 4px 12px rgba(196,43,28,0.3);
+        }
+        .thumbnails-bar {
+            height: 100px;
+            background: #0f0f0f;
+            border-top: 1px solid #2a2a2a;
+            display: flex;
+            align-items: center;
+            padding: 8px;
+            gap: 8px;
+            overflow-x: auto;
+            overflow-y: hidden;
+            transition: height 0.3s ease;
+            box-shadow: 0 -2px 8px rgba(0,0,0,0.3);
+        }
+        .thumbnails-bar.collapsed {
+            height: 0;
+            padding: 0;
+            border: none;
+            box-shadow: none;
+            overflow: hidden;
+        }
+        .thumbnail {
+            width: 84px;
+            height: 84px;
+            border: 2px solid #333;
+            border-radius: 4px;
+            cursor: pointer;
+            overflow: hidden;
+            background: #1a1a1a;
+            flex-shrink: 0;
+            transition: all 0.2s ease;
+            position: relative;
+        }
+        .thumbnail img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        .thumbnail:hover {
+            border-color: #0078d4;
+            transform: scale(1.05);
+        }
+        .thumbnail.active {
+            border-color: #0078d4;
+            box-shadow: 0 0 16px rgba(0,120,212,0.6);
+        }
+        .thumbnail-number {
+            position: absolute;
+            top: 2px;
+            left: 2px;
+            background: rgba(0,0,0,0.7);
+            color: #fff;
+            font-size: 10px;
+            padding: 2px 5px;
+            border-radius: 2px;
+            font-weight: 600;
+        }
+        .thumbnail-count {
+            position: absolute;
+            bottom: 2px;
+            right: 2px;
+            background: rgba(0,120,212,0.8);
+            color: white;
+            font-size: 9px;
+            padding: 1px 4px;
+            border-radius: 2px;
+            font-weight: 600;
+        }
+        .notification {
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            padding: 12px 20px;
+            background: #0078d4;
+            color: white;
+            border-radius: 6px;
+            font-size: 12px;
+            font-weight: 500;
+            z-index: 1000;
+            animation: slideIn 0.3s ease;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.4);
+        }
+        .notification.error {
+            background: #c42b1c;
+        }
+        .notification.success {
+            background: #107c10;
+        }
+        @keyframes slideIn {
+            from {
+                transform: translateX(400px);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #0f0f0f;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #3a3a3a;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #4a4a4a;
+        }
+        @media (max-width: 1024px) {
+            .right-panel {
+                width: 300px;
+            }
+        }
+        @media (max-width: 768px) {
+            .main-content {
+                flex-direction: column;
+            }
+            .right-panel {
+                width: 100%;
+                max-height: 250px;
+                border-left: none;
+                border-top: 1px solid #2a2a2a;
+            }
+            .thumbnails-bar {
+                height: 80px;
+            }
+            .template-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div id="app">
+        <!-- TOOLBAR -->
+        <div class="toolbar">
+            <span class="toolbar-title" id="appTitle">📚 Genealog Indexer</span>
+            <span id="imageCounter" style="margin-left: 20px; color: #999; font-size: 13px; letter-spacing: 1px;"></span>
+            <button class="toolbar-btn" onclick="addImages()" title="Dodaj obrazy (Ctrl+O)">
+                <i class="fas fa-folder-open"></i> Otwórz
+            </button>
+            <button class="toolbar-btn" id="roiBtn" onclick="toggleROI()" title="ROI: Zaznaczanie pól (Ctrl+R)">
+                <i class="fas fa-crop"></i> ROI
+            </button>
+            <button class="toolbar-btn" id="actBtn" onclick="toggleActMode()" title="Akt: Cały dokument (Ctrl+A)">
+                <i class="fas fa-square-full"></i> Akt
+            </button>
+            <button class="toolbar-btn" onclick="zoomToAct(app.records.find(r => r.id === app.currentRecordId)?.actROI)" title="Zoom do zaznaczonego aktu">
+                <i class="fas fa-search-plus"></i> Zoom Akt
+            </button>
+            <div class="toolbar-sep"></div>
+            <button class="toolbar-btn" onclick="zoomReset()" title="Zoom: Reset (Ctrl+0)">
+                <i class="fas fa-compress"></i> Fit
+            </button>
+            <button class="toolbar-btn" onclick="toggleFullscreen()" title="Pełny ekran (F)">
+                <i class="fas fa-expand"></i> Fullscreen
+            </button>
+            <div class="toolbar-sep"></div>
+            <button class="toolbar-btn" onclick="togglePanel('right')" title="Formularz (Ctrl+F)">
+                <i class="fas fa-list"></i> Formularz
+            </button>
+            <button class="toolbar-btn" onclick="togglePanel('thumbs')" title="Miniatury (Ctrl+M)">
+                <i class="fas fa-images"></i> Miniatury
+            </button>
+            <div class="toolbar-sep"></div>
+            <button class="toolbar-btn" onclick="exportData('simple')" title="Eksport danych bez ROI">
+                <i class="fas fa-download"></i> Eksport prosty
+            </button>
+            <button class="toolbar-btn" onclick="exportData('full')" title="Eksport pełny z zaznaczeniami ROI">
+                <i class="fas fa-download"></i> Eksport z ROI
+            </button>
+            <button class="toolbar-btn" onclick="importCSV()" title="Import danych z CSV">
+                <i class="fas fa-upload"></i> Import CSV
+            </button>
+            <div class="toolbar-sep"></div>
+            <button class="toolbar-btn" onclick="showHelp()" title="Pomoc i przewodnik">
+                <i class="fas fa-question-circle"></i> Help
+            </button>
+        </div>
+        <!-- v6.0: MODAL LICZBY AKTÓW -->
+        <div id="actCountModal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.3); backdrop-filter: blur(2px); z-index: 1000; pointer-events: auto;">
+            <div id="actCountModalContent" style="position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background: #1a1a1a; border: 1px solid #3a3a3a; border-radius: 8px; padding: 20px; width: 320px; box-shadow: 0 16px 48px rgba(0,0,0,0.95); z-index: 1001; cursor: move;">
+                <h2 style="color: #ddd; margin-top: 0; margin-bottom: 12px; font-size: 16px;">📋 Ile aktów?</h2>
+                <input type="number" id="actCountInput" min="1" max="10" value="1" style="width: 100%; padding: 10px; border: 1px solid #3a3a3a; background: #0a0a0a; color: #ddd; border-radius: 4px; font-size: 14px; margin-bottom: 12px; box-sizing: border-box;">
+                <div style="display: flex; gap: 8px;">
+                    <button onclick="createActsForImage()" style="flex: 1; padding: 10px; background: #0078d4; color: white; border: none; border-radius: 4px; font-weight: 600; cursor: pointer; font-size: 14px;">OK</button>
+                    <button onclick="closeActModal()" style="flex: 1; padding: 10px; background: #3a3a3a; color: #ddd; border: none; border-radius: 4px; font-weight: 600; cursor: pointer; font-size: 14px;">Anuluj</button>
+                </div>
+            </div>
+        </div>
+        <!-- MAIN CONTENT -->
+        <div class="main-content">
+            <!-- RECORDS SIDEBAR -->
+            <div class="records-sidebar" id="recordsSidebar">
+                <input type="text" id="recordsFilter" placeholder="🔍 Szukaj..." style="display: none; width: 100%; padding: 8px; margin-bottom: 8px; border: 1px solid #3a3a3a; border-radius: 4px; background: #1a1a1a; color: #ddd; font-size: 12px;">
+            </div>
+            <!-- VIEWER -->
+            <div class="viewer-panel">
+                <div class="viewer-container" id="viewerContainer">
+                    <div id="viewer"></div>
+                    <canvas id="drawingCanvas"></canvas>
+                    <div class="roi-info-overlay" id="roiInfo">Tryb ROI aktywny: Zaznacz obszar na obrazie</div>
+                    <!-- ROTATE CONTROLS -->
+                    <div class="rotate-controls">
+                        <button class="rotate-btn" onclick="rotateImage(-90)" title="Obrót -90° (←)">
+                            <i class="fas fa-redo"></i>
+                        </button>
+                        <button class="rotate-btn" onclick="rotateImage(90)" title="Obrót +90° (→)">
+                            <i class="fas fa-undo"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <!-- RIGHT PANEL -->
+            <div class="right-panel" id="rightPanel">
+                <div class="panel-content">
+                    <!-- FORM SECTIONS -->
+                    <div id="formsContainer"></div>
+                </div>
+            </div>
+        </div>
+        <!-- THUMBNAILS BAR -->
+        <div class="thumbnails-bar" id="thumbsBar"></div>
+    </div>
+    <input type="file" id="fileInput" multiple accept="image/*" style="display: none;" title="Wybierz obrazy do zaindeksowania">
+    <script>
+        const app = {
+            images: [],
+            // v6.0: Nowa hierarchia - akty per obraz
+            imageActs: [],  // [{ imageIdx, actNum, fieldValues{}, fieldROIs{}, actROI }]
+            currentImageIdx: 0,
+            currentActNum: null,  // Numer aktu (1, 2, 3...)
+            currentTemplate: null,
+            templates: [],
+            viewer: null,
+            roiMode: false,
+            actMode: false,
+            drawingCanvas: null,
+            drawingCtx: null,
+            activeField: null,
+            drawingROI: false,
+            roiStartX: 0,
+            roiStartY: 0,
+            roiOverlays: [],
+            // v6.0: Modal state
+            showActModal: false,
+            actCountInput: null
+        };
+        // INITIALIZATION
+        document.addEventListener('DOMContentLoaded', async () => {
+            loadFallbackTemplates();
+            initViewer();
+            setupDrawingCanvas();
+            setupEvents();
+            loadStorage();
+            renderUI();
+            notify('System gotowy - v6.0', 'success');
+        });
+        // FALLBACK TEMPLATES - Z ACCORDION SEKCJAMI
+        function loadFallbackTemplates() {
+            app.templates = [
+                {
+                    id: "birth",
+                    name: "Akt Urodzenia",
+                    icon: "fa-baby",
+                    sections: [
+                        {
+                            id: "basic",
+                            title: "📋 Podstawowe",
+                            expanded: true,
+                            fields: [
+                                {id: "child_first_name", label: "Imię dziecka", type: "text", required: true},
+                                {id: "child_last_name", label: "Nazwisko dziecka", type: "text", required: true}
+                            ]
+                        },
+                        {
+                            id: "informant",
+                            title: "👤 Zgłaszający",
+                            expanded: false,
+                            fields: [
+                                {id: "informant_name", label: "Imię i nazwisko", type: "text", required: false},
+                                {id: "informant_relation", label: "Pokrewieństwo", type: "text", required: false}
+                            ]
+                        },
+                        {
+                            id: "parents",
+                            title: "👨‍👩 Rodzice",
+                            expanded: true,
+                            fields: [
+                                {id: "father_name", label: "Imię ojca", type: "text", required: false},
+                                {id: "mother_name", label: "Imię matki", type: "text", required: false}
+                            ]
+                        },
+                        {
+                            id: "birth_details",
+                            title: "📅 Urodzenie",
+                            expanded: false,
+                            fields: [
+                                {id: "birth_date", label: "Data urodzenia", type: "date", required: false},
+                                {id: "birth_place", label: "Miejsce urodzenia", type: "text", required: false}
+                            ]
+                        },
+                        {
+                            id: "notes_section",
+                            title: "📝 Dopiski",
+                            expanded: false,
+                            fields: [
+                                {id: "notes", label: "Uwagi genealogiczne", type: "textarea", required: false}
+                            ]
+                        }
+                    ]
+                },
+                {
+                    id: "marriage",
+                    name: "Akt Małżeństwa",
+                    icon: "fa-ring",
+                    sections: [
+                        {
+                            id: "basic",
+                            title: "📋 Podstawowe",
+                            expanded: true,
+                            fields: [
+                                {id: "groom_first_name", label: "Imię pana młodego", type: "text", required: true},
+                                {id: "groom_last_name", label: "Nazwisko pana młodego", type: "text", required: true},
+                                {id: "bride_first_name", label: "Imię panny młodej", type: "text", required: true},
+                                {id: "bride_last_name", label: "Nazwisko panny młodej", type: "text", required: true}
+                            ]
+                        },
+                        {
+                            id: "details",
+                            title: "📅 Małżeństwo",
+                            expanded: false,
+                            fields: [
+                                {id: "marriage_date", label: "Data małżeństwa", type: "date", required: false},
+                                {id: "marriage_place", label: "Miejsce małżeństwa", type: "text", required: false}
+                            ]
+                        },
+                        {
+                            id: "notes_section",
+                            title: "📝 Dopiski",
+                            expanded: false,
+                            fields: [
+                                {id: "notes", label: "Uwagi genealogiczne", type: "textarea", required: false}
+                            ]
+                        }
+                    ]
+                },
+                {
+                    id: "death",
+                    name: "Akt Zgonu",
+                    icon: "fa-cross",
+                    sections: [
+                        {
+                            id: "basic",
+                            title: "📋 Podstawowe",
+                            expanded: true,
+                            fields: [
+                                {id: "deceased_first_name", label: "Imię zmarłego", type: "text", required: true},
+                                {id: "deceased_last_name", label: "Nazwisko zmarłego", type: "text", required: true}
+                            ]
+                        },
+                        {
+                            id: "death_details",
+                            title: "📅 Zgon",
+                            expanded: false,
+                            fields: [
+                                {id: "death_date", label: "Data zgonu", type: "date", required: false},
+                                {id: "death_place", label: "Miejsce zgonu", type: "text", required: false},
+                                {id: "age", label: "Wiek (lata)", type: "number", required: false}
+                            ]
+                        },
+                        {
+                            id: "notes_section",
+                            title: "📝 Dopiski",
+                            expanded: false,
+                            fields: [
+                                {id: "notes", label: "Uwagi genealogiczne", type: "textarea", required: false}
+                            ]
+                        }
+                    ]
+                }
+            ];
+            app.currentTemplate = app.templates[0].id;
+            renderFormSections();
+        }
+        // RENDER FORM SECTIONS
+        function renderFormSections() {
+            const container = document.getElementById('formsContainer');
+            container.innerHTML = '';
+            app.templates.forEach((template) => {
+                const section = document.createElement('div');
+                section.id = `form-${template.id}`;
+                section.className = `form-section ${template.id === app.currentTemplate ? 'active' : ''}`;
+                
+                // Header
+                const header = document.createElement('div');
+                header.className = 'form-header';
+                header.innerHTML = `
+                    <h3>${template.name}</h3>
+                    <div class="record-counter" id="recordCounter">Rekord: #0</div>
+                `;
+                section.appendChild(header);
+                
+                // Smart Defaults Bar
+                const defaultsBar = document.createElement('div');
+                defaultsBar.className = 'smart-defaults-bar';
+                defaultsBar.innerHTML = `
+                    <div>
+                        <label for="defaultParish">⛪ Parafia</label>
+                        <select id="defaultParish" class="default-parish-select" onchange="saveSmartDefaults()">
+                            <option value="">-- Wybierz paraffię --</option>
+                            <option value="Wniebowzięcia">Wniebowzięcia</option>
+                            <option value="Świętego Michała">Świętego Michała</option>
+                            <option value="Świętego Józefa">Świętego Józefa</option>
+                            <option value="Świętej Barbary">Świętej Barbary</option>
+                            <option value="Karmelitów">Karmelitów</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label for="defaultYear">📅 Rok</label>
+                        <input type="number" id="defaultYear" class="default-year-input" placeholder="YYYY" min="1500" max="2050" onchange="saveSmartDefaults()" style="width:100%; padding:6px 8px; background:#0f0f0f; border:1px solid #3a3a3a; color:#ddd; border-radius:4px; font-size:11px;">
+                    </div>
+                    <div>
+                        <label for="defaultActType">📋 Typ Aktu</label>
+                        <select id="defaultActType" class="default-act-type-select" onchange="saveSmartDefaults(); selectTemplateFromDefault()">
+                            <option value="birth">Akt Urodzenia</option>
+                            <option value="marriage">Akt Małżeństwa</option>
+                            <option value="death">Akt Zgonu</option>
+                            <option value="mixed">Mieszane</option>
+                            <option value="other">Inne</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label for="defaultLang">🌐 Język</label>
+                        <select id="defaultLang" class="default-lang-select" onchange="saveSmartDefaults()">
+                            <option value="PL">Polski (PL)</option>
+                            <option value="RU">Rosyjski (RU)</option>
+                            <option value="LA">Łaciński (LA)</option>
+                        </select>
+                    </div>
+                    <div class="smart-defaults-checkboxes">
+                        <label><input type="checkbox" id="copyFromPrevious" class="copy-previous-check"> Kopiuj z poprzedniego</label>
+                        <label><input type="checkbox" id="autoIncrementYear" class="auto-increment-check"> Auto-inkrementuj rok</label>
+                        <button type="button" id="syncAllBtn" style="margin-left: auto; padding: 6px 12px; background: #107c10; color: white; border: none; border-radius: 3px; font-size: 12px; font-weight: 600; cursor: pointer;">📋 Synchronizuj</button>
+                    </div>
+                `;
+                section.appendChild(defaultsBar);
+                
+                // ACCORDION SEKCJE
+                if (template.sections) {
+                    const accordion = document.createElement('div');
+                    accordion.className = 'form-accordion';
+                    
+                    template.sections.forEach(sectionDef => {
+                        const item = document.createElement('div');
+                        item.className = 'accordion-item';
+                        item.dataset.sectionId = sectionDef.id;
+                        
+                        // Header
+                        const headerBtn = document.createElement('button');
+                        headerBtn.className = `accordion-header ${sectionDef.expanded ? 'active' : ''}`;
+                        headerBtn.innerHTML = `
+                            <span>${sectionDef.title}</span>
+                            <span class="accordion-icon">⬇️</span>
+                        `;
+                        headerBtn.onclick = (e) => {
+                            e.preventDefault();
+                            headerBtn.classList.toggle('active');
+                            contentDiv.classList.toggle('active');
+                        };
+                        item.appendChild(headerBtn);
+                        
+                        // Content
+                        const contentDiv = document.createElement('div');
+                        contentDiv.className = `accordion-content ${sectionDef.expanded ? 'active' : ''}`;
+                        
+                        const fieldsDiv = document.createElement('div');
+                        fieldsDiv.className = `accordion-fields ${sectionDef.fields.length === 1 ? 'full' : ''}`;
+                        
+                        sectionDef.fields.forEach(field => {
+                            const group = document.createElement('div');
+                            group.className = `form-group ${field.required ? 'required' : ''}`;
+                            
+                            const label = document.createElement('label');
+                            label.textContent = field.label;
+                            
+                            let input;
+                            if (field.type === 'textarea') {
+                                input = document.createElement('textarea');
+                            } else {
+                                input = document.createElement('input');
+                                input.type = field.type;
+                            }
+                            input.className = 'field-input';
+                            input.dataset.field = field.id;
+                            input.dataset.templateId = template.id;
+                            input.title = field.label;
+                            input.placeholder = field.label;
+                            if (field.required) {
+                                input.required = true;
+                            }
+                            
+                            // v6.0: Copy button wyłączony - akty się tworzą przez modal
+                            // const copyBtn = document.createElement('button');
+                            
+                            group.appendChild(label);
+                            group.appendChild(input);
+                            fieldsDiv.appendChild(group);
+                        });
+                        
+                        contentDiv.appendChild(fieldsDiv);
+                        item.appendChild(contentDiv);
+                        accordion.appendChild(item);
+                    });
+                    
+                    section.appendChild(accordion);
+                }
+                
+                // Action buttons
+                const actions = document.createElement('div');
+                actions.className = 'form-actions';
+                actions.innerHTML = `
+                    <button class="form-btn" onclick="saveRecord()">
+                        <i class="fas fa-save"></i> Zapisz
+                    </button>
+                    <button class="form-btn danger" onclick="deleteCurrentRecord()">
+                        <i class="fas fa-trash"></i> Usuń
+                    </button>
+                `;
+                section.appendChild(actions);
+                
+                container.appendChild(section);
+            });
+            
+            setupFormEvents();
+            loadSmartDefaults();
+        }
+        // SETUP FORM EVENTS (delegacja zdarzeń na kontenerze)
+        function setupFormEvents() {
+            const formsContainer = document.getElementById('formsContainer');
+            if (!formsContainer) return;
+            // Usuń stare delegowane listenery (cloneNode trick)
+            formsContainer.replaceWith(formsContainer.cloneNode(true));
+            const newContainer = document.getElementById('formsContainer');
+            // Delegacja zdarzeń – focusin (propaguje, w przeciwieństwie do focus)
+            newContainer.addEventListener('focusin', (e) => {
+                if (e.target.classList.contains('field-input')) {
+                    app.activeField = e.target;
+                    console.log('🔵 Focus: pole aktywne', e.target.dataset.field);
+                    redrawROIs();
+                    // Zoom do ROI jeśli istnieje
+                    if (app.currentRecordId) {
+                        const record = app.records.find(r => r.id === app.currentRecordId);
+                        if (record && record.rois && record.rois[e.target.dataset.field]) {
+                            zoomToROI(record.rois[e.target.dataset.field]);
+                        }
+                    }
+                }
+            });
+            // Mouseenter - podświetlenie pola przy najechaniu
+            newContainer.addEventListener('mouseenter', (e) => {
+                if (e.target.classList.contains('field-input')) {
+                    const fieldId = e.target.dataset.field;
+                    if (app.currentRecordId) {
+                        const record = app.records.find(r => r.id === app.currentRecordId);
+                        if (record && record.rois && record.rois[fieldId]) {
+                            redrawROIs(fieldId); // podświetlenie tylko tego pola
+                        }
+                    }
+                }
+            }, true);
+            // Mouseleave - powrót do normalnego rysowania
+            newContainer.addEventListener('mouseleave', (e) => {
+                if (e.target.classList.contains('field-input')) {
+                    redrawROIs(); // wróć do normalnego rysowania
+                }
+            }, true);
+            // Keydown - Enter przechodzi do następnego pola, Tab/Shift+Tab nawigacja
+            newContainer.addEventListener('keydown', (e) => {
+                if (e.target.classList.contains('field-input')) {
+                    const form = e.target.closest('.form-section');
+                    const inputs = Array.from(form.querySelectorAll('.field-input'));
+                    const idx = inputs.indexOf(e.target);
+                    
+                    // Enter - następne pole (tylko dla text inputów, nie textarea)
+                    if (e.key === 'Enter' && e.target.tagName !== 'TEXTAREA') {
+                        e.preventDefault();
+                        if (idx < inputs.length - 1) {
+                            inputs[idx + 1].focus();
+                        } else {
+                            saveRecord();
+                        }
+                    }
+                    
+                    // Tab - następne pole
+                    if (e.key === 'Tab' && !e.shiftKey) {
+                        e.preventDefault();
+                        if (idx < inputs.length - 1) {
+                            inputs[idx + 1].focus();
+                        } else {
+                            saveRecord();
+                        }
+                    }
+                    
+                    // Shift+Tab - poprzednie pole
+                    if (e.key === 'Tab' && e.shiftKey) {
+                        e.preventDefault();
+                        if (idx > 0) {
+                            inputs[idx - 1].focus();
+                        } else if (idx === 0) {
+                            // Przejdź do ostatniego pola poprzedniej sekcji
+                            const sections = Array.from(form.querySelectorAll('.accordion-item'));
+                            const currentSection = e.target.closest('.accordion-item');
+                            const sectionIdx = sections.indexOf(currentSection);
+                            if (sectionIdx > 0) {
+                                const prevSection = sections[sectionIdx - 1];
+                                const prevInputs = Array.from(prevSection.querySelectorAll('.field-input'));
+                                if (prevInputs.length > 0) {
+                                    prevInputs[prevInputs.length - 1].focus();
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+            console.log('✅ Form events delegated on container');
+        }
+        // VIEWER INIT (bez canvas, tylko OSD)
+        function initViewer() {
+            app.viewer = OpenSeadragon({
+                id: 'viewer',
+                prefixUrl: 'https://openseadragon.github.io/openseadragon/images/',
+                minZoomLevel: 0.5,
+                maxZoomLevel: 20,
+                visibilityRatio: 0.5,
+                constrainDuringPan: true,
+                showNavigator: true,
+                navigatorPosition: 'BOTTOM_RIGHT',
+                gestureSettingsMouse: {
+                    scrollToZoom: true,
+                    clickToZoom: false
+                }
+            });
+            // Dodaj listenery - przy zoom/pan/rotate OSD automatycznie skaluje overlays!
+            app.viewer.addHandler('animation', () => {
+                // OSD automatycznie redrawuje overlays
+            });
+            app.viewer.addHandler('resize', () => {
+                resizeDrawingCanvas();
+            });
+            // Dodaj handler do resetu overlays przy załadowaniu nowego obrazu
+            app.viewer.addHandler('open', () => {
+                app.roiOverlays = [];
+                redrawROIs();
+            });
+        }
+        // SETUP DRAWING CANVAS (do rysowania, nie do wyświetlania!)
+        function setupDrawingCanvas() {
+            app.drawingCanvas = document.getElementById('drawingCanvas');
+            if (!app.drawingCanvas) {
+                console.error('Drawing Canvas element not found');
+                return;
+            }
+            app.drawingCtx = app.drawingCanvas.getContext('2d', { willReadFrequently: true });
+            const container = document.querySelector('.viewer-container');
+            if (!container) {
+                console.error('Viewer container not found');
+                return;
+            }
+            const resize = () => {
+                app.drawingCanvas.width = container.offsetWidth;
+                app.drawingCanvas.height = container.offsetHeight;
+            };
+            resize();
+            window.addEventListener('resize', resize);
+            function resizeDrawingCanvas() {
+                app.drawingCanvas.width = container.offsetWidth;
+                app.drawingCanvas.height = container.offsetHeight;
+            }
+            window.resizeDrawingCanvas = resizeDrawingCanvas;
+            console.log('✅ Drawing Canvas Setup complete');
+            // MOUSE EVENTS - rysowanie tymczasowe na canvas
+            app.drawingCanvas.addEventListener('mousedown', (e) => {
+                // TRYB ROI - dla pojedynczych pól
+                if (app.roiMode) {
+                    // Jeśli brak rekordu, pokaż błąd
+                    if (!app.currentRecordId) {
+                        notify('❌ Utwórz rekord przed ROI', 'error');
+                        return;
+                    }
+                    // Jeśli brak zaznaczonego pola, pokaż błąd
+                    if (!app.activeField) {
+                        notify('❌ Zaznacz pole w formularzu', 'error');
+                        return;
+                    }
+                }
+                
+                // TRYB AKT - dla całego dokumentu
+                if (app.actMode) {
+                    // Jeśli brak rekordu, pokaż błąd
+                    if (!app.currentRecordId) {
+                        notify('❌ Utwórz rekord przed zaznaczaniem aktu', 'error');
+                        return;
+                    }
+                }
+                
+                // Jeśli żaden tryb nie jest włączony, wyjdź
+                if (!app.roiMode && !app.actMode) {
+                    console.warn('Neither ROI nor Act mode enabled');
+                    return;
+                }
+                
+                // Wszystko OK - rozpoczęcie rysowania
+                e.preventDefault();
+                e.stopPropagation();
+                app.drawingROI = true;
+                app.roiStartX = e.offsetX;
+                app.roiStartY = e.offsetY;
+                
+                if (app.roiMode) {
+                    console.log('🎨 ROI START:', { x: app.roiStartX, y: app.roiStartY, field: app.activeField.dataset.field });
+                } else if (app.actMode) {
+                    console.log('📑 ACT START:', { x: app.roiStartX, y: app.roiStartY, recordId: app.currentRecordId });
+                }
+            });
+            app.drawingCanvas.addEventListener('mousemove', (e) => {
+                if (!app.drawingROI) return;
+                e.preventDefault();
+                e.stopPropagation();
+                app.drawingCtx.clearRect(0, 0, app.drawingCanvas.width, app.drawingCanvas.height);
+                redrawROIs(); // zachowaj istniejące overlays
+                let x = app.roiStartX;
+                let y = app.roiStartY;
+                let w = e.offsetX - app.roiStartX;
+                let h = e.offsetY - app.roiStartY;
+                // Obsługa rysowania w dowolnym kierunku
+                if (w < 0) { x += w; w = -w; }
+                if (h < 0) { y += h; h = -h; }
+                
+                // Różne kolory dla ROI vs ACT
+                if (app.roiMode) {
+                    app.drawingCtx.strokeStyle = '#0078d4';  // Niebieski dla ROI
+                    app.drawingCtx.fillStyle = 'rgba(0,120,212,0.15)';
+                } else if (app.actMode) {
+                    app.drawingCtx.strokeStyle = '#10b981';  // Zielony dla ACT
+                    app.drawingCtx.fillStyle = 'rgba(16,185,129,0.1)';
+                }
+                
+                app.drawingCtx.lineWidth = 2;
+                app.drawingCtx.setLineDash([5, 5]);
+                app.drawingCtx.strokeRect(x, y, w, h);
+                app.drawingCtx.fillRect(x, y, w, h);
+                app.drawingCtx.setLineDash([]);
+            });
+            app.drawingCanvas.addEventListener('mouseup', (e) => {
+                if (!app.drawingROI) return;
+                e.preventDefault();
+                e.stopPropagation();
+                app.drawingROI = false;
+                let startX = app.roiStartX;
+                let startY = app.roiStartY;
+                let endX = e.offsetX;
+                let endY = e.offsetY;
+                let x = Math.min(startX, endX);
+                let y = Math.min(startY, endY);
+                let w = Math.abs(endX - startX);
+                let h = Math.abs(endY - startY);
+                
+                if (app.roiMode) {
+                    console.log('🖱️ ROI final size:', { x, y, w, h });
+                } else if (app.actMode) {
+                    console.log('📑 ACT final size:', { x, y, w, h });
+                }
+                
+                if (w < 10 || h < 10) {
+                    console.log('⚠️ Selection too small, cancelled');
+                    app.drawingCtx.clearRect(0, 0, app.drawingCanvas.width, app.drawingCanvas.height);
+                    redrawROIs();
+                    return;
+                }
+                // Konwersja do współrzędnych obrazu – użyj lewy-górny róg + dodatnie w/h
+                const roi = screenToImageRect(x, y, w, h);
+                if (!roi) {
+                    notify('❌ Błąd konwersji zaznaczenia', 'error');
+                    app.drawingCtx.clearRect(0, 0, app.drawingCanvas.width, app.drawingCanvas.height);
+                    redrawROIs();
+                    return;
+                }
+                
+                const act = getCurrentAct();
+                if (!act) {
+                    notify('❌ Nie wybrano aktu', 'error');
+                    return;
+                }
+                
+                // TRYB ROI - zapisz do pola
+                if (app.roiMode) {
+                    if (!act.fieldROIs) act.fieldROIs = {};
+                    const fieldId = app.activeField.dataset.field;
+                    act.fieldROIs[fieldId] = roi;
+                    app.activeField.classList.add('has-roi');
+                    const label = app.activeField.previousElementSibling?.textContent?.trim() || fieldId;
+                    notify(`✅ ROI zapisany dla: ${label}`, 'success');
+                }
+                // TRYB AKT - zapisz granicę aktu
+                else if (app.actMode) {
+                    act.actROI = roi;
+                    notify(`✅ Granica aktu zapisana`, 'success');
+                    console.log('📑 Act ROI saved:', roi);
+                }
+                
+                saveStorage();
+                app.drawingCtx.clearRect(0, 0, app.drawingCanvas.width, app.drawingCanvas.height);
+                setTimeout(redrawROIs, 50);
+            });
+            // Globalny mouseup (gdy puścisz mysz poza canvasem)
+            document.addEventListener('mouseup', () => {
+                if (app.drawingROI) {
+                    app.drawingROI = false;
+                    app.drawingCtx.clearRect(0, 0, app.drawingCanvas.width, app.drawingCanvas.height);
+                    redrawROIs();
+                }
+            });
+        }
+        // SCREEN TO IMAGE COORDINATES
+        function screenToImageRect(x, y, w, h) {
+            const viewer = app.viewer;
+            if (!viewer) {
+                notify('❌ Viewer not initialized', 'error');
+                return null;
+            }
+            const item = viewer.world.getItemAt(0);
+            if (!item) {
+                notify('❌ No image loaded', 'error');
+                return null;
+            }
+            try {
+                const p1 = viewer.viewport.pointFromPixel(new OpenSeadragon.Point(x, y));
+                const p2 = viewer.viewport.pointFromPixel(new OpenSeadragon.Point(x + w, y + h));
+                const img1 = item.viewportToImageCoordinates(p1);
+                const img2 = item.viewportToImageCoordinates(p2);
+                const size = item.getContentSize();
+                return {
+                    x: img1.x / size.x,
+                    y: img1.y / size.y,
+                    w: (img2.x - img1.x) / size.x,
+                    h: (img2.y - img1.y) / size.y
+                };
+            } catch (err) {
+                console.error('Error converting ROI coordinates:', err);
+                notify('❌ Błąd konwersji ROI', 'error');
+                return null;
+            }
+        }
+        // REDRAW ROIs - TERAZ UŻYWAMY OSD OVERLAYS!
+        function redrawROIs(highlightField = null) {
+            const viewer = app.viewer;
+            const item = viewer.world.getItemAt(0);
+            if (!item) {
+                console.warn('No image loaded');
+                return;
+            }
+            // Usuń stare overlays
+            app.roiOverlays.forEach(overlay => {
+                viewer.removeOverlay(overlay);
+            });
+            app.roiOverlays = [];
+            const size = item.getContentSize();
+            const currentImageActs = app.imageActs.filter(a => a.imageIdx === app.currentImageIdx);
+            let roiCount = 0;
+            
+            // RYSUJ ACT OVERLAYS (granice całych aktów) - ZIELONE
+            currentImageActs.forEach(act => {
+                if (!act.actROI) return;
+                try {
+                    const actROI = act.actROI;
+                    const imgRect = new OpenSeadragon.Rect(
+                        actROI.x * size.x,
+                        actROI.y * size.y,
+                        actROI.w * size.x,
+                        actROI.h * size.y
+                    );
+                    const viewportRect = viewer.viewport.imageToViewportRectangle(imgRect);
+                    
+                    // Utwórz div overlay dla aktu
+                    const overlayDiv = document.createElement('div');
+                    overlayDiv.className = 'act-overlay';
+                    if (act.actNum === app.currentActNum) {
+                        overlayDiv.classList.add('active');
+                    }
+                    
+                    // Dodaj label
+                    const label = document.createElement('div');
+                    label.style.cssText = 'color: white; font-size: 12px; font-weight: bold; padding: 6px; background: rgba(16,185,129,0.8); border-radius: 2px;';
+                    label.textContent = `📑 Akt ${act.actNum}`;
+                    overlayDiv.appendChild(label);
+                    // Popover dla aktu
+                    overlayDiv.addEventListener('mouseenter', () => {
+                        showPopover(overlayDiv, `Akt ${act.actNum}`);
+                    });
+                    overlayDiv.addEventListener('mouseleave', () => {
+                        hidePopover();
+                    });
+                    // Dodaj overlay do OSD
+                    viewer.addOverlay({
+                        element: overlayDiv,
+                        location: viewportRect
+                    });
+                    app.roiOverlays.push(overlayDiv);
+                    roiCount++;
+                    console.log('📑 Act overlay drawn:', act.actNum);
+                } catch (err) {
+                    console.warn(`Act overlay error for act ${act.actNum}:`, err);
+                }
+            });
+            
+            // RYSUJ ROI OVERLAYS (pola w akcie) - NIEBIESKIE
+            currentImageActs.forEach(act => {
+                if (!act.fieldROIs) return;
+                Object.entries(act.fieldROIs).forEach(([fieldId, roi]) => {
+                    if (highlightField && (fieldId !== highlightField || act.actNum !== app.currentActNum)) return;
+                    try {
+                        // Konwersja ROI z obrazu → viewport rectangle
+                        const imgRect = new OpenSeadragon.Rect(
+                            roi.x * size.x,
+                            roi.y * size.y,
+                            roi.w * size.x,
+                            roi.h * size.y
+                        );
+                        const viewportRect = viewer.viewport.imageToViewportRectangle(imgRect);
+                        // Utwórz div overlay
+                        const overlayDiv = document.createElement('div');
+                        overlayDiv.className = 'roi-overlay';
+                        const isCurrent = act.actNum === app.currentActNum;
+                        const isActive = isCurrent && app.activeField && app.activeField.dataset.field === fieldId;
+                        const isHighlight = fieldId === highlightField;
+                        if (isActive) {
+                            overlayDiv.classList.add('active');
+                        } else if (isHighlight) {
+                            overlayDiv.classList.add('highlight');
+                        }
+                        // Dodaj label
+                        const label = document.createElement('div');
+                        label.style.cssText = 'color: white; font-size: 11px; font-weight: bold; padding: 4px; background: rgba(0,0,0,0.6); border-radius: 2px;';
+                        label.textContent = fieldId.substring(0, 15);
+                        overlayDiv.appendChild(label);
+                        // Dodaj event listenery dla popovrów
+                        overlayDiv.addEventListener('mouseenter', () => {
+                            showPopover(overlayDiv, fieldId);
+                        });
+                        overlayDiv.addEventListener('mouseleave', () => {
+                            hidePopover();
+                        });
+                        // Dodaj overlay do OSD
+                        viewer.addOverlay({
+                            element: overlayDiv,
+                            location: viewportRect
+                        });
+                        app.roiOverlays.push(overlayDiv);
+                        roiCount++;
+                    } catch (err) {
+                        console.warn(`ROI overlay error for ${fieldId}:`, err);
+                    }
+                });
+            });
+            if (roiCount > 0) {
+                console.log(`✅ redrawROIs: narysowano ${roiCount} overlays (ACT + ROI)`);
+            }
+        }
+        // ZOOM TO ROI
+        function zoomToROI(roi) {
+            if (!app.viewer || !app.viewer.world.getItemAt(0)) return;
+            const item = app.viewer.world.getItemAt(0);
+            const itemSize = item.getContentSize();
+            const rect = new OpenSeadragon.Rect(
+                roi.x * itemSize.x,
+                roi.y * itemSize.y,
+                roi.w * itemSize.x,
+                roi.h * itemSize.y
+            );
+            const viewportRect = app.viewer.viewport.imageToViewportRectangle(rect);
+            app.viewer.viewport.fitBounds(viewportRect, true);
+        }
+        // ZOOM TO ACT
+        function zoomToAct(actROI) {
+            if (!actROI) {
+                notify('❌ Akt nie ma zaznaczonej granicy', 'warning');
+                return;
+            }
+            zoomToROI(actROI);  // Reuse tej samej logiki
+        }
+        // POPOVER SYSTEM
+        function createPopover(fieldLabel) {
+            let popover = document.getElementById('popover');
+            if (!popover) {
+                popover = document.createElement('div');
+                popover.id = 'popover';
+                popover.className = 'popover';
+                document.body.appendChild(popover);
+            }
+            popover.textContent = fieldLabel;
+            return popover;
+        }
+        function showPopover(overlayDiv, fieldLabel) {
+            const popover = createPopover(fieldLabel);
+            // Pozycja popovera - nad lub obok overlaya
+            const rect = overlayDiv.getBoundingClientRect();
+            popover.style.left = (rect.left + rect.width / 2 - popover.offsetWidth / 2) + 'px';
+            popover.style.top = (rect.top - 30) + 'px';
+            // Jeśli popover wychodzi poza ekran, ustaw poniżej
+            if (popover.offsetTop < 0) {
+                popover.style.top = (rect.bottom + 10) + 'px';
+            }
+            popover.classList.add('show');
+        }
+        function hidePopover() {
+            const popover = document.getElementById('popover');
+            if (popover) {
+                popover.classList.remove('show');
+            }
+        }
+        // SETUP EVENTS
+        function setupEvents() {
+            document.getElementById('fileInput').addEventListener('change', (e) => {
+                handleFiles(e.target.files);
+            });
+            // Records filter
+            const filterInput = document.getElementById('recordsFilter');
+            if (filterInput) {
+                filterInput.addEventListener('input', () => {
+                    renderActButtons();
+                });
+            }
+            // Synchronizuj z poprzedniego - batch copy wszystkich pól
+            const syncAllBtn = document.getElementById('syncAllBtn');
+            if (syncAllBtn) {
+                syncAllBtn.addEventListener('click', () => {
+                    if (app.currentActNum === null) {
+                        notify('❌ Brak aktywnego aktu', 'error');
+                        return;
+                    }
+                    const prevActs = app.imageActs.filter(a => a.imageIdx === app.currentImageIdx && a.actNum < app.currentActNum);
+                    if (prevActs.length === 0) {
+                        notify('❌ Brak poprzedniego aktu do synchronizacji', 'warning');
+                        return;
+                    }
+                    const lastAct = prevActs[prevActs.length - 1];
+                    const form = document.querySelector(`#form-${app.currentTemplate}`);
+                    let copiedCount = 0;
+                    form.querySelectorAll('.field-input').forEach(input => {
+                        const fieldId = input.dataset.field;
+                        if (lastAct.fieldValues[fieldId]) {
+                            input.value = lastAct.fieldValues[fieldId];
+                            copiedCount++;
+                        }
+                    });
+                    notify(`✅ Skopiowano ${copiedCount} pole(ć) z poprzedniego aktu`, 'success');
+                    setupFormEvents();
+                });
+            }
+            const viewerContainer = document.getElementById('viewerContainer');
+            if (viewerContainer) {
+                viewerContainer.addEventListener('dragover', (e) => {
+                    e.preventDefault();
+                    viewerContainer.classList.add('drag-over');
+                });
+                viewerContainer.addEventListener('dragleave', () => {
+                    viewerContainer.classList.remove('drag-over');
+                });
+                viewerContainer.addEventListener('drop', (e) => {
+                    e.preventDefault();
+                    viewerContainer.classList.remove('drag-over');
+                    if (e.dataTransfer.files.length) {
+                        handleFiles(e.dataTransfer.files);
+                    }
+                });
+            }
+            document.addEventListener('keydown', (e) => {
+                if (e.ctrlKey || e.metaKey) {
+                    if (e.key === 'o') { e.preventDefault(); addImages(); }
+                    if (e.key === 'r') { e.preventDefault(); toggleROI(); }
+                    if (e.key === 'a') { e.preventDefault(); toggleActMode(); }
+                    if (e.key === 's') { e.preventDefault(); exportData(); }
+                    if (e.key === '0') { e.preventDefault(); zoomReset(); }
+                    if (e.key === 'n') { e.preventDefault(); createNewRecord(); }
+                    
+                    // Ctrl+1-9 - szybki dostęp do sekcji accordion
+                    const num = parseInt(e.key);
+                    if (num >= 1 && num <= 9) {
+                        e.preventDefault();
+                        const form = document.querySelector(`.form-section.active`);
+                        if (form) {
+                            const items = Array.from(form.querySelectorAll('.accordion-item'));
+                            const targetItem = items[num - 1];
+                            if (targetItem) {
+                                const header = targetItem.querySelector('.accordion-header');
+                                const content = targetItem.querySelector('.accordion-content');
+                                
+                                // Otwórz sekcję jeśli zamknięta
+                                if (!content.classList.contains('active')) {
+                                    header.classList.add('active');
+                                    content.classList.add('active');
+                                }
+                                
+                                // Focus pierwsze pole w sekcji
+                                const firstInput = targetItem.querySelector('.field-input');
+                                if (firstInput) {
+                                    firstInput.focus();
+                                }
+                                
+                                console.log(`⌨️ Sekscja ${num} otwarta`);
+                            }
+                        }
+                    }
+                }
+                
+                // Shift+Left/Right - nawigacja pomiędzy obrazami
+                if (e.shiftKey && !e.ctrlKey && !e.metaKey) {
+                    if (e.key === 'ArrowLeft') {
+                        e.preventDefault();
+                        if (app.currentImageIdx > 0) {
+                            selectImage(app.currentImageIdx - 1);
+                            console.log(`⬅️ Poprzedni obraz: ${app.currentImageIdx + 1} / ${app.images.length}`);
+                        }
+                    }
+                    if (e.key === 'ArrowRight') {
+                        e.preventDefault();
+                        if (app.currentImageIdx < app.images.length - 1) {
+                            selectImage(app.currentImageIdx + 1);
+                            console.log(`➡️ Następny obraz: ${app.currentImageIdx + 1} / ${app.images.length}`);
+                        }
+                    }
+                }
+            });
+        }
+        // RECORDS MANAGEMENT
+        // SMART DEFAULTS SYSTEM
+        function loadSmartDefaults() {
+            const saved = localStorage.getItem('genealog_defaults');
+            if (saved) {
+                const defaults = JSON.parse(saved);
+                const parish = document.querySelector('.default-parish-select');
+                const year = document.querySelector('.default-year-input');
+                const lang = document.querySelector('.default-lang-select');
+                const actType = document.querySelector('.default-act-type-select');
+                const copy = document.querySelector('.copy-previous-check');
+                const autoInc = document.querySelector('.auto-increment-check');
+                
+                if (parish) parish.value = defaults.parish || '';
+                if (year) year.value = defaults.year || new Date().getFullYear();
+                if (lang) lang.value = defaults.lang || 'PL';
+                if (actType) actType.value = defaults.actType || 'birth';
+                if (copy) copy.checked = defaults.copyPrevious !== false;
+                if (autoInc) autoInc.checked = defaults.autoIncrement !== false;
+                
+                // Automatycznie zmień typ aktu jeśli wybrany
+                if (defaults.actType && defaults.actType !== 'mixed' && defaults.actType !== 'other') {
+                    selectTemplate(defaults.actType);
+                }
+            }
+        }
+        function saveSmartDefaults() {
+            const parish = document.querySelector('.default-parish-select')?.value || '';
+            const year = document.querySelector('.default-year-input')?.value || '';
+            const lang = document.querySelector('.default-lang-select')?.value || 'PL';
+            const actType = document.querySelector('.default-act-type-select')?.value || 'birth';
+            const copy = document.querySelector('.copy-previous-check')?.checked || false;
+            const autoInc = document.querySelector('.auto-increment-check')?.checked || false;
+            
+            localStorage.setItem('genealog_defaults', JSON.stringify({
+                parish, year, lang, actType, copyPrevious: copy, autoIncrement: autoInc
+            }));
+            console.log('💾 Smart Defaults zapisane');
+        }
+        function applySmartDefaults() {
+            const copyCheckbox = document.querySelector('.copy-previous-check');
+            const autoIncCheckbox = document.querySelector('.auto-increment-check');
+            const yearInput = document.querySelector('.default-year-input');
+            
+            if (copyCheckbox?.checked && app.records.length > 0) {
+                // Skopiuj ostatni rekord
+                const lastRecord = app.records[app.records.length - 1];
+                const form = document.querySelector(`#form-${app.currentTemplate}`);
+                Object.entries(lastRecord.data).forEach(([field, value]) => {
+                    const input = form.querySelector(`[data-field="${field}"]`);
+                    if (input) input.value = value;
+                });
+                notify('📋 Dane skopiowane z poprzedniego rekordu', 'success');
+            }
+            
+            if (autoIncCheckbox?.checked && yearInput?.value) {
+                // Inkrementuj rok
+                const currentYear = parseInt(yearInput.value);
+                yearInput.value = currentYear + 1;
+                saveSmartDefaults();
+                console.log(`📅 Rok auto-inkrementowany: ${currentYear + 1}`);
+            }
+        }
+        // v6.0: Te funkcje się nie przydadzą - akty się tworzą przez modal
+        /*
+        function createNewRecord() {
+            const recordId = Date.now();
+            const currentImg = app.images[app.currentImageIdx];
+            const record = {
+                id: recordId,
+                template: app.currentTemplate,
+                data: {},
+                rois: {},
+                imageIdx: app.currentImageIdx,
+                imageName: currentImg?.name,
+                imagePath: currentImg?.path || currentImg?.name,
+                timestamp: new Date().toISOString()
+            };
+            app.records.push(record);
+            app.currentRecordId = recordId;
+            clearForm();
+            applySmartDefaults();
+            renderRecordsSidebar();
+            updateImageCounter();
+            redrawROIs();
+            updateRecordCounter();
+            notify('✨ Nowy rekord utworzony + Smart Defaults zastosowane', 'success');
+            saveStorage();
+        }
+        function selectRecord(recordId) {
+            app.currentRecordId = recordId;
+            const record = app.records.find(r => r.id === recordId);
+            if (record) {
+                if (record.template !== app.currentTemplate) {
+                    selectTemplate(record.template);
+                }
+                setTimeout(() => {
+                    const form = document.querySelector(`#form-${record.template}`);
+                    Object.entries(record.data).forEach(([field, value]) => {
+                        const input = form.querySelector(`[data-field="${field}"]`);
+                        if (input) {
+                            input.value = value;
+                            if (record.rois && record.rois[field]) {
+                                input.classList.add('has-roi');
+                            }
+                        }
+                    });
+                    setupFormEvents();
+                    updateRecordCounter();
+                    redrawROIs();
+                }, 100);
+            }
+        }
+        */
+        function saveRecord() {
+            if (app.currentActNum === null) {
+                notify('❌ Najpierw wybierz akt', 'error');
+                return;
+            }
+            const act = getCurrentAct();
+            if (!act) return;
+            const form = document.querySelector(`#form-${app.currentTemplate}`);
+            if (!form) return;
+            const data = {};
+            form.querySelectorAll('.field-input').forEach(input => {
+                data[input.dataset.field] = input.value;
+            });
+            if (!Object.values(data).some(v => v)) {
+                notify('Uzupełnij przynajmniej jedno pole', 'error');
+                return;
+            }
+            act.fieldValues = data;
+            act.timestamp = new Date().toISOString();
+            renderActButtons();
+            notify('Akt zapisany!', 'success');
+            saveStorage();
+        }
+        function deleteCurrentRecord() {
+            if (app.currentActNum === null) return;
+            if (confirm('Usunąć ten akt?')) {
+                const actToDelete = app.currentActNum;
+                app.imageActs = app.imageActs.filter(a => !(a.imageIdx === app.currentImageIdx && a.actNum === actToDelete));
+                app.currentActNum = null;
+                clearForm();
+                renderActButtons();
+                redrawROIs();
+                notify('Akt usunięty', 'success');
+                saveStorage();
+            }
+        }
+        function updateRecordCounter() {
+            // v6.0: Zmieniony na licznik aktów
+            const counter = document.getElementById('recordCounter');
+            const totalActs = app.imageActs.filter(a => a.imageIdx === app.currentImageIdx).length;
+            if (app.currentActNum !== null) {
+                counter.textContent = `Akt: #${app.currentActNum} / ${totalActs}`;
+            } else {
+                counter.textContent = `Akty: ${totalActs}`;
+            }
+        }
+        function renderRecordsSidebar() {
+            const sidebar = document.getElementById('recordsSidebar');
+            const filterInput = document.getElementById('recordsFilter');
+            const filter = (filterInput?.value || '').toLowerCase();
+            
+            // Usuń wszystkie pill'i oprócz filtera
+            const pills = sidebar.querySelectorAll('.record-pill');
+            pills.forEach(p => p.remove());
+            
+            const newBtn = document.createElement('div');
+            newBtn.className = 'record-pill new';
+            newBtn.innerHTML = '+';
+            newBtn.title = 'Nowy rekord (Ctrl+N)';
+            newBtn.onclick = createNewRecord;
+            sidebar.appendChild(newBtn);
+            
+            const currentRecords = app.records.filter(r => r.imageIdx === app.currentImageIdx);
+            const filteredRecords = currentRecords.filter(record => {
+                if (!filter) return true;
+                // Szukaj w danych rekordu
+                return Object.values(record.data || {}).some(v => 
+                    v.toString().toLowerCase().includes(filter)
+                );
+            });
+            
+            filteredRecords.forEach((record, idx) => {
+                const pill = document.createElement('div');
+                const templateClass = record.template === 'birth' ? 'birth' : 
+                                     record.template === 'marriage' ? 'marriage' :
+                                     record.template === 'death' ? 'death' : '';
+                pill.className = `record-pill ${templateClass} ${record.id === app.currentRecordId ? 'active' : ''}`;
+                pill.textContent = currentRecords.indexOf(record) + 1;  // Pokazuj oryginalny numer
+                const dataPreview = Object.values(record.data || {}).join(', ').substring(0, 30);
+                const filePath = record.imagePath || record.imageName || 'Brak ścieżki';
+                pill.title = `Rekord ${currentRecords.indexOf(record) + 1}: ${record.template}\n${dataPreview}\n📁 ${filePath}`;
+                pill.draggable = true;
+                pill.dataset.recordId = record.id;
+                pill.onclick = (e) => {
+                    if (e.dataTransfer === undefined) selectRecord(record.id);
+                };
+                // Drag & Drop
+                pill.addEventListener('dragstart', (e) => {
+                    e.dataTransfer.effectAllowed = 'move';
+                    e.dataTransfer.setData('recordId', record.id);
+                    pill.classList.add('dragging');
+                });
+                pill.addEventListener('dragend', () => {
+                    pill.classList.remove('dragging');
+                });
+                pill.addEventListener('dragover', (e) => {
+                    e.preventDefault();
+                    e.dataTransfer.dropEffect = 'move';
+                    pill.classList.add('drag-over');
+                });
+                pill.addEventListener('dragleave', () => {
+                    pill.classList.remove('drag-over');
+                });
+                pill.addEventListener('drop', (e) => {
+                    e.preventDefault();
+                    pill.classList.remove('drag-over');
+                    const draggedId = e.dataTransfer.getData('recordId');
+                    if (draggedId !== record.id) {
+                        // Swap rekordów
+                        const draggedIdx = app.records.findIndex(r => r.id == draggedId);
+                        const targetIdx = app.records.findIndex(r => r.id === record.id);
+                        [app.records[draggedIdx], app.records[targetIdx]] = [app.records[targetIdx], app.records[draggedIdx]];
+                        saveStorage();
+                        renderRecordsSidebar();
+                        console.log(`🔄 Reordered records: ${draggedId} <-> ${record.id}`);
+                    }
+                });
+                sidebar.appendChild(pill);
+            });
+            
+            // Update filter input visibility
+            if (filterInput) {
+                filterInput.style.display = currentRecords.length > 3 ? 'block' : 'none';
+            }
+        }
+        // IMAGES MANAGEMENT
+        function addImages() {
+            document.getElementById('fileInput').click();
+        }
+        function handleFiles(files) {
+            const imageFiles = Array.from(files).filter(f => f.type && f.type.startsWith('image/'));
+            if (imageFiles.length === 0) {
+                notify('Nie znaleziono obrazów', 'error');
+                return;
+            }
+            let loaded = 0;
+            imageFiles.forEach(file => {
+                const reader = new FileReader();
+                reader.onload = (e) => {
+                    // Spróbuj uzyskać pełną ścieżkę (webkitRelativePath lub path)
+                    let filePath = file.webkitRelativePath || file.path || file.name;
+                    app.images.push({
+                        name: file.name,
+                        path: filePath,  // Ścieżka względna (jeśli dostępna) lub nazwa
+                        data: e.target.result  // Base64 data URL
+                    });
+                    loaded++;
+                    updateThumbs();
+                    if (app.images.length === 1) selectImage(0);
+                    if (loaded === imageFiles.length) {
+                        notify(`✅ Wczytano ${imageFiles.length} obraz(y)`, 'success');
+                    }
+                };
+                reader.readAsDataURL(file);
+            });
+        }
+        function updateThumbs() {
+            const bar = document.getElementById('thumbsBar');
+            bar.innerHTML = '';
+            app.images.forEach((img, i) => {
+                const div = document.createElement('div');
+                div.className = 'thumbnail' + (i === app.currentImageIdx ? ' active' : '');
+                div.onclick = () => selectImage(i);
+                const num = document.createElement('div');
+                num.className = 'thumbnail-number';
+                num.textContent = i + 1;
+                const count = document.createElement('div');
+                count.className = 'thumbnail-count';
+                const recordCount = app.records.filter(r => r.imageIdx === i).length;
+                count.textContent = `${recordCount} akt`;
+                const imgEl = document.createElement('img');
+                imgEl.src = img.data;
+                imgEl.alt = img.name;
+                div.appendChild(num);
+                div.appendChild(imgEl);
+                div.appendChild(count);
+                bar.appendChild(div);
+            });
+            updateImageCounter();
+        }
+        function updateImageCounter() {
+            const counter = document.getElementById('imageCounter');
+            if (!counter) return;
+            const totalImages = app.images.length;
+            const totalRecords = app.records.length;
+            const currentImages = app.currentImageIdx !== null ? app.currentImageIdx + 1 : '-';
+            const currentImageRecords = app.currentImageIdx !== null ? app.records.filter(r => r.imageIdx === app.currentImageIdx).length : 0;
+            
+            if (totalImages === 0) {
+                counter.textContent = '';
+            } else {
+                counter.textContent = `${currentImages}/${totalImages} obr. | ${currentImageRecords}/${totalRecords} akt`;
+            }
+        }
+        function selectImage(i) {
+            if (i < 0 || i >= app.images.length) return;
+            app.currentImageIdx = i;
+            app.currentActNum = null;
+            app.activeField = null;
+            updateThumbs();
+            updateImageCounter();
+            // v6.0: Sprawdź czy obraz ma już akty
+            const actsForImage = app.imageActs.filter(a => a.imageIdx === i);
+            if (actsForImage.length === 0) {
+                // Pokaż modal do wyboru liczby aktów
+                showActCountModal();
+            } else {
+                // Załaduj pierwszy akt
+                selectAct(actsForImage[0].actNum);
+            }
+            clearForm();
+            if (app.viewer && app.images[i]) {
+                app.viewer.addOnceHandler('open', () => {
+                    setTimeout(() => redrawROIs(), 100);
+                });
+                app.viewer.open({
+                    type: 'image',
+                    url: app.images[i].data
+                });
+            }
+            redrawROIs();
+        }
+        // v6.0: MODAL - LICZBA AKTÓW
+        // v6.0: MODAL DRAGGING
+        function setupModalDrag() {
+            const modal = document.getElementById('actCountModalContent');
+            if (!modal) return;
+            let isDragging = false;
+            let offsetX = 0, offsetY = 0;
+            
+            modal.addEventListener('mousedown', (e) => {
+                if (e.target !== modal && !modal.contains(e.target.closest('input'))) {
+                    isDragging = true;
+                    offsetX = e.clientX - modal.offsetLeft;
+                    offsetY = e.clientY - modal.offsetTop;
+                }
+            });
+            
+            document.addEventListener('mousemove', (e) => {
+                if (isDragging) {
+                    modal.style.left = (e.clientX - offsetX) + 'px';
+                    modal.style.top = (e.clientY - offsetY) + 'px';
+                }
+            });
+            
+            document.addEventListener('mouseup', () => {
+                isDragging = false;
+            });
+        }
+        function showActCountModal() {
+            const modal = document.getElementById('actCountModal');
+            const input = document.getElementById('actCountInput');
+            input.value = '1';
+            modal.style.display = 'flex';
+            setTimeout(setupModalDrag, 0);
+        }
+        function closeActModal() {
+            const modal = document.getElementById('actCountModal');
+            modal.style.display = 'none';
+        }
+        // v6.0: Helper - pobierz bieżący akt
+        function getCurrentAct() {
+            if (app.currentActNum === null) return null;
+            return app.imageActs.find(a => a.imageIdx === app.currentImageIdx && a.actNum === app.currentActNum);
+        }
+        function createActsForImage() {
+            const input = document.getElementById('actCountInput');
+            const count = parseInt(input.value) || 1;
+            closeActModal();
+            
+            // Utwórz akty dla bieżącego obrazu
+            for (let i = 1; i <= count; i++) {
+                const act = {
+                    imageIdx: app.currentImageIdx,
+                    actNum: i,
+                    fieldValues: {},
+                    fieldROIs: {},
+                    actROI: null,
+                    timestamp: new Date().toISOString()
+                };
+                app.imageActs.push(act);
+            }
+            saveStorage();
+            selectAct(1);  // Zaznacz akt #1
+            renderUI();
+        }
+        function selectAct(actNum) {
+            const acts = app.imageActs.filter(a => a.imageIdx === app.currentImageIdx);
+            const act = acts.find(a => a.actNum === actNum);
+            if (act) {
+                app.currentActNum = actNum;
+                loadActToForm(act);
+                renderActButtons();
+            }
+        }
+        function loadActToForm(act) {
+            const form = document.querySelector(`#form-${app.currentTemplate}`);
+            if (form) {
+                form.querySelectorAll('.field-input').forEach(input => {
+                    const fieldId = input.dataset.field;
+                    input.value = act.fieldValues[fieldId] || '';
+                    if (act.fieldROIs[fieldId]) {
+                        input.classList.add('has-roi');
+                    } else {
+                        input.classList.remove('has-roi');
+                    }
+                });
+            }
+        }
+        function renderActButtons() {
+            const sidebar = document.getElementById('recordsSidebar');
+            // Renderuj przyciski aktów zamiast pillsów
+            const actsDiv = document.createElement('div');
+            actsDiv.id = 'actsButtons';
+            actsDiv.style.cssText = 'display: flex; gap: 8px; flex-wrap: wrap; padding: 12px; border-bottom: 1px solid #2a2a2a;';
+            
+            const acts = app.imageActs.filter(a => a.imageIdx === app.currentImageIdx);
+            acts.forEach(act => {
+                const btn = document.createElement('button');
+                btn.textContent = `Akt ${act.actNum}`;
+                btn.style.cssText = `
+                    padding: 8px 12px;
+                    background: ${app.currentActNum === act.actNum ? '#0078d4' : '#252525'};
+                    color: ${app.currentActNum === act.actNum ? 'white' : '#bbb'};
+                    border: 1px solid ${app.currentActNum === act.actNum ? '#0078d4' : '#3a3a3a'};
+                    border-radius: 4px;
+                    cursor: pointer;
+                    font-weight: 600;
+                    font-size: 12px;
+                `;
+                btn.onclick = () => selectAct(act.actNum);
+                actsDiv.appendChild(btn);
+            });
+            
+            // Usuń stare przyciski
+            const oldDiv = document.getElementById('actsButtons');
+            if (oldDiv) oldDiv.remove();
+            
+            // Dodaj nowe
+            sidebar.insertBefore(actsDiv, sidebar.firstChild);
+        }
+        // ROI MODE
+        function toggleROI() {
+            app.roiMode = !app.roiMode;
+            document.getElementById('roiBtn').classList.toggle('active', app.roiMode);
+            const canvas = document.getElementById('drawingCanvas');
+            canvas.classList.toggle('hidden', !app.roiMode);
+           
+            // Canvas MUSI odbierać zdarzenia myszy w ROI mode
+            // stopPropagation() zapobiegnie budzeniu OSD
+            if (app.roiMode) {
+                canvas.style.pointerEvents = 'auto'; // odbieraj myszy do rysowania
+                console.log('🎨 Canvas: pointer-events = auto (gotów do rysowania)');
+            } else {
+                canvas.style.pointerEvents = 'none'; // nie potrzeba gdy ROI off
+                console.log('🔓 Canvas: pointer-events = none (OSD w pełni aktywny)');
+            }
+            document.getElementById('roiInfo').classList.toggle('visible', app.roiMode);
+            if (app.roiMode) {
+                if (!app.activeField) {
+                    notify('❌ Najpierw kliknij w pole formularza (np. Imię dziecka)', 'error');
+                    toggleROI(); // wyłącz
+                    return;
+                }
+                const label = app.activeField.previousElementSibling?.textContent?.trim() || 'pole';
+                document.getElementById('roiInfo').textContent = `ROI dla: ${label}`;
+                notify('✏️ Rysuj ROI na obrazie (możesz zoomować/przesuwać)', 'success');
+            } else {
+                document.getElementById('roiInfo').textContent = 'Tryb ROI aktywny: Zaznacz obszar na obrazie';
+                app.drawingCtx?.clearRect(0, 0, app.drawingCanvas.width, app.drawingCanvas.height);
+            }
+        }
+        // ACT MODE - zaznaczanie całego aktu
+        function toggleActMode() {
+            app.actMode = !app.actMode;
+            document.getElementById('actBtn').classList.toggle('active', app.actMode);
+            const canvas = document.getElementById('drawingCanvas');
+            canvas.classList.toggle('hidden', !app.actMode);
+            
+            // Canvas MUSI odbierać zdarzenia myszy w ACT mode
+            if (app.actMode) {
+                canvas.style.pointerEvents = 'auto'; // odbieraj myszy do rysowania
+                document.getElementById('roiInfo').textContent = '📑 ACT MODE: Zaznacz granicę całego dokumentu (aktu)';
+                document.getElementById('roiInfo').classList.add('visible');
+                console.log('📑 Canvas: pointer-events = auto (tryb Akt - gotów do rysowania)');
+                
+                if (app.currentActNum === null) {
+                    notify('❌ Najpierw wybierz akt aby zaznaczać jego granicę', 'error');
+                    toggleActMode(); // wyłącz
+                    return;
+                }
+                notify('📑 Rysuj granicę aktu na obrazie (możesz zoomować/przesuwać)', 'success');
+            } else {
+                canvas.style.pointerEvents = 'none'; // nie potrzeba gdy ACT off
+                document.getElementById('roiInfo').classList.remove('visible');
+                app.drawingCtx?.clearRect(0, 0, app.drawingCanvas.width, app.drawingCanvas.height);
+                console.log('🔓 Canvas: pointer-events = none (OSD w pełni aktywny)');
+            }
+        }
+        // ROTATE
+        function rotateImage(degrees) {
+            if (!app.viewer) return;
+            const current = app.viewer.viewport.getRotation();
+            app.viewer.viewport.setRotation((current + degrees + 360) % 360);
+        }
+        // ZOOM
+        function zoomReset() {
+            if (app.viewer && app.viewer.world.getItemAt(0)) {
+                app.viewer.viewport.fitBounds(app.viewer.world.getItemAt(0).getBounds());
+            }
+        }
+        // FULLSCREEN
+        function toggleFullscreen() {
+            if (!document.fullscreenElement) {
+                document.documentElement.requestFullscreen().catch(err => {
+                    notify(`❌ Fullscreen: ${err.message}`, 'error');
+                });
+            } else {
+                document.exitFullscreen();
+            }
+        }
+        // PANELS
+        function togglePanel(panel) {
+            if (panel === 'right') {
+                const rightPanel = document.getElementById('rightPanel');
+                rightPanel.classList.toggle('collapsed');
+            } else if (panel === 'thumbs') {
+                const thumbsBar = document.getElementById('thumbsBar');
+                thumbsBar.classList.toggle('collapsed');
+            }
+        }
+        // EXPORT
+        function exportData(exportType = 'simple') {
+            if (app.records.length === 0) {
+                notify('❌ Brak rekordów do eksportu', 'error');
+                return;
+            }
+            const csv = convertToCSV(app.records, exportType);
+            const json = JSON.stringify(app.records, null, 2);
+            const suffix = exportType === 'full' ? '_pelny' : '_prosty';
+            downloadFile(csv, `records${suffix}.csv`, 'text/csv');
+            downloadFile(json, 'records.json', 'application/json');
+            notify(`✅ Eksportowano ${app.records.length} rekordów (${exportType === 'full' ? 'z ROI' : 'bez ROI'})`, 'success');
+        }
+        function importCSV() {
+            const input = document.createElement('input');
+            input.type = 'file';
+            input.accept = '.csv,.json';
+            input.onchange = (e) => {
+                const file = e.target.files[0];
+                if (!file) return;
+                const reader = new FileReader();
+                reader.onload = (ev) => {
+                    try {
+                        let records = [];
+                        if (file.name.endsWith('.json')) {
+                            // Import JSON
+                            records = JSON.parse(ev.target.result);
+                        } else if (file.name.endsWith('.csv')) {
+                            // Import CSV - bardzo prosty parser
+                            const lines = ev.target.result.split('\n').filter(l => l.trim());
+                            const headers = lines[0].split(',').map(h => h.trim().replace(/^"|"$/g, ''));
+                            for (let i = 1; i < lines.length; i++) {
+                                const cells = lines[i].match(/"([^"]*)"|([^,]+)/g) || [];
+                                const row = cells.map(c => c.replace(/^"|"$/g, ''));
+                                
+                                if (row.length >= 5) {
+                                    const record = {
+                                        id: parseInt(row[0]) || Date.now(),
+                                        template: row[1] || 'birth',
+                                        imageName: row[2] || '',
+                                        imagePath: row[3] || row[2] || '',
+                                        timestamp: new Date().toISOString(),
+                                        data: {},
+                                        rois: {},
+                                        imageIdx: 0
+                                    };
+                                    // Dodaj pola z kolumn
+                                    for (let j = 5; j < row.length && j < headers.length; j++) {
+                                        if (headers[j] && row[j]) {
+                                            record.data[headers[j]] = row[j];
+                                        }
+                                    }
+                                    records.push(record);
+                                }
+                            }
+                        }
+                        
+                        if (records.length === 0) {
+                            notify('❌ Brak danych w pliku', 'error');
+                            return;
+                        }
+                        
+                        // Merge z istniejącymi rekordami
+                        const existingIds = new Set(app.records.map(r => r.id));
+                        let newCount = 0;
+                        records.forEach(rec => {
+                            if (!existingIds.has(rec.id)) {
+                                app.records.push(rec);
+                                newCount++;
+                            }
+                        });
+                        
+                        saveStorage();
+                        renderRecordsSidebar();
+                        updateImageCounter();
+                        notify(`✅ Zaimportowano ${newCount} nowych rekordów`, 'success');
+                    } catch (err) {
+                        notify(`❌ Błąd importu: ${err.message}`, 'error');
+                        console.error(err);
+                    }
+                };
+                if (file.name.endsWith('.json')) {
+                    reader.readAsText(file);
+                } else {
+                    reader.readAsText(file);
+                }
+            };
+            input.click();
+        }
+        function convertToCSV(records, exportType = 'full') {
+            if (exportType === 'simple') {
+                // WERSJA PROSTA - tylko dane bez ROI
+                let csv = 'ID,Template,Obraz,Ścieżka,Data\n';
+                records.forEach(record => {
+                    const timestamp = new Date(record.timestamp).toLocaleString('pl-PL');
+                    const filePath = record.imagePath || record.imageName || '';
+                    csv += `"${record.id}","${record.template}","${record.imageName || ''}","${filePath}","${timestamp}"\n`;
+                    Object.entries(record.data).forEach(([field, value]) => {
+                        csv += `,"${field}","${value}"\n`;
+                    });
+                });
+                return csv;
+            } else {
+                // WERSJA PEŁNA - z ROI dla każdego pola i aktu
+                // Nagłówki dynamiczne - zbierz wszystkie możliwe pola z szablonów
+                let headers = ['ID', 'Template', 'Obraz', 'Ścieżka', 'Timestamp', 'Act_ROI_X', 'Act_ROI_Y', 'Act_ROI_W', 'Act_ROI_H'];
+                
+                const allFields = new Set();
+                app.templates.forEach(t => {
+                    if (t.sections) {
+                        t.sections.forEach(s => s.fields.forEach(f => allFields.add(f.label)));
+                    } else if (t.fields) {
+                        t.fields.forEach(f => allFields.add(f.label));
+                    }
+                });
+                
+                // Dodaj kolumny tekstowe i ROI dla każdego pola
+                allFields.forEach(label => {
+                    headers.push(label);                    // wartość tekstowa
+                    headers.push(`ROI_${label}_X`);
+                    headers.push(`ROI_${label}_Y`);
+                    headers.push(`ROI_${label}_W`);
+                    headers.push(`ROI_${label}_H`);
+                });
+                
+                let csv = headers.join(',') + '\n';
+                
+                records.forEach(record => {
+                    const filePath = record.imagePath || record.imageName || '';
+                    let row = [
+                        record.id,
+                        record.template,
+                        record.imageName || '',
+                        filePath,
+                        new Date(record.timestamp).toLocaleString('pl-PL'),
+                        record.actROI?.x || '',
+                        record.actROI?.y || '',
+                        record.actROI?.w || '',
+                        record.actROI?.h || ''
+                    ];
+                    
+                    const template = app.templates.find(t => t.id === record.template);
+                    const fieldMap = {};
+                    if (template) {
+                        if (template.sections) {
+                            template.sections.forEach(s => s.fields.forEach(f => fieldMap[f.label] = f.id));
+                        } else if (template.fields) {
+                            template.fields.forEach(f => fieldMap[f.label] = f.id);
+                        }
+                    }
+                    
+                    allFields.forEach(label => {
+                        const fieldId = fieldMap[label];
+                        const value = record.data[fieldId] || '';
+                        const roi = record.rois?.[fieldId];
+                        
+                        row.push(value);
+                        row.push(roi?.x || '');
+                        row.push(roi?.y || '');
+                        row.push(roi?.w || '');
+                        row.push(roi?.h || '');
+                    });
+                    
+                    csv += row.map(v => `"${v}"`).join(',') + '\n';
+                });
+                
+                return csv;
+            }
+        }
+        function downloadFile(content, filename, mimetype) {
+            const blob = new Blob(['\uFEFF' + content], { type: mimetype + ';charset=utf-8' });
+            const link = document.createElement('a');
+            link.href = URL.createObjectURL(blob);
+            link.download = filename;
+            link.click();
+            URL.revokeObjectURL(link.href);
+        }
+        // UTILITIES
+        function clearForm() {
+            const form = document.querySelector(`#form-${app.currentTemplate}`);
+            if (form) {
+                form.querySelectorAll('.field-input').forEach(input => {
+                    input.value = '';
+                    input.classList.remove('has-roi');
+                });
+            }
+        }
+        // v6.0: Alias dla render
+ Forms - renderForms() → renderFormSections()
+        function renderForms() {
+            renderFormSections();
+            setupFormEvents();
+        }
+        function selectTemplate(templateId) {
+            app.currentTemplate = templateId;
+            document.querySelectorAll('.template-btn').forEach((btn, idx) => {
+                btn.classList.toggle('active', app.templates[idx].id === templateId);
+            });
+            document.querySelectorAll('.form-section').forEach(section => {
+                section.classList.toggle('active', section.id === `form-${templateId}`);
+            });
+            setupFormEvents();
+            updateRecordCounter();
+        }
+        function selectTemplateFromDefault() {
+            const dropdown = document.getElementById('defaultActType');
+            if (dropdown) {
+                const templateId = dropdown.value;
+                if (templateId !== 'mixed' && templateId !== 'other') {
+                    selectTemplate(templateId);
+                    // Update dropdown in other form sections too
+                    document.querySelectorAll('.default-act-type-select').forEach(el => {
+                        el.value = templateId;
+                    });
+                }
+            }
+        }
+        function showHelp() {
+            const helpText = `
+📚 GENEALOG INDEXER v3.2 - POMOC
+
+⌨️ SKRÓTY KLAWISZOWE:
+  Ctrl+O - Otwórz obrazy
+  Ctrl+N - Nowy rekord
+  Ctrl+R - Zaznacz ROI (pole)
+  Ctrl+A - Zaznacz akt (cały dokument)
+  Ctrl+S - Eksport danych
+  Ctrl+0 - Reset zoom
+  Ctrl+1-9 - Szybki dostęp do sekcji
+  Tab/Shift+Tab - Nawigacja między polami
+  Shift+Left/Right - Poprzedni/Następny obraz
+  Enter - Zapisz rekord
+
+🖱️ MYSZ:
+  Drag & Drop obrazy - Dodaj do aplikacji
+  Drag & Drop pillsy - Reorder rekordów
+  Hover ROI - Pokaż popover z nazwą pola
+
+📋 REKORDY:
+  + - Nowy rekord
+  Liczba - Otwórz rekord
+  🔍 - Szukaj w danych rekordu
+  📋 (obok pola) - Kopiuj z poprzedniego
+  Synchronizuj - Kopiuj wszystkie pola
+
+📁 OBSŁUGA DANYCH:
+  Eksport prosty - Tylko dane (CSV + JSON)
+  Eksport z ROI - Dane + zaznaczenia ROI
+  Import CSV - Załaduj poprzednio eksportowane dane
+
+📖 DOKUMENTACJA:
+  README.md - Przegląd projektu
+  PRZEWODNIK.md - Szczegółowy przewodnik użytkownika
+  BRAINSTORM.md - Plan rozwoju
+
+👤 KONTAKT:
+  Projekt: Genealog Indexer
+  Wersja: 3.2 (2025-12-19)
+`;
+            alert(helpText);
+        }
+        function notify(message, type = 'info') {
+            const notification = document.createElement('div');
+            notification.className = `notification ${type}`;
+            notification.textContent = message;
+            document.body.appendChild(notification);
+            setTimeout(() => {
+                notification.remove();
+            }, 3000);
+        }
+        function saveStorage() {
+            localStorage.setItem('genealog_data', JSON.stringify({
+                imageActs: app.imageActs,
+                images: app.images,
+                currentTemplate: app.currentTemplate
+            }));
+        }
+        function loadStorage() {
+            const stored = localStorage.getItem('genealog_data');
+            if (stored) {
+                const data = JSON.parse(stored);
+                app.imageActs = data.imageActs || [];
+                app.images = data.images || [];
+                app.currentTemplate = data.currentTemplate || app.templates[0].id;
+                updateThumbs();
+                loadSmartDefaults(); // ← Wczytaj Smart Defaults
+                if (app.images.length > 0) {
+                    selectImage(0);
+                }
+            }
+        }
+        // v6.0: RENDER UI - GŁÓWNA FUNKCJA AKTUALIZACJI
+        function renderUI() {
+            renderForms();  // Renderuj formularz z aktami
+            renderActButtons();  // Renderuj przyciski aktów
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <title>Wachlarz Nadgarstkowy v1.5 – zagęszczony final</title>
+    <style>
+        body { margin: 0; background: #f0f0f0; text-align: center; font-family: Arial; }
+        canvas { border: 1px solid #ccc; background: #fff; cursor: crosshair; margin: 20px auto; display: block; }
+        #result { font-size: 24px; margin: 20px; }
+    </style>
+</head>
+<body>
+    <h2>Wachlarz Nadgarstkowy v1.5 – maksymalnie zagęszczony</h2>
+    <p>Kliknij na czerwony punkt START → wachlarz z 15 podpowiedziami, gęsto, ale bez nakładania.</p>
+    <p>Idealny dla szybkiego wyboru nadgarstkiem.</p>
+    <div id="result"></div>
+    <canvas id="canvas" width="900" height="600"></canvas>
+
+    <script>
+        const canvas = document.getElementById('canvas');
+        const ctx = canvas.getContext('2d');
+        const resultDiv = document.getElementById('result');
+
+        const startX = canvas.width - 100;
+        const startY = 150;
+
+        const suggestions = [
+            "Jan Kowalski", "Anna Nowak", "Piotr Wiśniewski", "Katarzyna Lewandowska",
+            "Michał Kamiński", "Zofia Wójcik", "Tomasz Kowalczyk", "Magdalena Zielińska",
+            "Krzysztof Wojciechowski", "Aleksandra Szymańska", "Marcin Jankowski",
+            "Julia Kamińska", "Paweł Nowak", "Ewa Kowalska", "Bartosz Lewandowski"
+        ];
+
+        let wachlarzVisible = false;
+        let items = [];
+
+        const a = 0.004;       // Twój idealny kształt paraboli
+        const horiz = 1.7;     // odchylenie w lewo
+        const deltaY = 38;     // gęsty odstęp w pionie (środki pasów)
+        const pasHeight = 36;  // wysokość paska
+        const numItems = suggestions.length;
+
+        function drawStartPoint() {
+            ctx.fillStyle = 'red';
+            ctx.beginPath();
+            ctx.arc(startX, startY, 18, 0, Math.PI * 2);
+            ctx.fill();
+
+            ctx.fillStyle = 'black';
+            ctx.font = '20px Arial';
+            ctx.fillText('START – kliknij tu, by pokazać wachlarz', startX - 350, startY - 50);
+        }
+
+        function showWachlarz() {
+            wachlarzVisible = true;
+            items = [];
+
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            drawStartPoint();
+
+            // Szary łuk odniesienia
+            const totalH = numItems * deltaY;
+            const maxDist = Math.sqrt(totalH / a);
+            ctx.beginPath();
+            ctx.moveTo(startX, startY);
+            for (let t = 0; t <= maxDist; t += 5) {
+                const y = a * t * t;
+                ctx.lineTo(startX - horiz * t, startY + y);
+            }
+            ctx.strokeStyle = '#dddddd';
+            ctx.lineWidth = 4;
+            ctx.stroke();
+
+            // Gęsto rozmieszczone poziome pasy
+            for (let i = 1; i <= numItems; i++) {
+                const yCenter = startY + i * deltaY;
+                const dist = Math.sqrt((yCenter - startY) / a);
+                const x = startX - horiz * dist;
+
+                const width = 180;
+                const offsetX = -width / 2 - 20;
+                const offsetY = -pasHeight / 2;
+
+                // Tło
+                ctx.fillStyle = '#3388ff';
+                ctx.fillRect(x + offsetX, yCenter + offsetY, width, pasHeight);
+
+                // Ramka
+                ctx.strokeStyle = '#ffffff';
+                ctx.lineWidth = 3;
+                ctx.strokeRect(x + offsetX, yCenter + offsetY, width, pasHeight);
+
+                // Tekst – trochę mniejsza czcionka dla gęstości
+                ctx.fillStyle = 'white';
+                ctx.font = 'bold 17px Arial';
+                ctx.textAlign = 'center';
+                ctx.textBaseline = 'middle';
+                ctx.fillText(suggestions[i-1], x + offsetX + width/2, yCenter);
+
+                items.push({
+                    name: suggestions[i-1],
+                    x: x + offsetX,
+                    y: yCenter + offsetY,
+                    w: width,
+                    h: pasHeight
+                });
+            }
+        }
+
+        function hideWachlarz() {
+            wachlarzVisible = false;
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            drawStartPoint();
+            resultDiv.textContent = '';
+        }
+
+        canvas.addEventListener('click', (e) => {
+            const rect = canvas.getBoundingClientRect();
+            const mx = e.clientX - rect.left;
+            const my = e.clientY - rect.top;
+
+            const distToStart = Math.hypot(mx - startX, my - startY);
+            if (distToStart < 30 && !wachlarzVisible) {
+                showWachlarz();
+                return;
+            }
+
+            if (wachlarzVisible) {
+                for (let item of items) {
+                    if (mx >= item.x && mx <= item.x + item.w &&
+                        my >= item.y && my <= item.y + item.h) {
+                        resultDiv.textContent = `Wybrano: ${item.name}`;
+                        resultDiv.style.color = 'green';
+                        hideWachlarz();
+                        return;
+                    }
+                }
+                hideWachlarz();
+            }
+        });
+
+        drawStartPoint();
+    </script>
+</body>
+</html>

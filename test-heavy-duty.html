@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Test Heavy-Duty Preset</title>
+    <style>
+        body { font-family: Arial; background: #f0f0f0; padding: 20px; }
+        .test-section { background: white; padding: 15px; margin: 10px 0; border-radius: 5px; border-left: 4px solid #0078d4; }
+        .passed { color: green; font-weight: bold; }
+        .failed { color: red; font-weight: bold; }
+        code { background: #f5f5f5; padding: 2px 5px; border-radius: 3px; }
+        iframe { width: 100%; height: 800px; border: 2px solid #0078d4; }
+    </style>
+</head>
+<body>
+    <h1>🔧 Test Heavy-Duty Preset</h1>
+    
+    <div class="test-section">
+        <h2>Test 1: Sprawdzenie struktury presetu</h2>
+        <p>Heavy-duty powinien mieć:</p>
+        <ul>
+            <li>backgroundSubtraction: 50 ✓</li>
+            <li>morphologyClose: 50 ✓</li>
+            <li>adaptiveThreshold: 80 ✓</li>
+            <li>autoInvert: true ✓</li>
+            <li>gaussianBlur: 1 ✓</li>
+            <li>medianBlur: 3 ✓</li>
+        </ul>
+        <p><strong>Status:</strong> Czeka na testowanie w aplikacji</p>
+    </div>
+
+    <div class="test-section">
+        <h2>Test 2: Sprawdzenie funkcji filtrów</h2>
+        <p>Funkcje do przetestowania:</p>
+        <ul>
+            <li><code>backgroundSubtraction(imageData, kernelSize)</code> - wyrównanie nierównego tła</li>
+            <li><code>morphologyClose(imageData, kernelSize)</code> - połączenie przerwanych kresek</li>
+            <li><code>autoInvert(imageData)</code> - detekcja jasnego tekstu na ciemnym tle</li>
+            <li><code>invertColors(imageData)</code> - inwersja kolorów</li>
+        </ul>
+        <p><strong>Status:</strong> Funkcje zaimplementowane w kodzie</p>
+    </div>
+
+    <div class="test-section">
+        <h2>Test 3: Live Test w Aplikacji</h2>
+        <p>Kroki testu:</p>
+        <ol>
+            <li>Załaduj testowy obraz (dowolny PDF scan genealogiczny)</li>
+            <li>Kliknij <strong>Postprocess</strong> w toolbar</li>
+            <li>Powinien pojawić się przycisk <strong>Heavy-Duty</strong> w dolnym panelu presetów</li>
+            <li>Kliknij <strong>Heavy-Duty</strong> - powinno zastosować pełny potok</li>
+            <li>Sprawdź efekt - tekst powinien być wyraźniejszy, tło wyrównane</li>
+            <li>Otwórz DevTools (F12) i sprawdź console czy są logi 🎨</li>
+        </ol>
+        <p><strong>Status:</strong> Poniżej znajduje się embedded aplikacja</p>
+    </div>
+
+    <div class="test-section">
+        <h2>Aplikacja v7.0 z Heavy-Duty Filtrem</h2>
+        <iframe src="http://localhost:5173/viewer-osd-v7.html"></iframe>
+    </div>
+
+    <div class="test-section">
+        <h2>Potok Heavy-Duty (Sekwencja filtrów)</h2>
+        <pre>
+1. Canvas GPU Filters (fast)
+   - levels: 40, autoContrast: ON, sepia: 10
+
+2. Histogram Equalization (OpenCV)
+   ✓ Wyrównanie zakresu dynamicznego
+
+3. Background Subtraction (OpenCV) ← NOWE
+   ✓ kernelSize: 50 → wyrównanie nierównego tła
+
+4. Gaussian Blur (OpenCV) ← DENOISING
+   ✓ kernelSize: 1 (radius=1, słaby blur)
+
+5. Median Blur (OpenCV) ← DENOISING
+   ✓ kernelSize: 3 (usunięcie soli i pieprzu)
+
+6. Archival Document Enhancement (pixel-level)
+   ✓ strength: 100 (maksymalny boost kontrastu)
+
+7. Descreen (removes halftone)
+   ✓ strength: 50 (removes scanlines)
+
+8. Adaptive Threshold (OpenCV) ← BINARYZACJA
+   ✓ blockSize: 31, constant: 5 (lokalna binaryzacja)
+
+9. Morphology Close (OpenCV) ← NOWE
+   ✓ kernelSize: 50 → połączenie przerwanych kresek
+
+10. Auto-Invert (OpenCV)
+    ✓ Jeśli >70% pikseli jest ciemnych → inwertuj
+        </pre>
+    </div>
+
+    <div class="test-section">
+        <h2>Oczekiwane Rezultaty dla Trudnych Dokumentów</h2>
+        <ul>
+            <li><strong>Tekst słaby/wyblakły:</strong> powinien być wyraźny dzięki archival enhancement + histogram</li>
+            <li><strong>Nierówne oświetlenie:</strong> powinno być wyrównane dzięki background subtraction</li>
+            <li><strong>Rozmazane krawędzie liter:</strong> powinny być ostre dzięki morphology close</li>
+            <li><strong>Szum papierowy:</strong> powinien być usunięty dzięki gaussian + median blur</li>
+            <li><strong>Tekst biały na czarnym:</strong> powinien być automatycznie inwertowany</li>
+            <li><strong>Tekst do OCR:</strong> po adaptive threshold będzie czystą binaryzacją</li>
+        </ul>
+    </div>
+
+    <script>
+        console.log('🔧 Heavy-Duty Test Page Loaded');
+        console.log('Otwórz http://localhost:5173/viewer-osd-v7.html w nowej karcie do live testowania');
+    </script>
+</body>
+</html>
