@@ -2397,7 +2397,7 @@
             updateRecordCounter();
         }
 
-        function selectImage(idx) {
+        function selectImage(idx, autoSelect = false) {
             if (idx < 0 || idx >= app.images.length) return;
 
             app.currentImageIdx = idx;
@@ -2408,9 +2408,9 @@
 
             const actsOnImage = app.imageActs.filter(a => a.imageIdx === idx);
 
-            if (actsOnImage.length === 0) {
+            if (!autoSelect && actsOnImage.length === 0) {
                 showAdvancedActModal();
-            } else {
+            } else if (actsOnImage.length > 0) {
                 selectAct(actsOnImage[0].actNum);
             }
 
@@ -2464,7 +2464,7 @@
             const currentImageName = app.images[app.currentImageIdx]?.name;
             const newIndex = app.images.findIndex(img => img.name === currentImageName);
             app.currentImageIdx = newIndex >= 0 ? newIndex : 0;
-            selectImage(app.currentImageIdx);
+            selectImage(app.currentImageIdx, true);
             notify('Obrazy posortowane po nazwie', 'success');
         }
 
@@ -2526,7 +2526,7 @@
                         // Autosort po nazwie po wczytaniu wszystkich plików
                         app.images.sort(naturalSort);
                         updateThumbs();
-                        selectImage(0); // Wybierz pierwszy (posortowany)
+                        selectImage(0, true); // Wybierz pierwszy (posortowany) - auto
                         notify(`Wczytano ${imageFiles.length} obraz(y) (posortowane)`, 'success');
                     }
                 };
@@ -2649,7 +2649,7 @@
                 app.currentTemplate = data.currentTemplate || 'birth';
                 console.log('📂 Loaded acts:', app.imageActs.length);
                 updateThumbs();
-                if (app.images.length > 0) selectImage(0);
+                if (app.images.length > 0) selectImage(0, true);
             }
         }
         
