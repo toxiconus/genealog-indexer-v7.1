@@ -439,6 +439,26 @@
             border-color: #0078d4;
             box-shadow: 0 0 16px rgba(0,120,212,0.6);
         }
+        /* Custom tooltip dla miniaturki */
+        .tooltip {
+            position: absolute;
+            background: rgba(0, 0, 0, 0.8);
+            color: white;
+            padding: 6px 10px;
+            border-radius: 4px;
+            font-size: 12px;
+            pointer-events: none;
+            z-index: 1000;
+            display: none;
+            white-space: nowrap;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
+        }
+
+        /* Miniaturka hover efekt */
+        .thumbnail:hover {
+            border: 2px solid #0078d4;
+            cursor: pointer;
+        }
         .notification {
             position: fixed;
             bottom: 24px;
@@ -2454,7 +2474,7 @@
                 reader.onload = (e) => {
                     app.images.push({
                         name: file.name,
-                        path: file.webkitRelativePath || file.name,
+                        relativePath: file.webkitRelativePath || '', // Zachowuje ścieżkę z folderu
                         data: e.target.result
                     });
                     loaded++;
@@ -2480,11 +2500,47 @@
             app.images.forEach((img, i) => {
                 const div = document.createElement('div');
                 div.className = 'thumbnail' + (i === app.currentImageIdx ? ' active' : '');
+                div.dataset.idx = i; // Dodaj index dla tooltipa
                 div.onclick = () => selectImage(i);
                 const imgEl = document.createElement('img');
                 imgEl.src = img.data;
                 div.appendChild(imgEl);
                 bar.appendChild(div);
+            });
+            // Dodaj eventy hover do każdej miniaturki
+            document.querySelectorAll('.thumbnail').forEach(thumb => {
+                thumb.addEventListener('mouseenter', (e) => {
+                    const idx = e.target.closest('.thumbnail').dataset.idx;
+                    const image = app.images[idx];
+                    const filePath = image.relativePath || ''; // Jeśli masz webkitRelativePath z inputu plików
+                    const fileName = image.name || 'brak nazwy';
+                    const fullInfo = `${filePath ? filePath + '/' : ''}${fileName}`;
+
+                    let tooltip = document.getElementById('fileTooltip');
+                    if (!tooltip) {
+                        tooltip = document.createElement('div');
+                        tooltip.id = 'fileTooltip';
+                        tooltip.className = 'tooltip';
+                        document.body.appendChild(tooltip);
+                    }
+                    tooltip.textContent = fullInfo;
+                    tooltip.style.display = 'block';
+                    tooltip.style.left = `${e.pageX + 10}px`;
+                    tooltip.style.top = `${e.pageY + 10}px`;
+                });
+
+                thumb.addEventListener('mousemove', (e) => {
+                    const tooltip = document.getElementById('fileTooltip');
+                    if (tooltip) {
+                        tooltip.style.left = `${e.pageX + 10}px`;
+                        tooltip.style.top = `${e.pageY + 10}px`;
+                    }
+                });
+
+                thumb.addEventListener('mouseleave', () => {
+                    const tooltip = document.getElementById('fileTooltip');
+                    if (tooltip) tooltip.style.display = 'none';
+                });
             });
             updateImageCounter();
         }
