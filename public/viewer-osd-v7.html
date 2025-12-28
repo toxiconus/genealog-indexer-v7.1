@@ -1120,6 +1120,7 @@
         </div>
     </div>
     <input type="file" id="fileInput" multiple accept="image/*" style="display: none;">
+    <input type="file" id="folderInput" webkitdirectory multiple accept="image/*" style="display: none;">
     <script>
         const app = {
             images: [],
@@ -1140,7 +1141,8 @@
             roiOverlays: [],
             wizardActive: false,
             wizardCurrentFieldIdx: 0,
-            wizardFields: []
+            wizardFields: [],
+            autoLoadFolder: true  // Włącz automatyczne ładowanie folderu przy starcie
         };
         
         document.addEventListener('DOMContentLoaded', async () => {
@@ -1169,6 +1171,12 @@
             console.log('📍 UI rendered');
             setupPostprocessSliders();
             console.log('📍 Postprocess sliders setup');
+            
+            // Auto-load folder if enabled
+            if (app.autoLoadFolder) {
+                setTimeout(() => document.getElementById('folderInput').click(), 500);
+            }
+            
             notify('v7.0 gotowy!', 'success');
         });
         
@@ -1819,6 +1827,10 @@
         
         function setupEvents() {
             document.getElementById('fileInput').addEventListener('change', (e) => {
+                handleFiles(e.target.files);
+            });
+            
+            document.getElementById('folderInput').addEventListener('change', (e) => {
                 handleFiles(e.target.files);
             });
             
