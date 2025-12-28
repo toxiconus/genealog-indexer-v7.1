@@ -2285,7 +2285,7 @@ Output ONLY the ID string, nothing else.`;
 
             modal.style.display = 'flex';
 
-            document.getElementById('modalOK').onclick = () => {
+            document.getElementById('modalOK').onclick = async () => {
                 const data = {
                     year: parseInt(document.getElementById('modalYear').value),
                     date: document.getElementById('modalDate').value,
@@ -2345,7 +2345,7 @@ Output ONLY the ID string, nothing else.`;
                 modal.style.display = 'none';
             };
 
-            document.getElementById('modalCopyPrev').onclick = () => {
+            document.getElementById('modalCopyPrev').onclick = async () => {
                 if (prevActs.length === 0) {
                     notify('Brak aktów na poprzedniej stronie', 'error');
                     return;
