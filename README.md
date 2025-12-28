@@ -1,9 +1,9 @@
-# 📚 Genealog Indexer v3.2 Professional
+# 📚 Genealog Indexer v7.1 Professional
 
-**Profesjonalne narzędzie do indeksacji i edycji genealogicznych aktów metryki.**
+**Profesjonalne narzędzie do indeksacji i edycji genealogicznych aktów metryki z OCR i post-processingiem.**
 
 ![Status](https://img.shields.io/badge/status-production-brightgreen)
-![Version](https://img.shields.io/badge/version-3.2.0-blue)
+![Version](https://img.shields.io/badge/version-7.1.0-blue)
 ![License](https://img.shields.io/badge/license-MIT-green)
 ![Language](https://img.shields.io/badge/language-Polish-red)
 
@@ -21,7 +21,17 @@
 - 📋 **3 Szablony** - Urodzenia, Małżeństwa, Zgony
 - ✏️ **Formularze** - dostosowane pola genealogiczne
 - 📍 **ROI Canvas** - zaznaczanie obszarów (Region of Interest)
-- 🟢 **Status Pól** - zielona ramka = ma ROI
+- 🟢 **Status Pól** - kolorowe ramki pól (zielona = ma ROI, żółta = ROI bez wartości, czerwona = puste)
+
+### Zaawansowane Funkcje v7.1
+- 🤖 **OCR** - rozpoznawanie tekstu z obrazów (Tesseract.js)
+- 🎨 **Post-processing** - zaawansowane filtry obrazu (OpenCV.js)
+- 💡 **Suggestions Fan** - wachlarz podpowiedzi z poprzednich rekordów
+- ⌨️ **Keyboard Shortcuts** - rozszerzone skróty klawiszowe
+- 📊 **Statistics** - statystyki postępu indeksacji
+- 🧙 **Wizard Mode** - asystent krok-po-kroku
+- 📌 **Pinups** - pływające formularze pól
+- 🔄 **Enhanced Copy** - inteligentne kopiowanie między aktami
 
 ### Workflow
 - ✅ Wielorekordy na jednym obrazie
@@ -29,12 +39,17 @@
 - ✅ Zoom do ROI przy focus
 - ✅ Nawigacja klawiszowa (Enter = następne pole)
 - ✅ Szybki export CSV + JSON
+- ✅ Progress bar - wizualny postęp indeksacji
 
 ### UI/UX
 - 🌙 **Dark Mode** - profesjonalny wygląd (Twitter/X style)
 - 📱 **Responsive** - działa na desktopie i mobilnie
-- ⌨️ **Keyboard Shortcuts** - Ctrl+N, Ctrl+R, Ctrl+S itp.
+- ⌨️ **Keyboard Shortcuts** - Ctrl+N, Ctrl+R, Ctrl+S, ←→ nawigacja itp.
 - 💾 **LocalStorage** - automatyczne zapisywanie
+- 🎨 **Post-processing Panel** - filtry obrazu w czasie rzeczywistym
+- 💡 **Suggestions Fan** - wachlarz podpowiedzi przy wpisywaniu
+- 📊 **Progress Bar** - wizualny wskaźnik kompletności pól
+- 🧙 **Wizard Prompts** - instrukcje dla bieżącego pola
 
 ---
 
@@ -58,7 +73,8 @@ npm install
 npm run dev
 
 # 4. Otwórz w przeglądarce
-# Zazwyczaj: http://localhost:5173 lub http://localhost:5174
+# Główna wersja: http://localhost:5173/public/viewer-osd-v7.html
+# Stabilna wersja: http://localhost:5173/public/viewer-osd-v5.html
 ```
 
 ### Pierwsze Kroki
@@ -79,21 +95,45 @@ npm run dev
 ```
 projekt-akta-v2/
 ├── public/
-│   └── viewer-osd.html          # Główna aplikacja (HTML + CSS + JS)
-├── package.json                  # Zależności (Vite)
-├── vite.config.js               # Konfiguracja serwera dev
-├── README.md                     # Ten plik
-├── PRZEWODNIK.md                # Instrukcja użytkownika (PL)
-├── CHANGELOG.md                 # Historia wersji
+│   ├── viewer-osd-v7.html       # 🎯 GŁÓWNA APLIKACJA v7.1 (OCR + Post-processing)
+│   ├── viewer-osd-v5.html       # ✅ STABILNA WERSJA v5.0 (fallback)
+│   ├── viewer-osd-v6.html       # ❌ EKSPERYMENTALNA (NIE UŻYWAĆ)
+│   ├── viewer-osd-v4.html       # 📚 LEGACY (referencyjna)
+│   ├── viewer-osd.html          # 🔄 KOPIA v5 (nieużywana)
+│   ├── *.backup-*.html          # 🗂️ BACKUPY (nieużywane)
+│   ├── tesseract.min.js         # 🤖 OCR engine
+│   ├── opencv.js                # 🎨 Post-processing (ładowane asynchronicznie)
+│   └── inne pliki...
+├── start-v7.1.bat               # 🚀 LAUNCHER dla v7.1
+├── start-server.bat             # 🔄 ALTERNATYWNY launcher
+├── package.json                 # 📦 Zależności (Vite)
+├── vite.config.js               # ⚙️ Konfiguracja serwera dev
+├── README.md                    # 📖 Ten plik
+├── PRZEWODNIK.md                # 📚 Instrukcja użytkownika (PL)
+├── CHANGELOG.md                 # 📝 Historia wersji
+├── .github/copilot-instructions.md # 🤖 Instrukcje dla AI
 └── .gitignore
 ```
 
-### Główny Plik
-- **`viewer-osd.html`** (~1450 linii)
-  - Single-file application
-  - HTML + CSS + JavaScript w jednym pliku
-  - Żadnych zewnętrznych zależności oprócz CDN (OpenSeadragon, Font Awesome)
-  - LocalStorage do persystencji danych
+### Aktywne Pliki Aplikacji
+- **`public/viewer-osd-v7.html`** (~3500 linii) - **GŁÓWNA WERSJA**
+  - Single-file application z OCR i post-processingiem
+  - Wszystkie nowe funkcje v7.1
+  - Zalecana dla nowych projektów
+  
+- **`public/viewer-osd-v5.html`** (~2200 linii) - **STABILNA WERSJA**
+  - Bez OCR, podstawowy system ROI
+  - Używać jeśli v7.1 ma problemy
+  
+- **`start-v7.1.bat`** - **REKOMENDOWANY LAUNCHER**
+  - Uruchamia v7.1 z opisem funkcji
+  - Sprawdza zależności
+
+### Nieużywane Pliki (Backup/Eksperymenty)
+- Wszystkie pliki `*.backup-*.html` - automatyczne kopie zapasowe
+- `viewer-osd-v6.html` - porzucona wersja hierarchiczna
+- `viewer-osd-v4*.html` - starsze wersje referencyjne
+- Pliki w `launchers/` - alternatywne launchery (opcjonalne)
 
 ---
 
@@ -106,7 +146,9 @@ projekt-akta-v2/
 
 ### Biblioteki Zewnętrzne
 - **OpenSeadragon** 2.4.8 - image viewer (CDN)
-- **Font Awesome** 6.0.0 - ikony (CDN)
+- **Font Awesome** 6.5.0 - ikony (CDN)
+- **Tesseract.js** 5.1.0 - OCR engine (CDN)
+- **OpenCV.js** 4.8.0 - image processing (CDN, asynchroniczne)
 - **Vite** 5.0+ - bundler dla development
 
 ### Dane
@@ -139,19 +181,34 @@ Highlight:     #ffb300 (yellow)
 
 ---
 
-## 🔑 Funkcje v3.2 (Nowe)
+## 🔑 Funkcje v7.1 (Nowe)
 
-✨ **ROI Enhancement**
-- Powiązanie ROI z polami formularza
-- Wizualne wskaźniki (zielona ramka dla pól z ROI)
-- Zoom do ROI przy focus
-- Hover highlight na canvas
+✨ **OCR Integration**
+- Rozpoznawanie tekstu z obrazów aktów
+- Automatyczne wypełnianie pól formularza
+- Wizualny progress bar podczas przetwarzania
 
-✨ **Better UX**
-- Enter nawigacja w formularzach
-- Toggle ROI wymaga aktywnego pola
-- Status messages z emojami
-- Bezpieczne zarządzanie listenerami
+✨ **Image Post-processing Pipeline**
+- 12 filtrów: brightness, contrast, sepia, histogram equalization
+- OpenCV.js: adaptive threshold, gaussian blur, median blur
+- Presety genealogiczne (genealogy-pro, faded-advanced, text-extraction)
+- Podgląd w czasie rzeczywistym
+
+✨ **Suggestions Fan (Wachlarz Podpowiedzi)**
+- Fan-shaped suggestions z poprzednich rekordów
+- Ergonomiczny layout dla szybkiego wyboru
+- Aktywacja przy wpisywaniu w pola
+
+✨ **Enhanced UX**
+- Color-coded fields: 🟢 zielona (wypełnione), 🟡 żółta (ROI bez wartości), 🔴 czerwona (puste)
+- Progress bar kompletności pól
+- Floating forms i pinups dla pól
+- Wizard mode z instrukcjami krok-po-kroku
+
+✨ **Keyboard Shortcuts**
+- Ctrl+S: zapisz, Ctrl+D: usuń, Ctrl+C: kopiuj poprzedni
+- ←→: nawigacja między aktami
+- Ctrl+N: nowe akty (z promptem ilości)
 
 Więcej: [CHANGELOG.md](CHANGELOG.md)
 
@@ -162,13 +219,17 @@ Więcej: [CHANGELOG.md](CHANGELOG.md)
 | Skrót | Akcja |
 |-------|-------|
 | Ctrl+O | Dodaj obrazy |
-| Ctrl+N | Nowy rekord |
-| Ctrl+R | Toggle ROI |
-| Ctrl+S | Eksportuj |
-| Ctrl+0 | Reset zoom |
+| Ctrl+N | Nowe akty (z promptem ilości) |
+| Ctrl+R | Toggle ROI dla aktywnego pola |
+| Ctrl+A | Toggle Act ROI (granica aktu) |
+| Ctrl+S | Zapisz rekord |
+| Ctrl+D | Usuń rekord (z potwierdzeniem) |
+| Ctrl+C | Kopiuj dane z poprzedniego aktu |
+| ← → | Nawigacja między aktami |
 | Enter | Następne pole / Zapisz |
-| Esc | Wyłącz ROI |
+| Esc | Wyłącz ROI / Zamknij wachlarz |
 | F11 | Fullscreen |
+| Ctrl+0 | Reset zoom |
 
 ---
 
@@ -239,25 +300,26 @@ npm run preview
 
 ## 🐛 Known Issues & Limitations
 
-- ❌ OCR nie jest dostępna (planned v3.3+)
-- ❌ Nie ma backendu (użyj localStorage lub JSON export)
-- ❌ Brak database integracji (planned v3.3+)
-- ⚠️ Tauri desktop app nie jest zintegrowana (można dodać później)
+- ⚠️ **OCR Performance** - Pierwsze uruchomienie pobiera ~70MB Tesseract (cache'owane potem)
+- ⚠️ **OpenCV.js Loading** - Post-processing wymaga asynchronicznego ładowania OpenCV
+- ❌ **Backend Integration** - Brak bazy danych (użyj localStorage lub JSON export)
+- ⚠️ **Large Images** - Post-processing może być wolny dla bardzo dużych plików
+- ❌ **Multi-user Support** - Brak synchronizacji między użytkownikami
 
 ---
 
-## 🚀 Future Plans (v3.3+)
+## 🚀 Future Plans (v7.2+)
 
-- [ ] **OCR Integration** - text recognition
-- [ ] **Database** - SQLite/PostgreSQL backend
-- [ ] **Tauri Desktop** - .exe packaging
-- [ ] **API** - REST API dla danych
-- [ ] **Multi-user** - collaboration features
-- [ ] **Advanced Search** - full-text search
-- [ ] **Plugins** - custom templates
-- [ ] **Sync** - cloud sync support
-- [ ] **Accessibility** - keyboard-only mode
-- [ ] **Mobile App** - React Native/Flutter
+- [ ] **Parabolic Suggestions Fan** - ergonomiczny wachlarz (v1.5)
+- [ ] **Database Backend** - SQLite/PostgreSQL integracja
+- [ ] **Tauri Desktop App** - natywna aplikacja .exe
+- [ ] **REST API** - API dla danych genealogicznych
+- [ ] **Multi-user Collaboration** - współdzielenie projektów
+- [ ] **Advanced OCR** - poprawiona dokładność rozpoznawania
+- [ ] **Cloud Sync** - synchronizacja z chmurą
+- [ ] **Custom Templates** - plugin system dla szablonów
+- [ ] **Mobile PWA** - progressive web app
+- [ ] **Batch Processing** - przetwarzanie wielu obrazów
 
 ---
 
@@ -313,4 +375,4 @@ Projekt korzysta z:
 
 ---
 
-**v3.2.0** | December 2025 | Production Ready ✅
+**v7.1.0** | December 2025 | Production Ready ✅
