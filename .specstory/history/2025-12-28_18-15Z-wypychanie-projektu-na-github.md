@@ -8113,7 +8113,7 @@ Zmiany zostały zatwierdzone lokalnie (commit). Jeśli chcesz push do GitHub, da
 
 ---
 
-_**User (2025-12-28 19:40Z)**_
+_**User (2025-12-28 19:41Z)**_
 
 poinien liczyc z poprzednich danych - miniatury np Dodaj akty do strony
 Rok: 
@@ -8181,6 +8181,849 @@ Odczytaj [](file:///j%3A/projekt%202025/projekt-akta-v2/public/viewer-osd-v7.htm
 
 
 Odczytaj [](file:///j%3A/projekt%202025/projekt-akta-v2/public/viewer-osd-v7.html#954-954), wiersze 954 do 1000
+
+</details>
+</tool-use>
+
+---
+
+<tool-use data-tool-type="unknown" data-tool-name="copilot_replaceString">
+<details>
+<summary>Tool use: **copilot_replaceString**</summary>
+
+Additional data:
+
+```json
+{
+  "vscodeToolId": "copilot_replaceString",
+  "isHidden": true
+}
+```
+Result:
+
+```json
+{
+  "invocationMessage": "Korzystanie z \"Zamień ciąg w pliku\"",
+  "isConfirmed": {
+    "type": 1
+  },
+  "content": "&#96;&#96;&#96;html\nchrzest\"&gt;Chrzest&lt;/option&gt;\r\n                        &lt;option value=\"\n&#96;&#96;&#96;\n\n",
+  "textEditContent": "chrzest\"&gt;Chrzest&lt;/option&gt;\r\n                        &lt;option value=\"",
+  "toolCallResult": null
+}
+```
+Status: **completed**
+
+
+</details>
+</tool-use>
+
+---
+
+<tool-use data-tool-type="unknown" data-tool-name="copilot_replaceString">
+<details>
+<summary>Tool use: **copilot_replaceString**</summary>
+
+Additional data:
+
+```json
+{
+  "vscodeToolId": "copilot_replaceString",
+  "isHidden": true
+}
+```
+Result:
+
+```json
+{
+  "invocationMessage": "Korzystanie z \"Zamień ciąg w pliku\"",
+  "isConfirmed": {
+    "type": 1
+  },
+  "content": "&#96;&#96;&#96;html\n.sort((a,b) =&gt; (a.nr || 0) - (b.nr || 0)) || []; // Poprzednia strona, sortowane po nr\n&#96;&#96;&#96;\n\n",
+  "textEditContent": ".sort((a,b) =&gt; (a.nr || 0) - (b.nr || 0)) || []; // Poprzednia strona, sortowane po nr",
+  "toolCallResult": null
+}
+```
+Status: **completed**
+
+
+</details>
+</tool-use>
+
+---
+
+<tool-use data-tool-type="unknown" data-tool-name="copilot_replaceString">
+<details>
+<summary>Tool use: **copilot_replaceString**</summary>
+
+Additional data:
+
+```json
+{
+  "vscodeToolId": "copilot_replaceString",
+  "isHidden": true
+}
+```
+Result:
+
+```json
+{
+  "invocationMessage": "Korzystanie z \"Zamień ciąg w pliku\"",
+  "isConfirmed": {
+    "type": 1
+  },
+  "content": "",
+  "textEditContent": "",
+  "toolCallResult": null
+}
+```
+Status: **completed**
+
+
+</details>
+</tool-use>
+
+---
+
+<tool-use data-tool-type="read" data-tool-name="copilot_readFile">
+<details>
+<summary>Tool use: **copilot_readFile** • Czytanie [](file:///j%3A/projekt%202025/projekt-akta-v2/public/viewer-osd-v7.html#2215-2215), wiersze 2215 do 2220</summary>
+
+
+Odczytaj [](file:///j%3A/projekt%202025/projekt-akta-v2/public/viewer-osd-v7.html#2215-2215), wiersze 2215 do 2220
+
+</details>
+</tool-use>
+
+---
+
+<tool-use data-tool-type="read" data-tool-name="copilot_readFile">
+<details>
+<summary>Tool use: **copilot_readFile** • Czytanie [](file:///j%3A/projekt%202025/projekt-akta-v2/public/viewer-osd-v7.html#2220-2220), wiersze 2220 do 2225</summary>
+
+
+Odczytaj [](file:///j%3A/projekt%202025/projekt-akta-v2/public/viewer-osd-v7.html#2220-2220), wiersze 2220 do 2225
+
+</details>
+</tool-use>
+
+---
+
+<tool-use data-tool-type="unknown" data-tool-name="copilot_replaceString">
+<details>
+<summary>Tool use: **copilot_replaceString**</summary>
+
+Additional data:
+
+```json
+{
+  "vscodeToolId": "copilot_replaceString",
+  "isHidden": true
+}
+```
+Result:
+
+```json
+{
+  "invocationMessage": "Korzystanie z \"Zamień ciąg w pliku\"",
+  "isConfirmed": {
+    "type": 1
+  },
+  "content": "&#96;&#96;&#96;html\nhasPrev = prevActs.length &gt; 0;\r\n            const defaultFirst = hasPrev\n&#96;&#96;&#96;\n\n",
+  "textEditContent": "hasPrev = prevActs.length &gt; 0;\r\n            const defaultFirst = hasPrev",
+  "toolCallResult": null
+}
+```
+Status: **completed**
+
+
+</details>
+</tool-use>
+
+---
+
+<tool-use data-tool-type="unknown" data-tool-name="copilot_replaceString">
+<details>
+<summary>Tool use: **copilot_replaceString**</summary>
+
+Additional data:
+
+```json
+{
+  "vscodeToolId": "copilot_replaceString",
+  "isHidden": true
+}
+```
+Result:
+
+```json
+{
+  "invocationMessage": "Korzystanie z \"Zamień ciąg w pliku\"",
+  "isConfirmed": {
+    "type": 1
+  },
+  "content": "&#96;&#96;&#96;html\nhasPrev || \n&#96;&#96;&#96;\n\n",
+  "textEditContent": "hasPrev || ",
+  "toolCallResult": null
+}
+```
+Status: **completed**
+
+
+</details>
+</tool-use>
+
+---
+
+<tool-use data-tool-type="unknown" data-tool-name="run_in_terminal">
+<details>
+<summary>Tool use: **run_in_terminal**</summary>
+
+
+Parameters:
+
+```json
+{
+  "kind": "terminal",
+  "terminalToolSessionId": "3567e184-23fa-491e-afad-d495329e9d83",
+  "terminalCommandId": "tool-62f8d3f7-b34c-4a1f-aa9d-1580525f8710",
+  "commandLine": {
+    "original": "cd \"j:\\projekt 2025\\projekt-akta-v2\" &amp;&amp; git add . &amp;&amp; git commit -m \"Add 'chrzest' act type and improve modal counting from previous page data\"",
+    "toolEdited": "cd \"j:\\projekt 2025\\projekt-akta-v2\" ; git add . ; git commit -m \"Add 'chrzest' act type and improve modal counting from previous page data\""
+  },
+  "language": "pwsh",
+  "autoApproveInfo": {
+    "value": "Automatycznie zatwierdzane dla tej sesji ([Wyłącz](command:workbench.action.terminal.chat.disableSessionAutoApproval?%255B%25226adafc7a-262d-41f2-9499-640bd3472ba6%2522%255D))",
+    "isTrusted": {
+      "enabledCommands": [
+        "workbench.action.terminal.chat.disableSessionAutoApproval"
+      ]
+    },
+    "supportThemeIcons": false,
+    "supportHtml": false,
+    "supportAlertSyntax": false
+  },
+  "terminalCommandState": {
+    "exitCode": 0,
+    "timestamp": 1766950875975,
+    "duration": 463
+  },
+  "terminalCommandUri": {
+    "$mid": 1,
+    "path": "/36a0d7807ea04b2e7f9bed2c2ac94af7/2",
+    "scheme": "vscode-terminal",
+    "query": "command=tool-62f8d3f7-b34c-4a1f-aa9d-1580525f8710"
+  },
+  "terminalCommandOutput": {
+    "text": "\u001b[36m modal counting from previous page data\"\r\n\u001b[0m[master bc90f42] Add 'chrzest' act type and improve modal counting from previous page data\r\n 2 files changed, 7237 insertions(+), 4 deletions(-)",
+    "lineCount": 4
+  },
+  "terminalTheme": {
+    "background": "#181818",
+    "foreground": "#cccccc"
+  }
+}
+```
+Additional data:
+
+```json
+{
+  "vscodeToolId": "run_in_terminal",
+  "isHidden": false
+}
+```
+Result:
+
+```json
+{
+  "invocationMessage": "Korzystanie z \"Uruchom w terminalu\"",
+  "isConfirmed": {
+    "type": 1
+  },
+  "content": "",
+  "textEditContent": "",
+  "toolCallResult": null
+}
+```
+Status: **completed**
+
+
+</details>
+</tool-use>
+
+---
+
+<tool-use data-tool-type="unknown" data-tool-name="run_in_terminal">
+<details>
+<summary>Tool use: **run_in_terminal**</summary>
+
+
+Parameters:
+
+```json
+{
+  "kind": "terminal",
+  "terminalToolSessionId": "5a4b0279-7cad-48ba-a1a1-acde88608288",
+  "terminalCommandId": "tool-c7dc3824-0b9f-48d5-8f5f-d34ee1cfe8f9",
+  "commandLine": {
+    "original": "cd \"j:\\projekt 2025\\projekt-akta-v2\" &amp;&amp; npm run dev",
+    "toolEdited": "cd \"j:\\projekt 2025\\projekt-akta-v2\" ; npm run dev"
+  },
+  "language": "pwsh",
+  "autoApproveInfo": {
+    "value": "Automatycznie zatwierdzane dla tej sesji ([Wyłącz](command:workbench.action.terminal.chat.disableSessionAutoApproval?%255B%25226adafc7a-262d-41f2-9499-640bd3472ba6%2522%255D))",
+    "isTrusted": {
+      "enabledCommands": [
+        "workbench.action.terminal.chat.disableSessionAutoApproval"
+      ]
+    },
+    "supportThemeIcons": false,
+    "supportHtml": false,
+    "supportAlertSyntax": false
+  },
+  "terminalCommandState": {
+    "exitCode": 1,
+    "timestamp": 1766951029982,
+    "duration": 150498
+  },
+  "terminalCommandUri": {
+    "$mid": 1,
+    "path": "/36a0d7807ea04b2e7f9bed2c2ac94af7/3",
+    "scheme": "vscode-terminal",
+    "query": "command=tool-c7dc3824-0b9f-48d5-8f5f-d34ee1cfe8f9"
+  },
+  "terminalTheme": {
+    "background": "#181818",
+    "foreground": "#cccccc"
+  }
+}
+```
+Additional data:
+
+```json
+{
+  "vscodeToolId": "run_in_terminal",
+  "isHidden": false
+}
+```
+Result:
+
+```json
+{
+  "invocationMessage": "Korzystanie z \"Uruchom w terminalu\"",
+  "isConfirmed": {
+    "type": 1
+  },
+  "content": "",
+  "textEditContent": "",
+  "toolCallResult": null
+}
+```
+Status: **completed**
+
+
+</details>
+</tool-use>
+
+---
+
+<tool-use data-tool-type="unknown" data-tool-name="copilot_openSimpleBrowser">
+<details>
+<summary>Tool use: **copilot_openSimpleBrowser**</summary>
+
+Additional data:
+
+```json
+{
+  "vscodeToolId": "copilot_openSimpleBrowser",
+  "isHidden": false
+}
+```
+Result:
+
+```json
+{
+  "invocationMessage": "Otwieranie prostej przeglądarki pod adresem http://localhost:5173/public/viewer-osd-v7.html",
+  "pastTenseMessage": "Otwarto prostą przeglądarkę pod adresem http://localhost:5173/public/viewer-osd-v7.html",
+  "isConfirmed": {
+    "type": 3,
+    "scope": "profile"
+  },
+  "content": "",
+  "textEditContent": "",
+  "toolCallResult": null
+}
+```
+Status: **completed**
+
+
+</details>
+</tool-use>
+
+---
+
+Zmiany zostały wprowadzone i zatwierdzone. Oto podsumowanie ulepszeń modalu do tworzenia aktów:
+
+## ✅ Wprowadzone zmiany
+
+### 1. **Dodano typ aktu "Chrzest"**
+- Dodano opcję `<option value="chrzest">Chrzest</option>` do select typu aktu w modalu
+- Teraz dostępne typy: Urodzenia, Chrzest, Małżeństwa, Zgony, Inne
+
+### 2. **Ulepszona logika liczenia od poprzednich danych**
+- **Automatyczne wykrywanie kontynuacji**: Jeśli na poprzedniej stronie (poprzedni obraz) istnieją akty, modal automatycznie zaznacza checkbox "Kontynuacja poprzedniej strony"
+- **Inteligentne numerowanie**: Pierwszy akt zawsze = ostatni nr z poprzedniej strony + 1
+- **Domyślna liczba aktów**: Tyle samo co na poprzedniej stronie (lub 10 jeśli brak danych)
+- **Sortowanie aktów**: Akty na poprzedniej stronie są sortowane po numerze (nr), aby poprawnie obliczyć ostatni nr
+
+### 3. **Przykład działania**
+- Jeśli poprzednia strona miała akty nr 1-5, nowy modal zaproponuje:
+  - Pierwszy akt: 6
+  - Ostatni akt: 10 (6 + 5 - 1)
+  - Kontynuacja: zaznaczona automatycznie
+
+## 🧪 Testowanie
+Serwer deweloperski został uruchomiony na `http://localhost:5173/public/viewer-osd-v7.html`. Modal powinien teraz inteligentnie kontynuować numerację aktów między stronami i oferować nowy typ "Chrzest".
+
+Zmiany zostały zatwierdzone w commicie `bc90f42`. Jeśli potrzebujesz dalszych dostosowań, daj znać!
+
+---
+
+_**User (2025-12-28 19:43Z)**_
+
+trafiłem na kopie poprzedniej strony moze od razu tez przycisk kopia poprzedniej
+
+---
+
+_**Agent (model copilot/grok-code-fast-1)**_
+
+<tool-use data-tool-type="read" data-tool-name="copilot_readFile">
+<details>
+<summary>Tool use: **copilot_readFile** • Czytanie [](file:///j%3A/projekt%202025/projekt-akta-v2/public/viewer-osd-v7.html#960-960), wiersze 960 do 970</summary>
+
+
+Odczytaj [](file:///j%3A/projekt%202025/projekt-akta-v2/public/viewer-osd-v7.html#960-960), wiersze 960 do 970
+
+</details>
+</tool-use>
+
+---
+
+<tool-use data-tool-type="read" data-tool-name="copilot_readFile">
+<details>
+<summary>Tool use: **copilot_readFile** • Czytanie [](file:///j%3A/projekt%202025/projekt-akta-v2/public/viewer-osd-v7.html#970-970), wiersze 970 do 975</summary>
+
+
+Odczytaj [](file:///j%3A/projekt%202025/projekt-akta-v2/public/viewer-osd-v7.html#970-970), wiersze 970 do 975
+
+</details>
+</tool-use>
+
+---
+
+<tool-use data-tool-type="unknown" data-tool-name="copilot_replaceString">
+<details>
+<summary>Tool use: **copilot_replaceString**</summary>
+
+Additional data:
+
+```json
+{
+  "vscodeToolId": "copilot_replaceString",
+  "isHidden": true
+}
+```
+Result:
+
+```json
+{
+  "invocationMessage": "Korzystanie z \"Zamień ciąg w pliku\"",
+  "isConfirmed": {
+    "type": 1
+  },
+  "content": "&#96;&#96;&#96;html\nopyPrev\"&gt;Kopiuj z poprzedniej&lt;/button&gt;\r\n                &lt;button id=\"modalC\n&#96;&#96;&#96;\n\n",
+  "textEditContent": "opyPrev\"&gt;Kopiuj z poprzedniej&lt;/button&gt;\r\n                &lt;button id=\"modalC",
+  "toolCallResult": null
+}
+```
+Status: **completed**
+
+
+</details>
+</tool-use>
+
+---
+
+<tool-use data-tool-type="read" data-tool-name="copilot_readFile">
+<details>
+<summary>Tool use: **copilot_readFile** • Czytanie [](file:///j%3A/projekt%202025/projekt-akta-v2/public/viewer-osd-v7.html#2250-2250), wiersze 2250 do 2280</summary>
+
+
+Odczytaj [](file:///j%3A/projekt%202025/projekt-akta-v2/public/viewer-osd-v7.html#2250-2250), wiersze 2250 do 2280
+
+</details>
+</tool-use>
+
+---
+
+<tool-use data-tool-type="unknown" data-tool-name="copilot_replaceString">
+<details>
+<summary>Tool use: **copilot_replaceString**</summary>
+
+Additional data:
+
+```json
+{
+  "vscodeToolId": "copilot_replaceString",
+  "isHidden": true
+}
+```
+Result:
+
+```json
+{
+  "invocationMessage": "Korzystanie z \"Zamień ciąg w pliku\"",
+  "isConfirmed": {
+    "type": 1
+  },
+  "content": "&#96;&#96;&#96;html\nopyPrev').onclick = () =&gt; {\r\n                if (prevActs.length === 0) {\r\n                    notify('Brak aktów na poprzedniej stronie', 'error');\r\n                    return;\r\n                }\r\n                const data = {\r\n                    year: parseInt(document.getElementById('modalYear').value),\r\n                    parish: document.getElementById('modalParish').value,\r\n                    type: document.getElementById('modalType').value,\r\n                    continuation: document.getElementById('modalContinuation').checked,\r\n                    incomplete: document.getElementById('modalIncomplete').checked,\r\n                    plusIndex: document.getElementById('modalPlusIndex').checked\r\n                };\r\n                localStorage.setItem('lastActSettings', JSON.stringify(data));\r\n\r\n                let currentNr = data.continuation ? lastPrevNr + 1 : 1;\r\n                prevActs.forEach((prevAct, index) =&gt; {\r\n                    const act = {\r\n                        imageIdx: app.currentImageIdx,\r\n                        actNum: index + 1,\r\n                        nr: currentNr + index,\r\n                        year: data.year,\r\n                        parish: data.parish,\r\n                        type: data.type,\r\n                        fieldValues: JSON.parse(JSON.stringify(prevAct.fieldValues)), // Deep copy\r\n                        fieldROIs: JSON.parse(JSON.stringify(prevAct.fieldROIs)), // Deep copy\r\n                        actROI: prevAct.actROI ? JSON.parse(JSON.stringify(prevAct.actROI)) : null,\r\n                        timestamp: new Date().toISOString()\r\n                    };\r\n                    if (data.plusIndex) act.index = prevAct.index || '';\r\n                    if (index === prevActs.length - 1 &amp;&amp; data.incomplete) act.incomplete = true;\r\n                    app.imageActs.push(act);\r\n                });\r\n\r\n                saveStorage();\r\n                renderActButtons();\r\n                selectAct(1);\r\n                updateRecordCounter();\r\n                notify(&#96;Skopiowano ${prevActs.length} aktów z poprzedniej strony&#96;, 'success');\r\n                modal.style.display = 'none';\r\n            };\r\n\r\n            document.getElementById('modalC\n&#96;&#96;&#96;\n\n",
+  "textEditContent": "opyPrev').onclick = () =&gt; {\r\n                if (prevActs.length === 0) {\r\n                    notify('Brak aktów na poprzedniej stronie', 'error');\r\n                    return;\r\n                }\r\n                const data = {\r\n                    year: parseInt(document.getElementById('modalYear').value),\r\n                    parish: document.getElementById('modalParish').value,\r\n                    type: document.getElementById('modalType').value,\r\n                    continuation: document.getElementById('modalContinuation').checked,\r\n                    incomplete: document.getElementById('modalIncomplete').checked,\r\n                    plusIndex: document.getElementById('modalPlusIndex').checked\r\n                };\r\n                localStorage.setItem('lastActSettings', JSON.stringify(data));\r\n\r\n                let currentNr = data.continuation ? lastPrevNr + 1 : 1;\r\n                prevActs.forEach((prevAct, index) =&gt; {\r\n                    const act = {\r\n                        imageIdx: app.currentImageIdx,\r\n                        actNum: index + 1,\r\n                        nr: currentNr + index,\r\n                        year: data.year,\r\n                        parish: data.parish,\r\n                        type: data.type,\r\n                        fieldValues: JSON.parse(JSON.stringify(prevAct.fieldValues)), // Deep copy\r\n                        fieldROIs: JSON.parse(JSON.stringify(prevAct.fieldROIs)), // Deep copy\r\n                        actROI: prevAct.actROI ? JSON.parse(JSON.stringify(prevAct.actROI)) : null,\r\n                        timestamp: new Date().toISOString()\r\n                    };\r\n                    if (data.plusIndex) act.index = prevAct.index || '';\r\n                    if (index === prevActs.length - 1 &amp;&amp; data.incomplete) act.incomplete = true;\r\n                    app.imageActs.push(act);\r\n                });\r\n\r\n                saveStorage();\r\n                renderActButtons();\r\n                selectAct(1);\r\n                updateRecordCounter();\r\n                notify(&#96;Skopiowano ${prevActs.length} aktów z poprzedniej strony&#96;, 'success');\r\n                modal.style.display = 'none';\r\n            };\r\n\r\n            document.getElementById('modalC",
+  "toolCallResult": null
+}
+```
+Status: **completed**
+
+
+</details>
+</tool-use>
+
+---
+
+<tool-use data-tool-type="unknown" data-tool-name="run_in_terminal">
+<details>
+<summary>Tool use: **run_in_terminal**</summary>
+
+
+Parameters:
+
+```json
+{
+  "kind": "terminal",
+  "terminalToolSessionId": "c2447787-f836-4247-aa44-e22d4c70a445",
+  "terminalCommandId": "tool-7894dece-e25b-45b4-8135-605150d26fbc",
+  "commandLine": {
+    "original": "cd \"j:\\projekt 2025\\projekt-akta-v2\" &amp;&amp; git add . &amp;&amp; git commit -m \"Add 'Kopiuj z poprzedniej' button to advanced act modal for copying acts from previous page\"",
+    "toolEdited": "cd \"j:\\projekt 2025\\projekt-akta-v2\" ; git add . ; git commit -m \"Add 'Kopiuj z poprzedniej' button to advanced act modal for copying acts from previous page\""
+  },
+  "language": "pwsh",
+  "autoApproveInfo": {
+    "value": "Automatycznie zatwierdzane dla tej sesji ([Wyłącz](command:workbench.action.terminal.chat.disableSessionAutoApproval?%255B%25226adafc7a-262d-41f2-9499-640bd3472ba6%2522%255D))",
+    "isTrusted": {
+      "enabledCommands": [
+        "workbench.action.terminal.chat.disableSessionAutoApproval"
+      ]
+    },
+    "supportThemeIcons": false,
+    "supportHtml": false,
+    "supportAlertSyntax": false
+  },
+  "terminalCommandState": {
+    "exitCode": 0,
+    "timestamp": 1766951030691,
+    "duration": 457
+  },
+  "terminalCommandUri": {
+    "$mid": 1,
+    "path": "/36a0d7807ea04b2e7f9bed2c2ac94af7/3",
+    "scheme": "vscode-terminal",
+    "query": "command=tool-7894dece-e25b-45b4-8135-605150d26fbc"
+  },
+  "terminalTheme": {
+    "background": "#181818",
+    "foreground": "#cccccc"
+  }
+}
+```
+Additional data:
+
+```json
+{
+  "vscodeToolId": "run_in_terminal",
+  "isHidden": false
+}
+```
+Result:
+
+```json
+{
+  "invocationMessage": "Korzystanie z \"Uruchom w terminalu\"",
+  "isConfirmed": {
+    "type": 1
+  },
+  "content": "",
+  "textEditContent": "",
+  "toolCallResult": null
+}
+```
+Status: **completed**
+
+
+</details>
+</tool-use>
+
+---
+
+<tool-use data-tool-type="unknown" data-tool-name="copilot_openSimpleBrowser">
+<details>
+<summary>Tool use: **copilot_openSimpleBrowser**</summary>
+
+Additional data:
+
+```json
+{
+  "vscodeToolId": "copilot_openSimpleBrowser",
+  "isHidden": false
+}
+```
+Result:
+
+```json
+{
+  "invocationMessage": "Otwieranie prostej przeglądarki pod adresem http://localhost:5175/public/viewer-osd-v7.html",
+  "pastTenseMessage": "Otwarto prostą przeglądarkę pod adresem http://localhost:5175/public/viewer-osd-v7.html",
+  "isConfirmed": {
+    "type": 3,
+    "scope": "profile"
+  },
+  "content": "",
+  "textEditContent": "",
+  "toolCallResult": null
+}
+```
+Status: **completed**
+
+
+</details>
+</tool-use>
+
+---
+
+## ✅ Dodano przycisk "Kopiuj z poprzedniej" do modalu
+
+### Nowa funkcjonalność
+- **Przycisk w modalu**: Dodano trzeci przycisk "Kopiuj z poprzedniej" między "OK" a "Anuluj"
+- **Funkcja kopiowania**: Kopiuje wszystkie akty z poprzedniej strony (poprzedni obraz) do obecnej strony
+- **Zachowanie danych**: 
+  - Kopiuje wszystkie dane pól (`fieldValues`), ROI (`fieldROIs`), oraz Act ROI
+  - Używa nowych numerów aktów (kontynuacja lub od 1, zgodnie z ustawieniami)
+  - Zachowuje ustawienia roku, parafii, typu z modalu
+  - Obsługuje flagi "ostatni niepełny" i "dodaj indeks"
+
+### Przykład użycia
+Gdy trafisz na kopię poprzedniej strony:
+1. Otwórz modal dodawania aktów
+2. Kliknij "Kopiuj z poprzedniej" 
+3. Wszystkie akty z poprzedniej strony zostaną skopiowane z nowymi numerami
+
+### Techniczne szczegóły
+- Kopiowanie głębokie (deep copy) danych, aby uniknąć referencji
+- Sprawdzenie, czy poprzednia strona ma akty (jeśli nie, błąd)
+- Zachowanie timestamp jako nowy (aktualny czas)
+- Automatyczna aktualizacja UI po kopiowaniu
+
+Serwer deweloperski działa na `http://localhost:5175/public/viewer-osd-v7.html`. Zmiany zatwierdzone w commicie. Jeśli przycisk działa jak oczekiwane, daj znać!
+
+---
+
+_**User (2025-12-28 20:42Z)**_
+
+"You are an expert in generating unique IDs for genealogical records based on Polish metrical books. Follow this strict schema for ID: TYP.WOJ.PARAFIA.ROK.MIES.NR.SUF
+
+TYP: 2 letters from input (CH=chrzest, UR=urodzenie, MZ=małżeństwo, ZG=zgon, IN=indeks)
+WOJ: 3 letters province code (e.g., LUB=lubelskie)
+PARAFIA: 4-6 uppercase letters (e.g., BLIN)
+ROK: 4 digits year from registration date (zgłoszenia)
+MIES: 2 digits month from registration date (00 if unknown)
+NR: 5 digits padded with zeros - act number from book (00000 if no numbering)
+SUF: always 2 digits - 00 default; 01-09 for variants/copies/duplicates (e.g., twins or copies)
+
+Input is JSON with act data. Generate ID automatically. If copy/duplicate, increment SUF (e.g., from 00 to 01). If no act number, use 00000. Use registration date priority.
+Example input: { "typ": "chrzest", "woj": "lubelskie", "parafia": "Blindów", "data_zgl": "1908-05-15", "nr_aktu": 60, "is_copy": false }
+Output: CH.LUB.BLIN.1908.05.00060.00
+Example input: { "typ": "urodzenie", "woj": "mazowieckie", "parafia": "Warszawa", "data_zgl": "1920", "nr_aktu": 0, "is_copy": true }
+Output: UR.MAZ.WARS.1920.00.00000.01
+Input: [wklej tutaj JSON z danymi aktu]
+Output ONLY the ID string, nothing else."
+Jak to działa:
+
+LLM dostaje JSON z danymi (np. {typ: "chrzest", woj: "LUB", ... , is_copy: true/false}).
+Generuje dokładnie ID – bez dodatkowego tekstu.
+Dla kopii: flag is_copy: true → auto +1 do SUF (z 00 na 01).
+Jeśli brak miesiąca: 00.
+Bezpieczne: LLM nie dodaje liter, tylko cyfry w SUF.
+
+Integracja w kodzie v7.1 (pomysły + kod)
+
+Widoczność ID na stronie: Dodaj w UI karty aktu (w .act-card) mały span z ID.
+W funkcji updateActsUI() (lub redraw acts) dodaj:JavaScriptconst idSpan = document.createElement('span');
+idSpan.style.fontSize = '0.8em';
+idSpan.style.color = '#888';
+idSpan.textContent = act.displayID || generateActID(act).displayID;  // Użyj displayID bez .00
+card.appendChild(idSpan);  // Pod tytułem aktu
+
+Automatyczne generowanie z LLM: Zakładam integrację z API LLM (np. Grok via xAI API lub lokalny). W saveRecord() lub po wypełnieniu formularza:
+Zbierz dane w JSON.
+Wywołaj LLM z promptem (użyj fetch do API).
+Wpisz wynik do act.id.
+Przykładowy kod (dodaj w setupEvents lub nowej funkcji):JavaScriptasync function autoGenerateID(actData) {
+    const prompt = `You are an expert... [cały prompt powyżej] \n\nInput: ${JSON.stringify(actData)}`;  // Dodaj dane JSON
+    // Przykład fetch do API LLM (dostosuj do Twojego API)
+    const response = await fetch('https://api.x.ai/v1/chat/completions', {  // Lub inny endpoint LLM
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer YOUR_API_KEY' },
+        body: JSON.stringify({
+            model: 'grok-beta',  // Lub inny model
+            messages: [{ role: 'user', content: prompt }]
+        })
+    });
+    const result = await response.json();
+    const generatedID = result.choices[0].message.content.trim();  // Tylko ID
+    return generatedID;
+}
+
+// Użycie np. w addAct lub saveRecord:
+const actData = {
+    typ: document.getElementById('actType').value,
+    woj: 'LUB',  // Z ustawień lub pola
+    parafia: 'BLIN',
+    data_zgl: '1908-05-15',  // Z pola daty
+    nr_aktu: parseInt(document.getElementById('actNr').value) || 0,
+    is_copy: isDuplicating  // Flag z przycisku kopiowania
+};
+const newID = await autoGenerateID(actData);
+currentAct.id = newID;
+// Odśwież UI z ID małymi literami
+Dla kopii (duplikatów): Dodaj przycisk "Duplikuj akt" (Ctrl+D) – ustaw flag is_copy: true w actData, co spowoduje .01 w SUF.
+Zapisywanie i eksport:
+W pamięci: act.id zawsze w app.imageActs.
+LocalStorage: przy save – JSON.stringify(app.imageActs) zawiera id.
+Eksport: W funkcji exportCSV/JSON – dodaj kolumnę "id": act.id (pełne fullID, z .00 dla kompletności w bazie).
+Dla bazy (przyszłość): Przy IndexedDB – klucz 'id' = act.fullID.
+
+---
+
+_**Agent (model copilot/grok-code-fast-1)**_
+
+<tool-use data-tool-type="search" data-tool-name="copilot_findTextInFiles">
+<details>
+<summary>Tool use: **copilot_findTextInFiles** • Wyszukiwanie tekstu `renderActButtons` (`**/public/viewer-osd-v7.html`)</summary>
+
+
+No results found
+</details>
+</tool-use>
+
+---
+
+<tool-use data-tool-type="read" data-tool-name="copilot_readFile">
+<details>
+<summary>Tool use: **copilot_readFile** • Czytanie [](file:///j%3A/projekt%202025/projekt-akta-v2/public/viewer-osd-v7.html#2027-2027), wiersze 2027 do 2070</summary>
+
+
+Odczytaj [](file:///j%3A/projekt%202025/projekt-akta-v2/public/viewer-osd-v7.html#2027-2027), wiersze 2027 do 2070
+
+</details>
+</tool-use>
+
+---
+
+<tool-use data-tool-type="read" data-tool-name="copilot_readFile">
+<details>
+<summary>Tool use: **copilot_readFile** • Czytanie [](file:///j%3A/projekt%202025/projekt-akta-v2/public/viewer-osd-v7.html#2070-2070), wiersze 2070 do 2120</summary>
+
+
+Odczytaj [](file:///j%3A/projekt%202025/projekt-akta-v2/public/viewer-osd-v7.html#2070-2070), wiersze 2070 do 2120
+
+</details>
+</tool-use>
+
+---
+
+<tool-use data-tool-type="read" data-tool-name="copilot_readFile">
+<details>
+<summary>Tool use: **copilot_readFile** • Czytanie [](file:///j%3A/projekt%202025/projekt-akta-v2/public/viewer-osd-v7.html#2020-2020), wiersze 2020 do 2025</summary>
+
+
+Odczytaj [](file:///j%3A/projekt%202025/projekt-akta-v2/public/viewer-osd-v7.html#2020-2020), wiersze 2020 do 2025
+
+</details>
+</tool-use>
+
+---
+
+<tool-use data-tool-type="search" data-tool-name="copilot_findTextInFiles">
+<details>
+<summary>Tool use: **copilot_findTextInFiles** • Wyszukiwanie tekstu `function updateRecordCounter` (`**/public/viewer-osd-v7.html`)</summary>
+
+
+No results found
+</details>
+</tool-use>
+
+---
+
+<tool-use data-tool-type="read" data-tool-name="copilot_readFile">
+<details>
+<summary>Tool use: **copilot_readFile** • Czytanie [](file:///j%3A/projekt%202025/projekt-akta-v2/public/viewer-osd-v7.html#2014-2014), wiersze 2014 do 2027</summary>
+
+
+Odczytaj [](file:///j%3A/projekt%202025/projekt-akta-v2/public/viewer-osd-v7.html#2014-2014), wiersze 2014 do 2027
+
+</details>
+</tool-use>
+
+---
+
+<tool-use data-tool-type="unknown" data-tool-name="copilot_replaceString">
+<details>
+<summary>Tool use: **copilot_replaceString**</summary>
+
+Additional data:
+
+```json
+{
+  "vscodeToolId": "copilot_replaceString",
+  "isHidden": true
+}
+```
+Result:
+
+```json
+{
+  "invocationMessage": "Korzystanie z \"Zamień ciąg w pliku\"",
+  "isConfirmed": {
+    "type": 1
+  },
+  "content": "&#96;&#96;&#96;html\nasync function autoGenerateID(actData) {\r\n            const prompt = &#96;You are an expert in generating unique IDs for genealogical records based on Polish metrical books. Follow this strict schema for ID: TYP.WOJ.PARAFIA.ROK.MIES.NR.SUF\r\n\r\nTYP: 2 letters from input (CH=chrzest, UR=urodzenie, MZ=małżeństwo, ZG=zgon, IN=indeks)\r\nWOJ: 3 letters province code (e.g., LUB=lubelskie)\r\nPARAFIA: 4-6 uppercase letters (e.g., BLIN)\r\nROK: 4 digits year from registration date (zgłoszenia)\r\nMIES: 2 digits month from registration date (00 if unknown)\r\nNR: 5 digits padded with zeros - act number from book (00000 if no numbering)\r\nSUF: always 2 digits - 00 default; 01-09 for variants/copies/duplicates (e.g., twins or copies)\r\n\r\nInput is JSON with act data. Generate ID automatically. If copy/duplicate, increment SUF (e.g., from 00 to 01). If no act number, use 00000. Use registration date priority.\r\nExample input: { \"typ\": \"chrzest\", \"woj\": \"lubelskie\", \"parafia\": \"Blindów\", \"data_zgl\": \"1908-05-15\", \"nr_aktu\": 60, \"is_copy\": false }\r\nOutput: CH.LUB.BLIN.1908.05.00060.00\r\nExample input: { \"typ\": \"urodzenie\", \"woj\": \"mazowieckie\", \"parafia\": \"Warszawa\", \"data_zgl\": \"1920\", \"nr_aktu\": 0, \"is_copy\": true }\r\nOutput: UR.MAZ.WARS.1920.00.00000.01\r\nInput: ${JSON.stringify(actData)}\r\nOutput ONLY the ID string, nothing else.&#96;;\r\n\r\n            // TODO: Replace with actual API call\r\n            // For now, simulate with a mock\r\n            console.log('Prompt for LLM:', prompt);\r\n            // Mock response\r\n            const mockID = 'CH.LUB.BLIN.1908.05.00060.00'; // Replace with actual fetch\r\n            return mockID;\r\n\r\n            /*\r\n            const response = await fetch('https://api.x.ai/v1/chat/completions', {\r\n                method: 'POST',\r\n                headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer YOUR_API_KEY' },\r\n                body: JSON.stringify({\r\n                    model: 'grok-beta',\r\n                    messages: [{ role: 'user', content: prompt }]\r\n                })\r\n            });\r\n            const result = await response.json();\r\n            return result.choices[0].message.content.trim();\r\n            */\r\n        }\r\n\r\n        \n&#96;&#96;&#96;\n\n",
+  "textEditContent": "async function autoGenerateID(actData) {\r\n            const prompt = &#96;You are an expert in generating unique IDs for genealogical records based on Polish metrical books. Follow this strict schema for ID: TYP.WOJ.PARAFIA.ROK.MIES.NR.SUF\r\n\r\nTYP: 2 letters from input (CH=chrzest, UR=urodzenie, MZ=małżeństwo, ZG=zgon, IN=indeks)\r\nWOJ: 3 letters province code (e.g., LUB=lubelskie)\r\nPARAFIA: 4-6 uppercase letters (e.g., BLIN)\r\nROK: 4 digits year from registration date (zgłoszenia)\r\nMIES: 2 digits month from registration date (00 if unknown)\r\nNR: 5 digits padded with zeros - act number from book (00000 if no numbering)\r\nSUF: always 2 digits - 00 default; 01-09 for variants/copies/duplicates (e.g., twins or copies)\r\n\r\nInput is JSON with act data. Generate ID automatically. If copy/duplicate, increment SUF (e.g., from 00 to 01). If no act number, use 00000. Use registration date priority.\r\nExample input: { \"typ\": \"chrzest\", \"woj\": \"lubelskie\", \"parafia\": \"Blindów\", \"data_zgl\": \"1908-05-15\", \"nr_aktu\": 60, \"is_copy\": false }\r\nOutput: CH.LUB.BLIN.1908.05.00060.00\r\nExample input: { \"typ\": \"urodzenie\", \"woj\": \"mazowieckie\", \"parafia\": \"Warszawa\", \"data_zgl\": \"1920\", \"nr_aktu\": 0, \"is_copy\": true }\r\nOutput: UR.MAZ.WARS.1920.00.00000.01\r\nInput: ${JSON.stringify(actData)}\r\nOutput ONLY the ID string, nothing else.&#96;;\r\n\r\n            // TODO: Replace with actual API call\r\n            // For now, simulate with a mock\r\n            console.log('Prompt for LLM:', prompt);\r\n            // Mock response\r\n            const mockID = 'CH.LUB.BLIN.1908.05.00060.00'; // Replace with actual fetch\r\n            return mockID;\r\n\r\n            /*\r\n            const response = await fetch('https://api.x.ai/v1/chat/completions', {\r\n                method: 'POST',\r\n                headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer YOUR_API_KEY' },\r\n                body: JSON.stringify({\r\n                    model: 'grok-beta',\r\n                    messages: [{ role: 'user', content: prompt }]\r\n                })\r\n            });\r\n            const result = await response.json();\r\n            return result.choices[0].message.content.trim();\r\n            */\r\n        }\r\n\r\n        ",
+  "toolCallResult": null
+}
+```
+Status: **completed**
+
+
+</details>
+</tool-use>
+
+---
+
+<tool-use data-tool-type="read" data-tool-name="copilot_readFile">
+<details>
+<summary>Tool use: **copilot_readFile** • Czytanie [](file:///j%3A/projekt%202025/projekt-akta-v2/public/viewer-osd-v7.html#2045-2045), wiersze 2045 do 2055</summary>
+
+
+Odczytaj [](file:///j%3A/projekt%202025/projekt-akta-v2/public/viewer-osd-v7.html#2045-2045), wiersze 2045 do 2055
 
 </details>
 </tool-use>

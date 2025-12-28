@@ -955,7 +955,9 @@
             <div style="background:rgba(20,20,30,0.95); padding:20px; border-radius:8px; width:400px; pointer-events:auto;">
                 <h3>Dodaj akty do strony</h3>
                 <label>Rok: <input id="modalYear" type="number" value="1900"></label><br>
+                <label>Data zgłoszenia: <input id="modalDate" type="text" value="1900-01-01"></label><br>
                 <label>Parafia: <input id="modalParish" type="text" value="Brak"></label><br>
+                <label>Województwo: <input id="modalWoj" type="text" value="LUB"></label><br>
                 <label>Typ aktu: 
                     <select id="modalType">
                         <option value="urodzenia">Urodzenia</option>
@@ -2024,6 +2026,46 @@
             }
         }
 
+        async function autoGenerateID(actData) {
+            const prompt = `You are an expert in generating unique IDs for genealogical records based on Polish metrical books. Follow this strict schema for ID: TYP.WOJ.PARAFIA.ROK.MIES.NR.SUF
+
+TYP: 2 letters from input (CH=chrzest, UR=urodzenie, MZ=małżeństwo, ZG=zgon, IN=indeks)
+WOJ: 3 letters province code (e.g., LUB=lubelskie)
+PARAFIA: 4-6 uppercase letters (e.g., BLIN)
+ROK: 4 digits year from registration date (zgłoszenia)
+MIES: 2 digits month from registration date (00 if unknown)
+NR: 5 digits padded with zeros - act number from book (00000 if no numbering)
+SUF: always 2 digits - 00 default; 01-09 for variants/copies/duplicates (e.g., twins or copies)
+
+Input is JSON with act data. Generate ID automatically. If copy/duplicate, increment SUF (e.g., from 00 to 01). If no act number, use 00000. Use registration date priority.
+Example input: { "typ": "chrzest", "woj": "lubelskie", "parafia": "Blindów", "data_zgl": "1908-05-15", "nr_aktu": 60, "is_copy": false }
+Output: CH.LUB.BLIN.1908.05.00060.00
+Example input: { "typ": "urodzenie", "woj": "mazowieckie", "parafia": "Warszawa", "data_zgl": "1920", "nr_aktu": 0, "is_copy": true }
+Output: UR.MAZ.WARS.1920.00.00000.01
+Input: ${JSON.stringify(actData)}
+Output ONLY the ID string, nothing else.`;
+
+            // TODO: Replace with actual API call
+            // For now, simulate with a mock
+            console.log('Prompt for LLM:', prompt);
+            // Mock response
+            const mockID = 'CH.LUB.BLIN.1908.05.00060.00'; // Replace with actual fetch
+            return mockID;
+
+            /*
+            const response = await fetch('https://api.x.ai/v1/chat/completions', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer YOUR_API_KEY' },
+                body: JSON.stringify({
+                    model: 'grok-beta',
+                    messages: [{ role: 'user', content: prompt }]
+                })
+            });
+            const result = await response.json();
+            return result.choices[0].message.content.trim();
+            */
+        }
+
         function renderActButtons() {
             const sidebar = document.getElementById('recordsSidebar');
 
@@ -2058,7 +2100,7 @@
             acts.forEach(act => {
                 const btn = document.createElement('button');
                 btn.className = 'act-card';
-                btn.textContent = `📄 Akt ${act.actNum}`;
+                btn.innerHTML = `📄 Akt ${act.actNum}<br><span style="font-size: 0.8em; color: #888;">${act.id || 'Brak ID'}</span>`;
                 btn.style.cssText = `
                     padding: 12px 8px;
                     margin-bottom: 8px;
@@ -2094,7 +2136,7 @@
             addBtn.className = 'act-card toolbar-btn';
             addBtn.innerHTML = '<i class="fas fa-plus"></i>';
             addBtn.title = 'Dodaj nowy akt';
-            addBtn.onclick = () => {
+            addBtn.onclick = async () => {
                 const nextNum = acts.length + 1;
                 const newAct = {
                     imageIdx: app.currentImageIdx,
@@ -2104,6 +2146,16 @@
                     actROI: null,
                     timestamp: new Date().toISOString()
                 };
+                // Generate ID
+                const actData = {
+                    typ: 'urodzenia', // Default
+                    woj: 'LUB',
+                    parafia: 'BLIN',
+                    data_zgl: '1900-01-01',
+                    nr_aktu: nextNum,
+                    is_copy: false
+                };
+                newAct.id = await autoGenerateID(actData);
                 app.imageActs.push(newAct);
                 saveStorage();
                 selectAct(nextNum);
@@ -2214,7 +2266,9 @@
             // Ładuj pamiętane wartości z localStorage (z poprzedniej strony)
             const prevData = JSON.parse(localStorage.getItem('lastActSettings')) || {};
             document.getElementById('modalYear').value = prevData.year || new Date().getFullYear() - 100;
+            document.getElementById('modalDate').value = prevData.date || '1900-01-01';
             document.getElementById('modalParish').value = prevData.parish || 'Brak';
+            document.getElementById('modalWoj').value = prevData.woj || 'LUB';
             document.getElementById('modalType').value = prevData.type || 'urodzenia';
             
             const prevActs = app.imageActs.filter(a => a.imageIdx === app.currentImageIdx - 1).sort((a,b) => (a.nr || 0) - (b.nr || 0)) || []; // Poprzednia strona, sortowane po nr
@@ -2234,7 +2288,9 @@
             document.getElementById('modalOK').onclick = () => {
                 const data = {
                     year: parseInt(document.getElementById('modalYear').value),
+                    date: document.getElementById('modalDate').value,
                     parish: document.getElementById('modalParish').value,
+                    woj: document.getElementById('modalWoj').value,
                     type: document.getElementById('modalType').value,
                     firstNr: parseInt(document.getElementById('modalFirstNr').value),
                     lastNr: parseInt(document.getElementById('modalLastNr').value),
@@ -2245,13 +2301,16 @@
                 localStorage.setItem('lastActSettings', JSON.stringify(data));
 
                 const count = data.lastNr - data.firstNr + 1;
+                const newActs = [];
                 for (let i = 0; i < count; i++) {
                     const act = {
                         imageIdx: app.currentImageIdx,
                         actNum: i + 1, // actNum to numer aktu na stronie, nie globalny nr
                         nr: data.firstNr + i, // Globalny nr aktu
                         year: data.year,
+                        date: data.date,
                         parish: data.parish,
+                        woj: data.woj,
                         type: data.type,
                         fieldValues: {},
                         fieldROIs: {},
@@ -2260,8 +2319,23 @@
                     };
                     if (data.plusIndex) act.index = ''; // Dodaj pole indeksu
                     if (i === count - 1 && data.incomplete) act.incomplete = true; // Flag
-                    app.imageActs.push(act);
+                    newActs.push(act);
                 }
+
+                // Generate IDs asynchronously
+                for (const act of newActs) {
+                    const actData = {
+                        typ: act.type,
+                        woj: act.woj,
+                        parafia: act.parish,
+                        data_zgl: act.date,
+                        nr_aktu: act.nr,
+                        is_copy: false
+                    };
+                    act.id = await autoGenerateID(actData);
+                }
+
+                app.imageActs.push(...newActs);
 
                 saveStorage();
                 renderActButtons();
@@ -2278,7 +2352,9 @@
                 }
                 const data = {
                     year: parseInt(document.getElementById('modalYear').value),
+                    date: document.getElementById('modalDate').value,
                     parish: document.getElementById('modalParish').value,
+                    woj: document.getElementById('modalWoj').value,
                     type: document.getElementById('modalType').value,
                     continuation: document.getElementById('modalContinuation').checked,
                     incomplete: document.getElementById('modalIncomplete').checked,
@@ -2287,13 +2363,16 @@
                 localStorage.setItem('lastActSettings', JSON.stringify(data));
 
                 let currentNr = data.continuation ? lastPrevNr + 1 : 1;
+                const copiedActs = [];
                 prevActs.forEach((prevAct, index) => {
                     const act = {
                         imageIdx: app.currentImageIdx,
                         actNum: index + 1,
                         nr: currentNr + index,
                         year: data.year,
+                        date: data.date,
                         parish: data.parish,
+                        woj: data.woj,
                         type: data.type,
                         fieldValues: JSON.parse(JSON.stringify(prevAct.fieldValues)), // Deep copy
                         fieldROIs: JSON.parse(JSON.stringify(prevAct.fieldROIs)), // Deep copy
@@ -2302,8 +2381,23 @@
                     };
                     if (data.plusIndex) act.index = prevAct.index || '';
                     if (index === prevActs.length - 1 && data.incomplete) act.incomplete = true;
-                    app.imageActs.push(act);
+                    copiedActs.push(act);
                 });
+
+                // Generate IDs asynchronously
+                for (const act of copiedActs) {
+                    const actData = {
+                        typ: act.type,
+                        woj: act.woj,
+                        parafia: act.parish,
+                        data_zgl: act.date,
+                        nr_aktu: act.nr,
+                        is_copy: false
+                    };
+                    act.id = await autoGenerateID(actData);
+                }
+
+                app.imageActs.push(...copiedActs);
 
                 saveStorage();
                 renderActButtons();
