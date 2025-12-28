@@ -607,36 +607,6 @@
             background: rgba(50, 50, 70, 0.8);
             border: 1px solid #555;
         }
-        /* Modal "Ile aktów?" - przezroczysty, bez blokady i rozmycia */
-        #actCountModal {
-            background: rgba(0, 0, 0, 0.1) !important;     /* Bardzo delikatne przyciemnienie zamiast 0.5 */
-            backdrop-filter: none !important;             /* Wyłącz blur/rozmycie pod spodem */
-            -webkit-backdrop-filter: none !important;
-            pointer-events: none !important;               /* Modal nie blokuje kliknięć/scrolla pod spodem */
-            z-index: 1000;
-        }
-
-        /* Ale sam box z pytaniem niech reaguje na kliknięcia */
-        #actCountModal > div {
-            pointer-events: auto !important;               /* Input i przyciski nadal klikalne */
-            background: rgba(20, 20, 30, 0.95) !important; /* Ciemne, lekko przezroczyste */
-            border: 1px solid #0078d4;
-            box-shadow: 0 8px 32px rgba(0, 120, 212, 0.3);
-        }
-
-        /* Delikatne przyciemnienie tylko pod boxem (opcjonalne, ładniejsze) */
-        #actCountModal::before {
-            content: '';
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 360px;
-            height: 240px;
-            background: rgba(0, 0, 0, 0.3);
-            border-radius: 12px;
-            pointer-events: none;
-        }
         .ocr-btn {
             background: none;
             border: none;
@@ -981,14 +951,26 @@
             <!-- TASK #2: Search Input -->
             <input type="text" id="searchInput" class="toolbar-search" placeholder="🔍 Szukaj w aktach..." title="Wpisz aby wyszukać" style="padding: 8px 12px; border: 1px solid #3a3a3a; background: #1a1a1a; color: #ddd; border-radius: 4px; font-size: 13px; width: 180px;">
         </div>
-        <div id="actCountModal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.3); backdrop-filter: blur(2px); z-index: 1000;">
-            <div style="position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background: rgba(26, 26, 26, 0.98); border: 2px solid rgba(0, 120, 212, 0.9); border-radius: 12px; padding: 24px; width: 340px; box-shadow: 0 20px 60px rgba(0,0,0,0.9); backdrop-filter: blur(20px); z-index: 1001; font-size: 13px;">
-                <h2 style="color: #0078d4; margin-bottom: 16px; font-size: 16px; font-weight: 600;"><i class="fas fa-calculator"></i> Ile aktów?</h2>
-                <input type="number" id="actCountInput" min="1" max="10" value="1" style="width: 100%; padding: 12px; border: 1px solid rgba(58, 58, 58, 0.8); background: rgba(10, 10, 10, 0.9); color: #ddd; border-radius: 6px; margin-bottom: 16px; box-sizing: border-box; font-size: 13px;">
-                <div style="display: flex; gap: 10px;">
-                    <button onclick="createActsForImage()" style="flex: 1; padding: 12px; background: linear-gradient(135deg, #0078d4, #0099ff); color: white; border: none; border-radius: 6px; font-weight: 600; cursor: pointer; font-size: 13px; transition: all 0.2s;">OK</button>
-                    <button onclick="closeActModal()" style="flex: 1; padding: 12px; background: rgba(58, 58, 58, 0.8); color: #ddd; border: none; border-radius: 6px; font-weight: 600; cursor: pointer; font-size: 13px; transition: all 0.2s;">Anuluj</button>
-                </div>
+        <div id="advancedActModal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.1); z-index:1000; justify-content:center; align-items:center; pointer-events:none;">
+            <div style="background:rgba(20,20,30,0.95); padding:20px; border-radius:8px; width:400px; pointer-events:auto;">
+                <h3>Dodaj akty do strony</h3>
+                <label>Rok: <input id="modalYear" type="number" value="1900"></label><br>
+                <label>Parafia: <input id="modalParish" type="text" value="Brak"></label><br>
+                <label>Typ aktu: 
+                    <select id="modalType">
+                        <option value="urodzenia">Urodzenia</option>
+                        <option value="malzenstwa">Małżeństwa</option>
+                        <option value="zgony">Zgony</option>
+                        <option value="inne">Inne</option>
+                    </select>
+                </label><br>
+                <label>Nr pierwszego aktu: <input id="modalFirstNr" type="number" value="1"></label><br>
+                <label>Nr ostatniego aktu: <input id="modalLastNr" type="number" value="10"></label><br>
+                <label><input id="modalContinuation" type="checkbox"> Kontynuacja poprzedniej strony</label><br>
+                <label><input id="modalIncomplete" type="checkbox"> Ostatni akt niepełny</label><br>
+                <label><input id="modalPlusIndex" type="checkbox"> Dodaj pole indeksu</label><br>
+                <button id="modalOK">OK</button>
+                <button id="modalCancel">Anuluj</button>
             </div>
         </div>
         <div class="main-content">
@@ -1043,7 +1025,6 @@
         
         <!-- Toggle Acts Panel Button -->
         <button id="toggleActsPanel" style="position:fixed; top:10px; right:10px; z-index:9999; background: rgba(0,0,0,0.8); color: white; border: 1px solid #555; padding: 8px 12px; border-radius: 4px; cursor: pointer;">Ukryj karty</button>
-        <button id="toggleActModal" style="position:fixed; top:50px; right:10px; z-index:9999; background:rgba(0,0,0,0.8); color:white; border:1px solid #555; padding:8px 12px; border-radius:4px;">Ukryj modal aktów</button>
         
         <!-- Postprocessing Panel -->
         <div class="postprocess-panel" id="postprocessPanel">
@@ -1879,7 +1860,7 @@
                             notify('❌ Najpierw dodaj obrazy', 'error');
                             return;
                         }
-                        showActCountModal();
+                        showAdvancedActModal();
                         console.log('⌨️ Ctrl+N: New act');
                     }
                     // ⌨️ P0: Ctrl+S = Save Record
@@ -1922,12 +1903,6 @@
             if (panel) {
                 panel.style.display = panel.style.display === 'none' ? 'flex' : 'none';
             }
-        });
-        
-        // Toggle act modal
-        document.getElementById('toggleActModal')?.addEventListener('click', () => {
-            const modal = document.getElementById('actCountModal');
-            if (modal) modal.style.display = modal.style.display === 'none' ? 'flex' : 'none';
         });
         
         function saveRecord() {
@@ -2218,13 +2193,70 @@
             updateProgressBar();  // ⭐ Update progress when clearing form
         }
 
-        function showActCountModal() {
-            document.getElementById('actCountModal').style.display = 'flex';
-            document.getElementById('actCountInput').focus();
-        }
+        function showAdvancedActModal() {
+            const modal = document.getElementById('advancedActModal');
+            if (!modal) return;
 
-        function closeActModal() {
-            document.getElementById('actCountModal').style.display = 'none';
+            // Ładuj pamiętane wartości z localStorage (z poprzedniej strony)
+            const prevData = JSON.parse(localStorage.getItem('lastActSettings')) || {};
+            document.getElementById('modalYear').value = prevData.year || new Date().getFullYear() - 100;
+            document.getElementById('modalParish').value = prevData.parish || 'Brak';
+            document.getElementById('modalType').value = prevData.type || 'urodzenia';
+            
+            const prevActs = app.imageActs.filter(a => a.imageIdx === app.currentImageIdx - 1) || []; // Poprzednia strona
+            const lastPrevNr = prevActs.length > 0 ? prevActs[prevActs.length - 1].nr || 0 : 0;
+            const defaultFirst = prevData.continuation ? lastPrevNr + 1 : 1;
+            const defaultLast = defaultFirst + (prevActs.length || 10) - 1; // + tyle co poprzednio
+
+            document.getElementById('modalFirstNr').value = defaultFirst;
+            document.getElementById('modalLastNr').value = defaultLast;
+            document.getElementById('modalContinuation').checked = !!prevData.continuation;
+            document.getElementById('modalIncomplete').checked = !!prevData.incomplete;
+            document.getElementById('modalPlusIndex').checked = !!prevData.plusIndex;
+
+            modal.style.display = 'flex';
+
+            document.getElementById('modalOK').onclick = () => {
+                const data = {
+                    year: parseInt(document.getElementById('modalYear').value),
+                    parish: document.getElementById('modalParish').value,
+                    type: document.getElementById('modalType').value,
+                    firstNr: parseInt(document.getElementById('modalFirstNr').value),
+                    lastNr: parseInt(document.getElementById('modalLastNr').value),
+                    continuation: document.getElementById('modalContinuation').checked,
+                    incomplete: document.getElementById('modalIncomplete').checked,
+                    plusIndex: document.getElementById('modalPlusIndex').checked
+                };
+                localStorage.setItem('lastActSettings', JSON.stringify(data));
+
+                const count = data.lastNr - data.firstNr + 1;
+                for (let i = 0; i < count; i++) {
+                    const act = {
+                        imageIdx: app.currentImageIdx,
+                        actNum: i + 1, // actNum to numer aktu na stronie, nie globalny nr
+                        nr: data.firstNr + i, // Globalny nr aktu
+                        year: data.year,
+                        parish: data.parish,
+                        type: data.type,
+                        fieldValues: {},
+                        fieldROIs: {},
+                        actROI: null,
+                        timestamp: new Date().toISOString()
+                    };
+                    if (data.plusIndex) act.index = ''; // Dodaj pole indeksu
+                    if (i === count - 1 && data.incomplete) act.incomplete = true; // Flag
+                    app.imageActs.push(act);
+                }
+
+                saveStorage();
+                renderActButtons();
+                selectAct(1);
+                updateRecordCounter();
+                notify(`Utworzono ${count} aktów`, 'success');
+                modal.style.display = 'none';
+            };
+
+            document.getElementById('modalCancel').onclick = () => modal.style.display = 'none';
         }
 
         function createActsForImage() {
@@ -2365,7 +2397,7 @@
             const actsOnImage = app.imageActs.filter(a => a.imageIdx === idx);
 
             if (actsOnImage.length === 0) {
-                showActCountModal();
+                showAdvancedActModal();
             } else {
                 selectAct(actsOnImage[0].actNum);
             }
