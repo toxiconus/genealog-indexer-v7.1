@@ -971,6 +971,7 @@
                 <label><input id="modalIncomplete" type="checkbox"> Ostatni akt niepełny</label><br>
                 <label><input id="modalPlusIndex" type="checkbox"> Dodaj pole indeksu</label><br>
                 <button id="modalOK">OK</button>
+                <button id="modalCopyPrev">Kopiuj z poprzedniej</button>
                 <button id="modalCancel">Anuluj</button>
             </div>
         </div>
@@ -2267,6 +2268,48 @@
                 selectAct(1);
                 updateRecordCounter();
                 notify(`Utworzono ${count} aktów`, 'success');
+                modal.style.display = 'none';
+            };
+
+            document.getElementById('modalCopyPrev').onclick = () => {
+                if (prevActs.length === 0) {
+                    notify('Brak aktów na poprzedniej stronie', 'error');
+                    return;
+                }
+                const data = {
+                    year: parseInt(document.getElementById('modalYear').value),
+                    parish: document.getElementById('modalParish').value,
+                    type: document.getElementById('modalType').value,
+                    continuation: document.getElementById('modalContinuation').checked,
+                    incomplete: document.getElementById('modalIncomplete').checked,
+                    plusIndex: document.getElementById('modalPlusIndex').checked
+                };
+                localStorage.setItem('lastActSettings', JSON.stringify(data));
+
+                let currentNr = data.continuation ? lastPrevNr + 1 : 1;
+                prevActs.forEach((prevAct, index) => {
+                    const act = {
+                        imageIdx: app.currentImageIdx,
+                        actNum: index + 1,
+                        nr: currentNr + index,
+                        year: data.year,
+                        parish: data.parish,
+                        type: data.type,
+                        fieldValues: JSON.parse(JSON.stringify(prevAct.fieldValues)), // Deep copy
+                        fieldROIs: JSON.parse(JSON.stringify(prevAct.fieldROIs)), // Deep copy
+                        actROI: prevAct.actROI ? JSON.parse(JSON.stringify(prevAct.actROI)) : null,
+                        timestamp: new Date().toISOString()
+                    };
+                    if (data.plusIndex) act.index = prevAct.index || '';
+                    if (index === prevActs.length - 1 && data.incomplete) act.incomplete = true;
+                    app.imageActs.push(act);
+                });
+
+                saveStorage();
+                renderActButtons();
+                selectAct(1);
+                updateRecordCounter();
+                notify(`Skopiowano ${prevActs.length} aktów z poprzedniej strony`, 'success');
                 modal.style.display = 'none';
             };
 

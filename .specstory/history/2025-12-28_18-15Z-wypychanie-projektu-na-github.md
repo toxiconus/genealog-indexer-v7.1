@@ -7642,7 +7642,7 @@ Jeśli chcesz push teraz lub masz jakieś preferencje co do częstotliwości, da
 
 ---
 
-_**User (2025-12-28 19:33Z)**_
+_**User (2025-12-28 19:35Z)**_
 
 o ten modal który rok itd powinien pytac zaraz  od pierwszej pozycji. teraz jakby pytał od 3 miniatury. -niech pyta dopiero po kliknieciu miniatury lub przejciu nawigacja do nastepnej
 
@@ -7650,7 +7650,540 @@ o ten modal który rok itd powinien pytac zaraz  od pierwszej pozycji. teraz jak
 
 _**Agent (model copilot/grok-code-fast-1)**_
 
+<tool-use data-tool-type="search" data-tool-name="copilot_findTextInFiles">
+<details>
+<summary>Tool use: **copilot_findTextInFiles** • Wyszukiwanie tekstu `showAdvancedActModal` (`**/public/viewer-osd-v7.html`)</summary>
 
+
+No results found
+</details>
+</tool-use>
+
+---
+
+<tool-use data-tool-type="read" data-tool-name="copilot_readFile">
+<details>
+<summary>Tool use: **copilot_readFile** • Czytanie [](file:///j%3A/projekt%202025/projekt-akta-v2/public/viewer-osd-v7.html#1870-1870), wiersze 1870 do 1885</summary>
+
+
+Odczytaj [](file:///j%3A/projekt%202025/projekt-akta-v2/public/viewer-osd-v7.html#1870-1870), wiersze 1870 do 1885
+
+</details>
+</tool-use>
+
+---
+
+<tool-use data-tool-type="read" data-tool-name="copilot_readFile">
+<details>
+<summary>Tool use: **copilot_readFile** • Czytanie [](file:///j%3A/projekt%202025/projekt-akta-v2/public/viewer-osd-v7.html#2405-2405), wiersze 2405 do 2420</summary>
+
+
+Odczytaj [](file:///j%3A/projekt%202025/projekt-akta-v2/public/viewer-osd-v7.html#2405-2405), wiersze 2405 do 2420
+
+</details>
+</tool-use>
+
+---
+
+<tool-use data-tool-type="read" data-tool-name="copilot_readFile">
+<details>
+<summary>Tool use: **copilot_readFile** • Czytanie [](file:///j%3A/projekt%202025/projekt-akta-v2/public/viewer-osd-v7.html#2510-2510), wiersze 2510 do 2520</summary>
+
+
+Odczytaj [](file:///j%3A/projekt%202025/projekt-akta-v2/public/viewer-osd-v7.html#2510-2510), wiersze 2510 do 2520
+
+</details>
+</tool-use>
+
+---
+
+<tool-use data-tool-type="read" data-tool-name="copilot_readFile">
+<details>
+<summary>Tool use: **copilot_readFile** • Czytanie [](file:///j%3A/projekt%202025/projekt-akta-v2/public/viewer-osd-v7.html#2520-2520), wiersze 2520 do 2530</summary>
+
+
+Odczytaj [](file:///j%3A/projekt%202025/projekt-akta-v2/public/viewer-osd-v7.html#2520-2520), wiersze 2520 do 2530
+
+</details>
+</tool-use>
+
+---
+
+<tool-use data-tool-type="unknown" data-tool-name="copilot_replaceString">
+<details>
+<summary>Tool use: **copilot_replaceString**</summary>
+
+Additional data:
+
+```json
+{
+  "vscodeToolId": "copilot_replaceString",
+  "isHidden": true
+}
+```
+Result:
+
+```json
+{
+  "invocationMessage": "Korzystanie z \"Zamień ciąg w pliku\"",
+  "isConfirmed": {
+    "type": 1
+  },
+  "content": "&#96;&#96;&#96;html\n, true); // Wybierz pierwszy (posortowany) - auto\n&#96;&#96;&#96;\n\n",
+  "textEditContent": ", true); // Wybierz pierwszy (posortowany) - auto",
+  "toolCallResult": null
+}
+```
+Status: **completed**
+
+
+</details>
+</tool-use>
+
+---
+
+<tool-use data-tool-type="search" data-tool-name="copilot_findTextInFiles">
+<details>
+<summary>Tool use: **copilot_findTextInFiles** • Wyszukiwanie tekstu `function selectImage` (`**/public/viewer-osd-v7.html`)</summary>
+
+
+No results found
+</details>
+</tool-use>
+
+---
+
+<tool-use data-tool-type="unknown" data-tool-name="copilot_replaceString">
+<details>
+<summary>Tool use: **copilot_replaceString**</summary>
+
+Additional data:
+
+```json
+{
+  "vscodeToolId": "copilot_replaceString",
+  "isHidden": true
+}
+```
+Result:
+
+```json
+{
+  "invocationMessage": "Korzystanie z \"Zamień ciąg w pliku\"",
+  "isConfirmed": {
+    "type": 1
+  },
+  "content": "&#96;&#96;&#96;html\n, autoSelect = false\n&#96;&#96;&#96;\n\n",
+  "textEditContent": ", autoSelect = false",
+  "toolCallResult": null
+}
+```
+Status: **completed**
+
+
+</details>
+</tool-use>
+
+---
+
+<tool-use data-tool-type="unknown" data-tool-name="copilot_replaceString">
+<details>
+<summary>Tool use: **copilot_replaceString**</summary>
+
+Additional data:
+
+```json
+{
+  "vscodeToolId": "copilot_replaceString",
+  "isHidden": true
+}
+```
+Result:
+
+```json
+{
+  "invocationMessage": "Korzystanie z \"Zamień ciąg w pliku\"",
+  "isConfirmed": {
+    "type": 1
+  },
+  "content": "&#96;&#96;&#96;html\n!autoSelect &amp;&amp; actsOnImage.length === 0) {\r\n                showAdvancedActModal();\r\n            } else if (actsOnImage.length &gt; 0)\n&#96;&#96;&#96;\n\n",
+  "textEditContent": "!autoSelect &amp;&amp; actsOnImage.length === 0) {\r\n                showAdvancedActModal();\r\n            } else if (actsOnImage.length &gt; 0)",
+  "toolCallResult": null
+}
+```
+Status: **completed**
+
+
+</details>
+</tool-use>
+
+---
+
+<tool-use data-tool-type="search" data-tool-name="copilot_findTextInFiles">
+<details>
+<summary>Tool use: **copilot_findTextInFiles** • Wyszukiwanie tekstu `selectImage\(` (`**/public/viewer-osd-v7.html`)</summary>
+
+
+No results found
+</details>
+</tool-use>
+
+---
+
+<tool-use data-tool-type="read" data-tool-name="copilot_readFile">
+<details>
+<summary>Tool use: **copilot_readFile** • Czytanie [](file:///j%3A/projekt%202025/projekt-akta-v2/public/viewer-osd-v7.html#2650-2650), wiersze 2650 do 2660</summary>
+
+
+Odczytaj [](file:///j%3A/projekt%202025/projekt-akta-v2/public/viewer-osd-v7.html#2650-2650), wiersze 2650 do 2660
+
+</details>
+</tool-use>
+
+---
+
+<tool-use data-tool-type="read" data-tool-name="copilot_readFile">
+<details>
+<summary>Tool use: **copilot_readFile** • Czytanie [](file:///j%3A/projekt%202025/projekt-akta-v2/public/viewer-osd-v7.html#3605-3605), wiersze 3605 do 3615</summary>
+
+
+Odczytaj [](file:///j%3A/projekt%202025/projekt-akta-v2/public/viewer-osd-v7.html#3605-3605), wiersze 3605 do 3615
+
+</details>
+</tool-use>
+
+---
+
+<tool-use data-tool-type="read" data-tool-name="copilot_readFile">
+<details>
+<summary>Tool use: **copilot_readFile** • Czytanie [](file:///j%3A/projekt%202025/projekt-akta-v2/public/viewer-osd-v7.html#2465-2465), wiersze 2465 do 2475</summary>
+
+
+Odczytaj [](file:///j%3A/projekt%202025/projekt-akta-v2/public/viewer-osd-v7.html#2465-2465), wiersze 2465 do 2475
+
+</details>
+</tool-use>
+
+---
+
+<tool-use data-tool-type="unknown" data-tool-name="copilot_replaceString">
+<details>
+<summary>Tool use: **copilot_replaceString**</summary>
+
+Additional data:
+
+```json
+{
+  "vscodeToolId": "copilot_replaceString",
+  "isHidden": true
+}
+```
+Result:
+
+```json
+{
+  "invocationMessage": "Korzystanie z \"Zamień ciąg w pliku\"",
+  "isConfirmed": {
+    "type": 1
+  },
+  "content": "&#96;&#96;&#96;html\n, true\n&#96;&#96;&#96;\n\n",
+  "textEditContent": ", true",
+  "toolCallResult": null
+}
+```
+Status: **completed**
+
+
+</details>
+</tool-use>
+
+---
+
+<tool-use data-tool-type="unknown" data-tool-name="copilot_replaceString">
+<details>
+<summary>Tool use: **copilot_replaceString**</summary>
+
+Additional data:
+
+```json
+{
+  "vscodeToolId": "copilot_replaceString",
+  "isHidden": true
+}
+```
+Result:
+
+```json
+{
+  "invocationMessage": "Korzystanie z \"Zamień ciąg w pliku\"",
+  "isConfirmed": {
+    "type": 1
+  },
+  "content": "&#96;&#96;&#96;html\n, true\n&#96;&#96;&#96;\n\n",
+  "textEditContent": ", true",
+  "toolCallResult": null
+}
+```
+Status: **completed**
+
+
+</details>
+</tool-use>
+
+---
+
+<tool-use data-tool-type="unknown" data-tool-name="run_in_terminal">
+<details>
+<summary>Tool use: **run_in_terminal**</summary>
+
+
+Parameters:
+
+```json
+{
+  "kind": "terminal",
+  "terminalToolSessionId": "03911dc8-2e10-491e-af72-2bd758fb8579",
+  "terminalCommandId": "tool-b3bc1f28-9162-4456-84ab-e88d262557cc",
+  "commandLine": {
+    "original": "cd \"j:\\projekt 2025\\projekt-akta-v2\" &amp;&amp; git add public/viewer-osd-v7.html",
+    "toolEdited": "cd \"j:\\projekt 2025\\projekt-akta-v2\" ; git add public/viewer-osd-v7.html"
+  },
+  "language": "pwsh",
+  "autoApproveInfo": {
+    "value": "Automatycznie zatwierdzane dla tej sesji ([Wyłącz](command:workbench.action.terminal.chat.disableSessionAutoApproval?%255B%25226adafc7a-262d-41f2-9499-640bd3472ba6%2522%255D))",
+    "isTrusted": {
+      "enabledCommands": [
+        "workbench.action.terminal.chat.disableSessionAutoApproval"
+      ]
+    },
+    "supportThemeIcons": false,
+    "supportHtml": false,
+    "supportAlertSyntax": false
+  },
+  "terminalCommandState": {
+    "exitCode": 0,
+    "timestamp": 1766950507675,
+    "duration": 85
+  },
+  "terminalCommandUri": {
+    "$mid": 1,
+    "path": "/36a0d7807ea04b2e7f9bed2c2ac94af7/2",
+    "scheme": "vscode-terminal",
+    "query": "command=tool-b3bc1f28-9162-4456-84ab-e88d262557cc"
+  },
+  "terminalTheme": {
+    "background": "#181818",
+    "foreground": "#cccccc"
+  }
+}
+```
+Additional data:
+
+```json
+{
+  "vscodeToolId": "run_in_terminal",
+  "isHidden": false
+}
+```
+Result:
+
+```json
+{
+  "invocationMessage": "Korzystanie z \"Uruchom w terminalu\"",
+  "isConfirmed": {
+    "type": 1
+  },
+  "content": "",
+  "textEditContent": "",
+  "toolCallResult": null
+}
+```
+Status: **completed**
+
+
+</details>
+</tool-use>
+
+---
+
+<tool-use data-tool-type="unknown" data-tool-name="run_in_terminal">
+<details>
+<summary>Tool use: **run_in_terminal**</summary>
+
+
+Parameters:
+
+```json
+{
+  "kind": "terminal",
+  "terminalToolSessionId": "ed2614bb-5b70-490a-8f65-85c06855140d",
+  "terminalCommandId": "tool-cafc90be-8e5f-40f5-9eb1-a1c217823987",
+  "commandLine": {
+    "original": "cd \"j:\\projekt 2025\\projekt-akta-v2\" &amp;&amp; git commit -m \"Fix modal timing - show advanced act modal only on manual image selection\n\n- Added autoSelect parameter to selectImage() function\n- Modal now appears only when user manually clicks thumbnail or navigates\n- Auto-selection (on load, sort, etc.) doesn't trigger modal\n- Prevents modal from showing immediately on app startup with auto-loaded folder\"",
+    "toolEdited": "cd \"j:\\projekt 2025\\projekt-akta-v2\" ; git commit -m \"Fix modal timing - show advanced act modal only on manual image selection\n\n- Added autoSelect parameter to selectImage() function\n- Modal now appears only when user manually clicks thumbnail or navigates\n- Auto-selection (on load, sort, etc.) doesn't trigger modal\n- Prevents modal from showing immediately on app startup with auto-loaded folder\""
+  },
+  "language": "pwsh",
+  "autoApproveInfo": {
+    "value": "Automatycznie zatwierdzane dla tej sesji ([Wyłącz](command:workbench.action.terminal.chat.disableSessionAutoApproval?%255B%25226adafc7a-262d-41f2-9499-640bd3472ba6%2522%255D))",
+    "isTrusted": {
+      "enabledCommands": [
+        "workbench.action.terminal.chat.disableSessionAutoApproval"
+      ]
+    },
+    "supportThemeIcons": false,
+    "supportHtml": false,
+    "supportAlertSyntax": false
+  },
+  "terminalCommandState": {
+    "exitCode": 0,
+    "timestamp": 1766950511135,
+    "duration": 213
+  },
+  "terminalCommandUri": {
+    "$mid": 1,
+    "path": "/36a0d7807ea04b2e7f9bed2c2ac94af7/2",
+    "scheme": "vscode-terminal",
+    "query": "command=tool-cafc90be-8e5f-40f5-9eb1-a1c217823987"
+  },
+  "terminalCommandOutput": {
+    "text": "1b1183209[master eefe5ff] Fix modal timing - show advanced act modal only on \r\nmanual image selection\r\n 1 file changed, 6 insertions(+), 6 deletions(-)",
+    "lineCount": 4
+  },
+  "terminalTheme": {
+    "background": "#181818",
+    "foreground": "#cccccc"
+  }
+}
+```
+Additional data:
+
+```json
+{
+  "vscodeToolId": "run_in_terminal",
+  "isHidden": false
+}
+```
+Result:
+
+```json
+{
+  "invocationMessage": "Korzystanie z \"Uruchom w terminalu\"",
+  "isConfirmed": {
+    "type": 1
+  },
+  "content": "",
+  "textEditContent": "",
+  "toolCallResult": null
+}
+```
+Status: **completed**
+
+
+</details>
+</tool-use>
+
+---
+
+Zrobiłem zmiany! Teraz modal z pytaniem o akty (rok, parafia itp.) będzie się pokazywał **tylko przy ręcznym wyborze obrazu** – czyli po kliknięciu miniatury lub przejściu nawigacją do następnej strony.
+
+## Zmienione pliki:
+- `viewer-osd-v7.html`
+
+## Kluczowe zmiany:
+
+### 1. Parametr `autoSelect` w `selectImage()`:
+- Dodany `autoSelect = false` domyślnie
+- Kontroluje, czy wybór był automatyczny (ładowanie, sortowanie) czy ręczny
+
+### 2. Warunek pokazywania modala:
+- `if (!autoSelect && actsOnImage.length === 0)` – tylko przy ręcznym wyborze i braku aktów
+- Przy automatycznym wyborze (ładowanie obrazów) modal się nie pokazuje
+
+### 3. Zaktualizowane wywołania:
+- `selectImage(0, true)` przy automatycznym ładowaniu/wczytywaniu
+- `selectImage(app.currentImageIdx, true)` przy sortowaniu
+- Ręczne kliknięcia miniatur pozostają bez parametru (autoSelect=false)
+
+### Efekt:
+- Przy starcie aplikacji i automatycznym ładowaniu folderu – obrazy się wczytają, ale modal nie wyskoczy od razu
+- Modal pokaże się dopiero, gdy klikniesz pierwszą miniaturkę lub przejdziesz do niej nawigacją
+- Unika irytującego pytania "ile aktów?" przed wybraniem obrazu
+
+Zmiany zostały zatwierdzone lokalnie (commit). Jeśli chcesz push do GitHub, daj znać! 👍
+
+---
+
+_**User (2025-12-28 19:40Z)**_
+
+poinien liczyc z poprzednich danych - miniatury np Dodaj akty do strony
+Rok: 
+1909
+
+Parafia: 
+Blinów
+
+Typ aktu: 
+Urodzenia
+
+Nr pierwszego aktu: 
+1
+
+Nr ostatniego aktu: 
+6
+
+ Kontynuacja poprzedniej strony
+ Ostatni akt niepełny
+ Dodaj pole indeksu
+OK Anuluj  na drugiej juz automatycznie niech bedzie 6+1 czyli 7 i dodaje tyle co na poprzedniej jako podpowiedzi od razu wypełnione w oknie czyli tu pierwsz to 7 a mamy 6 aktów w tym 7 nr  czyli ostatnia to 12. brakuje tez do wyboru ze to typ aktu chrzest
+
+---
+
+_**Agent (model copilot/grok-code-fast-1)**_
+
+<tool-use data-tool-type="read" data-tool-name="copilot_readFile">
+<details>
+<summary>Tool use: **copilot_readFile** • Czytanie [](file:///j%3A/projekt%202025/projekt-akta-v2/public/viewer-osd-v7.html#1000-1000), wiersze 1000 do 1010</summary>
+
+
+Odczytaj [](file:///j%3A/projekt%202025/projekt-akta-v2/public/viewer-osd-v7.html#1000-1000), wiersze 1000 do 1010
+
+</details>
+</tool-use>
+
+---
+
+<tool-use data-tool-type="search" data-tool-name="copilot_findTextInFiles">
+<details>
+<summary>Tool use: **copilot_findTextInFiles** • Wyszukiwanie tekstu `advancedActModal` (`**/public/viewer-osd-v7.html`)</summary>
+
+
+No results found
+</details>
+</tool-use>
+
+---
+
+<tool-use data-tool-type="read" data-tool-name="copilot_readFile">
+<details>
+<summary>Tool use: **copilot_readFile** • Czytanie [](file:///j%3A/projekt%202025/projekt-akta-v2/public/viewer-osd-v7.html#2208-2208), wiersze 2208 do 2300</summary>
+
+
+Odczytaj [](file:///j%3A/projekt%202025/projekt-akta-v2/public/viewer-osd-v7.html#2208-2208), wiersze 2208 do 2300
+
+</details>
+</tool-use>
+
+---
+
+<tool-use data-tool-type="read" data-tool-name="copilot_readFile">
+<details>
+<summary>Tool use: **copilot_readFile** • Czytanie [](file:///j%3A/projekt%202025/projekt-akta-v2/public/viewer-osd-v7.html#954-954), wiersze 954 do 1000</summary>
+
+
+Odczytaj [](file:///j%3A/projekt%202025/projekt-akta-v2/public/viewer-osd-v7.html#954-954), wiersze 954 do 1000
+
+</details>
+</tool-use>
 
 ---
 
