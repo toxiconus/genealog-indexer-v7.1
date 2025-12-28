@@ -841,10 +841,18 @@
                 </div>
             </div>
             
+            <!-- Pliki i obrazy -->
+            <button class="toolbar-btn" onclick="addImages()" title="Dodaj obrazy (Ctrl+O)">
+                <i class="fas fa-folder-open"></i> Otwórz
+            </button>
+            
             <button class="toolbar-btn" onclick="sortImages()" title="Sortuj obrazy po nazwie">
                 <i class="fas fa-sort-alpha-down"></i> Sort
             </button>
             
+            <div class="toolbar-sep"></div>
+            
+            <!-- Narzędzia edycji -->
             <button class="toolbar-btn" id="roiBtn" onclick="toggleROI()" title="ROI (Ctrl+R)">
                 <i class="fas fa-crop-alt"></i> ROI
             </button>
@@ -857,12 +865,14 @@
                 <i class="fas fa-file-alt"></i> Akt
             </button>
             
+            <!-- Przetwarzanie -->
             <button class="toolbar-btn" onclick="togglePostprocessPanel()" title="Postprocessing - kontrast, jasność, wyostrzenie">
                 <i class="fas fa-sliders-h"></i> Postprocess
             </button>
             
             <div class="toolbar-sep"></div>
             
+            <!-- Widok -->
             <button class="toolbar-btn" onclick="zoomReset()" title="Dopasuj widok">
                 <i class="fas fa-expand-arrows-alt"></i> Fit
             </button>
@@ -873,6 +883,7 @@
             
             <div class="toolbar-sep"></div>
             
+            <!-- Dane -->
             <button class="toolbar-btn" onclick="exportData('simple')" title="Eksport">
                 <i class="fas fa-download"></i> Export
             </button>
@@ -888,6 +899,7 @@
             
             <div class="toolbar-sep"></div>
             
+            <!-- Interfejs -->
             <button class="toolbar-btn" onclick="toggleFloatingForm()" title="Pokaż pełny formularz aktu (Enter)">
                 <i class="fas fa-edit"></i> Formularz
             </button>
