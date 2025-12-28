@@ -587,6 +587,36 @@
             background: rgba(50, 50, 70, 0.8);
             border: 1px solid #555;
         }
+        /* Modal "Ile aktów?" - przezroczysty, bez blokady i rozmycia */
+        #actCountModal {
+            background: rgba(0, 0, 0, 0.1) !important;     /* Bardzo delikatne przyciemnienie zamiast 0.5 */
+            backdrop-filter: none !important;             /* Wyłącz blur/rozmycie pod spodem */
+            -webkit-backdrop-filter: none !important;
+            pointer-events: none !important;               /* Modal nie blokuje kliknięć/scrolla pod spodem */
+            z-index: 1000;
+        }
+
+        /* Ale sam box z pytaniem niech reaguje na kliknięcia */
+        #actCountModal > div {
+            pointer-events: auto !important;               /* Input i przyciski nadal klikalne */
+            background: rgba(20, 20, 30, 0.95) !important; /* Ciemne, lekko przezroczyste */
+            border: 1px solid #0078d4;
+            box-shadow: 0 8px 32px rgba(0, 120, 212, 0.3);
+        }
+
+        /* Delikatne przyciemnienie tylko pod boxem (opcjonalne, ładniejsze) */
+        #actCountModal::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 360px;
+            height: 240px;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 12px;
+            pointer-events: none;
+        }
         .ocr-btn {
             background: none;
             border: none;
@@ -993,6 +1023,7 @@
         
         <!-- Toggle Acts Panel Button -->
         <button id="toggleActsPanel" style="position:fixed; top:10px; right:10px; z-index:9999; background: rgba(0,0,0,0.8); color: white; border: 1px solid #555; padding: 8px 12px; border-radius: 4px; cursor: pointer;">Ukryj karty</button>
+        <button id="toggleActModal" style="position:fixed; top:50px; right:10px; z-index:9999; background:rgba(0,0,0,0.8); color:white; border:1px solid #555; padding:8px 12px; border-radius:4px;">Ukryj modal aktów</button>
         
         <!-- Postprocessing Panel -->
         <div class="postprocess-panel" id="postprocessPanel">
@@ -1871,6 +1902,12 @@
             if (panel) {
                 panel.style.display = panel.style.display === 'none' ? 'flex' : 'none';
             }
+        });
+        
+        // Toggle act modal
+        document.getElementById('toggleActModal')?.addEventListener('click', () => {
+            const modal = document.getElementById('actCountModal');
+            if (modal) modal.style.display = modal.style.display === 'none' ? 'flex' : 'none';
         });
         
         function saveRecord() {
