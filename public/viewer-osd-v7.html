@@ -573,6 +573,20 @@
             color: #ff6b6b;
             background: rgba(255,107,107,0.15);
         }
+        /* Panel z kartami aktów - przezroczysty i przesuwalny */
+        #actsContainer {
+            background: rgba(30, 30, 40, 0.6) !important;
+            backdrop-filter: none !important;
+            -webkit-backdrop-filter: none !important;
+            pointer-events: none !important;
+            transition: all 0.3s ease;
+        }
+        /* Ale same karty niech reagują na kliknięcia i hover */
+        .act-card {
+            pointer-events: auto !important;
+            background: rgba(50, 50, 70, 0.8);
+            border: 1px solid #555;
+        }
         .ocr-btn {
             background: none;
             border: none;
@@ -976,6 +990,9 @@
             </div>
         </div>
         <div class="thumbnails-bar" id="thumbsBar"></div>
+        
+        <!-- Toggle Acts Panel Button -->
+        <button id="toggleActsPanel" style="position:fixed; top:10px; right:10px; z-index:9999; background: rgba(0,0,0,0.8); color: white; border: 1px solid #555; padding: 8px 12px; border-radius: 4px; cursor: pointer;">Ukryj karty</button>
         
         <!-- Postprocessing Panel -->
         <div class="postprocess-panel" id="postprocessPanel">
@@ -1848,6 +1865,14 @@
             });
         }
         
+        // Toggle acts panel
+        document.getElementById('toggleActsPanel').addEventListener('click', () => {
+            const panel = document.getElementById('actsContainer');
+            if (panel) {
+                panel.style.display = panel.style.display === 'none' ? 'flex' : 'none';
+            }
+        });
+        
         function saveRecord() {
             if (app.currentActNum === null) {
                 notify('Zaznacz akt do zapisania', 'error');
@@ -1956,7 +1981,7 @@
         function renderActButtons() {
             const sidebar = document.getElementById('recordsSidebar');
 
-            const oldButtons = document.getElementById('actsButtonsContainer');
+            const oldButtons = document.getElementById('actsContainer');
             if (oldButtons) oldButtons.remove();
 
             const acts = app.imageActs
@@ -1966,30 +1991,39 @@
             if (acts.length === 0) return;
 
             const container = document.createElement('div');
-            container.id = 'actsButtonsContainer';
+            container.id = 'actsContainer';
             container.style.cssText = `
+                position: absolute;
+                top: 10px;
+                right: 10px;
                 display: flex;
                 flex-wrap: wrap;
                 gap: 8px;
                 padding: 12px;
-                border-bottom: 1px solid #2a2a2a;
-                justify-content: center;
+                background: rgba(30, 30, 40, 0.6);
+                backdrop-filter: none;
+                -webkit-backdrop-filter: none;
+                pointer-events: none;
+                border-radius: 8px;
+                z-index: 50;
+                transition: all 0.3s ease;
             `;
 
             acts.forEach(act => {
                 const btn = document.createElement('button');
+                btn.className = 'act-card';
                 btn.textContent = `📄 Akt ${act.actNum}`;
                 btn.style.cssText = `
-                    width: 100%;
                     padding: 12px 8px;
                     margin-bottom: 8px;
-                    background: #0f0f0f;
-                    border: 2px solid #2a2a2a;
+                    background: rgba(50, 50, 70, 0.8);
+                    border: 1px solid #555;
                     border-radius: 8px;
                     color: #ddd;
                     font-size: 12px;
                     font-weight: 600;
                     cursor: pointer;
+                    pointer-events: auto;
                     transition: all 0.2s ease;
                     box-shadow: 0 2px 8px rgba(0,0,0,0.3);
                 `;
@@ -1998,12 +2032,12 @@
                     btn.style.boxShadow = '0 4px 12px rgba(0,120,212,0.3)';
                 };
                 btn.onmouseout = () => {
-                    btn.style.borderColor = act.actNum === app.currentActNum ? '#10b981' : '#2a2a2a';
+                    btn.style.borderColor = act.actNum === app.currentActNum ? '#10b981' : '#555';
                     btn.style.boxShadow = act.actNum === app.currentActNum ? '0 4px 12px rgba(16,185,129,0.3)' : '0 2px 8px rgba(0,0,0,0.3)';
                 };
                 if (act.actNum === app.currentActNum) {
                     btn.style.borderColor = '#10b981';
-                    btn.style.background = '#0a1a0a';
+                    btn.style.background = 'rgba(16, 185, 129, 0.8)';
                     btn.style.boxShadow = '0 4px 12px rgba(16,185,129,0.3)';
                 }
                 btn.onclick = () => selectAct(act.actNum);
@@ -2011,8 +2045,8 @@
             });
 
             const addBtn = document.createElement('button');
+            addBtn.className = 'act-card toolbar-btn';
             addBtn.innerHTML = '<i class="fas fa-plus"></i>';
-            addBtn.className = 'toolbar-btn';
             addBtn.title = 'Dodaj nowy akt';
             addBtn.onclick = () => {
                 const nextNum = acts.length + 1;
@@ -2030,7 +2064,8 @@
             };
             container.appendChild(addBtn);
 
-            sidebar.insertBefore(container, sidebar.firstChild);
+            const viewerContainer = document.getElementById('viewerContainer');
+            viewerContainer.appendChild(container);
         }
 
         function getCurrentAct() {
