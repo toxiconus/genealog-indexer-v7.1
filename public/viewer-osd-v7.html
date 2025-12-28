@@ -841,12 +841,16 @@
                 </div>
             </div>
             
-            <button class="toolbar-btn" onclick="addImages()" title="Dodaj obrazy (Ctrl+O)">
-                <i class="fas fa-folder-open"></i> Otwórz
+            <button class="toolbar-btn" onclick="sortImages()" title="Sortuj obrazy po nazwie">
+                <i class="fas fa-sort-alpha-down"></i> Sort
             </button>
             
             <button class="toolbar-btn" id="roiBtn" onclick="toggleROI()" title="ROI (Ctrl+R)">
                 <i class="fas fa-crop-alt"></i> ROI
+            </button>
+            
+            <button class="toolbar-btn" onclick="clearAllROIs()" title="Usuń wszystkie ROI z bieżącego skanu">
+                <i class="fas fa-trash-alt"></i> Clear ROI
             </button>
             
             <button class="toolbar-btn" id="actBtn" onclick="toggleActMode()" title="Akt (Ctrl+A)">
@@ -2294,6 +2298,28 @@
             if (app.updateCanvasInteraction) app.updateCanvasInteraction();
         }
 
+        function clearAllROIs() {
+            const acts = app.imageActs.filter(act => act.imageIdx === app.currentImageIdx);
+            acts.forEach(act => {
+                act.fieldROIs = {}; // Czyści ROI per-pole
+                act.actROI = null; // Czyści główny ROI aktu
+            });
+            redrawROIs(); // Odśwież overlaye
+            saveStorage(); // Zapisz zmiany
+            notify('Wszystkie ROI usunięte z bieżącego skanu', 'success');
+        }
+
+        function sortImages() {
+            app.images.sort(naturalSort);
+            updateThumbs();
+            // Zachowaj wybór bieżącego obrazu jeśli to możliwe
+            const currentImageName = app.images[app.currentImageIdx]?.name;
+            const newIndex = app.images.findIndex(img => img.name === currentImageName);
+            app.currentImageIdx = newIndex >= 0 ? newIndex : 0;
+            selectImage(app.currentImageIdx);
+            notify('Obrazy posortowane po nazwie', 'success');
+        }
+
         function zoomToAct(actROI) {
             if (!actROI) return;
             const item = app.viewer.world.getItemAt(0);
@@ -2348,14 +2374,20 @@
                         data: e.target.result
                     });
                     loaded++;
-                    updateThumbs();
-                    if (app.images.length === 1) selectImage(0);
                     if (loaded === imageFiles.length) {
-                        notify(`Wczytano ${imageFiles.length} obraz(y)`, 'success');
+                        // Autosort po nazwie po wczytaniu wszystkich plików
+                        app.images.sort(naturalSort);
+                        updateThumbs();
+                        selectImage(0); // Wybierz pierwszy (posortowany)
+                        notify(`Wczytano ${imageFiles.length} obraz(y) (posortowane)`, 'success');
                     }
                 };
                 reader.readAsDataURL(file);
             });
+        }
+
+        function naturalSort(a, b) {
+            return a.name.localeCompare(b.name, undefined, {numeric: true, sensitivity: 'base'});
         }
 
         function updateThumbs() {
