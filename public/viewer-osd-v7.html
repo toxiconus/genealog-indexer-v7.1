@@ -1142,6 +1142,8 @@
             roiStartX: 0,
             roiStartY: 0,
             roiOverlays: [],
+            overlayMap: new Map(),
+            needsFullRedraw: true,
             wizardActive: false,
             wizardCurrentFieldIdx: 0,
             wizardFields: [],
@@ -1365,6 +1367,7 @@
             newContainer.addEventListener('focusin', (e) => {
                 if (e.target.classList.contains('field-input')) {
                     app.activeField = e.target;
+                    app.needsFullRedraw = false;
                     redrawROIs();
                     updateFieldStatus();  // 🟢 Update colors when field gets focus
                     updateProgressBar();  // ⭐ Update progress on focus change
@@ -1776,8 +1779,11 @@
             const item = viewer.world.getItemAt(0);
             if (!item) return;
             
-            app.roiOverlays.forEach(overlay => viewer.removeOverlay(overlay));
-            app.roiOverlays = [];
+            if (app.needsFullRedraw) {
+                app.roiOverlays.forEach(overlay => viewer.removeOverlay(overlay));
+                app.roiOverlays = [];
+                app.overlayMap.clear();
+            }
             
             const size = item.getContentSize();
             const currentActs = app.imageActs.filter(a => a.imageIdx === app.currentImageIdx);
@@ -1785,47 +1791,68 @@
             currentActs.forEach(act => {
                 if (!act.actROI) return;
                 
+                const key = `act_${act.actNum}`;
                 const imgRect = new OpenSeadragon.Rect(
                     act.actROI.x * size.x, act.actROI.y * size.y,
                     act.actROI.w * size.x, act.actROI.h * size.y
                 );
                 const viewportRect = viewer.viewport.imageToViewportRectangle(imgRect);
                 
-                const div = document.createElement('div');
-                div.className = 'act-overlay';
-                div.style.border = '3px solid #10b981';
-                const label = document.createElement('div');
-                label.textContent = `Akt ${act.actNum}`;
-                label.style.cssText = 'color: white; font-size: 12px; font-weight: bold; padding: 6px; background: rgba(16,185,129,0.8);';
-                div.appendChild(label);
-                
-                viewer.addOverlay({ element: div, location: viewportRect });
-                app.roiOverlays.push(div);
+                let div = app.overlayMap.get(key);
+                if (!div || app.needsFullRedraw) {
+                    div = document.createElement('div');
+                    div.className = 'act-overlay';
+                    div.style.border = '3px solid #10b981';
+                    const label = document.createElement('div');
+                    label.textContent = `Akt ${act.actNum}`;
+                    label.style.cssText = 'color: white; font-size: 12px; font-weight: bold; padding: 6px; background: rgba(16,185,129,0.8);';
+                    div.appendChild(label);
+                    
+                    viewer.addOverlay({ element: div, location: viewportRect });
+                    app.roiOverlays.push(div);
+                    app.overlayMap.set(key, div);
+                } else {
+                    viewer.removeOverlay(div);
+                    viewer.addOverlay({ element: div, location: viewportRect });
+                }
             });
             
             currentActs.forEach(act => {
                 if (!act.fieldROIs) return;
                 Object.entries(act.fieldROIs).forEach(([fieldId, roi]) => {
+                    const key = `field_${act.actNum}_${fieldId}`;
                     const imgRect = new OpenSeadragon.Rect(
                         roi.x * size.x, roi.y * size.y,
                         roi.w * size.x, roi.h * size.y
                     );
                     const viewportRect = viewer.viewport.imageToViewportRectangle(imgRect);
                     
-                    const div = document.createElement('div');
-                    div.className = 'roi-overlay';
+                    let div = app.overlayMap.get(key);
+                    if (!div || app.needsFullRedraw) {
+                        div = document.createElement('div');
+                        div.className = 'roi-overlay';
+                        const label = document.createElement('div');
+                        label.textContent = fieldId.substring(0, 15);
+                        label.style.cssText = 'color: white; font-size: 11px; padding: 4px; background: rgba(0,0,0,0.6);';
+                        div.appendChild(label);
+                        
+                        viewer.addOverlay({ element: div, location: viewportRect });
+                        app.roiOverlays.push(div);
+                        app.overlayMap.set(key, div);
+                    } else {
+                        viewer.removeOverlay(div);
+                        viewer.addOverlay({ element: div, location: viewportRect });
+                    }
+                    
+                    // Zawsze aktualizuj klasy
+                    div.classList.remove('active');
                     if (act.actNum === app.currentActNum && app.activeField?.dataset.field === fieldId) {
                         div.classList.add('active');
                     }
-                    const label = document.createElement('div');
-                    label.textContent = fieldId.substring(0, 15);
-                    label.style.cssText = 'color: white; font-size: 11px; padding: 4px; background: rgba(0,0,0,0.6);';
-                    div.appendChild(label);
-                    
-                    viewer.addOverlay({ element: div, location: viewportRect });
-                    app.roiOverlays.push(div);
                 });
             });
+            
+            app.needsFullRedraw = true; // Reset flagi
         }
         
         function setupEvents() {
@@ -2099,7 +2126,11 @@ Output ONLY the ID string, nothing else.`;
             acts.forEach(act => {
                 const btn = document.createElement('button');
                 btn.className = 'act-card';
-                btn.innerHTML = `📄 Akt ${act.actNum}<br><span style="font-size: 0.8em; color: #888;">${act.id || 'Brak ID'}</span>`;
+                const idSpan = document.createElement('span');
+                idSpan.textContent = act.id || 'Brak ID';
+                idSpan.style.cssText = 'font-size: 0.8em; color: #888; display: none;';
+                btn.innerHTML = `📄 Akt ${act.actNum}<br>`;
+                btn.appendChild(idSpan);
                 btn.style.cssText = `
                     padding: 12px 8px;
                     margin-bottom: 8px;
@@ -2117,17 +2148,24 @@ Output ONLY the ID string, nothing else.`;
                 btn.onmouseover = () => {
                     btn.style.borderColor = '#0078d4';
                     btn.style.boxShadow = '0 4px 12px rgba(0,120,212,0.3)';
+                    idSpan.style.display = 'block';
                 };
                 btn.onmouseout = () => {
                     btn.style.borderColor = act.actNum === app.currentActNum ? '#10b981' : '#555';
                     btn.style.boxShadow = act.actNum === app.currentActNum ? '0 4px 12px rgba(16,185,129,0.3)' : '0 2px 8px rgba(0,0,0,0.3)';
+                    if (act.actNum !== app.currentActNum) idSpan.style.display = 'none';
                 };
                 if (act.actNum === app.currentActNum) {
                     btn.style.borderColor = '#10b981';
                     btn.style.background = 'rgba(16, 185, 129, 0.8)';
                     btn.style.boxShadow = '0 4px 12px rgba(16,185,129,0.3)';
+                    idSpan.style.display = 'block';
                 }
                 btn.onclick = () => selectAct(act.actNum);
+                btn.oncontextmenu = (e) => {
+                    e.preventDefault();
+                    showActContextMenu(act.actNum, e);
+                };
                 container.appendChild(btn);
             });
 
@@ -2163,6 +2201,141 @@ Output ONLY the ID string, nothing else.`;
 
             const viewerContainer = document.getElementById('viewerContainer');
             viewerContainer.appendChild(container);
+        }
+
+        function showActContextMenu(actNum, event) {
+            // Usuń istniejące menu
+            const existingMenu = document.getElementById('actContextMenu');
+            if (existingMenu) existingMenu.remove();
+
+            const menu = document.createElement('div');
+            menu.id = 'actContextMenu';
+            menu.style.cssText = `
+                position: absolute;
+                top: ${event.clientY}px;
+                left: ${event.clientX}px;
+                background: #1a1a1a;
+                border: 1px solid #333;
+                border-radius: 4px;
+                padding: 4px 0;
+                z-index: 1000;
+                box-shadow: 0 4px 12px rgba(0,0,0,0.5);
+                min-width: 150px;
+            `;
+
+            const options = [
+                { label: 'Usuń akt', action: () => deleteAct(actNum) },
+                { label: 'Zmień nazwę aktu', action: () => renameAct(actNum) },
+                { label: 'Kopiuj akt', action: () => copyAct(actNum) },
+                { label: 'Usuń wszystkie akty', action: () => deleteAllActs() }
+            ];
+
+            options.forEach(opt => {
+                const item = document.createElement('div');
+                item.textContent = opt.label;
+                item.style.cssText = `
+                    padding: 8px 12px;
+                    cursor: pointer;
+                    color: #ddd;
+                    font-size: 12px;
+                    transition: background 0.15s;
+                `;
+                item.onmouseover = () => item.style.background = '#333';
+                item.onmouseout = () => item.style.background = 'transparent';
+                item.onclick = () => {
+                    opt.action();
+                    menu.remove();
+                };
+                menu.appendChild(item);
+            });
+
+            document.body.appendChild(menu);
+
+            // Zamknij menu przy kliknięciu poza
+            const closeMenu = (e) => {
+                if (!menu.contains(e.target)) {
+                    menu.remove();
+                    document.removeEventListener('click', closeMenu);
+                }
+            };
+            setTimeout(() => document.addEventListener('click', closeMenu), 10);
+        }
+
+        function deleteAct(actNum) {
+            if (!confirm(`Czy na pewno usunąć akt ${actNum}? Tej operacji nie można cofnąć.`)) {
+                return;
+            }
+
+            app.imageActs = app.imageActs.filter(a => 
+                !(a.imageIdx === app.currentImageIdx && a.actNum === actNum)
+            );
+
+            const remainingActs = app.imageActs
+                .filter(a => a.imageIdx === app.currentImageIdx)
+                .sort((a, b) => a.actNum - b.actNum);
+
+            remainingActs.forEach((act, idx) => {
+                act.actNum = idx + 1;
+            });
+
+            if (app.currentActNum === actNum) {
+                app.currentActNum = null;
+                clearForm();
+            }
+            renderActButtons();
+            redrawROIs();
+            updateRecordCounter();
+            saveStorage();
+            notify('Akt usunięty', 'success');
+        }
+
+        function renameAct(actNum) {
+            const act = app.imageActs.find(a => a.imageIdx === app.currentImageIdx && a.actNum === actNum);
+            if (!act) return;
+
+            const newId = prompt('Wprowadź nową nazwę/ID aktu:', act.id || '');
+            if (newId && newId !== act.id) {
+                act.id = newId;
+                renderActButtons();
+                saveStorage();
+                notify('Nazwa aktu zmieniona', 'success');
+            }
+        }
+
+        function copyAct(actNum) {
+            const sourceAct = app.imageActs.find(a => a.imageIdx === app.currentImageIdx && a.actNum === actNum);
+            if (!sourceAct) return;
+
+            const nextNum = Math.max(...app.imageActs.filter(a => a.imageIdx === app.currentImageIdx).map(a => a.actNum)) + 1;
+            const newAct = {
+                imageIdx: app.currentImageIdx,
+                actNum: nextNum,
+                fieldValues: JSON.parse(JSON.stringify(sourceAct.fieldValues)),
+                fieldROIs: JSON.parse(JSON.stringify(sourceAct.fieldROIs || {})),
+                actROI: sourceAct.actROI ? JSON.parse(JSON.stringify(sourceAct.actROI)) : null,
+                timestamp: new Date().toISOString(),
+                id: sourceAct.id + ' (kopia)'
+            };
+
+            app.imageActs.push(newAct);
+            saveStorage();
+            selectAct(nextNum);
+            notify('Akt skopiowany', 'success');
+        }
+
+        function deleteAllActs() {
+            if (!confirm('Czy na pewno usunąć WSZYSTKIE akty z tego obrazu? Tej operacji nie można cofnąć.')) {
+                return;
+            }
+
+            app.imageActs = app.imageActs.filter(a => a.imageIdx !== app.currentImageIdx);
+            app.currentActNum = null;
+            clearForm();
+            renderActButtons();
+            redrawROIs();
+            updateRecordCounter();
+            saveStorage();
+            notify('Wszystkie akty usunięte', 'success');
         }
 
         function getCurrentAct() {
