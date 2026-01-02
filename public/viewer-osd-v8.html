@@ -1996,6 +1996,16 @@
                 app.roiOverlays.forEach(overlay => viewer.removeOverlay(overlay));
                 app.roiOverlays = [];
                 app.overlayMap.clear();
+                
+                // Usuwamy wszelkie pozostałe overlay aktu z DOM
+                document.querySelectorAll('.act-overlay').forEach(el => {
+                    try {
+                        viewer.removeOverlay(el);
+                    } catch (e) {
+                        // Overlay może być już usunięty
+                    }
+                    el.remove();
+                });
             }
             
             const size = item.getContentSize();
@@ -2352,118 +2362,106 @@ Output ONLY the ID string, nothing else.`;
         }
 
         function renderActButtons() {
-            const sidebar = document.getElementById('recordsSidebar');
-
+            // Całość funkcjonalności przeniesiona do panelu aktów (renderActsList)
+            // Ta funkcja pozostawiona dla kompatybilności, ale nic nie robi
             const oldButtons = document.getElementById('actsContainer');
             if (oldButtons) oldButtons.remove();
-
-            const acts = app.imageActs
-                .filter(a => a.imageIdx === app.currentImageIdx)
-                .sort((a, b) => a.actNum - b.actNum);
-
-            if (acts.length === 0) return;
-
-            const container = document.createElement('div');
-            container.id = 'actsContainer';
-            container.style.cssText = `
-                position: absolute;
-                top: 10px;
-                right: 10px;
-                display: flex;
-                flex-wrap: wrap;
-                gap: 8px;
-                padding: 12px;
-                background: rgba(30, 30, 40, 0.6);
-                backdrop-filter: none;
-                -webkit-backdrop-filter: none;
-                pointer-events: none;
-                border-radius: 8px;
-                z-index: 50;
-                transition: all 0.3s ease;
-            `;
-
-            acts.forEach(act => {
-                const btn = document.createElement('button');
-                btn.className = 'act-card';
-                const idSpan = document.createElement('span');
-                idSpan.textContent = act.id || 'Brak ID';
-                idSpan.style.cssText = 'font-size: 0.8em; color: #888; display: none;';
-                btn.innerHTML = `📄 Akt ${act.actNum}<br>`;
-                btn.appendChild(idSpan);
-                btn.style.cssText = `
-                    padding: 12px 8px;
-                    margin-bottom: 8px;
-                    background: rgba(50, 50, 70, 0.8);
-                    border: 1px solid #555;
-                    border-radius: 8px;
-                    color: #ddd;
-                    font-size: 12px;
-                    font-weight: 600;
-                    cursor: pointer;
-                    pointer-events: auto;
-                    transition: all 0.2s ease;
-                    box-shadow: 0 2px 8px rgba(0,0,0,0.3);
-                `;
-                btn.onmouseover = () => {
-                    btn.style.borderColor = '#0078d4';
-                    btn.style.boxShadow = '0 4px 12px rgba(0,120,212,0.3)';
-                    idSpan.style.display = 'block';
-                };
-                btn.onmouseout = () => {
-                    btn.style.borderColor = act.actNum === app.currentActNum ? '#10b981' : '#555';
-                    btn.style.boxShadow = act.actNum === app.currentActNum ? '0 4px 12px rgba(16,185,129,0.3)' : '0 2px 8px rgba(0,0,0,0.3)';
-                    if (act.actNum !== app.currentActNum) idSpan.style.display = 'none';
-                };
-                if (act.actNum === app.currentActNum) {
-                    btn.style.borderColor = '#10b981';
-                    btn.style.background = 'rgba(16, 185, 129, 0.8)';
-                    btn.style.boxShadow = '0 4px 12px rgba(16,185,129,0.3)';
-                    idSpan.style.display = 'block';
-                }
-                btn.onclick = () => selectAct(act.actNum);
-                btn.oncontextmenu = (e) => {
-                    e.preventDefault();
-                    showActContextMenu(act.actNum, e);
-                };
-                container.appendChild(btn);
-            });
-
-            const addBtn = document.createElement('button');
-            addBtn.className = 'act-card toolbar-btn';
-            addBtn.innerHTML = '<i class="fas fa-plus"></i>';
-            addBtn.title = 'Dodaj nowy akt';
-            addBtn.onclick = async () => {
-                const nextNum = acts.length + 1;
-                const newAct = {
-                    imageIdx: app.currentImageIdx,
-                    actNum: nextNum,
-                    fieldValues: {},
-                    fieldROIs: {},
-                    actROI: null,
-                    timestamp: new Date().toISOString()
-                };
-                // Generate ID
-                const actData = {
-                    typ: 'urodzenia', // Default
-                    woj: 'LUB',
-                    parafia: 'BLIN',
-                    data_zgl: '1900-01-01',
-                    nr_aktu: nextNum,
-                    is_copy: false
-                };
-                newAct.id = await autoGenerateID(actData);
-                app.imageActs.push(newAct);
-                saveStorage();
-                renderActsList(); // Update acts panel after adding new act
-                selectAct(nextNum);
-            };
-            container.appendChild(addBtn);
-
-            const viewerContainer = document.getElementById('viewerContainer');
-            viewerContainer.appendChild(container);
         }
 
-        function showActContextMenu(actNum, event) {
+        function showActContextMenuPanel(actNum, event, btnElement) {
+            // Usuń istniejące menu
+            const existingMenu = document.getElementById('actContextMenu');
+            if (existingMenu) existingMenu.remove();
+
+            const menu = document.createElement('div');
+            menu.id = 'actContextMenu';
+            
+            // Pozycja przy przycisku
+            const rect = btnElement.getBoundingClientRect();
+            menu.style.cssText = `
+                position: fixed;
+                top: ${rect.bottom + 5}px;
+                left: ${rect.left}px;
+                background: #1a1a1a;
+                border: 1px solid #333;
+                border-radius: 4px;
+                padding: 4px 0;
+                z-index: 1000;
+                box-shadow: 0 4px 12px rgba(0,0,0,0.5);
+                min-width: 150px;
+            `;
+
+            const options = [
+                { label: 'Zmień nazwę', action: () => editActName(actNum) },
+                { label: 'Usuń akt', action: () => deleteCurrentRecord() }
+            ];
+
+            options.forEach(opt => {
+                const item = document.createElement('div');
+                item.textContent = opt.label;
+                item.style.cssText = `
+                    padding: 8px 12px;
+                    cursor: pointer;
+                    color: #ddd;
+                    font-size: 12px;
+                    transition: background 0.15s;
+                `;
+                item.onmouseover = () => item.style.background = '#333';
+                item.onmouseout = () => item.style.background = 'transparent';
+                item.onclick = () => {
+                    opt.action();
+                    menu.remove();
+                };
+                menu.appendChild(item);
+            });
+
+            document.body.appendChild(menu);
+
+            // Zamknij menu przy kliknięciu poza
+            const closeMenu = (e) => {
+                if (!menu.contains(e.target) && e.target !== btnElement) {
+                    menu.remove();
+                    document.removeEventListener('click', closeMenu);
+                }
+            };
+            setTimeout(() => document.addEventListener('click', closeMenu), 10);
+        }
+
+        function editActName(actNum) {
+            const act = app.imageActs.find(a => a.actNum === actNum && a.imageIdx === app.currentImageIdx);
+            if (!act) return;
+            
+            const currentName = formatActDisplayName(act);
+            const newName = prompt('Zmień nazwę aktu:\n(format: TYP.ROK.N͞o.NR np. CH.1908.N͞o.60)', currentName);
+            
+            if (newName && newName.trim()) {
+                // Jeśli to jest pełny ID w formacie CH.LUB.BLIN.1908.05.00060.00
+                if (newName.includes('.') && newName.split('.').length >= 6) {
+                    act.id = newName;
+                } else {
+                    // Jeśli to tylko skrócona nazwa, zastąp ostatnie części ID
+                    const parts = act.id.split('.');
+                    if (parts.length >= 6) {
+                        // Parse nowej nazwy
+                        const newParts = newName.split('.');
+                        if (newParts.length >= 3) {
+                            // CH.1908.N͞o.60 -> CH.LUB.BLIN.1908.05.00060.00
+                            const typ = newParts[0];
+                            const rok = newParts[1];
+                            const nr = newParts[newParts.length - 1].padStart(5, '0');
+                            parts[0] = typ;
+                            parts[3] = rok;
+                            parts[5] = nr;
+                            act.id = parts.join('.');
+                        }
+                    }
+                }
+                saveStorage();
+                renderActsList();
+                notify('✅ Nazwa aktu zmieniona', 'success');
+            }
+        }
+        
             // Usuń istniejące menu
             const existingMenu = document.getElementById('actContextMenu');
             if (existingMenu) existingMenu.remove();
@@ -2522,99 +2520,6 @@ Output ONLY the ID string, nothing else.`;
                 }
             };
             setTimeout(() => document.addEventListener('click', closeMenu), 10);
-        }
-
-        function deleteAct(actNum) {
-            if (!confirm(`Czy na pewno usunąć akt ${actNum}? Tej operacji nie można cofnąć.`)) {
-                return;
-            }
-
-            app.imageActs = app.imageActs.filter(a => 
-                !(a.imageIdx === app.currentImageIdx && a.actNum === actNum)
-            );
-
-            const remainingActs = app.imageActs
-                .filter(a => a.imageIdx === app.currentImageIdx)
-                .sort((a, b) => a.actNum - b.actNum);
-
-            remainingActs.forEach((act, idx) => {
-                act.actNum = idx + 1;
-            });
-
-            if (app.currentActNum === actNum) {
-                app.currentActNum = null;
-                clearForm();
-            }
-            renderActButtons();
-            redrawROIs();
-            updateRecordCounter();
-            saveStorage();
-            notify('Akt usunięty', 'success');
-        }
-
-        function renameAct(actNum) {
-            const act = app.imageActs.find(a => a.imageIdx === app.currentImageIdx && a.actNum === actNum);
-            if (!act) return;
-
-            const newId = prompt('Wprowadź nową nazwę/ID aktu:', act.id || '');
-            if (newId && newId !== act.id) {
-                act.id = newId;
-                renderActButtons();
-                saveStorage();
-                notify('Nazwa aktu zmieniona', 'success');
-            }
-        }
-
-        function copyAct(actNum) {
-            const sourceAct = app.imageActs.find(a => a.imageIdx === app.currentImageIdx && a.actNum === actNum);
-            if (!sourceAct) return;
-
-            const nextNum = Math.max(...app.imageActs.filter(a => a.imageIdx === app.currentImageIdx).map(a => a.actNum)) + 1;
-            const newAct = {
-                imageIdx: app.currentImageIdx,
-                actNum: nextNum,
-                fieldValues: JSON.parse(JSON.stringify(sourceAct.fieldValues)),
-                fieldROIs: JSON.parse(JSON.stringify(sourceAct.fieldROIs || {})),
-                actROI: sourceAct.actROI ? JSON.parse(JSON.stringify(sourceAct.actROI)) : null,
-                timestamp: new Date().toISOString(),
-                id: sourceAct.id + ' (kopia)'
-            };
-
-            app.imageActs.push(newAct);
-            saveStorage();
-            selectAct(nextNum);
-            notify('Akt skopiowany', 'success');
-        }
-
-        function deleteAllActs() {
-            if (!confirm('Czy na pewno usunąć WSZYSTKIE akty z tego obrazu? Tej operacji nie można cofnąć.')) {
-                return;
-            }
-
-            app.imageActs = app.imageActs.filter(a => a.imageIdx !== app.currentImageIdx);
-            app.currentActNum = null;
-            clearForm();
-            renderActButtons();
-            redrawROIs();
-            updateRecordCounter();
-            saveStorage();
-            notify('Wszystkie akty usunięte', 'success');
-        }
-
-        function deleteAllActsAllImages() {
-            if (!confirm('⚠️ UWAGA! Czy na pewno usunąć WSZYSTKIE akty ze WSZYSTKICH ' + app.images.length + ' wczytanych obrazów?\n\nTej operacji nie można cofnąć!\n\nAkta zostaną usunięte z lokalnego storage, ale pozostają w Firestore (jeśli zarejestrowałeś).')) {
-                return;
-            }
-
-            const deletedCount = app.imageActs.length;
-            app.imageActs = [];
-            app.currentActNum = null;
-            clearForm();
-            renderActButtons();
-            redrawROIs();
-            updateRecordCounter();
-            saveStorage();
-            notify(`✅ Usunięto ${deletedCount} aktów ze wszystkich obrazów (LOCAL ONLY)`, 'success');
         }
 
         function getCurrentAct() {
@@ -2786,7 +2691,7 @@ Output ONLY the ID string, nothing else.`;
                 app.imageActs.push(...newActs);
 
                 saveStorage();
-                renderActButtons();
+                renderActsList();
                 selectAct(1);
                 updateRecordCounter();
                 notify(`Utworzono ${count} aktów`, 'success');
@@ -2846,7 +2751,7 @@ Output ONLY the ID string, nothing else.`;
                 app.imageActs.push(...copiedActs);
 
                 saveStorage();
-                renderActButtons();
+                renderActsList();
                 selectAct(1);
                 updateRecordCounter();
                 notify(`Skopiowano ${prevActs.length} aktów z poprzedniej strony`, 'success');
@@ -3824,6 +3729,8 @@ Output ONLY the ID string, nothing else.`;
             actsList.innerHTML = '';
             const currentImageActs = app.imageActs.filter(a => a.imageIdx === app.currentImageIdx);
             
+            console.log('🎯 renderActsList: rendering', currentImageActs.length, 'acts');
+            
             currentImageActs.forEach(act => {
                 const btn = document.createElement('button');
                 btn.className = 'act-button' + (app.currentActNum === act.actNum ? ' active' : '');
@@ -3835,7 +3742,15 @@ Output ONLY the ID string, nothing else.`;
                 // Show full ID on hover or when active
                 btn.title = act.id || `Akt ${act.actNum}`;
                 
+                // Lewy klik - wybierz akt
                 btn.onclick = () => selectAct(act.actNum);
+                
+                // Prawy klik - kontekstowe menu
+                btn.oncontextmenu = (e) => {
+                    e.preventDefault();
+                    showActContextMenuPanel(act.actNum, e, btn);
+                };
+                
                 actsList.appendChild(btn);
             });
         }
