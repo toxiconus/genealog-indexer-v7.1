@@ -2462,64 +2462,6 @@ Output ONLY the ID string, nothing else.`;
             }
         }
         
-            // Usuń istniejące menu
-            const existingMenu = document.getElementById('actContextMenu');
-            if (existingMenu) existingMenu.remove();
-
-            const menu = document.createElement('div');
-            menu.id = 'actContextMenu';
-            menu.style.cssText = `
-                position: absolute;
-                top: ${event.clientY}px;
-                left: ${event.clientX}px;
-                background: #1a1a1a;
-                border: 1px solid #333;
-                border-radius: 4px;
-                padding: 4px 0;
-                z-index: 1000;
-                box-shadow: 0 4px 12px rgba(0,0,0,0.5);
-                min-width: 150px;
-            `;
-
-            const options = [
-                { label: 'Usuń akt', action: () => deleteAct(actNum) },
-                { label: 'Zmień nazwę aktu', action: () => renameAct(actNum) },
-                { label: 'Kopiuj akt', action: () => copyAct(actNum) },
-                { label: 'Usuń wszystkie akty', action: () => deleteAllActs() },
-                { label: '🗑️ Usuń wszystkie ze WSZYSTKICH obrazów', action: () => deleteAllActsAllImages(), separator: true }
-            ];
-
-            options.forEach(opt => {
-                const item = document.createElement('div');
-                item.textContent = opt.label;
-                item.style.cssText = `
-                    padding: 8px 12px;
-                    cursor: pointer;
-                    color: ${opt.separator ? '#ff6b6b' : '#ddd'};
-                    font-size: 12px;
-                    font-weight: ${opt.separator ? '600' : 'normal'};
-                    transition: background 0.15s;
-                    ${opt.separator ? 'border-top: 1px solid #333; margin-top: 4px; padding-top: 12px;' : ''}
-                `;
-                item.onmouseover = () => item.style.background = opt.separator ? '#2a1a1a' : '#333';
-                item.onmouseout = () => item.style.background = 'transparent';
-                item.onclick = () => {
-                    opt.action();
-                    menu.remove();
-                };
-                menu.appendChild(item);
-            });
-
-            document.body.appendChild(menu);
-
-            // Zamknij menu przy kliknięciu poza
-            const closeMenu = (e) => {
-                if (!menu.contains(e.target)) {
-                    menu.remove();
-                    document.removeEventListener('click', closeMenu);
-                }
-            };
-            setTimeout(() => document.addEventListener('click', closeMenu), 10);
         }
 
         function getCurrentAct() {
