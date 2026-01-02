@@ -990,7 +990,7 @@
                 <i class="fas fa-images"></i> Thumb
             </button>
             
-            <button class="toolbar-btn" onclick="toggleActsPanel()" title="Akty (Ctrl+L)">
+            <button class="toolbar-btn" title="Akty (Ctrl+L)">
                 <i class="fas fa-list"></i> Acts
             </button>
             
@@ -1073,9 +1073,9 @@
             <div class="thumbnails-bar" id="thumbsBar"></div>
             
             <div class="acts-panel" id="actsPanel">
-                <div style="font-size: 11px; font-weight: bold; color: #0078d4; padding: 4px 0; border-bottom: 1px solid #2a2a2a; margin-bottom: 4px;">📑 AKTY</div>
+                <div style="font-size: 11px; font-weight: bold; color: #0078d4; padding: 4px 0; border-bottom: 1px solid #2a2a2a; margin-bottom: 4px;">AKTY</div>
                 <div id="actsList" style="display: flex; flex-direction: column; gap: 4px; flex: 1;"></div>
-                <button class="toolbar-btn" onclick="toggleActsPanel()" title="Ukryj/Pokaż panel aktów" style="width: 100%; margin-top: 4px; padding: 4px;">
+                <button class="toolbar-btn" title="Ukryj/Pokaż panel aktów" style="width: 100%; margin-top: 4px; padding: 4px;">
                     <i class="fas fa-times"></i>
                 </button>
             </div>
@@ -1977,36 +1977,37 @@
             }
             
             const size = item.getContentSize();
-            const currentActs = app.imageActs.filter(a => a.imageIdx === app.currentImageIdx);
-            
-            currentActs.forEach(act => {
-                if (!act.actROI) return;
-                
-                const key = `act_${act.actNum}`;
-                const imgRect = new OpenSeadragon.Rect(
-                    act.actROI.x * size.x, act.actROI.y * size.y,
-                    act.actROI.w * size.x, act.actROI.h * size.y
-                );
-                const viewportRect = viewer.viewport.imageToViewportRectangle(imgRect);
-                
-                let div = app.overlayMap.get(key);
-                if (!div || app.needsFullRedraw) {
-                    div = document.createElement('div');
-                    div.className = 'act-overlay';
-                    div.style.border = '3px solid #10b981';
-                    const label = document.createElement('div');
-                    label.textContent = `Akt ${act.actNum}`;
-                    label.style.cssText = 'color: white; font-size: 12px; font-weight: bold; padding: 6px; background: rgba(16,185,129,0.8);';
-                    div.appendChild(label);
-                    
-                    viewer.addOverlay({ element: div, location: viewportRect });
-                    app.roiOverlays.push(div);
-                    app.overlayMap.set(key, div);
-                } else {
-                    viewer.removeOverlay(div);
-                    viewer.addOverlay({ element: div, location: viewportRect });
-                }
-            });
+            // Skip act overlays - moved to acts panel
+            // const currentActs = app.imageActs.filter(a => a.imageIdx === app.currentImageIdx);
+            //
+            // currentActs.forEach(act => {
+            //     if (!act.actROI) return;
+            //
+            //     const key = `act_${act.actNum}`;
+            //     const imgRect = new OpenSeadragon.Rect(
+            //         act.actROI.x * size.x, act.actROI.y * size.y,
+            //         act.actROI.w * size.x, act.actROI.h * size.y
+            //     );
+            //     const viewportRect = viewer.viewport.imageToViewportRectangle(imgRect);
+            //
+            //     let div = app.overlayMap.get(key);
+            //     if (!div || app.needsFullRedraw) {
+            //         div = document.createElement('div');
+            //         div.className = 'act-overlay';
+            //         div.style.border = '3px solid #10b981';
+            //         const label = document.createElement('div');
+            //         label.textContent = `Akt ${act.actNum}`;
+            //         label.style.cssText = 'color: white; font-size: 12px; font-weight: bold; padding: 6px; background: rgba(16,185,129,0.8);';
+            //         div.appendChild(label);
+            //
+            //         viewer.addOverlay({ element: div, location: viewportRect });
+            //         app.roiOverlays.push(div);
+            //         app.overlayMap.set(key, div);
+            //     } else {
+            //         viewer.removeOverlay(div);
+            //         viewer.addOverlay({ element: div, location: viewportRect });
+            //     }
+            // });
             
             currentActs.forEach(act => {
                 if (!act.fieldROIs) return;
@@ -2073,6 +2074,16 @@
             const postprocessBtn = document.querySelector('button[title*="Postprocessing"]');
             if (postprocessBtn) postprocessBtn.addEventListener('click', togglePostprocessPanel);
             
+            const actsBtn = document.querySelector('button[title*="Akty"]');
+            if (actsBtn) actsBtn.addEventListener('click', toggleActsPanel);
+            
+            // Close button in acts panel
+            const actsPanel = document.getElementById('actsPanel');
+            if (actsPanel) {
+                const closeBtn = actsPanel.querySelector('button[title*="Ukryj"]');
+                if (closeBtn) closeBtn.addEventListener('click', toggleActsPanel);
+            }
+            
             document.addEventListener('keydown', (e) => {
                 // ⭐ Arrow keys to navigate between acts
                 if (e.key === 'ArrowLeft' || e.key === 'ArrowRight') {
@@ -2138,14 +2149,6 @@
                 }
             });
         }
-        
-        // Toggle acts panel
-        document.getElementById('toggleActsPanel').addEventListener('click', () => {
-            const panel = document.getElementById('actsContainer');
-            if (panel) {
-                panel.style.display = panel.style.display === 'none' ? 'flex' : 'none';
-            }
-        });
         
         function saveRecord() {
             if (app.currentActNum === null) {
@@ -2395,6 +2398,7 @@ Output ONLY the ID string, nothing else.`;
                 newAct.id = await autoGenerateID(actData);
                 app.imageActs.push(newAct);
                 saveStorage();
+                renderActsList(); // Update acts panel after adding new act
                 selectAct(nextNum);
             };
             container.appendChild(addBtn);
@@ -2935,6 +2939,7 @@ Output ONLY the ID string, nothing else.`;
 
             updateThumbs();
             updateImageCounter();
+            renderActsList(); // Update acts panel when image changes
 
             const actsOnImage = app.imageActs.filter(a => a.imageIdx === idx);
 
@@ -3739,6 +3744,23 @@ Output ONLY the ID string, nothing else.`;
             actsPanel.classList.toggle('collapsed');
         }
         
+        function formatActDisplayName(act) {
+            // Parse ID like "CH.LUB.BLIN.1908.05.00060.00" to "CH.1908.N͞o.01"
+            if (!act.id) return `Akt ${act.actNum}`;
+            
+            const parts = act.id.split('.');
+            console.log('🎯 Parsing act ID:', act.id, 'parts:', parts);
+            if (parts.length >= 6) {
+                const typ = parts[0]; // CH, UR, MZ, ZG
+                const rok = parts[3]; // 1908
+                const nr = parts[5].replace(/^0+/, '') || '1'; // Remove leading zeros, default to 1
+                const formatted = `${typ}.${rok}.N͞o.${nr.padStart(2, '0')}`;
+                console.log('🎯 Formatted display name:', formatted);
+                return formatted;
+            }
+            return `Akt ${act.actNum}`;
+        }
+        
         function renderActsList() {
             const actsList = document.getElementById('actsList');
             if (!actsList) return;
@@ -3749,9 +3771,15 @@ Output ONLY the ID string, nothing else.`;
             currentImageActs.forEach(act => {
                 const btn = document.createElement('button');
                 btn.className = 'act-button' + (app.currentActNum === act.actNum ? ' active' : '');
-                btn.textContent = `Akt ${act.actNum}`;
+                
+                // Main display name
+                const displayName = formatActDisplayName(act);
+                btn.textContent = displayName;
+                
+                // Show full ID on hover or when active
+                btn.title = act.id || `Akt ${act.actNum}`;
+                
                 btn.onclick = () => selectAct(act.actNum);
-                btn.title = `Akt ${act.actNum}`;
                 actsList.appendChild(btn);
             });
         }
