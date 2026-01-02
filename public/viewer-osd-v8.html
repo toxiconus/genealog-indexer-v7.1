@@ -968,22 +968,22 @@
             <div class="toolbar-sep"></div>
             
             <!-- 1. FILE OPERATIONS -->
-            <button class="toolbar-btn" title="Dodaj obrazy (Ctrl+O)">
+            <button class="toolbar-btn" id="openBtn" title="Dodaj obrazy (Ctrl+O)">
                 <i class="fas fa-folder-open"></i> Otwórz
             </button>
             
-            <button class="toolbar-btn" onclick="sortImages()" title="Sortuj obrazy po nazwie">
+            <button class="toolbar-btn" id="sortBtn" title="Sortuj obrazy po nazwie">
                 <i class="fas fa-sort-alpha-down"></i> Sort
             </button>
             
             <div class="toolbar-sep"></div>
             
             <!-- 2. EDITING TOOLS -->
-            <button class="toolbar-btn" id="roiBtn" onclick="toggleROI()" title="Zaznacz ROI pól (Ctrl+R)">
+            <button class="toolbar-btn" id="roiBtn" title="Zaznacz ROI pól (Ctrl+R)">
                 <i class="fas fa-crop-alt"></i> ROI
             </button>
             
-            <button class="toolbar-btn" id="actBtn" onclick="toggleActMode()" title="Zaznacz granicę aktu (Ctrl+A)">
+            <button class="toolbar-btn" id="actBtn" title="Zaznacz granicę aktu (Ctrl+A)">
                 <i class="fas fa-file-alt"></i> Akt
             </button>
             
@@ -1038,6 +1038,10 @@
             <button class="toolbar-btn" onclick="exportFromLocalStorageToFirestore()" title="Migruj dane z localStorage do Firestore">
                 <i class="fas fa-cloud-upload-alt"></i> Migruj do Firebase
             </button>
+
+            <button class="toolbar-btn" id="clearStorageBtn" title="Wyczyść całe localStorage" style="color: #e74c3c;">
+                <i class="fas fa-trash-alt"></i> Wyczyść
+            </button>
             
             <div class="toolbar-sep"></div>
             
@@ -1076,7 +1080,6 @@
                 </label><br>
                 <label>Nr pierwszego aktu: <input id="modalFirstNr" type="number" value="1"></label><br>
                 <label>Nr ostatniego aktu: <input id="modalLastNr" type="number" value="10"></label><br>
-                <label><input id="modalContinuation" type="checkbox"> Kontynuacja poprzedniej strony</label><br>
                 <label><input id="modalIncomplete" type="checkbox"> Ostatni akt niepełny</label><br>
                 <label><input id="modalPlusIndex" type="checkbox"> Dodaj pole indeksu</label><br>
                 <button id="modalOK">OK</button>
@@ -2083,6 +2086,7 @@
         }
         
         function setupEvents() {
+            console.log('⚙️ setupEvents starting...');
             document.getElementById('fileInput').addEventListener('change', (e) => {
                 handleFiles(e.target.files);
             });
@@ -2103,7 +2107,9 @@
             }
             
             // Toolbar button listeners (safe after DOM loaded)
-            const addImagesBtn = document.querySelector('button[title*="Dodaj obrazy"]');
+            // Find by text content "Otwórz"
+            let addImagesBtn = document.getElementById('openBtn');
+            console.log('🔍 addImagesBtn found:', !!addImagesBtn, addImagesBtn?.title);
             if (addImagesBtn) addImagesBtn.addEventListener('click', addImages);
             
             const postprocessBtn = document.querySelector('button[title*="Postprocessing"]');
@@ -2111,6 +2117,27 @@
             
             const actsBtn = document.querySelector('button[title*="Akty"]');
             if (actsBtn) actsBtn.addEventListener('click', toggleActsPanel);
+            
+            // Inne przyciski toolbar
+            const sortBtn = document.getElementById('sortBtn');
+            if (sortBtn) sortBtn.addEventListener('click', sortImages);
+            
+            const roiBtn = document.getElementById('roiBtn');
+            if (roiBtn) roiBtn.addEventListener('click', toggleROI);
+            
+            const actBtn = document.getElementById('actBtn');
+            if (actBtn) actBtn.addEventListener('click', toggleActMode);
+            
+            const clearStorageBtn = document.getElementById('clearStorageBtn');
+            if (clearStorageBtn) {
+                clearStorageBtn.addEventListener('click', () => {
+                    if (confirm('⚠️ Wyczyść CAŁE localStorage? Wszystkie dane będą usunięte.')) {
+                        localStorage.clear();
+                        notify('✅ localStorage wyczyszczony. Odśwież stronę.', 'success');
+                        setTimeout(() => location.reload(), 1500);
+                    }
+                });
+            }
             
             // Close button in acts panel
             const actsPanel = document.getElementById('actsPanel');
@@ -2322,30 +2349,47 @@
         }
 
         async function autoGenerateID(actData) {
-            const prompt = `You are an expert in generating unique IDs for genealogical records based on Polish metrical books. Follow this strict schema for ID: TYP.WOJ.PARAFIA.ROK.MIES.NR.SUF
-
-TYP: 2 letters from input (CH=chrzest, UR=urodzenie, MZ=małżeństwo, ZG=zgon, IN=indeks)
-WOJ: 3 letters province code (e.g., LUB=lubelskie)
-PARAFIA: 4-6 uppercase letters (e.g., BLIN)
-ROK: 4 digits year from registration date (zgłoszenia)
-MIES: 2 digits month from registration date (00 if unknown)
-NR: 5 digits padded with zeros - act number from book (00000 if no numbering)
-SUF: always 2 digits - 00 default; 01-09 for variants/copies/duplicates (e.g., twins or copies)
-
-Input is JSON with act data. Generate ID automatically. If copy/duplicate, increment SUF (e.g., from 00 to 01). If no act number, use 00000. Use registration date priority.
-Example input: { "typ": "chrzest", "woj": "lubelskie", "parafia": "Blindów", "data_zgl": "1908-05-15", "nr_aktu": 60, "is_copy": false }
-Output: CH.LUB.BLIN.1908.05.00060.00
-Example input: { "typ": "urodzenie", "woj": "mazowieckie", "parafia": "Warszawa", "data_zgl": "1920", "nr_aktu": 0, "is_copy": true }
-Output: UR.MAZ.WARS.1920.00.00000.01
-Input: ${JSON.stringify(actData)}
-Output ONLY the ID string, nothing else.`;
-
-            // TODO: Replace with actual API call
-            // For now, simulate with a mock
-            console.log('Prompt for LLM:', prompt);
-            // Mock response
-            const mockID = 'CH.LUB.BLIN.1908.05.00060.00'; // Replace with actual fetch
-            return mockID;
+            // Generuj ID w formacie: TYP.WOJ.PARAFIA.ROK.MIES.NR.SUF
+            const typeMap = {
+                'chrzest': 'CH',
+                'urodzenie': 'UR',
+                'małżeństwo': 'MZ',
+                'zgon': 'ZG',
+                'indeks': 'IN'
+            };
+            
+            const wójMap = {
+                'LUB': 'LUB',
+                'MAZ': 'MAZ',
+                'WAR': 'WAR',
+                'KUJ': 'KUJ',
+                'POD': 'POD',
+                'MAL': 'MAL',
+                'SLA': 'SLA',
+                'POM': 'POM',
+                'GDA': 'GDA'
+            };
+            
+            const typ = typeMap[actData.typ] || 'UR';
+            const woj = wójMap[actData.woj] || actData.woj.substring(0, 3).toUpperCase();
+            const parafia = (actData.parafia || 'NEZNANE').substring(0, 6).toUpperCase();
+            
+            // Parse rok i miesiąc z data_zgl (format: YYYY-MM-DD)
+            // Miesiąc tylko jeśli podany, inaczej 00
+            let rok = '1900';
+            let mies = '00';
+            if (actData.data_zgl) {
+                const parts = actData.data_zgl.split('-');
+                rok = parts[0] || '1900';
+                mies = (parts[1] && parts[1] !== '00') ? parts[1] : '00';
+            }
+            
+            const nr = String(actData.nr_aktu || 0).padStart(5, '0');
+            const suf = actData.is_copy ? '01' : '00';
+            
+            const id = `${typ}.${woj}.${parafia}.${rok}.${mies}.${nr}.${suf}`;
+            console.log('📝 Generated ID:', id, 'from:', actData);
+            return id;
 
             /*
             const response = await fetch('https://api.x.ai/v1/chat/completions', {
@@ -2461,8 +2505,6 @@ Output ONLY the ID string, nothing else.`;
                 notify('✅ Nazwa aktu zmieniona', 'success');
             }
         }
-        
-        }
 
         function getCurrentAct() {
             if (app.currentActNum === null) return null;
@@ -2561,22 +2603,22 @@ Output ONLY the ID string, nothing else.`;
             const modal = document.getElementById('advancedActModal');
             if (!modal) return;
 
-            // Ładuj pamiętane wartości z localStorage (z poprzedniej strony)
+            // Ładuj pamiętane wartości z localStorage
             const prevData = JSON.parse(localStorage.getItem('lastActSettings')) || {};
             document.getElementById('modalYear').value = prevData.year || new Date().getFullYear() - 100;
             document.getElementById('modalParish').value = prevData.parish || 'Brak';
             document.getElementById('modalWoj').value = prevData.woj || 'LUB';
             document.getElementById('modalType').value = prevData.type || 'urodzenia';
             
-            const prevActs = app.imageActs.filter(a => a.imageIdx === app.currentImageIdx - 1).sort((a,b) => (a.nr || 0) - (b.nr || 0)) || []; // Poprzednia strona, sortowane po nr
+            // Szukaj ostatniego aktu z POPRZEDNIEGO obrazu
+            const prevActs = app.imageActs.filter(a => a.imageIdx === app.currentImageIdx - 1).sort((a,b) => (a.nr || 0) - (b.nr || 0)) || [];
             const lastPrevNr = prevActs.length > 0 ? prevActs[prevActs.length - 1].nr || 0 : 0;
             const hasPrev = prevActs.length > 0;
             const defaultFirst = hasPrev ? lastPrevNr + 1 : 1;
-            const defaultLast = defaultFirst + (prevActs.length || 10) - 1; // + tyle co poprzednio
+            const defaultLast = defaultFirst + (prevActs.length || 10) - 1;
 
             document.getElementById('modalFirstNr').value = defaultFirst;
             document.getElementById('modalLastNr').value = defaultLast;
-            document.getElementById('modalContinuation').checked = !!prevData.continuation;
             document.getElementById('modalIncomplete').checked = !!prevData.incomplete;
             document.getElementById('modalPlusIndex').checked = !!prevData.plusIndex;
 
@@ -2590,7 +2632,6 @@ Output ONLY the ID string, nothing else.`;
                     type: document.getElementById('modalType').value,
                     firstNr: parseInt(document.getElementById('modalFirstNr').value),
                     lastNr: parseInt(document.getElementById('modalLastNr').value),
-                    continuation: document.getElementById('modalContinuation').checked,
                     incomplete: document.getElementById('modalIncomplete').checked,
                     plusIndex: document.getElementById('modalPlusIndex').checked
                 };
@@ -2623,7 +2664,7 @@ Output ONLY the ID string, nothing else.`;
                         typ: act.type,
                         woj: act.woj,
                         parafia: act.parish,
-                        data_zgl: `${act.year}-01-01`,
+                        data_zgl: `${act.year}-00-01`,
                         nr_aktu: act.nr,
                         is_copy: false
                     };
@@ -2641,39 +2682,46 @@ Output ONLY the ID string, nothing else.`;
             };
 
             document.getElementById('modalCopyPrev').onclick = async () => {
-                if (prevActs.length === 0) {
+                // Przelicz aktów z poprzedniego obrazu - mogły się zmienić!
+                console.log('📋 copyPrev: currentImageIdx =', app.currentImageIdx, 'looking for imageIdx =', app.currentImageIdx - 1);
+                const freshPrevActs = app.imageActs.filter(a => a.imageIdx === app.currentImageIdx - 1).sort((a,b) => (a.nr || 0) - (b.nr || 0)) || [];
+                console.log('📋 Found freshPrevActs:', freshPrevActs.length, 'acts with nr:', freshPrevActs.map(a => a.nr));
+                if (freshPrevActs.length === 0) {
                     notify('Brak aktów na poprzedniej stronie', 'error');
                     return;
                 }
+                const freshLastPrevNr = freshPrevActs.length > 0 ? freshPrevActs[freshPrevActs.length - 1].nr || 0 : 0;
+                console.log('📋 lastPrevNr =', freshLastPrevNr);
+                
                 const data = {
                     year: parseInt(document.getElementById('modalYear').value),
                     parish: document.getElementById('modalParish').value,
                     woj: document.getElementById('modalWoj').value,
                     type: document.getElementById('modalType').value,
-                    continuation: document.getElementById('modalContinuation').checked,
                     incomplete: document.getElementById('modalIncomplete').checked,
                     plusIndex: document.getElementById('modalPlusIndex').checked
                 };
+                console.log('📋 copyPrev: kopiowanie poprzedniej strony');
                 localStorage.setItem('lastActSettings', JSON.stringify(data));
 
-                let currentNr = data.continuation ? lastPrevNr + 1 : 1;
+                const lastPrevAct = freshPrevActs[freshPrevActs.length - 1]; // Bierz dane TYLKO z ostatniego aktu
                 const copiedActs = [];
-                prevActs.forEach((prevAct, index) => {
+                freshPrevActs.forEach((prevAct, index) => {
                     const act = {
                         imageIdx: app.currentImageIdx,
                         actNum: index + 1,
-                        nr: currentNr + index,
+                        nr: prevAct.nr, // KOPIUJ dokładny nr z poprzedniej strony!
                         year: data.year,
                         parish: data.parish,
                         woj: data.woj,
                         type: data.type,
-                        fieldValues: JSON.parse(JSON.stringify(prevAct.fieldValues)), // Deep copy
-                        fieldROIs: JSON.parse(JSON.stringify(prevAct.fieldROIs)), // Deep copy
-                        actROI: prevAct.actROI ? JSON.parse(JSON.stringify(prevAct.actROI)) : null,
+                        fieldValues: JSON.parse(JSON.stringify(lastPrevAct.fieldValues)), // Dane TYLKO z ostatniego aktu!
+                        fieldROIs: JSON.parse(JSON.stringify(lastPrevAct.fieldROIs)), // ROI TYLKO z ostatniego aktu!
+                        actROI: lastPrevAct.actROI ? JSON.parse(JSON.stringify(lastPrevAct.actROI)) : null,
                         timestamp: new Date().toISOString()
                     };
-                    if (data.plusIndex) act.index = prevAct.index || '';
-                    if (index === prevActs.length - 1 && data.incomplete) act.incomplete = true;
+                    if (data.plusIndex) act.index = lastPrevAct.index || '';
+                    if (index === freshPrevActs.length - 1 && data.incomplete) act.incomplete = true;
                     copiedActs.push(act);
                 });
 
@@ -2683,7 +2731,7 @@ Output ONLY the ID string, nothing else.`;
                         typ: act.type,
                         woj: act.woj,
                         parafia: act.parish,
-                        data_zgl: `${act.year}-01-01`,
+                        data_zgl: `${act.year}-00-01`,
                         nr_aktu: act.nr,
                         is_copy: false
                     };
@@ -2696,7 +2744,7 @@ Output ONLY the ID string, nothing else.`;
                 renderActsList();
                 selectAct(1);
                 updateRecordCounter();
-                notify(`Skopiowano ${prevActs.length} aktów z poprzedniej strony`, 'success');
+                notify(`Skopiowano ${freshPrevActs.length} aktów z poprzedniej strony`, 'success');
                 modal.style.display = 'none';
             };
 
@@ -2947,7 +2995,7 @@ Output ONLY the ID string, nothing else.`;
         }
 
         function addImages() {
-            console.log('📁 addImages called');
+            console.log('📁 addImages clicked');
             document.getElementById('fileInput').click();
         }
 
@@ -3649,7 +3697,11 @@ Output ONLY the ID string, nothing else.`;
         
         function formatActDisplayName(act) {
             // Parse ID like "CH.LUB.BLIN.1908.05.00060.00" to "CH.1908.N͞o.01"
-            if (!act.id) return `Akt ${act.actNum}`;
+            console.log('🎯 formatActDisplayName:', { actNum: act.actNum, id: act.id, imageIdx: act.imageIdx });
+            if (!act.id) {
+                console.warn('❌ No ID for act', act.actNum, '- using fallback');
+                return `Akt ${act.actNum}`;
+            }
             
             const parts = act.id.split('.');
             console.log('🎯 Parsing act ID:', act.id, 'parts:', parts);
@@ -3661,6 +3713,7 @@ Output ONLY the ID string, nothing else.`;
                 console.log('🎯 Formatted display name:', formatted);
                 return formatted;
             }
+            console.warn('❌ Invalid ID format:', act.id, 'parts.length:', parts.length);
             return `Akt ${act.actNum}`;
         }
         
