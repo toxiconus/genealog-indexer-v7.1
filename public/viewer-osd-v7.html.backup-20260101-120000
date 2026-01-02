@@ -6,34 +6,7 @@
     <title>Genealog Indexer v7.1 - Zaawansowany Indekser Akt z OCR</title>
     <script src="https://openseadragon.github.io/openseadragon/openseadragon.min.js"></script>
     <script src="https://unpkg.com/tesseract.js@5.1.0/dist/tesseract.min.js"></script>
-    <!-- Firebase SDK -->
-    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
-    <script>
-        // Firebase configuration - ZASTĄP SWOIMI KLUCZAMI Z KONSOLI FIREBASE
-        const firebaseConfig = {
-            apiKey: "YOUR_API_KEY",
-            authDomain: "YOUR_PROJECT_ID.firebaseapp.com",
-            projectId: "YOUR_PROJECT_ID",
-            storageBucket: "YOUR_PROJECT_ID.appspot.com",
-            messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
-            appId: "YOUR_APP_ID"
-        };
-
-        // Initialize Firebase
-        firebase.initializeApp(firebaseConfig);
-        const db = firebase.firestore();
-        const auth = firebase.auth();
-
-        // Make db and auth available globally
-        window.db = db;
-        window.auth = auth;
-        
-        // Dispatch custom event when Firebase is ready
-        window.dispatchEvent(new Event('firebaseReady'));
-    </script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" integrity="sha512-QWW8KnkLA+k76+1F7kzIlQaY9w+D8tIPc7mojjkIrn2mstAlsJ7JiUUE+txlEjNEVvfS3+cTt03r5SNsND7Dcw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <style>
         * {
             margin: 0;
@@ -107,13 +80,9 @@
         }
         .main-content {
             flex: 1;
-            display: grid;
-            grid-template-columns: 100px 140px 1fr 300px;
+            display: flex;
             gap: 0;
             overflow: hidden;
-        }
-        .main-content.thumbs-collapsed {
-            grid-template-columns: 0px 140px 1fr 300px;
         }
         .viewer-panel {
             flex: 1;
@@ -121,7 +90,6 @@
             position: relative;
             display: flex;
             flex-direction: column;
-            grid-column: 3;
         }
         .viewer-container {
             flex: 1;
@@ -216,57 +184,16 @@
             pointer-events: none;
         }
         .right-panel {
+            width: 340px;
             background: linear-gradient(180deg, #1a1a1a 0%, #151515 100%);
             border-left: 1px solid #2a2a2a;
             display: flex;
             flex-direction: column;
             overflow: hidden;
-            grid-column: 4;
-            min-width: 300px;
         }
         .right-panel.collapsed {
-            min-width: 0;
+            width: 0;
             border: none;
-        }
-        .acts-panel {
-            background: #0f0f0f;
-            border-right: 1px solid #2a2a2a;
-            display: flex;
-            flex-direction: column;
-            padding: 8px;
-            gap: 8px;
-            overflow-y: auto;
-            min-width: 140px;
-            grid-column: 2;
-        }
-        .acts-panel.collapsed {
-            min-width: 0;
-            padding: 0;
-            border: none;
-            overflow: hidden;
-        }
-        .act-button {
-            padding: 8px;
-            background: #1a1a1a;
-            border: 1px solid #2a2a2a;
-            color: #ddd;
-            border-radius: 4px;
-            cursor: pointer;
-            font-size: 11px;
-            white-space: nowrap;
-            text-overflow: ellipsis;
-            overflow: hidden;
-            transition: all 0.2s ease;
-        }
-        .act-button:hover {
-            background: #252525;
-            border-color: #0078d4;
-        }
-        .act-button.active {
-            background: #0078d4;
-            border-color: #0078d4;
-            color: white;
-            font-weight: bold;
         }
         .panel-content {
             flex: 1;
@@ -433,18 +360,17 @@
             background: #a02318;
         }
         .thumbnails-bar {
+            height: 100px;
             background: #0f0f0f;
-            border-right: 1px solid #2a2a2a;
+            border-top: 1px solid #2a2a2a;
             display: flex;
-            flex-direction: column;
             align-items: center;
             padding: 8px;
             gap: 8px;
-            overflow-y: auto;
-            min-width: 100px;
+            overflow-x: auto;
         }
         .thumbnails-bar.collapsed {
-            min-width: 0;
+            height: 0;
             padding: 0;
             border: none;
             overflow: hidden;
@@ -491,8 +417,8 @@
             }
         }
         .thumbnail {
-            width: 100px;
-            height: 75px;
+            width: 84px;
+            height: 84px;
             border: 2px solid #333;
             border-radius: 4px;
             cursor: pointer;
@@ -500,7 +426,6 @@
             background: #1a1a1a;
             flex-shrink: 0;
             transition: all 0.2s ease;
-            margin-bottom: 4px;
         }
         .thumbnail img {
             width: 100%;
@@ -936,7 +861,7 @@
 <body>
     <div id="app">
         <div class="toolbar">
-            <span class="toolbar-title"><i class="fas fa-book"></i> Genealog Indexer v7.1</span>
+            <span class="toolbar-title"><i class="fas fa-book"></i> Genealog Indexer v7.1 - Akt Mode</span>
             <span id="imageCounter" style="margin-left: 20px; color: #999; font-size: 13px;"></span>
             
             <!-- ⭐ P0: Progress Bar -->
@@ -950,9 +875,7 @@
                 </div>
             </div>
             
-            <div class="toolbar-sep"></div>
-            
-            <!-- 1. FILE OPERATIONS -->
+            <!-- Pliki i obrazy -->
             <button class="toolbar-btn" onclick="addImages()" title="Dodaj obrazy (Ctrl+O)">
                 <i class="fas fa-folder-open"></i> Otwórz
             </button>
@@ -963,40 +886,27 @@
             
             <div class="toolbar-sep"></div>
             
-            <!-- 2. EDITING TOOLS -->
-            <button class="toolbar-btn" id="roiBtn" onclick="toggleROI()" title="Zaznacz ROI pól (Ctrl+R)">
+            <!-- Narzędzia edycji -->
+            <button class="toolbar-btn" id="roiBtn" onclick="toggleROI()" title="ROI (Ctrl+R)">
                 <i class="fas fa-crop-alt"></i> ROI
             </button>
             
-            <button class="toolbar-btn" id="actBtn" onclick="toggleActMode()" title="Zaznacz granicę aktu (Ctrl+A)">
+            <button class="toolbar-btn" onclick="clearAllROIs()" title="Usuń wszystkie ROI z bieżącego skanu">
+                <i class="fas fa-trash-alt"></i> Clear ROI
+            </button>
+            
+            <button class="toolbar-btn" id="actBtn" onclick="toggleActMode()" title="Akt (Ctrl+A)">
                 <i class="fas fa-file-alt"></i> Akt
             </button>
             
-            <button class="toolbar-btn" onclick="clearAllROIs()" title="Usuń wszystkie ROI">
-                <i class="fas fa-trash-alt"></i> Clear
+            <!-- Przetwarzanie -->
+            <button class="toolbar-btn" onclick="togglePostprocessPanel()" title="Postprocessing - kontrast, jasność, wyostrzenie">
+                <i class="fas fa-sliders-h"></i> Postprocess
             </button>
             
             <div class="toolbar-sep"></div>
             
-            <!-- 3. IMAGE PROCESSING -->
-            <button class="toolbar-btn" onclick="togglePostprocessPanel()" title="Postprocessing">
-                <i class="fas fa-sliders-h"></i> Proces
-            </button>
-            
-            <div class="toolbar-sep"></div>
-            
-            <!-- 4. PANELS -->
-            <button class="toolbar-btn" onclick="toggleThumbsPanel()" title="Miniatury (Ctrl+M)">
-                <i class="fas fa-images"></i> Thumb
-            </button>
-            
-            <button class="toolbar-btn" onclick="toggleActsPanel()" title="Akty (Ctrl+L)">
-                <i class="fas fa-list"></i> Acts
-            </button>
-            
-            <div class="toolbar-sep"></div>
-            
-            <!-- 5. VIEW -->
+            <!-- Widok -->
             <button class="toolbar-btn" onclick="zoomReset()" title="Dopasuj widok">
                 <i class="fas fa-expand-arrows-alt"></i> Fit
             </button>
@@ -1007,21 +917,18 @@
             
             <div class="toolbar-sep"></div>
             
-            <!-- 6. EXPORT/IMPORT -->
+            <!-- Dane -->
             <button class="toolbar-btn" onclick="exportData('simple')" title="Eksport">
                 <i class="fas fa-download"></i> Export
             </button>
             
             <button class="toolbar-btn" onclick="importCSV()" title="Import CSV">
-                <i class="fas fa-upload"></i> CSV
+                <i class="fas fa-upload"></i> Import
             </button>
             
+            <!-- TASK #3: JSON Import Button -->
             <button class="toolbar-btn" onclick="importJSON()" title="Import JSON (Ctrl+J)">
                 <i class="fas fa-file-import"></i> JSON
-            </button>
-            
-            <button class="toolbar-btn" onclick="exportFromLocalStorageToFirestore()" title="Migruj dane z localStorage do Firestore">
-                <i class="fas fa-cloud-upload-alt"></i> Migruj do Firebase
             </button>
             
             <div class="toolbar-sep"></div>
@@ -1070,16 +977,7 @@
             </div>
         </div>
         <div class="main-content">
-            <div class="thumbnails-bar" id="thumbsBar"></div>
-            
-            <div class="acts-panel" id="actsPanel">
-                <div style="font-size: 11px; font-weight: bold; color: #0078d4; padding: 4px 0; border-bottom: 1px solid #2a2a2a; margin-bottom: 4px;">📑 AKTY</div>
-                <div id="actsList" style="display: flex; flex-direction: column; gap: 4px; flex: 1;"></div>
-                <button class="toolbar-btn" onclick="toggleActsPanel()" title="Ukryj/Pokaż panel aktów" style="width: 100%; margin-top: 4px; padding: 4px;">
-                    <i class="fas fa-times"></i>
-                </button>
-            </div>
-            
+            <div class="records-sidebar" id="recordsSidebar"></div>
             <div class="viewer-panel">
                 <div class="viewer-container" id="viewerContainer">
                     <div id="viewer"></div>
@@ -1127,6 +1025,9 @@
             </div>
         </div>
         <div class="thumbnails-bar" id="thumbsBar"></div>
+        
+        <!-- Toggle Acts Panel Button -->
+        <button id="toggleActsPanel" style="position:fixed; top:10px; right:10px; z-index:9999; background: rgba(0,0,0,0.8); color: white; border: 1px solid #555; padding: 8px 12px; border-radius: 4px; cursor: pointer;">Ukryj karty</button>
         
         <!-- Postprocessing Panel -->
         <div class="postprocess-panel" id="postprocessPanel">
@@ -1241,30 +1142,14 @@
             roiStartX: 0,
             roiStartY: 0,
             roiOverlays: [],
-            overlayMap: new Map(),
-            needsFullRedraw: true,
             wizardActive: false,
             wizardCurrentFieldIdx: 0,
             wizardFields: [],
             autoLoadFolder: true  // Włącz automatyczne ładowanie folderu przy starcie
         };
         
-        document.addEventListener('DOMContentLoaded', () => {
-            // Initialize app directly
-            initApp();
-        });
-
-        function initApp() {
+        document.addEventListener('DOMContentLoaded', async () => {
             console.log('📍 DOMContentLoaded start');
-            
-            // Initialize Firebase Auth
-            if (window.auth) {
-                auth.signInAnonymously().then(() => {
-                    console.log('🔥 Firebase auth initialized');
-                }).catch((error) => {
-                    console.error('⚠️ Firebase auth optional:', error);
-                });
-            }
             
             // Clear old oversized data from localStorage
             try {
@@ -1277,7 +1162,7 @@
             
             loadFallbackTemplates();
             console.log('📍 Templates loaded:', app.templates.length);
-            initViewer();
+            await initViewer();
             console.log('📍 Viewer initialized');
             setupDrawingCanvas();
             console.log('📍 Canvas setup complete');
@@ -1296,7 +1181,7 @@
             }
             
             notify('v7.0 gotowy!', 'success');
-        }
+        });
         
         function loadFallbackTemplates() {
             app.templates = [
@@ -1480,7 +1365,6 @@
             newContainer.addEventListener('focusin', (e) => {
                 if (e.target.classList.contains('field-input')) {
                     app.activeField = e.target;
-                    app.needsFullRedraw = false;
                     redrawROIs();
                     updateFieldStatus();  // 🟢 Update colors when field gets focus
                     updateProgressBar();  // ⭐ Update progress on focus change
@@ -1892,11 +1776,8 @@
             const item = viewer.world.getItemAt(0);
             if (!item) return;
             
-            if (app.needsFullRedraw) {
-                app.roiOverlays.forEach(overlay => viewer.removeOverlay(overlay));
-                app.roiOverlays = [];
-                app.overlayMap.clear();
-            }
+            app.roiOverlays.forEach(overlay => viewer.removeOverlay(overlay));
+            app.roiOverlays = [];
             
             const size = item.getContentSize();
             const currentActs = app.imageActs.filter(a => a.imageIdx === app.currentImageIdx);
@@ -1904,68 +1785,47 @@
             currentActs.forEach(act => {
                 if (!act.actROI) return;
                 
-                const key = `act_${act.actNum}`;
                 const imgRect = new OpenSeadragon.Rect(
                     act.actROI.x * size.x, act.actROI.y * size.y,
                     act.actROI.w * size.x, act.actROI.h * size.y
                 );
                 const viewportRect = viewer.viewport.imageToViewportRectangle(imgRect);
                 
-                let div = app.overlayMap.get(key);
-                if (!div || app.needsFullRedraw) {
-                    div = document.createElement('div');
-                    div.className = 'act-overlay';
-                    div.style.border = '3px solid #10b981';
-                    const label = document.createElement('div');
-                    label.textContent = `Akt ${act.actNum}`;
-                    label.style.cssText = 'color: white; font-size: 12px; font-weight: bold; padding: 6px; background: rgba(16,185,129,0.8);';
-                    div.appendChild(label);
-                    
-                    viewer.addOverlay({ element: div, location: viewportRect });
-                    app.roiOverlays.push(div);
-                    app.overlayMap.set(key, div);
-                } else {
-                    viewer.removeOverlay(div);
-                    viewer.addOverlay({ element: div, location: viewportRect });
-                }
+                const div = document.createElement('div');
+                div.className = 'act-overlay';
+                div.style.border = '3px solid #10b981';
+                const label = document.createElement('div');
+                label.textContent = `Akt ${act.actNum}`;
+                label.style.cssText = 'color: white; font-size: 12px; font-weight: bold; padding: 6px; background: rgba(16,185,129,0.8);';
+                div.appendChild(label);
+                
+                viewer.addOverlay({ element: div, location: viewportRect });
+                app.roiOverlays.push(div);
             });
             
             currentActs.forEach(act => {
                 if (!act.fieldROIs) return;
                 Object.entries(act.fieldROIs).forEach(([fieldId, roi]) => {
-                    const key = `field_${act.actNum}_${fieldId}`;
                     const imgRect = new OpenSeadragon.Rect(
                         roi.x * size.x, roi.y * size.y,
                         roi.w * size.x, roi.h * size.y
                     );
                     const viewportRect = viewer.viewport.imageToViewportRectangle(imgRect);
                     
-                    let div = app.overlayMap.get(key);
-                    if (!div || app.needsFullRedraw) {
-                        div = document.createElement('div');
-                        div.className = 'roi-overlay';
-                        const label = document.createElement('div');
-                        label.textContent = fieldId.substring(0, 15);
-                        label.style.cssText = 'color: white; font-size: 11px; padding: 4px; background: rgba(0,0,0,0.6);';
-                        div.appendChild(label);
-                        
-                        viewer.addOverlay({ element: div, location: viewportRect });
-                        app.roiOverlays.push(div);
-                        app.overlayMap.set(key, div);
-                    } else {
-                        viewer.removeOverlay(div);
-                        viewer.addOverlay({ element: div, location: viewportRect });
-                    }
-                    
-                    // Zawsze aktualizuj klasy
-                    div.classList.remove('active');
+                    const div = document.createElement('div');
+                    div.className = 'roi-overlay';
                     if (act.actNum === app.currentActNum && app.activeField?.dataset.field === fieldId) {
                         div.classList.add('active');
                     }
+                    const label = document.createElement('div');
+                    label.textContent = fieldId.substring(0, 15);
+                    label.style.cssText = 'color: white; font-size: 11px; padding: 4px; background: rgba(0,0,0,0.6);';
+                    div.appendChild(label);
+                    
+                    viewer.addOverlay({ element: div, location: viewportRect });
+                    app.roiOverlays.push(div);
                 });
             });
-            
-            app.needsFullRedraw = true; // Reset flagi
         }
         
         function setupEvents() {
@@ -2239,11 +2099,7 @@ Output ONLY the ID string, nothing else.`;
             acts.forEach(act => {
                 const btn = document.createElement('button');
                 btn.className = 'act-card';
-                const idSpan = document.createElement('span');
-                idSpan.textContent = act.id || 'Brak ID';
-                idSpan.style.cssText = 'font-size: 0.8em; color: #888; display: none;';
-                btn.innerHTML = `📄 Akt ${act.actNum}<br>`;
-                btn.appendChild(idSpan);
+                btn.innerHTML = `📄 Akt ${act.actNum}<br><span style="font-size: 0.8em; color: #888;">${act.id || 'Brak ID'}</span>`;
                 btn.style.cssText = `
                     padding: 12px 8px;
                     margin-bottom: 8px;
@@ -2261,24 +2117,17 @@ Output ONLY the ID string, nothing else.`;
                 btn.onmouseover = () => {
                     btn.style.borderColor = '#0078d4';
                     btn.style.boxShadow = '0 4px 12px rgba(0,120,212,0.3)';
-                    idSpan.style.display = 'block';
                 };
                 btn.onmouseout = () => {
                     btn.style.borderColor = act.actNum === app.currentActNum ? '#10b981' : '#555';
                     btn.style.boxShadow = act.actNum === app.currentActNum ? '0 4px 12px rgba(16,185,129,0.3)' : '0 2px 8px rgba(0,0,0,0.3)';
-                    if (act.actNum !== app.currentActNum) idSpan.style.display = 'none';
                 };
                 if (act.actNum === app.currentActNum) {
                     btn.style.borderColor = '#10b981';
                     btn.style.background = 'rgba(16, 185, 129, 0.8)';
                     btn.style.boxShadow = '0 4px 12px rgba(16,185,129,0.3)';
-                    idSpan.style.display = 'block';
                 }
                 btn.onclick = () => selectAct(act.actNum);
-                btn.oncontextmenu = (e) => {
-                    e.preventDefault();
-                    showActContextMenu(act.actNum, e);
-                };
                 container.appendChild(btn);
             });
 
@@ -2314,160 +2163,6 @@ Output ONLY the ID string, nothing else.`;
 
             const viewerContainer = document.getElementById('viewerContainer');
             viewerContainer.appendChild(container);
-        }
-
-        function showActContextMenu(actNum, event) {
-            // Usuń istniejące menu
-            const existingMenu = document.getElementById('actContextMenu');
-            if (existingMenu) existingMenu.remove();
-
-            const menu = document.createElement('div');
-            menu.id = 'actContextMenu';
-            menu.style.cssText = `
-                position: absolute;
-                top: ${event.clientY}px;
-                left: ${event.clientX}px;
-                background: #1a1a1a;
-                border: 1px solid #333;
-                border-radius: 4px;
-                padding: 4px 0;
-                z-index: 1000;
-                box-shadow: 0 4px 12px rgba(0,0,0,0.5);
-                min-width: 150px;
-            `;
-
-            const options = [
-                { label: 'Usuń akt', action: () => deleteAct(actNum) },
-                { label: 'Zmień nazwę aktu', action: () => renameAct(actNum) },
-                { label: 'Kopiuj akt', action: () => copyAct(actNum) },
-                { label: 'Usuń wszystkie akty', action: () => deleteAllActs() },
-                { label: '🗑️ Usuń wszystkie ze WSZYSTKICH obrazów', action: () => deleteAllActsAllImages(), separator: true }
-            ];
-
-            options.forEach(opt => {
-                const item = document.createElement('div');
-                item.textContent = opt.label;
-                item.style.cssText = `
-                    padding: 8px 12px;
-                    cursor: pointer;
-                    color: ${opt.separator ? '#ff6b6b' : '#ddd'};
-                    font-size: 12px;
-                    font-weight: ${opt.separator ? '600' : 'normal'};
-                    transition: background 0.15s;
-                    ${opt.separator ? 'border-top: 1px solid #333; margin-top: 4px; padding-top: 12px;' : ''}
-                `;
-                item.onmouseover = () => item.style.background = opt.separator ? '#2a1a1a' : '#333';
-                item.onmouseout = () => item.style.background = 'transparent';
-                item.onclick = () => {
-                    opt.action();
-                    menu.remove();
-                };
-                menu.appendChild(item);
-            });
-
-            document.body.appendChild(menu);
-
-            // Zamknij menu przy kliknięciu poza
-            const closeMenu = (e) => {
-                if (!menu.contains(e.target)) {
-                    menu.remove();
-                    document.removeEventListener('click', closeMenu);
-                }
-            };
-            setTimeout(() => document.addEventListener('click', closeMenu), 10);
-        }
-
-        function deleteAct(actNum) {
-            if (!confirm(`Czy na pewno usunąć akt ${actNum}? Tej operacji nie można cofnąć.`)) {
-                return;
-            }
-
-            app.imageActs = app.imageActs.filter(a => 
-                !(a.imageIdx === app.currentImageIdx && a.actNum === actNum)
-            );
-
-            const remainingActs = app.imageActs
-                .filter(a => a.imageIdx === app.currentImageIdx)
-                .sort((a, b) => a.actNum - b.actNum);
-
-            remainingActs.forEach((act, idx) => {
-                act.actNum = idx + 1;
-            });
-
-            if (app.currentActNum === actNum) {
-                app.currentActNum = null;
-                clearForm();
-            }
-            renderActButtons();
-            redrawROIs();
-            updateRecordCounter();
-            saveStorage();
-            notify('Akt usunięty', 'success');
-        }
-
-        function renameAct(actNum) {
-            const act = app.imageActs.find(a => a.imageIdx === app.currentImageIdx && a.actNum === actNum);
-            if (!act) return;
-
-            const newId = prompt('Wprowadź nową nazwę/ID aktu:', act.id || '');
-            if (newId && newId !== act.id) {
-                act.id = newId;
-                renderActButtons();
-                saveStorage();
-                notify('Nazwa aktu zmieniona', 'success');
-            }
-        }
-
-        function copyAct(actNum) {
-            const sourceAct = app.imageActs.find(a => a.imageIdx === app.currentImageIdx && a.actNum === actNum);
-            if (!sourceAct) return;
-
-            const nextNum = Math.max(...app.imageActs.filter(a => a.imageIdx === app.currentImageIdx).map(a => a.actNum)) + 1;
-            const newAct = {
-                imageIdx: app.currentImageIdx,
-                actNum: nextNum,
-                fieldValues: JSON.parse(JSON.stringify(sourceAct.fieldValues)),
-                fieldROIs: JSON.parse(JSON.stringify(sourceAct.fieldROIs || {})),
-                actROI: sourceAct.actROI ? JSON.parse(JSON.stringify(sourceAct.actROI)) : null,
-                timestamp: new Date().toISOString(),
-                id: sourceAct.id + ' (kopia)'
-            };
-
-            app.imageActs.push(newAct);
-            saveStorage();
-            selectAct(nextNum);
-            notify('Akt skopiowany', 'success');
-        }
-
-        function deleteAllActs() {
-            if (!confirm('Czy na pewno usunąć WSZYSTKIE akty z tego obrazu? Tej operacji nie można cofnąć.')) {
-                return;
-            }
-
-            app.imageActs = app.imageActs.filter(a => a.imageIdx !== app.currentImageIdx);
-            app.currentActNum = null;
-            clearForm();
-            renderActButtons();
-            redrawROIs();
-            updateRecordCounter();
-            saveStorage();
-            notify('Wszystkie akty usunięte', 'success');
-        }
-
-        function deleteAllActsAllImages() {
-            if (!confirm('⚠️ UWAGA! Czy na pewno usunąć WSZYSTKIE akty ze WSZYSTKICH ' + app.images.length + ' wczytanych obrazów?\n\nTej operacji nie można cofnąć!\n\nAkta zostaną usunięte z lokalnego storage, ale pozostają w Firestore (jeśli zarejestrowałeś).')) {
-                return;
-            }
-
-            const deletedCount = app.imageActs.length;
-            app.imageActs = [];
-            app.currentActNum = null;
-            clearForm();
-            renderActButtons();
-            redrawROIs();
-            updateRecordCounter();
-            saveStorage();
-            notify(`✅ Usunięto ${deletedCount} aktów ze wszystkich obrazów (LOCAL ONLY)`, 'success');
         }
 
         function getCurrentAct() {
@@ -3069,121 +2764,26 @@ Output ONLY the ID string, nothing else.`;
             setTimeout(() => notification.remove(), 3000);
         }
 
-        // Funkcja migracji danych z localStorage do Firestore
-        async function exportFromLocalStorageToFirestore() {
-            if (!window.db) {
-                console.error('❌ Firebase nie jest zainicjalizowany');
-                return;
-            }
-            const stored = localStorage.getItem('genealog_data');
-            if (!stored) {
-                console.log('ℹ️ Brak danych w localStorage do migracji');
-                return;
-            }
-            const data = JSON.parse(stored);
-            try {
-                // Migruj imageActs
-                for (const act of data.imageActs || []) {
-                    await db.collection('records').add(act);
-                }
-                // Migruj ustawienia
-                await db.collection('settings').doc('currentTemplate').set({ value: data.currentTemplate || 'birth' });
-                console.log('✅ Migracja do Firestore zakończona');
-                notify('✅ Dane zmigrowane do Firestore', 'success');
-            } catch (error) {
-                console.error('❌ Błąd migracji:', error);
-                notify('❌ Błąd migracji do Firestore', 'error');
-            }
-        }
-
         function saveStorage() {
-            if (!window.db) {
-                console.warn('⚠️ Firebase nie dostępny, zapis do localStorage');
-                // Fallback to localStorage
-                localStorage.setItem('genealog_data', JSON.stringify({
-                    imageActs: app.imageActs,
-                    currentTemplate: app.currentTemplate
-                }));
-                return;
-            }
-            
-            // Save to Firestore asynchronously
-            db.collection('records').get().then(() => {
-                // Clear existing records first
-                return db.collection('records').get();
-            }).then((querySnapshot) => {
-                const batch = db.batch();
-                querySnapshot.forEach((doc) => {
-                    batch.delete(doc.ref);
-                });
-                return batch.commit();
-            }).then(() => {
-                // Add new records
-                const batch = db.batch();
-                app.imageActs.forEach((act) => {
-                    const docRef = db.collection('records').doc(act.id.toString());
-                    batch.set(docRef, act);
-                });
-                return batch.commit();
-            }).then(() => {
-                // Save settings
-                return db.collection('settings').doc('currentTemplate').set({ value: app.currentTemplate || 'birth' });
-            }).then(() => {
-                console.log('💾 Storage saved to Firestore');
-            }).catch((error) => {
-                console.error('❌ Error saving to Firestore:', error);
-                // Fallback
-                localStorage.setItem('genealog_data', JSON.stringify({
-                    imageActs: app.imageActs,
-                    currentTemplate: app.currentTemplate
-                }));
-            });
+            // Don't save images - they're too large and stay in RAM
+            // Only save acts and settings
+            localStorage.setItem('genealog_data', JSON.stringify({
+                imageActs: app.imageActs,
+                currentTemplate: app.currentTemplate
+            }));
+            console.log('💾 Storage saved (acts only, images kept in RAM)');
         }
 
         function loadStorage() {
-            if (!window.db) {
-                console.warn('⚠️ Firebase nie dostępny, ładowanie z localStorage');
-                const stored = localStorage.getItem('genealog_data');
-                if (stored) {
-                    const data = JSON.parse(stored);
-                    app.imageActs = data.imageActs || [];
-                    app.currentTemplate = data.currentTemplate || 'birth';
-                    console.log('📂 Loaded acts from localStorage:', app.imageActs.length);
-                }
+            const stored = localStorage.getItem('genealog_data');
+            if (stored) {
+                const data = JSON.parse(stored);
+                app.imageActs = data.imageActs || [];
+                app.currentTemplate = data.currentTemplate || 'birth';
+                console.log('📂 Loaded acts:', app.imageActs.length);
                 updateThumbs();
                 if (app.images.length > 0) selectImage(0, true);
-                return;
             }
-            
-            // Load from Firestore
-            db.collection('records').get().then((querySnapshot) => {
-                app.imageActs = [];
-                querySnapshot.forEach((docSnap) => {
-                    app.imageActs.push(docSnap.data());
-                });
-                console.log('📂 Loaded acts from Firestore:', app.imageActs.length);
-                
-                // Load settings
-                return db.collection('settings').doc('currentTemplate').get();
-            }).then((docSnap) => {
-                if (docSnap.exists) {
-                    app.currentTemplate = docSnap.data().value || 'birth';
-                }
-                updateThumbs();
-                if (app.images.length > 0) selectImage(0, true);
-            }).catch((error) => {
-                console.error('❌ Error loading from Firestore:', error);
-                // Fallback
-                const stored = localStorage.getItem('genealog_data');
-                if (stored) {
-                    const data = JSON.parse(stored);
-                    app.imageActs = data.imageActs || [];
-                    app.currentTemplate = data.currentTemplate || 'birth';
-                    console.log('📂 Loaded acts from localStorage (fallback):', app.imageActs.length);
-                    updateThumbs();
-                    if (app.images.length > 0) selectImage(0, true);
-                }
-            });
         }
         
         function toggleFloatingForm(show = null) {
@@ -3708,35 +3308,6 @@ Output ONLY the ID string, nothing else.`;
         function togglePostprocessPanel() {
             const panel = document.getElementById('postprocessPanel');
             panel.classList.toggle('visible');
-        }
-        
-        function toggleThumbsPanel() {
-            const thumbsBar = document.getElementById('thumbsBar');
-            const mainContent = document.querySelector('.main-content');
-            thumbsBar.classList.toggle('collapsed');
-            mainContent.classList.toggle('thumbs-collapsed');
-        }
-        
-        function toggleActsPanel() {
-            const actsPanel = document.getElementById('actsPanel');
-            actsPanel.classList.toggle('collapsed');
-        }
-        
-        function renderActsList() {
-            const actsList = document.getElementById('actsList');
-            if (!actsList) return;
-            
-            actsList.innerHTML = '';
-            const currentImageActs = app.imageActs.filter(a => a.imageIdx === app.currentImageIdx);
-            
-            currentImageActs.forEach(act => {
-                const btn = document.createElement('button');
-                btn.className = 'act-button' + (app.currentActNum === act.actNum ? ' active' : '');
-                btn.textContent = `Akt ${act.actNum}`;
-                btn.onclick = () => selectAct(act.actNum);
-                btn.title = `Akt ${act.actNum}`;
-                actsList.appendChild(btn);
-            });
         }
         
         function setupPostprocessSliders() {
@@ -4727,26 +4298,6 @@ Output ONLY the ID string, nothing else.`;
                     if (nextIdx !== currentIdx) {
                         selectAct(currentActList[nextIdx].actNum);
                         console.log(`⌨️ Nawigacja: Akt ${currentActList[nextIdx].actNum}`);
-                    }
-                }
-                
-                // Ctrl+M = Toggle thumbnails panel
-                if (e.key === 'm' || e.key === 'M') {
-                    if (hasCtrlCmd) {
-                        e.preventDefault();
-                        toggleThumbsPanel();
-                        console.log('⌨️ B: Ctrl+M → Toggle Thumbs');
-                        return;
-                    }
-                }
-                
-                // Ctrl+L = Toggle acts panel
-                if (e.key === 'l' || e.key === 'L') {
-                    if (hasCtrlCmd) {
-                        e.preventDefault();
-                        toggleActsPanel();
-                        console.log('⌨️ B: Ctrl+L → Toggle Acts');
-                        return;
                     }
                 }
                 

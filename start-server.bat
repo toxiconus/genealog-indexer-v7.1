@@ -1,13 +1,13 @@
 @echo off
-REM Genealog Indexer Server Launcher
+REM Genealog Indexer v8.0 - Server Launcher
 REM Lokalizacja: j:\projekt 2025\projekt-akta-v2\
 
-title Genealog Indexer v3.2 - Server
+title Genealog Indexer v8.0 - Server
 color 0A
 
 echo.
 echo ========================================
-echo   Genealog Indexer v3.2 - Server
+echo   Genealog Indexer v8.0 - Server
 echo   Starting Vite Dev Server...
 echo ========================================
 echo.
@@ -40,7 +40,7 @@ if not exist "node_modules" (
 )
 
 REM Start serwera
-echo Starting server on http://localhost:5173/viewer-osd-v7.html
+echo Starting server on http://localhost:5173/viewer-osd-v8.html
 echo.
 echo Press Ctrl+C to stop the server
 echo.

@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="pl">
 <head>
     <meta charset="UTF-8">
@@ -953,7 +953,7 @@
             <div class="toolbar-sep"></div>
             
             <!-- 1. FILE OPERATIONS -->
-            <button class="toolbar-btn" onclick="addImages()" title="Dodaj obrazy (Ctrl+O)">
+            <button class="toolbar-btn" title="Dodaj obrazy (Ctrl+O)">
                 <i class="fas fa-folder-open"></i> Otwórz
             </button>
             
@@ -979,7 +979,7 @@
             <div class="toolbar-sep"></div>
             
             <!-- 3. IMAGE PROCESSING -->
-            <button class="toolbar-btn" onclick="togglePostprocessPanel()" title="Postprocessing">
+            <button class="toolbar-btn" title="Postprocessing">
                 <i class="fas fa-sliders-h"></i> Proces
             </button>
             
@@ -1249,6 +1249,84 @@
             autoLoadFolder: true  // Włącz automatyczne ładowanie folderu przy starcie
         };
         
+        // ===== POSTPROCESSING STATE & PRESETS (MUST BE BEFORE setupPostprocessSliders) =====
+        const postprocessState = {
+            levels: 0,               // -100 to 100 (shadows/highlights)
+            autoContrast: false,     // Auto histogram equalization
+            archival: 0,             // 0-100 (dedykowany dla wyblakłych dokumentów)
+            descreen: 0,             // 0-100 (removes halftone patterns)
+            sepia: 0,                // 0-100 (żółty/sepia filtr dla starych aktów)
+            hue: 0,                  // -180 to 180 (rotacja barwy)
+            saturation: 100,         // 0-200 (nasycenie kolorów)
+            invert: 0,               // 0-100 (inwersja, pomaga przy ciemnym tle)
+            adaptiveThreshold: 0,    // 0-100 (adaptive thresholding strength)
+            gaussianBlur: 0,         // 0-10 (Gaussian blur kernel)
+            medianBlur: 0,           // 0-10 (Median denoise)
+            histogramEq: false,      // boolean (histogram equalization)
+            backgroundSubtraction: 0,// 0-100 (background leveling - NOWE!)
+            morphologyClose: 0,      // 0-100 (connecting broken strokes - NOWE!)
+            autoInvert: false        // boolean (auto-detect and invert - NOWE!)
+        };
+        
+        // Presets dla typowych genealogicznych dokumentów - rozszerzone
+        const presets = {
+            'archival': { 
+                levels: 20, autoContrast: true, archival: 80, descreen: 20, sepia: 0, hue: 0, saturation: 80, invert: 0,
+                adaptiveThreshold: 0, gaussianBlur: 0, medianBlur: 0, histogramEq: true,
+                backgroundSubtraction: 0, morphologyClose: 0, autoInvert: false
+            },
+            'faded': { 
+                levels: 30, autoContrast: true, archival: 100, descreen: 10, sepia: 0, hue: 0, saturation: 70, invert: 0,
+                adaptiveThreshold: 0, gaussianBlur: 0, medianBlur: 0, histogramEq: true,
+                backgroundSubtraction: 0, morphologyClose: 0, autoInvert: false
+            },
+            'dark': { 
+                levels: -20, autoContrast: false, archival: 0, descreen: 0, sepia: 0, hue: 0, saturation: 100, invert: 0,
+                adaptiveThreshold: 0, gaussianBlur: 0, medianBlur: 0, histogramEq: false,
+                backgroundSubtraction: 0, morphologyClose: 0, autoInvert: false
+            },
+            'bright': { 
+                levels: 20, autoContrast: true, archival: 0, descreen: 0, sepia: 0, hue: 0, saturation: 100, invert: 0,
+                adaptiveThreshold: 0, gaussianBlur: 0, medianBlur: 0, histogramEq: false,
+                backgroundSubtraction: 0, morphologyClose: 0, autoInvert: false
+            },
+            'typewriter': { 
+                levels: 10, autoContrast: true, archival: 0, descreen: 5, sepia: 0, hue: 0, saturation: 100, invert: 0,
+                adaptiveThreshold: 50, gaussianBlur: 0, medianBlur: 0, histogramEq: false,
+                backgroundSubtraction: 0, morphologyClose: 0, autoInvert: false
+            },
+            'ink': {
+                levels: 5, autoContrast: false, archival: 0, descreen: 30, sepia: 0, hue: 0, saturation: 100, invert: 0,
+                adaptiveThreshold: 60, gaussianBlur: 1, medianBlur: 1, histogramEq: false,
+                backgroundSubtraction: 0, morphologyClose: 0, autoInvert: false
+            },
+            'genealogy-pro': {
+                levels: 15, autoContrast: true, archival: 50, descreen: 15, sepia: 5, hue: 0, saturation: 85, invert: 0,
+                adaptiveThreshold: 40, gaussianBlur: 1, medianBlur: 0, histogramEq: true,
+                backgroundSubtraction: 0, morphologyClose: 0, autoInvert: false
+            },
+            'faded-advanced': {
+                levels: 35, autoContrast: true, archival: 90, descreen: 20, sepia: 10, hue: 0, saturation: 75, invert: 0,
+                adaptiveThreshold: 50, gaussianBlur: 2, medianBlur: 1, histogramEq: true,
+                backgroundSubtraction: 0, morphologyClose: 0, autoInvert: false
+            },
+            'text-extraction': {
+                levels: 25, autoContrast: true, archival: 60, descreen: 25, sepia: 0, hue: 0, saturation: 100, invert: 0,
+                adaptiveThreshold: 80, gaussianBlur: 0, medianBlur: 0, histogramEq: true,
+                backgroundSubtraction: 0, morphologyClose: 0, autoInvert: false
+            },
+            'heavy-duty': {
+                levels: 40, autoContrast: true, archival: 100, descreen: 50, sepia: 10, hue: 0, saturation: 70, invert: 0,
+                adaptiveThreshold: 80, gaussianBlur: 1, medianBlur: 3, histogramEq: true,
+                backgroundSubtraction: 50, morphologyClose: 50, autoInvert: true
+            }
+        };
+        
+        // Global flags for preview
+        let previewTimeout = null;
+        let isProcessing = false;
+        let opencvReady = false;
+        
         document.addEventListener('DOMContentLoaded', () => {
             // Initialize app directly
             initApp();
@@ -1281,14 +1359,14 @@
             console.log('📍 Viewer initialized');
             setupDrawingCanvas();
             console.log('📍 Canvas setup complete');
-            setupEvents();
-            console.log('📍 Events setup complete');
             loadStorage();
             console.log('📍 Storage loaded, images:', app.images.length);
             renderUI();
             console.log('📍 UI rendered');
             setupPostprocessSliders();
             console.log('📍 Postprocess sliders setup');
+            setupEvents();
+            console.log('📍 Events setup complete');
             
             // Auto-load folder if enabled
             if (app.autoLoadFolder) {
@@ -1978,13 +2056,22 @@
             });
             
             const viewerContainer = document.getElementById('viewerContainer');
-            viewerContainer.addEventListener('dragover', (e) => { e.preventDefault(); viewerContainer.classList.add('drag-over'); });
-            viewerContainer.addEventListener('dragleave', () => { viewerContainer.classList.remove('drag-over'); });
-            viewerContainer.addEventListener('drop', (e) => {
-                e.preventDefault();
-                viewerContainer.classList.remove('drag-over');
-                handleFiles(e.dataTransfer.files);
-            });
+            if (viewerContainer) {
+                viewerContainer.addEventListener('dragover', (e) => { e.preventDefault(); viewerContainer.classList.add('drag-over'); });
+                viewerContainer.addEventListener('dragleave', () => { viewerContainer.classList.remove('drag-over'); });
+                viewerContainer.addEventListener('drop', (e) => {
+                    e.preventDefault();
+                    viewerContainer.classList.remove('drag-over');
+                    handleFiles(e.dataTransfer.files);
+                });
+            }
+            
+            // Toolbar button listeners (safe after DOM loaded)
+            const addImagesBtn = document.querySelector('button[title*="Dodaj obrazy"]');
+            if (addImagesBtn) addImagesBtn.addEventListener('click', addImages);
+            
+            const postprocessBtn = document.querySelector('button[title*="Postprocessing"]');
+            if (postprocessBtn) postprocessBtn.addEventListener('click', togglePostprocessPanel);
             
             document.addEventListener('keydown', (e) => {
                 // ⭐ Arrow keys to navigate between acts
@@ -2836,10 +2923,15 @@ Output ONLY the ID string, nothing else.`;
         }
 
         function selectImage(idx, autoSelect = false) {
-            if (idx < 0 || idx >= app.images.length) return;
+            console.log('🖼️ selectImage called with idx:', idx);
+            if (idx < 0 || idx >= app.images.length) {
+                console.log('❌ Invalid image index:', idx, 'max:', app.images.length);
+                return;
+            }
 
             app.currentImageIdx = idx;
             app.currentActNum = null;
+            console.log('✅ Set currentImageIdx to:', idx);
 
             updateThumbs();
             updateImageCounter();
@@ -2855,6 +2947,7 @@ Output ONLY the ID string, nothing else.`;
             if (app.images[idx]) {
                 const imageData = app.images[idx].data;
                 console.log('📸 Opening image:', app.images[idx].name);
+                console.log('📊 Image data length:', imageData ? imageData.length : 'null');
                 
                 // Zawsze otwieraj przez OpenSeadragon (obsługuje zarówno URL jak i data URL)
                 if (app.viewer) {
@@ -2867,6 +2960,8 @@ Output ONLY the ID string, nothing else.`;
                 
                 // Ukryj fallback img (na wszelki wypadek)
                 document.getElementById('imageFallback').classList.remove('active');
+            } else {
+                console.log('❌ No image data at index:', idx);
             }
 
             redrawROIs();
@@ -2944,16 +3039,21 @@ Output ONLY the ID string, nothing else.`;
         }
 
         function addImages() {
+            console.log('📁 addImages called');
             document.getElementById('fileInput').click();
         }
 
         function handleFiles(files) {
+            console.log('📁 handleFiles called with', files.length, 'files');
             const imageFiles = Array.from(files).filter(f => f.type?.startsWith('image/'));
+            console.log('🖼️ Found', imageFiles.length, 'image files');
             let loaded = 0;
 
             imageFiles.forEach(file => {
+                console.log('📄 Processing file:', file.name);
                 const reader = new FileReader();
                 reader.onload = (e) => {
+                    console.log('✅ File loaded:', file.name, 'data length:', e.target.result.length);
                     app.images.push({
                         name: file.name,
                         relativePath: file.webkitRelativePath || '', // Zachowuje ścieżkę z folderu
@@ -2961,6 +3061,7 @@ Output ONLY the ID string, nothing else.`;
                     });
                     loaded++;
                     if (loaded === imageFiles.length) {
+                        console.log('🎉 All images loaded, sorting and updating UI');
                         // Autosort po nazwie po wczytaniu wszystkich plików
                         app.images.sort(naturalSort);
                         updateThumbs();
@@ -3618,96 +3719,12 @@ Output ONLY the ID string, nothing else.`;
             notify('\u2713 OCR zastosowany', 'success');
         }
         
-        // ===== POSTPROCESSING SYSTEM =====
-        // ===== POSTPROCESSING SYSTEM - Genealogy Optimized with Advanced OpenCV Filters =====
-        const postprocessState = {
-            levels: 0,               // -100 to 100 (shadows/highlights)
-            autoContrast: false,     // Auto histogram equalization
-            archival: 0,             // 0-100 (dedykowany dla wyblakłych dokumentów)
-            descreen: 0,             // 0-100 (removes halftone patterns)
-            sepia: 0,                // 0-100 (żółty/sepia filtr dla starych aktów)
-            hue: 0,                  // -180 to 180 (rotacja barwy)
-            saturation: 100,         // 0-200 (nasycenie kolorów)
-            invert: 0,               // 0-100 (inwersja, pomaga przy ciemnym tle)
-            adaptiveThreshold: 0,    // 0-100 (adaptive thresholding strength)
-            gaussianBlur: 0,         // 0-10 (Gaussian blur kernel)
-            medianBlur: 0,           // 0-10 (Median denoise)
-            histogramEq: false,      // boolean (histogram equalization)
-            backgroundSubtraction: 0,// 0-100 (background leveling - NOWE!)
-            morphologyClose: 0,      // 0-100 (connecting broken strokes - NOWE!)
-            autoInvert: false        // boolean (auto-detect and invert - NOWE!)
-        };
-        
-        // Presets dla typowych genealogicznych dokumentów - rozszerzone
-        const presets = {
-            'archival': { 
-                levels: 20, autoContrast: true, archival: 50, descreen: 20,
-                sepia: 30, hue: 0, saturation: 80, invert: 0,
-                adaptiveThreshold: 0, gaussianBlur: 0, medianBlur: 0, histogramEq: false,
-                backgroundSubtraction: 0, morphologyClose: 0, autoInvert: false
-            },
-            'faded': { 
-                levels: 30, autoContrast: true, archival: 70, descreen: 30,
-                sepia: 20, hue: 10, saturation: 90, invert: 0,
-                adaptiveThreshold: 0, gaussianBlur: 0, medianBlur: 2, histogramEq: true,
-                backgroundSubtraction: 0, morphologyClose: 0, autoInvert: false
-            },
-            'dark': { 
-                levels: -30, autoContrast: true, archival: 40, descreen: 10,
-                sepia: 0, hue: 0, saturation: 70, invert: 0,
-                adaptiveThreshold: 0, gaussianBlur: 0, medianBlur: 0, histogramEq: false,
-                backgroundSubtraction: 0, morphologyClose: 0, autoInvert: false
-            },
-            'bright': { 
-                levels: 20, autoContrast: false, archival: 20, descreen: 0,
-                sepia: 0, hue: 0, saturation: 100, invert: 0,
-                adaptiveThreshold: 0, gaussianBlur: 0, medianBlur: 0, histogramEq: false,
-                backgroundSubtraction: 0, morphologyClose: 0, autoInvert: false
-            },
-            'typewriter': { 
-                levels: 10, autoContrast: true, archival: 30, descreen: 50,
-                sepia: 0, hue: 0, saturation: 0, invert: 0,
-                adaptiveThreshold: 50, gaussianBlur: 0, medianBlur: 0, histogramEq: false,
-                backgroundSubtraction: 0, morphologyClose: 0, autoInvert: false
-            },
-            'ink': {
-                levels: 15, autoContrast: true, archival: 45, descreen: 25,
-                sepia: 50, hue: -10, saturation: 70, invert: 0,
-                adaptiveThreshold: 0, gaussianBlur: 0, medianBlur: 1, histogramEq: true,
-                backgroundSubtraction: 0, morphologyClose: 0, autoInvert: false
-            },
-            'genealogy-pro': {
-                levels: 25, autoContrast: true, archival: 60, descreen: 35,
-                sepia: 25, hue: 0, saturation: 75, invert: 0,
-                adaptiveThreshold: 30, gaussianBlur: 2, medianBlur: 1, histogramEq: true,
-                backgroundSubtraction: 0, morphologyClose: 0, autoInvert: false
-            },
-            'faded-advanced': {
-                levels: 35, autoContrast: true, archival: 80, descreen: 40,
-                sepia: 15, hue: 5, saturation: 80, invert: 0,
-                adaptiveThreshold: 40, gaussianBlur: 3, medianBlur: 2, histogramEq: true,
-                backgroundSubtraction: 0, morphologyClose: 0, autoInvert: false
-            },
-            'text-extraction': {
-                levels: 20, autoContrast: true, archival: 50, descreen: 30,
-                sepia: 0, hue: 0, saturation: 0, invert: 0,
-                adaptiveThreshold: 60, gaussianBlur: 1, medianBlur: 2, histogramEq: true,
-                backgroundSubtraction: 0, morphologyClose: 0, autoInvert: false
-            },
-            'heavy-duty': {
-                levels: 40, autoContrast: true, archival: 100, descreen: 50,
-                sepia: 10, hue: 0, saturation: 70, invert: 0,
-                adaptiveThreshold: 80, gaussianBlur: 1, medianBlur: 3, histogramEq: true,
-                backgroundSubtraction: 50, morphologyClose: 50, autoInvert: true
-            }
-        };
-        
-        let previewTimeout = null;
-        let isProcessing = false;
-        
+        // ===== POSTPROCESSING PANEL FUNCTIONS =====
         function togglePostprocessPanel() {
+            console.log('🎨 togglePostprocessPanel called');
             const panel = document.getElementById('postprocessPanel');
             panel.classList.toggle('visible');
+            console.log('🎨 Panel visibility:', panel.classList.contains('visible'));
         }
         
         function toggleThumbsPanel() {
@@ -3740,94 +3757,61 @@ Output ONLY the ID string, nothing else.`;
         }
         
         function setupPostprocessSliders() {
-            // Levels slider
-            document.getElementById('contrastSlider').addEventListener('input', (e) => {
-                postprocessState.levels = parseInt(e.target.value);
-                document.getElementById('contrastValue').textContent = e.target.value;
-                debouncePreview();
-            });
+            // Helper function to safely attach listeners
+            const attachSliderListener = (id, key, valueId, suffix = '') => {
+                const el = document.getElementById(id);
+                if (!el) {
+                    console.warn(`⚠️ Slider element not found: ${id}`);
+                    return;
+                }
+                el.addEventListener('input', (e) => {
+                    postprocessState[key] = parseInt(e.target.value);
+                    const valEl = document.getElementById(valueId);
+                    if (valEl) valEl.textContent = e.target.value + suffix;
+                    debouncePreview();
+                });
+            };
             
-            // Archival documents slider
-            document.getElementById('brightnessSlider').addEventListener('input', (e) => {
-                postprocessState.archival = parseInt(e.target.value);
-                document.getElementById('brightnessValue').textContent = e.target.value + '%';
-                debouncePreview();
-            });
+            const attachCheckboxListener = (id, key, valueId) => {
+                const el = document.getElementById(id);
+                if (!el) {
+                    console.warn(`⚠️ Checkbox element not found: ${id}`);
+                    return;
+                }
+                el.addEventListener('change', (e) => {
+                    postprocessState[key] = e.target.checked;
+                    const valEl = document.getElementById(valueId);
+                    if (valEl) valEl.textContent = e.target.checked ? 'ON' : 'OFF';
+                    debouncePreview();
+                });
+            };
             
-            // Descreen slider
-            document.getElementById('sharpenSlider').addEventListener('input', (e) => {
-                postprocessState.descreen = parseInt(e.target.value);
-                document.getElementById('sharpenValue').textContent = e.target.value + '%';
-                debouncePreview();
-            });
+            // === CORE FILTERS ===
+            attachSliderListener('contrastSlider', 'levels', 'contrastValue', '');
+            attachSliderListener('brightnessSlider', 'archival', 'brightnessValue', '%');
+            attachSliderListener('sharpenSlider', 'descreen', 'sharpenValue', '%');
+            attachCheckboxListener('saturationSlider', 'autoContrast', 'saturationValue');
             
-            // Auto-contrast checkbox
-            const autoContrastEl = document.getElementById('saturationSlider');
-            if (autoContrastEl) {
-                autoContrastEl.addEventListener('change', (e) => {
-                    postprocessState.autoContrast = e.target.checked;
-                    document.getElementById('saturationValue').textContent = e.target.checked ? 'ON' : 'OFF';
+            // === ADVANCED FILTERS ===
+            attachSliderListener('sepiaSlider', 'sepia', 'sepiaValue', '%');
+            attachSliderListener('hueSlider', 'hue', 'hueValue', '°');
+            attachSliderListener('saturSlider', 'saturation', 'saturValue', '%');
+            attachSliderListener('invertSlider', 'invert', 'invertValue', '%');
+            
+            // === OPENCV ADVANCED FILTERS ===
+            const adaptiveEl = document.getElementById('adaptiveThresholdSlider');
+            if (adaptiveEl) {
+                adaptiveEl.addEventListener('input', (e) => {
+                    postprocessState.adaptiveThreshold = parseInt(e.target.value);
+                    const valEl = document.getElementById('adaptiveThresholdValue');
+                    if (valEl) valEl.textContent = e.target.value > 0 ? 'ON (' + e.target.value + '%)' : 'OFF';
                     debouncePreview();
                 });
             }
             
-            // === ADVANCED FILTERS ===
-            // Sepia slider
-            document.getElementById('sepiaSlider').addEventListener('input', (e) => {
-                postprocessState.sepia = parseInt(e.target.value);
-                document.getElementById('sepiaValue').textContent = e.target.value + '%';
-                debouncePreview();
-            });
-            
-            // Hue slider
-            document.getElementById('hueSlider').addEventListener('input', (e) => {
-                postprocessState.hue = parseInt(e.target.value);
-                document.getElementById('hueValue').textContent = e.target.value + '°';
-                debouncePreview();
-            });
-            
-            // Saturation slider
-            document.getElementById('saturSlider').addEventListener('input', (e) => {
-                postprocessState.saturation = parseInt(e.target.value);
-                document.getElementById('saturValue').textContent = e.target.value + '%';
-                debouncePreview();
-            });
-            
-            // Invert slider
-            document.getElementById('invertSlider').addEventListener('input', (e) => {
-                postprocessState.invert = parseInt(e.target.value);
-                document.getElementById('invertValue').textContent = e.target.value + '%';
-                debouncePreview();
-            });
-            
-            // === OPENCV ADVANCED FILTERS ===
-            // Adaptive Threshold slider
-            document.getElementById('adaptiveThresholdSlider').addEventListener('input', (e) => {
-                postprocessState.adaptiveThreshold = parseInt(e.target.value);
-                document.getElementById('adaptiveThresholdValue').textContent = e.target.value > 0 ? 'ON (' + e.target.value + '%)' : 'OFF';
-                debouncePreview();
-            });
-            
-            // Gaussian Blur slider
-            document.getElementById('gaussianBlurSlider').addEventListener('input', (e) => {
-                postprocessState.gaussianBlur = parseInt(e.target.value);
-                document.getElementById('gaussianBlurValue').textContent = e.target.value;
-                debouncePreview();
-            });
-            
-            // Median Blur slider
-            document.getElementById('medianBlurSlider').addEventListener('input', (e) => {
-                postprocessState.medianBlur = parseInt(e.target.value);
-                document.getElementById('medianBlurValue').textContent = e.target.value;
-                debouncePreview();
-            });
-            
-            // Histogram Equalization checkbox
-            document.getElementById('histogramEqCheckbox').addEventListener('change', (e) => {
-                postprocessState.histogramEq = e.target.checked;
-                document.getElementById('histogramEqValue').textContent = e.target.checked ? 'ON' : 'OFF';
-                debouncePreview();
-            });
+            attachSliderListener('gaussianBlurSlider', 'gaussianBlur', 'gaussianBlurValue', '');
+            attachSliderListener('medianBlurSlider', 'medianBlur', 'medianBlurValue', '');
+            attachCheckboxListener('histogramEqCheckbox', 'histogramEq', 'histogramEqValue');
             
             // Presets - dodaj przycisk dla każdego presetu
             const presetsContainer = document.querySelector('.postprocess-buttons');
@@ -3857,6 +3841,9 @@ Output ONLY the ID string, nothing else.`;
                 });
                 
                 presetsContainer.insertBefore(presetsDiv, presetsContainer.firstChild);
+                console.log('✅ Preset buttons added:', Object.keys(presets).length, 'presets');
+            } else {
+                console.log('ℹ️ Presets container not found or already has preset buttons');
             }
         }
         
@@ -3868,41 +3855,61 @@ Output ONLY the ID string, nothing else.`;
         }
         
         function updateProcessedPreview() {
-            if (isProcessing || !app.images[app.currentImageIdx] || !app.images[app.currentImageIdx].data) return;
-            if (!app.viewer) return;
-            
-            isProcessing = true;
-            const original = app.images[app.currentImageIdx];
-            const img = new Image();
-            img.src = original.data;
-            
-            img.onload = () => {
-                try {
-                    const canvas = document.createElement('canvas');
-                    canvas.width = img.width;
-                    canvas.height = img.height;
-                    const ctx = canvas.getContext('2d');
-                    ctx.drawImage(img, 0, 0);
-                    
-                    applyPostprocessFilters(canvas, postprocessState);
-                    const processed = canvas.toDataURL('image/jpeg', 0.95);
-                    
-                    app.viewer.open({
-                        type: 'image',
-                        url: processed
-                    });
-                    console.log('✅ Preview updated');
-                } catch (e) {
-                    console.error('❌ Preview error:', e);
-                } finally {
-                    isProcessing = false;
+            try {
+                if (isProcessing || !app.images[app.currentImageIdx] || !app.images[app.currentImageIdx].data) {
+                    console.warn('⚠️ Preview: Missing image data or already processing');
+                    return;
                 }
-            };
-            
-            img.onerror = () => {
-                console.error('❌ Failed to load preview');
+                if (!app.viewer) {
+                    console.warn('⚠️ Preview: Viewer not initialized');
+                    return;
+                }
+                
+                isProcessing = true;
+                const original = app.images[app.currentImageIdx];
+                const img = new Image();
+                img.src = original.data;
+                
+                img.onload = () => {
+                    try {
+                        const canvas = document.createElement('canvas');
+                        canvas.width = img.width;
+                        canvas.height = img.height;
+                        const ctx = canvas.getContext('2d');
+                        ctx.drawImage(img, 0, 0);
+                        
+                        applyPostprocessFilters(canvas, postprocessState);
+                        const processed = canvas.toDataURL('image/jpeg', 0.95);
+                        
+                        app.viewer.open({
+                            type: 'image',
+                            url: processed
+                        });
+                        console.log('✅ Live preview updated');
+                    } catch (e) {
+                        console.error('❌ Preview processing error:', e);
+                    } finally {
+                        isProcessing = false;
+                    }
+                };
+                
+                img.onerror = (err) => {
+                    console.error('❌ Failed to load preview image:', err);
+                    isProcessing = false;
+                };
+                
+                // Timeout safety: if image doesn't load in 5s, cancel
+                setTimeout(() => {
+                    if (isProcessing) {
+                        console.warn('⚠️ Preview timeout - image too large or slow connection');
+                        isProcessing = false;
+                    }
+                }, 5000);
+                
+            } catch (e) {
+                console.error('❌ updateProcessedPreview exception:', e);
                 isProcessing = false;
-            };
+            }
         }
         
         function applyPreset(presetName) {
@@ -3961,8 +3968,13 @@ Output ONLY the ID string, nothing else.`;
         
         function applyPostprocessFilters(canvas, state) {
             const ctx = canvas.getContext('2d');
-            
-            // === STEP 1: Canvas Filters (GPU-accelerated, szybko) ===
+            console.log('🎨 applyPostprocessFilters START with state:', {
+                levels: state.levels,
+                archival: state.archival,
+                descreen: state.descreen,
+                adaptiveThreshold: state.adaptiveThreshold,
+                gaussianBlur: state.gaussianBlur
+            });
             let filterString = '';
             
             // Levels (shadows/highlights)
@@ -4115,6 +4127,8 @@ Output ONLY the ID string, nothing else.`;
                     console.log('ℹ️ Auto-Invert: Nie trzeba - tekst jest czarny');
                 }
             }
+            
+            console.log('✅ applyPostprocessFilters COMPLETE');
         }
         
         function saveProcessedAsNew() {
@@ -4234,7 +4248,6 @@ Output ONLY the ID string, nothing else.`;
         }
         
         // ===== ADVANCED FILTERS WITH OPENCV.JS =====
-        let opencvReady = false;
         
         function onOpenCvReady() {
             opencvReady = true;

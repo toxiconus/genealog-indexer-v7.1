@@ -14,7 +14,7 @@ Jeden Przycisk → 1 Sekunda → Wyblakłe Dokumenty = Czytelne Tekst
 
 ### 1. Załaduj Aplikację
 ```
-URL: http://localhost:5173/viewer-osd-v7.html
+URL: http://localhost:5173/viewer-osd-v8.html
 ```
 
 ### 2. Załaduj Dokument
@@ -103,7 +103,7 @@ Zobaczysz: Logi z każdego etapu 🎨
 ## ✅ Wszystko Jest Gotowe
 
 ```
-✅ Kod wdrożony (public/viewer-osd-v7.html)
+✅ Kod wdrożony (public/viewer-osd-v8.html)
 ✅ Backup stworzony (...backup-heavy-duty-[timestamp].html)
 ✅ Dev server uruchomiony (localhost:5173)
 ✅ Dokumentacja kompletna (4 pliki)
@@ -258,7 +258,7 @@ Ten eksperyment pokazuje zaawansowane techniki:
 ║ Status: ✅ PRODUCTION READY                               ║
 ║ Testing: ⏳ CZEKA NA DOKUMENTACH TESTOWYCH               ║
 ║                                                            ║
-║ Dev Server: http://localhost:5173/viewer-osd-v7.html     ║
+║ Dev Server: http://localhost:5173/viewer-osd-v8.html     ║
 ║ Dokumentacja: 5 plików (*.md)                            ║
 ║ Backup: viewer-osd-v7.html.backup-heavy-duty-*           ║
 ║                                                            ║

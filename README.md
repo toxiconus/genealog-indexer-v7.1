@@ -75,7 +75,7 @@ npm install
 npm run dev
 
 # 4. Otwórz w przeglądarce
-# Główna wersja: http://localhost:5173/public/viewer-osd-v7.html
+# Główna wersja: http://localhost:5173/public/viewer-osd-v8.html
 # Stabilna wersja: http://localhost:5173/public/viewer-osd-v5.html
 ```
 
@@ -109,7 +109,7 @@ git pull origin master
 ```
 projekt-akta-v2/
 ├── public/
-│   ├── viewer-osd-v7.html       # 🎯 GŁÓWNA APLIKACJA v7.1 (OCR + Post-processing)
+│   ├── viewer-osd-v8.html       # 🎯 GŁÓWNA APLIKACJA v8.0 (Firebase + OCR + Post-processing)
 │   ├── viewer-osd-v5.html       # ✅ STABILNA WERSJA v5.0 (fallback)
 │   ├── viewer-osd-v6.html       # ❌ EKSPERYMENTALNA (NIE UŻYWAĆ)
 │   ├── viewer-osd-v4.html       # 📚 LEGACY (referencyjna)
@@ -130,7 +130,7 @@ projekt-akta-v2/
 ```
 
 ### Aktywne Pliki Aplikacji
-- **`public/viewer-osd-v7.html`** (~3500 linii) - **GŁÓWNA WERSJA**
+- **`public/viewer-osd-v8.html`** (~3500 linii) - **GŁÓWNA WERSJA**
   - Single-file application z OCR i post-processingiem
   - Wszystkie nowe funkcje v7.1
   - Zalecana dla nowych projektów
