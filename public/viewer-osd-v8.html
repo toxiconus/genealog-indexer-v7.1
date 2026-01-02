@@ -268,6 +268,21 @@
             color: white;
             font-weight: bold;
         }
+        
+        .act-control-btn {
+            font-family: 'Courier New', monospace;
+            font-size: 10px;
+            padding: 1px 3px;
+            border: none;
+            border-radius: 2px;
+            cursor: pointer;
+            transition: opacity 0.2s;
+        }
+        
+        .act-control-btn:hover {
+            opacity: 0.8;
+        }
+        
         .panel-content {
             flex: 1;
             display: flex;
@@ -1073,7 +1088,14 @@
             <div class="thumbnails-bar" id="thumbsBar"></div>
             
             <div class="acts-panel" id="actsPanel">
-                <div style="font-size: 11px; font-weight: bold; color: #0078d4; padding: 4px 0; border-bottom: 1px solid #2a2a2a; margin-bottom: 4px;">AKTY</div>
+                <div style="display: flex; align-items: center; justify-content: space-between; font-size: 10px; font-weight: bold; color: #0078d4; padding: 4px 0; border-bottom: 1px solid #2a2a2a; margin-bottom: 4px;">
+                    <span>AKTY</span>
+                    <div style="display: flex; gap: 2px;">
+                        <button class="act-control-btn" title="Dodaj nowy akt" style="font-size: 10px; padding: 2px 4px; background: #10b981; color: white; border: none; border-radius: 2px; cursor: pointer;">+</button>
+                        <button class="act-control-btn" title="Usuń wybrany akt" style="font-size: 10px; padding: 2px 4px; background: #f59e0b; color: white; border: none; border-radius: 2px; cursor: pointer;">−</button>
+                        <button class="act-control-btn" title="Usuń wszystkie akty" style="font-size: 10px; padding: 2px 4px; background: #ef4444; color: white; border: none; border-radius: 2px; cursor: pointer;">×</button>
+                    </div>
+                </div>
                 <div id="actsList" style="display: flex; flex-direction: column; gap: 4px; flex: 1;"></div>
                 <button class="toolbar-btn" title="Ukryj/Pokaż panel aktów" style="width: 100%; margin-top: 4px; padding: 4px;">
                     <i class="fas fa-times"></i>
@@ -2009,6 +2031,9 @@
             //     }
             // });
             
+            // Draw field ROIs for all acts on current image
+            const currentActs = app.imageActs.filter(a => a.imageIdx === app.currentImageIdx);
+            
             currentActs.forEach(act => {
                 if (!act.fieldROIs) return;
                 Object.entries(act.fieldROIs).forEach(([fieldId, roi]) => {
@@ -2082,6 +2107,26 @@
             if (actsPanel) {
                 const closeBtn = actsPanel.querySelector('button[title*="Ukryj"]');
                 if (closeBtn) closeBtn.addEventListener('click', toggleActsPanel);
+                
+                // Act control buttons
+                const addActBtn = actsPanel.querySelector('button[title*="Dodaj nowy akt"]');
+                if (addActBtn) addActBtn.addEventListener('click', () => showAdvancedActModal());
+                
+                const removeActBtn = actsPanel.querySelector('button[title*="Usuń wybrany akt"]');
+                if (removeActBtn) removeActBtn.addEventListener('click', () => {
+                    if (app.currentActNum) {
+                        deleteCurrentRecord();
+                    } else {
+                        notify('Najpierw wybierz akt do usunięcia', 'error');
+                    }
+                });
+                
+                const removeAllBtn = actsPanel.querySelector('button[title*="Usuń wszystkie akty"]');
+                if (removeAllBtn) removeAllBtn.addEventListener('click', () => {
+                    if (confirm('Czy na pewno chcesz usunąć wszystkie akty z tego obrazu?')) {
+                        clearAllActsOnImage();
+                    }
+                });
             }
             
             document.addEventListener('keydown', (e) => {
@@ -2240,6 +2285,17 @@
             saveStorage();
 
             notify('Akt usunięty', 'success');
+        }
+
+        function clearAllActsOnImage() {
+            app.imageActs = app.imageActs.filter(a => a.imageIdx !== app.currentImageIdx);
+            app.currentActNum = null;
+            clearForm();
+            renderActsList();
+            redrawROIs();
+            updateRecordCounter();
+            saveStorage();
+            notify('Wszystkie akty usunięte z tego obrazu', 'success');
         }
 
         function updateRecordCounter() {
