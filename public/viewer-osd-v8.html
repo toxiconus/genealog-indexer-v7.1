@@ -2188,7 +2188,9 @@
                 if (!act) return;
                 
                 if (app.roiMode) {
-                    act.fieldROIs[app.activeField.dataset.field] = roi;
+                    // Normalizuj fieldId - zamień kropki na podkreślenia
+                    const normalizedFieldId = app.activeField.dataset.field.replace(/\./g, '_');
+                    act.fieldROIs[normalizedFieldId] = roi;
                     app.activeField.classList.add('has-roi');
                     notify('✓ Pole zaznaczone', 'success');
                 } else if (app.actMode) {
@@ -3614,12 +3616,13 @@
                 const point = item.imageToViewportCoordinates(centerX, bottomY);
                 const pixel = app.viewer.viewport.viewportToViewerElementCoordinates(point);
 
-                // Szukaj labela pola
+                // Szukaj labela pola - normalizuj fieldId (zamień kropki na podkreślenia)
+                const normalizedFieldId = fieldId.replace(/\./g, '_');
                 let fieldLabel = fieldId;
                 const template = app.templates.find(t => t.id === app.currentTemplate);
                 if (template) {
                     for (let sec of template.sections) {
-                        const f = sec.fields.find(fld => fld.id === fieldId);
+                        const f = sec.fields.find(fld => fld.id === normalizedFieldId);
                         if (f) { fieldLabel = f.label; break; }
                     }
                 }
