@@ -2295,13 +2295,14 @@
             //     }
             // });
             
-            // Draw field ROIs for all acts on current image
-            const currentActs = app.imageActs.filter(a => a.imageIdx === app.currentImageIdx);
+            // Draw field ROIs ONLY for the currently selected act
+            const currentAct = app.imageActs.find(a => 
+                a.imageIdx === app.currentImageIdx && a.actNum === app.currentActNum
+            );
             
-            currentActs.forEach(act => {
-                if (!act.fieldROIs) return;
-                Object.entries(act.fieldROIs).forEach(([fieldId, roi]) => {
-                    const key = `field_${act.actNum}_${fieldId}`;
+            if (currentAct && currentAct.fieldROIs) {
+                Object.entries(currentAct.fieldROIs).forEach(([fieldId, roi]) => {
+                    const key = `field_${currentAct.actNum}_${fieldId}`;
                     const imgRect = new OpenSeadragon.Rect(
                         roi.x * size.x, roi.y * size.y,
                         roi.w * size.x, roi.h * size.y
@@ -2327,11 +2328,11 @@
                     
                     // Zawsze aktualizuj klasy
                     div.classList.remove('active');
-                    if (act.actNum === app.currentActNum && app.activeField?.dataset.field === fieldId) {
+                    if (app.activeField?.dataset.field === fieldId) {
                         div.classList.add('active');
                     }
                 });
-            });
+            }
             
             app.needsFullRedraw = true; // Reset flagi
         }
