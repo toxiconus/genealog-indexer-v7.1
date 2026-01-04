@@ -2210,6 +2210,9 @@
                     
                     // Wyłącz tryb rysowania i uruchom wizard
                     toggleActMode();
+                    // Also disable ROI mode after marking act boundaries
+                    app.roiMode = false;
+                    document.getElementById('roiBtn').classList.remove('active');
                     setTimeout(() => startWizard(), 200);
                 }
                 
