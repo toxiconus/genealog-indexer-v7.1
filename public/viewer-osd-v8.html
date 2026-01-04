@@ -213,12 +213,18 @@
         }
         .act-overlay {
             border: 2px dashed #666;
-            background: rgba(16,185,129,0.1);
+            background: transparent;
             pointer-events: none;
             z-index: 101;
         }
         .act-overlay.active {
             border: 3px solid #10b981;
+        }
+        .act-overlay-inner {
+            border: 2px solid #ff9800;
+            background: rgba(255,152,0,0.1);
+            pointer-events: none;
+            z-index: 102;
         }
         #drawingCanvas {
             position: absolute;
@@ -2354,6 +2360,32 @@
                     div.className = 'act-overlay' + (act.actNum === app.currentActNum ? ' active' : '');
                     viewer.removeOverlay(div);
                     viewer.addOverlay({ element: div, location: viewportRect });
+                }
+                
+                // Secondary smaller orange overlay
+                const key2 = `act_inner_${act.actNum}`;
+                const innerPadding = 0.1; // 10% smaller
+                const innerImgRect = new OpenSeadragon.Rect(
+                    (act.actROI.x + act.actROI.w * innerPadding) * size.x,
+                    (act.actROI.y + act.actROI.h * innerPadding) * size.y,
+                    act.actROI.w * (1 - 2 * innerPadding) * size.x,
+                    act.actROI.h * (1 - 2 * innerPadding) * size.y
+                );
+                const innerViewportRect = viewer.viewport.imageToViewportRectangle(innerImgRect);
+                
+                if (innerViewportRect.width > 0 && innerViewportRect.height > 0) {
+                    let div2 = app.overlayMap.get(key2);
+                    if (!div2 || app.needsFullRedraw) {
+                        div2 = document.createElement('div');
+                        div2.className = 'act-overlay-inner';
+                        
+                        viewer.addOverlay({ element: div2, location: innerViewportRect });
+                        app.roiOverlays.push(div2);
+                        app.overlayMap.set(key2, div2);
+                    } else {
+                        viewer.removeOverlay(div2);
+                        viewer.addOverlay({ element: div2, location: innerViewportRect });
+                    }
                 }
             });
             
