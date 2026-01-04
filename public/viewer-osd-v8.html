@@ -2366,8 +2366,15 @@
                 }
             });
             
-            // Draw field ROIs ONLY for the currently selected act, but only if ROI mode is active
-            console.log('roiMode:', app.roiMode);
+            // ========== ZAZNACZANIE PÓL W AKCIE (na razie wyłączone) ==========
+            // Ten kod będzie używany do zaznaczania konkretnych pól w akcie (imię, nazwisko itd.)
+            // Logika:
+            // - Gdy roiMode = true, użytkownik rysuje prostokąty na polach
+            // - Każde pole jest przechowywane w fieldROIs
+            // - fieldROIs są rysowane jako pomarańczowe ramki z nazwą pola
+            // - Kod pozostaje dla przyszłej implementacji
+            // ===================================================================
+            /*
             if (app.roiMode && currentAct && currentAct.fieldROIs) {
                 const actTypeShort = currentAct.type.toUpperCase().substring(0, 2);
                 const actName = `${actTypeShort}.${currentAct.year}.No.${currentAct.nr.toString().padStart(2, '0')}`;
@@ -2413,6 +2420,7 @@
                     }
                 });
             }
+            */
             
             app.needsFullRedraw = true; // Reset flagi
             } catch (e) {
