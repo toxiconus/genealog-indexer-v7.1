@@ -218,7 +218,7 @@
             z-index: 101;
         }
         .act-overlay.active {
-            border: 3px solid #10b981;
+            border: 1px solid #10b981;
         }
         .act-overlay-inner {
             border: 2px solid #ff9800;
@@ -2351,9 +2351,10 @@
                 if (!div || app.needsFullRedraw) {
                     div = document.createElement('div');
                     div.className = 'act-overlay' + (act.actNum === app.currentActNum ? ' active' : '');
+                    div.style.position = 'relative';
                     const label = document.createElement('div');
                     label.textContent = actName;
-                    label.style.cssText = 'color: white; font-size: 12px; font-weight: bold; padding: 6px; background: rgba(16,185,129,0.8); text-decoration: overline;';
+                    label.style.cssText = 'position: absolute; top: -18px; left: 0; color: #10b981; font-size: 12px; font-weight: bold; background: transparent; padding: 0; white-space: nowrap;';
                     div.appendChild(label);
                     
                     viewer.addOverlay({ element: div, location: viewportRect });
