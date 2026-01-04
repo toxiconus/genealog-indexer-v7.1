@@ -1268,8 +1268,8 @@
             <input type="text" id="searchInput" placeholder="🔍 Szukaj..." title="Szukaj aktów" style="margin-left: auto; padding: 6px 10px; border: 1px solid #3a3a3a; background: #1a1a1a; color: #ddd; border-radius: 4px; font-size: 11px; width: 160px; flex-shrink: 0;">
         </div>
         <div id="advancedActModal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.1); z-index:1000; justify-content:center; align-items:center; pointer-events:none;">
-            <div style="background:rgba(20,20,30,0.95); padding:20px; border-radius:8px; width:400px; pointer-events:auto;">
-                <h3>Dodaj akty do strony</h3>
+            <div id="advancedActModalContent" style="background:rgba(20,20,30,0.95); padding:20px; border-radius:8px; width:400px; pointer-events:auto; cursor:move; box-shadow:0 4px 20px rgba(0,0,0,0.5);">
+                <div style="background:#0078d4; padding:8px 12px; margin:-20px -20px 12px -20px; border-radius:8px 8px 0 0; cursor:move; user-select:none; color:white; font-weight:bold; font-size:14px;">Dodaj akty do strony</div>
                 <label>Rok: <input id="modalYear" type="number" value="1900"></label><br>
                 <label>Parafia: <input id="modalParish" type="text" value="Brak"></label><br>
                 <label>Województwo: <input id="modalWoj" type="text" value="LUB"></label><br>
@@ -2874,6 +2874,10 @@
             document.getElementById('modalPlusIndex').checked = !!prevData.plusIndex;
 
             modal.style.display = 'flex';
+            
+            // Uczynij modal przesuwnym
+            const modalContent = document.getElementById('advancedActModalContent');
+            makeElementDraggable(modalContent);
 
             document.getElementById('modalOK').onclick = async () => {
                 const data = {
