@@ -2364,6 +2364,7 @@
             });
             
             // Draw field ROIs ONLY for the currently selected act, but only if ROI mode is active
+            console.log('roiMode:', app.roiMode);
             if (app.roiMode && currentAct && currentAct.fieldROIs) {
                 const actTypeShort = currentAct.type.toUpperCase().substring(0, 2);
                 const actName = `${actTypeShort}.${currentAct.year}.No.${currentAct.nr.toString().padStart(2, '0')}`;
@@ -3321,12 +3322,22 @@
         function toggleROI() {
             app.roiMode = !app.roiMode;
             document.getElementById('roiBtn').classList.toggle('active', app.roiMode);
+            // Disable act mode when switching to ROI mode
+            if (app.roiMode && app.actMode) {
+                app.actMode = false;
+                document.getElementById('actBtn').classList.remove('active');
+            }
             if (app.updateCanvasInteraction) app.updateCanvasInteraction();
         }
 
         function toggleActMode() {
             app.actMode = !app.actMode;
             document.getElementById('actBtn').classList.toggle('active', app.actMode);
+            // Disable ROI mode when switching to act mode
+            if (app.actMode && app.roiMode) {
+                app.roiMode = false;
+                document.getElementById('roiBtn').classList.remove('active');
+            }
             if (app.updateCanvasInteraction) app.updateCanvasInteraction();
         }
 
