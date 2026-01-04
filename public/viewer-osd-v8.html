@@ -212,10 +212,13 @@
             background: rgba(255,152,0,0.2);
         }
         .act-overlay {
-            border: 3px solid #10b981;
+            border: 2px dashed #666;
             background: rgba(16,185,129,0.1);
             pointer-events: none;
-            z-index: 100;
+            z-index: 101;
+        }
+        .act-overlay.active {
+            border: 3px solid #10b981;
         }
         #drawingCanvas {
             position: absolute;
@@ -2245,6 +2248,34 @@
             }
         }
         
+        function calculateActROI(act) {
+            if (!act.fieldROIs || Object.keys(act.fieldROIs).length === 0) return null;
+            
+            let minX = Infinity, minY = Infinity, maxX = -Infinity, maxY = -Infinity;
+            Object.values(act.fieldROIs).forEach(roi => {
+                minX = Math.min(minX, roi.x);
+                minY = Math.min(minY, roi.y);
+                maxX = Math.max(maxX, roi.x + roi.w);
+                maxY = Math.max(maxY, roi.y + roi.h);
+            });
+            
+            // Add some padding
+            const padding = 0.05; // 5%
+            const w = maxX - minX;
+            const h = maxY - minY;
+            minX = Math.max(0, minX - w * padding);
+            minY = Math.max(0, minY - h * padding);
+            maxX = Math.min(1, maxX + w * padding);
+            maxY = Math.min(1, maxY + h * padding);
+            
+            return {
+                x: minX,
+                y: minY,
+                w: maxX - minX,
+                h: maxY - minY
+            };
+        }
+        
         function redrawROIs() {
             try {
                 const viewer = app.viewer;
@@ -2277,6 +2308,14 @@
             // Draw act overlays for all acts on current image
             const currentActs = app.imageActs.filter(a => a.imageIdx === app.currentImageIdx);
             
+            // Calculate actROI if not set and has fieldROIs
+            currentActs.forEach(act => {
+                if (!act.actROI && act.fieldROIs && Object.keys(act.fieldROIs).length > 0) {
+                    act.actROI = calculateActROI(act);
+                    console.log('Calculated actROI for act', act.actNum, act.actROI);
+                }
+            });
+            
             console.log('currentActs length:', currentActs.length, 'currentImageIdx:', app.currentImageIdx);
             
             currentActs.forEach(act => {
@@ -2302,8 +2341,7 @@
                 let div = app.overlayMap.get(key);
                 if (!div || app.needsFullRedraw) {
                     div = document.createElement('div');
-                    div.className = 'act-overlay';
-                    div.style.border = act.actNum === app.currentActNum ? '3px solid #10b981' : '2px dashed #666';
+                    div.className = 'act-overlay' + (act.actNum === app.currentActNum ? ' active' : '');
                     const label = document.createElement('div');
                     label.textContent = actName;
                     label.style.cssText = 'color: white; font-size: 12px; font-weight: bold; padding: 6px; background: rgba(16,185,129,0.8); text-decoration: overline;';
@@ -2313,6 +2351,7 @@
                     app.roiOverlays.push(div);
                     app.overlayMap.set(key, div);
                 } else {
+                    div.className = 'act-overlay' + (act.actNum === app.currentActNum ? ' active' : '');
                     viewer.removeOverlay(div);
                     viewer.addOverlay({ element: div, location: viewportRect });
                 }
