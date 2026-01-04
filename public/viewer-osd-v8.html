@@ -50,20 +50,24 @@
         }
         #app {
             display: grid;
-            grid-template-rows: 38px 1fr 25%;
+            grid-template-rows: auto 1fr 25%;
             height: 100vh;
         }
         .toolbar {
             background: linear-gradient(180deg, #1a1a1a 0%, #151515 100%);
             border-bottom: 1px solid #2a2a2a;
-            padding: 6px 10px;
+            padding: 5px 8px;
             display: flex;
-            align-items: center;
-            gap: 6px;
-            min-height: 38px;
+            align-items: flex-start;
+            align-content: flex-start;
+            gap: 3px;
+            min-height: auto;
+            height: auto;
             box-shadow: 0 2px 8px rgba(0,0,0,0.3);
             z-index: 100;
             flex-wrap: wrap;
+            overflow-x: visible;
+            overflow-y: visible;
             grid-row: 1;
         }
         .toolbar-title {
@@ -78,15 +82,16 @@
             background: #252525;
             border: 1px solid #3a3a3a;
             color: #bbb;
-            padding: 5px 10px;
+            padding: 4px 8px;
             border-radius: 4px;
             cursor: pointer;
-            font-size: 11px;
+            font-size: 10px;
             display: flex;
             align-items: center;
-            gap: 5px;
+            gap: 4px;
             transition: all 0.15s ease;
             white-space: nowrap;
+            flex-shrink: 0;
         }
         .toolbar-btn:hover {
             background: #2d2d2d;
@@ -102,9 +107,10 @@
         }
         .toolbar-sep {
             width: 1px;
-            height: 20px;
+            height: 18px;
             background: #2a2a2a;
-            margin: 0 2px;
+            margin: 0 1px;
+            flex-shrink: 0;
         }
         .main-content {
             flex: 1;
@@ -269,6 +275,24 @@
             border-color: #0078d4;
             color: white;
             font-weight: bold;
+        }
+        
+        .acts-group-header {
+            padding: 8px 6px;
+            font-size: 11px;
+            font-weight: 600;
+            color: #aaa;
+            background: #1a1a1a;
+            border-bottom: 1px solid #3a3a3a;
+            margin-top: 4px;
+            cursor: pointer;
+            border-radius: 3px;
+            transition: all 0.2s ease;
+        }
+        
+        .acts-group-header:hover {
+            background: #252525;
+            color: #ddd;
         }
         
         .act-control-btn {
@@ -1143,10 +1167,9 @@
 <body>
     <div id="app">
         <div class="toolbar">
-            <span class="toolbar-title"><i class="fas fa-book"></i> Genealog Indexer v7.1</span>
-            <span id="imageCounter" style="margin-left: 20px; color: #999; font-size: 13px;"></span>
+            <span id="imageCounter" style="color: #999; font-size: 11px; margin-right: 10px;"></span>
             
-            <!-- ⭐ P0: Progress Bar -->
+            <!-- Progress Bar -->
             <div id="progressBar">
                 <span class="progress-text">Pola:</span>
                 <div class="progress-container">
@@ -1159,7 +1182,7 @@
             
             <div class="toolbar-sep"></div>
             
-            <!-- 1. FILE OPERATIONS - Wczytywanie, sortowanie, zapis -->
+            <!-- FILE OPS: Otwórz, Sort, Export, Import -->
             <button class="toolbar-btn" id="openBtn" title="Dodaj obrazy (Ctrl+O)">
                 <i class="fas fa-folder-open"></i> Otwórz
             </button>
@@ -1172,13 +1195,13 @@
             <button class="toolbar-btn" onclick="importCSV()" title="Import CSV">
                 <i class="fas fa-upload"></i> CSV
             </button>
-            <button class="toolbar-btn" onclick="importJSON()" title="Import JSON (Ctrl+J)">
+            <button class="toolbar-btn" onclick="importJSON()" title="Import JSON">
                 <i class="fas fa-file-import"></i> JSON
             </button>
             
             <div class="toolbar-sep"></div>
             
-            <!-- 2. EDITING TOOLS - Zaznaczanie ROI i aktów -->
+            <!-- EDIT: ROI, Akt, Clear -->
             <button class="toolbar-btn" id="roiBtn" title="Zaznacz ROI pól (Ctrl+R)">
                 <i class="fas fa-crop-alt"></i> ROI
             </button>
@@ -1186,63 +1209,63 @@
                 <i class="fas fa-file-alt"></i> Akt
             </button>
             <button class="toolbar-btn" onclick="clearAllROIs()" title="Usuń wszystkie ROI">
-                <i class="fas fa-trash-alt"></i> Clear ROI
+                <i class="fas fa-trash-alt"></i> Clear
             </button>
             
             <div class="toolbar-sep"></div>
             
-            <!-- 3. IMAGE PROCESSING - Filtry i przetwarzanie -->
-            <button class="toolbar-btn" id="postprocessBtn" title="Postprocessing filtry">
-                <i class="fas fa-sliders-h"></i> Filtry
-            </button>
-            
-            <div class="toolbar-sep"></div>
-            
-            <!-- 4. PANELS - Widoczność paneli -->
-            <button class="toolbar-btn" onclick="toggleThumbsPanel()" title="Miniatury (Ctrl+M)">
+            <!-- PANELS: Thumbs, Acts -->
+            <button class="toolbar-btn" onclick="toggleThumbsPanel()" title="Miniatury">
                 <i class="fas fa-images"></i> Thumbs
             </button>
-            <button class="toolbar-btn" id="toggleActsBtn" title="Akty (Ctrl+L)">
+            <button class="toolbar-btn" id="toggleActsBtn" title="Akty">
                 <i class="fas fa-list"></i> Acts
             </button>
             
             <div class="toolbar-sep"></div>
             
-            <!-- 5. VIEW - Zoom i pełny ekran -->
-            <button class="toolbar-btn" onclick="zoomReset()" title="Dopasuj widok">
+            <!-- VIEW: Fit, FS -->
+            <button class="toolbar-btn" onclick="zoomReset()" title="Dopasuj">
                 <i class="fas fa-expand-arrows-alt"></i> Fit
             </button>
-            <button class="toolbar-btn" onclick="toggleFullscreen()" title="Pełny ekran">
-                <i class="fas fa-expand"></i> Fullscreen
+            <button class="toolbar-btn" onclick="toggleFullscreen()" title="Fullscreen">
+                <i class="fas fa-expand"></i> FS
             </button>
             
             <div class="toolbar-sep"></div>
             
-            <!-- 6. FORMS & INTERFACE - Formularze i interfejs -->
-            <button class="toolbar-btn" onclick="toggleFloatingForm()" title="Pełny formularz aktu (Enter)">
-                <i class="fas fa-edit"></i> Formularz
+            <!-- FORMS: Formularz, Pinupy, Clear -->
+            <button class="toolbar-btn" onclick="toggleFloatingForm()" title="Formularz">
+                <i class="fas fa-edit"></i> Form
             </button>
-            <button class="toolbar-btn" onclick="showAllPinups()" title="Pokaż PIN-UPY pól z ROI">
-                <i class="fas fa-thumbtack"></i> Pinupy
+            <button class="toolbar-btn" onclick="showAllPinups()" title="Pinupy">
+                <i class="fas fa-thumbtack"></i> PIN
             </button>
-            <button class="toolbar-btn" onclick="clearPinups()" title="Zamknij wszystkie pin-upy">
-                <i class="fas fa-times"></i> Zamknij PIN
+            <button class="toolbar-btn" onclick="clearPinups()" title="Zamknij PIN">
+                <i class="fas fa-times"></i> ✕PIN
             </button>
             
             <div class="toolbar-sep"></div>
             
-            <!-- 7. ADVANCED - Dane i zaawansowane opcje -->
-            <button class="toolbar-btn" onclick="exportFromLocalStorageToFirestore()" title="Migruj do Firebase">
-                <i class="fas fa-cloud-upload-alt"></i> Firebase
+            <!-- PROCESS: Filtry -->
+            <button class="toolbar-btn" id="postprocessBtn" title="Filtry">
+                <i class="fas fa-sliders-h"></i> Filtry
             </button>
-            <button class="toolbar-btn" id="clearStorageBtn" title="Wyczyść localStorage" style="color: #e74c3c;">
+            
+            <div class="toolbar-sep"></div>
+            
+            <!-- ADVANCED: Firebase, Clear -->
+            <button class="toolbar-btn" onclick="exportFromLocalStorageToFirestore()" title="Firebase">
+                <i class="fas fa-cloud-upload-alt"></i> FB
+            </button>
+            <button class="toolbar-btn" id="clearStorageBtn" title="Wyczyść" style="color: #e74c3c;">
                 <i class="fas fa-trash-alt"></i> Wyczyść
             </button>
             
             <div class="toolbar-sep"></div>
             
-            <!-- 8. SEARCH - Wyszukiwanie (PRAWY KONIEC) -->
-            <input type="text" id="searchInput" placeholder="🔍 Szukaj..." title="Wpisz aby wyszukać akty" style="margin-left: auto; padding: 8px 12px; border: 1px solid #3a3a3a; background: #1a1a1a; color: #ddd; border-radius: 4px; font-size: 13px; width: 200px;">
+            <!-- SEARCH (prawy koniec) -->
+            <input type="text" id="searchInput" placeholder="🔍 Szukaj..." title="Szukaj aktów" style="margin-left: auto; padding: 6px 10px; border: 1px solid #3a3a3a; background: #1a1a1a; color: #ddd; border-radius: 4px; font-size: 11px; width: 160px; flex-shrink: 0;">
         </div>
         <div id="advancedActModal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.1); z-index:1000; justify-content:center; align-items:center; pointer-events:none;">
             <div style="background:rgba(20,20,30,0.95); padding:20px; border-radius:8px; width:400px; pointer-events:auto;">
@@ -3950,31 +3973,74 @@
             if (!actsList) return;
             
             actsList.innerHTML = '';
-            const currentImageActs = app.imageActs.filter(a => a.imageIdx === app.currentImageIdx);
             
-            console.log('🎯 renderActsList: rendering', currentImageActs.length, 'acts');
+            // Grupuj wszystkie akty po imageIdx
+            const groupedByImage = {};
+            app.imageActs.forEach(act => {
+                if (!groupedByImage[act.imageIdx]) {
+                    groupedByImage[act.imageIdx] = [];
+                }
+                groupedByImage[act.imageIdx].push(act);
+            });
             
-            currentImageActs.forEach(act => {
-                const btn = document.createElement('button');
-                btn.className = 'act-button' + (app.currentActNum === act.actNum ? ' active' : '');
+            console.log('🎯 renderActsList: rendering all acts grouped by image', Object.keys(groupedByImage).length, 'images');
+            
+            // Sortuj imageIdx i iteruj po nich
+            const sortedImageIndices = Object.keys(groupedByImage).map(Number).sort((a, b) => a - b);
+            
+            sortedImageIndices.forEach((imageIdx, groupIndex) => {
+                const acts = groupedByImage[imageIdx];
                 
-                // Main display name
-                const displayName = formatActDisplayName(act);
-                btn.textContent = displayName;
+                // Dodaj header grupy z nazwą obrazu
+                const header = document.createElement('div');
+                header.className = 'acts-group-header';
+                const imageName = app.images[imageIdx]?.name || `Obraz ${imageIdx + 1}`;
+                header.textContent = imageName;
+                header.style.cssText = `
+                    padding: 8px 6px;
+                    font-size: 11px;
+                    font-weight: 600;
+                    color: #aaa;
+                    background: ${groupIndex % 2 === 0 ? '#1a1a1a' : '#0f0f0f'};
+                    border-bottom: 1px solid #3a3a3a;
+                    margin-top: ${groupIndex > 0 ? '4px' : '0'};
+                    cursor: pointer;
+                `;
                 
-                // Show full ID on hover or when active
-                btn.title = act.id || `Akt ${act.actNum}`;
+                // Klik na header - pokaż ten obraz
+                header.onclick = () => selectImage(imageIdx);
+                header.title = `Kliknij aby otworzyć ${imageName}`;
                 
-                // Lewy klik - wybierz akt
-                btn.onclick = () => selectAct(act.actNum);
+                actsList.appendChild(header);
                 
-                // Prawy klik - kontekstowe menu
-                btn.oncontextmenu = (e) => {
-                    e.preventDefault();
-                    showActContextMenuPanel(act.actNum, e, btn);
-                };
-                
-                actsList.appendChild(btn);
+                // Dodaj akty dla tego obrazu
+                acts.forEach(act => {
+                    const btn = document.createElement('button');
+                    btn.className = 'act-button' + (app.currentActNum === act.actNum ? ' active' : '');
+                    
+                    // Main display name
+                    const displayName = formatActDisplayName(act);
+                    btn.textContent = displayName;
+                    
+                    // Show full ID on hover or when active
+                    btn.title = act.id || `Akt ${act.actNum}`;
+                    
+                    // Lewy klik - wybierz akt (jeśli jest z innego obrazu, przełącz obraz)
+                    btn.onclick = () => {
+                        if (app.currentImageIdx !== imageIdx) {
+                            selectImage(imageIdx);
+                        }
+                        selectAct(act.actNum);
+                    };
+                    
+                    // Prawy klik - kontekstowe menu
+                    btn.oncontextmenu = (e) => {
+                        e.preventDefault();
+                        showActContextMenuPanel(act.actNum, e, btn);
+                    };
+                    
+                    actsList.appendChild(btn);
+                });
             });
         }
         
