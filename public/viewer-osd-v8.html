@@ -3623,6 +3623,9 @@
                         if (f) { fieldLabel = f.label; break; }
                     }
                 }
+                
+                // Pobierz nazwę aktu
+                const actDisplayName = formatActDisplayName(act);
 
                 const container = document.getElementById('fieldPinupsContainer');
                 let pinup = container.querySelector(`[data-field="${fieldId}"]`);
@@ -3645,20 +3648,25 @@
                 pinup.style.left = `${Math.max(10, pixel.x - 130)}px`;
 
                 pinup.innerHTML = `
-                    <div class="field-pinup-header">
-                        <span>${fieldLabel}</span>
-                        <div style="display:flex; gap:6px; align-items:center;">
+                    <div class="field-pinup-header" style="background: #0078d4; color: white; padding: 6px 8px; border-radius: 3px 3px 0 0; font-weight: bold; font-size: 12px; margin-bottom: 4px;">
+                        ${actDisplayName}
+                    </div>
+                    <div class="field-pinup-header" style="padding: 0 0 6px 0; margin-bottom: 6px; border-bottom: 1px solid #3a3a3a;">
+                        <span style="color: #aaa; font-size: 10px;">${fieldLabel}</span>
+                        <div style="display:flex; gap:6px; align-items:center; float: right;">
                             <button class="ocr-btn" title="OCR – spróbuj odczytać tekst z ROI" 
-                                    onclick="runOCRForPinup(this.closest('.field-pinup'))">
+                                    onclick="runOCRForPinup(this.closest('.field-pinup'))"
+                                    style="padding: 2px 4px; font-size: 10px;">
                                 <i class="fas fa-wand-magic-sparkles"></i>
                             </button>
-                            <button class="field-pinup-close" onclick="this.closest('.field-pinup').remove()">&times;</button>
+                            <button class="field-pinup-close" onclick="this.closest('.field-pinup').remove()" style="padding: 0 2px;">&times;</button>
                         </div>
                     </div>
                     <input type="text" 
                            value="${(act.fieldValues[fieldId] || '').replace(/"/g, '&quot;')}" 
                            placeholder="${fieldLabel}"
                            data-field="${fieldId}"
+                           style="width: 100%; padding: 4px; background: #1a1a1a; color: #ddd; border: 1px solid #3a3a3a; border-radius: 2px; font-size: 11px;"
                            ${act.fieldROIs[fieldId] ? 'class="has-roi"' : ''}>
                     <div class="ocr-suggestions" style="margin-top:6px; font-size:11px; color:#aaa; display:none;"></div>
                 `;
