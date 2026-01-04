@@ -2363,9 +2363,8 @@
                 }
             });
             
-            // Draw field ROIs ONLY for the currently selected act
-            
-            if (currentAct && currentAct.fieldROIs) {
+            // Draw field ROIs ONLY for the currently selected act, but only if ROI mode is active
+            if (app.roiMode && currentAct && currentAct.fieldROIs) {
                 const actTypeShort = currentAct.type.toUpperCase().substring(0, 2);
                 const actName = `${actTypeShort}.${currentAct.year}.No.${currentAct.nr.toString().padStart(2, '0')}`;
                 
