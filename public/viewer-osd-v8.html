@@ -2361,32 +2361,6 @@
                     viewer.removeOverlay(div);
                     viewer.addOverlay({ element: div, location: viewportRect });
                 }
-                
-                // Secondary smaller orange overlay
-                const key2 = `act_inner_${act.actNum}`;
-                const innerPadding = 0.1; // 10% smaller
-                const innerImgRect = new OpenSeadragon.Rect(
-                    (act.actROI.x + act.actROI.w * innerPadding) * size.x,
-                    (act.actROI.y + act.actROI.h * innerPadding) * size.y,
-                    act.actROI.w * (1 - 2 * innerPadding) * size.x,
-                    act.actROI.h * (1 - 2 * innerPadding) * size.y
-                );
-                const innerViewportRect = viewer.viewport.imageToViewportRectangle(innerImgRect);
-                
-                if (innerViewportRect.width > 0 && innerViewportRect.height > 0) {
-                    let div2 = app.overlayMap.get(key2);
-                    if (!div2 || app.needsFullRedraw) {
-                        div2 = document.createElement('div');
-                        div2.className = 'act-overlay-inner';
-                        
-                        viewer.addOverlay({ element: div2, location: innerViewportRect });
-                        app.roiOverlays.push(div2);
-                        app.overlayMap.set(key2, div2);
-                    } else {
-                        viewer.removeOverlay(div2);
-                        viewer.addOverlay({ element: div2, location: innerViewportRect });
-                    }
-                }
             });
             
             // Draw field ROIs ONLY for the currently selected act
