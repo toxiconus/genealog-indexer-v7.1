@@ -3640,9 +3640,9 @@
                     }
                 }
                 
-                // Fallback jeśli wciąż nie znaleziono
+                // Fallback - pokaż normalizedFieldId jeśli nie znaleziono labela
                 if (!fieldLabel) {
-                    fieldLabel = `Pole (${normalizedFieldId})`;
+                    fieldLabel = normalizedFieldId;
                 }
                 
                 // Pobierz nazwę aktu
@@ -3672,9 +3672,9 @@
                     <div class="field-pinup-header" style="background: #0078d4; color: white; padding: 6px 8px; border-radius: 3px 3px 0 0; font-weight: bold; font-size: 12px; margin-bottom: 4px;">
                         ${actDisplayName}
                     </div>
-                    <div class="field-pinup-header" style="padding: 0 0 6px 0; margin-bottom: 6px; border-bottom: 1px solid #3a3a3a;">
+                    <div style="padding: 4px 6px; background: #1a1a1a; border-bottom: 1px solid #3a3a3a; margin-bottom: 6px; display: flex; justify-content: space-between; align-items: center;">
                         <span style="color: #aaa; font-size: 10px;">${fieldLabel}</span>
-                        <div style="display:flex; gap:6px; align-items:center; float: right;">
+                        <div style="display:flex; gap:6px; align-items:center;">
                             <button class="ocr-btn" title="OCR – spróbuj odczytać tekst z ROI" 
                                     onclick="runOCRForPinup(this.closest('.field-pinup'))"
                                     style="padding: 2px 4px; font-size: 10px;">
