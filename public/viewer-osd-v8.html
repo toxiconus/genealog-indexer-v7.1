@@ -1201,14 +1201,14 @@
             
             <div class="toolbar-sep"></div>
             
-            <!-- EDIT: ROI, Akt, Clear -->
-            <button class="toolbar-btn" id="roiBtn" title="Zaznacz ROI pól (Ctrl+R)">
-                <i class="fas fa-crop-alt"></i> ROI
+            <!-- EDIT: Zaznacz akt, Zaznacz pola, Clear -->
+            <button class="toolbar-btn" id="roiBtn" title="Zaznacz granice całego aktu na obrazie (Ctrl+R)">
+                <i class="fas fa-expand"></i> Granice aktu
             </button>
-            <button class="toolbar-btn" id="actBtn" title="Zaznacz granicę aktu (Ctrl+A)">
-                <i class="fas fa-file-alt"></i> Akt
+            <button class="toolbar-btn" id="actBtn" title="Zaznacz konkretne pola w akcie (imię, nazwisko itd.) - Ctrl+A">
+                <i class="fas fa-crop-alt"></i> Pola w akcie
             </button>
-            <button class="toolbar-btn" onclick="clearAllROIs()" title="Usuń wszystkie ROI">
+            <button class="toolbar-btn" onclick="clearAllROIs()" title="Usuń wszystkie zaznaczenia">
                 <i class="fas fa-trash-alt"></i> Clear
             </button>
             
@@ -1314,7 +1314,7 @@
                     <div id="viewer"></div>
                     <img id="imageFallback" />
                     <canvas id="drawingCanvas"></canvas>
-                    <div class="roi-info-overlay" id="roiInfo">Tryb ROI</div>
+                    <div class="roi-info-overlay" id="roiInfo">Tryb zaznaczania</div>
                     <!-- 💡 Suggestions Fan - Wachlarz podpowiedzi -->
                     <div id="suggestionsWachlarz" style="position: absolute; z-index: 200; pointer-events: none; display: none;"></div>
                     <div class="rotate-controls">
@@ -2142,8 +2142,8 @@
             
             app.drawingCanvas.addEventListener('mousedown', (e) => {
                 if (!app.roiMode && !app.actMode) return;
-                if (app.roiMode && !app.activeField) { notify('Zaznacz pole w formularzu', 'error'); return; }
-                if (!app.currentActNum) { notify('Zaznacz akt przed rysowaniem', 'error'); return; }
+                if (app.roiMode && !app.activeField) { notify('Zaznacz pole (imię, nazwisko itd.) w formularzu', 'error'); return; }
+                if (!app.currentActNum) { notify('Zaznacz akt w oknie AKTY zanim zaznaczysz pola', 'error'); return; }
                 
                 e.preventDefault();
                 app.drawingROI = true;
@@ -2190,10 +2190,10 @@
                 if (app.roiMode) {
                     act.fieldROIs[app.activeField.dataset.field] = roi;
                     app.activeField.classList.add('has-roi');
-                    notify('ROI zapisany', 'success');
+                    notify('✓ Pole zaznaczone', 'success');
                 } else if (app.actMode) {
                     act.actROI = roi;
-                    notify('Granica aktu zapisana', 'success');
+                    notify('✓ Granice aktu zaznaczone', 'success');
                     
                     // Wyłącz tryb rysowania i uruchom wizard
                     toggleActMode();
