@@ -204,6 +204,7 @@
             border: 2px dashed #0078d4;
             background: rgba(0,120,212,0.15);
             pointer-events: none;
+            z-index: 100;
         }
         .roi-overlay.active {
             border-color: #ff9800;
@@ -214,6 +215,7 @@
             border: 3px solid #10b981;
             background: rgba(16,185,129,0.1);
             pointer-events: none;
+            z-index: 100;
         }
         #drawingCanvas {
             position: absolute;
@@ -1380,10 +1382,10 @@
                     <thead>
                         <tr>
                             <th><input type="checkbox" id="selectAllCheckbox" title="Zaznacz wszystko"></th>
-                            <th>Lp</th>
-                            <th>Imię</th>
-                            <th>Nazwisko</th>
-                            <th>Zawód</th>
+                            <th>Akt</th>
+                            <th>Imię dziecka</th>
+                            <th>Nazwisko dziecka</th>
+                            <th>Data urodzenia</th>
                             <th>Notatki</th>
                         </tr>
                     </thead>
@@ -2244,9 +2246,10 @@
         }
         
         function redrawROIs() {
-            const viewer = app.viewer;
-            const item = viewer.world.getItemAt(0);
-            if (!item) return;
+            try {
+                const viewer = app.viewer;
+                const item = viewer.world.getItemAt(0);
+                if (!item) return;
             
             if (app.needsFullRedraw) {
                 app.roiOverlays.forEach(overlay => viewer.removeOverlay(overlay));
@@ -2265,44 +2268,62 @@
             }
             
             const size = item.getContentSize();
-            // Skip act overlays - moved to acts panel
-            // const currentActs = app.imageActs.filter(a => a.imageIdx === app.currentImageIdx);
-            //
-            // currentActs.forEach(act => {
-            //     if (!act.actROI) return;
-            //
-            //     const key = `act_${act.actNum}`;
-            //     const imgRect = new OpenSeadragon.Rect(
-            //         act.actROI.x * size.x, act.actROI.y * size.y,
-            //         act.actROI.w * size.x, act.actROI.h * size.y
-            //     );
-            //     const viewportRect = viewer.viewport.imageToViewportRectangle(imgRect);
-            //
-            //     let div = app.overlayMap.get(key);
-            //     if (!div || app.needsFullRedraw) {
-            //         div = document.createElement('div');
-            //         div.className = 'act-overlay';
-            //         div.style.border = '3px solid #10b981';
-            //         const label = document.createElement('div');
-            //         label.textContent = `Akt ${act.actNum}`;
-            //         label.style.cssText = 'color: white; font-size: 12px; font-weight: bold; padding: 6px; background: rgba(16,185,129,0.8);';
-            //         div.appendChild(label);
-            //
-            //         viewer.addOverlay({ element: div, location: viewportRect });
-            //         app.roiOverlays.push(div);
-            //         app.overlayMap.set(key, div);
-            //     } else {
-            //         viewer.removeOverlay(div);
-            //         viewer.addOverlay({ element: div, location: viewportRect });
-            //     }
-            // });
             
             // Draw field ROIs ONLY for the currently selected act
             const currentAct = app.imageActs.find(a => 
                 a.imageIdx === app.currentImageIdx && a.actNum === app.currentActNum
             );
             
+            // Draw act overlays for all acts on current image
+            const currentActs = app.imageActs.filter(a => a.imageIdx === app.currentImageIdx);
+            
+            console.log('currentActs length:', currentActs.length, 'currentImageIdx:', app.currentImageIdx);
+            
+            currentActs.forEach(act => {
+                if (!act.actROI) return;
+                
+                console.log('Drawing act overlay for act', act.actNum);
+                
+                const actTypeShort = act.type.toUpperCase().substring(0, 2);
+                const actName = `${actTypeShort}.${act.year}.No.${act.nr.toString().padStart(2, '0')}`;
+                
+                const key = `act_${act.actNum}`;
+                const imgRect = new OpenSeadragon.Rect(
+                    act.actROI.x * size.x, act.actROI.y * size.y,
+                    act.actROI.w * size.x, act.actROI.h * size.y
+                );
+                const viewportRect = viewer.viewport.imageToViewportRectangle(imgRect);
+                
+                if (viewportRect.width <= 0 || viewportRect.height <= 0) {
+                    console.warn('Invalid viewportRect for act', act.actNum, viewportRect);
+                    return;
+                }
+                
+                let div = app.overlayMap.get(key);
+                if (!div || app.needsFullRedraw) {
+                    div = document.createElement('div');
+                    div.className = 'act-overlay';
+                    div.style.border = act.actNum === app.currentActNum ? '3px solid #10b981' : '2px dashed #666';
+                    const label = document.createElement('div');
+                    label.textContent = actName;
+                    label.style.cssText = 'color: white; font-size: 12px; font-weight: bold; padding: 6px; background: rgba(16,185,129,0.8); text-decoration: overline;';
+                    div.appendChild(label);
+                    
+                    viewer.addOverlay({ element: div, location: viewportRect });
+                    app.roiOverlays.push(div);
+                    app.overlayMap.set(key, div);
+                } else {
+                    viewer.removeOverlay(div);
+                    viewer.addOverlay({ element: div, location: viewportRect });
+                }
+            });
+            
+            // Draw field ROIs ONLY for the currently selected act
+            
             if (currentAct && currentAct.fieldROIs) {
+                const actTypeShort = currentAct.type.toUpperCase().substring(0, 2);
+                const actName = `${actTypeShort}.${currentAct.year}.No.${currentAct.nr.toString().padStart(2, '0')}`;
+                
                 Object.entries(currentAct.fieldROIs).forEach(([fieldId, roi]) => {
                     const key = `field_${currentAct.actNum}_${fieldId}`;
                     const imgRect = new OpenSeadragon.Rect(
@@ -2311,19 +2332,28 @@
                     );
                     const viewportRect = viewer.viewport.imageToViewportRectangle(imgRect);
                     
+                    if (viewportRect.width <= 0 || viewportRect.height <= 0) {
+                        console.warn('Invalid viewportRect for field', fieldId, viewportRect);
+                        return;
+                    }
+                    
+                    console.log('Drawing field ROI for', fieldId, 'at', viewportRect);
+                    
                     let div = app.overlayMap.get(key);
                     if (!div || app.needsFullRedraw) {
                         div = document.createElement('div');
                         div.className = 'roi-overlay';
                         const label = document.createElement('div');
-                        label.textContent = fieldId.substring(0, 15);
-                        label.style.cssText = 'color: white; font-size: 11px; padding: 4px; background: rgba(0,0,0,0.6);';
+                        label.textContent = actName;
+                        label.style.cssText = 'color: white; font-size: 11px; padding: 4px; background: rgba(0,0,0,0.6); text-decoration: overline;';
                         div.appendChild(label);
                         
+                        console.log('Adding overlay for', key, 'at', viewportRect);
                         viewer.addOverlay({ element: div, location: viewportRect });
                         app.roiOverlays.push(div);
                         app.overlayMap.set(key, div);
                     } else {
+                        console.log('Updating overlay for', key);
                         viewer.removeOverlay(div);
                         viewer.addOverlay({ element: div, location: viewportRect });
                     }
@@ -2337,6 +2367,9 @@
             }
             
             app.needsFullRedraw = true; // Reset flagi
+            } catch (e) {
+                console.error('Error in redrawROIs:', e);
+            }
         }
         
         function setupEvents() {
@@ -2483,6 +2516,64 @@
                         console.log('🔌 Escape: All pinups cleared');
                     }
                 }
+            });
+        }
+        
+        // Table editing listeners
+        const dataTable = document.getElementById('dataTable');
+        if (dataTable) {
+            dataTable.addEventListener('click', (e) => {
+                if (e.target.classList.contains('cell-editable')) {
+                    const input = document.createElement('input');
+                    input.value = e.target.textContent;
+                    input.style.width = '100%';
+                    e.target.innerHTML = '';
+                    e.target.appendChild(input);
+                    input.focus();
+                    
+                    input.addEventListener('blur', () => {
+                        const newValue = input.value;
+                        e.target.textContent = newValue;
+                        
+                        // Zapisz do aktu
+                        const rowIdx = e.target.parentNode.rowIndex - 1; // -1 dla thead
+                        const currentActs = app.imageActs.filter(a => a.imageIdx === app.currentImageIdx);
+                        const act = currentActs[rowIdx];
+                        const cellIdx = e.target.cellIndex - 1; // -1 dla checkbox
+                        
+                        if (cellIdx === 1) act.fieldValues.child_first_name = newValue;
+                        else if (cellIdx === 2) act.fieldValues.child_last_name = newValue;
+                        else if (cellIdx === 3) act.fieldValues.child_birth_date = newValue;
+                        else if (cellIdx === 4) act.fieldValues.notes = newValue;
+                        
+                        saveStorage();
+                        renderRecordsTable(); // Odśwież tabelę
+                    });
+                }
+            });
+            
+            // Paste listener for table
+            dataTable.addEventListener('paste', (e) => {
+                e.preventDefault();
+                const pastedData = (e.clipboardData || window.clipboardData).getData('text');
+                const rows = pastedData.split('\n').map(row => row.split('\t'));
+                
+                const selectedRow = document.activeElement.closest('tr')?.rowIndex - 1 || 0;
+                const currentActs = app.imageActs.filter(a => a.imageIdx === app.currentImageIdx);
+                
+                rows.forEach((rowData, i) => {
+                    if (currentActs[selectedRow + i]) {
+                        const act = currentActs[selectedRow + i];
+                        if (rowData[0]) act.fieldValues.child_first_name = rowData[0];
+                        if (rowData[1]) act.fieldValues.child_last_name = rowData[1];
+                        if (rowData[2]) act.fieldValues.child_birth_date = rowData[2];
+                        if (rowData[3]) act.fieldValues.notes = rowData[3];
+                    }
+                });
+                
+                saveStorage();
+                renderRecordsTable();
+                notify('📋 Wklejono dane', 'success');
             });
         }
         
@@ -2933,6 +3024,7 @@
 
                 saveStorage();
                 renderActsList();
+                renderRecordsTable();
                 selectAct(1);
                 updateRecordCounter();
                 notify(`Utworzono ${count} aktów`, 'success');
@@ -3149,6 +3241,7 @@
             updateThumbs();
             updateImageCounter();
             renderActsList(); // Update acts panel when image changes
+            renderRecordsTable();
 
             const actsOnImage = app.imageActs.filter(a => a.imageIdx === idx);
 
@@ -4075,6 +4168,52 @@
                     
                     actsList.appendChild(btn);
                 });
+            });
+        }
+        
+        function renderRecordsTable() {
+            const tableBody = document.getElementById('dataTableBody');
+            if (!tableBody) return;
+            
+            tableBody.innerHTML = '';
+            
+            // Filtruj akty dla bieżącego obrazu
+            const currentActs = app.imageActs.filter(a => a.imageIdx === app.currentImageIdx);
+            
+            currentActs.forEach((act, index) => {
+                const row = tableBody.insertRow();
+                
+                // Checkbox
+                const checkboxCell = row.insertCell();
+                const checkbox = document.createElement('input');
+                checkbox.type = 'checkbox';
+                checkbox.className = 'row-checkbox';
+                checkboxCell.appendChild(checkbox);
+                
+                // Akt name
+                const actTypeShort = act.type.toUpperCase().substring(0, 2);
+                const actName = `${actTypeShort}.${act.year}.No.${act.nr.toString().padStart(2, '0')}`;
+                row.insertCell().textContent = actName;
+                
+                // Imię dziecka
+                const firstNameCell = row.insertCell();
+                firstNameCell.textContent = act.fieldValues.child_first_name || '';
+                firstNameCell.className = 'cell-editable';
+                
+                // Nazwisko dziecka
+                const lastNameCell = row.insertCell();
+                lastNameCell.textContent = act.fieldValues.child_last_name || '';
+                lastNameCell.className = 'cell-editable';
+                
+                // Data urodzenia
+                const birthDateCell = row.insertCell();
+                birthDateCell.textContent = act.fieldValues.child_birth_date || '';
+                birthDateCell.className = 'cell-editable';
+                
+                // Notatki
+                const notesCell = row.insertCell();
+                notesCell.textContent = act.fieldValues.notes || '';
+                notesCell.className = 'cell-editable';
             });
         }
         
