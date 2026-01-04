@@ -3618,13 +3618,31 @@
 
                 // Szukaj labela pola - normalizuj fieldId (zamień kropki na podkreślenia)
                 const normalizedFieldId = fieldId.replace(/\./g, '_');
-                let fieldLabel = fieldId;
+                let fieldLabel = null;
+                
+                // Szukaj w bieżącym szablonie
                 const template = app.templates.find(t => t.id === app.currentTemplate);
                 if (template) {
                     for (let sec of template.sections) {
                         const f = sec.fields.find(fld => fld.id === normalizedFieldId);
                         if (f) { fieldLabel = f.label; break; }
                     }
+                }
+                
+                // Jeśli nie znaleziono, szukaj we wszystkich szablonach
+                if (!fieldLabel) {
+                    for (let tpl of app.templates) {
+                        for (let sec of tpl.sections) {
+                            const f = sec.fields.find(fld => fld.id === normalizedFieldId);
+                            if (f) { fieldLabel = f.label; break; }
+                        }
+                        if (fieldLabel) break;
+                    }
+                }
+                
+                // Fallback jeśli wciąż nie znaleziono
+                if (!fieldLabel) {
+                    fieldLabel = `Pole (${normalizedFieldId})`;
                 }
                 
                 // Pobierz nazwę aktu
