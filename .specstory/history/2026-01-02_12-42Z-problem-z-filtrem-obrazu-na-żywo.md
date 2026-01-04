@@ -9859,7 +9859,7 @@ Bez zbędnego checkboxa.
 
 ---
 
-_**User (2026-01-02 14:47Z)**_
+_**User (2026-01-02 14:48Z)**_
 
 ok. mozesz zrobic backup lokalny i github
 
@@ -9867,7 +9867,1044 @@ ok. mozesz zrobic backup lokalny i github
 
 _**Agent (model copilot/grok-code-fast-1)**_
 
+<tool-use data-tool-type="unknown" data-tool-name="run_in_terminal">
+<details>
+<summary>Tool use: **run_in_terminal**</summary>
 
+
+Parameters:
+
+```json
+{
+  "kind": "terminal",
+  "terminalToolSessionId": "8585d5aa-6c05-4468-8a00-47a7650dc20a",
+  "terminalCommandId": "tool-fe9d0b5b-2e8b-4680-93d6-fdbe93742cd9",
+  "commandLine": {
+    "original": "cd \"j:\\projekt 2025\"; robocopy \"projekt-akta-v2\" \"backup-akta-v2-20260102\" /E /COPYALL /R:0 /W:0"
+  },
+  "language": "pwsh",
+  "autoApproveInfo": {
+    "value": "Automatycznie zatwierdzane dla tej sesji ([Wyłącz](command:workbench.action.terminal.chat.disableSessionAutoApproval?%255B%252238589c6e-aa8d-4d3b-9568-11fd9a938049%2522%255D))",
+    "isTrusted": {
+      "enabledCommands": [
+        "workbench.action.terminal.chat.disableSessionAutoApproval"
+      ]
+    },
+    "supportThemeIcons": false,
+    "supportHtml": false,
+    "supportAlertSyntax": false
+  },
+  "terminalCommandState": {
+    "exitCode": 1,
+    "timestamp": 1767365246706,
+    "duration": 89
+  },
+  "terminalCommandUri": {
+    "$mid": 1,
+    "path": "/36a0d7807ea04b2e7f9bed2c2ac94af7/13",
+    "scheme": "vscode-terminal",
+    "query": "command=tool-fe9d0b5b-2e8b-4680-93d6-fdbe93742cd9"
+  },
+  "terminalCommandOutput": {
+    "text": "\r\n-------------------------------------------------------------------------------\r\n   ROBOCOPY     ::     Robust File Copy for Windows\r\n\r\n-------------------------------------------------------------------------------\r\n\r\n  Started : piątek, 2 stycznia 2026 15:47:26\r\n   Source : J:\\projekt 2025\\projekt-akta-v2\\\r\n     Dest : J:\\projekt 2025\\backup-akta-v2-20260102\\\r\n\r\n    Files : *.*\r\n\r\n  Options : *.* /S /E /COPYALL /R:0 /W:0\r\n\r\n------------------------------------------------------------------------------\r\n\r\nERROR : You do not have the Manage Auditing user right.\r\n*****  You need this to copy auditing information (/COPY:U or /COPYALL).\r\n\r\n       Simple Usage :: ROBOCOPY source destination /MIR\r\n\r\n             source :: Source Directory (drive:\\path or \\\\server\\share\\path).\r\n        destination :: Destination Dir  (drive:\\path or \\\\server\\share\\path).\r\n               /MIR :: Mirror a complete directory tree.\r\n\r\n    For more usage information run ROBOCOPY /?\r\n\r\n\r\n****  /MIR can DELETE files as well as copy them !",
+    "lineCount": 35
+  },
+  "terminalTheme": {
+    "background": "#181818",
+    "foreground": "#cccccc"
+  }
+}
+```
+Additional data:
+
+```json
+{
+  "vscodeToolId": "run_in_terminal",
+  "isHidden": false
+}
+```
+Result:
+
+```json
+{
+  "invocationMessage": "Korzystanie z \"Uruchom w terminalu\"",
+  "isConfirmed": {
+    "type": 1
+  },
+  "content": "",
+  "textEditContent": "",
+  "toolCallResult": null
+}
+```
+Status: **completed**
+
+
+</details>
+</tool-use>
+
+---
+
+<tool-use data-tool-type="unknown" data-tool-name="run_in_terminal">
+<details>
+<summary>Tool use: **run_in_terminal**</summary>
+
+
+Parameters:
+
+```json
+{
+  "kind": "terminal",
+  "terminalToolSessionId": "fc810c2f-b14d-4312-b2ef-f90604bcc4e8",
+  "terminalCommandId": "tool-d740ef1c-e0c6-464c-92a3-631e39f91ae0",
+  "commandLine": {
+    "original": "cd \"j:\\projekt 2025\\projekt-akta-v2\"; git add .; git commit -m \"Backup 2026-01-02 - postprocessing fixes and acts system reorganization\"; git push origin master"
+  },
+  "language": "pwsh",
+  "autoApproveInfo": {
+    "value": "Automatycznie zatwierdzane dla tej sesji ([Wyłącz](command:workbench.action.terminal.chat.disableSessionAutoApproval?%255B%252238589c6e-aa8d-4d3b-9568-11fd9a938049%2522%255D))",
+    "isTrusted": {
+      "enabledCommands": [
+        "workbench.action.terminal.chat.disableSessionAutoApproval"
+      ]
+    },
+    "supportThemeIcons": false,
+    "supportHtml": false,
+    "supportAlertSyntax": false
+  },
+  "terminalCommandState": {
+    "timestamp": 1767365247010,
+    "duration": 9
+  },
+  "terminalCommandUri": {
+    "$mid": 1,
+    "path": "/36a0d7807ea04b2e7f9bed2c2ac94af7/13",
+    "scheme": "vscode-terminal",
+    "query": "command=tool-d740ef1c-e0c6-464c-92a3-631e39f91ae0"
+  },
+  "terminalTheme": {
+    "background": "#181818",
+    "foreground": "#cccccc"
+  }
+}
+```
+Additional data:
+
+```json
+{
+  "vscodeToolId": "run_in_terminal",
+  "isHidden": false
+}
+```
+Result:
+
+```json
+{
+  "invocationMessage": "Korzystanie z \"Uruchom w terminalu\"",
+  "isConfirmed": {
+    "type": 1
+  },
+  "content": "",
+  "textEditContent": "",
+  "toolCallResult": null
+}
+```
+Status: **completed**
+
+
+</details>
+</tool-use>
+
+---
+
+<tool-use data-tool-type="unknown" data-tool-name="run_in_terminal">
+<details>
+<summary>Tool use: **run_in_terminal**</summary>
+
+
+Parameters:
+
+```json
+{
+  "kind": "terminal",
+  "terminalToolSessionId": "1476f087-f6f5-4e78-b29b-12ac320464ca",
+  "terminalCommandId": "tool-af7d0000-ef50-450f-820a-628dee9c900c",
+  "commandLine": {
+    "original": "cd \"j:\\projekt 2025\"; Copy-Item -Path \"projekt-akta-v2\" -Destination \"backup-akta-v2-20260102\" -Recurse -Force"
+  },
+  "language": "pwsh",
+  "autoApproveInfo": {
+    "value": "Automatycznie zatwierdzane dla tej sesji ([Wyłącz](command:workbench.action.terminal.chat.disableSessionAutoApproval?%255B%252238589c6e-aa8d-4d3b-9568-11fd9a938049%2522%255D))",
+    "isTrusted": {
+      "enabledCommands": [
+        "workbench.action.terminal.chat.disableSessionAutoApproval"
+      ]
+    },
+    "supportThemeIcons": false,
+    "supportHtml": false,
+    "supportAlertSyntax": false
+  },
+  "terminalCommandState": {
+    "exitCode": 1,
+    "timestamp": 1767365249695,
+    "duration": 96
+  },
+  "terminalCommandUri": {
+    "$mid": 1,
+    "path": "/36a0d7807ea04b2e7f9bed2c2ac94af7/13",
+    "scheme": "vscode-terminal",
+    "query": "command=tool-af7d0000-ef50-450f-820a-628dee9c900c"
+  },
+  "terminalTheme": {
+    "background": "#181818",
+    "foreground": "#cccccc"
+  }
+}
+```
+Additional data:
+
+```json
+{
+  "vscodeToolId": "run_in_terminal",
+  "isHidden": false
+}
+```
+Result:
+
+```json
+{
+  "invocationMessage": "Korzystanie z \"Uruchom w terminalu\"",
+  "isConfirmed": {
+    "type": 1
+  },
+  "content": "",
+  "textEditContent": "",
+  "toolCallResult": null
+}
+```
+Status: **completed**
+
+
+</details>
+</tool-use>
+
+---
+
+<tool-use data-tool-type="unknown" data-tool-name="run_in_terminal">
+<details>
+<summary>Tool use: **run_in_terminal**</summary>
+
+
+Parameters:
+
+```json
+{
+  "kind": "terminal",
+  "terminalToolSessionId": "3eee8162-7bd2-4f46-806f-469084518a2a",
+  "terminalCommandId": "tool-f1b7b779-0f46-432d-926f-8f40fd4910d6",
+  "commandLine": {
+    "original": "cd \"j:\\projekt 2025\\projekt-akta-v2\"; git status; git add .; git commit -m \"Backup 2026-01-02 - postprocessing fixes and acts system reorganization\"; git push origin master"
+  },
+  "language": "pwsh",
+  "autoApproveInfo": {
+    "value": "Automatycznie zatwierdzane dla tej sesji ([Wyłącz](command:workbench.action.terminal.chat.disableSessionAutoApproval?%255B%252238589c6e-aa8d-4d3b-9568-11fd9a938049%2522%255D))",
+    "isTrusted": {
+      "enabledCommands": [
+        "workbench.action.terminal.chat.disableSessionAutoApproval"
+      ]
+    },
+    "supportThemeIcons": false,
+    "supportHtml": false,
+    "supportAlertSyntax": false
+  },
+  "terminalCommandState": {
+    "exitCode": 0,
+    "timestamp": 1767365263686,
+    "duration": 13731
+  },
+  "terminalCommandUri": {
+    "$mid": 1,
+    "path": "/36a0d7807ea04b2e7f9bed2c2ac94af7/13",
+    "scheme": "vscode-terminal",
+    "query": "command=tool-f1b7b779-0f46-432d-926f-8f40fd4910d6"
+  },
+  "terminalCommandOutput": {
+    "text": "\u001b[90m-Path\u001b[0m \u001b[36m\"projekt-akta-v2\"\u001b[0m \u001b[90m-Destination\u001b[0m \u001b[36m\"backup-akta-v2-20260102\"\u001b[0m \u001b[90m-Recurse\u001b[0m \u001b[90m-Force\u001b[0m",
+    "lineCount": 2
+  },
+  "terminalTheme": {
+    "background": "#181818",
+    "foreground": "#cccccc"
+  }
+}
+```
+Additional data:
+
+```json
+{
+  "vscodeToolId": "run_in_terminal",
+  "isHidden": false
+}
+```
+Result:
+
+```json
+{
+  "invocationMessage": "Korzystanie z \"Uruchom w terminalu\"",
+  "isConfirmed": {
+    "type": 1
+  },
+  "content": "",
+  "textEditContent": "",
+  "toolCallResult": null
+}
+```
+Status: **completed**
+
+
+</details>
+</tool-use>
+
+---
+
+<tool-use data-tool-type="unknown" data-tool-name="run_in_terminal">
+<details>
+<summary>Tool use: **run_in_terminal**</summary>
+
+
+Parameters:
+
+```json
+{
+  "kind": "terminal",
+  "terminalToolSessionId": "adcbe324-aeab-4034-a7c4-170e336bf417",
+  "terminalCommandId": "tool-5f059faf-cd54-43bc-8cd3-a3f990cf7212",
+  "commandLine": {
+    "original": "cd \"j:\\projekt 2025\\projekt-akta-v2\"; git push origin master --verbose"
+  },
+  "language": "pwsh",
+  "autoApproveInfo": {
+    "value": "Automatycznie zatwierdzane dla tej sesji ([Wyłącz](command:workbench.action.terminal.chat.disableSessionAutoApproval?%255B%252238589c6e-aa8d-4d3b-9568-11fd9a938049%2522%255D))",
+    "isTrusted": {
+      "enabledCommands": [
+        "workbench.action.terminal.chat.disableSessionAutoApproval"
+      ]
+    },
+    "supportThemeIcons": false,
+    "supportHtml": false,
+    "supportAlertSyntax": false
+  },
+  "terminalCommandState": {
+    "exitCode": 0,
+    "timestamp": 1767365266509,
+    "duration": 2716
+  },
+  "terminalCommandUri": {
+    "$mid": 1,
+    "path": "/36a0d7807ea04b2e7f9bed2c2ac94af7/13",
+    "scheme": "vscode-terminal",
+    "query": "command=tool-5f059faf-cd54-43bc-8cd3-a3f990cf7212"
+  },
+  "terminalCommandOutput": {
+    "text": "; \u001b[93mgit\u001b[0m add .; \u001b[93mgit\u001b[0m commit \u001b[90m-m\u001b[0m \u001b[36m\"Backup 2026-01-02 - postprocessing fixes and acts system reorganization\"\u001b[0m; \u001b[93mgit\u001b[0m push origin master\r\nOn branch master\r\nYour branch is ahead of 'origin/master' by 1 commit.\r\n  (use \"git push\" to publish your local commits)\r\n\r\nChanges not staged for commit:\r\n  (use \"git add &lt;file&gt;...\" to update what will be committed)        \r\n  (use \"git restore &lt;file&gt;...\" to discard changes in working directory)\r\n        \u001b[31mmodified:   \".specstory/history/2026-01-02_12-42Z-problem-z-filtrem-obrazu-na-\\305\\274ywo.md\"\r\n\r\n\u001b[0mno changes added to commit (use \"git add\" and/or \"git commit -a\")   \r\n[master e7bbd2f] Backup 2026-01-02 - postprocessing fixes and acts system reorganization\r\n 1 file changed, 294 insertions(+), 2 deletions(-)\r\nEnumerating objects: 9, done.\r\nCounting objects: 100% (9/9), done.\r\nDelta compression using up to 8 threads\r\nCompressing objects: 100% (5/5), done.\r\nWriting objects: 100% (5/5), 1.16 KiB | 169.00 KiB/s, done.\r\nTotal 5 (delta 4), reused 0 (delta 0), pack-reused 0 (from 0)       \r\nremote: Resolving deltas: 100% (4/4), completed with 4 local objects.\r\nTo https://github.com/toxiconus/genealog-indexer-v7.1.git\r\n   b4c549e..e7bbd2f  master -&gt; master\u001b[93m",
+    "lineCount": 27
+  },
+  "terminalTheme": {
+    "background": "#181818",
+    "foreground": "#cccccc"
+  }
+}
+```
+Additional data:
+
+```json
+{
+  "vscodeToolId": "run_in_terminal",
+  "isHidden": false
+}
+```
+Result:
+
+```json
+{
+  "invocationMessage": "Korzystanie z \"Uruchom w terminalu\"",
+  "isConfirmed": {
+    "type": 1
+  },
+  "content": "",
+  "textEditContent": "",
+  "toolCallResult": null
+}
+```
+Status: **completed**
+
+
+</details>
+</tool-use>
+
+---
+
+Backup lokalny utworzony w `j:\projekt 2025\backup-akta-v2-20260102`. Zmiany zatwierdzone i wypchnięte na GitHub (commit: "Backup 2026-01-02 - postprocessing fixes and acts system reorganization").
+
+---
+
+_**User (2026-01-02 14:49Z)**_
+
+zamknij sesje i robimy przerwe. chyba nam zabrakło znowu polecaenia dla copilota i innych by ograniczali tokkeny przy pracy i odpowiedzi - mozesz dodac odpowiednie info?
+
+---
+
+_**Agent (model copilot/grok-code-fast-1)**_
+
+<tool-use data-tool-type="read" data-tool-name="copilot_readFile">
+<details>
+<summary>Tool use: **copilot_readFile** • Czytanie [](file:///j%3A/projekt%202025/projekt-akta-v2/.github/copilot-instructions.md#1-1), wiersze 1 do 50</summary>
+
+
+Odczytaj [](file:///j%3A/projekt%202025/projekt-akta-v2/.github/copilot-instructions.md#1-1), wiersze 1 do 50
+
+</details>
+</tool-use>
+
+---
+
+<tool-use data-tool-type="read" data-tool-name="copilot_readFile">
+<details>
+<summary>Tool use: **copilot_readFile** • Czytanie [](file:///j%3A/projekt%202025/projekt-akta-v2/.github/copilot-instructions.md#1340-1340), wiersze 1340 do 1345</summary>
+
+
+Odczytaj [](file:///j%3A/projekt%202025/projekt-akta-v2/.github/copilot-instructions.md#1340-1340), wiersze 1340 do 1345
+
+</details>
+</tool-use>
+
+---
+
+<tool-use data-tool-type="unknown" data-tool-name="copilot_replaceString">
+<details>
+<summary>Tool use: **copilot_replaceString**</summary>
+
+Additional data:
+
+```json
+{
+  "vscodeToolId": "copilot_replaceString",
+  "isHidden": true
+}
+```
+Result:
+
+```json
+{
+  "invocationMessage": "Korzystanie z \"Zamień ciąg w pliku\"",
+  "isConfirmed": {
+    "type": 1
+  },
+  "content": "&#96;&#96;&#96;markdown\n\r\n\r\n## 💡 Token Optimization Guidelines\r\n\r\n**For AI Agents (Copilot, etc.):**\r\n- Keep answers short and impersonal.\r\n- Avoid verbose explanations unless specifically requested.\r\n- Use tools efficiently - prefer targeted searches over broad ones.\r\n- Minimize tool calls by reading large chunks of code at once.\r\n- Do not repeat information already in context.\r\n- Focus on completing the user's request directly.\r\n- If uncertain, ask for clarification briefly rather than assuming.\n&#96;&#96;&#96;\n\n",
+  "textEditContent": "\r\n\r\n## 💡 Token Optimization Guidelines\r\n\r\n**For AI Agents (Copilot, etc.):**\r\n- Keep answers short and impersonal.\r\n- Avoid verbose explanations unless specifically requested.\r\n- Use tools efficiently - prefer targeted searches over broad ones.\r\n- Minimize tool calls by reading large chunks of code at once.\r\n- Do not repeat information already in context.\r\n- Focus on completing the user's request directly.\r\n- If uncertain, ask for clarification briefly rather than assuming.",
+  "toolCallResult": null
+}
+```
+Status: **completed**
+
+
+</details>
+</tool-use>
+
+---
+
+Dodano sekcję "Token Optimization Guidelines" do `copilot-instructions.md`. Sesja zakończona. Przerwa.
+
+---
+
+_**User (2026-01-02 14:51Z)**_
+
+a przejrzyj jeszcze tren copilot instruction bo dawno nie był edytowany do obecnego stanu
+
+---
+
+_**Agent (model copilot/grok-code-fast-1)**_
+
+<tool-use data-tool-type="read" data-tool-name="copilot_readFile">
+<details>
+<summary>Tool use: **copilot_readFile** • Czytanie [](file:///j%3A/projekt%202025/projekt-akta-v2/.github/copilot-instructions.md#1-1), wiersze 1 do 100</summary>
+
+
+Odczytaj [](file:///j%3A/projekt%202025/projekt-akta-v2/.github/copilot-instructions.md#1-1), wiersze 1 do 100
+
+</details>
+</tool-use>
+
+---
+
+<tool-use data-tool-type="read" data-tool-name="copilot_readFile">
+<details>
+<summary>Tool use: **copilot_readFile** • Czytanie [](file:///j%3A/projekt%202025/projekt-akta-v2/.github/copilot-instructions.md#100-100), wiersze 100 do 200</summary>
+
+
+Odczytaj [](file:///j%3A/projekt%202025/projekt-akta-v2/.github/copilot-instructions.md#100-100), wiersze 100 do 200
+
+</details>
+</tool-use>
+
+---
+
+<tool-use data-tool-type="unknown" data-tool-name="copilot_replaceString">
+<details>
+<summary>Tool use: **copilot_replaceString**</summary>
+
+Additional data:
+
+```json
+{
+  "vscodeToolId": "copilot_replaceString",
+  "isHidden": true
+}
+```
+Result:
+
+```json
+{
+  "invocationMessage": "Korzystanie z \"Zamień ciąg w pliku\"",
+  "isConfirmed": {
+    "type": 1
+  },
+  "content": "&#96;&#96;&#96;markdown\n4.0 | **Last Updated:** 2 stycznia 2026 | **Status:** Production (v8.0 latest, v5 stable)\r\n\r\n## 🎯 TL;DR for AI Agents\r\n\r\n**This is a single-file genealogical document editor** for indexing historical records with visual region marking.\r\n\r\n- **Tech:** Vanilla JS + OpenSeadragon (image viewer) + Vite + localStorage\r\n- **Latest version:** v8.0 (&#96;public/viewer-osd-v8.html&#96;, ~4841 lines)\r\n- **Stable version:** v5 (&#96;public/viewer-osd-v5.html&#96;, ~2200 lines)\r\n- **Key files:** Main files: &#96;public/viewer-osd-v5.html&#96;, &#96;public/viewer-osd-v7.html&#96;, &#96;public/viewer-osd-v8.html&#96;\r\n- **No external APIs:** All data persisted locally to browser localStorage\r\n- **Polish UI:** All user-facing text is in Polish\r\n\r\n**Immediate setup:**\r\n&#96;&#96;&#96;bash\r\nnpm install &amp;&amp; npm run dev  # Starts on port 5173\r\n# Then navigate to http://localhost:5173/public/viewer-osd-v8.html\r\n&#96;&#96;&#96;\r\n\r\n**Most common task:** Edit the single HTML file (v8.0 or v5) directly. No build step needed for HTML—just refresh browser.\r\n\r\n**Critical patterns:**\r\n- ROI coordinates MUST be normalized to 0-1 range (not pixels)\r\n- Two independent drawing modes: Field ROI (for individual fields) and Act ROI (for entire document boundary)\r\n- Form events use delegation on container, not individual inputs (prevent listener duplication)\r\n- localStorage sync is explicit: always call &#96;saveStorage()&#96; after data changes\r\n- Acts system: Acts displayed in sidebar panel with controls, not overlays\r\n\r\n**If v8.0\n&#96;&#96;&#96;\n\n",
+  "textEditContent": "4.0 | **Last Updated:** 2 stycznia 2026 | **Status:** Production (v8.0 latest, v5 stable)\r\n\r\n## 🎯 TL;DR for AI Agents\r\n\r\n**This is a single-file genealogical document editor** for indexing historical records with visual region marking.\r\n\r\n- **Tech:** Vanilla JS + OpenSeadragon (image viewer) + Vite + localStorage\r\n- **Latest version:** v8.0 (&#96;public/viewer-osd-v8.html&#96;, ~4841 lines)\r\n- **Stable version:** v5 (&#96;public/viewer-osd-v5.html&#96;, ~2200 lines)\r\n- **Key files:** Main files: &#96;public/viewer-osd-v5.html&#96;, &#96;public/viewer-osd-v7.html&#96;, &#96;public/viewer-osd-v8.html&#96;\r\n- **No external APIs:** All data persisted locally to browser localStorage\r\n- **Polish UI:** All user-facing text is in Polish\r\n\r\n**Immediate setup:**\r\n&#96;&#96;&#96;bash\r\nnpm install &amp;&amp; npm run dev  # Starts on port 5173\r\n# Then navigate to http://localhost:5173/public/viewer-osd-v8.html\r\n&#96;&#96;&#96;\r\n\r\n**Most common task:** Edit the single HTML file (v8.0 or v5) directly. No build step needed for HTML—just refresh browser.\r\n\r\n**Critical patterns:**\r\n- ROI coordinates MUST be normalized to 0-1 range (not pixels)\r\n- Two independent drawing modes: Field ROI (for individual fields) and Act ROI (for entire document boundary)\r\n- Form events use delegation on container, not individual inputs (prevent listener duplication)\r\n- localStorage sync is explicit: always call &#96;saveStorage()&#96; after data changes\r\n- Acts system: Acts displayed in sidebar panel with controls, not overlays\r\n\r\n**If v8.0",
+  "toolCallResult": null
+}
+```
+Status: **completed**
+
+
+</details>
+</tool-use>
+
+---
+
+<tool-use data-tool-type="unknown" data-tool-name="copilot_replaceString">
+<details>
+<summary>Tool use: **copilot_replaceString**</summary>
+
+Additional data:
+
+```json
+{
+  "vscodeToolId": "copilot_replaceString",
+  "isHidden": true
+}
+```
+Result:
+
+```json
+{
+  "invocationMessage": "Korzystanie z \"Zamień ciąg w pliku\"",
+  "isConfirmed": {
+    "type": 1
+  },
+  "content": "&#96;&#96;&#96;markdown\n4.0** is a professional genealogical document editing tool for indexing and metadata extraction from historical registry documents with visual Region of Interest (ROI) marking. The project contains **multiple parallel versions** reflecting different architectural iterations.\r\n\r\n**Stack:** Vanilla JS + OpenSeadragon (image viewer) + Vite (dev server) + localStorage (persistence)  \r\n**Current:** Monolithic single-file HTML applications (&#96;public/viewer-osd-v8.html&#96; latest, 4841 lines)\r\n\r\n### Version Status\r\n- **v8.0** (&#96;viewer-osd-v8.html&#96;): Latest production. Acts system in sidebar panel with controls, postprocessing filters, advanced modal for act creation/copying, auto ID generation. Build: ~4841 lines.\r\n- **v7.1** (&#96;viewer-osd-v7.html&#96;): Previous version. Features A-E (Suggestions Fan, Keyboard Shortcuts, Clipboard, OCR, Post-processing). ~3500 lines.\r\n- **v5.0** (&#96;viewer-osd-v5.html&#96;): Stable fallback. Flat record structure, no OCR/image processing. ~2200 lines. Use if v8.0\n&#96;&#96;&#96;\n\n",
+  "textEditContent": "4.0** is a professional genealogical document editing tool for indexing and metadata extraction from historical registry documents with visual Region of Interest (ROI) marking. The project contains **multiple parallel versions** reflecting different architectural iterations.\r\n\r\n**Stack:** Vanilla JS + OpenSeadragon (image viewer) + Vite (dev server) + localStorage (persistence)  \r\n**Current:** Monolithic single-file HTML applications (&#96;public/viewer-osd-v8.html&#96; latest, 4841 lines)\r\n\r\n### Version Status\r\n- **v8.0** (&#96;viewer-osd-v8.html&#96;): Latest production. Acts system in sidebar panel with controls, postprocessing filters, advanced modal for act creation/copying, auto ID generation. Build: ~4841 lines.\r\n- **v7.1** (&#96;viewer-osd-v7.html&#96;): Previous version. Features A-E (Suggestions Fan, Keyboard Shortcuts, Clipboard, OCR, Post-processing). ~3500 lines.\r\n- **v5.0** (&#96;viewer-osd-v5.html&#96;): Stable fallback. Flat record structure, no OCR/image processing. ~2200 lines. Use if v8.0",
+  "toolCallResult": null
+}
+```
+Status: **completed**
+
+
+</details>
+</tool-use>
+
+---
+
+<tool-use data-tool-type="unknown" data-tool-name="copilot_replaceString">
+<details>
+<summary>Tool use: **copilot_replaceString**</summary>
+
+Additional data:
+
+```json
+{
+  "vscodeToolId": "copilot_replaceString",
+  "isHidden": true
+}
+```
+Result:
+
+```json
+{
+  "invocationMessage": "Korzystanie z \"Zamień ciąg w pliku\"",
+  "isConfirmed": {
+    "type": 1
+  },
+  "content": "&#96;&#96;&#96;markdown\nPrevious: OCR + post-processing\r\n- **&#96;public/viewer-osd-v8.html&#96;** - Latest: Acts system in sidebar, advanced modals, auto ID generation\r\n- **Versioning strategy:** Before major changes, backup: &#96;cp viewer-osd-v8.html \"viewer-osd-v8\n&#96;&#96;&#96;\n\n",
+  "textEditContent": "Previous: OCR + post-processing\r\n- **&#96;public/viewer-osd-v8.html&#96;** - Latest: Acts system in sidebar, advanced modals, auto ID generation\r\n- **Versioning strategy:** Before major changes, backup: &#96;cp viewer-osd-v8.html \"viewer-osd-v8",
+  "toolCallResult": null
+}
+```
+Status: **completed**
+
+
+</details>
+</tool-use>
+
+---
+
+<tool-use data-tool-type="unknown" data-tool-name="copilot_replaceString">
+<details>
+<summary>Tool use: **copilot_replaceString**</summary>
+
+Additional data:
+
+```json
+{
+  "vscodeToolId": "copilot_replaceString",
+  "isHidden": true
+}
+```
+Result:
+
+```json
+{
+  "invocationMessage": "Korzystanie z \"Zamień ciąg w pliku\"",
+  "isConfirmed": {
+    "type": 1
+  },
+  "content": "&#96;&#96;&#96;markdown\nconsole.log('📋 Acts list rendered:', actsCount); // v8.0 new - acts in sidebar\r\nconsole.log('🔢 Auto ID generated:', idString);    // v8.0 new - ID generation\r\nconsole.log('🗂️ Modal opened:', modalType);        // v8.0 new - advanced modals\r\n\n&#96;&#96;&#96;\n\n",
+  "textEditContent": "console.log('📋 Acts list rendered:', actsCount); // v8.0 new - acts in sidebar\r\nconsole.log('🔢 Auto ID generated:', idString);    // v8.0 new - ID generation\r\nconsole.log('🗂️ Modal opened:', modalType);        // v8.0 new - advanced modals\r\n",
+  "toolCallResult": null
+}
+```
+Status: **completed**
+
+
+</details>
+</tool-use>
+
+---
+
+<tool-use data-tool-type="unknown" data-tool-name="copilot_replaceString">
+<details>
+<summary>Tool use: **copilot_replaceString**</summary>
+
+Additional data:
+
+```json
+{
+  "vscodeToolId": "copilot_replaceString",
+  "isHidden": true
+}
+```
+Result:
+
+```json
+{
+  "invocationMessage": "Korzystanie z \"Zamień ciąg w pliku\"",
+  "isConfirmed": {
+    "type": 1
+  },
+  "content": "&#96;&#96;&#96;markdown\n8.0** ← USE THIS for new projects\r\n  - Acts system in sidebar panel with controls\r\n  - Advanced modal for act creation/copying with auto ID generation\r\n  - Postprocessing filters, ROI system\r\n  - File: &#96;public/viewer-osd-v8.html&#96;\r\n  - Testing status: ✅ Production ready (as of Jan 2, 2026\n&#96;&#96;&#96;\n\n",
+  "textEditContent": "8.0** ← USE THIS for new projects\r\n  - Acts system in sidebar panel with controls\r\n  - Advanced modal for act creation/copying with auto ID generation\r\n  - Postprocessing filters, ROI system\r\n  - File: &#96;public/viewer-osd-v8.html&#96;\r\n  - Testing status: ✅ Production ready (as of Jan 2, 2026",
+  "toolCallResult": null
+}
+```
+Status: **completed**
+
+
+</details>
+</tool-use>
+
+---
+
+<tool-use data-tool-type="unknown" data-tool-name="copilot_replaceString">
+<details>
+<summary>Tool use: **copilot_replaceString**</summary>
+
+Additional data:
+
+```json
+{
+  "vscodeToolId": "copilot_replaceString",
+  "isHidden": true
+}
+```
+Result:
+
+```json
+{
+  "invocationMessage": "Korzystanie z \"Zamień ciąg w pliku\"",
+  "isConfirmed": {
+    "type": 1
+  },
+  "content": "&#96;&#96;&#96;markdown\n↔ v8.0 (Compatible):**\r\n- All use flat &#96;app.records[]&#96; array\r\n- All store ROI as &#96;record.rois[fieldId] = { x, y, w, h }&#96;\r\n- All save to localStorage under key &#96;genealog_data&#96;\r\n- **Migration:** Export v5 JSON → Import to v8.0 works perfectly\r\n- **Reverse:** Export v8.0 JSON\n&#96;&#96;&#96;\n\n",
+  "textEditContent": "↔ v8.0 (Compatible):**\r\n- All use flat &#96;app.records[]&#96; array\r\n- All store ROI as &#96;record.rois[fieldId] = { x, y, w, h }&#96;\r\n- All save to localStorage under key &#96;genealog_data&#96;\r\n- **Migration:** Export v5 JSON → Import to v8.0 works perfectly\r\n- **Reverse:** Export v8.0 JSON",
+  "toolCallResult": null
+}
+```
+Status: **completed**
+
+
+</details>
+</tool-use>
+
+---
+
+<tool-use data-tool-type="unknown" data-tool-name="copilot_replaceString">
+<details>
+<summary>Tool use: **copilot_replaceString**</summary>
+
+Additional data:
+
+```json
+{
+  "vscodeToolId": "copilot_replaceString",
+  "isHidden": true
+}
+```
+Result:
+
+```json
+{
+  "invocationMessage": "Korzystanie z \"Zamień ciąg w pliku\"",
+  "isConfirmed": {
+    "type": 1
+  },
+  "content": "&#96;&#96;&#96;markdown\n8.0\r\n\r\n**Recommended for users with production v5 data:**\r\n1. In v5: **Export Data** (CSV + JSON)\r\n2. Close v5 tab\r\n3. Open v8.0 (&#96;http://localhost:5173/public/viewer-osd-v8.html&#96;)\r\n4. **Import JSON** (uses same format)\r\n5. All records/ROIs appear exactly as before\r\n6. Now can use new v8.0 features (acts sidebar, advanced modals, auto ID generation\n&#96;&#96;&#96;\n\n",
+  "textEditContent": "8.0\r\n\r\n**Recommended for users with production v5 data:**\r\n1. In v5: **Export Data** (CSV + JSON)\r\n2. Close v5 tab\r\n3. Open v8.0 (&#96;http://localhost:5173/public/viewer-osd-v8.html&#96;)\r\n4. **Import JSON** (uses same format)\r\n5. All records/ROIs appear exactly as before\r\n6. Now can use new v8.0 features (acts sidebar, advanced modals, auto ID generation",
+  "toolCallResult": null
+}
+```
+Status: **completed**
+
+
+</details>
+</tool-use>
+
+---
+
+<tool-use data-tool-type="unknown" data-tool-name="copilot_replaceString">
+<details>
+<summary>Tool use: **copilot_replaceString**</summary>
+
+Additional data:
+
+```json
+{
+  "vscodeToolId": "copilot_replaceString",
+  "isHidden": true
+}
+```
+Result:
+
+```json
+{
+  "invocationMessage": "Korzystanie z \"Zamień ciąg w pliku\"",
+  "isConfirmed": {
+    "type": 1
+  },
+  "content": "&#96;&#96;&#96;markdown\n8.0 (adding features or beyond):**\r\n&#96;&#96;&#96;bash\r\n# ALWAYS backup v8.0 first (it's large, easy to break)\r\ncp public/viewer-osd-v8.html \"public/viewer-osd-v8.html.backup-$(date +%Y%m%d-%H%M%S)\"\r\n# Edit viewer-osd-v8.html\r\n# Test: http://localhost:5173/public/viewer-osd-v8.html\r\n# If broken: restore backup, debug in smaller steps\r\n&#96;&#96;&#96;\r\n\r\n**Never edit v6** (it's abandoned). If you need hierarchical acts:\r\n- Consider implementing in v8.0\n&#96;&#96;&#96;\n\n",
+  "textEditContent": "8.0 (adding features or beyond):**\r\n&#96;&#96;&#96;bash\r\n# ALWAYS backup v8.0 first (it's large, easy to break)\r\ncp public/viewer-osd-v8.html \"public/viewer-osd-v8.html.backup-$(date +%Y%m%d-%H%M%S)\"\r\n# Edit viewer-osd-v8.html\r\n# Test: http://localhost:5173/public/viewer-osd-v8.html\r\n# If broken: restore backup, debug in smaller steps\r\n&#96;&#96;&#96;\r\n\r\n**Never edit v6** (it's abandoned). If you need hierarchical acts:\r\n- Consider implementing in v8.0",
+  "toolCallResult": null
+}
+```
+Status: **completed**
+
+
+</details>
+</tool-use>
+
+---
+
+_**User (2026-01-02 14:52Z)**_
+
+kontynuuj
+
+---
+
+_**Agent (model copilot/grok-code-fast-1)**_
+
+<tool-use data-tool-type="read" data-tool-name="copilot_readFile">
+<details>
+<summary>Tool use: **copilot_readFile** • Czytanie [](file:///j%3A/projekt%202025/projekt-akta-v2/.github/copilot-instructions.md#200-200), wiersze 200 do 250</summary>
+
+
+Odczytaj [](file:///j%3A/projekt%202025/projekt-akta-v2/.github/copilot-instructions.md#200-200), wiersze 200 do 250
+
+</details>
+</tool-use>
+
+---
+
+<tool-use data-tool-type="read" data-tool-name="copilot_readFile">
+<details>
+<summary>Tool use: **copilot_readFile** • Czytanie [](file:///j%3A/projekt%202025/projekt-akta-v2/.github/copilot-instructions.md#300-300), wiersze 300 do 350</summary>
+
+
+Odczytaj [](file:///j%3A/projekt%202025/projekt-akta-v2/.github/copilot-instructions.md#300-300), wiersze 300 do 350
+
+</details>
+</tool-use>
+
+---
+
+<tool-use data-tool-type="search" data-tool-name="copilot_findTextInFiles">
+<details>
+<summary>Tool use: **copilot_findTextInFiles** • Wyszukiwanie tekstu `## �📋 Key Functions & Their Roles` (`**/*.md`)</summary>
+
+
+No results found
+</details>
+</tool-use>
+
+---
+
+<tool-use data-tool-type="read" data-tool-name="copilot_readFile">
+<details>
+<summary>Tool use: **copilot_readFile** • Czytanie [](file:///j%3A/projekt%202025/projekt-akta-v2/.github/copilot-instructions.md#436-436), wiersze 436 do 500</summary>
+
+
+Odczytaj [](file:///j%3A/projekt%202025/projekt-akta-v2/.github/copilot-instructions.md#436-436), wiersze 436 do 500
+
+</details>
+</tool-use>
+
+---
+
+<tool-use data-tool-type="unknown" data-tool-name="copilot_replaceString">
+<details>
+<summary>Tool use: **copilot_replaceString**</summary>
+
+Additional data:
+
+```json
+{
+  "vscodeToolId": "copilot_replaceString",
+  "isHidden": true
+}
+```
+Result:
+
+```json
+{
+  "invocationMessage": "Korzystanie z \"Zamień ciąg w pliku\"",
+  "isConfirmed": {
+    "type": 1
+  },
+  "content": "&#96;&#96;&#96;markdown\n\r\n\r\n### Acts System (v8.0)\r\n- &#96;renderActsList()&#96; - Display acts in sidebar panel with controls\r\n- &#96;showAdvancedActModal()&#96; - Modal for creating/copying acts with auto ID generation\r\n- &#96;autoGenerateID(actData)&#96; - Generate IDs in TYP.WOJ.PARAFIA.ROK.MIES.NR.SUF format\r\n- &#96;formatActDisplayName(id)&#96; - Parse ID to display format (e.g., \"CH.1909.N͞o.01\")\r\n- &#96;showActContextMenuPanel(actId)&#96; - Context menu for act editing/deletion\n&#96;&#96;&#96;\n\n",
+  "textEditContent": "\r\n\r\n### Acts System (v8.0)\r\n- &#96;renderActsList()&#96; - Display acts in sidebar panel with controls\r\n- &#96;showAdvancedActModal()&#96; - Modal for creating/copying acts with auto ID generation\r\n- &#96;autoGenerateID(actData)&#96; - Generate IDs in TYP.WOJ.PARAFIA.ROK.MIES.NR.SUF format\r\n- &#96;formatActDisplayName(id)&#96; - Parse ID to display format (e.g., \"CH.1909.N͞o.01\")\r\n- &#96;showActContextMenuPanel(actId)&#96; - Context menu for act editing/deletion",
+  "toolCallResult": null
+}
+```
+Status: **completed**
+
+
+</details>
+</tool-use>
+
+---
+
+<tool-use data-tool-type="search" data-tool-name="copilot_findTextInFiles">
+<details>
+<summary>Tool use: **copilot_findTextInFiles** • Wyszukiwanie tekstu `## 🧪 Testing Checklist for v7.1 Features` (`**/*.md`)</summary>
+
+
+No results found
+</details>
+</tool-use>
+
+---
+
+<tool-use data-tool-type="read" data-tool-name="copilot_readFile">
+<details>
+<summary>Tool use: **copilot_readFile** • Czytanie [](file:///j%3A/projekt%202025/projekt-akta-v2/.github/copilot-instructions.md#965-965), wiersze 965 do 1050</summary>
+
+
+Odczytaj [](file:///j%3A/projekt%202025/projekt-akta-v2/.github/copilot-instructions.md#965-965), wiersze 965 do 1050
+
+</details>
+</tool-use>
+
+---
+
+<tool-use data-tool-type="unknown" data-tool-name="copilot_replaceString">
+<details>
+<summary>Tool use: **copilot_replaceString**</summary>
+
+Additional data:
+
+```json
+{
+  "vscodeToolId": "copilot_replaceString",
+  "isHidden": true
+}
+```
+Result:
+
+```json
+{
+  "invocationMessage": "Korzystanie z \"Zamień ciąg w pliku\"",
+  "isConfirmed": {
+    "type": 1
+  },
+  "content": "&#96;&#96;&#96;markdown\n8.0 Features\r\n\r\nBefore committing any changes to v8.0\n&#96;&#96;&#96;\n\n",
+  "textEditContent": "8.0 Features\r\n\r\nBefore committing any changes to v8.0",
+  "toolCallResult": null
+}
+```
+Status: **completed**
+
+
+</details>
+</tool-use>
+
+---
+
+<tool-use data-tool-type="unknown" data-tool-name="copilot_replaceString">
+<details>
+<summary>Tool use: **copilot_replaceString**</summary>
+
+Additional data:
+
+```json
+{
+  "vscodeToolId": "copilot_replaceString",
+  "isHidden": true
+}
+```
+Result:
+
+```json
+{
+  "invocationMessage": "Korzystanie z \"Zamień ciąg w pliku\"",
+  "isConfirmed": {
+    "type": 1
+  },
+  "content": "&#96;&#96;&#96;markdown\nFeature F: Acts System (v8.0)\r\n- [ ] Acts displayed in sidebar panel, not overlays\r\n- [ ] Click act in sidebar → loads record data into form\r\n- [ ] Right-click act → context menu appears (edit name, delete)\r\n- [ ] Advanced modal opens for creating new acts\r\n- [ ] Auto ID generation: TYP.WOJ.PARAFIA.ROK.MIES.NR.SUF format\r\n- [ ] CopyPrev copies exact act numbers from previous page\r\n- [ ] Create starts from highest existing nr + 1\r\n- [ ] Modal shows generated ID preview\r\n- [ ] Act display name parsed correctly (e.g., \"CH.1909.N͞o.01\")\r\n\r\n### \n&#96;&#96;&#96;\n\n",
+  "textEditContent": "Feature F: Acts System (v8.0)\r\n- [ ] Acts displayed in sidebar panel, not overlays\r\n- [ ] Click act in sidebar → loads record data into form\r\n- [ ] Right-click act → context menu appears (edit name, delete)\r\n- [ ] Advanced modal opens for creating new acts\r\n- [ ] Auto ID generation: TYP.WOJ.PARAFIA.ROK.MIES.NR.SUF format\r\n- [ ] CopyPrev copies exact act numbers from previous page\r\n- [ ] Create starts from highest existing nr + 1\r\n- [ ] Modal shows generated ID preview\r\n- [ ] Act display name parsed correctly (e.g., \"CH.1909.N͞o.01\")\r\n\r\n### ",
+  "toolCallResult": null
+}
+```
+Status: **completed**
+
+
+</details>
+</tool-use>
+
+---
+
+<tool-use data-tool-type="search" data-tool-name="copilot_findTextInFiles">
+<details>
+<summary>Tool use: **copilot_findTextInFiles** • Wyszukiwanie tekstu `## � v7.1-Specific Patterns` (`**/*.md`)</summary>
+
+
+No results found
+</details>
+</tool-use>
+
+---
+
+<tool-use data-tool-type="unknown" data-tool-name="copilot_replaceString">
+<details>
+<summary>Tool use: **copilot_replaceString**</summary>
+
+Additional data:
+
+```json
+{
+  "vscodeToolId": "copilot_replaceString",
+  "isHidden": true
+}
+```
+Result:
+
+```json
+{
+  "invocationMessage": "Korzystanie z \"Zamień ciąg w pliku\"",
+  "isConfirmed": {
+    "type": 1
+  },
+  "content": "&#96;&#96;&#96;markdown\n8.0\n&#96;&#96;&#96;\n\n",
+  "textEditContent": "8.0",
+  "toolCallResult": null
+}
+```
+Status: **completed**
+
+
+</details>
+</tool-use>
+
+---
+
+<tool-use data-tool-type="read" data-tool-name="copilot_readFile">
+<details>
+<summary>Tool use: **copilot_readFile** • Czytanie [](file:///j%3A/projekt%202025/projekt-akta-v2/.github/copilot-instructions.md#1067-1067), wiersze 1067 do 1150</summary>
+
+
+Odczytaj [](file:///j%3A/projekt%202025/projekt-akta-v2/.github/copilot-instructions.md#1067-1067), wiersze 1067 do 1150
+
+</details>
+</tool-use>
+
+---
+
+<tool-use data-tool-type="unknown" data-tool-name="copilot_replaceString">
+<details>
+<summary>Tool use: **copilot_replaceString**</summary>
+
+Additional data:
+
+```json
+{
+  "vscodeToolId": "copilot_replaceString",
+  "isHidden": true
+}
+```
+Result:
+
+```json
+{
+  "invocationMessage": "Korzystanie z \"Zamień ciąg w pliku\"",
+  "isConfirmed": {
+    "type": 1
+  },
+  "content": "&#96;&#96;&#96;markdown\n\r\n\r\n### Acts System Architecture (v8.0)\r\nThe acts system manages genealogical acts in a sidebar panel instead of overlays:\r\n&#96;&#96;&#96;js\r\n// 1. Acts stored in app.imageActs[] per image\r\n// 2. renderActsList() populates #actsPanel with act items\r\n// 3. Each act item has click handler to selectRecord(actId)\r\n// 4. Right-click shows context menu: edit name, delete\r\n// 5. Advanced modal for batch creation: showAdvancedActModal()\r\n// 6. Auto ID generation: autoGenerateID(actData) creates TYP.WOJ.PARAFIA.ROK.MIES.NR.SUF\r\n// 7. CopyPrev: copies exact nr values from previous page\r\n// 8. Create: starts from highest existing nr + 1\r\n&#96;&#96;&#96;\r\n\r\n**Key Functions:**\r\n- &#96;formatActDisplayName(id)&#96; - Converts ID to readable format (e.g., \"CH.1909.N͞o.01\")\r\n- &#96;showActContextMenuPanel(actId)&#96; - Displays edit/delete options\r\n- Modal data flow: {year, parish, woj, type, incomplete, plusIndex} → generates IDs sequentially\n&#96;&#96;&#96;\n\n",
+  "textEditContent": "\r\n\r\n### Acts System Architecture (v8.0)\r\nThe acts system manages genealogical acts in a sidebar panel instead of overlays:\r\n&#96;&#96;&#96;js\r\n// 1. Acts stored in app.imageActs[] per image\r\n// 2. renderActsList() populates #actsPanel with act items\r\n// 3. Each act item has click handler to selectRecord(actId)\r\n// 4. Right-click shows context menu: edit name, delete\r\n// 5. Advanced modal for batch creation: showAdvancedActModal()\r\n// 6. Auto ID generation: autoGenerateID(actData) creates TYP.WOJ.PARAFIA.ROK.MIES.NR.SUF\r\n// 7. CopyPrev: copies exact nr values from previous page\r\n// 8. Create: starts from highest existing nr + 1\r\n&#96;&#96;&#96;\r\n\r\n**Key Functions:**\r\n- &#96;formatActDisplayName(id)&#96; - Converts ID to readable format (e.g., \"CH.1909.N͞o.01\")\r\n- &#96;showActContextMenuPanel(actId)&#96; - Displays edit/delete options\r\n- Modal data flow: {year, parish, woj, type, incomplete, plusIndex} → generates IDs sequentially",
+  "toolCallResult": null
+}
+```
+Status: **completed**
+
+
+</details>
+</tool-use>
+
+---
+
+<tool-use data-tool-type="read" data-tool-name="copilot_readFile">
+<details>
+<summary>Tool use: **copilot_readFile** • Czytanie [](file:///j%3A/projekt%202025/projekt-akta-v2/.github/copilot-instructions.md#1375-1375), wiersze 1375 do 1381</summary>
+
+
+Odczytaj [](file:///j%3A/projekt%202025/projekt-akta-v2/.github/copilot-instructions.md#1375-1375), wiersze 1375 do 1381
+
+</details>
+</tool-use>
+
+---
+
+Zaktualizowałem `copilot-instructions.md` do obecnego stanu projektu (v8.0 jako najnowsza wersja). Główne zmiany:
+
+- **Nagłówek i TL;DR:** Wersja 4.0, data 2 stycznia 2026, v8.0 jako najnowszy.
+- **Project Overview:** v4.0, v8.0 z opisem nowych funkcji (acts system w sidebar, modals, auto ID).
+- **Version Status:** v8.0 jako production, z opisem.
+- **Key Files:** Dodano viewer-osd-v8.html jako główny plik.
+- **Console Logging:** Dodano nowe emoji dla v8.0 (acts list, auto ID, modals).
+- **Version Compatibility:** Zaktualizowano do v8.0 kompatybilności.
+- **Upgrade Path:** v5 → v8.0.
+- **Development Workflow:** Instrukcje dla edycji v8.0.
+- **Key Functions:** Dodano sekcję Acts System (v8.0) z funkcjami jak renderActsList(), autoGenerateID().
+- **Testing Checklist:** Zaktualizowano do v8.0, dodano testy dla acts system.
+- **v8.0-Specific Patterns:** Dodano architekturę acts system.
+
+Plik jest teraz aktualny. Jeśli potrzebujesz dalszych zmian, daj znać.
 
 ---
 

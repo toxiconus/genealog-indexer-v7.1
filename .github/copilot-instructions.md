@@ -1,46 +1,48 @@
 # Genealog Indexer - Copilot Instructions
 
-**Version:** 3.2 | **Last Updated:** 20 grudnia 2025 | **Status:** Production (v7.1 latest, v5 stable)
+**Version:** 4.0 | **Last Updated:** 2 stycznia 2026 | **Status:** Production (v8.0 latest, v5 stable)
 
 ## 🎯 TL;DR for AI Agents
 
 **This is a single-file genealogical document editor** for indexing historical records with visual region marking.
 
 - **Tech:** Vanilla JS + OpenSeadragon (image viewer) + Vite + localStorage
-- **Latest version:** v7.1 (`public/viewer-osd-v7.html`, ~3500 lines)
+- **Latest version:** v8.0 (`public/viewer-osd-v8.html`, ~4841 lines)
 - **Stable version:** v5 (`public/viewer-osd-v5.html`, ~2200 lines)
-- **Key files:** Only 2 main files: `public/viewer-osd-v5.html` and `public/viewer-osd-v7.html`
+- **Key files:** Main files: `public/viewer-osd-v5.html`, `public/viewer-osd-v7.html`, `public/viewer-osd-v8.html`
 - **No external APIs:** All data persisted locally to browser localStorage
 - **Polish UI:** All user-facing text is in Polish
 
 **Immediate setup:**
 ```bash
 npm install && npm run dev  # Starts on port 5173
-# Then navigate to http://localhost:5173/public/viewer-osd-v7.html
+# Then navigate to http://localhost:5173/public/viewer-osd-v8.html
 ```
 
-**Most common task:** Edit the single HTML file (either v5 or v7.1) directly. No build step needed for HTML—just refresh browser.
+**Most common task:** Edit the single HTML file (v8.0 or v5) directly. No build step needed for HTML—just refresh browser.
 
 **Critical patterns:**
 - ROI coordinates MUST be normalized to 0-1 range (not pixels)
 - Two independent drawing modes: Field ROI (for individual fields) and Act ROI (for entire document boundary)
 - Form events use delegation on container, not individual inputs (prevent listener duplication)
 - localStorage sync is explicit: always call `saveStorage()` after data changes
+- Acts system: Acts displayed in sidebar panel with controls, not overlays
 
-**If v7.1 has bugs:** Use v5 immediately (localStorage independent, same data format).
+**If v8.0 has bugs:** Use v5 immediately (localStorage independent, same data format).
 
 
 
 ## 🎯 Project Overview
 
-**Genealog Indexer v3.2** is a professional genealogical document editing tool for indexing and metadata extraction from historical registry documents with visual Region of Interest (ROI) marking. The project contains **multiple parallel versions** reflecting different architectural iterations.
+**Genealog Indexer v4.0** is a professional genealogical document editing tool for indexing and metadata extraction from historical registry documents with visual Region of Interest (ROI) marking. The project contains **multiple parallel versions** reflecting different architectural iterations.
 
 **Stack:** Vanilla JS + OpenSeadragon (image viewer) + Vite (dev server) + localStorage (persistence)  
-**Current:** Monolithic single-file HTML applications (`public/viewer-osd-v7.html` latest, 3083 lines)
+**Current:** Monolithic single-file HTML applications (`public/viewer-osd-v8.html` latest, 4841 lines)
 
 ### Version Status
-- **v7.1** (`viewer-osd-v7.html`): Latest production. Features A-E (Suggestions Fan, Keyboard Shortcuts, Clipboard, OCR, Post-processing). Build: ~3500 lines.
-- **v5.0** (`viewer-osd-v5.html`): Stable fallback. Flat record structure, no OCR/image processing. ~2200 lines. Use if v7.1 bugs occur.
+- **v8.0** (`viewer-osd-v8.html`): Latest production. Acts system in sidebar panel with controls, postprocessing filters, advanced modal for act creation/copying, auto ID generation. Build: ~4841 lines.
+- **v7.1** (`viewer-osd-v7.html`): Previous version. Features A-E (Suggestions Fan, Keyboard Shortcuts, Clipboard, OCR, Post-processing). ~3500 lines.
+- **v5.0** (`viewer-osd-v5.html`): Stable fallback. Flat record structure, no OCR/image processing. ~2200 lines. Use if v8.0 bugs occur.
 - **v6.0** (`viewer-osd-v6.html`): Experimental hierarchical acts, **DO NOT USE** (incomplete ROI implementation, CSV bugs)
 - **v4.x**: Legacy, reference only
 
@@ -59,8 +61,9 @@ npm run build        # Build for production → dist/
   - v5: Stable, flat record structure (RECOMMENDED for changes)
   - v4.1: Hierarchy system backup
   - v4: Earlier version (reference only)
-- **`public/viewer-osd-v7.html`** - Experimental: OCR + post-processing
-- **Versioning strategy:** Before major changes, backup: `cp viewer-osd-v5.html "viewer-osd-v5.html.backup-$(date +%Y%m%d-%H%M%S)"`
+- **`public/viewer-osd-v7.html`** - Previous: OCR + post-processing
+- **`public/viewer-osd-v8.html`** - Latest: Acts system in sidebar, advanced modals, auto ID generation
+- **Versioning strategy:** Before major changes, backup: `cp viewer-osd-v8.html "viewer-osd-v8.html.backup-$(date +%Y%m%d-%H%M%S)"`
 
 ### Testing & Debugging Workflow
 
@@ -75,6 +78,9 @@ console.error('❌ Error message');                 // Errors
 console.log('💡 Suggestion fan created:', suggestions); // v7.1 new
 console.log('⌨️ Keyboard shortcut:', key);         // v7.1 new
 console.log('🖼️ OCR result:', extractedText);      // v7.1 new
+console.log('📋 Acts list rendered:', actsCount); // v8.0 new - acts in sidebar
+console.log('🔢 Auto ID generated:', idString);    // v8.0 new - ID generation
+console.log('🗂️ Modal opened:', modalType);        // v8.0 new - advanced modals
 ```
 
 **localStorage Inspection:**
@@ -105,11 +111,12 @@ Object.values(record.rois).forEach(roi => {
 ### Which Version to Use?
 
 **Production (Choose One):**
-- **v7.1** ← USE THIS for new projects
-  - All v7.0 features (OCR, post-processing, adaptive threshold)
-  - PLUS v7.1 features A-E (suggestions, keyboard shortcuts, clipboard, enhanced OCR, image pipeline)
-  - File: `public/viewer-osd-v7.html`
-  - Testing status: ✅ All 5 features implemented (as of Dec 20, 2025)
+- **v8.0** ← USE THIS for new projects
+  - Acts system in sidebar panel with controls
+  - Advanced modal for act creation/copying with auto ID generation
+  - Postprocessing filters, ROI system
+  - File: `public/viewer-osd-v8.html`
+  - Testing status: ✅ Production ready (as of Jan 2, 2026)
   
 - **v5.0** ← USE THIS for stability
   - Proven stable, no advanced features
@@ -124,12 +131,12 @@ Object.values(record.rois).forEach(roi => {
 
 ### Data Format Compatibility
 
-**v5 ↔ v7.1 (Compatible):**
-- Both use flat `app.records[]` array
-- Both store ROI as `record.rois[fieldId] = { x, y, w, h }`
-- Both save to localStorage under key `genealog_data`
-- **Migration:** Export v5 JSON → Import to v7.1 works perfectly
-- **Reverse:** Export v7.1 JSON (without processed images) → Import to v5 works
+**v5 ↔ v7.1 ↔ v8.0 (Compatible):**
+- All use flat `app.records[]` array
+- All store ROI as `record.rois[fieldId] = { x, y, w, h }`
+- All save to localStorage under key `genealog_data`
+- **Migration:** Export v5 JSON → Import to v8.0 works perfectly
+- **Reverse:** Export v8.0 JSON → Import to v5 works
 
 **v6 (Incompatible):**
 - Uses `app.acts[]` with hierarchy structure
@@ -137,15 +144,15 @@ Object.values(record.rois).forEach(roi => {
 - CSV export format different
 - **Migration required:** Extract v6 data, transform to v5 format, reimport
 
-### Upgrade Path v5 → v7.1
+### Upgrade Path v5 → v8.0
 
 **Recommended for users with production v5 data:**
 1. In v5: **Export Data** (CSV + JSON)
 2. Close v5 tab
-3. Open v7.1 (`http://localhost:5173/public/viewer-osd-v7.html`)
+3. Open v8.0 (`http://localhost:5173/public/viewer-osd-v8.html`)
 4. **Import JSON** (uses same format)
 5. All records/ROIs appear exactly as before
-6. Now can use new v7.1 features (suggestions fan, OCR, etc.)
+6. Now can use new v8.0 features (acts sidebar, advanced modals, auto ID generation)
 7. If issues, switch back to v5 (localStorage independent)
 
 ### Development Workflow by Version
@@ -158,17 +165,17 @@ cp public/viewer-osd-v5.html "public/viewer-osd-v5.html.backup-$(date +%Y%m%d-%H
 # Test: http://localhost:5173/public/viewer-osd-v5.html
 ```
 
-**Working on v7.1 (adding features A-E or beyond):**
+**Working on v8.0 (adding features or beyond):**
 ```bash
-# ALWAYS backup v7.1 first (it's large, easy to break)
-cp public/viewer-osd-v7.html "public/viewer-osd-v7.html.backup-$(date +%Y%m%d-%H%M%S)"
-# Edit viewer-osd-v7.html
-# Test: http://localhost:5173/public/viewer-osd-v7.html
+# ALWAYS backup v8.0 first (it's large, easy to break)
+cp public/viewer-osd-v8.html "public/viewer-osd-v8.html.backup-$(date +%Y%m%d-%H%M%S)"
+# Edit viewer-osd-v8.html
+# Test: http://localhost:5173/public/viewer-osd-v8.html
 # If broken: restore backup, debug in smaller steps
 ```
 
 **Never edit v6** (it's abandoned). If you need hierarchical acts:
-- Consider implementing in v7.1 (would require significant refactor)
+- Consider implementing in v8.0 (would require significant refactor)
 - Or document v6's approach in BRAINSTORM.md for future reference
 
 
@@ -465,6 +472,13 @@ saveStorage();               // Persist (must be explicit!)
 - `rotateImage(degrees)` - OSD rotation transformation
 - `togglePanel('right'|'thumbs')` - Collapse/expand side panels
 - `toggleFullscreen()` - Request fullscreen API
+
+### Acts System (v8.0)
+- `renderActsList()` - Display acts in sidebar panel with controls
+- `showAdvancedActModal()` - Modal for creating/copying acts with auto ID generation
+- `autoGenerateID(actData)` - Generate IDs in TYP.WOJ.PARAFIA.ROK.MIES.NR.SUF format
+- `formatActDisplayName(id)` - Parse ID to display format (e.g., "CH.1909.N͞o.01")
+- `showActContextMenuPanel(actId)` - Context menu for act editing/deletion
 
 ## 🔑 Key Patterns & Conventions
 
@@ -948,9 +962,9 @@ function updateROIStyles() {
 }
 ```
 
-## 🧪 Testing Checklist for v7.1 Features
+## 🧪 Testing Checklist for v8.0 Features
 
-Before committing any changes to v7.1, verify:
+Before committing any changes to v8.0, verify:
 
 ### Feature A: Suggestions Fan
 - [ ] Load image with 2+ records containing same field values
@@ -988,6 +1002,17 @@ Before committing any changes to v7.1, verify:
 - [ ] Switch image → different post-process settings load per image
 - [ ] Adaptive threshold slider visible and responsive (0-100)
 - [ ] Check `app.postprocessState` has all 12 properties
+
+### Feature F: Acts System (v8.0)
+- [ ] Acts displayed in sidebar panel, not overlays
+- [ ] Click act in sidebar → loads record data into form
+- [ ] Right-click act → context menu appears (edit name, delete)
+- [ ] Advanced modal opens for creating new acts
+- [ ] Auto ID generation: TYP.WOJ.PARAFIA.ROK.MIES.NR.SUF format
+- [ ] CopyPrev copies exact act numbers from previous page
+- [ ] Create starts from highest existing nr + 1
+- [ ] Modal shows generated ID preview
+- [ ] Act display name parsed correctly (e.g., "CH.1909.N͞o.01")
 
 ### Critical Infrastructure
 - [ ] localStorage not corrupted after all tests
@@ -1039,7 +1064,7 @@ x_i = startX - 1.7 × dist_i         // left offset for ergonomic reach
 2. **v7.2 planned:** Mouse move detection (>100px left, >50px down) for instant popup
 3. **v7.2+ future:** Gesture recognition for wrist-movement-only interaction
 
-## � v7.1-Specific Patterns
+## � v8.0-Specific Patterns
 
 ### Suggestions Fan Architecture
 The fan system extends the form focus workflow:
@@ -1104,6 +1129,24 @@ Tesseract WASM is expensive. v7.1 implements:
 4. Show visual progress bar during extraction
 
 **Risk:** Cache invalidation if user re-processes image. Clear `app.ocrCache` on image modification.
+
+### Acts System Architecture (v8.0)
+The acts system manages genealogical acts in a sidebar panel instead of overlays:
+```js
+// 1. Acts stored in app.imageActs[] per image
+// 2. renderActsList() populates #actsPanel with act items
+// 3. Each act item has click handler to selectRecord(actId)
+// 4. Right-click shows context menu: edit name, delete
+// 5. Advanced modal for batch creation: showAdvancedActModal()
+// 6. Auto ID generation: autoGenerateID(actData) creates TYP.WOJ.PARAFIA.ROK.MIES.NR.SUF
+// 7. CopyPrev: copies exact nr values from previous page
+// 8. Create: starts from highest existing nr + 1
+```
+
+**Key Functions:**
+- `formatActDisplayName(id)` - Converts ID to readable format (e.g., "CH.1909.N͞o.01")
+- `showActContextMenuPanel(actId)` - Displays edit/delete options
+- Modal data flow: {year, parish, woj, type, incomplete, plusIndex} → generates IDs sequentially
 
 
 
@@ -1342,3 +1385,14 @@ Enhanced from v7.0. Tesseract.js integration with visual feedback.
 - **[README.md](README.md)** - Project overview and architecture overview
 - **[CHANGELOG.md](CHANGELOG.md)** - Version history and feature details
 - **[BRAINSTORM.md](.github/BRAINSTORM.md)** - Design decisions and planned improvements
+
+## 💡 Token Optimization Guidelines
+
+**For AI Agents (Copilot, etc.):**
+- Keep answers short and impersonal.
+- Avoid verbose explanations unless specifically requested.
+- Use tools efficiently - prefer targeted searches over broad ones.
+- Minimize tool calls by reading large chunks of code at once.
+- Do not repeat information already in context.
+- Focus on completing the user's request directly.
+- If uncertain, ask for clarification briefly rather than assuming.
