@@ -1,15 +1,15 @@
 @echo off
 REM ============================================
-REM Genealog Indexer v7.1 - Akt Mode Launcher
+REM Genealog Indexer v9.0 - Akt Mode Launcher
 REM ============================================
 REM Lokalizacja: j:\projekt 2025\projekt-akta-v2\
 
-title Genealog Indexer v7.1 - Akt Mode
+title Genealog Indexer v9.0 - Akt Mode
 color 0A
 
 echo.
 echo ============================================
-echo   Genealog Indexer v7.1 - Akt Mode
+echo   Genealog Indexer v9.0 - Akt Mode
 echo   Enhanced Ergonomic Act Processing
 echo ============================================
 echo.
@@ -42,7 +42,7 @@ if not exist "node_modules" (
 )
 
 echo ============================================
-echo Starting Genealog Indexer v7.1...
+echo Starting Genealog Indexer v9.0...
 echo ============================================
 echo.
 echo Features:

@@ -1,11 +1,11 @@
 #!/bin/bash
 # ============================================
-# Genealog Indexer v7.1 - Akt Mode Launcher
+# Genealog Indexer v9.0 - Akt Mode Launcher
 # For WSL/Linux/Mac
 # ============================================
 
 echo "============================================"
-echo "  Genealog Indexer v7.1 - Akt Mode"
+echo "  Genealog Indexer v9.0 - Akt Mode"
 echo "  Enhanced Ergonomic Act Processing"
 echo "============================================"
 echo ""
@@ -35,7 +35,7 @@ if [ ! -d "node_modules" ]; then
 fi
 
 echo "============================================"
-echo "Starting Genealog Indexer v7.1..."
+echo "Starting Genealog Indexer v9.0..."
 echo "============================================"
 echo ""
 echo "Features:"
