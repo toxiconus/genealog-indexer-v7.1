@@ -1515,7 +1515,9 @@
     <script>
         const app = {
             images: [],
-            imageActs: [],
+            imageActs: new Map(),  // Changed to Map for ACTA v1
+            personsRegistry: new Map(),  // Registry for all persons to avoid duplicates
+            nextPersonId: 1,
             currentImageIdx: 0,
             currentEventId: null,
             currentTemplate: null,
@@ -1610,6 +1612,18 @@
                 backgroundSubtraction: 50, morphologyClose: 50, autoInvert: true
             }
         };
+        
+        // ===== PERSON REGISTRY FUNCTIONS =====
+        function createPerson(firstName = '', lastName = '') {
+            const person = new ACTA.PersonModel(firstName, lastName);
+            person.id = app.nextPersonId++;
+            app.personsRegistry.set(person.id, person);
+            return person;
+        }
+        
+        function getPersonFromRole(role) {
+            return role.personId ? app.personsRegistry.get(role.personId) : null;
+        }
         
         // Global flags for preview
         let previewTimeout = null;
@@ -2014,8 +2028,9 @@
                 const filtered = currentImageEvents.filter(event => {
                     // Search in all roles' person data
                     return event.roles.some(role => {
-                        if (!role.person) return false;
-                        const person = role.person;
+                        if (!role.personId) return false;
+                        const person = app.personsRegistry.get(role.personId);
+                        if (!person) return false;
                         const searchableFields = [
                             person.firstName,
                             person.lastName,
@@ -2724,91 +2739,96 @@
                 const fatherRole = event.getFather();
                 const motherRole = event.getMother();
 
-                if (childRole && childRole.person) {
+                if (childRole && getPersonFromRole(childRole)) {
+                    const person = getPersonFromRole(childRole);
                     const childFirst = form.querySelector('[name="child_first_name"]');
-                    if (childFirst) childRole.person.firstName = childFirst.value.trim();
+                    if (childFirst) person.firstName = childFirst.value.trim();
                     
                     const childLast = form.querySelector('[name="child_last_name"]');
-                    if (childLast) childRole.person.lastName = childLast.value.trim();
+                    if (childLast) person.lastName = childLast.value.trim();
                     
                     const childGender = form.querySelector('[name="child_gender"]:checked');
-                    if (childGender) childRole.person.gender = childGender.value;
+                    if (childGender) person.gender = childGender.value;
                     
                     const childBirth = form.querySelector('[name="child_birth_date"]');
                     if (childBirth && childBirth.value) {
-                        childRole.person.birthDate = new ACTA.HistoricalDate(childBirth.value, 'day');
+                        person.birthDate = new ACTA.HistoricalDate(childBirth.value, 'day');
                     }
                     
                     const childPlace = form.querySelector('[name="child_place"]');
                     if (childPlace && childPlace.value) {
-                        childRole.person.birthPlace = new ACTA.HistoricalPlace(childPlace.value.trim(), 'town');
+                        person.birthPlace = new ACTA.HistoricalPlace(childPlace.value.trim(), 'town');
                     }
                 }
 
-                if (fatherRole && fatherRole.person) {
+                if (fatherRole && getPersonFromRole(fatherRole)) {
+                    const person = getPersonFromRole(fatherRole);
                     const fatherFirst = form.querySelector('[name="father_first_name"]');
-                    if (fatherFirst) fatherRole.person.firstName = fatherFirst.value.trim();
+                    if (fatherFirst) person.firstName = fatherFirst.value.trim();
                     
                     const fatherLast = form.querySelector('[name="father_last_name"]');
-                    if (fatherLast) fatherRole.person.lastName = fatherLast.value.trim();
+                    if (fatherLast) person.lastName = fatherLast.value.trim();
                     
                     const fatherOcc = form.querySelector('[name="father_occupation"]');
-                    if (fatherOcc) fatherRole.person.occupation = fatherOcc.value.trim();
+                    if (fatherOcc) person.occupation = fatherOcc.value.trim();
                     
                     const fatherAge = form.querySelector('[name="father_age"]');
                     if (fatherAge && fatherAge.value) {
-                        fatherRole.person.age = parseInt(fatherAge.value);
+                        person.age = parseInt(fatherAge.value);
                     }
                 }
 
-                if (motherRole && motherRole.person) {
+                if (motherRole && getPersonFromRole(motherRole)) {
+                    const person = getPersonFromRole(motherRole);
                     const motherFirst = form.querySelector('[name="mother_first_name"]');
-                    if (motherFirst) motherRole.person.firstName = motherFirst.value.trim();
+                    if (motherFirst) person.firstName = motherFirst.value.trim();
                     
                     const motherMaiden = form.querySelector('[name="mother_maiden_name"]');
-                    if (motherMaiden) motherRole.person.maidenName = motherMaiden.value.trim();
+                    if (motherMaiden) person.maidenName = motherMaiden.value.trim();
                     
                     const motherOcc = form.querySelector('[name="mother_occupation"]');
-                    if (motherOcc) motherRole.person.occupation = motherOcc.value.trim();
+                    if (motherOcc) person.occupation = motherOcc.value.trim();
                     
                     const motherAge = form.querySelector('[name="mother_age"]');
                     if (motherAge && motherAge.value) {
-                        motherRole.person.age = parseInt(motherAge.value);
+                        person.age = parseInt(motherAge.value);
                     }
                 }
             } else if (event.type === 'małżeństwo') {
                 const groomRole = event.getGroom();
                 const brideRole = event.getBride();
 
-                if (groomRole && groomRole.person) {
+                if (groomRole && getPersonFromRole(groomRole)) {
+                    const person = getPersonFromRole(groomRole);
                     const groomFirst = form.querySelector('[name="groom_first_name"]');
-                    if (groomFirst) groomRole.person.firstName = groomFirst.value.trim();
+                    if (groomFirst) person.firstName = groomFirst.value.trim();
                     
                     const groomLast = form.querySelector('[name="groom_last_name"]');
-                    if (groomLast) groomRole.person.lastName = groomLast.value.trim();
+                    if (groomLast) person.lastName = groomLast.value.trim();
                     
                     const groomAge = form.querySelector('[name="groom_age"]');
                     if (groomAge && groomAge.value) {
-                        groomRole.person.age = parseInt(groomAge.value);
+                        person.age = parseInt(groomAge.value);
                     }
                     
                     const groomOcc = form.querySelector('[name="groom_occupation"]');
-                    if (groomOcc) groomRole.person.occupation = groomOcc.value.trim();
+                    if (groomOcc) person.occupation = groomOcc.value.trim();
                 }
 
-                if (brideRole && brideRole.person) {
+                if (brideRole && getPersonFromRole(brideRole)) {
+                    const person = getPersonFromRole(brideRole);
                     const brideFirst = form.querySelector('[name="bride_first_name"]');
-                    if (brideFirst) brideRole.person.firstName = brideFirst.value.trim();
+                    if (brideFirst) person.firstName = brideFirst.value.trim();
                     
                     const brideLast = form.querySelector('[name="bride_last_name"]');
-                    if (brideLast) brideRole.person.lastName = brideLast.value.trim();
+                    if (brideLast) person.lastName = brideLast.value.trim();
                     
                     const brideMaiden = form.querySelector('[name="bride_maiden_name"]');
-                    if (brideMaiden) brideRole.person.maidenName = brideMaiden.value.trim();
+                    if (brideMaiden) person.maidenName = brideMaiden.value.trim();
                     
                     const brideAge = form.querySelector('[name="bride_age"]');
                     if (brideAge && brideAge.value) {
-                        brideRole.person.age = parseInt(brideAge.value);
+                        person.age = parseInt(brideAge.value);
                     }
                 }
             } else if (event.type === 'urodzenie') {
@@ -3549,10 +3569,13 @@
                     
                     // Kopiuj role i relacje z poprzedniego eventu
                     prevEvent.roles.forEach(roleEntry => {
-                        const newPerson = new ACTA.PersonModel();
+                        const newPerson = createPerson();
                         // Kopiuj podstawowe dane osoby
-                        Object.assign(newPerson, JSON.parse(JSON.stringify(roleEntry.person)));
-                        event.addPersonWithRole(newPerson, roleEntry.role);
+                        const sourcePerson = roleEntry.person || app.personsRegistry.get(roleEntry.personId);
+                        if (sourcePerson) {
+                            Object.assign(newPerson, JSON.parse(JSON.stringify(sourcePerson)));
+                        }
+                        event.addPersonWithRole(newPerson.id, roleEntry.role);
                     });
                     
                     // Kopiuj relacje
@@ -3606,13 +3629,13 @@
         // ✅ NOWA FUNKCJA: Inicjalizuj domyślne role dla typu aktu
         function initializeEventRoles(event, type) {
             if (type === 'chrzest') {
-                const child = new ACTA.PersonModel();
-                const father = new ACTA.PersonModel();
-                const mother = new ACTA.PersonModel();
+                const child = createPerson();
+                const father = createPerson();
+                const mother = createPerson();
                 
-                event.addPersonWithRole(child, ACTA.RoleTypes.CHILD);
-                event.addPersonWithRole(father, ACTA.RoleTypes.FATHER);
-                event.addPersonWithRole(mother, ACTA.RoleTypes.MOTHER);
+                event.addPersonWithRole(child.id, ACTA.RoleTypes.CHILD);
+                event.addPersonWithRole(father.id, ACTA.RoleTypes.FATHER);
+                event.addPersonWithRole(mother.id, ACTA.RoleTypes.MOTHER);
                 
                 // Dodaj relacje rodzinne
                 event.addRelationship(father, child, ACTA.RelationshipTypes.PARENT_CHILD);
@@ -3621,30 +3644,30 @@
                 console.log('✅ Initialized baptism event with 3 roles');
             } 
             else if (type === 'małżeństwo') {
-                const groom = new ACTA.PersonModel();
-                const bride = new ACTA.PersonModel();
+                const groom = createPerson();
+                const bride = createPerson();
                 
-                event.addPersonWithRole(groom, 'pan_młody');
-                event.addPersonWithRole(bride, 'panna_młoda');
+                event.addPersonWithRole(groom.id, 'pan_młody');
+                event.addPersonWithRole(bride.id, 'panna_młoda');
                 
                 event.addRelationship(groom, bride, ACTA.RelationshipTypes.MARRIAGE);
                 
                 console.log('✅ Initialized marriage event with 2 roles');
             } 
             else if (type === 'zgon') {
-                const deceased = new ACTA.PersonModel();
-                event.addPersonWithRole(deceased, 'zmarły');
+                const deceased = createPerson();
+                event.addPersonWithRole(deceased.id, 'zmarły');
                 
                 console.log('✅ Initialized death event with 1 role');
             } 
             else if (type === 'urodzenie') {
-                const child = new ACTA.PersonModel();
-                const father = new ACTA.PersonModel();
-                const mother = new ACTA.PersonModel();
+                const child = createPerson();
+                const father = createPerson();
+                const mother = createPerson();
                 
-                event.addPersonWithRole(child, ACTA.RoleTypes.CHILD);
-                event.addPersonWithRole(father, ACTA.RoleTypes.FATHER);
-                event.addPersonWithRole(mother, ACTA.RoleTypes.MOTHER);
+                event.addPersonWithRole(child.id, ACTA.RoleTypes.CHILD);
+                event.addPersonWithRole(father.id, ACTA.RoleTypes.FATHER);
+                event.addPersonWithRole(mother.id, ACTA.RoleTypes.MOTHER);
                 
                 event.addRelationship(father, child, ACTA.RelationshipTypes.PARENT_CHILD);
                 event.addRelationship(mother, child, ACTA.RelationshipTypes.PARENT_CHILD);
@@ -4102,8 +4125,38 @@
             }
         }
 
-        function saveStorage() {
+        async function saveToFirebase() {
+            if (!window.db) return;
+            
             try {
+                const batch = window.db.batch();
+                
+                // Save persons
+                app.personsRegistry.forEach((person, id) => {
+                    const personRef = window.db.collection('persons').doc(id.toString());
+                    batch.set(personRef, person.toJSON());
+                });
+                
+                // Save events
+                app.imageActs.forEach((event, id) => {
+                    const eventRef = window.db.collection('events').doc(id.toString());
+                    batch.set(eventRef, event.toJSON());
+                });
+                
+                await batch.commit();
+                console.log('✓ Dane zapisane do Firebase');
+            } catch (e) {
+                console.error('❌ Błąd zapisu do Firebase:', e);
+            }
+        }
+
+        async function saveStorage() {
+            try {
+                // Save to Firebase if available
+                if (window.db) {
+                    await saveToFirebase();
+                }
+                
                 // ✅ NOWE: Konwertuj imageActs (Map) na array do JSON
                 const actsArray = Array.from(app.imageActs.values()).map(event => event.toJSON());
                 
@@ -4115,16 +4168,17 @@
                         rotation: img.rotation || 0
                     })),
                     imageActs: actsArray, // ✅ NOWE: Array zamiast Map
-                    personDb: app.personDb.toJSON(), // ✅ NOWE: Cała baza osób
+                    personsRegistry: Array.from(app.personsRegistry.entries()), // Registry as [id, person]
+                    nextPersonId: app.nextPersonId,
                     currentImageIndex: app.currentImageIdx || 0,
                     currentEventId: app.currentEventId || null, // ✅ NOWE: Event ID zamiast index
                     currentTemplate: app.currentTemplate || 'birth'
                 };
                 
-                localStorage.setItem('genealog-indexer-v8', JSON.stringify(storageData));
-                console.log('✓ Dane zapisane do LocalStorage (ACTA v1)');
+                localStorage.setItem('genealog-indexer-v9', JSON.stringify(storageData));
+                console.log('✓ Dane zapisane do LocalStorage (ACTA v1 with Registry)');
                 console.log(`  - Akty: ${actsArray.length}`);
-                console.log(`  - Osoby: ${app.personDb.persons.size}`);
+                console.log(`  - Osoby: ${app.personsRegistry.size}`);
                 console.log(`  - Rozmiar: ${Math.round(JSON.stringify(storageData).length / 1024)} KB`);
             } catch (e) {
                 console.error('❌ Błąd zapisu:', e);
@@ -4132,9 +4186,93 @@
             }
         }
 
-        function loadStorage() {
+        async function loadFromFirebase() {
+            if (!window.db) return;
+            
             try {
-                const stored = localStorage.getItem('genealog-indexer-v8');
+                // Load persons
+                const personsSnap = await window.db.collection('persons').get();
+                app.personsRegistry.clear();
+                personsSnap.forEach(doc => {
+                    const person = ACTA.PersonModel.fromJSON(doc.data());
+                    app.personsRegistry.set(doc.id, person);
+                });
+                
+                // Load events
+                const eventsSnap = await window.db.collection('events').get();
+                app.imageActs.clear();
+                eventsSnap.forEach(doc => {
+                    const event = ACTA.EventModel.fromJSON(doc.data());
+                    app.imageActs.set(doc.id, event);
+                });
+                
+                console.log(`✓ Dane załadowane z Firebase: ${app.personsRegistry.size} osób, ${app.imageActs.size} aktów`);
+                updateThumbs();
+            } catch (e) {
+                console.error('❌ Błąd ładowania z Firebase:', e);
+                // Fallback to LocalStorage
+                loadFromLocalStorage();
+            }
+        }
+
+        function loadFromLocalStorage() {
+            const stored = localStorage.getItem('genealog-indexer-v9');
+            if (!stored) {
+                console.log('ℹ️ Brak danych w LocalStorage (nowa sesja)');
+                return;
+            }
+
+            const data = JSON.parse(stored);
+            
+            // ✅ NOWE: Załaduj obrazy
+            if (data.imageData) {
+                app.images = data.imageData;
+                console.log(`📷 Załadowano ${app.images.length} obrazów`);
+            }
+
+            // ✅ NOWE: Załaduj akty z ACTA v1 JSON
+            if (data.imageActs && Array.isArray(data.imageActs)) {
+                app.imageActs.clear(); // Wyczyść mapę
+                
+                data.imageActs.forEach(eventData => {
+                    const event = ACTA.EventModel.fromJSON(eventData);
+                    app.imageActs.set(event.id, event);
+                });
+                
+                console.log(`📋 Załadowano ${data.imageActs.length} aktów (ACTA v1)`);
+            }
+
+            // ✅ NOWE: Załaduj registry osób
+            if (data.personsRegistry) {
+                app.personsRegistry.clear();
+                data.personsRegistry.forEach(([id, personData]) => {
+                    const person = ACTA.PersonModel.fromJSON(personData);
+                    app.personsRegistry.set(id, person);
+                });
+                app.nextPersonId = data.nextPersonId || 1;
+                console.log(`👥 Załadowano registry: ${app.personsRegistry.size} osób`);
+            }
+
+            // Przywróć stan
+            app.currentImageIdx = data.currentImageIndex || 0;
+            app.currentEventId = data.currentEventId || null; // ✅ NOWE
+            app.currentTemplate = data.currentTemplate || 'birth';
+            
+            console.log(`✓ Dane załadowane z LocalStorage (v${data.version || '?'})`);
+            
+            updateThumbs();
+        }
+
+        async function loadStorage() {
+            try {
+                // Try Firebase first
+                if (window.db) {
+                    await loadFromFirebase();
+                    return;
+                }
+                
+                // Fallback to LocalStorage
+                const stored = localStorage.getItem('genealog-indexer-v9');
                 if (!stored) {
                     console.log('ℹ️ Brak danych w LocalStorage (nowa sesja)');
                     return;
@@ -4160,10 +4298,15 @@
                     console.log(`📋 Załadowano ${data.imageActs.length} aktów (ACTA v1)`);
                 }
 
-                // ✅ NOWE: Załaduj bazę osób
-                if (data.personDb) {
-                    app.personDb = ACTA.PersonDatabase.fromJSON(data.personDb);
-                    console.log(`👥 Załadowano bazę: ${app.personDb.persons.size} osób`);
+                // ✅ NOWE: Załaduj registry osób
+                if (data.personsRegistry) {
+                    app.personsRegistry.clear();
+                    data.personsRegistry.forEach(([id, personData]) => {
+                        const person = ACTA.PersonModel.fromJSON(personData);
+                        app.personsRegistry.set(id, person);
+                    });
+                    app.nextPersonId = data.nextPersonId || 1;
+                    console.log(`👥 Załadowano registry: ${app.personsRegistry.size} osób`);
                 }
 
                 // Przywróć stan
@@ -6091,9 +6234,12 @@
             currentAct.relationships = [];
             
             previousAct.roles.forEach(roleEntry => {
-                const newPerson = new ACTA.PersonModel();
-                Object.assign(newPerson, JSON.parse(JSON.stringify(roleEntry.person)));
-                currentAct.addPersonWithRole(newPerson, roleEntry.role);
+                const newPerson = createPerson();
+                const sourcePerson = roleEntry.person || app.personsRegistry.get(roleEntry.personId);
+                if (sourcePerson) {
+                    Object.assign(newPerson, JSON.parse(JSON.stringify(sourcePerson)));
+                }
+                currentAct.addPersonWithRole(newPerson.id, roleEntry.role);
             });
             
             previousAct.relationships.forEach(rel => {

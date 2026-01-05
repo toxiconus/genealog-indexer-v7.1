@@ -9815,7 +9815,7 @@ Migracja ACTA v1 została całkowicie zakończona i jest dostępna w repozytoriu
 
 ---
 
-_**User (2026-01-05 19:13Z)**_
+_**User (2026-01-05 19:14Z)**_
 
 dasz rade html podniesc do następnego v+?
 
@@ -9861,6 +9861,1461 @@ Result:
 Status: **completed**
 
 
+</details>
+</tool-use>
+
+---
+
+<tool-use data-tool-type="unknown" data-tool-name="run_in_terminal">
+<details>
+<summary>Tool use: **run_in_terminal**</summary>
+
+
+Parameters:
+
+```json
+{
+  "kind": "terminal",
+  "terminalToolSessionId": "fef1f8d1-3582-459f-ac0a-d28871b8eae5",
+  "terminalCommandId": "tool-0fc6d419-29e1-4173-94a0-87f142ef4063",
+  "commandLine": {
+    "original": "cd \"j:\\projekt 2025\\projekt-akta-v2\" &amp;&amp; type start-v7.1.bat",
+    "toolEdited": "cd \"j:\\projekt 2025\\projekt-akta-v2\" ; type start-v7.1.bat"
+  },
+  "language": "pwsh",
+  "autoApproveInfo": {
+    "value": "Automatycznie zatwierdzane dla tej sesji ([Wyłącz](command:workbench.action.terminal.chat.disableSessionAutoApproval?%255B%252249e683f7-16c8-437e-8720-25607a516875%2522%255D))",
+    "isTrusted": {
+      "enabledCommands": [
+        "workbench.action.terminal.chat.disableSessionAutoApproval"
+      ]
+    },
+    "supportThemeIcons": false,
+    "supportHtml": false,
+    "supportAlertSyntax": false
+  },
+  "terminalCommandState": {
+    "exitCode": 0,
+    "timestamp": 1767640450069,
+    "duration": 76
+  },
+  "terminalCommandUri": {
+    "$mid": 1,
+    "path": "/6ba9a78b74ea4bb2d0e5368bde90f64f/10",
+    "scheme": "vscode-terminal",
+    "query": "command=tool-0fc6d419-29e1-4173-94a0-87f142ef4063"
+  },
+  "terminalCommandOutput": {
+    "text": "@echo off\r\nREM ============================================\r\nREM Genealog Indexer v7.1 - Akt Mode Launcher\r\nREM ============================================\r\nREM Lokalizacja: j:\\projekt 2025\\projekt-akta-v2\\\r\n\r\ntitle Genealog Indexer v7.1 - Akt Mode\r\ncolor 0A\r\n\r\necho.\r\necho ============================================\r\necho   Genealog Indexer v7.1 - Akt Mode\r\necho   Enhanced Ergonomic Act Processing\r\necho ============================================\r\necho.\r\n\r\nREM Sprawdzenie czy Node.js jest zainstalowany\r\nwhere node &gt;nul 2&gt;nul\r\nif %errorlevel% neq 0 (\r\n    echo ERROR: Node.js not found!\r\n    echo Please install Node.js from https://nodejs.org/\r\n    pause\r\n    exit /b 1\r\n)\r\n\r\nREM PrzejĹ›cie do folderu projektu\r\ncd /d \"%~dp0\"\r\n\r\nREM Sprawdzenie czy package.json istnieje\r\nif not exist \"package.json\" (\r\n    echo ERROR: package.json not found!\r\n    echo This file should be in: %cd%\r\n    pause\r\n    exit /b 1\r\n)\r\n\r\nREM Sprawdzenie czy node_modules istnieje, jeĹ›li nie - instalacja  \r\nif not exist \"node_modules\" (\r\n    echo Installing dependencies...\r\n    call npm install\r\n    echo.\r\n)\r\n\r\necho ============================================\r\necho Starting Genealog Indexer v7.1...\r\necho ============================================\r\necho.\r\necho Features:\r\necho   â€˘ Card-style act buttons (fishy design)\r\necho   â€˘ Arrow key navigation (Left/Right)\r\necho   â€˘ Clean act-focused workflow\r\necho   â€˘ Heavy-Duty postprocessing preset\r\necho.\r\necho Opening: http://localhost:5173/viewer-osd-v8.html\r\necho.\r\necho Press Ctrl+C to stop the server\r\necho ============================================\r\necho.\r\n\r\ncall npm run dev\r\n",
+    "lineCount": 61
+  },
+  "terminalTheme": {
+    "background": "#181818",
+    "foreground": "#cccccc"
+  }
+}
+```
+Additional data:
+
+```json
+{
+  "vscodeToolId": "run_in_terminal",
+  "isHidden": false
+}
+```
+Result:
+
+```json
+{
+  "invocationMessage": "Korzystanie z \"Uruchom w terminalu\"",
+  "isConfirmed": {
+    "type": 1
+  },
+  "content": "",
+  "textEditContent": "",
+  "toolCallResult": null
+}
+```
+Status: **completed**
+
+
+</details>
+</tool-use>
+
+---
+
+<tool-use data-tool-type="read" data-tool-name="copilot_readFile">
+<details>
+<summary>Tool use: **copilot_readFile** • Czytanie [](file:///j%3A/projekt%202025/projekt-akta-v2/public/viewer-osd-v8.html#1-1), wiersze 1 do 50</summary>
+
+
+Odczytaj [](file:///j%3A/projekt%202025/projekt-akta-v2/public/viewer-osd-v8.html#1-1), wiersze 1 do 50
+
+</details>
+</tool-use>
+
+---
+
+<tool-use data-tool-type="unknown" data-tool-name="run_in_terminal">
+<details>
+<summary>Tool use: **run_in_terminal**</summary>
+
+
+Parameters:
+
+```json
+{
+  "kind": "terminal",
+  "terminalToolSessionId": "4ca5fac3-e884-4092-83e0-55d199d30889",
+  "terminalCommandId": "tool-e896ef8d-d990-4442-a888-a69556d61271",
+  "commandLine": {
+    "original": "cd \"j:\\projekt 2025\\projekt-akta-v2\\public\" &amp;&amp; copy viewer-osd-v8.html viewer-osd-v9.html",
+    "toolEdited": "cd \"j:\\projekt 2025\\projekt-akta-v2\\public\" ; copy viewer-osd-v8.html viewer-osd-v9.html"
+  },
+  "language": "pwsh",
+  "autoApproveInfo": {
+    "value": "Automatycznie zatwierdzane dla tej sesji ([Wyłącz](command:workbench.action.terminal.chat.disableSessionAutoApproval?%255B%252249e683f7-16c8-437e-8720-25607a516875%2522%255D))",
+    "isTrusted": {
+      "enabledCommands": [
+        "workbench.action.terminal.chat.disableSessionAutoApproval"
+      ]
+    },
+    "supportThemeIcons": false,
+    "supportHtml": false,
+    "supportAlertSyntax": false
+  },
+  "terminalCommandState": {
+    "exitCode": 0,
+    "timestamp": 1767640455856,
+    "duration": 17
+  },
+  "terminalCommandUri": {
+    "$mid": 1,
+    "path": "/6ba9a78b74ea4bb2d0e5368bde90f64f/10",
+    "scheme": "vscode-terminal",
+    "query": "command=tool-e896ef8d-d990-4442-a888-a69556d61271"
+  },
+  "terminalTheme": {
+    "background": "#181818",
+    "foreground": "#cccccc"
+  }
+}
+```
+Additional data:
+
+```json
+{
+  "vscodeToolId": "run_in_terminal",
+  "isHidden": false
+}
+```
+Result:
+
+```json
+{
+  "invocationMessage": "Korzystanie z \"Uruchom w terminalu\"",
+  "isConfirmed": {
+    "type": 1
+  },
+  "content": "",
+  "textEditContent": "",
+  "toolCallResult": null
+}
+```
+Status: **completed**
+
+
+</details>
+</tool-use>
+
+---
+
+<tool-use data-tool-type="read" data-tool-name="copilot_readFile">
+<details>
+<summary>Tool use: **copilot_readFile** • Czytanie [](file:///j%3A/projekt%202025/projekt-akta-v2/public/viewer-osd-v9.html#1-1), wiersze 1 do 10</summary>
+
+
+Odczytaj [](file:///j%3A/projekt%202025/projekt-akta-v2/public/viewer-osd-v9.html#1-1), wiersze 1 do 10
+
+</details>
+</tool-use>
+
+---
+
+<tool-use data-tool-type="unknown" data-tool-name="copilot_replaceString">
+<details>
+<summary>Tool use: **copilot_replaceString**</summary>
+
+Additional data:
+
+```json
+{
+  "vscodeToolId": "copilot_replaceString",
+  "isHidden": true
+}
+```
+Result:
+
+```json
+{
+  "invocationMessage": "Korzystanie z \"Zamień ciąg w pliku\"",
+  "isConfirmed": {
+    "type": 1
+  },
+  "content": "&#96;&#96;&#96;html\n9\n&#96;&#96;&#96;\n\n",
+  "textEditContent": "9",
+  "toolCallResult": null
+}
+```
+Status: **completed**
+
+
+</details>
+</tool-use>
+
+---
+
+<tool-use data-tool-type="unknown" data-tool-name="copilot_replaceString">
+<details>
+<summary>Tool use: **copilot_replaceString**</summary>
+
+Additional data:
+
+```json
+{
+  "vscodeToolId": "copilot_replaceString",
+  "isHidden": false
+}
+```
+Result:
+
+```json
+{
+  "invocationMessage": "Korzystanie z \"Zamień ciąg w pliku\"",
+  "isConfirmed": {
+    "type": 3,
+    "scope": "workspace"
+  },
+  "content": "&#96;&#96;&#96;bat\n9\n&#96;&#96;&#96;\n\n",
+  "textEditContent": "9",
+  "toolCallResult": null
+}
+```
+Status: **completed**
+
+
+</details>
+</tool-use>
+
+---
+
+<tool-use data-tool-type="read" data-tool-name="copilot_readFile">
+<details>
+<summary>Tool use: **copilot_readFile** • Czytanie [](file:///j%3A/projekt%202025/projekt-akta-v2/ROADMAP.md#1-1), wiersze 1 do 50</summary>
+
+
+Odczytaj [](file:///j%3A/projekt%202025/projekt-akta-v2/ROADMAP.md#1-1), wiersze 1 do 50
+
+</details>
+</tool-use>
+
+---
+
+<tool-use data-tool-type="unknown" data-tool-name="copilot_replaceString">
+<details>
+<summary>Tool use: **copilot_replaceString**</summary>
+
+Additional data:
+
+```json
+{
+  "vscodeToolId": "copilot_replaceString",
+  "isHidden": false
+}
+```
+Result:
+
+```json
+{
+  "invocationMessage": "Korzystanie z \"Zamień ciąg w pliku\"",
+  "isConfirmed": {
+    "type": 3,
+    "scope": "workspace"
+  },
+  "content": "&#96;&#96;&#96;markdown\n9\n&#96;&#96;&#96;\n\n",
+  "textEditContent": "9",
+  "toolCallResult": null
+}
+```
+Status: **completed**
+
+
+</details>
+</tool-use>
+
+---
+
+<tool-use data-tool-type="search" data-tool-name="copilot_findTextInFiles">
+<details>
+<summary>Tool use: **copilot_findTextInFiles** • Wyszukiwanie tekstu `Current Version` (`**/ROADMAP.md`)</summary>
+
+
+No results found
+</details>
+</tool-use>
+
+---
+
+<tool-use data-tool-type="unknown" data-tool-name="copilot_replaceString">
+<details>
+<summary>Tool use: **copilot_replaceString**</summary>
+
+Additional data:
+
+```json
+{
+  "vscodeToolId": "copilot_replaceString",
+  "isHidden": false
+}
+```
+Result:
+
+```json
+{
+  "invocationMessage": "Korzystanie z \"Zamień ciąg w pliku\"",
+  "isConfirmed": {
+    "type": 3,
+    "scope": "workspace"
+  },
+  "content": "&#96;&#96;&#96;markdown\nv9\n&#96;&#96;&#96;\n\n",
+  "textEditContent": "v9",
+  "toolCallResult": null
+}
+```
+Status: **completed**
+
+
+</details>
+</tool-use>
+
+---
+
+<tool-use data-tool-type="unknown" data-tool-name="run_in_terminal">
+<details>
+<summary>Tool use: **run_in_terminal**</summary>
+
+
+Parameters:
+
+```json
+{
+  "kind": "terminal",
+  "terminalToolSessionId": "cf77d9d0-a227-45cf-aae8-7f31249a71de",
+  "terminalCommandId": "tool-6aeb541d-6d6d-40a8-b84f-c93e78ba56e8",
+  "commandLine": {
+    "original": "cd \"j:\\projekt 2025\\projekt-akta-v2\" &amp;&amp; type start-v7.1.sh",
+    "toolEdited": "cd \"j:\\projekt 2025\\projekt-akta-v2\" ; type start-v7.1.sh"
+  },
+  "language": "pwsh",
+  "autoApproveInfo": {
+    "value": "Automatycznie zatwierdzane dla tej sesji ([Wyłącz](command:workbench.action.terminal.chat.disableSessionAutoApproval?%255B%252249e683f7-16c8-437e-8720-25607a516875%2522%255D))",
+    "isTrusted": {
+      "enabledCommands": [
+        "workbench.action.terminal.chat.disableSessionAutoApproval"
+      ]
+    },
+    "supportThemeIcons": false,
+    "supportHtml": false,
+    "supportAlertSyntax": false
+  },
+  "terminalCommandState": {
+    "exitCode": 0,
+    "timestamp": 1767640473173,
+    "duration": 65
+  },
+  "terminalCommandUri": {
+    "$mid": 1,
+    "path": "/6ba9a78b74ea4bb2d0e5368bde90f64f/10",
+    "scheme": "vscode-terminal",
+    "query": "command=tool-6aeb541d-6d6d-40a8-b84f-c93e78ba56e8"
+  },
+  "terminalCommandOutput": {
+    "text": "#!/bin/bash\r\n# ============================================\r\n# Genealog Indexer v7.1 - Akt Mode Launcher\r\n# For WSL/Linux/Mac\r\n# ============================================\r\n\r\necho \"============================================\"\r\necho \"  Genealog Indexer v7.1 - Akt Mode\"\r\necho \"  Enhanced Ergonomic Act Processing\"\r\necho \"============================================\"\r\necho \"\"\r\n\r\n# Check if Node.js is installed\r\nif ! command -v node &amp;&gt; /dev/null; then\r\n    echo \"ERROR: Node.js not found!\"\r\n    echo \"Please install Node.js from https://nodejs.org/\"\r\n    exit 1\r\nfi\r\n\r\n# Navigate to project directory\r\ncd \"$(dirname \"$0\")\"\r\n\r\n# Check if package.json exists\r\nif [ ! -f \"package.json\" ]; then\r\n    echo \"ERROR: package.json not found!\"\r\n    echo \"This file should be in: $(pwd)\"\r\n    exit 1\r\nfi\r\n\r\n# Check if node_modules exists, if not - install\r\nif [ ! -d \"node_modules\" ]; then\r\n    echo \"Installing dependencies...\"\r\n    npm install\r\n    echo \"\"\r\nfi\r\n\r\necho \"============================================\"\r\necho \"Starting Genealog Indexer v7.1...\"\r\necho \"============================================\"\r\necho \"\"\r\necho \"Features:\"\r\necho \"  â€˘ Card-style act buttons (fishy design)\"\r\necho \"  â€˘ Arrow key navigation (Left/Right)\"\r\necho \"  â€˘ Clean act-focused workflow\"\r\necho \"  â€˘ Heavy-Duty postprocessing preset\"\r\necho \"\"\r\necho \"Opening: http://localhost:5173/viewer-osd-v8.html\"\r\necho \"\"\r\necho \"Press Ctrl+C to stop the server\"\r\necho \"============================================\"\r\necho \"\"\r\n",
+    "lineCount": 52
+  },
+  "terminalTheme": {
+    "background": "#181818",
+    "foreground": "#cccccc"
+  }
+}
+```
+Additional data:
+
+```json
+{
+  "vscodeToolId": "run_in_terminal",
+  "isHidden": false
+}
+```
+Result:
+
+```json
+{
+  "invocationMessage": "Korzystanie z \"Uruchom w terminalu\"",
+  "isConfirmed": {
+    "type": 1
+  },
+  "content": "",
+  "textEditContent": "",
+  "toolCallResult": null
+}
+```
+Status: **completed**
+
+
+</details>
+</tool-use>
+
+---
+
+<tool-use data-tool-type="unknown" data-tool-name="copilot_replaceString">
+<details>
+<summary>Tool use: **copilot_replaceString**</summary>
+
+Additional data:
+
+```json
+{
+  "vscodeToolId": "copilot_replaceString",
+  "isHidden": false
+}
+```
+Result:
+
+```json
+{
+  "invocationMessage": "Korzystanie z \"Zamień ciąg w pliku\"",
+  "isConfirmed": {
+    "type": 3,
+    "scope": "workspace"
+  },
+  "content": "&#96;&#96;&#96;shellscript\n9\n&#96;&#96;&#96;\n\n",
+  "textEditContent": "9",
+  "toolCallResult": null
+}
+```
+Status: **completed**
+
+
+</details>
+</tool-use>
+
+---
+
+<tool-use data-tool-type="unknown" data-tool-name="run_in_terminal">
+<details>
+<summary>Tool use: **run_in_terminal**</summary>
+
+
+Parameters:
+
+```json
+{
+  "kind": "terminal",
+  "terminalToolSessionId": "3cd07249-6c32-4e53-bfac-f6e273cc57e4",
+  "terminalCommandId": "tool-ec823a21-daad-4a49-af68-fe786b890915",
+  "commandLine": {
+    "original": "cd \"j:\\projekt 2025\\projekt-akta-v2\" &amp;&amp; git add .",
+    "toolEdited": "cd \"j:\\projekt 2025\\projekt-akta-v2\" ; git add ."
+  },
+  "language": "pwsh",
+  "autoApproveInfo": {
+    "value": "Automatycznie zatwierdzane dla tej sesji ([Wyłącz](command:workbench.action.terminal.chat.disableSessionAutoApproval?%255B%252249e683f7-16c8-437e-8720-25607a516875%2522%255D))",
+    "isTrusted": {
+      "enabledCommands": [
+        "workbench.action.terminal.chat.disableSessionAutoApproval"
+      ]
+    },
+    "supportThemeIcons": false,
+    "supportHtml": false,
+    "supportAlertSyntax": false
+  },
+  "terminalCommandState": {
+    "exitCode": 0,
+    "timestamp": 1767640478438,
+    "duration": 739
+  },
+  "terminalCommandUri": {
+    "$mid": 1,
+    "path": "/6ba9a78b74ea4bb2d0e5368bde90f64f/10",
+    "scheme": "vscode-terminal",
+    "query": "command=tool-ec823a21-daad-4a49-af68-fe786b890915"
+  },
+  "terminalCommandOutput": {
+    "text": "warning: in the working copy of 'start-v7.1.sh', LF will be replaced by CRLF the next time Git touches it",
+    "lineCount": 2
+  },
+  "terminalTheme": {
+    "background": "#181818",
+    "foreground": "#cccccc"
+  }
+}
+```
+Additional data:
+
+```json
+{
+  "vscodeToolId": "run_in_terminal",
+  "isHidden": false
+}
+```
+Result:
+
+```json
+{
+  "invocationMessage": "Korzystanie z \"Uruchom w terminalu\"",
+  "isConfirmed": {
+    "type": 1
+  },
+  "content": "",
+  "textEditContent": "",
+  "toolCallResult": null
+}
+```
+Status: **completed**
+
+
+</details>
+</tool-use>
+
+---
+
+<tool-use data-tool-type="unknown" data-tool-name="run_in_terminal">
+<details>
+<summary>Tool use: **run_in_terminal**</summary>
+
+
+Parameters:
+
+```json
+{
+  "kind": "terminal",
+  "terminalToolSessionId": "d20157f4-ada1-4fbd-9e03-67ae0ed59df9",
+  "terminalCommandId": "tool-cdfd1356-f584-412e-bf30-a1d25704638c",
+  "commandLine": {
+    "original": "cd \"j:\\projekt 2025\\projekt-akta-v2\" &amp;&amp; git commit -m \"Version bump to v9 - New HTML file viewer-osd-v9.html\n\n- Created viewer-osd-v9.html as copy of v8 with ACTA v1 integration\n- Updated title to 'Genealog Indexer v9 - ACTA v1 Integration'\n- Updated start scripts (bat/sh) to open v9.html\n- Updated ROADMAP.md version to v9.0-acta\n- Ready for next development phase\"",
+    "toolEdited": "cd \"j:\\projekt 2025\\projekt-akta-v2\" ; git commit -m \"Version bump to v9 - New HTML file viewer-osd-v9.html\n\n- Created viewer-osd-v9.html as copy of v8 with ACTA v1 integration\n- Updated title to 'Genealog Indexer v9 - ACTA v1 Integration'\n- Updated start scripts (bat/sh) to open v9.html\n- Updated ROADMAP.md version to v9.0-acta\n- Ready for next development phase\""
+  },
+  "language": "pwsh",
+  "autoApproveInfo": {
+    "value": "Automatycznie zatwierdzane dla tej sesji ([Wyłącz](command:workbench.action.terminal.chat.disableSessionAutoApproval?%255B%252249e683f7-16c8-437e-8720-25607a516875%2522%255D))",
+    "isTrusted": {
+      "enabledCommands": [
+        "workbench.action.terminal.chat.disableSessionAutoApproval"
+      ]
+    },
+    "supportThemeIcons": false,
+    "supportHtml": false,
+    "supportAlertSyntax": false
+  },
+  "terminalCommandState": {
+    "exitCode": 0,
+    "timestamp": 1767640481718,
+    "duration": 351
+  },
+  "terminalCommandUri": {
+    "$mid": 1,
+    "path": "/6ba9a78b74ea4bb2d0e5368bde90f64f/10",
+    "scheme": "vscode-terminal",
+    "query": "command=tool-cdfd1356-f584-412e-bf30-a1d25704638c"
+  },
+  "terminalCommandOutput": {
+    "text": "nt phase\";149f9239-0ef0-4e8d-a876-2106a86db2cd[master 21a699c] Version bump to v9 - New HTML file viewer-osd-v9.ht\r\nml\r\n 18 files changed, 85024 insertions(+), 6 deletions(-)\r\n create mode 100644 public/.specstory/history/2026-01-05_18-02Z-implementing-step-by-step-changes-in-code.md\r\n create mode 100644 public/ACTA_V1_CHANGES.md\r\n create mode 100644 public/viewer-osd-v8-acta-backup.html\r\n create mode 100644 public/viewer-osd-v8.html.backup-20260105-acta-v1-migration-complete\r\n create mode 100644 public/viewer-osd-v8.html.backup-20260105-critical-fixes\r\n create mode 100644 public/viewer-osd-v8.html.backup-20260105-critical-ui-fixes\r\n create mode 100644 public/viewer-osd-v8.html.backup-20260105-floating-form-fixed\r\n create mode 100644 public/viewer-osd-v8.html.backup-20260105-marriage-death-birth\r\n create mode 100644 public/viewer-osd-v8.html.backup-20260105-phase2-complete\r\n create mode 100644 public/viewer-osd-v8.html.backup-20260105-phase3-advanced-features\r\n create mode 100644 public/viewer-osd-v8.html.backup-20260105-renderActsList-fixed\r\n create mode 100644 public/viewer-osd-v8.html.backup-20260105-syntax-error-fixed\r\n create mode 100644 public/viewer-osd-v8.html.backup-20260105-with-test-data\r\n create mode 100644 public/viewer-osd-v9.html",
+    "lineCount": 29
+  },
+  "terminalTheme": {
+    "background": "#181818",
+    "foreground": "#cccccc"
+  }
+}
+```
+Additional data:
+
+```json
+{
+  "vscodeToolId": "run_in_terminal",
+  "isHidden": false
+}
+```
+Result:
+
+```json
+{
+  "invocationMessage": "Korzystanie z \"Uruchom w terminalu\"",
+  "isConfirmed": {
+    "type": 1
+  },
+  "content": "",
+  "textEditContent": "",
+  "toolCallResult": null
+}
+```
+Status: **completed**
+
+
+</details>
+</tool-use>
+
+---
+
+<tool-use data-tool-type="unknown" data-tool-name="run_in_terminal">
+<details>
+<summary>Tool use: **run_in_terminal**</summary>
+
+
+Parameters:
+
+```json
+{
+  "kind": "terminal",
+  "terminalToolSessionId": "0be415d9-ef10-481f-92ca-abc218285276",
+  "terminalCommandId": "tool-5c2af525-9e96-4246-91c7-a3aea71d76b8",
+  "commandLine": {
+    "original": "cd \"j:\\projekt 2025\\projekt-akta-v2\" &amp;&amp; git push origin master",
+    "toolEdited": "cd \"j:\\projekt 2025\\projekt-akta-v2\" ; git push origin master"
+  },
+  "language": "pwsh",
+  "autoApproveInfo": {
+    "value": "Automatycznie zatwierdzane dla tej sesji ([Wyłącz](command:workbench.action.terminal.chat.disableSessionAutoApproval?%255B%252249e683f7-16c8-437e-8720-25607a516875%2522%255D))",
+    "isTrusted": {
+      "enabledCommands": [
+        "workbench.action.terminal.chat.disableSessionAutoApproval"
+      ]
+    },
+    "supportThemeIcons": false,
+    "supportHtml": false,
+    "supportAlertSyntax": false
+  },
+  "terminalCommandState": {
+    "exitCode": 0,
+    "timestamp": 1767640486634,
+    "duration": 2937
+  },
+  "terminalCommandUri": {
+    "$mid": 1,
+    "path": "/6ba9a78b74ea4bb2d0e5368bde90f64f/10",
+    "scheme": "vscode-terminal",
+    "query": "command=tool-5c2af525-9e96-4246-91c7-a3aea71d76b8"
+  },
+  "terminalCommandOutput": {
+    "text": "Enumerating objects: 30, done.\r\nCounting objects: 100% (30/30), done.\r\nDelta compression using up to 8 threads\r\nCompressing objects: 100% (22/22), done.\r\nWriting objects: 100% (22/22), 151.92 KiB | 2.27 MiB/s, done.\r\nTotal 22 (delta 18), reused 0 (delta 0), pack-reused 0 (from 0)     \r\nremote: Resolving deltas: 100% (18/18), completed with 7 local objects.\r\nTo https://github.com/toxiconus/genealog-indexer-v7.1.git\r\n   e4895f2..21a699c  master -&gt; master",
+    "lineCount": 10
+  },
+  "terminalTheme": {
+    "background": "#181818",
+    "foreground": "#cccccc"
+  }
+}
+```
+Additional data:
+
+```json
+{
+  "vscodeToolId": "run_in_terminal",
+  "isHidden": false
+}
+```
+Result:
+
+```json
+{
+  "invocationMessage": "Korzystanie z \"Uruchom w terminalu\"",
+  "isConfirmed": {
+    "type": 1
+  },
+  "content": "",
+  "textEditContent": "",
+  "toolCallResult": null
+}
+```
+Status: **completed**
+
+
+</details>
+</tool-use>
+
+---
+
+Tak, dałem radę! Podniosłem wersję HTML do następnej - **v9**. Oto co zostało wykonane:
+
+## ✅ Wersja v9 została utworzona i wypchnięta do repozytorium
+
+### Zmiany wprowadzone:
+1. **Nowy plik HTML**: `viewer-osd-v9.html` - kopia `viewer-osd-v8.html` z pełną integracją ACTA v1
+2. **Zaktualizowany tytuł**: "Genealog Indexer v9 - ACTA v1 Integration"
+3. **Zaktualizowane skrypty startowe**:
+   - `start-v7.1.bat` - teraz otwiera `viewer-osd-v9.html`
+   - `start-v7.1.sh` - również zaktualizowany
+4. **`ROADMAP.md`**: Zaktualizowany tytuł i wersja na `v9.0-acta`
+
+### Git commit i push:
+- Commit: `21a699c` - "Version bump to v9 - New HTML file viewer-osd-v9.html"
+- Wszystkie zmiany zostały wypchnięte do repozytorium: https://github.com/toxiconus/genealog-indexer-v7.1
+
+Aplikacja jest gotowa do dalszego rozwoju w wersji v9! 🚀
+
+---
+
+_**User (2026-01-05 19:16Z)**_
+
+ponies tez od razu poziom bat bo sie gubię i i nee zalezne 
+
+---
+
+_**Agent (model copilot/grok-code-fast-1)**_
+
+<tool-use data-tool-type="unknown" data-tool-name="copilot_replaceString">
+<details>
+<summary>Tool use: **copilot_replaceString**</summary>
+
+Additional data:
+
+```json
+{
+  "vscodeToolId": "copilot_replaceString",
+  "isHidden": false
+}
+```
+Result:
+
+```json
+{
+  "invocationMessage": "Korzystanie z \"Zamień ciąg w pliku\"",
+  "isConfirmed": {
+    "type": 3,
+    "scope": "workspace"
+  },
+  "content": "&#96;&#96;&#96;bat\n9.0\n&#96;&#96;&#96;\n\n",
+  "textEditContent": "9.0",
+  "toolCallResult": null
+}
+```
+Status: **completed**
+
+
+</details>
+</tool-use>
+
+---
+
+<tool-use data-tool-type="unknown" data-tool-name="copilot_replaceString">
+<details>
+<summary>Tool use: **copilot_replaceString**</summary>
+
+Additional data:
+
+```json
+{
+  "vscodeToolId": "copilot_replaceString",
+  "isHidden": false
+}
+```
+Result:
+
+```json
+{
+  "invocationMessage": "Korzystanie z \"Zamień ciąg w pliku\"",
+  "isConfirmed": {
+    "type": 3,
+    "scope": "workspace"
+  },
+  "content": "&#96;&#96;&#96;bat\n9.0\n&#96;&#96;&#96;\n\n",
+  "textEditContent": "9.0",
+  "toolCallResult": null
+}
+```
+Status: **completed**
+
+
+</details>
+</tool-use>
+
+---
+
+<tool-use data-tool-type="unknown" data-tool-name="copilot_replaceString">
+<details>
+<summary>Tool use: **copilot_replaceString**</summary>
+
+Additional data:
+
+```json
+{
+  "vscodeToolId": "copilot_replaceString",
+  "isHidden": false
+}
+```
+Result:
+
+```json
+{
+  "invocationMessage": "Korzystanie z \"Zamień ciąg w pliku\"",
+  "isConfirmed": {
+    "type": 3,
+    "scope": "workspace"
+  },
+  "content": "&#96;&#96;&#96;bat\n9.0\n&#96;&#96;&#96;\n\n",
+  "textEditContent": "9.0",
+  "toolCallResult": null
+}
+```
+Status: **completed**
+
+
+</details>
+</tool-use>
+
+---
+
+<tool-use data-tool-type="unknown" data-tool-name="copilot_replaceString">
+<details>
+<summary>Tool use: **copilot_replaceString**</summary>
+
+Additional data:
+
+```json
+{
+  "vscodeToolId": "copilot_replaceString",
+  "isHidden": false
+}
+```
+Result:
+
+```json
+{
+  "invocationMessage": "Korzystanie z \"Zamień ciąg w pliku\"",
+  "isConfirmed": {
+    "type": 3,
+    "scope": "workspace"
+  },
+  "content": "&#96;&#96;&#96;bat\n9.0\n&#96;&#96;&#96;\n\n",
+  "textEditContent": "9.0",
+  "toolCallResult": null
+}
+```
+Status: **completed**
+
+
+</details>
+</tool-use>
+
+---
+
+<tool-use data-tool-type="unknown" data-tool-name="copilot_replaceString">
+<details>
+<summary>Tool use: **copilot_replaceString**</summary>
+
+Additional data:
+
+```json
+{
+  "vscodeToolId": "copilot_replaceString",
+  "isHidden": false
+}
+```
+Result:
+
+```json
+{
+  "invocationMessage": "Korzystanie z \"Zamień ciąg w pliku\"",
+  "isConfirmed": {
+    "type": 3,
+    "scope": "workspace"
+  },
+  "content": "&#96;&#96;&#96;shellscript\n9.0\n&#96;&#96;&#96;\n\n",
+  "textEditContent": "9.0",
+  "toolCallResult": null
+}
+```
+Status: **completed**
+
+
+</details>
+</tool-use>
+
+---
+
+<tool-use data-tool-type="unknown" data-tool-name="copilot_replaceString">
+<details>
+<summary>Tool use: **copilot_replaceString**</summary>
+
+Additional data:
+
+```json
+{
+  "vscodeToolId": "copilot_replaceString",
+  "isHidden": false
+}
+```
+Result:
+
+```json
+{
+  "invocationMessage": "Korzystanie z \"Zamień ciąg w pliku\"",
+  "isConfirmed": {
+    "type": 3,
+    "scope": "workspace"
+  },
+  "content": "&#96;&#96;&#96;shellscript\n9.0\n&#96;&#96;&#96;\n\n",
+  "textEditContent": "9.0",
+  "toolCallResult": null
+}
+```
+Status: **completed**
+
+
+</details>
+</tool-use>
+
+---
+
+<tool-use data-tool-type="unknown" data-tool-name="copilot_replaceString">
+<details>
+<summary>Tool use: **copilot_replaceString**</summary>
+
+Additional data:
+
+```json
+{
+  "vscodeToolId": "copilot_replaceString",
+  "isHidden": false
+}
+```
+Result:
+
+```json
+{
+  "invocationMessage": "Korzystanie z \"Zamień ciąg w pliku\"",
+  "isConfirmed": {
+    "type": 3,
+    "scope": "workspace"
+  },
+  "content": "&#96;&#96;&#96;shellscript\n9.0\n&#96;&#96;&#96;\n\n",
+  "textEditContent": "9.0",
+  "toolCallResult": null
+}
+```
+Status: **completed**
+
+
+</details>
+</tool-use>
+
+---
+
+<tool-use data-tool-type="unknown" data-tool-name="run_in_terminal">
+<details>
+<summary>Tool use: **run_in_terminal**</summary>
+
+
+Parameters:
+
+```json
+{
+  "kind": "terminal",
+  "terminalToolSessionId": "59e75bde-7b24-4317-b8aa-4e4a0beb2cdb",
+  "terminalCommandId": "tool-76afd4bd-46c1-43fb-9084-7e5ed41725a6",
+  "commandLine": {
+    "original": "cd \"j:\\projekt 2025\\projekt-akta-v2\" &amp;&amp; git add .",
+    "toolEdited": "cd \"j:\\projekt 2025\\projekt-akta-v2\" ; git add ."
+  },
+  "language": "pwsh",
+  "autoApproveInfo": {
+    "value": "Automatycznie zatwierdzane dla tej sesji ([Wyłącz](command:workbench.action.terminal.chat.disableSessionAutoApproval?%255B%252249e683f7-16c8-437e-8720-25607a516875%2522%255D))",
+    "isTrusted": {
+      "enabledCommands": [
+        "workbench.action.terminal.chat.disableSessionAutoApproval"
+      ]
+    },
+    "supportThemeIcons": false,
+    "supportHtml": false,
+    "supportAlertSyntax": false
+  },
+  "terminalCommandUri": {
+    "$mid": 1,
+    "path": "/6ba9a78b74ea4bb2d0e5368bde90f64f/10",
+    "scheme": "vscode-terminal",
+    "query": "command=tool-76afd4bd-46c1-43fb-9084-7e5ed41725a6"
+  },
+  "terminalCommandState": {
+    "exitCode": 0,
+    "timestamp": 1767640596173,
+    "duration": 81
+  },
+  "terminalCommandOutput": {
+    "text": "warning: in the working copy of 'start-v7.1.sh', LF will be replaced by CRLF the next time Git touches it",
+    "lineCount": 2
+  },
+  "terminalTheme": {
+    "background": "#181818",
+    "foreground": "#cccccc"
+  }
+}
+```
+Additional data:
+
+```json
+{
+  "vscodeToolId": "run_in_terminal",
+  "isHidden": false
+}
+```
+Result:
+
+```json
+{
+  "invocationMessage": "Korzystanie z \"Uruchom w terminalu\"",
+  "isConfirmed": {
+    "type": 1
+  },
+  "content": "",
+  "textEditContent": "",
+  "toolCallResult": null
+}
+```
+Status: **completed**
+
+
+</details>
+</tool-use>
+
+---
+
+<tool-use data-tool-type="unknown" data-tool-name="run_in_terminal">
+<details>
+<summary>Tool use: **run_in_terminal**</summary>
+
+
+Parameters:
+
+```json
+{
+  "kind": "terminal",
+  "terminalToolSessionId": "42ff8d6e-9469-4a16-bbf2-8d6579f07f6a",
+  "terminalCommandId": "tool-19ad20a9-7764-4412-915c-9e5b8e1d47fe",
+  "commandLine": {
+    "original": "cd \"j:\\projekt 2025\\projekt-akta-v2\" &amp;&amp; git commit -m \"Version bump for start scripts to v9.0\n\n- Updated start-v7.1.bat version to v9.0\n- Updated start-v7.1.sh version to v9.0\n- All scripts now consistent with HTML v9\"",
+    "toolEdited": "cd \"j:\\projekt 2025\\projekt-akta-v2\" ; git commit -m \"Version bump for start scripts to v9.0\n\n- Updated start-v7.1.bat version to v9.0\n- Updated start-v7.1.sh version to v9.0\n- All scripts now consistent with HTML v9\""
+  },
+  "language": "pwsh",
+  "autoApproveInfo": {
+    "value": "Automatycznie zatwierdzane dla tej sesji ([Wyłącz](command:workbench.action.terminal.chat.disableSessionAutoApproval?%255B%252249e683f7-16c8-437e-8720-25607a516875%2522%255D))",
+    "isTrusted": {
+      "enabledCommands": [
+        "workbench.action.terminal.chat.disableSessionAutoApproval"
+      ]
+    },
+    "supportThemeIcons": false,
+    "supportHtml": false,
+    "supportAlertSyntax": false
+  },
+  "terminalCommandState": {
+    "exitCode": 0,
+    "timestamp": 1767640598316,
+    "duration": 126
+  },
+  "terminalCommandUri": {
+    "$mid": 1,
+    "path": "/6ba9a78b74ea4bb2d0e5368bde90f64f/10",
+    "scheme": "vscode-terminal",
+    "query": "command=tool-19ad20a9-7764-4412-915c-9e5b8e1d47fe"
+  },
+  "terminalCommandOutput": {
+    "text": "0ef0-4e8d-a876-2106a86db2cd[master a56e3e7] Version bump for start scripts to v9.0",
+    "lineCount": 2
+  },
+  "terminalTheme": {
+    "background": "#181818",
+    "foreground": "#cccccc"
+  }
+}
+```
+Additional data:
+
+```json
+{
+  "vscodeToolId": "run_in_terminal",
+  "isHidden": false
+}
+```
+Result:
+
+```json
+{
+  "invocationMessage": "Korzystanie z \"Uruchom w terminalu\"",
+  "isConfirmed": {
+    "type": 1
+  },
+  "content": "",
+  "textEditContent": "",
+  "toolCallResult": null
+}
+```
+Status: **completed**
+
+
+</details>
+</tool-use>
+
+---
+
+<tool-use data-tool-type="unknown" data-tool-name="run_in_terminal">
+<details>
+<summary>Tool use: **run_in_terminal**</summary>
+
+
+Parameters:
+
+```json
+{
+  "kind": "terminal",
+  "terminalToolSessionId": "85e22cae-2976-4a9a-b5d8-b4c60b3cd1f7",
+  "terminalCommandId": "tool-93ec4ad8-9bf4-482b-a290-38937fe1aacf",
+  "commandLine": {
+    "original": "cd \"j:\\projekt 2025\\projekt-akta-v2\" &amp;&amp; git push origin master",
+    "toolEdited": "cd \"j:\\projekt 2025\\projekt-akta-v2\" ; git push origin master"
+  },
+  "language": "pwsh",
+  "autoApproveInfo": {
+    "value": "Automatycznie zatwierdzane dla tej sesji ([Wyłącz](command:workbench.action.terminal.chat.disableSessionAutoApproval?%255B%252249e683f7-16c8-437e-8720-25607a516875%2522%255D))",
+    "isTrusted": {
+      "enabledCommands": [
+        "workbench.action.terminal.chat.disableSessionAutoApproval"
+      ]
+    },
+    "supportThemeIcons": false,
+    "supportHtml": false,
+    "supportAlertSyntax": false
+  },
+  "terminalCommandState": {
+    "exitCode": 0,
+    "timestamp": 1767640603419,
+    "duration": 2326
+  },
+  "terminalCommandUri": {
+    "$mid": 1,
+    "path": "/6ba9a78b74ea4bb2d0e5368bde90f64f/10",
+    "scheme": "vscode-terminal",
+    "query": "command=tool-93ec4ad8-9bf4-482b-a290-38937fe1aacf"
+  },
+  "terminalCommandOutput": {
+    "text": "Enumerating objects: 7, done.\r\nCounting objects: 100% (7/7), done.\r\nDelta compression using up to 8 threads\r\nCompressing objects: 100% (4/4), done.\r\nWriting objects: 100% (4/4), 507 bytes | 507.00 KiB/s, done.        \r\nTotal 4 (delta 3), reused 0 (delta 0), pack-reused 0 (from 0)       \r\nremote: Resolving deltas: 100% (3/3), completed with 3 local objects.\r\nTo https://github.com/toxiconus/genealog-indexer-v7.1.git\r\n   21a699c..a56e3e7  master -&gt; master",
+    "lineCount": 10
+  },
+  "terminalTheme": {
+    "background": "#181818",
+    "foreground": "#cccccc"
+  }
+}
+```
+Additional data:
+
+```json
+{
+  "vscodeToolId": "run_in_terminal",
+  "isHidden": false
+}
+```
+Result:
+
+```json
+{
+  "invocationMessage": "Korzystanie z \"Uruchom w terminalu\"",
+  "isConfirmed": {
+    "type": 1
+  },
+  "content": "",
+  "textEditContent": "",
+  "toolCallResult": null
+}
+```
+Status: **completed**
+
+
+</details>
+</tool-use>
+
+---
+
+Jasne, podniosłem też poziom skryptów startowych do **v9.0**, żeby wszystko było spójne z HTML v9!
+
+## ✅ Skrypty startowe zaktualizowane do v9.0
+
+### Zmiany:
+- **`start-v7.1.bat`**: Wszystkie referencje do v7.1 zmienione na v9.0
+- **`start-v7.1.sh`**: Podobnie zaktualizowane
+
+### Szczegóły aktualizacji:
+- Tytuły, komentarze i komunikaty konsoli teraz pokazują "Genealog Indexer v9.0"
+- Skrypty nadal otwierają `viewer-osd-v9.html`
+
+### Git:
+- Commit: `a56e3e7` - "Version bump for start scripts to v9.0"
+- Wypchnięte do repo: https://github.com/toxiconus/genealog-indexer-v7.1
+
+Teraz wszystko jest na poziomie v9 - nie będziesz się gubić! 🎯
+
+---
+
+_**User (2026-01-05 19:18Z)**_
+
+Analiza pliku viewer-osd-v8.html z Twojego repo
+Dzięki za link! Przejrzałem repozytorium i najnowszą wersję pliku public/viewer-osd-v8.html (na podstawie aktualnego stanu master branch na dzień 5 stycznia 2026).
+To ewolucja od v7.1 – widać znaczące postępy w implementacji modelu danych ACTA v1, integracji ROI/POI, formularzy i tabeli rekordów. Podsumuję kluczowe elementy, co działa dobrze, co wymaga dopracowania (w kontekście naszych poprzednich dyskusji o nazwie POI, tabeli, relacjach i LocalStorage), oraz konkretne sugestie poprawek.
+Co jest już zaimplementowane i działa super
+
+Dynamiczna nazwa POI dla całego aktu
+Widzę, że rozwiązałeś problem z "child_first_name"! Teraz w funkcji redrawROIs() (lub podobnej) używasz czegoś w stylu:JavaScriptconst actName = `${act.type.substring(0,2).toUpperCase()}.${act.year}.No.${String(act.nr).padStart(2,'0')}`;Label overlay pokazuje poprawnie np. "CH.1990.No.01". Brawo!
+Kreska nad nazwą (overline)
+Dodany CSS dla .roi-label z text-decoration: overline; lub border-top – wygląda dobrze wizualnie.
+Tabela rekordów w dolnym panelu
+Podłączona! Masz renderRecordsTable(), edycję in-place (click → input), obsługę paste (z parsowaniem tab-separated). Wyświetla akty z rolami/osobami. Super integracja z panelem wprowadzania.
+Początkowa integracja modelu ACTA v1
+Wprowadziłeś klasy: PersonModel, EventModel, PersonRoleModel, HistoricalDate, HistoricalPlace.
+app.imageActs to tablica EventModel.
+Przy dodawaniu aktu tworzysz osoby i role (np. dziecko, ojciec, matka dla chrztu).
+Podstawowe relacje dodawane automatycznie (rodzic-dziecko).
+
+ROI dla pól i całego aktu
+Przypisywanie ROI do ról/osób działa, redraw poprawny.
+
+Co jeszcze wymaga dopracowania (kluczowe kwestie)
+
+Problem z LocalStorage – cykliczne referencje i serializacja
+Aktualnie masz bezpośrednie referencje (np. role.person = new PersonModel() i person.parents = [...] z referencjami wstecznymi).
+Przy saveStorage() i JSON.stringify dostaniesz błąd "Converting circular structure to JSON" – aplikacja nie zapisze danych po reloadzie.Rozwiązanie (już częściowo zaczęte, ale dokończ):
+Wprowadź centralny rejestr osób z ID (jak sugerowałem wcześniej). Widzę, że masz person.id, ale jeszcze nie pełny Map/registry i nie zamieniłeś referencji na ID.Dodaj to globalnie:JavaScriptconst app = {
+  // ... istniejące
+  personsRegistry: new Map(), // Map<id, PersonModel>
+  nextPersonId: 1,
+  imageActs: [],
+  // ...
+};
+
+function createPerson() {
+  const person = new PersonModel();
+  person.id = app.nextPersonId++;
+  app.personsRegistry.set(person.id, person);
+  return person;
+}W EventModel zmień:JavaScript// Zamiast role.person = personInstance
+role.personId = person.id;
+
+// Podobnie w relationships
+rel.person1Id = person1.id;
+rel.person2Id = person2.id;W saveStorage():JavaScriptconst dataToSave = {
+  imageActs: app.imageActs.map(event => ({
+    // serializuj tylko dane, nie instancje
+    ...event,
+    roles: event.roles.map(r => ({...r, person: null, personId: r.personId})),
+    relationships: event.relationships.map(rel => ({
+      ...rel,
+      person1: null,
+      person2: null,
+      person1Id: rel.person1Id,
+      person2Id: rel.person2Id
+    }))
+  })),
+  personsRegistry: Array.from(app.personsRegistry.entries()),
+  nextPersonId: app.nextPersonId,
+  // ... reszta app (currentImage itp.)
+};
+localStorage.setItem('genealogData_v8', JSON.stringify(dataToSave));W loadStorage() – odbuduj Map i zamień ID na referencje (opcjonalnie, dla wygody dostępu).
+Brak pełnego łączenia osób między aktami
+Obecnie każda osoba w akcie jest nowa. Jeśli ta sama matka występuje w dwóch chrztach – masz duplikaty.
+Po wprowadzeniu registry będziesz mógł szukać istniejącej osoby (np. po imieniu/nazwisku/approx match) i używać tego samego ID.
+Formularz nie w pełni mapuje na PersonModel
+Pola w formularzu wciąż używają starego fieldValues lub bezpośredniego przypisania.
+Przejdź na:JavaScript// Przy loadActToForm
+const childRole = event.roles.find(r => r.roleType === 'dziecko');
+document.getElementById('child_first_name').value = childRole.person.firstName || '';
+// Podobnie dla innychPrzy zapisie – odwrotnie.
+Małe bugi/błędy do poprawy
+W addNewActFromModal() – dla małżeństwa/zgonu dodaj odpowiednie role z tabel dokumentacji (pan młody, panna młoda, zmarły itp.).
+Confidence i sources – dodaj pola w formularzu (np. slider dla pewności).
+Walidacja required pól przed zapisem.
+Auto-save co X sekund.
+
+
+Podsumowanie – stan projektu
+Jesteś bardzo blisko działającej v8 z pełnym modelem ACTA v1!
+Główna blokada to zapis do LocalStorage – po wdrożeniu registry z ID wszystko będzie działać płynnie, dane przetrwają reload, a w przyszłości łatwo przejdziesz na IndexedDB lub backend.
+Jeśli wkleisz fragment kodu z saveStorage() / klas modeli (lub cały plik gdzieś na pastebin/raw), mogę dać dokładny patch difa.
+Kontynuuj – to już wygląda na profesjonalne narzędzie genealogiczne! 🚀 Jeśli masz konkretny błąd lub chcesz pomocy z kodem registry – pisz! 😊sourcesA obsłuży to firebase jak dobrze pamiętam mam do tego exportowac bazeTak, Firebase (Firestore) obsłuży Twój aktualny model danych ACTA v1 znacznie lepiej niż LocalStorage, i to bez większych problemów z cyklicznymi referencjami czy serializacją.
+Dlaczego Firebase to dobry wybór
+
+Automatyczne ID i referencje → Firestore to NoSQL, gdzie każdy dokument ma unikalne ID. Osoby zapisujesz jako osobne dokumenty w kolekcji persons (z polem id auto-generowanym). W aktach (events lub records) trzymasz referencje typu DocumentReference do osób (np. roles: [{ roleType: 'dziecko', person: db.doc('persons/abc123') }]). Zero cykli, łatwe łączenie tej samej osoby w wielu aktach.
+Brak problemów z JSON.stringify → Nie serializujesz całego grafu ręcznie – Firestore obsługuje zagnieżdżone obiekty, tablice, daty (Timestamp), mapy. Metody klas (addParent itp.) trzymasz w kodzie JS, a w bazie tylko dane.
+Skalowalność → Łatwe wyszukiwanie (queries po imieniu, roku, roli), security rules, realtime sync (jeśli chcesz multi-user później), offline support.
+Pewność i źródła → Pola jak confidence, sources[] – idealnie pasują.
+
+Co już masz w kodzie (na podstawie aktualnego v8.html)
+
+Firebase SDK załadowany (app, firestore, auth compat v9.22).
+Inicjalizacja z placeholder config (musisz wkleić swoje dane z Firebase Console).
+Anonymous auth (działa opcjonalnie).
+Funkcja exportFromLocalStorageToFirestore() – jednorazowa migracja z LocalStorage do Firestore (dodaje akty do kolekcji 'records').
+Przycisk w toolbarze do eksportu/migracji.
+
+Jak to w pełni podłączyć i eksportować bazę
+
+Uzupełnij config Firebase
+Idź do Firebase Console → Project Settings → Your apps → SDK setup → wklej prawdziwy firebaseConfig zamiast placeholderów.
+Zmodyfikuj storage na Firestore (zamiast tylko LocalStorage)
+Zmień saveStorage() i loadStorage() na async i używaj Firestore:JavaScriptasync function saveStorage() {
+    if (!window.db) return; // fallback do localStorage jeśli brak Firebase
+
+    try {
+        // Zapisz osoby (batch dla wydajności)
+        const batch = db.batch();
+        app.personDb.persons.forEach((person, id) => {
+            batch.set(db.collection('persons').doc(id), person.toJSON()); // toJSON() bez referencji
+        });
+
+        // Zapisz akty
+        app.imageActs.forEach((event, id) => {
+            batch.set(db.collection('events').doc(id), event.toJSONWithRefs()); // konwertuj personId na db.doc('persons/' + personId)
+        });
+
+        await batch.commit();
+        console.log('Zapisano do Firestore');
+    } catch (e) {
+        console.error(e);
+        // fallback do localStorage
+    }
+}
+
+async function loadStorage() {
+    if (!window.db) return loadFromLocal(); // fallback
+
+    const personsSnap = await db.collection('persons').get();
+    personsSnap.forEach(doc => app.personDb.persons.set(doc.id, PersonModel.fromJSON(doc.data())));
+
+    const eventsSnap = await db.collection('events').get();
+    eventsSnap.forEach(doc => {
+        const event = EventModel.fromJSON(doc.data());
+        // Odbuduj referencje jeśli potrzeba
+        app.imageActs.set(doc.id, event);
+    });
+
+    renderEverything();
+}
+Migracja/eksport istniejącej bazy
+Uruchom istniejącą funkcję exportFromLocalStorageToFirestore() (przycisk w UI) – ona już migruje akty z LocalStorage do Firestore kolekcji 'records'.
+Po migracji zmień kod, by zapisywał bezpośrednio do Firestore.
+Dla pełnego eksportu: Użyj Google Cloud managed export/import (linki poniżej) lub Node.js script z Admin SDK.
+
+Dodatkowe ulepszenia
+Dodaj kolekcję images lub projects dla organizacji danych per użytkownik/obraz.
+Security rules: Allow read/write tylko dla zalogowanego (anonymous OK na start).
+Dla ROI: Zapisz jako geo-points lub po prostu obiekty w dokumencie eventu.
+
+
+Oficialne narzędzia Firebase do eksportu/importu całej bazy
+
+Managed export/import: https://firebase.google.com/docs/firestore/manage-data/export-import (do Cloud Storage, wymaga Blaze plan).
+Indexes export: firebase firestore:indexes > firestore.indexes.json
+
+Po tych zmianach Firebase w pełni obsłuży Twój model – będzie szybsze, bezpieczniejsze i gotowe na przyszły rozwój (np. wyszukiwanie osób, deduplikacja).
+jesli co s pomoże to wprowadzaj ze zmnianami swoimi
+
+---
+
+_**Agent (model copilot/grok-code-fast-1)**_
+
+<tool-use data-tool-type="read" data-tool-name="copilot_readFile">
+<details>
+<summary>Tool use: **copilot_readFile** • Czytanie [](file:///j%3A/projekt%202025/projekt-akta-v2/public/viewer-osd-v9.html#100-100), wiersze 100 do 200</summary>
+
+
+Odczytaj [](file:///j%3A/projekt%202025/projekt-akta-v2/public/viewer-osd-v9.html#100-100), wiersze 100 do 200
+
+</details>
+</tool-use>
+
+---
+
+<tool-use data-tool-type="search" data-tool-name="copilot_findTextInFiles">
+<details>
+<summary>Tool use: **copilot_findTextInFiles** • Wyszukiwanie tekstu `const app = \{` (`**/viewer-osd-v9.html`)</summary>
+
+
+No results found
+</details>
+</tool-use>
+
+---
+
+<tool-use data-tool-type="read" data-tool-name="copilot_readFile">
+<details>
+<summary>Tool use: **copilot_readFile** • Czytanie [](file:///j%3A/projekt%202025/projekt-akta-v2/public/viewer-osd-v9.html#1510-1510), wiersze 1510 do 1550</summary>
+
+
+Odczytaj [](file:///j%3A/projekt%202025/projekt-akta-v2/public/viewer-osd-v9.html#1510-1510), wiersze 1510 do 1550
+
+</details>
+</tool-use>
+
+---
+
+<tool-use data-tool-type="unknown" data-tool-name="copilot_replaceString">
+<details>
+<summary>Tool use: **copilot_replaceString**</summary>
+
+Additional data:
+
+```json
+{
+  "vscodeToolId": "copilot_replaceString",
+  "isHidden": true
+}
+```
+Result:
+
+```json
+{
+  "invocationMessage": "Korzystanie z \"Zamień ciąg w pliku\"",
+  "isConfirmed": {
+    "type": 1
+  },
+  "content": "&#96;&#96;&#96;html\nnew Map(),  // Changed to Map for ACTA v1\r\n            personsRegistry: new Map(),  // Registry for all persons to avoid duplicates\r\n            nextPersonId: 1\n&#96;&#96;&#96;\n\n",
+  "textEditContent": "new Map(),  // Changed to Map for ACTA v1\r\n            personsRegistry: new Map(),  // Registry for all persons to avoid duplicates\r\n            nextPersonId: 1",
+  "toolCallResult": null
+}
+```
+Status: **completed**
+
+
+</details>
+</tool-use>
+
+---
+
+<tool-use data-tool-type="search" data-tool-name="copilot_findTextInFiles">
+<details>
+<summary>Tool use: **copilot_findTextInFiles** • Wyszukiwanie tekstu `new PersonModel` (`**/viewer-osd-v9.html`)</summary>
+
+
+No results found
+</details>
+</tool-use>
+
+---
+
+<tool-use data-tool-type="search" data-tool-name="copilot_findTextInFiles">
+<details>
+<summary>Tool use: **copilot_findTextInFiles** • Wyszukiwanie tekstu `PersonModel` (`**/viewer-osd-v9.html`)</summary>
+
+
+No results found
 </details>
 </tool-use>
 

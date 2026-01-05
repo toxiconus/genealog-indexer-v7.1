@@ -118,7 +118,7 @@ class HistoricalPlace {
 class PersonModel {
   constructor(firstName = null, lastName = null) {
     // Identyfikacja
-    this.id = this.generateUUID();
+    this.id = null; // Set by registry
     this.firstName = firstName;
     this.lastName = lastName;
     this.maidenName = null; // Dla kobiet
@@ -293,7 +293,7 @@ class PersonModel {
 class PersonRoleModel {
   constructor() {
     this.id = this.generateUUID();
-    this.person = null; // Instancja PersonModel lub ID
+    this.personId = null; // ID osoby z registry
     this.roleType = null; // 'dziecko', 'ojciec', 'matka', 'małżonek', 'świadek', 'chrzestny', itp.
     this.properties = {}; // Dodatkowe właściwości (np. zawód, wiek, status cywilny w momencie aktu)
     this.roiId = null; // ID powiązanego ROI w obrazie (dla OCR)
@@ -324,7 +324,7 @@ class PersonRoleModel {
   toJSON() {
     return {
       id: this.id,
-      person: this.person instanceof PersonModel ? this.person.id : this.person,
+      personId: this.personId,
       roleType: this.roleType,
       properties: this.properties,
       roiId: this.roiId,
@@ -336,7 +336,7 @@ class PersonRoleModel {
   static fromJSON(data) {
     const role = new PersonRoleModel();
     role.id = data.id;
-    role.person = data.person; // Będzie odwołaniem do ID
+    role.personId = data.personId || data.person; // Backward compatibility
     role.roleType = data.roleType;
     role.properties = data.properties;
     role.roiId = data.roiId;
@@ -463,9 +463,9 @@ class EventModel {
   }
 
   // Metody do zarządzania rolami
-  addPersonWithRole(person, roleType, properties = {}) {
+  addPersonWithRole(personId, roleType, properties = {}) {
     const role = new PersonRoleModel();
-    role.person = person instanceof PersonModel ? person.id : person;
+    role.personId = personId;
     role.roleType = roleType;
     role.properties = properties;
     this.roles.push(role);
