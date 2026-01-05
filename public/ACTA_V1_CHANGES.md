@@ -1,7 +1,23 @@
-# ACTA v1 Integration - Kroki zmian dla viewer-osd-v8.html
+# ACTA v1 Integration - Complete Implementation Summary
 
-## ✅ Zrobione:
-1. ✅ Tytuł HTML zmieniony na "v8 - ACTA v1 Integration"
+## ✅ **COMPLETED: Person Registry & Firebase Integration**
+
+### Latest Changes (5 stycznia 2026):
+- ✅ **Person Registry**: `app.personsRegistry = new Map()` with unique IDs
+- ✅ **createPerson()**: Factory function adding persons to registry
+- ✅ **getPersonFromRole()**: Helper to get person from role.personId
+- ✅ **Circular References Fixed**: All role.person → role.personId
+- ✅ **Firebase Async Persistence**: saveToFirebase() and loadFromFirebase()
+- ✅ **LocalStorage Fallback**: Works offline without Firebase
+- ✅ **Version**: Updated to v9.0-acta-registry
+
+### Previous Changes (ACTA v1 Migration):
+1. ✅ Tytuł HTML zmieniony na "v9 - ACTA v1 Integration"
+2. ✅ Inicjalizacja: `app.personDb` → `app.personsRegistry`
+3. ✅ `app.imageActs` changed to Map
+4. ✅ All functions updated for Map API
+5. ✅ PersonModel integration complete
+6. ✅ EventModel with roles and relationships
 
 ## 🔄 Do zrobienia (w kolejności):
 

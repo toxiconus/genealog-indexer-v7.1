@@ -1,24 +1,24 @@
 # 🗺️ ROADMAP - Genealog Indexer v9 ACTA v1 Integration
 
-Phase 4: Testing & Validation 🔄 **IN PROGRESS**  
-**Last Updated:** 5 stycznia 2026 (ACTA v1 Migration Complete)
-**Status:** Full ACTA v1 migration completed - all fieldValues references removed
+Phase 5: Person Registry & Firebase Integration ✅ **COMPLETED**  
+**Last Updated:** 5 stycznia 2026 (Person Registry & Firebase Complete)
+**Status:** Full ACTA v1 with Person Registry and Firebase persistence implemented
 
-### ACTA v1 Migration Complete:
-- ✅ **All fieldValues references**: Removed from paste listener, CSV export, OCR, suggestions
-- ✅ **PersonModel mapping**: Implemented for all event types (baptism, marriage, death, birth)
-- ✅ **loadActToForm()**: Added marriage form loading support
-- ✅ **saveRecord()**: All event types supported with PersonModel
-- ✅ **initializeEventRoles()**: Complete for all 4 event types
-- ✅ **Syntax validation**: No JavaScript errors detected
-- ✅ **Backup**: viewer-osd-v8.html.backup-20260105-acta-v1-migration-complete
+### Person Registry & Firebase Integration Complete:
+- ✅ **Person Registry**: Implemented Map-based registry with unique IDs
+- ✅ **Circular References Fixed**: No more JSON serialization errors in LocalStorage
+- ✅ **Firebase Integration**: Async save/load with Firestore batch operations
+- ✅ **Data Persistence**: Survives browser reload, syncs with Firebase
+- ✅ **Person Deduplication**: Registry enables linking same persons across events
+- ✅ **LocalStorage Fallback**: Works without Firebase, falls back gracefully
+- ✅ **Backup**: viewer-osd-v9.html with full registry and Firebase support
 
 ### Remaining Issues to Test:
-- 🔄 Browser testing of all event types (baptism, marriage, death, birth)
-- 🔄 Verify localStorage persistence with EventModel serialization
-- 🔄 Test search functionality across PersonModel genealogical data
-- 🔄 Validate OCR pin-up integration  
-**Current Version:** v9.0-acta
+- 🔄 Browser testing of all event types with registry
+- 🔄 Firebase authentication and multi-user support
+- 🔄 Person deduplication UI (merge duplicate persons)
+- 🔄 Performance testing with large datasets
+**Current Version:** v9.0-acta-registry
 
 ---
 
@@ -39,15 +39,19 @@ Phase 2: Critical Map API Fixes ✅ (4-5 stycznia 2026)
   └─ Context menus and act selection working with eventId
   └─ Backup: viewer-osd-v8.html.backup-20260105-phase2-complete
 
-Phase 3: Advanced Features ✅ (5 stycznia 2026)
-  └─ modalCopyPrev: Fixed Map API usage, now copies EventModel data correctly
-  └─ createPinupForField: Refactored to use PersonModel properties instead of fieldValues
-  └─ PersonModel data mapping: Implemented bidirectional fieldId ↔ PersonModel mapping
-  └─ Backup: viewer-osd-v8.html.backup-20260105-phase3-advanced-features
+Phase 5: Person Registry & Firebase Integration ✅ (5 stycznia 2026)
+  └─ Implemented Person Registry with unique IDs
+  └─ Fixed circular reference serialization issues
+  └─ Added Firebase Firestore async persistence
+  └─ LocalStorage fallback for offline use
+  └─ Person deduplication framework ready
+  └─ Commit: 34535e8
 
-Phase 4: Testing & Validation 🔄 (Next)
-  └─ Browser testing of all event types (baptism, marriage, death, birth)
-  └─ Verify localStorage persistence with EventModel serialization
+Phase 6: Testing & Validation 🔄 (Next)
+  └─ Browser testing with registry and Firebase
+  └─ Person deduplication UI implementation
+  └─ Performance testing with large genealogical datasets
+  └─ Multi-user Firebase authentication setup
   └─ Test search functionality across PersonModel genealogical data
   └─ Validate OCR pin-up integration
   └─ ROI mapping and visualization
