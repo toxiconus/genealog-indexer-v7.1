@@ -1,4 +1,4 @@
-# 🗺️ ROADMAP - Genealog Indexer v8 ACTA v1 Integration
+# 🗺️ ROADMAP - Genealog Indexer v9 ACTA v1 Integration
 
 Phase 4: Testing & Validation 🔄 **IN PROGRESS**  
 **Last Updated:** 5 stycznia 2026 (ACTA v1 Migration Complete)
@@ -18,7 +18,7 @@ Phase 4: Testing & Validation 🔄 **IN PROGRESS**
 - 🔄 Verify localStorage persistence with EventModel serialization
 - 🔄 Test search functionality across PersonModel genealogical data
 - 🔄 Validate OCR pin-up integration  
-**Current Version:** 1.0-acta
+**Current Version:** v9.0-acta
 
 ---
 
