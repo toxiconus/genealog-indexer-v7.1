@@ -5258,13 +5258,37 @@
                 const section = document.createElement('div');
                 section.style.marginBottom = '16px';
                 
+                // ✅ v9.2: Collapsible section header
+                const titleContainer = document.createElement('div');
+                titleContainer.style.cssText = 'display: flex; align-items: center; cursor: pointer; user-select: none; margin-bottom: 8px;';
+                
+                const toggle = document.createElement('span');
+                toggle.textContent = sectionDef.expanded !== false ? '▼' : '▶';
+                toggle.style.cssText = 'display: inline-block; width: 16px; margin-right: 6px; color: #0078d4; font-size: 10px; transition: transform 0.2s;';
+                
                 const title = document.createElement('div');
                 title.innerHTML = sectionDef.title;
                 title.style.color = '#0078d4';
                 title.style.fontWeight = '600';
                 title.style.fontSize = '12px';
-                title.style.marginBottom = '8px';
-                section.appendChild(title);
+                
+                titleContainer.appendChild(toggle);
+                titleContainer.appendChild(title);
+                
+                // Content wrapper (collapsible)
+                const sectionContent = document.createElement('div');
+                sectionContent.style.cssText = `max-height: ${sectionDef.expanded !== false ? '1000px' : '0'}; overflow: hidden; transition: max-height 0.3s ease; margin-bottom: 12px;`;
+                
+                // Toggle functionality
+                titleContainer.addEventListener('click', () => {
+                    const isExpanded = sectionContent.style.maxHeight !== '0px';
+                    sectionContent.style.maxHeight = isExpanded ? '0px' : '1000px';
+                    toggle.style.transform = isExpanded ? 'rotate(0deg)' : 'rotate(90deg)';
+                    sectionDef.expanded = !isExpanded; // Remember state
+                });
+                
+                section.appendChild(titleContainer);
+                section.appendChild(sectionContent);
                 
                 sectionDef.fields.forEach(field => {
                     // ✅ NOWE: Filtruj pola po applicableTypes
@@ -5299,7 +5323,7 @@
                     
                     group.appendChild(label);
                     group.appendChild(input);
-                    section.appendChild(group);
+                    sectionContent.appendChild(group);
                 });
                 
                 // ✅ NOWE: Przycisk "Dodaj dodatkowe pole" na końcu każdej sekcji
@@ -5311,9 +5335,9 @@
                 addFieldBtn.addEventListener('mouseout', () => addFieldBtn.style.background = '#2a2a2a');
                 addFieldBtn.addEventListener('click', (e) => {
                     e.preventDefault();
-                    addCustomField(section, sectionDef, act.type);
+                    addCustomField(sectionContent, sectionDef, act.type);
                 });
-                section.appendChild(addFieldBtn);
+                sectionContent.appendChild(addFieldBtn);
                 
                 content.appendChild(section);
             });
