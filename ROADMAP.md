@@ -4,6 +4,59 @@
 
 ---
 
+## 🚀 v9.2+ VIEWER-OSD-V9 IMPROVEMENTS (W TRAKCIE)
+
+### v9.2 - Safety & Persistence (Current Sprint)
+
+#### P1: Fallback for Unknown Act Types [20min] 
+- [ ] Detect when act.type has no template
+- [ ] Create basic fallback: notes, date, location
+- [ ] Don't crash on unknown types
+- **Location:** `renderFloatingForm()` 
+
+#### P2: Extend Templates (Rare Types) [30min]
+- [ ] Add "rozwód" (divorce) template
+- [ ] Add historical Polish act types
+- **Location:** `loadFallbackTemplates()`
+
+#### P3: Persist Custom Fields [30min] ⭐ HIGH
+- [ ] Save custom fields to localStorage
+- [ ] Load on app init + merge with templates
+- [ ] Allow delete/edit custom fields
+- **Location:** `addCustomField()` + `initApp()`
+
+#### P4: Form Preview Modal [20min]
+- [ ] "👁️ Podgląd" button showing all values
+- [ ] Edit option in modal
+- **Function:** `previewFormBeforeSave()`
+
+#### P5: Required Field Validation [25min] ⭐ HIGH
+- [ ] Mark required fields with `*` (red)
+- [ ] Warn before close if unfilled
+- [ ] Config per act type in templates
+- **Location:** Field rendering + validation check
+
+#### P6: Duplicate Previous Template [15min]
+- [ ] "📋 Powiel" button copies last event
+- [ ] Auto-fills role structure
+- **Function:** `duplicateLastEventTemplate()`
+
+### v9.3 - UX Polish (Q2 2026)
+- [ ] Form auto-save indicator (✓ saved)
+- [ ] Field grouping tabs (Basic | Advanced | Metadata)
+- [ ] Keyboard shortcuts for navigation
+- [ ] Undo/Redo for form changes
+- [ ] Field validation patterns (regex)
+
+### v9.4+ - Advanced (Q3+ 2026)
+- [ ] Auto-OCR correction from images
+- [ ] Relationship inference from data
+- [ ] Real-time multi-user editing
+- [ ] Change history & audit log
+- [ ] Person graph visualization
+
+---
+
 ## 🎯 Wizja Długoterminowa (2026-2030)
 
 ACTA ewoluuje od specjalistycznego narzędzia genealogicznego do kompleksowej platformy badawczej, integrującej sztuczną inteligencję, analizy genetyczne i współpracę globalną. Celem jest stworzenie najbardziej zaawansowanego systemu genealogicznego na świecie, obsługującego miliony użytkowników i integrującego dane z tysięcy źródeł historycznych.
