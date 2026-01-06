@@ -4950,6 +4950,8 @@
             
             console.log('🔄 Realtime listeners setup for Firebase');
         }
+
+        function loadStorageData() {
             const stored = localStorage.getItem('genealog-indexer-v9');
             if (!stored) {
                 console.log('ℹ️ Brak danych w LocalStorage (nowa sesja)');
