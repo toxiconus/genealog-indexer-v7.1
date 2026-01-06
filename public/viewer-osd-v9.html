@@ -1209,13 +1209,13 @@
             <button class="toolbar-btn" id="sortBtn" title="Sortuj obrazy po nazwie">
                 <i class="fas fa-sort-alpha-down"></i> Sort
             </button>
-            <button class="toolbar-btn" onclick="exportData('simple')" title="Eksport CSV">
+            <button class="toolbar-btn" id="exportBtn" title="Eksport CSV">
                 <i class="fas fa-download"></i> Export
             </button>
-            <button class="toolbar-btn" onclick="importCSV()" title="Import CSV">
+            <button class="toolbar-btn" id="importCsvBtn" title="Import CSV">
                 <i class="fas fa-upload"></i> CSV
             </button>
-            <button class="toolbar-btn" onclick="importJSON()" title="Import JSON">
+            <button class="toolbar-btn" id="importJsonBtn" title="Import JSON">
                 <i class="fas fa-file-import"></i> JSON
             </button>
             
@@ -1228,14 +1228,14 @@
             <button class="toolbar-btn" id="actBtn" title="Zaznacz konkretne pola w akcie (imię, nazwisko itd.) - Ctrl+A">
                 <i class="fas fa-crop-alt"></i> Pola w akcie
             </button>
-            <button class="toolbar-btn" onclick="clearAllROIs()" title="Usuń wszystkie zaznaczenia">
+            <button class="toolbar-btn" id="clearRoiBtn" title="Usuń wszystkie zaznaczenia">
                 <i class="fas fa-trash-alt"></i> Clear
             </button>
             
             <div class="toolbar-sep"></div>
             
             <!-- PANELS: Thumbs, Acts -->
-            <button class="toolbar-btn" onclick="toggleThumbsPanel()" title="Miniatury">
+            <button class="toolbar-btn" id="toggleThumbsBtn" title="Miniatury">
                 <i class="fas fa-images"></i> Thumbs
             </button>
             <button class="toolbar-btn" id="toggleActsBtn" title="Akty">
@@ -1245,23 +1245,23 @@
             <div class="toolbar-sep"></div>
             
             <!-- VIEW: Fit, FS -->
-            <button class="toolbar-btn" onclick="zoomReset()" title="Dopasuj">
+            <button class="toolbar-btn" id="zoomFitBtn" title="Dopasuj">
                 <i class="fas fa-expand-arrows-alt"></i> Fit
             </button>
-            <button class="toolbar-btn" onclick="toggleFullscreen()" title="Fullscreen">
+            <button class="toolbar-btn" id="fullscreenBtn" title="Fullscreen">
                 <i class="fas fa-expand"></i> FS
             </button>
             
             <div class="toolbar-sep"></div>
             
             <!-- FORMS: Formularz, Pinupy, Clear -->
-            <button class="toolbar-btn" onclick="toggleFloatingForm()" title="Formularz">
+            <button class="toolbar-btn" id="formBtn" title="Formularz">
                 <i class="fas fa-edit"></i> Form
             </button>
-            <button class="toolbar-btn" onclick="showAllPinups()" title="Pinupy">
+            <button class="toolbar-btn" id="pinsBtn" title="Pinupy">
                 <i class="fas fa-thumbtack"></i> PIN
             </button>
-            <button class="toolbar-btn" onclick="clearPinups()" title="Zamknij PIN">
+            <button class="toolbar-btn" id="clearPinsBtn" title="Zamknij PIN">
                 <i class="fas fa-times"></i> ✕PIN
             </button>
             
@@ -1275,7 +1275,7 @@
             <div class="toolbar-sep"></div>
             
             <!-- ADVANCED: Firebase, Clear -->
-            <button class="toolbar-btn" onclick="exportFromLocalStorageToFirestore()" title="Firebase">
+            <button class="toolbar-btn" id="firebaseBtn" title="Firebase">
                 <i class="fas fa-cloud-upload-alt"></i> FB
             </button>
             <button class="toolbar-btn" id="clearStorageBtn" title="Wyczyść" style="color: #e74c3c;">
@@ -2713,6 +2713,44 @@
                 });
             }
             
+            // Export/Import buttons
+            const exportBtn = document.getElementById('exportBtn');
+            if (exportBtn) exportBtn.addEventListener('click', () => exportData('simple'));
+            
+            const importCsvBtn = document.getElementById('importCsvBtn');
+            if (importCsvBtn) importCsvBtn.addEventListener('click', importCSV);
+            
+            const importJsonBtn = document.getElementById('importJsonBtn');
+            if (importJsonBtn) importJsonBtn.addEventListener('click', importJSON);
+            
+            // Form & ROI buttons
+            const clearRoiBtn = document.getElementById('clearRoiBtn');
+            if (clearRoiBtn) clearRoiBtn.addEventListener('click', clearAllROIs);
+            
+            const formBtn = document.getElementById('formBtn');
+            if (formBtn) formBtn.addEventListener('click', toggleFloatingForm);
+            
+            const pinsBtn = document.getElementById('pinsBtn');
+            if (pinsBtn) pinsBtn.addEventListener('click', showAllPinups);
+            
+            const clearPinsBtn = document.getElementById('clearPinsBtn');
+            if (clearPinsBtn) clearPinsBtn.addEventListener('click', clearPinups);
+            
+            // View buttons
+            const zoomFitBtn = document.getElementById('zoomFitBtn');
+            if (zoomFitBtn) zoomFitBtn.addEventListener('click', zoomReset);
+            
+            const fullscreenBtn = document.getElementById('fullscreenBtn');
+            if (fullscreenBtn) fullscreenBtn.addEventListener('click', toggleFullscreen);
+            
+            // Panel buttons
+            const toggleThumbsBtn = document.getElementById('toggleThumbsBtn');
+            if (toggleThumbsBtn) toggleThumbsBtn.addEventListener('click', toggleThumbsPanel);
+            
+            // Firebase button
+            const firebaseBtn = document.getElementById('firebaseBtn');
+            if (firebaseBtn) firebaseBtn.addEventListener('click', exportFromLocalStorageToFirestore);
+            
             // Close button in acts panel
             const actsPanel = document.getElementById('actsPanel');
             if (actsPanel) {
@@ -3068,7 +3106,6 @@
             // Metadata dla osób
             const confidenceField = form.querySelector('[name="confidence"]');
             const sourceTextField = form.querySelector('[name="source_text"]');
-            const notesField = form.querySelector('[name="notes"]');
             
             // Przypisz metadata do wszystkich osób w tym evencie
             event.roles.forEach(role => {
@@ -3408,6 +3445,17 @@
                     }
                 }
             });
+            
+            // ✅ NOWE: Oblicz wiarygodność (reliability score)
+            // Baza: confidence z formularza + jakość danych
+            const confidenceValue = confidenceField ? parseInt(confidenceField.value) || 70 : 70;
+            const hasSourceText = sourceTextField && sourceTextField.value.trim().length > 0 ? 10 : 0;
+            const hasNotes = notesField && notesField.value.trim().length > 0 ? 5 : 0;
+            const dnaBoost = dnaTestTypeField && dnaTestTypeField.value ? 15 : 0;  // DNA zwiększa wiarygodność
+            const filledFields = Array.from(form.querySelectorAll('[data-field]')).filter(f => f.value.trim().length > 0).length;
+            const fieldCompleteness = Math.min(filledFields * 2, 20);  // Max 20 pkt za wypełnione pola
+            
+            event.reliability = Math.min(100, confidenceValue + hasSourceText + hasNotes + dnaBoost + fieldCompleteness);
             
             event.lastModified = new Date();
             saveStorage();
@@ -5183,11 +5231,72 @@
                     section.appendChild(group);
                 });
                 
+                // ✅ NOWE: Przycisk "Dodaj dodatkowe pole" na końcu każdej sekcji
+                const addFieldBtn = document.createElement('button');
+                addFieldBtn.type = 'button';
+                addFieldBtn.textContent = '➕ Dodaj pole';
+                addFieldBtn.style.cssText = 'width: 100%; padding: 6px 8px; margin-top: 8px; background: #2a2a2a; border: 1px solid #444; color: #0078d4; border-radius: 3px; cursor: pointer; font-size: 10px; transition: background 0.2s;';
+                addFieldBtn.addEventListener('mouseover', () => addFieldBtn.style.background = '#333');
+                addFieldBtn.addEventListener('mouseout', () => addFieldBtn.style.background = '#2a2a2a');
+                addFieldBtn.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    addCustomField(section, sectionDef, act.type);
+                });
+                section.appendChild(addFieldBtn);
+                
                 content.appendChild(section);
             });
             
             // Focus na pierwsze pole
             content.querySelector('.field-input')?.focus();
+        }
+        
+        // ✅ NOWA FUNKCJA: Dynamiczne dodawanie pól
+        function addCustomField(sectionElement, sectionDef, actType) {
+            const fieldId = `custom_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
+            const fieldName = prompt('🔧 Wpisz nazwę nowego pola (np. "Dodatkowe imię"):');
+            if (!fieldName) return;
+            
+            // Dodaj do szablonu (sesjnie)
+            if (!sectionDef.fields) sectionDef.fields = [];
+            sectionDef.fields.push({
+                id: fieldId,
+                label: fieldName,
+                type: 'text',
+                applicableTypes: [actType]
+            });
+            
+            // Utwórz input w UI
+            const group = document.createElement('div');
+            group.className = 'form-group';
+            group.style.marginBottom = '10px';
+            
+            const label = document.createElement('label');
+            label.textContent = fieldName;
+            label.style.fontSize = '10px';
+            
+            const input = document.createElement('input');
+            input.type = 'text';
+            input.className = 'field-input';
+            input.dataset.field = fieldId;
+            input.placeholder = fieldName;
+            input.style.width = '100%';
+            input.addEventListener('change', saveFormToAct);
+            
+            group.appendChild(label);
+            group.appendChild(input);
+            
+            // Wstaw przed przyciskami na koniec sekcji (przed przyciskiem "Dodaj pole")
+            const addBtn = sectionElement.querySelector('button');
+            if (addBtn) {
+                sectionElement.insertBefore(group, addBtn);
+            } else {
+                sectionElement.appendChild(group);
+            }
+            
+            input.focus();
+            saveStorage();  // Zapisz zmianę
+            notify(`✅ Pole "${fieldName}" dodane`, 'success');
         }
         
         function positionFloatingFormNearAct() {
