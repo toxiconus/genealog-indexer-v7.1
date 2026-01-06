@@ -26687,7 +26687,7 @@ Przeładuj stronę (F5) - teraz gdy klikniesz "Otwórz", będziesz mieć możliw
 
 ---
 
-_**User (2026-01-06 18:53Z)**_
+_**User (2026-01-06 18:54Z)**_
 
 terz pyta 2 razy o wybranie plików
 
@@ -26718,6 +26718,71 @@ Odczytaj [](file:///j%3A/projekt%202025/projekt-akta-v2/public/viewer-osd-v8.htm
 
 ---
 
+<tool-use data-tool-type="search" data-tool-name="copilot_findTextInFiles">
+<details>
+<summary>Tool use: **copilot_findTextInFiles** • Wyszukiwanie tekstu `initApp()` (`**/viewer-osd-v8.html`)</summary>
+
+
+No results found
+</details>
+</tool-use>
+
+---
+
+<tool-use data-tool-type="read" data-tool-name="copilot_readFile">
+<details>
+<summary>Tool use: **copilot_readFile** • Czytanie [](file:///j%3A/projekt%202025/projekt-akta-v2/public/viewer-osd-v8.html#3100-3100), wiersze 3100 do 3160</summary>
+
+
+Odczytaj [](file:///j%3A/projekt%202025/projekt-akta-v2/public/viewer-osd-v8.html#3100-3100), wiersze 3100 do 3160
+
+</details>
+</tool-use>
+
+---
+
+<tool-use data-tool-type="unknown" data-tool-name="copilot_replaceString">
+<details>
+<summary>Tool use: **copilot_replaceString**</summary>
+
+
+Parameters:
+
+```json
+{
+  "relativeWorkspacePath": "j:\\projekt 2025\\projekt-akta-v2\\public\\viewer-osd-v8.html",
+  "file_path": "j:\\projekt 2025\\projekt-akta-v2\\public\\viewer-osd-v8.html"
+}
+```
+Additional data:
+
+```json
+{
+  "vscodeToolId": "copilot_replaceString",
+  "isHidden": true
+}
+```
+Result:
+
+```json
+{
+  "invocationMessage": "Korzystanie z \"Zamień ciąg w pliku\"",
+  "isConfirmed": {
+    "type": 1
+  },
+  "content": "✅ Gotowe! Usunąłem &#96;onclick=\"addImages()\"&#96; z HTML. Teraz przycisk będzie wywoływać funkcję tylko raz (przez event listener w &#96;setupEvents()&#96;), a nie 2 razy.\n\nPrzeładuj stronę (F5) - teraz dialog do wyboru plików powinien pojawić się tylko raz.",
+  "textEditContent": "",
+  "toolCallResult": null
+}
+```
+Status: **completed**
+
+
+</details>
+</tool-use>
+
+---
+
 Użytkownik mówi że teraz pyta 2 razy o wybranie plików. To oznacza że `fileInput` może być klikane z dwóch miejsc lub event listener się podwójnie attachuje.
 
 Sprawdzę:
@@ -26725,7 +26790,694 @@ Sprawdzę:
 2. Czy `addImages()` jest wywoływane z kilku miejsc
 3. Czy event listener nie jest duplikowany
 
-Problem możliwy: jeśli `setupEvents()` jest wywoływane kilka razy, to event listener się podwaja.Problem to że event listener na `fileInput` może się podwajać lub być attachowany kilka razy. Czytam gdzie `setupEvents()` jest wywoływane: Czytam kontekst gdzie `setupEvents()` jest wywoływane: 
+Problem możliwy: jeśli `setupEvents()` jest wywoływane kilka razy, to event listener się podwaja.Problem to że event listener na `fileInput` może się podwajać lub być attachowany kilka razy. Czytam gdzie `setupEvents()` jest wywoływane: Czytam kontekst gdzie `setupEvents()` jest wywoływane: Czytam gdzie `initApp()` się woła (czy jest wywoływana wielokrotnie): OK, `initApp()` jest wywoływane tylko raz (na linii 1790). Problem może być w event listenerze - trzeba go zakryć aby się nie multiplował. Rozwiązanie to użycie `removeEventListener` przed dodaniem nowego, lub użycie opcji `once: true`.
+
+Czytam pełny `setupEvents()`: Widzę problem! Na linii 3123 jest `addImagesBtn.addEventListener('click', addImages)`, a przycisk ma też `onclick="addImages()"` w HTML (linia 1293). To powoduje DUPLIKAT - funkcja się woła 2 razy!
+
+Trzeba usunąć albo `onclick` z HTML, albo `addEventListener` z JavaScript. Będę na to patrzeć w `setupEvents()`. Mam dwa rozwiązania:
+
+1. Usunąć `addEventListener` z `setupEvents()` - trzymać `onclick` w HTML
+2. Usunąć `onclick` z HTML - trzymać `addEventListener` w `setupEvents()`
+
+Rozwiązanie 2 jest lepsze (unificuje handling eventów). Usunę `onclick` z HTML: 
+
+---
+
+_**User (2026-01-06 18:55Z)**_
+
+wypchnij do git
+
+---
+
+_**Agent (model copilot/claude-haiku-4.5)**_
+
+<tool-use data-tool-type="unknown" data-tool-name="mcp_gitkraken_git_status">
+<details>
+<summary>Tool use: **mcp_gitkraken_git_status**</summary>
+
+
+Parameters:
+
+```json
+{
+  "kind": "input",
+  "rawInput": {
+    "directory": "j:\\projekt 2025\\projekt-akta-v2\\public"
+  }
+}
+```
+Additional data:
+
+```json
+{
+  "vscodeToolId": "mcp_gitkraken_git_status",
+  "isHidden": false
+}
+```
+Result:
+
+```json
+{
+  "invocationMessage": "Uruchamianie &#96;git_status&#96;",
+  "pastTenseMessage": "Uruchomiono &#96;git_status&#96; ",
+  "resultDetails": {
+    "input": "{\n  \"directory\": \"j:\\\\projekt 2025\\\\projekt-akta-v2\\\\public\"\n}",
+    "output": [
+      {
+        "type": "embed",
+        "isText": true,
+        "value": "{\"data\":{\"output\":\"On branch master\\nYour branch is up to date with 'origin/master'.\\n\\nChanges not staged for commit:\\n  (use \\\"git add \\u003cfile\\u003e...\\\" to update what will be committed)\\n  (use \\\"git restore \\u003cfile\\u003e...\\\" to discard changes in working directory)\\n\\tmodified:   .specstory/history/2026-01-06_12-22Z-genealogical-indexer-application-development-update.md\\n\\tmodified:   FIRESTORE_MIGRATION_ROADMAP.md\\n\\tmodified:   acta-v1-models.js\\n\\tmodified:   viewer-osd-v8.html\\n\\tmodified:   viewer-osd-v9.html\\n\\nno changes added to commit (use \\\"git add\\\" and/or \\\"git commit -a\\\")\"}}"
+      }
+    ],
+    "isError": false
+  },
+  "isConfirmed": {
+    "type": 1
+  },
+  "content": "",
+  "textEditContent": "",
+  "toolCallResult": null
+}
+```
+Status: **completed**
+
+
+</details>
+</tool-use>
+
+---
+
+<tool-use data-tool-type="unknown" data-tool-name="mcp_gitkraken_git_add_or_commit">
+<details>
+<summary>Tool use: **mcp_gitkraken_git_add_or_commit**</summary>
+
+
+Parameters:
+
+```json
+{
+  "kind": "input",
+  "rawInput": {
+    "action": "add",
+    "directory": "j:\\projekt 2025\\projekt-akta-v2\\public"
+  }
+}
+```
+Additional data:
+
+```json
+{
+  "vscodeToolId": "mcp_gitkraken_git_add_or_commit",
+  "isHidden": false
+}
+```
+Result:
+
+```json
+{
+  "invocationMessage": "Uruchamianie &#96;git_add_or_commit&#96;",
+  "pastTenseMessage": "Uruchomiono &#96;git_add_or_commit&#96; ",
+  "resultDetails": {
+    "input": "{\n  \"action\": \"add\",\n  \"directory\": \"j:\\\\projekt 2025\\\\projekt-akta-v2\\\\public\"\n}",
+    "output": [
+      {
+        "type": "embed",
+        "isText": true,
+        "value": "Error: MPC -32603: \n  - git output: .\n     git error: \n      - exit status 128:\n        gkcli/internal/git.(*nativeGitCommandExecutor).ExecuteWithOutput\n            gkcli/internal/git/native_git.go:211\n      - exit status 128 :\n    gkcli/internal/mcp/internal/tools.(*GitTool).gitAddOrCommitHandler\n        gkcli/internal/mcp/internal/tools/git.go:827\n  - git output: .\n     git error: \n      - exit status 128:\n        gkcli/internal/git.(*nativeGitCommandExecutor).ExecuteWithOutput\n            gkcli/internal/git/native_git.go:211\n      - exit status 128 :\n    gkcli/internal/mcp/internal/tools.gitError\n        gkcli/internal/mcp/internal/tools/git.go:880\n  - exit status 128:\n    gkcli/internal/git.(*nativeGitCommandExecutor).ExecuteWithOutput\n        gkcli/internal/git/native_git.go:211\n  - exit status 128"
+      }
+    ],
+    "isError": true
+  },
+  "isConfirmed": {
+    "type": 3,
+    "scope": "profile"
+  },
+  "content": "",
+  "textEditContent": "",
+  "toolCallResult": null
+}
+```
+Status: **completed**
+
+
+</details>
+</tool-use>
+
+---
+
+<tool-use data-tool-type="unknown" data-tool-name="run_in_terminal">
+<details>
+<summary>Tool use: **run_in_terminal**</summary>
+
+
+Parameters:
+
+```json
+{
+  "kind": "terminal",
+  "terminalToolSessionId": "42bff6c8-075f-427d-87c5-b4fe04e255b1",
+  "terminalCommandId": "tool-297c600b-2445-4bd1-a468-c548725ee4c9",
+  "commandLine": {
+    "original": "cd \"j:\\projekt 2025\\projekt-akta-v2\\public\"; git add -A"
+  },
+  "language": "pwsh",
+  "autoApproveInfo": {
+    "value": "Automatycznie zatwierdzane dla tej sesji ([Wyłącz](command:workbench.action.terminal.chat.disableSessionAutoApproval?%255B%2522416ba437-4ef3-44a3-825c-25ff65dbdaa6%2522%255D))",
+    "isTrusted": {
+      "enabledCommands": [
+        "workbench.action.terminal.chat.disableSessionAutoApproval"
+      ]
+    },
+    "supportThemeIcons": false,
+    "supportHtml": false,
+    "supportAlertSyntax": false
+  },
+  "terminalCommandState": {
+    "exitCode": 1,
+    "timestamp": 1767725725081,
+    "duration": 612
+  },
+  "terminalCommandUri": {
+    "$mid": 1,
+    "path": "/6ba9a78b74ea4bb2d0e5368bde90f64f/16",
+    "scheme": "vscode-terminal",
+    "query": "command=tool-297c600b-2445-4bd1-a468-c548725ee4c9"
+  },
+  "terminalTheme": {
+    "background": "#181818",
+    "foreground": "#cccccc"
+  }
+}
+```
+Additional data:
+
+```json
+{
+  "vscodeToolId": "run_in_terminal",
+  "isHidden": false
+}
+```
+Result:
+
+```json
+{
+  "invocationMessage": "Korzystanie z \"Uruchom w terminalu\"",
+  "isConfirmed": {
+    "type": 1
+  },
+  "content": "",
+  "textEditContent": "",
+  "toolCallResult": null
+}
+```
+Status: **completed**
+
+
+</details>
+</tool-use>
+
+---
+
+<tool-use data-tool-type="unknown" data-tool-name="run_in_terminal">
+<details>
+<summary>Tool use: **run_in_terminal**</summary>
+
+
+Parameters:
+
+```json
+{
+  "kind": "terminal",
+  "terminalToolSessionId": "45dad60d-3a5b-4746-835a-39eb3c941bdd",
+  "terminalCommandId": "tool-f44d6542-503e-432f-b493-20acf38aea39",
+  "commandLine": {
+    "original": "cd \"j:\\projekt 2025\\projekt-akta-v2\\public\" ; git add -A ; git commit -m \"Fix: Zmiana fileInput, usunięcie duplikatu event listenera, naprawa syntax error\" ; git push origin master"
+  },
+  "language": "pwsh",
+  "autoApproveInfo": {
+    "value": "Automatycznie zatwierdzane dla tej sesji ([Wyłącz](command:workbench.action.terminal.chat.disableSessionAutoApproval?%255B%2522416ba437-4ef3-44a3-825c-25ff65dbdaa6%2522%255D))",
+    "isTrusted": {
+      "enabledCommands": [
+        "workbench.action.terminal.chat.disableSessionAutoApproval"
+      ]
+    },
+    "supportThemeIcons": false,
+    "supportHtml": false,
+    "supportAlertSyntax": false
+  },
+  "terminalCommandState": {
+    "exitCode": 0,
+    "timestamp": 1767725731941,
+    "duration": 3427
+  },
+  "terminalCommandUri": {
+    "$mid": 1,
+    "path": "/6ba9a78b74ea4bb2d0e5368bde90f64f/16",
+    "scheme": "vscode-terminal",
+    "query": "command=tool-f44d6542-503e-432f-b493-20acf38aea39"
+  },
+  "terminalCommandOutput": {
+    "text": "push origin master\r\n[master 1be1fcf] Fix: Zmiana fileInput, usunicie duplikatu event listenera, naprawa syntax error\r\n 5 files changed, 12011 insertions(+), 628 deletions(-)\r\nEnumerating objects: 19, done.\r\nCounting objects: 100% (19/19), done.\r\nDelta compression using up to 8 threads\r\nCompressing objects: 100% (10/10), done.\r\nWriting objects: 100% (10/10), 75.66 KiB | 1.84 MiB/s, done.\r\nTotal 10 (delta 8), reused 0 (delta 0), pack-reused 0 (from 0)      \r\nremote: Resolving deltas: 100% (8/8), completed with 8 local objects.\r\nTo https://github.com/toxiconus/genealog-indexer-v7.1.git\r\n   117595f..1be1fcf  master -&gt; master",
+    "lineCount": 14
+  },
+  "terminalTheme": {
+    "background": "#181818",
+    "foreground": "#cccccc"
+  }
+}
+```
+Additional data:
+
+```json
+{
+  "vscodeToolId": "run_in_terminal",
+  "isHidden": false
+}
+```
+Result:
+
+```json
+{
+  "invocationMessage": "Korzystanie z \"Uruchom w terminalu\"",
+  "isConfirmed": {
+    "type": 1
+  },
+  "content": "",
+  "textEditContent": "",
+  "toolCallResult": null
+}
+```
+Status: **completed**
+
+
+</details>
+</tool-use>
+
+---
+
+Użytkownik prosi aby wypchnąć zmiany do gita. Muszę:
+1. Dodać zmienione pliki do staging area
+2. Commitnąć z wiadomością
+3. Wypchnąć do repozytorium (push)
+
+Użyję narzędzi do obsługi gita.Błąd w narzędziu. Użyję terminal do dodania i committowania: Czyszczę terminal i próbuję ponownie: ✅ Wypchnięte! Commit `1be1fcf` zawiera:
+- Naprawę syntax error w `loadActToForm()` (usunięcie duplikatu kodu)
+- Zmianę z `folderInput` na `fileInput` w `addImages()`
+- Usunięcie duplikatu event listenera (usunęłem `onclick` z HTML)
+
+Wszystkie zmiany są na master branchu w repozytorium.
+
+---
+
+_**User (2026-01-06 19:01Z)**_
+
+Na podstawie analizy kodu z Twojego repo (v9.html), mam pełne zrozumienie struktury. Aktualnie system ma solidną bazę: app.templates definiuje pola dla typów aktów (chrzest, małżeństwo itp.), loadActToForm mapuje wartości z modelu do inputów na podstawie typu, a renderFloatingForm renderuje formularz. Jednak formularz jest statyczny – renderuje pełny template bez filtrowania pól pod typ aktu, co powoduje, że dla chrztu widzisz pola małżeństwa (i na odwrót). Brak też automatycznej zmiany typu i dynamicznego dodawania pól.
+Poniżej krok po kroku, jak to naprawić i wdrożyć Twoje oczekiwania. Zmiany są proste, kompatybilne z v9 i gotowe na Firestore (używaj personId, unikaj cykli). Wklej do sekcji <script> w v9.html.
+1. Rozszerz app.templates o filtr po typie
+Dodaj do każdego pola w template applicableTypes (tablica typów, gdzie pole jest widoczne). To pozwoli na dynamiczne ukrywanie.
+Przykład edycji app.templates (dodaj do istniejącego kodu):
+JavaScriptapp.templates = [
+  {
+    id: "chrzest",
+    name: "Akt Chrztu",
+    sections: [
+      {
+        title: "Dziecko",
+        fields: [
+          { id: "child_first_name", label: "Imię dziecka", type: "text", applicableTypes: ["chrzest", "urodzenie"] },
+          { id: "child_last_name", label: "Nazwisko dziecka", type: "text", applicableTypes: ["chrzest", "urodzenie"] },
+          // ... reszta pól dla dziecka
+        ]
+      },
+      {
+        title: "Ojciec",
+        fields: [
+          { id: "father_first_name", label: "Imię ojca", type: "text", applicableTypes: ["chrzest", "urodzenie", "małżeństwo"] },
+          // ... dodaj applicableTypes do każdego pola
+        ]
+      },
+      // ... podobne dla matki, chrzestnych itp.
+    ]
+  },
+  {
+    id: "małżeństwo",
+    name: "Akt Małżeństwa",
+    sections: [
+      {
+        title: "Pan młody",
+        fields: [
+          { id: "groom_first_name", label: "Imię pana młodego", type: "text", applicableTypes: ["małżeństwo"] },
+          { id: "groom_last_name", label: "Nazwisko pana młodego", type: "text", applicableTypes: ["małżeństwo"] },
+          // ... pola dla pana młodego, panny młodej, świadków
+        ]
+      },
+      // ...
+    ]
+  },
+  // dodaj podobne dla "zgon", "urodzenie" itp.
+];
+2. Zmodyfikuj renderFloatingForm() – dynamiczne renderowanie
+Filtruj pola na podstawie act.type. Dodaj selector typu aktu na górze formularza (do zmiany typu).
+Zmiana w renderFloatingForm():
+JavaScriptfunction renderFloatingForm() {
+  const formContainer = document.getElementById('floatingForm');
+  formContainer.innerHTML = '';
+
+  const event = app.imageActs.find(e => e.id === app.currentEventId);
+  if (!event) return;
+
+  // Dodaj selector typu aktu (z możliwością zmiany)
+  const typeSelect = document.createElement('select');
+  typeSelect.id = 'actTypeSelect';
+  typeSelect.className = 'form-select';
+  app.templates.forEach(template => {
+    const option = document.createElement('option');
+    option.value = template.id;
+    option.textContent = template.name;
+    option.selected = template.id === event.type;
+    typeSelect.appendChild(option);
+  });
+  typeSelect.addEventListener('change', (e) => {
+    event.type = e.target.value;  // Zmień typ aktu
+    saveStorage();                // Zapisz
+    renderFloatingForm();         // Odśwież formularz pod nowy typ
+    loadActToForm(event);         // Załaduj dane
+  });
+  formContainer.appendChild(typeSelect);
+
+  // Renderuj sekcje i pola tylko pasujące do typu
+  const template = app.templates.find(t => t.id === event.type);
+  if (template) {
+    template.sections.forEach(section => {
+      const sectionDiv = document.createElement('div');
+      sectionDiv.className = 'form-section';
+      sectionDiv.innerHTML = `<h3>${section.title}</h3>`;
+
+      section.fields.forEach(field => {
+        if (field.applicableTypes.includes(event.type)) {  // Filtruj po typie
+          const input = document.createElement('input');
+          input.type = field.type;
+          input.id = `form-${field.id}`;
+          input.placeholder = field.label;
+          input.value = getFieldValue(field.id) || '';  // Załaduj wartość
+          input.dataset.field = field.id;
+          input.addEventListener('input', saveRecord);  // Auto-zapisz
+          sectionDiv.appendChild(input);
+        }
+      });
+
+      // Przycisk "Dodaj pole" na końcu sekcji
+      const addFieldBtn = document.createElement('button');
+      addFieldBtn.textContent = 'Dodaj dodatkowe pole';
+      addFieldBtn.onclick = () => addCustomField(sectionDiv, event.type);
+      sectionDiv.appendChild(addFieldBtn);
+
+      formContainer.appendChild(sectionDiv);
+    });
+  } else {
+    // Fallback dla nieznanego typu
+    formContainer.innerHTML += '<p>Nieznany typ aktu – dodaj niestandardowe pola.</p>';
+  }
+}
+3. Nowa funkcja: addCustomField() – dynamiczne dodawanie pól
+Pozwala dodawać pola ręcznie (z edycją typu, labela).
+JavaScriptfunction addCustomField(sectionDiv, actType) {
+  const fieldId = `custom_${Date.now()}`;  // Unikalne ID
+  const input = document.createElement('input');
+  input.type = 'text';
+  input.id = `form-${fieldId}`;
+  input.placeholder = 'Nowe pole (np. dodatkowe imię)';
+  input.dataset.field = fieldId;
+  input.addEventListener('input', saveRecord);
+
+  // Zapisz nowe pole do template (tymczasowo, na sesję)
+  const template = app.templates.find(t => t.id === actType);
+  if (template) {
+    const section = template.sections.find(s => s.title === sectionDiv.querySelector('h3').textContent);
+    if (section) {
+      section.fields.push({ id: fieldId, label: input.placeholder, type: 'text', applicableTypes: [actType] });
+    }
+  }
+
+  sectionDiv.insertBefore(input, sectionDiv.lastChild);  // Przed przyciskiem
+  saveStorage();
+}
+4. Automatyczne ustawianie formularza po dodaniu aktów
+Zmodyfikuj addNewActFromModal() (lub callback modala), by po dodaniu aktów od razu ustawić typ i odświeżyć formularz.
+Zmiana w funkcji obsługującej OK modala (zakładam, że jest w document.getElementById('advancedActOk').addEventListener('click', ...)):
+JavaScript// ... po stworzeniu eventów
+app.currentEventId = newEvents[0].id;  // Ustaw pierwszy nowy akt jako bieżący
+selectAct(app.currentEventId);         // Załaduj formularz – automatycznie dostosuje pola
+5. Ulepszenia wiarygodności i zapisu (zgodne z notatkami)
+Dodaj do saveRecord() obliczenie wiarygodności (z ostatniej notatki).
+JavaScriptfunction saveRecord() {
+  // ... istniejący kod
+  // Oblicz wiarygodność (źródło + ekstrakcja + interpretacja)
+  const sourceRel = 80;  // Przykładowo z źródła
+  const extrRel = 90;    // Z OCR/transkrypcji
+  const interpRel = 85;  // Z walidacji
+  event.reliability = Math.round((sourceRel * 0.4) + (extrRel * 0.35) + (interpRel * 0.25));
+
+  saveStorage();
+  updateProgressBar();   // Odśwież UI
+}
+6. Testowanie i debug
+
+Uruchom app, dodaj akty (np. chrzest) – formularz powinien pokazać tylko pola chrztu, z selectorem do zmiany na małżeństwo (odświeży pola).
+Dodaj pole – pojawi się w sekcji, zapisze się do template.
+Jeśli błąd: Dodaj console.log(event.type) w renderFloatingForm() do debugu.
+
+Te zmiany sprawią, że formularz będzie dynamiczny, z automatycznym dostosowaniem do typu aktu, możliwością zmiany i dodawania pól. Jeśli potrzebujesz pełnego patcha (diff), wklej fragment kodu z v9.
+
+---
+
+_**Agent (model copilot/claude-haiku-4.5)**_
+
+<tool-use data-tool-type="read" data-tool-name="copilot_readFile">
+<details>
+<summary>Tool use: **copilot_readFile** • Czytanie [](file:///j%3A/projekt%202025/projekt-akta-v2/public/viewer-osd-v8.html#1920-1920), wiersze 1920 do 1980</summary>
+
+
+Odczytaj [](file:///j%3A/projekt%202025/projekt-akta-v2/public/viewer-osd-v8.html#1920-1920), wiersze 1920 do 1980
+
+</details>
+</tool-use>
+
+---
+
+<tool-use data-tool-type="search" data-tool-name="copilot_findTextInFiles">
+<details>
+<summary>Tool use: **copilot_findTextInFiles** • Wyszukiwanie tekstu `app.currentTemplate = "chrzest"` (`**/viewer-osd-v8.html`)</summary>
+
+
+No results found
+</details>
+</tool-use>
+
+---
+
+<tool-use data-tool-type="read" data-tool-name="copilot_readFile">
+<details>
+<summary>Tool use: **copilot_readFile** • Czytanie [](file:///j%3A/projekt%202025/projekt-akta-v2/public/viewer-osd-v8.html#2320-2320), wiersze 2320 do 2330</summary>
+
+
+Odczytaj [](file:///j%3A/projekt%202025/projekt-akta-v2/public/viewer-osd-v8.html#2320-2320), wiersze 2320 do 2330
+
+</details>
+</tool-use>
+
+---
+
+Użytkownik przesłał dokładny opis problemu i pełny plan naprawczy dla formularza. Chce żebym wdrożył te zmiany do viewer-osd-v8.html na podstawie analizy struktury z v9.
+
+Problem:
+- Formularz jest statyczny, pokazuje wszystkie pola niezależnie od typu aktu
+- Brakuje dynamicznego dostosowania pól do wybranego typu
+- Brakuje możliwości zmiany typu aktu bez przeładowania
+- Brakuje obsługi niestandardowych pól
+
+Plan rozwiązania:
+1. Rozszerzyć app.templates o `applicableTypes` dla każdego pola
+2. Zmodyfikować `renderFloatingForm()` do dynamicznego renderowania z filtrem po typie
+3. Dodać funkcję `addCustomField()` do dynamicznego dodawania pól
+4. Ulepszać automatyczne ustawianie formularza
+5. Dodać obliczanie wiarygodności w `saveRecord()`
+
+To powinno być wdrożone do viewer-osd-v8.html. 
+
+Obecnie w v8 system ma:
+- `app.templates` w `loadFallbackTemplates()`
+- `renderFormContent()` które renderuje pola
+- `loadActToForm()` które ładuje dane
+- Dropdown typu aktu w `renderFormSections()`
+
+Użytkownik pracuje teraz z v9, ale mówi "na podstawie analizy kodu z Twojego repo (v9.html)" i chce to wdrożyć. Wygląda na to że chce zmiany do v8, bo pracujemy na v8.
+
+Powinienem:
+1. Przeczytać obecną strukturę app.templates w v8
+
+
+2. Rozszerzyć każde pole o `applicableTypes` aby określić dla jakich typów aktów powinno się wyświetlać
+3. Zmienić `renderFormContent()` żeby filtrował pola na podstawie wybranego typu
+4. Dodać dynamiczny selector do zmiany typu bez przeładowania
+5. Zaimplementować `addCustomField()` dla niestandardowych pól
+
+To będzie znaczna refaktoryzacja formularza. Zaczynam od czytania obecnego stanu.Rozumiem! To solidny plan. Wdrożę dynamiczny formularz z filtrowaniem po typie aktu. Czytam obecną strukturę `app.templates` w v8: OK! Widzę strukturę. Teraz będę wdrażać plan. Zaczynam od rozszerzenia `app.templates` o `applicableTypes` i modyfikacji `renderFormContent()`.
+
+Czytam całą funkcję `loadFallbackTemplates()` aby wiedzieć jej koniec: Świetnie! Teraz będę robić zmiany. Zaczynam od dodania `applicableTypes` do wszystkich pól w `loadFallbackTemplates()`. To jest duża zmiana, więc zrobię ją w etapach, zaczynając od sekcji "chrzest": 
+
+---
+
+_**User (2026-01-06 19:02Z)**_
+
+my pracujemy na v8 czy v9?
+
+---
+
+_**Agent (model copilot/claude-haiku-4.5)**_
+
+Użytkownik pyta, na której wersji pracujemy - v8 czy v9. Patrzę na kontekst:
+
+1. Workspace struktura pokazuje głównie pliki v7 i v8
+2. Ostatni commit wciąż mówi o `viewer-osd-v8.html`
+3. User attachment zawiera v9.html, ale to tylko do analizy/inspiracji
+4. Wszystkie dotychczasowe zmiany były na v8
+
+Powinno być jasne - pracujemy na **v8**. v9.html został przesłany jako przykład/referencja do implementacji dynamicznego formularza.Pracujemy na **v8** (`viewer-osd-v8.html`). 
+
+v9.html, które wysłałeś, to tylko przykład/referencja do analizy struktury i inspiracji dla implementacji dynamicznego formularza z filtrowaniem po typie aktu.
+
+Wszystkie dotychczasowe zmiany były na v8:
+- ✅ Naprawa syntax error
+- ✅ Zmiana fileInput zamiast folderInput
+- ✅ Usunięcie duplikatu event listenera
+
+Chcesz teraz wdrożyć na v8 system dynamicznego formularza z `applicableTypes` według planu podanego wcześniej?
+
+---
+
+_**User (2026-01-06 19:03Z)**_
+
+a sprawdz zawartosc ktml v9
+
+---
+
+_**Agent (model copilot/claude-haiku-4.5)**_
+
+<tool-use data-tool-type="read" data-tool-name="copilot_readFile">
+<details>
+<summary>Tool use: **copilot_readFile** • Czytanie [](file:///j%3A/projekt%202025/projekt-akta-v2/public/viewer-osd-v9.html#1-1), wiersze 1 do 100</summary>
+
+
+Odczytaj [](file:///j%3A/projekt%202025/projekt-akta-v2/public/viewer-osd-v9.html#1-1), wiersze 1 do 100
+
+</details>
+</tool-use>
+
+---
+
+<tool-use data-tool-type="search" data-tool-name="copilot_findTextInFiles">
+<details>
+<summary>Tool use: **copilot_findTextInFiles** • Wyszukiwanie tekstu `renderFloatingForm|loadFallbackTemplates|app.templates` (`**/viewer-osd-v9.html`)</summary>
+
+
+No results found
+</details>
+</tool-use>
+
+---
+
+<tool-use data-tool-type="search" data-tool-name="copilot_findTextInFiles">
+<details>
+<summary>Tool use: **copilot_findTextInFiles** • Wyszukiwanie tekstu `function renderFloatingForm` (`**/viewer-osd-v9.html`)</summary>
+
+
+No results found
+</details>
+</tool-use>
+
+---
+
+<tool-use data-tool-type="read" data-tool-name="copilot_readFile">
+<details>
+<summary>Tool use: **copilot_readFile** • Czytanie [](file:///j%3A/projekt%202025/projekt-akta-v2/public/viewer-osd-v9.html#5055-5055), wiersze 5055 do 5150</summary>
+
+
+Odczytaj [](file:///j%3A/projekt%202025/projekt-akta-v2/public/viewer-osd-v9.html#5055-5055), wiersze 5055 do 5150
+
+</details>
+</tool-use>
+
+---
+
+Użytkownik chce sprawdzić zawartość HTML v9. Mogę używać read_file do czytania, ale plik v9.html jest już wczytany w kontekście jako attachment. Mogę przeanalizować jego strukturę lub przeczytać części z pliku.
+
+Sprawdzę co jest w v9 - czy ma już `renderFloatingForm()`, jakie szablony itp.Czytam strukturę v9.html: V9 to pełny plik HTML (7005 linii) z Firebase i ACTA v1. Sprawdzę czy ma już `renderFloatingForm()` i jak są szablony: Czytam `renderFloatingForm()` w v9: Widzę! V9 ma już `renderFloatingForm()`, ale **bez filtrowania po typie** - wyświetla wszystkie pola dla wszystkich typów aktów. Jego `loadFallbackTemplates()` też nie ma `applicableTypes`.
+
+**Podsumowanie różnic v8 vs v9:**
+
+| Cecha | v8 | v9 |
+|-------|----|----|
+| **Firebase** | Nie | Tak |
+| **ACTA v1** | Tak | Tak |
+| **renderFloatingForm()** | Nie widać | Tak, ale bez filtrowania |
+| **Szablony** | Static, bez applicableTypes | Static, bez applicableTypes |
+| **Struktura** | renderFormSections() + dropdown | renderFloatingForm() |
+
+**Które wdrażać?** Pracujemy na **v8**, ale mogę się zainspirować strukturą v9 dla `renderFloatingForm()` jeśli chcesz tego stylu formularza zamiast dropdown'a.
+
+Masz preferencje:
+1. **Dropdown + akordeony** (obecny v8 style) z dynamicznym filtrowaniem
+2. **Floating form** (v9 style) z dynamicznym filtrowaniem po typie
+
+Który preferujesz?
+
+---
+
+_**User (2026-01-06 19:03Z)**_
+
+chce miec w v9 to co zrobiłeś w v8 i dodatkowo pracujemy nad formularzami
+
+---
+
+_**Agent (model copilot/claude-haiku-4.5)**_
+
+<tool-use data-tool-type="read" data-tool-name="copilot_readFile">
+<details>
+<summary>Tool use: **copilot_readFile** • Czytanie [](file:///j%3A/projekt%202025/projekt-akta-v2/public/viewer-osd-v9.html#1190-1190), wiersze 1190 do 1350</summary>
+
+
+Odczytaj [](file:///j%3A/projekt%202025/projekt-akta-v2/public/viewer-osd-v9.html#1190-1190), wiersze 1190 do 1350
+
+</details>
+</tool-use>
+
+---
+
+Użytkownik chce:
+1. Mieć w v9 to, co zrobiłem w v8 (te naprawy)
+2. Pracować nad formularzami dynamicznie filtrowanymi po typie
+
+Czyli:
+1. Skopiuj przesunięte zmiany z v8 do v9
+2. Wdrażaj system dynamiczny z `applicableTypes` w v9
+
+Naprawy z v8:
+- Syntax error fix w `loadActToForm()`
+- Zmiana `folderInput` na `fileInput` w `addImages()`
+- Usunięcie duplikatu event listenera (usunęłem `onclick` z HTML)
+
+Ale v9 nie ma tych problemów, bo to nowy kod. V9 ma `renderFloatingForm()` co jest lepsze do pracy z formularzami.
+
+Powinien:
+1. Skopiować kod z v8 jeśli potrzebny
+2. Pracować na v9 dla nowych funcjonalności z formularzami
+
+Czytam HTML v9 aby zobaczyć gdzie są przyciski i formularze.Rozumiem! Chcesz:
+1. **Przenieść naprawy z v8 do v9** (jeśli potrzebne)
+2. **Wdrożyć dynamiczny formularz w v9** z filtrowaniem po typie aktu
+
+Czytam HTML v9 aby zobaczyć gdzie są przyciski i input elementy: 
 
 ---
 

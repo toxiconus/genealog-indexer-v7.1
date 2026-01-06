@@ -1734,8 +1734,8 @@
                             title: "<i class='fas fa-info-circle'></i> Podstawowe",
                             expanded: true,
                             fields: [
-                                {id: "child_first_name", label: "Imię dziecka", type: "text"},
-                                {id: "child_last_name", label: "Nazwisko dziecka", type: "text"}
+                                {id: "child_first_name", label: "Imię dziecka", type: "text", applicableTypes: ["chrzest", "urodzenie"]},
+                                {id: "child_last_name", label: "Nazwisko dziecka", type: "text", applicableTypes: ["chrzest", "urodzenie"]}
                             ]
                         },
                         {
@@ -1743,8 +1743,8 @@
                             title: "<i class='fas fa-users'></i> Rodzice",
                             expanded: false,
                             fields: [
-                                {id: "father_name", label: "Ojciec", type: "text"},
-                                {id: "mother_name", label: "Matka", type: "text"}
+                                {id: "father_name", label: "Ojciec", type: "text", applicableTypes: ["chrzest", "urodzenie", "zgon"]},
+                                {id: "mother_name", label: "Matka", type: "text", applicableTypes: ["chrzest", "urodzenie", "zgon"]}
                             ]
                         },
                         {
@@ -1752,9 +1752,9 @@
                             title: "<i class='fas fa-sticky-note'></i> Metadane",
                             expanded: false,
                             fields: [
-                                {id: "confidence", label: "Pewność (%)", type: "number", min: "0", max: "100"},
-                                {id: "source_text", label: "Tekst źródłowy", type: "textarea"},
-                                {id: "notes", label: "Notatki", type: "textarea"}
+                                {id: "confidence", label: "Pewność (%)", type: "number", min: "0", max: "100", applicableTypes: ["chrzest", "urodzenie", "zgon", "małżeństwo"]},
+                                {id: "source_text", label: "Tekst źródłowy", type: "textarea", applicableTypes: ["chrzest", "urodzenie", "zgon", "małżeństwo"]},
+                                {id: "notes", label: "Notatki", type: "textarea", applicableTypes: ["chrzest", "urodzenie", "zgon", "małżeństwo"]}
                             ]
                         },
                         {
@@ -1762,10 +1762,10 @@
                             title: "<i class='fas fa-dna'></i> DNA i Genetyka",
                             expanded: false,
                             fields: [
-                                {id: "dna_test_type", label: "Typ testu DNA", type: "select", options: ["autosomal", "Y-DNA", "mtDNA", "X-DNA"]},
-                                {id: "dna_results", label: "Wyniki DNA", type: "textarea", placeholder: "Np. DYS393:13, DYS390:24"},
-                                {id: "haplogroup", label: "Haplogrupa", type: "text", placeholder: "Np. R1a, H1a"},
-                                {id: "dna_source", label: "Źródło testu", type: "text", placeholder: "GEDmatch, MyHeritage, etc."}
+                                {id: "dna_test_type", label: "Typ testu DNA", type: "select", options: ["autosomal", "Y-DNA", "mtDNA", "X-DNA"], applicableTypes: ["chrzest", "urodzenie", "zgon"]},
+                                {id: "dna_results", label: "Wyniki DNA", type: "textarea", placeholder: "Np. DYS393:13, DYS390:24", applicableTypes: ["chrzest", "urodzenie", "zgon"]},
+                                {id: "haplogroup", label: "Haplogrupa", type: "text", placeholder: "Np. R1a, H1a", applicableTypes: ["chrzest", "urodzenie", "zgon"]},
+                                {id: "dna_source", label: "Źródło testu", type: "text", placeholder: "GEDmatch, MyHeritage, etc.", applicableTypes: ["chrzest", "urodzenie", "zgon"]}
                             ]
                         },
                         {
@@ -1773,9 +1773,9 @@
                             title: "<i class='fas fa-heartbeat'></i> Zdrowie i Choroby",
                             expanded: false,
                             fields: [
-                                {id: "medical_condition", label: "Stan zdrowia/Choroba", type: "text", placeholder: "Np. gruźlica, dur brzuszny"},
-                                {id: "condition_onset", label: "Data wystąpienia", type: "date"},
-                                {id: "medical_source", label: "Źródło informacji", type: "text"}
+                                {id: "medical_condition", label: "Stan zdrowia/Choroba", type: "text", placeholder: "Np. gruźlica, dur brzuszny", applicableTypes: ["chrzest", "urodzenie", "zgon"]},
+                                {id: "condition_onset", label: "Data wystąpienia", type: "date", applicableTypes: ["chrzest", "urodzenie", "zgon"]},
+                                {id: "medical_source", label: "Źródło informacji", type: "text", applicableTypes: ["chrzest", "urodzenie", "zgon"]}
                             ]
                         },
                         {
@@ -1783,11 +1783,11 @@
                             title: "<i class='fas fa-plane'></i> Migracje",
                             expanded: false,
                             fields: [
-                                {id: "migration_from", label: "Skąd migracja", type: "text", placeholder: "Miejscowość lub kraj"},
-                                {id: "migration_to", label: "Dokąd migracja", type: "text", placeholder: "Miejscowość lub kraj"},
-                                {id: "migration_date", label: "Data migracji", type: "date"},
-                                {id: "migration_reason", label: "Przyczyna migracji", type: "text", placeholder: "wojna, ekonomiczna, ucieczka"},
-                                {id: "migration_source", label: "Źródło", type: "text"}
+                                {id: "migration_from", label: "Skąd migracja", type: "text", placeholder: "Miejscowość lub kraj", applicableTypes: ["chrzest", "urodzenie", "zgon"]},
+                                {id: "migration_to", label: "Dokąd migracja", type: "text", placeholder: "Miejscowość lub kraj", applicableTypes: ["chrzest", "urodzenie", "zgon"]},
+                                {id: "migration_date", label: "Data migracji", type: "date", applicableTypes: ["chrzest", "urodzenie", "zgon"]},
+                                {id: "migration_reason", label: "Przyczyna migracji", type: "text", placeholder: "wojna, ekonomiczna, ucieczka", applicableTypes: ["chrzest", "urodzenie", "zgon"]},
+                                {id: "migration_source", label: "Źródło", type: "text", applicableTypes: ["chrzest", "urodzenie", "zgon"]}
                             ]
                         },
                         {
@@ -1795,10 +1795,10 @@
                             title: "<i class='fas fa-coins'></i> Majątek",
                             expanded: false,
                             fields: [
-                                {id: "asset_type", label: "Typ majątku", type: "select", options: ["nieruchomość", "pieniądze", "narzędzia", "ziemia", "inny"]},
-                                {id: "asset_value", label: "Wartość/Opis", type: "text", placeholder: "Wartość lub opis majątku"},
-                                {id: "asset_date", label: "Data nabycia", type: "date"},
-                                {id: "asset_source", label: "Źródło", type: "text"}
+                                {id: "asset_type", label: "Typ majątku", type: "select", options: ["nieruchomość", "pieniądze", "narzędzia", "ziemia", "inny"], applicableTypes: ["chrzest", "urodzenie", "zgon"]},
+                                {id: "asset_value", label: "Wartość/Opis", type: "text", placeholder: "Wartość lub opis majątku", applicableTypes: ["chrzest", "urodzenie", "zgon"]},
+                                {id: "asset_date", label: "Data nabycia", type: "date", applicableTypes: ["chrzest", "urodzenie", "zgon"]},
+                                {id: "asset_source", label: "Źródło", type: "text", applicableTypes: ["chrzest", "urodzenie", "zgon"]}
                             ]
                         },
                         {
@@ -1806,9 +1806,9 @@
                             title: "<i class='fas fa-globe'></i> Kulturowe",
                             expanded: false,
                             fields: [
-                                {id: "patronymic", label: "Otczestwo/Patronymic", type: "text", placeholder: "Np. Ivanovich, Petrovich"},
-                                {id: "clan_tribe", label: "Klan/Plemię", type: "text", placeholder: "Dla kultur plemiennych"},
-                                {id: "religion", label: "Wyznanie", type: "text", placeholder: "katolickie, prawosławne, etc."}
+                                {id: "patronymic", label: "Otczestwo/Patronymic", type: "text", placeholder: "Np. Ivanovich, Petrovich", applicableTypes: ["chrzest", "urodzenie", "zgon"]},
+                                {id: "clan_tribe", label: "Klan/Plemię", type: "text", placeholder: "Dla kultur plemiennych", applicableTypes: ["chrzest", "urodzenie", "zgon"]},
+                                {id: "religion", label: "Wyznanie", type: "text", placeholder: "katolickie, prawosławne, etc.", applicableTypes: ["chrzest", "urodzenie", "zgon"]}
                             ]
                         },
                         {
@@ -1816,10 +1816,10 @@
                             title: "<i class='fas fa-robot'></i> AI i Walidacja",
                             expanded: false,
                             fields: [
-                                {id: "ai_generated", label: "Dane z AI", type: "checkbox"},
-                                {id: "parent_match", label: "Dopasowanie rodziców (%)", type: "number", min: "0", max: "100"},
-                                {id: "name_match", label: "Dopasowanie imienia (%)", type: "number", min: "0", max: "100"},
-                                {id: "location_match", label: "Dopasowanie miejsca (%)", type: "number", min: "0", max: "100"}
+                                {id: "ai_generated", label: "Dane z AI", type: "checkbox", applicableTypes: ["chrzest", "urodzenie", "zgon"]},
+                                {id: "parent_match", label: "Dopasowanie rodziców (%)", type: "number", min: "0", max: "100", applicableTypes: ["chrzest", "urodzenie", "zgon"]},
+                                {id: "name_match", label: "Dopasowanie imienia (%)", type: "number", min: "0", max: "100", applicableTypes: ["chrzest", "urodzenie", "zgon"]},
+                                {id: "location_match", label: "Dopasowanie miejsca (%)", type: "number", min: "0", max: "100", applicableTypes: ["chrzest", "urodzenie", "zgon"]}
                             ]
                         }
                     ]
@@ -1833,10 +1833,10 @@
                             title: "<i class='fas fa-info-circle'></i> Podstawowe",
                             expanded: true,
                             fields: [
-                                {id: "groom_first_name", label: "Imię pana młodego", type: "text"},
-                                {id: "groom_last_name", label: "Nazwisko pana młodego", type: "text"},
-                                {id: "bride_first_name", label: "Imię panny młodej", type: "text"},
-                                {id: "bride_last_name", label: "Nazwisko panny młodej (przed)", type: "text"}
+                                {id: "groom_first_name", label: "Imię pana młodego", type: "text", applicableTypes: ["małżeństwo"]},
+                                {id: "groom_last_name", label: "Nazwisko pana młodego", type: "text", applicableTypes: ["małżeństwo"]},
+                                {id: "bride_first_name", label: "Imię panny młodej", type: "text", applicableTypes: ["małżeństwo"]},
+                                {id: "bride_last_name", label: "Nazwisko panny młodej (przed)", type: "text", applicableTypes: ["małżeństwo"]}
                             ]
                         },
                         {
@@ -1844,10 +1844,10 @@
                             title: "<i class='fas fa-users'></i> Rodzice",
                             expanded: false,
                             fields: [
-                                {id: "groom_father", label: "Ojciec pana młodego", type: "text"},
-                                {id: "groom_mother", label: "Matka pana młodego", type: "text"},
-                                {id: "bride_father", label: "Ojciec panny młodej", type: "text"},
-                                {id: "bride_mother", label: "Matka panny młodej", type: "text"}
+                                {id: "groom_father", label: "Ojciec pana młodego", type: "text", applicableTypes: ["małżeństwo"]},
+                                {id: "groom_mother", label: "Matka pana młodego", type: "text", applicableTypes: ["małżeństwo"]},
+                                {id: "bride_father", label: "Ojciec panny młodej", type: "text", applicableTypes: ["małżeństwo"]},
+                                {id: "bride_mother", label: "Matka panny młodej", type: "text", applicableTypes: ["małżeństwo"]}
                             ]
                         },
                         {
@@ -1855,9 +1855,9 @@
                             title: "<i class='fas fa-sticky-note'></i> Metadane",
                             expanded: false,
                             fields: [
-                                {id: "confidence", label: "Pewność (%)", type: "number", min: "0", max: "100"},
-                                {id: "source_text", label: "Tekst źródłowy", type: "textarea"},
-                                {id: "notes", label: "Notatki", type: "textarea"}
+                                {id: "confidence", label: "Pewność (%)", type: "number", min: "0", max: "100", applicableTypes: ["małżeństwo"]},
+                                {id: "source_text", label: "Tekst źródłowy", type: "textarea", applicableTypes: ["małżeństwo"]},
+                                {id: "notes", label: "Notatki", type: "textarea", applicableTypes: ["małżeństwo"]}
                             ]
                         }
                     ]
@@ -1871,10 +1871,10 @@
                             title: "<i class='fas fa-info-circle'></i> Podstawowe",
                             expanded: true,
                             fields: [
-                                {id: "deceased_first_name", label: "Imię zmarłego", type: "text"},
-                                {id: "deceased_last_name", label: "Nazwisko zmarłego", type: "text"},
-                                {id: "age", label: "Wiek", type: "text"},
-                                {id: "death_place", label: "Miejsce zgonu", type: "text"}
+                                {id: "deceased_first_name", label: "Imię zmarłego", type: "text", applicableTypes: ["zgon"]},
+                                {id: "deceased_last_name", label: "Nazwisko zmarłego", type: "text", applicableTypes: ["zgon"]},
+                                {id: "age", label: "Wiek", type: "text", applicableTypes: ["zgon"]},
+                                {id: "death_place", label: "Miejsce zgonu", type: "text", applicableTypes: ["zgon"]}
                             ]
                         },
                         {
@@ -1882,9 +1882,9 @@
                             title: "<i class='fas fa-users'></i> Rodzina",
                             expanded: false,
                             fields: [
-                                {id: "spouse", label: "Małżonek/małżonka", type: "text"},
-                                {id: "father", label: "Ojciec", type: "text"},
-                                {id: "mother", label: "Matka", type: "text"}
+                                {id: "spouse", label: "Małżonek/małżonka", type: "text", applicableTypes: ["zgon"]},
+                                {id: "father", label: "Ojciec", type: "text", applicableTypes: ["zgon"]},
+                                {id: "mother", label: "Matka", type: "text", applicableTypes: ["zgon"]}
                             ]
                         },
                         {
@@ -1892,9 +1892,9 @@
                             title: "<i class='fas fa-sticky-note'></i> Metadane",
                             expanded: false,
                             fields: [
-                                {id: "confidence", label: "Pewność (%)", type: "number", min: "0", max: "100"},
-                                {id: "source_text", label: "Tekst źródłowy", type: "textarea"},
-                                {id: "notes", label: "Notatki", type: "textarea"}
+                                {id: "confidence", label: "Pewność (%)", type: "number", min: "0", max: "100", applicableTypes: ["zgon"]},
+                                {id: "source_text", label: "Tekst źródłowy", type: "textarea", applicableTypes: ["zgon"]},
+                                {id: "notes", label: "Notatki", type: "textarea", applicableTypes: ["zgon"]}
                             ]
                         }
                     ]
@@ -1908,8 +1908,8 @@
                             title: "<i class='fas fa-info-circle'></i> Podstawowe",
                             expanded: true,
                             fields: [
-                                {id: "child_first_name", label: "Imię dziecka", type: "text"},
-                                {id: "child_last_name", label: "Nazwisko dziecka", type: "text"}
+                                {id: "child_first_name", label: "Imię dziecka", type: "text", applicableTypes: ["urodzenie"]},
+                                {id: "child_last_name", label: "Nazwisko dziecka", type: "text", applicableTypes: ["urodzenie"]}
                             ]
                         },
                         {
@@ -1917,8 +1917,8 @@
                             title: "<i class='fas fa-users'></i> Rodzice",
                             expanded: false,
                             fields: [
-                                {id: "father_name", label: "Ojciec", type: "text"},
-                                {id: "mother_name", label: "Matka", type: "text"}
+                                {id: "father_name", label: "Ojciec", type: "text", applicableTypes: ["urodzenie"]},
+                                {id: "mother_name", label: "Matka", type: "text", applicableTypes: ["urodzenie"]}
                             ]
                         },
                         {
@@ -1926,9 +1926,9 @@
                             title: "<i class='fas fa-sticky-note'></i> Metadane",
                             expanded: false,
                             fields: [
-                                {id: "confidence", label: "Pewność (%)", type: "number", min: "0", max: "100"},
-                                {id: "source_text", label: "Tekst źródłowy", type: "textarea"},
-                                {id: "notes", label: "Notatki", type: "textarea"}
+                                {id: "confidence", label: "Pewność (%)", type: "number", min: "0", max: "100", applicableTypes: ["urodzenie"]},
+                                {id: "source_text", label: "Tekst źródłowy", type: "textarea", applicableTypes: ["urodzenie"]},
+                                {id: "notes", label: "Notatki", type: "textarea", applicableTypes: ["urodzenie"]}
                             ]
                         }
                     ]
@@ -5062,6 +5062,36 @@
             const act = getCurrentAct();
             if (!act) return;
             
+            // ✅ NOWE: Dodaj selector typu aktu na górze
+            const typeSelector = document.createElement('div');
+            typeSelector.style.cssText = 'margin-bottom: 12px; padding-bottom: 12px; border-bottom: 1px solid #3a3a3a;';
+            
+            const typeLabel = document.createElement('label');
+            typeLabel.textContent = 'Typ aktu:';
+            typeLabel.style.cssText = 'display: block; font-size: 10px; color: #888; margin-bottom: 6px; font-weight: 600;';
+            
+            const typeSelect = document.createElement('select');
+            typeSelect.style.cssText = 'width: 100%; padding: 8px; background: #1a1a1a; color: #ddd; border: 1px solid #3a3a3a; border-radius: 4px; font-size: 12px;';
+            
+            app.templates.forEach(t => {
+                const option = document.createElement('option');
+                option.value = t.id;
+                option.textContent = t.name;
+                option.selected = (t.id === act.type);
+                typeSelect.appendChild(option);
+            });
+            
+            typeSelect.addEventListener('change', (e) => {
+                act.type = e.target.value;  // ✅ Zmień typ aktu
+                app.currentTemplate = e.target.value;
+                saveFormToAct();  // Zapisz przed zmianą
+                renderFloatingForm();  // Odśwież formularz
+            });
+            
+            typeSelector.appendChild(typeLabel);
+            typeSelector.appendChild(typeSelect);
+            content.appendChild(typeSelector);
+
             // Helper: mapuj field.id → wartość z PersonModel
             const getFieldValue = (fieldId) => {
                 const mappings = {
@@ -5105,7 +5135,9 @@
                     // Metadata
                     'notes': () => act.notes || '',
                     'archive_ref': () => act.archiveReference || '',
-                    'page': () => act.pageNumber || ''
+                    'page': () => act.pageNumber || '',
+                    // Default: return input value if not in mappings (for custom fields)
+                    'default': (fieldId) => document.querySelector(`[data-field="${fieldId}"]`)?.value || ''
                 };
                 return (mappings[fieldId] || (() => ''))();
             };
@@ -5123,6 +5155,11 @@
                 section.appendChild(title);
                 
                 sectionDef.fields.forEach(field => {
+                    // ✅ NOWE: Filtruj pola po applicableTypes
+                    if (field.applicableTypes && !field.applicableTypes.includes(act.type)) {
+                        return;  // Pomiń to pole jeśli nie ma typu aktu
+                    }
+                    
                     const group = document.createElement('div');
                     group.className = 'form-group';
                     group.style.marginBottom = '10px';
@@ -5138,7 +5175,8 @@
                     input.placeholder = field.label;
                     input.value = getFieldValue(field.id);
                     
-                    // ✅ NOWE: Brak fieldROIs na EventModel, ale można dodać później
+                    // Auto-save na change
+                    input.addEventListener('change', saveFormToAct);
                     
                     group.appendChild(label);
                     group.appendChild(input);
