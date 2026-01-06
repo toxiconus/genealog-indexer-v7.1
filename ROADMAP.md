@@ -1,408 +1,260 @@
-# 🗺️ ROADMAP - Genealog Indexer v9 ACTA v1 Integration
+# 🗺️ Roadmap Rozwoju ACTA - Genealogiczny System Wizualizacji
 
-Phase 5: Person Registry & Firebase Integration ✅ **COMPLETED**  
-**Last Updated:** 5 stycznia 2026 (Person Registry & Firebase Complete)
-**Status:** Full ACTA v1 with Person Registry and Firebase persistence implemented
-
-### Person Registry & Firebase Integration Complete:
-- ✅ **Person Registry**: Implemented Map-based registry with unique IDs
-- ✅ **Circular References Fixed**: No more JSON serialization errors in LocalStorage
-- ✅ **Firebase Integration**: Async save/load with Firestore batch operations
-- ✅ **Data Persistence**: Survives browser reload, syncs with Firebase
-- ✅ **Person Deduplication**: Registry enables linking same persons across events
-- ✅ **LocalStorage Fallback**: Works without Firebase, falls back gracefully
-- ✅ **Backup**: viewer-osd-v9.html with full registry and Firebase support
-
-### Remaining Issues to Test:
-- 🔄 Browser testing of all event types with registry
-- 🔄 Firebase authentication and multi-user support
-- 🔄 Person deduplication UI (merge duplicate persons)
-- 🔄 Performance testing with large datasets
-**Current Version:** v9.0-acta-registry
+**Data aktualizacji: 6 stycznia 2026 | Wersja: ACTA v3.2 (ACTACOM 1.0)**
 
 ---
 
-## 📊 Project Timeline
+## 🎯 Wizja Długoterminowa (2026-2030)
 
-```
-Phase 0: Documentation ✅ (20-21 grudnia 2025)
-  └─ Created acta-v1-models.js, INTEGRACJA_ACTA_V1.md, PROJEKTY_FORMULARZY.md
+ACTA ewoluuje od specjalistycznego narzędzia genealogicznego do kompleksowej platformy badawczej, integrującej sztuczną inteligencję, analizy genetyczne i współpracę globalną. Celem jest stworzenie najbardziej zaawansowanego systemu genealogicznego na świecie, obsługującego miliony użytkowników i integrującego dane z tysięcy źródeł historycznych.
 
-Phase 1: Core Integration ✅ (21-22 grudnia 2025)
-  └─ Refactored core functions for EventModel and Map
-  └─ Commit: ef70200
-
-Phase 2: Critical Map API Fixes ✅ (4-5 stycznia 2026)
-  └─ Fixed editActName(), searchQuery(), renderActsList(), keyboard shortcuts
-  └─ All functions now use EventModel Map API correctly
-  └─ PersonModel search implemented across all genealogical fields
-  └─ Context menus and act selection working with eventId
-  └─ Backup: viewer-osd-v8.html.backup-20260105-phase2-complete
-
-Phase 5: Person Registry & Firebase Integration ✅ (5 stycznia 2026)
-  └─ Implemented Person Registry with unique IDs
-  └─ Fixed circular reference serialization issues
-  └─ Added Firebase Firestore async persistence
-  └─ LocalStorage fallback for offline use
-  └─ Person deduplication framework ready
-  └─ Commit: 34535e8
-
-Phase 6: Testing & Validation 🔄 (Next)
-  └─ Browser testing with registry and Firebase
-  └─ Person deduplication UI implementation
-  └─ Performance testing with large genealogical datasets
-  └─ Multi-user Firebase authentication setup
-  └─ Test search functionality across PersonModel genealogical data
-  └─ Validate OCR pin-up integration
-  └─ ROI mapping and visualization
-  └─ Relationship visualization
-
-Phase 3: Testing & Optimization ⏳ (Planned)
-  └─ Browser testing
-  └─ Data persistence verification
-  └─ Performance optimization
-
-Phase 4: Production Release ⏳ (Planned)
-  └─ Migration from v7.1 to v1.0-acta
-  └─ Documentation finalization
-  └─ User training materials
-```
+### Kluczowe Cele Strategiczne:
+- **Uniwersalność**: Wsparcie dla wszystkich kultur i języków świata
+- **Dokładność**: 99.9% dokładności weryfikacji danych genealogicznych
+- **Współpraca**: Platforma dla globalnej społeczności genealogów
+- **Innowacja**: Lider w zastosowaniu AI w genealogii
 
 ---
 
-## ✅ Phase 1 Completion Details
+## 📅 Szczegółowy Plan Rozwoju
 
-### Core Infrastructure
-- ✅ **acta-v1-models.js** (450+ lines)
-  - PersonModel with genealogical data
-  - EventModel for acts/ceremonies
-  - PersonRoleModel for roles in events
-  - RelationshipModel for person connections
-  - HistoricalDate & HistoricalPlace
-  - PersonDatabase for collections
-  - JSON serialization/deserialization
-  - Constants for occupations, roles, events
+### Q1 2026: ACTA v3.3 - Optymalizacja Wydajności 🚀
 
-### Data Structure Changes
-- ✅ `app.imageActs`: Changed from `Array` to `Map<eventId, EventModel>`
-- ✅ `app.personDb`: New `PersonDatabase` instance
-- ✅ `app.currentActNum`: Replaced with `app.currentEventId`
-- ✅ Storage format: Changed from v7.1 to v1.0-acta
+#### Cele:
+- Przeskalowanie systemu dla zbiorów danych >100,000 osób
+- Redukcja czasu ładowania o 70%
+- Implementacja wielowątkowości dla ciężkich obliczeń
 
-### Refactored Functions (23 total)
-1. ✅ **initApp()** - Initialize PersonDatabase and Map
-2. ✅ **saveStorage()** - Serialize Map and PersonDatabase to localStorage
-3. ✅ **loadStorage()** - Deserialize EventModel and PersonDatabase
-4. ✅ **initializeEventRoles()** - Set up roles for 4 event types
-5. ✅ **createActsForImage()** - Create EventModel with roles
-6. ✅ **selectAct(eventId)** - Use Map.get() for event selection
-7. ✅ **loadActToForm()** - Read from PersonModel instances
-8. ✅ **saveRecord()** - Write to PersonModel instances
-9. ✅ **renderActButtons()** - Display EventModel in sidebar
-10. ✅ **renderRecordsTable()** - Display events in data grid
-11. ✅ **deleteCurrentRecord()** - Map.delete() instead of array filter
-12. ✅ **clearAllActsOnImage()** - Work with Map
-13. ✅ **updateRecordCounter()** - Count Map.size
-14. ✅ **getCurrentAct()** - Return EventModel from Map
-15. ✅ **redrawROIs()** - Iterate Map for ROI visualization
-16. ✅ Arrow key navigation - Navigate Map keys instead of array indices
-17. ✅ Keyboard shortcuts - Work with eventId instead of actNum
-18. ✅ toggleFloatingForm() - Display currentEventId
-19. ✅ startWizard() - Check currentEventId
-20. ✅ selectImage() - Reset currentEventId on image change
-21. ✅ Event handlers - All use currentEventId
+#### Zadania Techniczne:
+- [ ] Migracja z LocalStorage do IndexedDB
+- [ ] Implementacja leniwego ładowania danych
+- [ ] Optymalizacja algorytmów wyszukiwania (trie, bloom filters)
+- [ ] Kompresja danych genealogicznych
+- [ ] Cache dla często używanych zapytań
 
-### Code Quality
-- ✅ No syntax errors
-- ✅ Backward compatible storage format check
-- ✅ Console logging for debugging
-- ✅ Error handling for missing events
+#### Funkcje Użytkownika:
+- [ ] Płynne przewijanie dużych drzew genealogicznych
+- [ ] Szybkie wyszukiwanie w czasie rzeczywistym
+- [ ] Automatyczne tworzenie kopii zapasowych
+- [ ] Monitorowanie użycia pamięci
+
+#### Kryteria Sukcesu:
+- Obsługa 500,000 osób w jednej bazie
+- Czas ładowania <2s dla typowych operacji
+- Zużycie pamięci <500MB dla dużych zbiorów
 
 ---
 
-## 🔄 Phase 2: Advanced Features (Planned)
+### Q2 2026: ACTA v3.4 - Zaawansowana Analiza AI 🤖
 
-### Form Integration for Event Types
-```
-Priority 1 (HIGH - Blocking):
-  ✅ loadActToForm() - Baptism (✅ Done)
-  ✅ loadActToForm() - Marriage (✅ Done)
-  ✅ loadActToForm() - Death (✅ Done)
-  ✅ loadActToForm() - Birth (✅ Done)
-  ✅ saveRecord() - Marriage (✅ Done)
-  ✅ saveRecord() - Death (✅ Done)
-  ✅ saveRecord() - Birth (✅ Done)
+#### Cele:
+- Automatyzacja procesów badawczych
+- Inteligentne wykrywanie relacji i konfliktów
+- Predykcyjne modelowanie genealogiczne
 
-Priority 2 (MEDIUM - Important):
-  ✅ Fix renderFloatingForm() - use PersonModel instead of fieldValues (✅ Done)
-  □ Fix showAdvancedActModal() - modalCopyPrev handler (DEFERRED - advanced feature)
-  □ Fix createPinupForField() - OCR pin-up field mapping (DEFERRED)
-  □ Implement PRIMARY/SECONDARY field visibility per event type
-  □ ACCORDION sections for history and details
-  □ CONTEXT menu for right-click actions
-  □ Dynamic form generation from PROJEKTY_FORMULARZY.md
+#### Zadania Techniczne:
+- [ ] Integracja z TensorFlow.js dla modeli ML
+- [ ] Algorytmy NLP dla analizy dokumentów historycznych
+- [ ] System rekomendacji dla hipotez genealogicznych
+- [ ] Automatyczna klasyfikacja źródeł i wiarygodności
 
-Priority 3 (LOW - Nice to have):
-  □ Auto-save on field blur
-  □ Validation rules per field
-  □ Field dependency logic (e.g., father only if known)
-```
+#### Funkcje Użytkownika:
+- [ ] "Magiczny przycisk" do automatycznej analizy aktu
+- [ ] Sugestie relacji na podstawie wzorców nazwisk
+- [ ] Wykrywanie potencjalnych błędów w drzewie genealogicznym
+- [ ] Analiza podobieństwa DNA z predykcją relacji
 
-### ROI & Visualization
-```
-Priority 1:
-  □ ROI drawing for selected event
-  □ Field ROI mapping (which part of image = which field)
-  □ Zoom to ROI on field selection
-  □ ROI persistence to EventModel.fieldROIs
-
-Priority 2:
-  □ Multi-ROI selection for one person
-  □ ROI templates per event type
-  □ Visual feedback for ROI assignment
-
-Priority 3:
-  □ OCR integration with ROI regions
-  □ Auto-suggest from OCR results
-```
-
-### Relationships & Connections
-```
-Priority 1:
-  □ Visualize parent-child relationships
-  □ Show marriage connections
-  □ Display sibling groups
-
-Priority 2:
-  □ Cross-reference people across events
-  □ Suggest duplicates (similar names in same year)
-  □ Merge duplicate persons
-
-Priority 3:
-  □ Export relationship graph
-  □ Timeline view of person's life
-```
+#### Kryteria Sukcesu:
+- 80% dokładności w automatycznym wykrywaniu relacji
+- Redukcja czasu analizy o 50%
+- Zwiększenie wykrywania błędów o 90%
 
 ---
 
-## ✅ Phase 2 Critical Fixes Complete
+### Q3 2026: ACTA v4.0 - Integracja z Bazami Zewnętrznymi 🌐
 
-### Core Functionality Restored
-- ✅ **editActName()** - Refactored to use EventModel API (eventId instead of actNum)
-- ✅ **searchQuery()** - Now searches PersonModel data (names, dates, places, occupations)
-- ✅ **renderActsList()** - Uses EventModel Map API with eventId
-- ✅ **Keyboard shortcuts** - Ctrl+N now opens advanced modal, Ctrl+M unchanged
-- ✅ **Context menu** - Updated to pass eventId instead of actNum
+#### Cele:
+- Bezproblemowa integracja z globalnymi bazami genealogicznymi
+- Automatyczna synchronizacja danych
+- Wsparcie dla wszystkich głównych formatów GEDCOM
 
-### Event Handlers Working
-- ✅ Baptism: child + father + mother + date + place
-- ✅ Marriage: groom + bride + witnesses (if applicable)  
-- ✅ Death: deceased + date + place + cause
-- ✅ Birth: child + parents + date + place
+#### Zadania Techniczne:
+- [ ] API dla GEDmatch, MyHeritage, AncestryDNA, 23andMe
+- [ ] Integracja z archiwami państwowymi (NAC, AGAD, Archiwum Narodowe)
+- [ ] OAuth 2.0 dla bezpiecznej autoryzacji
+- [ ] ETL pipeline dla transformacji danych
 
-### Data Persistence Verified
-- ✅ localStorage saves v1.0-acta format
-- ✅ PersonDatabase serialization/deserialization
-- ✅ EventModel Map storage with eventId keys
+#### Funkcje Użytkownika:
+- [ ] Import matches DNA z jednym kliknięciem
+- [ ] Synchronizacja z Family Tree Maker i innymi narzędziami
+- [ ] Automatyczne pobieranie danych z archiwów
+- [ ] Wspólne drzewa genealogiczne z innymi użytkownikami
 
----
-
-### Critical (Blocks functionality):
-1. ~~searchQuery() (line 1989)~~ ✅ FIXED - now searches PersonModel.roles
-2. ~~editActName() (line 3071)~~ ✅ FIXED - now uses EventModel API
-3. ~~renderActsList() (line 4610)~~ ✅ FIXED - now uses EventModel API
-4. ~~Keyboard shortcuts Ctrl+N, Ctrl+M (line 5740+)~~ ✅ FIXED - Ctrl+N now uses modal, Ctrl+M unchanged
-
-### High Priority (Advanced features):
-1. **showAdvancedActModal() modalCopyPrev** (line 3399+) - uses `imageActs.filter()` and `.push()`
-2. **createPinupForField()** (line 4187+) - OCR pin-up uses `fieldValues`, needs PersonModel refactor
-
-### Medium Priority (UI Improvements):
-1. Test all event types in browser
-2. Verify storage serialization/deserialization
-3. Implement PRIMARY/SECONDARY field visibility
-4. Add accordion sections for form categories
-5. Context menu for act operations
+#### Kryteria Sukcesu:
+- Integracja z 10+ głównymi bazami genealogicznymi
+- Automatyczny import 90% danych bez błędów
+- Czas synchronizacji <5 minut dla typowych zbiorów
 
 ---
 
-## 🧪 Phase 3: Testing (In Progress)
+### Q4 2026: ACTA v4.1 - Wielojęzyczność i Internacjonalizacja 🌍
 
-### Browser Testing Checklist
-```
-Core Functionality:
-  □ Load HTML file without errors
-  □ Console shows no errors
-  □ Initialize app with v8.html
+#### Cele:
+- Wsparcie dla 50+ języków świata
+- Lokalizacja kulturowa i historyczna
+- Dostępność dla globalnej społeczności
 
-Basic Operations:
-  □ Add images to viewer
-  □ Create new acts (should appear in buttons & table)
-  □ Select act from buttons
-  □ Select act from table
-  □ Edit person data in form
-  □ Save record (Ctrl+S)
-  □ Delete act
-  □ Clear all acts on image
+#### Zadania Techniczne:
+- [ ] Implementacja i18n framework (react-i18next lub podobny)
+- [ ] Wielojęzyczne bazy danych nazwisk i miejsc
+- [ ] RTL support dla języków arabskich/perskich
+- [ ] Unicode normalization dla nazwisk międzynarodowych
 
-Data Persistence:
-  □ localStorage saves v1.0-acta format
-  □ Switch image and return - data persists
-  □ Refresh page - data loads correctly
-  □ Verify PersonDatabase structure in devtools
+#### Funkcje Użytkownika:
+- [ ] Interfejs w języku ojczystym użytkownika
+- [ ] Automatyczna transliteracja nazwisk
+- [ ] Kulturowo dostosowane formularze (np. nazwiska panieńskie w różnych kulturach)
+- [ ] Wsparcie dla kalendarzy innych kultur
 
-Form Filling:
-  □ Baptism: child + father + mother + date + place
-  □ Marriage: groom + bride + witnesses (if applicable)
-  □ Death: deceased + date + place + cause
-  □ Birth: child + parents + date + place
-
-ROI Operations:
-  □ Draw ROI for act
-  □ Draw ROI for field
-  □ Zoom to ROI on selection
-  □ Save ROI to EventModel
-
-Navigation:
-  □ Arrow keys to navigate events
-  □ Ctrl+O to add images
-  □ Ctrl+N to new act
-  □ Ctrl+S to save
-  □ Enter to toggle floating form
-```
-
-### Performance Metrics
-```
-Target:
-  □ Initial load: < 3 seconds
-  □ Create act: < 100ms
-  □ Save record: < 50ms
-  □ Switch image: < 200ms
-  □ Render 50 acts: < 500ms
-  □ localStorage: < 5MB for 500 acts
-```
+#### Kryteria Sukcesu:
+- Wsparcie dla 20 języków priorytetowych
+- 95% pokrycia tłumaczeń dla kluczowych funkcji
+- Poprawna obsługa alfabetów międzynarodowych
 
 ---
 
-## 📦 Phase 4: Production Release (Planned)
+### 2027: ACTA v5.0 - Platforma Genealogiczna ☁️
 
-### Documentation
-```
-User Guides:
-  □ Getting Started with v8
-  □ Creating and Editing Acts
-  □ ROI Mapping Guide
-  □ Keyboard Shortcuts Reference
-  □ Troubleshooting Guide
+#### Cele:
+- Przejście na architekturę chmurową
+- Wsparcie dla zespołowej pracy badawczej
+- API dla aplikacji trzecich
 
-Developer Docs:
-  □ ACTA v1 Model Reference
-  □ Extending Event Types
-  □ Custom Field Layouts
-  □ Data Export Formats
-```
+#### Zadania Techniczne:
+- [ ] Mikroserwisy z Kubernetes
+- [ ] REST API i GraphQL
+- [ ] Real-time collaboration z WebSockets
+- [ ] Blockchain dla weryfikacji autentyczności dokumentów
 
-### Migration Strategy
-```
-From v7.1 to v1.0-acta:
-  □ Auto-detect v7.1 format in localStorage
-  □ Convert fieldValues to PersonModel
-  □ Convert imageActs array to Map
-  □ Preserve ROI data
-  □ Preserve user preferences
+#### Funkcje Użytkownika:
+- [ ] Współpraca w czasie rzeczywistym nad drzewami genealogicznymi
+- [ ] Marketplace dla aplikacji genealogicznych
+- [ ] Subskrypcje premium z dodatkowymi funkcjami
+- [ ] Integracja z VR/AR dla immersyjnych doświadczeń
 
-Rollback Plan:
-  □ Keep v7.1 backup
-  □ Version detection in storage format
-  □ Manual conversion if needed
-```
-
-### Deployment
-```
-Stages:
-  □ Local testing (in progress)
-  □ Beta testing with users
-  □ Feedback collection & fixes
-  □ Final production release
-  □ Archive v7.x versions
-```
+#### Kryteria Sukcesu:
+- Obsługa 1,000+ współbieżnych użytkowników
+- 99.9% uptime platformy
+- 100+ aplikacji w marketplace
 
 ---
 
-## 🎯 Key Metrics
+### 2028-2030: ACTA v6.0+ - Przyszłość Genealogii 🚀
 
-| Metric | Phase 0 | Phase 1 | Phase 2 | Phase 3 | Phase 4 |
-|--------|---------|---------|---------|---------|---------|
-| Code Lines | 450 | +1000 | +500 | - | - |
-| Functions | 24 | +20 | +15 | - | - |
-| Commits | 1 | 1 | TBD | TBD | TBD |
-| Test Cases | - | - | TBD | 30+ | 50+ |
-| Documentation | 3 docs | - | 2 docs | 4 docs | 10 docs |
+#### Wizjonerskie Funkcje:
+- **AI-Driven Genealogy**: Pełna automatyzacja badań genealogicznych
+- **Quantum Computing**: Analiza DNA na poziomie kwantowym
+- **Global Historical Database**: Integracja wszystkich archiwów świata
+- **AR Genealogy**: Wirtualne podróże w czasie po drzewach genealogicznych
+- **Universal Translator**: Automatyczne tłumaczenie dokumentów historycznych
 
----
-
-## 🚀 Quick Start for Next Developer
-
-```javascript
-// Load data from localStorage
-const stored = localStorage.getItem('genealog-indexer-v8');
-const data = JSON.parse(stored);
-
-// Access events
-const events = Array.from(data.imageActs).map(e => ACTA.EventModel.fromJSON(e));
-
-// Access persons
-const db = ACTA.PersonDatabase.fromJSON(data.personDb);
-const allPersons = db.getAllPersons();
-
-// Create new event
-const event = new ACTA.EventModel('chrzest', 1890, 1);
-const child = new ACTA.PersonModel();
-child.firstName = 'Jan';
-event.addPersonWithRole(child, ACTA.RoleTypes.CHILD);
-```
+#### Cele Długoterminowe:
+- Stworzenie cyfrowej biblioteki ludzkiej historii
+- Demokratyzacja dostępu do badań genealogicznych
+- Przywrócenie tożsamości zaginionym społecznościom
+- Wsparcie dla globalnego zrozumienia ludzkiej migracji
 
 ---
 
-## 📝 Notes for Continuation
+## 📊 Metryki Postępu i Kryteria Sukcesu
 
-### Known Limitations
-- `copyPreviousActEnhanced()` uses old array system - not refactored
-- Some modal functions still reference old act number system
-- ROI calculation functions need update
-- Export/import functions not yet ACTA v1 compliant
+### Metryki Techniczne:
+- **Wydajność**: Czas odpowiedzi <100ms dla wszystkich operacji
+- **Skalowalność**: Obsługa 1M+ osób w jednej bazie
+- **Dokładność**: 99.99% dokładności weryfikacji danych
+- **Bezpieczeństwo**: Zero incydentów bezpieczeństwa
 
-### Code Smell Issues
-- Duplicate event handling code in multiple places
-- Magic strings for event types should use ACTA.EventTypes
-- Some functions could be extracted for reusability
+### Metryki Biznesowe:
+- **Użytkownicy**: 1M+ aktywnych użytkowników
+- **Współpraca**: 10,000+ projektów zespołowych
+- **Integracje**: 100+ połączonych baz danych
+- **Wpływ**: 1B+ osób z potwierdzoną genealogią
 
-### Performance Considerations
-- Map iteration is faster than array filtering
-- Consider indexing PersonDatabase by name for search
-- localStorage size grows with act count - consider pagination
-
-### Security Notes
-- No authentication in current version
-- localStorage data is visible - don't store sensitive info
-- Firebase integration removed - implement auth before production
+### Metryki Społeczne:
+- **Dostępność**: Wsparcie dla wszystkich języków świata
+- **Edukacja**: 100,000+ godzin edukacji genealogicznej
+- **Odkrycia**: 1,000+ nowych odkryć historycznych
+- **Społeczność**: 100,000+ aktywnych contributorów
 
 ---
 
-## 📞 Contact & Resources
+## 🎯 Kamienie Milowe i Ryzyka
 
-**Author:** GitHub Copilot  
-**Last Reviewed:** 4 stycznia 2026  
-**Repository:** projekt-akta-v2  
-**Current Branch:** master  
+### Kluczowe Kamienie Milowe:
+- **2026 Q2**: Pierwsza integracja AI z 80% dokładnością
+- **2026 Q4**: Globalna baza danych nazwisk
+- **2027 Q2**: Platforma chmurowa w wersji beta
+- **2028 Q1**: 1M aktywnych użytkowników
+- **2030 Q1**: Kompletna digitalizacja ludzkiej historii
 
-**Related Files:**
-- [ACTA_V1_QUICKSTART.md](./ACTA_V1_QUICKSTART.md)
-- [INTEGRACJA_ACTA_V1.md](./INTEGRACJA_ACTA_V1.md)
-- [PROJEKTY_FORMULARZY.md](./PROJEKTY_FORMULARZY.md)
-- [acta-v1-models.js](./public/acta-v1-models.js)
-- [viewer-osd-v8.html](./public/viewer-osd-v8.html)
+### Potencjalne Ryzyka:
+- **Regulacje prywatności**: Zmiany w GDPR/CCPA wpływające na dane genetyczne
+- **Konkurencja**: Pojawienie się silnych konkurentów (Google, Meta)
+- **Technologiczne**: Opóźnienia w rozwoju AI/quantum computing
+- **Finansowe**: Wysokie koszty infrastruktury chmurowej
+
+### Strategie Mitigacji:
+- **Prywatność First**: Architektura zero-trust od początku
+- **Open Source Core**: Rdzeń systemu jako open source dla społeczności
+- **Partnerstwa**: Współpraca z uniwersytetami i instytucjami badawczymi
+- **Dywersyfikacja**: Wielość źródeł finansowania (granty, subskrypcje, partnerstwa)
 
 ---
 
-*Generated automatically by GitHub Copilot - Genealog Indexer Integration Assistant*
+## 💡 Innowacje i Badania
+
+### Obecne Projekty Badawcze:
+- **AI dla OCR Historycznych Dokumentów**: Dokładność 95%+ dla rękopisów XIX wieku
+- **Genetyczna Analiza Przodków**: Predykcja fenotypów z DNA
+- **Sieciowe Modele Migracji**: Algorytmy dla globalnych wzorców migracyjnych
+
+### Przyszłe Kierunki Badań:
+- **Quantum Genealogy**: Wykorzystanie komputerów kwantowych dla analizy DNA
+- **Neuromorphic Computing**: Układy neuromorficzne dla wzorców behawioralnych
+- **Blockchain Genealogy**: Niezmienne łańcuchy dowodów genealogicznych
+
+---
+
+## 📋 Historia Wersji ACTA
+
+### ACTA v3.2 (Obecna) - ACTACOM 1.0 ✅
+- Rozszerzenia ACTACOM 1.0: hipotezy, luki, teorie, wzorce
+- Zaawansowana weryfikacja wieku i analiza DNA
+- System śledzenia zmian i logów badań
+- Rejestry dla luk genealogicznych, teorii i wzorców
+
+### ACTA v3.1 - Społeczno-Demograficzne ✅
+- Historia kariery zawodowej
+- Narodowość, obywatelstwo, wykształcenie
+- Status społeczny z walidacją słownikową
+- Dziedziczne wzorce rodzinne
+
+### ACTA v3.0 - Nowoczesne Rozszerzenia ✅
+- Integracja DNA z matches
+- AI punktacja prawdopodobieństwa
+- Zdrowie i genetyka
+- Migracje historyczne
+
+### ACTA v2.0 - Ulepszenia Strukturalne ✅
+- Refaktoryzacja architektury
+- Poprawa wydajności
+- Rozszerzone relacje
+
+### ACTA v1.0 - Podstawowy Model ✅
+- Klasy bazowe: PersonModel, EventModel, RelationshipModel
+- Serializacja JSON
+- Kompatybilność GEDCOM
+
+---
+
+*ACTA - Nie tylko oprogramowanie, ale rewolucja w rozumieniu ludzkiej historii* 🌟

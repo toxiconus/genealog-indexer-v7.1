@@ -526,30 +526,44 @@ notes: "Niewyraźne - mogą być litery K, K, K"
 
 ## 🎯 Plany rozwoju
 
+### ✅ Faza ACTACOM 1.0 (Zakończona - 6 stycznia 2026)
+- [x] Implementacja GapModel dla luk genealogicznych
+- [x] Dodanie TheoryModel dla systemów teorii
+- [x] Utworzenie PatternModel dla wykrywania wzorców
+- [x] Implementacja HistEventModel dla kontekstu historycznego
+- [x] Dodanie SourceModel dla rozszerzonych źródeł
+- [x] Rozszerzenie PersonModel o pola hypothesis, ageAnalysis, changeLog, researchLog
+- [x] Integracja DNA matches z ACTACOM
+- [x] Aktualizacja dokumentacji i przykładów
+
 ### Faza 1 (MVP): Kluczowe dane
 - [x] Typ aktu (3 opcje)
 - [x] Osoby główne (imię, nazwisko, wiek/data)
 - [x] Daty główne (rok, miesiąc, dzień - elastycznie)
 - [x] Miejsca
-- [ ] Szybkie słowniki (zawody, choroby)
+- [x] Szybkie słowniki (zawody, choroby)
+- [x] Rozszerzenia ACTACOM 1.0
 
 ### Faza 2: Inteligencja
 - [ ] Walidacja warunkowa (data > data, wiek realistyczny)
 - [ ] Sugestie (np. "bliźnięta" jeśli mały przedział między urodzeniami)
 - [ ] Auto-uzupełnianie (zawody dla regionu/okresu)
 - [ ] Linkowanie osób (ten "Piotr" to syn tamtego "Stanisława"?)
+- [ ] Integracja ACTACOM w formularzach UI
 
 ### Faza 3: Analityka
 - [ ] Statystyki (ile dzieci na parę, wiek ślubu, przyczyny zgonu)
 - [ ] Duplikaty (czy ten akt jest już w bazie?)
 - [ ] Genealogia (wizualizacja powiązań między aktami)
 - [ ] Export (GEDCOM, CSV, JSON)
+- [ ] Raporty ACTACOM (hipotezy, luki, teorie)
 
 ### Faza 4: Zaawansowane
 - [ ] OCR dla rękopiśmiennych aktów
 - [ ] Transliteracja (cyrylica → łacina)
 - [ ] Czasoprzestrzenne mapy (gdzie się rodzili, umierali)
 - [ ] Integracja z archiwami (czy istnieje oryginał?)
+- [ ] AI-driven genealogy z ACTACOM
 
 ---
 
@@ -585,6 +599,151 @@ notes: "Niewyraźne - mogą być litery K, K, K"
 
 ---
 
-**Ostatnia aktualizacja**: 4 stycznia 2026
-**Status**: Koncepcja do implementacji
+**Data aktualizacji**: 6 stycznia 2026  
+**Status**: Zaktualizowane dla ACTA v3.2 z ACTACOM 1.0  
 **Autor**: Projekt genealogiczny v8
+
+---
+
+## 🎯 Rozszerzenia ACTACOM 1.0
+
+### Nowe encje w modelu danych:
+
+#### GapModel - Luki Genealogiczne
+```json
+{
+  "gapId": "uuid",
+  "personId": "uuid",
+  "gapType": "MISSING_GENERATION|MISSING_SIBLING|MISSING_PARENT|MISSING_SPOUSE",
+  "description": "Opis problemu",
+  "possibleCauses": ["przyczyna1", "przyczyna2"],
+  "researchStrategy": "Strategia rozwiązania",
+  "priority": "HIGH|MEDIUM|LOW",
+  "status": "OPEN|INVESTIGATING|RESOLVED",
+  "createdDate": "2026-01-06",
+  "resolvedDate": null
+}
+```
+
+#### TheoryModel - Teorie Genealogiczne
+```json
+{
+  "theoryId": "uuid",
+  "personId": "uuid",
+  "title": "Tytuł teorii",
+  "description": "Opis teorii",
+  "confidence": 0.75,
+  "relatedTheories": ["theoryId1", "theoryId2"],
+  "conflictingTheories": ["theoryId3"],
+  "supportingSources": ["sourceId1", "sourceId2"],
+  "contradictingSources": ["sourceId3"],
+  "status": "ACTIVE|ARCHIVED|REJECTED",
+  "createdDate": "2026-01-06"
+}
+```
+
+#### PatternModel - Wzorce
+```json
+{
+  "patternId": "uuid",
+  "patternType": "NAME|MIGRATION|OCCUPATION|FERTILITY",
+  "description": "Opis wzorca",
+  "frequency": 0.85,
+  "relatedPersons": ["personId1", "personId2"],
+  "significance": "Znaczenie dla genealogii rodziny",
+  "confidence": 0.9
+}
+```
+
+#### HistEventModel - Wydarzenia Historyczne
+```json
+{
+  "eventId": "uuid",
+  "eventType": "WAR|EPIDEMIC|MIGRATION|POLITICAL_CHANGE",
+  "title": "Tytuł wydarzenia",
+  "date": "1914-1918",
+  "location": "Europa",
+  "impact": "Wpływ na populację",
+  "affectedPersons": ["personId1", "personId2"]
+}
+```
+
+#### SourceModel - Rozszerzone Źródła
+```json
+{
+  "sourceId": "uuid",
+  "sourceType": "PRIMARY|SECONDARY|TERTIARY",
+  "title": "Tytuł źródła",
+  "author": "Autor instytucji",
+  "date": "1890-01-15",
+  "reliability": 4,
+  "preservation": "GOOD|FAIR|POOR",
+  "notes": "Notatki o źródle"
+}
+```
+
+### Rozszerzone pola w PersonModel:
+
+#### Hypothesis (Hipotezy)
+```json
+"hypothesis": {
+  "isHypothetical": true,
+  "confidence": 0.7,
+  "justification": "Uzasadnienie hipotezy",
+  "alternativeTheoryIds": ["theoryId1"],
+  "evidence": ["dowód1", "dowód2"]
+}
+```
+
+#### Age Analysis (Analiza wieku)
+```json
+"ageAnalysis": {
+  "expectedAge": 45,
+  "variance": 5,
+  "isSuspicious": false,
+  "historicalContext": "Kontekst historyczny",
+  "familyPattern": "Wzorce rodzinne"
+}
+```
+
+#### Change Log & Research Log
+```json
+"changeLog": [
+  {
+    "date": "2026-01-06",
+    "changeType": "ADD|MODIFY|DELETE",
+    "author": "użytkownik",
+    "description": "Opis zmiany",
+    "reason": "Powód zmiany"
+  }
+],
+"researchLog": [
+  {
+    "date": "2026-01-06",
+    "researchType": "ARCHIVE|DNA|INTERVIEW",
+    "source": "źródło",
+    "results": "Wyniki badań",
+    "nextSteps": "Następne kroki",
+    "priority": "HIGH|MEDIUM|LOW"
+  }
+]
+```
+
+#### DNA Data (rozszerzone)
+```json
+"dnaData": {
+  "matches": [
+    {
+      "matchId": "uuid",
+      "relationship": "2nd_cousin",
+      "confidence": 0.95,
+      "sharedDNA": 150,
+      "confirmed": true
+    }
+  ],
+  "testType": "AUTOSOMAL|Y_DNA|MT_DNA",
+  "company": "MyHeritage|AncestryDNA|23andMe"
+}
+```
+
+---

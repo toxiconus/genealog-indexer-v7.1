@@ -413,6 +413,12 @@
             border-left: 4px solid #ef4444;  /* 🔴 Red - empty & no ROI */
             box-shadow: 0 0 8px rgba(239,68,68,0.3);
         }
+        .form-group input.error,
+        .form-group textarea.error {
+            border-color: #ef4444 !important;
+            box-shadow: 0 0 0 3px rgba(239,68,68,0.2) !important;
+            background: rgba(239,68,68,0.05) !important;
+        }
         .form-group textarea {
             resize: vertical;
             min-height: 60px;
@@ -1677,6 +1683,10 @@
             console.log('📍 Canvas setup complete');
             loadStorage();
             console.log('📍 Storage loaded, images:', app.images.length);
+            setupRealtimeListener();
+            console.log('📍 Realtime listeners setup');
+            startAutoSave();
+            console.log('📍 Auto-save started');
             renderUI();
             console.log('📍 UI rendered');
             setupPostprocessSliders();
@@ -1735,6 +1745,81 @@
                                 {id: "father_name", label: "Ojciec", type: "text"},
                                 {id: "mother_name", label: "Matka", type: "text"}
                             ]
+                        },
+                        {
+                            id: "metadata",
+                            title: "<i class='fas fa-sticky-note'></i> Metadane",
+                            expanded: false,
+                            fields: [
+                                {id: "confidence", label: "Pewność (%)", type: "number", min: "0", max: "100"},
+                                {id: "source_text", label: "Tekst źródłowy", type: "textarea"},
+                                {id: "notes", label: "Notatki", type: "textarea"}
+                            ]
+                        },
+                        {
+                            id: "dna",
+                            title: "<i class='fas fa-dna'></i> DNA i Genetyka",
+                            expanded: false,
+                            fields: [
+                                {id: "dna_test_type", label: "Typ testu DNA", type: "select", options: ["autosomal", "Y-DNA", "mtDNA", "X-DNA"]},
+                                {id: "dna_results", label: "Wyniki DNA", type: "textarea", placeholder: "Np. DYS393:13, DYS390:24"},
+                                {id: "haplogroup", label: "Haplogrupa", type: "text", placeholder: "Np. R1a, H1a"},
+                                {id: "dna_source", label: "Źródło testu", type: "text", placeholder: "GEDmatch, MyHeritage, etc."}
+                            ]
+                        },
+                        {
+                            id: "health",
+                            title: "<i class='fas fa-heartbeat'></i> Zdrowie i Choroby",
+                            expanded: false,
+                            fields: [
+                                {id: "medical_condition", label: "Stan zdrowia/Choroba", type: "text", placeholder: "Np. gruźlica, dur brzuszny"},
+                                {id: "condition_onset", label: "Data wystąpienia", type: "date"},
+                                {id: "medical_source", label: "Źródło informacji", type: "text"}
+                            ]
+                        },
+                        {
+                            id: "migrations",
+                            title: "<i class='fas fa-plane'></i> Migracje",
+                            expanded: false,
+                            fields: [
+                                {id: "migration_from", label: "Skąd migracja", type: "text", placeholder: "Miejscowość lub kraj"},
+                                {id: "migration_to", label: "Dokąd migracja", type: "text", placeholder: "Miejscowość lub kraj"},
+                                {id: "migration_date", label: "Data migracji", type: "date"},
+                                {id: "migration_reason", label: "Przyczyna migracji", type: "text", placeholder: "wojna, ekonomiczna, ucieczka"},
+                                {id: "migration_source", label: "Źródło", type: "text"}
+                            ]
+                        },
+                        {
+                            id: "assets",
+                            title: "<i class='fas fa-coins'></i> Majątek",
+                            expanded: false,
+                            fields: [
+                                {id: "asset_type", label: "Typ majątku", type: "select", options: ["nieruchomość", "pieniądze", "narzędzia", "ziemia", "inny"]},
+                                {id: "asset_value", label: "Wartość/Opis", type: "text", placeholder: "Wartość lub opis majątku"},
+                                {id: "asset_date", label: "Data nabycia", type: "date"},
+                                {id: "asset_source", label: "Źródło", type: "text"}
+                            ]
+                        },
+                        {
+                            id: "cultural",
+                            title: "<i class='fas fa-globe'></i> Kulturowe",
+                            expanded: false,
+                            fields: [
+                                {id: "patronymic", label: "Otczestwo/Patronymic", type: "text", placeholder: "Np. Ivanovich, Petrovich"},
+                                {id: "clan_tribe", label: "Klan/Plemię", type: "text", placeholder: "Dla kultur plemiennych"},
+                                {id: "religion", label: "Wyznanie", type: "text", placeholder: "katolickie, prawosławne, etc."}
+                            ]
+                        },
+                        {
+                            id: "ai_validation",
+                            title: "<i class='fas fa-robot'></i> AI i Walidacja",
+                            expanded: false,
+                            fields: [
+                                {id: "ai_generated", label: "Dane z AI", type: "checkbox"},
+                                {id: "parent_match", label: "Dopasowanie rodziców (%)", type: "number", min: "0", max: "100"},
+                                {id: "name_match", label: "Dopasowanie imienia (%)", type: "number", min: "0", max: "100"},
+                                {id: "location_match", label: "Dopasowanie miejsca (%)", type: "number", min: "0", max: "100"}
+                            ]
                         }
                     ]
                 },
@@ -1763,6 +1848,16 @@
                                 {id: "bride_father", label: "Ojciec panny młodej", type: "text"},
                                 {id: "bride_mother", label: "Matka panny młodej", type: "text"}
                             ]
+                        },
+                        {
+                            id: "metadata",
+                            title: "<i class='fas fa-sticky-note'></i> Metadane",
+                            expanded: false,
+                            fields: [
+                                {id: "confidence", label: "Pewność (%)", type: "number", min: "0", max: "100"},
+                                {id: "source_text", label: "Tekst źródłowy", type: "textarea"},
+                                {id: "notes", label: "Notatki", type: "textarea"}
+                            ]
                         }
                     ]
                 },
@@ -1790,6 +1885,16 @@
                                 {id: "father", label: "Ojciec", type: "text"},
                                 {id: "mother", label: "Matka", type: "text"}
                             ]
+                        },
+                        {
+                            id: "metadata",
+                            title: "<i class='fas fa-sticky-note'></i> Metadane",
+                            expanded: false,
+                            fields: [
+                                {id: "confidence", label: "Pewność (%)", type: "number", min: "0", max: "100"},
+                                {id: "source_text", label: "Tekst źródłowy", type: "textarea"},
+                                {id: "notes", label: "Notatki", type: "textarea"}
+                            ]
                         }
                     ]
                 },
@@ -1813,6 +1918,16 @@
                             fields: [
                                 {id: "father_name", label: "Ojciec", type: "text"},
                                 {id: "mother_name", label: "Matka", type: "text"}
+                            ]
+                        },
+                        {
+                            id: "metadata",
+                            title: "<i class='fas fa-sticky-note'></i> Metadane",
+                            expanded: false,
+                            fields: [
+                                {id: "confidence", label: "Pewność (%)", type: "number", min: "0", max: "100"},
+                                {id: "source_text", label: "Tekst źródłowy", type: "textarea"},
+                                {id: "notes", label: "Notatki", type: "textarea"}
                             ]
                         }
                     ]
@@ -1879,13 +1994,55 @@
                             group.className = 'form-group';
                             const label = document.createElement('label');
                             label.textContent = field.label;
-                            const input = document.createElement('input');
-                            input.type = field.type || 'text';
-                            input.className = 'field-input';
+                            
+                            let input;
+                            if (field.type === 'textarea') {
+                                input = document.createElement('textarea');
+                                input.className = 'field-input field-textarea';
+                                input.rows = 3;
+                            } else if (field.type === 'select') {
+                                input = document.createElement('select');
+                                input.className = 'field-input';
+                                // Add empty option
+                                const emptyOption = document.createElement('option');
+                                emptyOption.value = '';
+                                emptyOption.textContent = '-- Wybierz --';
+                                input.appendChild(emptyOption);
+                                // Add options from field.options
+                                if (field.options) {
+                                    field.options.forEach(option => {
+                                        const opt = document.createElement('option');
+                                        opt.value = option;
+                                        opt.textContent = option;
+                                        input.appendChild(opt);
+                                    });
+                                }
+                            } else if (field.type === 'checkbox') {
+                                input = document.createElement('input');
+                                input.type = 'checkbox';
+                                input.className = 'field-input';
+                                // For checkbox, label is different
+                                label.textContent = '';
+                                const checkboxLabel = document.createElement('span');
+                                checkboxLabel.textContent = field.label;
+                                group.appendChild(input);
+                                group.appendChild(checkboxLabel);
+                            } else {
+                                input = document.createElement('input');
+                                input.type = field.type || 'text';
+                                input.className = 'field-input';
+                                if (field.min) input.min = field.min;
+                                if (field.max) input.max = field.max;
+                            }
+                            
                             input.dataset.field = field.id;
-                            input.placeholder = field.label;
-                            group.appendChild(label);
-                            group.appendChild(input);
+                            if (field.placeholder) input.placeholder = field.placeholder;
+                            if (!field.type === 'checkbox') {
+                                group.appendChild(label);
+                            }
+                            if (field.type !== 'checkbox') {
+                                group.appendChild(input);
+                            }
                             contentDiv.appendChild(group);
                         });
                         
@@ -2836,49 +2993,61 @@
                 const fatherRole = event.getFather();
                 const motherRole = event.getMother();
 
-                if (childRole && childRole.person) {
-                    const childFirst = form.querySelector('[name="child_first_name"]');
-                    if (childFirst) childRole.person.firstName = childFirst.value.trim();
-                    
-                    const childLast = form.querySelector('[name="child_last_name"]');
-                    if (childLast) childRole.person.lastName = childLast.value.trim();
-                }
-
-                if (fatherRole && fatherRole.person) {
-                    const fatherName = form.querySelector('[name="father_name"]');
-                    if (fatherName) {
-                        const nameParts = fatherName.value.trim().split(' ');
-                        fatherRole.person.firstName = nameParts[0] || '';
-                        fatherRole.person.lastName = nameParts.slice(1).join(' ') || '';
+                if (childRole && childRole.personId) {
+                    const person = getPersonFromRole(childRole);
+                    if (person) {
+                        const childFirst = form.querySelector('[name="child_first_name"]');
+                        if (childFirst) person.firstName = childFirst.value.trim();
+                        
+                        const childLast = form.querySelector('[name="child_last_name"]');
+                        if (childLast) person.lastName = childLast.value.trim();
                     }
                 }
 
-                if (motherRole && motherRole.person) {
-                    const motherName = form.querySelector('[name="mother_name"]');
-                    if (motherName) {
-                        const nameParts = motherName.value.trim().split(' ');
-                        motherRole.person.firstName = nameParts[0] || '';
-                        motherRole.person.lastName = nameParts.slice(1).join(' ') || '';
+                if (fatherRole && fatherRole.personId) {
+                    const person = getPersonFromRole(fatherRole);
+                    if (person) {
+                        const fatherName = form.querySelector('[name="father_name"]');
+                        if (fatherName) {
+                            const nameParts = fatherName.value.trim().split(' ');
+                            person.firstName = nameParts[0] || '';
+                            person.lastName = nameParts.slice(1).join(' ') || '';
+                        }
+                    }
+                }
+
+                if (motherRole && motherRole.personId) {
+                    const person = getPersonFromRole(motherRole);
+                    if (person) {
+                        const motherName = form.querySelector('[name="mother_name"]');
+                        if (motherName) {
+                            const nameParts = motherName.value.trim().split(' ');
+                            person.firstName = nameParts[0] || '';
+                            person.lastName = nameParts.slice(1).join(' ') || '';
+                        }
                     }
                 }
             } else if (event.type === 'zgon') {
                 const deceasedRole = event.getDeceased();
 
-                if (deceasedRole && deceasedRole.person) {
-                    const deceasedFirst = form.querySelector('[name="deceased_first_name"]');
-                    if (deceasedFirst) deceasedRole.person.firstName = deceasedFirst.value.trim();
-                    
-                    const deceasedLast = form.querySelector('[name="deceased_last_name"]');
-                    if (deceasedLast) deceasedRole.person.lastName = deceasedLast.value.trim();
-                    
-                    const deceasedAge = form.querySelector('[name="age"]');
-                    if (deceasedAge && deceasedAge.value) {
-                        deceasedRole.person.age = parseInt(deceasedAge.value);
-                    }
-                    
-                    const deathPlace = form.querySelector('[name="death_place"]');
-                    if (deathPlace) {
-                        deceasedRole.person.deathPlace = new ACTA.HistoricalPlace(deathPlace.value.trim(), 'town');
+                if (deceasedRole && deceasedRole.personId) {
+                    const person = getPersonFromRole(deceasedRole);
+                    if (person) {
+                        const deceasedFirst = form.querySelector('[name="deceased_first_name"]');
+                        if (deceasedFirst) person.firstName = deceasedFirst.value.trim();
+                        
+                        const deceasedLast = form.querySelector('[name="deceased_last_name"]');
+                        if (deceasedLast) person.lastName = deceasedLast.value.trim();
+                        
+                        const deceasedAge = form.querySelector('[name="age"]');
+                        if (deceasedAge && deceasedAge.value) {
+                            person.age = parseInt(deceasedAge.value);
+                        }
+                        
+                        const deathPlace = form.querySelector('[name="death_place"]');
+                        if (deathPlace) {
+                            person.deathPlace = new ACTA.HistoricalPlace(deathPlace.value.trim(), 'town');
+                        }
                     }
                 }
             }
@@ -2895,6 +3064,29 @@
                 event.pageNumber = parseInt(pageField.value);
             }
             
+            // Metadata dla osób
+            const confidenceField = form.querySelector('[name="confidence"]');
+            const sourceTextField = form.querySelector('[name="source_text"]');
+            const notesField = form.querySelector('[name="notes"]');
+            
+            // Przypisz metadata do wszystkich osób w tym evencie
+            event.roles.forEach(role => {
+                if (role.personId) {
+                    const person = getPersonFromRole(role);
+                    if (person) {
+                        if (confidenceField && confidenceField.value) {
+                            person.confidence = parseInt(confidenceField.value) || 100;
+                        }
+                        if (sourceTextField) {
+                            person.sourceText = sourceTextField.value.trim();
+                        }
+                        if (notesField) {
+                            person.notes = notesField.value.trim();
+                        }
+                    }
+                }
+            });
+            
             event.lastModified = new Date();
 
             renderActButtons();
@@ -2907,6 +3099,317 @@
 
             notify('✅ Akt zapisany', 'success');
             console.log(`✅ Event ${event.id} saved`);
+        }
+
+        // ✅ NOWA FUNKCJA: Auto-save - zapisuje formularz do aktualnego aktu bez powiadomień
+        function saveFormToAct() {
+            if (!app.currentEventId) return;
+
+            const event = app.imageActs.get(app.currentEventId);
+            if (!event || !(event instanceof ACTA.EventModel)) return;
+
+            const form = document.querySelector(`#form-${event.type}`);
+            if (!form) return;
+
+            // ✅ NOWE: Dla chrztu zapisz do PersonModel
+            if (event.type === 'chrzest') {
+                const childRole = event.getChild();
+                const fatherRole = event.getFather();
+                const motherRole = event.getMother();
+
+                if (childRole && getPersonFromRole(childRole)) {
+                    const person = getPersonFromRole(childRole);
+                    const childFirst = form.querySelector('[name="child_first_name"]');
+                    if (childFirst) person.firstName = childFirst.value.trim();
+                    
+                    const childLast = form.querySelector('[name="child_last_name"]');
+                    if (childLast) person.lastName = childLast.value.trim();
+                    
+                    const childGender = form.querySelector('[name="child_gender"]:checked');
+                    if (childGender) person.gender = childGender.value;
+                    
+                    const childBirth = form.querySelector('[name="child_birth_date"]');
+                    if (childBirth && childBirth.value) {
+                        person.birthDate = new ACTA.HistoricalDate(childBirth.value, 'day');
+                    }
+                    
+                    const childPlace = form.querySelector('[name="child_place"]');
+                    if (childPlace && childPlace.value) {
+                        person.birthPlace = new ACTA.HistoricalPlace(childPlace.value.trim(), 'town');
+                    }
+                }
+
+                if (fatherRole && getPersonFromRole(fatherRole)) {
+                    const person = getPersonFromRole(fatherRole);
+                    const fatherFirst = form.querySelector('[name="father_first_name"]');
+                    if (fatherFirst) person.firstName = fatherFirst.value.trim();
+                    
+                    const fatherLast = form.querySelector('[name="father_last_name"]');
+                    if (fatherLast) person.lastName = fatherLast.value.trim();
+                    
+                    const fatherOcc = form.querySelector('[name="father_occupation"]');
+                    if (fatherOcc) person.occupation = fatherOcc.value.trim();
+                    
+                    const fatherAge = form.querySelector('[name="father_age"]');
+                    if (fatherAge && fatherAge.value) {
+                        person.age = parseInt(fatherAge.value);
+                    }
+                }
+
+                if (motherRole && getPersonFromRole(motherRole)) {
+                    const person = getPersonFromRole(motherRole);
+                    const motherFirst = form.querySelector('[name="mother_first_name"]');
+                    if (motherFirst) person.firstName = motherFirst.value.trim();
+                    
+                    const motherMaiden = form.querySelector('[name="mother_maiden_name"]');
+                    if (motherMaiden) person.maidenName = motherMaiden.value.trim();
+                    
+                    const motherOcc = form.querySelector('[name="mother_occupation"]');
+                    if (motherOcc) person.occupation = motherOcc.value.trim();
+                    
+                    const motherAge = form.querySelector('[name="mother_age"]');
+                    if (motherAge && motherAge.value) {
+                        person.age = parseInt(motherAge.value);
+                    }
+                }
+            } else if (event.type === 'małżeństwo') {
+                const groomRole = event.getGroom();
+                const brideRole = event.getBride();
+
+                if (groomRole && getPersonFromRole(groomRole)) {
+                    const person = getPersonFromRole(groomRole);
+                    const groomFirst = form.querySelector('[name="groom_first_name"]');
+                    if (groomFirst) person.firstName = groomFirst.value.trim();
+                    
+                    const groomLast = form.querySelector('[name="groom_last_name"]');
+                    if (groomLast) person.lastName = groomLast.value.trim();
+                    
+                    const groomAge = form.querySelector('[name="groom_age"]');
+                    if (groomAge && groomAge.value) {
+                        person.age = parseInt(groomAge.value);
+                    }
+                    
+                    const groomOcc = form.querySelector('[name="groom_occupation"]');
+                    if (groomOcc) person.occupation = groomOcc.value.trim();
+                }
+
+                if (brideRole && getPersonFromRole(brideRole)) {
+                    const person = getPersonFromRole(brideRole);
+                    const brideFirst = form.querySelector('[name="bride_first_name"]');
+                    if (brideFirst) person.firstName = brideFirst.value.trim();
+                    
+                    const brideLast = form.querySelector('[name="bride_last_name"]');
+                    if (brideLast) person.lastName = brideLast.value.trim();
+                    
+                    const brideMaiden = form.querySelector('[name="bride_maiden_name"]');
+                    if (brideMaiden) person.maidenName = brideMaiden.value.trim();
+                    
+                    const brideAge = form.querySelector('[name="bride_age"]');
+                    if (brideAge && brideAge.value) {
+                        person.age = parseInt(brideAge.value);
+                    }
+                }
+            } else if (event.type === 'urodzenie') {
+                const childRole = event.getChild();
+                const fatherRole = event.getFather();
+                const motherRole = event.getMother();
+
+                if (childRole && childRole.personId) {
+                    const person = getPersonFromRole(childRole);
+                    if (person) {
+                        const childFirst = form.querySelector('[name="child_first_name"]');
+                        if (childFirst) person.firstName = childFirst.value.trim();
+                        
+                        const childLast = form.querySelector('[name="child_last_name"]');
+                        if (childLast) person.lastName = childLast.value.trim();
+                    }
+                }
+
+                if (fatherRole && fatherRole.personId) {
+                    const person = getPersonFromRole(fatherRole);
+                    if (person) {
+                        const fatherName = form.querySelector('[name="father_name"]');
+                        if (fatherName) {
+                            const nameParts = fatherName.value.trim().split(' ');
+                            person.firstName = nameParts[0] || '';
+                            person.lastName = nameParts.slice(1).join(' ') || '';
+                        }
+                    }
+                }
+
+                if (motherRole && motherRole.personId) {
+                    const person = getPersonFromRole(motherRole);
+                    if (person) {
+                        const motherName = form.querySelector('[name="mother_name"]');
+                        if (motherName) {
+                            const nameParts = motherName.value.trim().split(' ');
+                            person.firstName = nameParts[0] || '';
+                            person.lastName = nameParts.slice(1).join(' ') || '';
+                        }
+                    }
+                }
+            } else if (event.type === 'zgon') {
+                const deceasedRole = event.getDeceased();
+
+                if (deceasedRole && deceasedRole.personId) {
+                    const person = getPersonFromRole(deceasedRole);
+                    if (person) {
+                        const deceasedFirst = form.querySelector('[name="deceased_first_name"]');
+                        if (deceasedFirst) person.firstName = deceasedFirst.value.trim();
+                        
+                        const deceasedLast = form.querySelector('[name="deceased_last_name"]');
+                        if (deceasedLast) person.lastName = deceasedLast.value.trim();
+                        
+                        const deceasedAge = form.querySelector('[name="age"]');
+                        if (deceasedAge && deceasedAge.value) {
+                            person.age = parseInt(deceasedAge.value);
+                        }
+                        
+                        const deathPlace = form.querySelector('[name="death_place"]');
+                        if (deathPlace) {
+                            person.deathPlace = new ACTA.HistoricalPlace(deathPlace.value.trim(), 'town');
+                        }
+                    }
+                }
+            }
+
+            // Notatki i metadane
+            const notesField = form.querySelector('[name="notes"]');
+            if (notesField) event.notes = notesField.value.trim();
+            
+            const archiveField = form.querySelector('[name="archive_ref"]');
+            if (archiveField) event.archiveReference = archiveField.value.trim();
+            
+            const pageField = form.querySelector('[name="page"]');
+            if (pageField && pageField.value) {
+                event.pageNumber = parseInt(pageField.value);
+            }
+            
+            // Metadata dla osób i nowe pola ACTA v3
+            const confidenceField = form.querySelector('[name="confidence"]');
+            const sourceTextField = form.querySelector('[name="source_text"]');
+            const notesField = form.querySelector('[name="notes"]');
+            
+            // Nowe pola ACTA v3
+            const dnaTestTypeField = form.querySelector('[name="dna_test_type"]');
+            const dnaResultsField = form.querySelector('[name="dna_results"]');
+            const haplogroupField = form.querySelector('[name="haplogroup"]');
+            const dnaSourceField = form.querySelector('[name="dna_source"]');
+            
+            const medicalConditionField = form.querySelector('[name="medical_condition"]');
+            const conditionOnsetField = form.querySelector('[name="condition_onset"]');
+            const medicalSourceField = form.querySelector('[name="medical_source"]');
+            
+            const migrationFromField = form.querySelector('[name="migration_from"]');
+            const migrationToField = form.querySelector('[name="migration_to"]');
+            const migrationDateField = form.querySelector('[name="migration_date"]');
+            const migrationReasonField = form.querySelector('[name="migration_reason"]');
+            const migrationSourceField = form.querySelector('[name="migration_source"]');
+            
+            const assetTypeField = form.querySelector('[name="asset_type"]');
+            const assetValueField = form.querySelector('[name="asset_value"]');
+            const assetDateField = form.querySelector('[name="asset_date"]');
+            const assetSourceField = form.querySelector('[name="asset_source"]');
+            
+            const patronymicField = form.querySelector('[name="patronymic"]');
+            const clanTribeField = form.querySelector('[name="clan_tribe"]');
+            const religionField = form.querySelector('[name="religion"]');
+            
+            const aiGeneratedField = form.querySelector('[name="ai_generated"]');
+            const parentMatchField = form.querySelector('[name="parent_match"]');
+            const nameMatchField = form.querySelector('[name="name_match"]');
+            const locationMatchField = form.querySelector('[name="location_match"]');
+            
+            // Przypisz metadata i nowe pola ACTA v3 do wszystkich osób w tym evencie
+            event.roles.forEach(role => {
+                if (role.personId) {
+                    const person = getPersonFromRole(role);
+                    if (person) {
+                        // Metadata
+                        if (confidenceField && confidenceField.value) {
+                            person.confidence = parseInt(confidenceField.value) || 100;
+                        }
+                        if (sourceTextField) {
+                            person.sourceText = sourceTextField.value.trim();
+                        }
+                        if (notesField) {
+                            person.notes = notesField.value.trim();
+                        }
+                        
+                        // DNA
+                        if (dnaTestTypeField && dnaTestTypeField.value) {
+                            person.addDnaTest(
+                                dnaTestTypeField.value,
+                                dnaResultsField ? dnaResultsField.value.split(',').map(s => s.trim()) : [],
+                                haplogroupField ? haplogroupField.value.trim() : null,
+                                dnaSourceField ? dnaSourceField.value.trim() : 'Form input',
+                                confidenceField ? parseInt(confidenceField.value) || 100 : 100
+                            );
+                        }
+                        
+                        // Zdrowie
+                        if (medicalConditionField && medicalConditionField.value) {
+                            person.addMedicalCondition(
+                                medicalConditionField.value.trim(),
+                                conditionOnsetField && conditionOnsetField.value ? new ACTA.HistoricalDate(conditionOnsetField.value) : null,
+                                medicalSourceField ? medicalSourceField.value.trim() : 'Form input',
+                                confidenceField ? parseInt(confidenceField.value) || 100 : 100
+                            );
+                        }
+                        
+                        // Migracje
+                        if (migrationFromField && migrationFromField.value && migrationToField && migrationToField.value) {
+                            person.addMigration(
+                                new ACTA.HistoricalPlace(migrationFromField.value.trim()),
+                                new ACTA.HistoricalPlace(migrationToField.value.trim()),
+                                migrationDateField && migrationDateField.value ? new ACTA.HistoricalDate(migrationDateField.value) : null,
+                                migrationReasonField ? migrationReasonField.value.trim() : null,
+                                migrationSourceField ? migrationSourceField.value.trim() : 'Form input',
+                                confidenceField ? parseInt(confidenceField.value) || 100 : 100
+                            );
+                        }
+                        
+                        // Majątek
+                        if (assetTypeField && assetTypeField.value) {
+                            person.addAsset(
+                                assetTypeField.value,
+                                assetValueField ? assetValueField.value.trim() : null,
+                                assetDateField && assetDateField.value ? new ACTA.HistoricalDate(assetDateField.value) : null,
+                                assetSourceField ? assetSourceField.value.trim() : 'Form input',
+                                confidenceField ? parseInt(confidenceField.value) || 100 : 100
+                            );
+                        }
+                        
+                        // Kulturowe
+                        if (patronymicField && patronymicField.value) {
+                            person.patronymic = patronymicField.value.trim();
+                        }
+                        if (clanTribeField && clanTribeField.value) {
+                            person.clanOrTribe = clanTribeField.value.trim();
+                        }
+                        if (religionField && religionField.value) {
+                            person.religion = religionField.value.trim();
+                        }
+                        
+                        // AI i walidacja
+                        if (aiGeneratedField) {
+                            person.aiGenerated = aiGeneratedField.checked;
+                        }
+                        if (parentMatchField && parentMatchField.value) {
+                            person.probabilityScores.parentMatch = parseFloat(parentMatchField.value) / 100;
+                        }
+                        if (nameMatchField && nameMatchField.value) {
+                            person.probabilityScores.nameMatch = parseFloat(nameMatchField.value) / 100;
+                        }
+                        if (locationMatchField && locationMatchField.value) {
+                            person.probabilityScores.locationMatch = parseFloat(locationMatchField.value) / 100;
+                        }
+                    }
+                }
+            });
+            
+            event.lastModified = new Date();
+            saveStorage();
         }
 
         function deleteCurrentRecord() {
@@ -3251,105 +3754,129 @@
                 const fatherRole = event.getFather();
                 const motherRole = event.getMother();
                 
-                if (childRole && childRole.person) {
-                    const childForm = form.querySelector('[name="child_first_name"]');
-                    if (childForm) childForm.value = childRole.person.firstName || '';
-                    
-                    const childLast = form.querySelector('[name="child_last_name"]');
-                    if (childLast) childLast.value = childRole.person.lastName || '';
-                    
-                    const childBirth = form.querySelector('[name="child_birth_date"]');
-                    if (childBirth) childBirth.value = childRole.person.birthDate.getDisplayString();
-                    
-                    const childPlace = form.querySelector('[name="child_place"]');
-                    if (childPlace) childPlace.value = childRole.person.birthPlace.getDisplayString();
-                    
-                    const childGender = form.querySelector(`[value="${childRole.person.gender}"]`);
-                    if (childGender) childGender.checked = true;
+                if (childRole && childRole.personId) {
+                    const person = getPersonFromRole(childRole);
+                    if (person) {
+                        const childForm = form.querySelector('[name="child_first_name"]');
+                        if (childForm) childForm.value = person.firstName || '';
+                        
+                        const childLast = form.querySelector('[name="child_last_name"]');
+                        if (childLast) childLast.value = person.lastName || '';
+                        
+                        const childBirth = form.querySelector('[name="child_birth_date"]');
+                        if (childBirth) childBirth.value = person.birthDate.getDisplayString();
+                        
+                        const childPlace = form.querySelector('[name="child_place"]');
+                        if (childPlace) childPlace.value = person.birthPlace.getDisplayString();
+                        
+                        const childGender = form.querySelector(`[value="${person.gender}"]`);
+                        if (childGender) childGender.checked = true;
+                    }
                 }
                 
-                if (fatherRole && fatherRole.person) {
-                    const fatherFirst = form.querySelector('[name="father_first_name"]');
-                    if (fatherFirst) fatherFirst.value = fatherRole.person.firstName || '';
-                    
-                    const fatherLast = form.querySelector('[name="father_last_name"]');
-                    if (fatherLast) fatherLast.value = fatherRole.person.lastName || '';
-                    
-                    const fatherOcc = form.querySelector('[name="father_occupation"]');
-                    if (fatherOcc) fatherOcc.value = fatherRole.person.occupation || '';
-                    
-                    const fatherAge = form.querySelector('[name="father_age"]');
-                    if (fatherAge) fatherAge.value = fatherRole.person.age || '';
+                if (fatherRole && fatherRole.personId) {
+                    const person = getPersonFromRole(fatherRole);
+                    if (person) {
+                        const fatherFirst = form.querySelector('[name="father_first_name"]');
+                        if (fatherFirst) fatherFirst.value = person.firstName || '';
+                        
+                        const fatherLast = form.querySelector('[name="father_last_name"]');
+                        if (fatherLast) fatherLast.value = person.lastName || '';
+                        
+                        const fatherOcc = form.querySelector('[name="father_occupation"]');
+                        if (fatherOcc) fatherOcc.value = person.occupation || '';
+                        
+                        const fatherAge = form.querySelector('[name="father_age"]');
+                        if (fatherAge) fatherAge.value = person.age || '';
+                    }
                 }
                 
-                if (motherRole && motherRole.person) {
-                    const motherFirst = form.querySelector('[name="mother_first_name"]');
-                    if (motherFirst) motherFirst.value = motherRole.person.firstName || '';
-                    
-                    const motherMaiden = form.querySelector('[name="mother_maiden_name"]');
-                    if (motherMaiden) motherMaiden.value = motherRole.person.maidenName || '';
-                    
-                    const motherOcc = form.querySelector('[name="mother_occupation"]');
-                    if (motherOcc) motherOcc.value = motherRole.person.occupation || '';
-                    
-                    const motherAge = form.querySelector('[name="mother_age"]');
-                    if (motherAge) motherAge.value = motherRole.person.age || '';
+                if (motherRole && motherRole.personId) {
+                    const person = getPersonFromRole(motherRole);
+                    if (person) {
+                        const motherFirst = form.querySelector('[name="mother_first_name"]');
+                        if (motherFirst) motherFirst.value = person.firstName || '';
+                        
+                        const motherMaiden = form.querySelector('[name="mother_maiden_name"]');
+                        if (motherMaiden) motherMaiden.value = person.maidenName || '';
+                        
+                        const motherOcc = form.querySelector('[name="mother_occupation"]');
+                        if (motherOcc) motherOcc.value = person.occupation || '';
+                        
+                        const motherAge = form.querySelector('[name="mother_age"]');
+                        if (motherAge) motherAge.value = person.age || '';
+                    }
                 }
             } else if (event.type === 'małżeństwo') {
                 const groomRole = event.getGroom();
                 const brideRole = event.getBride();
 
-                if (groomRole && groomRole.person) {
-                    const groomFirst = form.querySelector('[name="groom_first_name"]');
-                    if (groomFirst) groomFirst.value = groomRole.person.firstName || '';
-                    
-                    const groomLast = form.querySelector('[name="groom_last_name"]');
-                    if (groomLast) groomLast.value = groomRole.person.lastName || '';
-                    
-                    const groomAge = form.querySelector('[name="groom_age"]');
-                    if (groomAge) groomAge.value = groomRole.person.age || '';
-                    
-                    const groomOcc = form.querySelector('[name="groom_occupation"]');
-                    if (groomOcc) groomOcc.value = groomRole.person.occupation || '';
+                if (groomRole && groomRole.personId) {
+                    const person = getPersonFromRole(groomRole);
+                    if (person) {
+                        const groomFirst = form.querySelector('[name="groom_first_name"]');
+                        if (groomFirst) groomFirst.value = person.firstName || '';
+                        
+                        const groomLast = form.querySelector('[name="groom_last_name"]');
+                        if (groomLast) groomLast.value = person.lastName || '';
+                        
+                        const groomAge = form.querySelector('[name="groom_age"]');
+                        if (groomAge) groomAge.value = person.age || '';
+                        
+                        const groomOcc = form.querySelector('[name="groom_occupation"]');
+                        if (groomOcc) groomOcc.value = person.occupation || '';
+                    }
                 }
 
-                if (brideRole && brideRole.person) {
-                    const brideFirst = form.querySelector('[name="bride_first_name"]');
-                    if (brideFirst) brideFirst.value = brideRole.person.firstName || '';
-                    
-                    const brideLast = form.querySelector('[name="bride_last_name"]');
-                    if (brideLast) brideLast.value = brideRole.person.lastName || '';
-                    
-                    const brideMaiden = form.querySelector('[name="bride_maiden_name"]');
-                    if (brideMaiden) brideMaiden.value = brideRole.person.maidenName || '';
-                    
-                    const brideAge = form.querySelector('[name="bride_age"]');
-                    if (brideAge) brideAge.value = brideRole.person.age || '';
+                if (brideRole && brideRole.personId) {
+                    const person = getPersonFromRole(brideRole);
+                    if (person) {
+                        const brideFirst = form.querySelector('[name="bride_first_name"]');
+                        if (brideFirst) brideFirst.value = person.firstName || '';
+                        
+                        const brideLast = form.querySelector('[name="bride_last_name"]');
+                        if (brideLast) brideLast.value = person.lastName || '';
+                        
+                        const brideMaiden = form.querySelector('[name="bride_maiden_name"]');
+                        if (brideMaiden) brideMaiden.value = person.maidenName || '';
+                        
+                        const brideAge = form.querySelector('[name="bride_age"]');
+                        if (brideAge) brideAge.value = person.age || '';
+                    }
                 }
             } else if (event.type === 'urodzenie') {
                 const childRole = event.getChild();
                 const fatherRole = event.getFather();
                 const motherRole = event.getMother();
 
-                if (childRole && childRole.person) {
-                    const childFirst = form.querySelector('[name="child_first_name"]');
-                    if (childFirst) childFirst.value = childRole.person.firstName || '';
-                    
-                    const childLast = form.querySelector('[name="child_last_name"]');
-                    if (childLast) childLast.value = childRole.person.lastName || '';
-                }
-
-                if (fatherRole && fatherRole.person) {
-                    const fatherName = form.querySelector('[name="father_name"]');
-                    if (fatherName) {
-                        fatherName.value = `${fatherRole.person.firstName || ''} ${fatherRole.person.lastName || ''}`.trim();
+                if (childRole && childRole.personId) {
+                    const person = getPersonFromRole(childRole);
+                    if (person) {
+                        const childFirst = form.querySelector('[name="child_first_name"]');
+                        if (childFirst) childFirst.value = person.firstName || '';
+                        
+                        const childLast = form.querySelector('[name="child_last_name"]');
+                        if (childLast) childLast.value = person.lastName || '';
                     }
                 }
 
-                if (motherRole && motherRole.person) {
-                    const motherName = form.querySelector('[name="mother_name"]');
-                    if (motherName) {
-                        motherName.value = `${motherRole.person.firstName || ''} ${motherRole.person.lastName || ''}`.trim();
+                if (fatherRole && fatherRole.personId) {
+                    const person = getPersonFromRole(fatherRole);
+                    if (person) {
+                        const fatherName = form.querySelector('[name="father_name"]');
+                        if (fatherName) {
+                            fatherName.value = `${person.firstName || ''} ${person.lastName || ''}`.trim();
+                        }
+                    }
+                }
+
+                if (motherRole && motherRole.personId) {
+                    const person = getPersonFromRole(motherRole);
+                    if (person) {
+                        const motherName = form.querySelector('[name="mother_name"]');
+                        if (motherName) {
+                            motherName.value = `${person.firstName || ''} ${person.lastName || ''}`.trim();
+                        }
                     }
                 }
             } else if (event.type === 'małżeństwo') {
@@ -3357,50 +3884,60 @@
                 const groomRole = event.roles.find(r => r.roleType === 'pan_młody');
                 const brideRole = event.roles.find(r => r.roleType === 'panna_młoda');
                 
-                if (groomRole && groomRole.person) {
-                    const groomFirst = form.querySelector('[name="groom_first_name"]');
-                    if (groomFirst) groomFirst.value = groomRole.person.firstName || '';
-                    
-                    const groomLast = form.querySelector('[name="groom_last_name"]');
-                    if (groomLast) groomLast.value = groomRole.person.lastName || '';
-                    
-                    const groomAge = form.querySelector('[name="groom_age"]');
-                    if (groomAge) groomAge.value = groomRole.person.age || '';
-                    
-                    const groomOcc = form.querySelector('[name="groom_occupation"]');
-                    if (groomOcc) groomOcc.value = groomRole.person.occupation || '';
+                if (groomRole && groomRole.personId) {
+                    const person = getPersonFromRole(groomRole);
+                    if (person) {
+                        const groomFirst = form.querySelector('[name="groom_first_name"]');
+                        if (groomFirst) groomFirst.value = person.firstName || '';
+                        
+                        const groomLast = form.querySelector('[name="groom_last_name"]');
+                        if (groomLast) groomLast.value = person.lastName || '';
+                        
+                        const groomAge = form.querySelector('[name="groom_age"]');
+                        if (groomAge) groomAge.value = person.age || '';
+                        
+                        const groomOcc = form.querySelector('[name="groom_occupation"]');
+                        if (groomOcc) groomOcc.value = person.occupation || '';
+                    }
                 }
                 
-                if (brideRole && brideRole.person) {
-                    const brideFirst = form.querySelector('[name="bride_first_name"]');
-                    if (brideFirst) brideFirst.value = brideRole.person.firstName || '';
-                    
-                    const brideLast = form.querySelector('[name="bride_last_name"]');
-                    if (brideLast) brideLast.value = brideRole.person.lastName || '';
-                    
-                    const brideMaiden = form.querySelector('[name="bride_maiden_name"]');
-                    if (brideMaiden) brideMaiden.value = brideRole.person.maidenName || '';
-                    
-                    const brideAge = form.querySelector('[name="bride_age"]');
-                    if (brideAge) brideAge.value = brideRole.person.age || '';
+                if (brideRole && brideRole.personId) {
+                    const person = getPersonFromRole(brideRole);
+                    if (person) {
+                        const brideFirst = form.querySelector('[name="bride_first_name"]');
+                        if (brideFirst) brideFirst.value = person.firstName || '';
+                        
+                        const brideLast = form.querySelector('[name="bride_last_name"]');
+                        if (brideLast) brideLast.value = person.lastName || '';
+                        
+                        const brideMaiden = form.querySelector('[name="bride_maiden_name"]');
+                        if (brideMaiden) brideMaiden.value = person.maidenName || '';
+                        
+                        const brideAge = form.querySelector('[name="bride_age"]');
+                        if (brideAge) brideAge.value = person.age || '';
+                    }
                 }
             } else if (event.type === 'zgon') {
                 const deceasedRole = event.getDeceased();
 
-                if (deceasedRole && deceasedRole.person) {
-                    const deceasedFirst = form.querySelector('[name="deceased_first_name"]');
-                    if (deceasedFirst) deceasedFirst.value = deceasedRole.person.firstName || '';
-                    
-                    const deceasedLast = form.querySelector('[name="deceased_last_name"]');
-                    if (deceasedLast) deceasedLast.value = deceasedRole.person.lastName || '';
-                    
-                    const deceasedAge = form.querySelector('[name="age"]');
-                    if (deceasedAge) deceasedAge.value = deceasedRole.person.age || '';
-                    
-                    const deathPlace = form.querySelector('[name="death_place"]');
-                    if (deathPlace && deceasedRole.person.deathPlace) {
-                        deathPlace.value = deceasedRole.person.deathPlace.getDisplayString();
+                if (deceasedRole && deceasedRole.personId) {
+                    const person = getPersonFromRole(deceasedRole);
+                    if (person) {
+                        const deceasedFirst = form.querySelector('[name="deceased_first_name"]');
+                        if (deceasedFirst) deceasedFirst.value = person.firstName || '';
+                        
+                        const deceasedLast = form.querySelector('[name="deceased_last_name"]');
+                        if (deceasedLast) deceasedLast.value = person.lastName || '';
+                        
+                        const deceasedAge = form.querySelector('[name="age"]');
+                        if (deceasedAge) deceasedAge.value = person.age || '';
+                        
+                        const deathPlace = form.querySelector('[name="death_place"]');
+                        if (deathPlace && person.deathPlace) {
+                            deathPlace.value = person.deathPlace.getDisplayString();
+                        }
                     }
+                }
                 }
             }
             
@@ -3413,6 +3950,102 @@
             
             const pageField = form.querySelector('[name="page"]');
             if (pageField) pageField.value = event.pageNumber || '';
+            
+            // Metadata z pierwszej osoby w evencie
+            const firstRoleWithPerson = event.roles.find(role => role.personId);
+            if (firstRoleWithPerson) {
+                const person = getPersonFromRole(firstRoleWithPerson);
+                if (person) {
+                    const confidenceField = form.querySelector('[name="confidence"]');
+                    if (confidenceField) confidenceField.value = person.confidence || 100;
+                    
+                    const sourceTextField = form.querySelector('[name="source_text"]');
+                    if (sourceTextField) sourceTextField.value = person.sourceText || '';
+                    
+                    const notesField = form.querySelector('[name="notes"]');
+                    if (notesField) notesField.value = person.notes || '';
+                    
+                    // Nowe pola ACTA v3
+                    // DNA
+                    if (person.dnaData && person.dnaData.tests && person.dnaData.tests.length > 0) {
+                        const dnaTestTypeField = form.querySelector('[name="dna_test_type"]');
+                        const dnaResultsField = form.querySelector('[name="dna_results"]');
+                        const haplogroupField = form.querySelector('[name="haplogroup"]');
+                        const dnaSourceField = form.querySelector('[name="dna_source"]');
+                        
+                        const firstDnaTest = person.dnaData.tests[0];
+                        if (dnaTestTypeField) dnaTestTypeField.value = firstDnaTest.type || '';
+                        if (dnaResultsField) dnaResultsField.value = Array.isArray(firstDnaTest.results) ? firstDnaTest.results.join(', ') : firstDnaTest.results || '';
+                        if (haplogroupField) haplogroupField.value = person.dnaData.haplogroup || firstDnaTest.haplogroup || '';
+                        if (dnaSourceField) dnaSourceField.value = firstDnaTest.source || '';
+                    }
+                    
+                    // Zdrowie
+                    if (person.medicalConditions && person.medicalConditions.length > 0) {
+                        const medicalConditionField = form.querySelector('[name="medical_condition"]');
+                        const conditionOnsetField = form.querySelector('[name="condition_onset"]');
+                        const medicalSourceField = form.querySelector('[name="medical_source"]');
+                        
+                        const firstCondition = person.medicalConditions[0];
+                        if (medicalConditionField) medicalConditionField.value = firstCondition.condition || '';
+                        if (conditionOnsetField && firstCondition.onsetDate) conditionOnsetField.value = firstCondition.onsetDate.getDisplayString();
+                        if (medicalSourceField) medicalSourceField.value = firstCondition.source || '';
+                    }
+                    
+                    // Migracje
+                    if (person.migrations && person.migrations.length > 0) {
+                        const migrationFromField = form.querySelector('[name="migration_from"]');
+                        const migrationToField = form.querySelector('[name="migration_to"]');
+                        const migrationDateField = form.querySelector('[name="migration_date"]');
+                        const migrationReasonField = form.querySelector('[name="migration_reason"]');
+                        const migrationSourceField = form.querySelector('[name="migration_source"]');
+                        
+                        const firstMigration = person.migrations[0];
+                        if (migrationFromField && firstMigration.from) migrationFromField.value = firstMigration.from.getDisplayString();
+                        if (migrationToField && firstMigration.to) migrationToField.value = firstMigration.to.getDisplayString();
+                        if (migrationDateField && firstMigration.date) migrationDateField.value = firstMigration.date.getDisplayString();
+                        if (migrationReasonField) migrationReasonField.value = firstMigration.reason || '';
+                        if (migrationSourceField) migrationSourceField.value = firstMigration.source || '';
+                    }
+                    
+                    // Majątek
+                    if (person.assets && person.assets.length > 0) {
+                        const assetTypeField = form.querySelector('[name="asset_type"]');
+                        const assetValueField = form.querySelector('[name="asset_value"]');
+                        const assetDateField = form.querySelector('[name="asset_date"]');
+                        const assetSourceField = form.querySelector('[name="asset_source"]');
+                        
+                        const firstAsset = person.assets[0];
+                        if (assetTypeField) assetTypeField.value = firstAsset.assetType || '';
+                        if (assetValueField) assetValueField.value = firstAsset.value || '';
+                        if (assetDateField && firstAsset.date) assetDateField.value = firstAsset.date.getDisplayString();
+                        if (assetSourceField) assetSourceField.value = firstAsset.source || '';
+                    }
+                    
+                    // Kulturowe
+                    const patronymicField = form.querySelector('[name="patronymic"]');
+                    if (patronymicField) patronymicField.value = person.patronymic || '';
+                    
+                    const clanTribeField = form.querySelector('[name="clan_tribe"]');
+                    if (clanTribeField) clanTribeField.value = person.clanOrTribe || '';
+                    
+                    const religionField = form.querySelector('[name="religion"]');
+                    if (religionField) religionField.value = person.religion || '';
+                    
+                    // AI i walidacja
+                    const aiGeneratedField = form.querySelector('[name="ai_generated"]');
+                    if (aiGeneratedField) aiGeneratedField.checked = person.aiGenerated || false;
+                    
+                    const parentMatchField = form.querySelector('[name="parent_match"]');
+                    if (parentMatchField && person.probabilityScores.parentMatch) parentMatchField.value = Math.round(person.probabilityScores.parentMatch * 100);
+                    
+                    const nameMatchField = form.querySelector('[name="name_match"]');
+                    if (nameMatchField && person.probabilityScores.nameMatch) nameMatchField.value = Math.round(person.probabilityScores.nameMatch * 100);
+                    
+                    const locationMatchField = form.querySelector('[name="location_match"]');
+                    if (locationMatchField && person.probabilityScores.locationMatch) locationMatchField.value = Math.round(person.probabilityScores.locationMatch * 100);
+                }
+            }
             
             updateFieldStatus();
             updateProgressBar();
@@ -3697,10 +4330,10 @@
                 // Dodaj do mapy (zamiast array.push)
                 app.imageActs.set(event.id, event);
                 
-                // Dodaj do bazy danych osób
+                // Dodaj do rejestru osób (registry już ma osoby z initializeEventRoles)
                 event.roles.forEach(role => {
-                    if (role.person && role.person instanceof ACTA.PersonModel) {
-                        app.personDb.addPerson(role.person);
+                    if (role.personId && app.personsRegistry.has(role.personId)) {
+                        // Osoba już jest w registry - nic nie rób
                     }
                 });
             }
@@ -4098,6 +4731,45 @@
             setTimeout(() => notification.remove(), 3000);
         }
 
+        // Walidacja formularza
+        function validateForm() {
+            const form = document.querySelector(`#form-${app.currentTemplate}`);
+            if (!form) return true;
+            
+            let isValid = true;
+            const requiredFields = form.querySelectorAll('[required]');
+            
+            requiredFields.forEach(field => {
+                if (!field.value.trim()) {
+                    field.classList.add('error');
+                    isValid = false;
+                } else {
+                    field.classList.remove('error');
+                }
+            });
+            
+            return isValid;
+        }
+
+        // Auto-save co 30 sekund
+        let autoSaveTimer = null;
+        function startAutoSave() {
+            if (autoSaveTimer) clearInterval(autoSaveTimer);
+            autoSaveTimer = setInterval(() => {
+                if (app.currentEventId && validateForm()) {
+                    saveFormToAct();
+                    console.log('💾 Auto-saved');
+                }
+            }, 30000); // 30 sekund
+        }
+
+        function stopAutoSave() {
+            if (autoSaveTimer) {
+                clearInterval(autoSaveTimer);
+                autoSaveTimer = null;
+            }
+        }
+
         // Funkcja migracji danych z localStorage do Firestore
         async function exportFromLocalStorageToFirestore() {
             if (!window.db) {
@@ -4215,7 +4887,42 @@
             }
         }
 
-        function loadFromLocalStorage() {
+        function setupRealtimeListener() {
+            if (!window.db) return;
+            
+            // Listen for changes in persons collection
+            window.db.collection('persons').onSnapshot((snapshot) => {
+                snapshot.docChanges().forEach((change) => {
+                    if (change.type === 'added' || change.type === 'modified') {
+                        const person = ACTA.PersonModel.fromJSON(change.doc.data());
+                        app.personsRegistry.set(change.doc.id, person);
+                    } else if (change.type === 'removed') {
+                        app.personsRegistry.delete(change.doc.id);
+                    }
+                });
+                // Refresh UI if needed
+                renderRecordsTable();
+                updateRecordCounter();
+            });
+            
+            // Listen for changes in events collection
+            window.db.collection('events').onSnapshot((snapshot) => {
+                snapshot.docChanges().forEach((change) => {
+                    if (change.type === 'added' || change.type === 'modified') {
+                        const event = ACTA.EventModel.fromJSON(change.doc.data());
+                        app.imageActs.set(change.doc.id, event);
+                    } else if (change.type === 'removed') {
+                        app.imageActs.delete(change.doc.id);
+                    }
+                });
+                // Refresh UI
+                renderActButtons();
+                renderRecordsTable();
+                updateRecordCounter();
+            });
+            
+            console.log('🔄 Realtime listeners setup for Firebase');
+        }
             const stored = localStorage.getItem('genealog-indexer-v9');
             if (!stored) {
                 console.log('ℹ️ Brak danych w LocalStorage (nowa sesja)');

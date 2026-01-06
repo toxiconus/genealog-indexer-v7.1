@@ -32,6 +32,21 @@
         window.db = db;
         window.auth = auth;
         
+        // Auth state listener
+        auth.onAuthStateChanged(user => {
+            if (user) {
+                console.log('✅ Zalogowany jako:', user.displayName || user.email);
+                app.user = user;
+                app.storageMode = 'firestore'; // Automatycznie Firestore dla zalogowanych
+                updateAuthUI(true);
+            } else {
+                console.log('ℹ️ Niezalogowany');
+                app.user = null;
+                app.storageMode = 'localStorage'; // LocalStorage dla niezalogowanych
+                updateAuthUI(false);
+            }
+        });
+        
         // Dispatch custom event when Firebase is ready
         window.dispatchEvent(new Event('firebaseReady'));
     </script>
@@ -881,6 +896,62 @@
             font-weight: 600;
             text-transform: uppercase;
         }
+        
+        /* ACTACOM 1.0 Panels */
+        .anomalies-panel {
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 320px;
+            height: 100vh;
+            background: linear-gradient(180deg, #1a1a1a 0%, #151515 100%);
+            border-left: 1px solid #2a2a2a;
+            display: flex;
+            flex-direction: column;
+            z-index: 200;
+            box-shadow: -4px 0 20px rgba(0,0,0,0.3);
+        }
+        .anomalies-panel.visible {
+            display: flex;
+        }
+        .panel-title {
+            font-size: 12px;
+            color: #ff6b6b;
+            font-weight: 600;
+            text-transform: uppercase;
+            padding: 12px;
+            border-bottom: 1px solid #2a2a2a;
+            background: rgba(255, 107, 107, 0.1);
+        }
+        .anomalies-list {
+            flex: 1;
+            overflow-y: auto;
+            padding: 8px;
+        }
+        .anomalies-item {
+            background: #252525;
+            border: 1px solid #3a3a3a;
+            border-radius: 4px;
+            padding: 8px;
+            margin-bottom: 8px;
+            font-size: 11px;
+        }
+        .anomalies-item:hover {
+            border-color: #ff6b6b;
+        }
+        .anomalies-actions {
+            padding: 8px;
+            border-top: 1px solid #2a2a2a;
+            display: flex;
+            gap: 4px;
+        }
+        .empty-state {
+            color: #666;
+            text-align: center;
+            padding: 20px;
+            font-style: italic;
+        }
+        
         .postprocess-slider {
             display: flex;
             flex-direction: column;
@@ -1234,6 +1305,9 @@
             <button class="toolbar-btn" id="toggleActsBtn" title="Akty">
                 <i class="fas fa-list"></i> Acts
             </button>
+            <button class="toolbar-btn" onclick="showAnomalyModal()" title="Problemy w danych">
+                <i class="fas fa-exclamation-triangle"></i> Anomalie
+            </button>
             
             <div class="toolbar-sep"></div>
             
@@ -1267,12 +1341,25 @@
             
             <div class="toolbar-sep"></div>
             
-            <!-- ADVANCED: Firebase, Clear -->
-            <button class="toolbar-btn" onclick="exportFromLocalStorageToFirestore()" title="Firebase">
+            <!-- ADVANCED: Storage Toggle, Firebase, Clear -->
+            <button class="toolbar-btn" id="storageToggleBtn" onclick="toggleStorageMode()" title="Przełącz LocalStorage/Firestore">
+                <i class="fas fa-database"></i> LS
+            </button>
+            <button class="toolbar-btn" onclick="exportFromLocalStorageToFirestore()" title="Migruj do Firebase">
                 <i class="fas fa-cloud-upload-alt"></i> FB
+            </button>
+            <button class="toolbar-btn" id="authBtn" title="Zaloguj się z Google">
+                <i class="fas fa-sign-in-alt"></i> Login
             </button>
             <button class="toolbar-btn" id="clearStorageBtn" title="Wyczyść" style="color: #e74c3c;">
                 <i class="fas fa-trash-alt"></i> Wyczyść
+            </button>
+            
+            <div class="toolbar-sep"></div>
+            
+            <!-- ACTACOM 1.0: Anomalie -->
+            <button class="toolbar-btn" onclick="toggleAnomaliesPanel()" title="Anomalie i konflikty danych">
+                <i class="fas fa-exclamation-triangle"></i> Anomalie
             </button>
             
             <div class="toolbar-sep"></div>
@@ -1302,6 +1389,51 @@
                 <button id="modalOK">OK</button>
                 <button id="modalCopyPrev">Kopiuj z poprzedniej</button>
                 <button id="modalCancel">Anuluj</button>
+            </div>
+        </div>
+        
+        <!-- Anomaly Modal - ACTACOM 1.0 -->
+        <div id="anomalyModal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.8); z-index:1000; justify-content:center; align-items:center;">
+            <div id="anomalyModalContent" style="background:#1a1a1a; padding:20px; border-radius:8px; width:500px; max-height:80vh; overflow-y:auto; box-shadow:0 4px 20px rgba(0,0,0,0.5); border:1px solid #ff6b6b;">
+                <div style="background:#ff6b6b; padding:8px 12px; margin:-20px -20px 12px -20px; border-radius:8px 8px 0 0; color:white; font-weight:bold; font-size:14px;">⚠️ Dodaj/edytuj anomalie</div>
+                
+                <div style="margin-bottom: 15px;">
+                    <label style="display: block; margin-bottom: 5px; color: #ddd;">Typ anomalii:</label>
+                    <select id="anomalyType" style="width: 100%; padding: 8px; background: #252525; border: 1px solid #3a3a3a; color: #ddd; border-radius: 4px;">
+                        <option value="SPRZECZNOŚĆ_DAT">Sprzeczność dat</option>
+                        <option value="BRAK_ZGODY_ŹRÓDEŁ">Brak zgody źródeł</option>
+                        <option value="NIEMOŻLIWY_WIEK">Niemożliwy wiek</option>
+                    </select>
+                </div>
+                
+                <div style="margin-bottom: 15px;">
+                    <label style="display: block; margin-bottom: 5px; color: #ddd;">Opis anomalii:</label>
+                    <textarea id="anomalyDescription" rows="3" style="width: 100%; padding: 8px; background: #252525; border: 1px solid #3a3a3a; color: #ddd; border-radius: 4px; resize: vertical;" placeholder="Opisz konflikt lub sprzeczność..."></textarea>
+                </div>
+                
+                <div style="margin-bottom: 15px;">
+                    <label style="display: block; margin-bottom: 5px; color: #ddd;">Rozwiązanie (opcjonalne):</label>
+                    <textarea id="anomalyResolution" rows="2" style="width: 100%; padding: 8px; background: #252525; border: 1px solid #3a3a3a; color: #ddd; border-radius: 4px; resize: vertical;" placeholder="Jak anomalia została rozwiązana..."></textarea>
+                </div>
+                
+                <div style="margin-bottom: 15px;">
+                    <label style="display: block; margin-bottom: 5px; color: #ddd;">Poziom pewności:</label>
+                    <select id="anomalyConfidence" style="width: 100%; padding: 8px; background: #252525; border: 1px solid #3a3a3a; color: #ddd; border-radius: 4px;">
+                        <option value="WYSOKI">Wysoki</option>
+                        <option value="ŚREDNI" selected>Średni</option>
+                        <option value="NISKI">Niski</option>
+                    </select>
+                </div>
+                
+                <div style="margin-bottom: 15px;">
+                    <label style="display: block; margin-bottom: 5px; color: #ddd;">Komentarze:</label>
+                    <textarea id="anomalyComments" rows="2" style="width: 100%; padding: 8px; background: #252525; border: 1px solid #3a3a3a; color: #ddd; border-radius: 4px; resize: vertical;" placeholder="Dodatkowe uwagi..."></textarea>
+                </div>
+                
+                <div style="display: flex; gap: 10px; justify-content: flex-end; margin-top: 20px;">
+                    <button id="anomalySave" style="padding: 8px 16px; background: #10b981; color: white; border: none; border-radius: 4px; cursor: pointer;">Zapisz</button>
+                    <button id="anomalyCancel" style="padding: 8px 16px; background: #6b7280; color: white; border: none; border-radius: 4px; cursor: pointer;">Anuluj</button>
+                </div>
             </div>
         </div>
         <div class="main-content">
@@ -1509,6 +1641,18 @@
                 <button class="postprocess-btn reset" onclick="resetPostprocessing()">↻ Reset</button>
             </div>
         </div>
+        
+        <!-- Anomalies Panel - ACTACOM 1.0 -->
+        <div class="anomalies-panel" id="anomaliesPanel" style="display: none;">
+            <div class="panel-title">⚠️ Anomalie i konflikty danych</div>
+            <div class="anomalies-list" id="anomaliesList">
+                <div class="empty-state">Brak anomalii</div>
+            </div>
+            <div class="anomalies-actions">
+                <button class="toolbar-btn" onclick="addNewAnomaly()">➕ Dodaj anomalie</button>
+                <button class="toolbar-btn" onclick="exportAnomalies()">📤 Eksport</button>
+            </div>
+        </div>
     </div>
     <input type="file" id="fileInput" multiple accept="image/*" style="display: none;">
     <input type="file" id="folderInput" webkitdirectory multiple accept="image/*" style="display: none;">
@@ -1535,7 +1679,9 @@
             wizardActive: false,
             wizardCurrentFieldIdx: 0,
             wizardFields: [],
-            autoLoadFolder: true  // Włącz automatyczne ładowanie folderu przy starcie
+            autoLoadFolder: true,  // Włącz automatyczne ładowanie folderu przy starcie
+            storageMode: 'localStorage',  // 'localStorage' | 'firestore'
+            user: null  // Firebase user
         };
         
         // ===== POSTPROCESSING STATE & PRESETS (MUST BE BEFORE setupPostprocessSliders) =====
@@ -1705,6 +1851,14 @@
                     name: "Akt Chrztu",
                     sections: [
                         {
+                            id: "record_type",
+                            title: "<i class='fas fa-tag'></i> Typ aktu",
+                            expanded: true,
+                            fields: [
+                                {id: "record_type", label: "Typ aktu", type: "select", enumName: "EventTypes"}
+                            ]
+                        },
+                        {
                             id: "basic",
                             title: "<i class='fas fa-info-circle'></i> Podstawowe",
                             expanded: true,
@@ -1728,6 +1882,14 @@
                     id: "małżeństwo",
                     name: "Akt Małżeństwa",
                     sections: [
+                        {
+                            id: "record_type",
+                            title: "<i class='fas fa-tag'></i> Typ aktu",
+                            expanded: true,
+                            fields: [
+                                {id: "record_type", label: "Typ aktu", type: "select", enumName: "EventTypes"}
+                            ]
+                        },
                         {
                             id: "basic",
                             title: "<i class='fas fa-info-circle'></i> Podstawowe",
@@ -1757,6 +1919,14 @@
                     name: "Akt Zgonu",
                     sections: [
                         {
+                            id: "record_type",
+                            title: "<i class='fas fa-tag'></i> Typ aktu",
+                            expanded: true,
+                            fields: [
+                                {id: "record_type", label: "Typ aktu", type: "select", enumName: "EventTypes"}
+                            ]
+                        },
+                        {
                             id: "basic",
                             title: "<i class='fas fa-info-circle'></i> Podstawowe",
                             expanded: true,
@@ -1784,6 +1954,14 @@
                     name: "Akt Urodzenia",
                     sections: [
                         {
+                            id: "record_type",
+                            title: "<i class='fas fa-tag'></i> Typ aktu",
+                            expanded: true,
+                            fields: [
+                                {id: "record_type", label: "Typ aktu", type: "select", enumName: "EventTypes"}
+                            ]
+                        },
+                        {
                             id: "basic",
                             title: "<i class='fas fa-info-circle'></i> Podstawowe",
                             expanded: true,
@@ -1799,6 +1977,242 @@
                             fields: [
                                 {id: "father_name", label: "Ojciec", type: "text"},
                                 {id: "mother_name", label: "Matka", type: "text"}
+                            ]
+                        }
+                    ]
+                },
+                // ✅ NOWE: Rozszerzone templates ACTACOM 1.0
+                {
+                    id: "rozwód",
+                    name: "Akt Rozwodu",
+                    sections: [
+                        {
+                            id: "basic",
+                            title: "<i class='fas fa-info-circle'></i> Podstawowe",
+                            expanded: true,
+                            fields: [
+                                {id: "husband_first_name", label: "Imię męża", type: "text"},
+                                {id: "husband_last_name", label: "Nazwisko męża", type: "text"},
+                                {id: "wife_first_name", label: "Imię żony", type: "text"},
+                                {id: "wife_last_name", label: "Nazwisko żony", type: "text"},
+                                {id: "divorce_date", label: "Data rozwodu", type: "date"},
+                                {id: "court", label: "Sąd", type: "text"}
+                            ]
+                        },
+                        {
+                            id: "marriage_info",
+                            title: "<i class='fas fa-heart-broken'></i> Małżeństwo",
+                            expanded: false,
+                            fields: [
+                                {id: "marriage_date", label: "Data ślubu", type: "date"},
+                                {id: "marriage_place", label: "Miejsce ślubu", type: "text"},
+                                {id: "children_count", label: "Liczba dzieci", type: "number"}
+                            ]
+                        }
+                    ]
+                },
+                {
+                    id: "adopcja",
+                    name: "Akt Adopcji",
+                    sections: [
+                        {
+                            id: "basic",
+                            title: "<i class='fas fa-info-circle'></i> Podstawowe",
+                            expanded: true,
+                            fields: [
+                                {id: "child_first_name", label: "Imię dziecka", type: "text"},
+                                {id: "child_last_name", label: "Nazwisko dziecka", type: "text"},
+                                {id: "adoption_date", label: "Data adopcji", type: "date"},
+                                {id: "court", label: "Sąd", type: "text"}
+                            ]
+                        },
+                        {
+                            id: "adoptive_parents",
+                            title: "<i class='fas fa-users'></i> Rodzice adopcyjni",
+                            expanded: false,
+                            fields: [
+                                {id: "father_first_name", label: "Imię ojca adopcyjnego", type: "text"},
+                                {id: "father_last_name", label: "Nazwisko ojca adopcyjnego", type: "text"},
+                                {id: "mother_first_name", label: "Imię matki adopcyjnej", type: "text"},
+                                {id: "mother_last_name", label: "Nazwisko matki adopcyjnej", type: "text"}
+                            ]
+                        },
+                        {
+                            id: "biological_parents",
+                            title: "<i class='fas fa-user-times'></i> Rodzice biologiczni",
+                            expanded: false,
+                            fields: [
+                                {id: "bio_father", label: "Ojciec biologiczny", type: "text"},
+                                {id: "bio_mother", label: "Matka biologiczna", type: "text"}
+                            ]
+                        }
+                    ]
+                },
+                {
+                    id: "emigracja",
+                    name: "Akt Emigracji",
+                    sections: [
+                        {
+                            id: "basic",
+                            title: "<i class='fas fa-info-circle'></i> Podstawowe",
+                            expanded: true,
+                            fields: [
+                                {id: "person_first_name", label: "Imię", type: "text"},
+                                {id: "person_last_name", label: "Nazwisko", type: "text"},
+                                {id: "emigration_date", label: "Data emigracji", type: "date"},
+                                {id: "destination_country", label: "Kraj docelowy", type: "text"},
+                                {id: "destination_city", label: "Miasto docelowe", type: "text"}
+                            ]
+                        },
+                        {
+                            id: "family",
+                            title: "<i class='fas fa-users'></i> Rodzina",
+                            expanded: false,
+                            fields: [
+                                {id: "spouse", label: "Małżonek/małżonka", type: "text"},
+                                {id: "children", label: "Dzieci", type: "text"},
+                                {id: "reason", label: "Powód emigracji", type: "text"}
+                            ]
+                        }
+                    ]
+                },
+                {
+                    id: "imigracja",
+                    name: "Akt Imigracji",
+                    sections: [
+                        {
+                            id: "basic",
+                            title: "<i class='fas fa-info-circle'></i> Podstawowe",
+                            expanded: true,
+                            fields: [
+                                {id: "person_first_name", label: "Imię", type: "text"},
+                                {id: "person_last_name", label: "Nazwisko", type: "text"},
+                                {id: "immigration_date", label: "Data imigracji", type: "date"},
+                                {id: "origin_country", label: "Kraj pochodzenia", type: "text"},
+                                {id: "origin_city", label: "Miasto pochodzenia", type: "text"}
+                            ]
+                        },
+                        {
+                            id: "family",
+                            title: "<i class='fas fa-users'></i> Rodzina",
+                            expanded: false,
+                            fields: [
+                                {id: "spouse", label: "Małżonek/małżonka", type: "text"},
+                                {id: "children", label: "Dzieci", type: "text"},
+                                {id: "reason", label: "Powód imigracji", type: "text"}
+                            ]
+                        }
+                    ]
+                },
+                {
+                    id: "ślub_cywilny",
+                    name: "Akt Ślubu Cywilnego",
+                    sections: [
+                        {
+                            id: "basic",
+                            title: "<i class='fas fa-info-circle'></i> Podstawowe",
+                            expanded: true,
+                            fields: [
+                                {id: "groom_first_name", label: "Imię pana młodego", type: "text"},
+                                {id: "groom_last_name", label: "Nazwisko pana młodego", type: "text"},
+                                {id: "bride_first_name", label: "Imię panny młodej", type: "text"},
+                                {id: "bride_last_name", label: "Nazwisko panny młodej (przed)", type: "text"},
+                                {id: "marriage_date", label: "Data ślubu", type: "date"},
+                                {id: "marriage_place", label: "Miejsce ślubu", type: "text"}
+                            ]
+                        },
+                        {
+                            id: "officials",
+                            title: "<i class='fas fa-gavel'></i> Urzędnicy",
+                            expanded: false,
+                            fields: [
+                                {id: "officiant", label: "Urzędnik prowadzący", type: "text"},
+                                {id: "witness1", label: "Świadek 1", type: "text"},
+                                {id: "witness2", label: "Świadek 2", type: "text"}
+                            ]
+                        }
+                    ]
+                },
+                {
+                    id: "ślub_kościelny",
+                    name: "Akt Ślubu Kościelnego",
+                    sections: [
+                        {
+                            id: "basic",
+                            title: "<i class='fas fa-info-circle'></i> Podstawowe",
+                            expanded: true,
+                            fields: [
+                                {id: "groom_first_name", label: "Imię pana młodego", type: "text"},
+                                {id: "groom_last_name", label: "Nazwisko pana młodego", type: "text"},
+                                {id: "bride_first_name", label: "Imię panny młodej", type: "text"},
+                                {id: "bride_last_name", label: "Nazwisko panny młodej (przed)", type: "text"},
+                                {id: "marriage_date", label: "Data ślubu", type: "date"},
+                                {id: "church", label: "Kościół", type: "text"}
+                            ]
+                        },
+                        {
+                            id: "ceremony",
+                            title: "<i class='fas fa-pray'></i> Ceremonia",
+                            expanded: false,
+                            fields: [
+                                {id: "priest", label: "Ksiądz", type: "text"},
+                                {id: "banns_date", label: "Data zapowiedzi", type: "date"},
+                                {id: "witness1", label: "Świadek 1", type: "text"},
+                                {id: "witness2", label: "Świadek 2", type: "text"}
+                            ]
+                        }
+                    ]
+                },
+                {
+                    id: "pogrzeb",
+                    name: "Akt Pogrzebu",
+                    sections: [
+                        {
+                            id: "basic",
+                            title: "<i class='fas fa-info-circle'></i> Podstawowe",
+                            expanded: true,
+                            fields: [
+                                {id: "deceased_first_name", label: "Imię zmarłego", type: "text"},
+                                {id: "deceased_last_name", label: "Nazwisko zmarłego", type: "text"},
+                                {id: "burial_date", label: "Data pogrzebu", type: "date"},
+                                {id: "burial_place", label: "Miejsce pogrzebu", type: "text"}
+                            ]
+                        },
+                        {
+                            id: "ceremony",
+                            title: "<i class='fas fa-cross'></i> Ceremonia",
+                            expanded: false,
+                            fields: [
+                                {id: "priest", label: "Ksiądz", type: "text"},
+                                {id: "cemetery", label: "Cmentarz", type: "text"},
+                                {id: "cause_of_death", label: "Przyczyna zgonu", type: "text"}
+                            ]
+                        }
+                    ]
+                },
+                {
+                    id: "spis_ludności",
+                    name: "Akt Spisu Ludności",
+                    sections: [
+                        {
+                            id: "basic",
+                            title: "<i class='fas fa-info-circle'></i> Podstawowe",
+                            expanded: true,
+                            fields: [
+                                {id: "person_first_name", label: "Imię", type: "text"},
+                                {id: "person_last_name", label: "Nazwisko", type: "text"},
+                                {id: "census_year", label: "Rok spisu", type: "number"},
+                                {id: "address", label: "Adres", type: "text"}
+                            ]
+                        },
+                        {
+                            id: "family",
+                            title: "<i class='fas fa-users'></i> Rodzina",
+                            expanded: false,
+                            fields: [
+                                {id: "spouse", label: "Małżonek/małżonka", type: "text"},
+                                {id: "children", label: "Dzieci", type: "text"},
+                                {id: "occupation", label: "Zawód", type: "text"}
                             ]
                         }
                     ]
@@ -1865,11 +2279,35 @@
                             group.className = 'form-group';
                             const label = document.createElement('label');
                             label.textContent = field.label;
-                            const input = document.createElement('input');
-                            input.type = field.type || 'text';
-                            input.className = 'field-input';
-                            input.dataset.field = field.id;
-                            input.placeholder = field.label;
+                            
+                            let input;
+                            if (field.type === 'select') {
+                                input = document.createElement('select');
+                                input.className = 'field-input';
+                                input.dataset.field = field.id;
+                                input.name = field.id;
+                                
+                                // Dodaj opcje na podstawie enum
+                                if (field.enumName) {
+                                    const enumObj = ACTA[field.enumName];
+                                    if (enumObj) {
+                                        Object.entries(enumObj).forEach(([key, value]) => {
+                                            const option = document.createElement('option');
+                                            option.value = value;
+                                            option.textContent = key.replace(/_/g, ' ').toLowerCase().replace(/\b\w/g, l => l.toUpperCase());
+                                            input.appendChild(option);
+                                        });
+                                    }
+                                }
+                            } else {
+                                input = document.createElement('input');
+                                input.type = field.type || 'text';
+                                input.className = 'field-input';
+                                input.dataset.field = field.id;
+                                input.name = field.id;
+                                input.placeholder = field.label;
+                            }
+                            
                             group.appendChild(label);
                             group.appendChild(input);
                             contentDiv.appendChild(group);
@@ -2861,6 +3299,146 @@
                         deceasedRole.person.deathPlace = new ACTA.HistoricalPlace(deathPlace.value.trim(), 'town');
                     }
                 }
+            } else if (event.type === 'rozwód') {
+                // Obsługa rozwodu - znajdź role małżonków
+                const husbandRole = event.roles.find(r => r.roleType === 'mąż' || r.roleType === 'PAN_MŁODY');
+                const wifeRole = event.roles.find(r => r.roleType === 'żona' || r.roleType === 'PANNA_MŁODA');
+
+                if (husbandRole && husbandRole.person) {
+                    const husbandFirst = form.querySelector('[name="husband_first_name"]');
+                    if (husbandFirst) husbandRole.person.firstName = husbandFirst.value.trim();
+                    
+                    const husbandLast = form.querySelector('[name="husband_last_name"]');
+                    if (husbandLast) husbandRole.person.lastName = husbandLast.value.trim();
+                }
+
+                if (wifeRole && wifeRole.person) {
+                    const wifeFirst = form.querySelector('[name="wife_first_name"]');
+                    if (wifeFirst) wifeRole.person.firstName = wifeFirst.value.trim();
+                    
+                    const wifeLast = form.querySelector('[name="wife_last_name"]');
+                    if (wifeLast) wifeRole.person.lastName = wifeLast.value.trim();
+                }
+
+                const divorceDate = form.querySelector('[name="divorce_date"]');
+                if (divorceDate && divorceDate.value) {
+                    event.date = new ACTA.HistoricalDate(divorceDate.value, 'day');
+                }
+
+                const court = form.querySelector('[name="court"]');
+                if (court) event.court = court.value.trim();
+
+            } else if (event.type === 'adopcja') {
+                const childRole = event.roles.find(r => r.roleType === 'ADOPTOWANY');
+                const adoptiveFatherRole = event.roles.find(r => r.roleType === 'RODZIC_ADOPTUJĄCY');
+                const adoptiveMotherRole = event.roles.find(r => r.roleType === 'RODZIC_ADOPTUJĄCY');
+
+                if (childRole && childRole.person) {
+                    const childFirst = form.querySelector('[name="child_first_name"]');
+                    if (childFirst) childRole.person.firstName = childFirst.value.trim();
+                    
+                    const childLast = form.querySelector('[name="child_last_name"]');
+                    if (childLast) childRole.person.lastName = childLast.value.trim();
+                }
+
+                // Obsługa rodziców adopcyjnych
+                const fatherFirst = form.querySelector('[name="father_first_name"]');
+                const fatherLast = form.querySelector('[name="father_last_name"]');
+                if (fatherFirst && fatherLast && adoptiveFatherRole) {
+                    adoptiveFatherRole.person.firstName = fatherFirst.value.trim();
+                    adoptiveFatherRole.person.lastName = fatherLast.value.trim();
+                }
+
+                const motherFirst = form.querySelector('[name="mother_first_name"]');
+                const motherLast = form.querySelector('[name="mother_last_name"]');
+                if (motherFirst && motherLast && adoptiveMotherRole) {
+                    adoptiveMotherRole.person.firstName = motherFirst.value.trim();
+                    adoptiveMotherRole.person.lastName = motherLast.value.trim();
+                }
+
+                const adoptionDate = form.querySelector('[name="adoption_date"]');
+                if (adoptionDate && adoptionDate.value) {
+                    event.date = new ACTA.HistoricalDate(adoptionDate.value, 'day');
+                }
+
+            } else if (event.type === 'emigracja' || event.type === 'imigracja') {
+                const personRole = event.roles.find(r => r.roleType === 'EMIGRANT' || r.roleType === 'IMIGRANT');
+
+                if (personRole && personRole.person) {
+                    const personFirst = form.querySelector('[name="person_first_name"]');
+                    if (personFirst) personRole.person.firstName = personFirst.value.trim();
+                    
+                    const personLast = form.querySelector('[name="person_last_name"]');
+                    if (personLast) personRole.person.lastName = personLast.value.trim();
+                }
+
+                const migrationDate = form.querySelector(`[name="${event.type}_date"]`);
+                if (migrationDate && migrationDate.value) {
+                    event.date = new ACTA.HistoricalDate(migrationDate.value, 'day');
+                }
+
+                const destinationCountry = form.querySelector('[name="destination_country"]');
+                if (destinationCountry) event.destinationCountry = destinationCountry.value.trim();
+
+                const originCountry = form.querySelector('[name="origin_country"]');
+                if (originCountry) event.originCountry = originCountry.value.trim();
+
+            } else if (event.type === 'ślub_cywilny' || event.type === 'ślub_kościelny') {
+                const groomRole = event.roles.find(r => r.roleType === 'PAN_MŁODY');
+                const brideRole = event.roles.find(r => r.roleType === 'PANNA_MŁODA');
+
+                if (groomRole && groomRole.person) {
+                    const groomFirst = form.querySelector('[name="groom_first_name"]');
+                    if (groomFirst) groomRole.person.firstName = groomFirst.value.trim();
+                    
+                    const groomLast = form.querySelector('[name="groom_last_name"]');
+                    if (groomLast) groomRole.person.lastName = groomLast.value.trim();
+                }
+
+                if (brideRole && brideRole.person) {
+                    const brideFirst = form.querySelector('[name="bride_first_name"]');
+                    if (brideFirst) brideRole.person.firstName = brideFirst.value.trim();
+                    
+                    const brideLast = form.querySelector('[name="bride_last_name"]');
+                    if (brideLast) brideRole.person.lastName = brideLast.value.trim();
+                }
+
+                const marriageDate = form.querySelector('[name="marriage_date"]');
+                if (marriageDate && marriageDate.value) {
+                    event.date = new ACTA.HistoricalDate(marriageDate.value, 'day');
+                }
+
+            } else if (event.type === 'pogrzeb') {
+                const deceasedRole = event.roles.find(r => r.roleType === 'ZMARŁY');
+
+                if (deceasedRole && deceasedRole.person) {
+                    const deceasedFirst = form.querySelector('[name="deceased_first_name"]');
+                    if (deceasedFirst) deceasedRole.person.firstName = deceasedFirst.value.trim();
+                    
+                    const deceasedLast = form.querySelector('[name="deceased_last_name"]');
+                    if (deceasedLast) deceasedRole.person.lastName = deceasedLast.value.trim();
+                }
+
+                const burialDate = form.querySelector('[name="burial_date"]');
+                if (burialDate && burialDate.value) {
+                    event.date = new ACTA.HistoricalDate(burialDate.value, 'day');
+                }
+
+            } else if (event.type === 'spis_ludności') {
+                const personRole = event.roles.find(r => r.roleType === 'GŁOWA_RODZINY' || r.roleType === 'CZŁONEK_RODZINY');
+
+                if (personRole && personRole.person) {
+                    const personFirst = form.querySelector('[name="person_first_name"]');
+                    if (personFirst) personRole.person.firstName = personFirst.value.trim();
+                    
+                    const personLast = form.querySelector('[name="person_last_name"]');
+                    if (personLast) personRole.person.lastName = personLast.value.trim();
+                }
+
+                const censusYear = form.querySelector('[name="census_year"]');
+                if (censusYear && censusYear.value) {
+                    event.year = parseInt(censusYear.value);
+                }
             }
 
             // Notatki i metadane
@@ -2953,6 +3531,14 @@
                 'urodzenie': 'UR',
                 'małżeństwo': 'MZ',
                 'zgon': 'ZG',
+                'rozwód': 'RZ',
+                'adopcja': 'AD',
+                'emigracja': 'EM',
+                'imigracja': 'IM',
+                'ślub_cywilny': 'SC',
+                'ślub_kościelny': 'SK',
+                'pogrzeb': 'PG',
+                'spis_ludności': 'SL',
                 'indeks': 'IN'
             };
             
@@ -3382,6 +3968,144 @@
                         deathPlace.value = deceasedRole.person.deathPlace.getDisplayString();
                     }
                 }
+            } else if (event.type === 'rozwód') {
+                const husbandRole = event.roles.find(r => r.roleType === 'mąż' || r.roleType === 'PAN_MŁODY');
+                const wifeRole = event.roles.find(r => r.roleType === 'żona' || r.roleType === 'PANNA_MŁODA');
+
+                if (husbandRole && husbandRole.person) {
+                    const husbandFirst = form.querySelector('[name="husband_first_name"]');
+                    if (husbandFirst) husbandFirst.value = husbandRole.person.firstName || '';
+                    
+                    const husbandLast = form.querySelector('[name="husband_last_name"]');
+                    if (husbandLast) husbandLast.value = husbandRole.person.lastName || '';
+                }
+
+                if (wifeRole && wifeRole.person) {
+                    const wifeFirst = form.querySelector('[name="wife_first_name"]');
+                    if (wifeFirst) wifeFirst.value = wifeRole.person.firstName || '';
+                    
+                    const wifeLast = form.querySelector('[name="wife_last_name"]');
+                    if (wifeLast) wifeLast.value = wifeRole.person.lastName || '';
+                }
+
+                const divorceDate = form.querySelector('[name="divorce_date"]');
+                if (divorceDate && event.date) {
+                    divorceDate.value = event.date.getDisplayString();
+                }
+
+                const court = form.querySelector('[name="court"]');
+                if (court) court.value = event.court || '';
+
+            } else if (event.type === 'adopcja') {
+                const childRole = event.roles.find(r => r.roleType === 'ADOPTOWANY');
+                const adoptiveFatherRole = event.roles.find(r => r.roleType === 'RODZIC_ADOPTUJĄCY' && r.person?.gender === 'male');
+                const adoptiveMotherRole = event.roles.find(r => r.roleType === 'RODZIC_ADOPTUJĄCY' && r.person?.gender === 'female');
+
+                if (childRole && childRole.person) {
+                    const childFirst = form.querySelector('[name="child_first_name"]');
+                    if (childFirst) childFirst.value = childRole.person.firstName || '';
+                    
+                    const childLast = form.querySelector('[name="child_last_name"]');
+                    if (childLast) childLast.value = childRole.person.lastName || '';
+                }
+
+                if (adoptiveFatherRole && adoptiveFatherRole.person) {
+                    const fatherFirst = form.querySelector('[name="father_first_name"]');
+                    if (fatherFirst) fatherFirst.value = adoptiveFatherRole.person.firstName || '';
+                    
+                    const fatherLast = form.querySelector('[name="father_last_name"]');
+                    if (fatherLast) fatherLast.value = adoptiveFatherRole.person.lastName || '';
+                }
+
+                if (adoptiveMotherRole && adoptiveMotherRole.person) {
+                    const motherFirst = form.querySelector('[name="mother_first_name"]');
+                    if (motherFirst) motherFirst.value = adoptiveMotherRole.person.firstName || '';
+                    
+                    const motherLast = form.querySelector('[name="mother_last_name"]');
+                    if (motherLast) motherLast.value = adoptiveMotherRole.person.lastName || '';
+                }
+
+                const adoptionDate = form.querySelector('[name="adoption_date"]');
+                if (adoptionDate && event.date) {
+                    adoptionDate.value = event.date.getDisplayString();
+                }
+
+            } else if (event.type === 'emigracja' || event.type === 'imigracja') {
+                const personRole = event.roles.find(r => r.roleType === 'EMIGRANT' || r.roleType === 'IMIGRANT');
+
+                if (personRole && personRole.person) {
+                    const personFirst = form.querySelector('[name="person_first_name"]');
+                    if (personFirst) personFirst.value = personRole.person.firstName || '';
+                    
+                    const personLast = form.querySelector('[name="person_last_name"]');
+                    if (personLast) personLast.value = personRole.person.lastName || '';
+                }
+
+                const migrationDate = form.querySelector(`[name="${event.type}_date"]`);
+                if (migrationDate && event.date) {
+                    migrationDate.value = event.date.getDisplayString();
+                }
+
+                const destinationCountry = form.querySelector('[name="destination_country"]');
+                if (destinationCountry) destinationCountry.value = event.destinationCountry || '';
+
+                const originCountry = form.querySelector('[name="origin_country"]');
+                if (originCountry) originCountry.value = event.originCountry || '';
+
+            } else if (event.type === 'ślub_cywilny' || event.type === 'ślub_kościelny') {
+                const groomRole = event.roles.find(r => r.roleType === 'PAN_MŁODY');
+                const brideRole = event.roles.find(r => r.roleType === 'PANNA_MŁODA');
+
+                if (groomRole && groomRole.person) {
+                    const groomFirst = form.querySelector('[name="groom_first_name"]');
+                    if (groomFirst) groomFirst.value = groomRole.person.firstName || '';
+                    
+                    const groomLast = form.querySelector('[name="groom_last_name"]');
+                    if (groomLast) groomLast.value = groomRole.person.lastName || '';
+                }
+
+                if (brideRole && brideRole.person) {
+                    const brideFirst = form.querySelector('[name="bride_first_name"]');
+                    if (brideFirst) brideFirst.value = brideRole.person.firstName || '';
+                    
+                    const brideLast = form.querySelector('[name="bride_last_name"]');
+                    if (brideLast) brideLast.value = brideRole.person.lastName || '';
+                }
+
+                const marriageDate = form.querySelector('[name="marriage_date"]');
+                if (marriageDate && event.date) {
+                    marriageDate.value = event.date.getDisplayString();
+                }
+
+            } else if (event.type === 'pogrzeb') {
+                const deceasedRole = event.roles.find(r => r.roleType === 'ZMARŁY');
+
+                if (deceasedRole && deceasedRole.person) {
+                    const deceasedFirst = form.querySelector('[name="deceased_first_name"]');
+                    if (deceasedFirst) deceasedFirst.value = deceasedRole.person.firstName || '';
+                    
+                    const deceasedLast = form.querySelector('[name="deceased_last_name"]');
+                    if (deceasedLast) deceasedLast.value = deceasedRole.person.lastName || '';
+                }
+
+                const burialDate = form.querySelector('[name="burial_date"]');
+                if (burialDate && event.date) {
+                    burialDate.value = event.date.getDisplayString();
+                }
+
+            } else if (event.type === 'spis_ludności') {
+                const personRole = event.roles.find(r => r.roleType === 'GŁOWA_RODZINY' || r.roleType === 'CZŁONEK_RODZINY');
+
+                if (personRole && personRole.person) {
+                    const personFirst = form.querySelector('[name="person_first_name"]');
+                    if (personFirst) personFirst.value = personRole.person.firstName || '';
+                    
+                    const personLast = form.querySelector('[name="person_last_name"]');
+                    if (personLast) personLast.value = personRole.person.lastName || '';
+                }
+
+                const censusYear = form.querySelector('[name="census_year"]');
+                if (censusYear) censusYear.value = event.year || '';
             }
             
             // Notatki i metadane
@@ -4076,33 +4800,143 @@
         }
 
         // Funkcja migracji danych z localStorage do Firestore
+        // Funkcja migracji danych z localStorage do Firestore (rozszerzona)
         async function exportFromLocalStorageToFirestore() {
             if (!window.db) {
                 console.error('❌ Firebase nie jest zainicjalizowany');
                 return;
             }
-            const stored = localStorage.getItem('genealog_data');
+            const stored = localStorage.getItem('genealog-indexer-v8');
             if (!stored) {
                 console.log('ℹ️ Brak danych w localStorage do migracji');
                 return;
             }
             const data = JSON.parse(stored);
+            
+            // Backup przed migracją
+            const backupKey = 'genealog-indexer-v8-backup-' + new Date().toISOString().slice(0, 19).replace(/:/g, '-');
+            localStorage.setItem(backupKey, stored);
+            console.log('💾 Backup utworzony:', backupKey);
+            
+            // Liczenie danych przed migracją
+            const counts = {
+                persons: data.personDb?.persons?.length || 0,
+                records: data.imageActs?.length || 0,
+                sources: data.sources?.length || 0,
+                anomalies: data.anomalies?.length || 0
+            };
+            console.log('📊 Dane do migracji:', counts);
+            
             try {
-                // Migruj imageActs
-                for (const act of data.imageActs || []) {
-                    await db.collection('records').add(act);
+                const batch = db.batch();
+                
+                // Migruj osoby (persons)
+                if (data.personDb && data.personDb.persons) {
+                    data.personDb.persons.forEach(personData => {
+                        const personRef = db.collection('persons').doc(personData.id);
+                        batch.set(personRef, personData);
+                    });
                 }
-                // Migruj ustawienia
-                await db.collection('settings').doc('currentTemplate').set({ value: data.currentTemplate || 'birth' });
-                console.log('✅ Migracja do Firestore zakończona');
-                notify('✅ Dane zmigrowane do Firestore', 'success');
+                
+                // Migruj akty (records)
+                if (data.imageActs) {
+                    data.imageActs.forEach(eventData => {
+                        const recordRef = db.collection('records').doc(eventData.id);
+                        batch.set(recordRef, eventData);
+                    });
+                }
+                
+                // Migruj źródła (sources) - jeśli istnieją
+                if (data.sources) {
+                    data.sources.forEach(sourceData => {
+                        const sourceRef = db.collection('sources').doc(sourceData.id);
+                        batch.set(sourceRef, sourceData);
+                    });
+                }
+                
+                // Migruj anomalie (anomalies) - jeśli istnieją
+                if (data.anomalies) {
+                    data.anomalies.forEach(anomalyData => {
+                        const anomalyRef = db.collection('anomalies').doc(anomalyData.id);
+                        batch.set(anomalyRef, anomalyData);
+                    });
+                }
+                
+                await batch.commit();
+                
+                // Walidacja: sprawdź liczbę dokumentów w Firestore
+                const [personsCount, recordsCount, sourcesCount, anomaliesCount] = await Promise.all([
+                    db.collection('persons').get().then(snap => snap.size),
+                    db.collection('records').get().then(snap => snap.size),
+                    db.collection('sources').get().then(snap => snap.size),
+                    db.collection('anomalies').get().then(snap => snap.size)
+                ]);
+                
+                const firestoreCounts = { persons: personsCount, records: recordsCount, sources: sourcesCount, anomalies: anomaliesCount };
+                console.log('✅ Migracja zakończona. Liczba w Firestore:', firestoreCounts);
+                
+                if (JSON.stringify(counts) === JSON.stringify(firestoreCounts)) {
+                    notify('✅ Migracja zakończona pomyślnie', 'success');
+                } else {
+                    notify('⚠️ Migracja zakończona, ale liczby się różnią - sprawdź logi', 'warning');
+                }
             } catch (error) {
                 console.error('❌ Błąd migracji:', error);
                 notify('❌ Błąd migracji do Firestore', 'error');
             }
         }
 
+        // Firestore: Zapisz dane do Firestore
+        async function saveToFirestore() {
+            if (!window.db) {
+                console.error('❌ Firebase nie jest zainicjalizowany');
+                return false;
+            }
+            try {
+                const batch = db.batch();
+                
+                // Zapisz osoby
+                for (const person of app.personDb.persons.values()) {
+                    const personRef = db.collection('persons').doc(person.id);
+                    batch.set(personRef, person.toJSON());
+                }
+                
+                // Zapisz akty
+                for (const event of app.imageActs.values()) {
+                    const recordRef = db.collection('records').doc(event.id);
+                    batch.set(recordRef, event.toJSON());
+                }
+                
+                // Zapisz źródła (jeśli istnieją)
+                if (app.sources) {
+                    for (const source of app.sources.values()) {
+                        const sourceRef = db.collection('sources').doc(source.id);
+                        batch.set(sourceRef, source.toJSON());
+                    }
+                }
+                
+                // Zapisz anomalie (jeśli istnieją)
+                if (app.anomalies) {
+                    for (const anomaly of app.anomalies.values()) {
+                        const anomalyRef = db.collection('anomalies').doc(anomaly.id);
+                        batch.set(anomalyRef, anomaly.toJSON());
+                    }
+                }
+                
+                await batch.commit();
+                console.log('✓ Dane zapisane do Firestore');
+                return true;
+            } catch (error) {
+                console.error('❌ Błąd zapisu do Firestore:', error);
+                notify('❌ Błąd zapisu do Firestore', 'error');
+                return false;
+            }
+        }
+
         function saveStorage() {
+            if (app.storageMode === 'firestore') {
+                return saveToFirestore();
+            }
             try {
                 // ✅ NOWE: Konwertuj imageActs (Map) na array do JSON
                 const actsArray = Array.from(app.imageActs.values()).map(event => event.toJSON());
@@ -4133,6 +4967,9 @@
         }
 
         function loadStorage() {
+            if (app.storageMode === 'firestore') {
+                return loadFromFirestore();
+            }
             try {
                 const stored = localStorage.getItem('genealog-indexer-v8');
                 if (!stored) {
@@ -4184,6 +5021,116 @@
                 console.error('❌ Błąd ładowania:', e);
                 notify('Błąd ładowania danych', 'error');
             }
+        }
+        
+        // Firestore: Załaduj dane z Firestore
+        async function loadFromFirestore() {
+            if (!window.db) {
+                console.error('❌ Firebase nie jest zainicjalizowany');
+                return false;
+            }
+            try {
+                // Załaduj osoby
+                const personsSnapshot = await db.collection('persons').get();
+                app.personDb.persons.clear();
+                personsSnapshot.forEach(doc => {
+                    const person = ACTA.PersonModel.fromJSON(doc.data());
+                    app.personDb.addPerson(person);
+                });
+                console.log(`👥 Załadowano ${personsSnapshot.size} osób z Firestore`);
+                
+                // Załaduj akty
+                const recordsSnapshot = await db.collection('records').get();
+                app.imageActs.clear();
+                recordsSnapshot.forEach(doc => {
+                    const record = ACTA.EventModel.fromJSON(doc.data());
+                    app.imageActs.set(record.id, record);
+                });
+                console.log(`📋 Załadowano ${recordsSnapshot.size} aktów z Firestore`);
+                
+                // Załaduj źródła
+                const sourcesSnapshot = await db.collection('sources').get();
+                app.sources = new Map();
+                sourcesSnapshot.forEach(doc => {
+                    const source = ACTA.SourceModel.fromJSON(doc.data());
+                    app.sources.set(source.id, source);
+                });
+                console.log(`📚 Załadowano ${sourcesSnapshot.size} źródeł z Firestore`);
+                
+                // Załaduj anomalie
+                const anomaliesSnapshot = await db.collection('anomalies').get();
+                app.anomalies = new Map();
+                anomaliesSnapshot.forEach(doc => {
+                    const anomaly = ACTA.AnomalyModel.fromJSON(doc.data());
+                    app.anomalies.set(anomaly.id, anomaly);
+                });
+                console.log(`⚠️ Załadowano ${anomaliesSnapshot.size} anomalii z Firestore`);
+                
+                console.log('✓ Dane załadowane z Firestore');
+                updateThumbs();
+                renderActButtons();
+                renderRecordsTable();
+                return true;
+            } catch (error) {
+                console.error('❌ Błąd ładowania z Firestore:', error);
+                notify('❌ Błąd ładowania z Firestore', 'error');
+                return false;
+            }
+        }
+        
+        // Firebase Auth: Logowanie z Google
+        async function signInWithGoogle() {
+            const provider = new firebase.auth.GoogleAuthProvider();
+            try {
+                await auth.signInWithPopup(provider);
+                notify('✅ Zalogowano pomyślnie', 'success');
+            } catch (error) {
+                console.error('❌ Błąd logowania:', error);
+                notify('❌ Błąd logowania', 'error');
+            }
+        }
+        
+        // Firebase Auth: Wylogowanie
+        async function signOut() {
+            try {
+                await auth.signOut();
+                notify('👋 Wylogowano', 'info');
+            } catch (error) {
+                console.error('❌ Błąd wylogowania:', error);
+                notify('❌ Błąd wylogowania', 'error');
+            }
+        }
+        
+        // Aktualizuj UI dla auth
+        function updateAuthUI(loggedIn) {
+            const authBtn = document.getElementById('authBtn');
+            if (loggedIn) {
+                authBtn.innerHTML = '<i class="fas fa-sign-out-alt"></i> Logout';
+                authBtn.title = 'Wyloguj się';
+                authBtn.onclick = signOut;
+            } else {
+                authBtn.innerHTML = '<i class="fas fa-sign-in-alt"></i> Login';
+                authBtn.title = 'Zaloguj się z Google';
+                authBtn.onclick = signInWithGoogle;
+            }
+        }
+        
+        // Przełącz tryb storage
+        function toggleStorageMode() {
+            if (!app.user && app.storageMode === 'localStorage') {
+                notify('⚠️ Zaloguj się najpierw, aby używać Firestore', 'warning');
+                return;
+            }
+            if (app.storageMode === 'localStorage') {
+                app.storageMode = 'firestore';
+                document.getElementById('storageToggleBtn').innerHTML = '<i class="fas fa-cloud"></i> FS';
+                document.getElementById('storageToggleBtn').title = 'Tryb Firestore';
+            } else {
+                app.storageMode = 'localStorage';
+                document.getElementById('storageToggleBtn').innerHTML = '<i class="fas fa-database"></i> LS';
+                document.getElementById('storageToggleBtn').title = 'Tryb LocalStorage';
+            }
+            notify(`🔄 Przełączono na ${app.storageMode}`, 'info');
         }
         
         function toggleFloatingForm(show = null) {
@@ -4837,6 +5784,16 @@
         function toggleActsPanel() {
             const actsPanel = document.getElementById('actsPanel');
             actsPanel.classList.toggle('collapsed');
+        }
+        
+        // ===== ACTACOM 1.0 PANEL FUNCTIONS =====
+        function toggleAnomaliesPanel() {
+            const panel = document.getElementById('anomaliesPanel');
+            const isVisible = panel.style.display !== 'none';
+            panel.style.display = isVisible ? 'none' : 'flex';
+            if (!isVisible) {
+                renderAnomaliesList();
+            }
         }
         
         function formatActDisplayName(act) {
@@ -6136,6 +7093,180 @@
                 hideSuggestions();
             }
         });
+        
+        // ===== ACTACOM 1.0 FUNCTIONS =====
+        function showAnomalyModal(anomaly = null) {
+            const modal = document.getElementById('anomalyModal');
+            modal.style.display = 'flex';
+            
+            if (anomaly) {
+                // Edit mode
+                document.getElementById('anomalyType').value = anomaly.type;
+                document.getElementById('anomalyDescription').value = anomaly.description || '';
+                document.getElementById('anomalyResolution').value = anomaly.resolution || '';
+                document.getElementById('anomalyConfidence').value = anomaly.confidence;
+                document.getElementById('anomalyComments').value = anomaly.comments || '';
+                modal.dataset.editId = anomaly.id;
+            } else {
+                // Create mode
+                document.getElementById('anomalyType').value = 'SPRZECZNOŚĆ_DAT';
+                document.getElementById('anomalyDescription').value = '';
+                document.getElementById('anomalyResolution').value = '';
+                document.getElementById('anomalyConfidence').value = 'ŚREDNI';
+                document.getElementById('anomalyComments').value = '';
+                delete modal.dataset.editId;
+            }
+            
+            // Setup event listeners
+            setupAnomalyModalEvents();
+        }
+        
+        function setupAnomalyModalEvents() {
+            const saveBtn = document.getElementById('anomalySave');
+            const cancelBtn = document.getElementById('anomalyCancel');
+            
+            // Remove existing listeners
+            saveBtn.onclick = null;
+            cancelBtn.onclick = null;
+            
+            saveBtn.onclick = saveAnomaly;
+            cancelBtn.onclick = hideAnomalyModal;
+        }
+        
+        function saveAnomaly() {
+            if (!app.personDb) {
+                notify('Baza danych nie jest dostępna', 'error');
+                return;
+            }
+            
+            const type = document.getElementById('anomalyType').value;
+            const description = document.getElementById('anomalyDescription').value.trim();
+            const resolution = document.getElementById('anomalyResolution').value.trim();
+            const confidence = document.getElementById('anomalyConfidence').value;
+            const comments = document.getElementById('anomalyComments').value.trim();
+            
+            if (!description) {
+                notify('Opis anomalii jest wymagany', 'error');
+                return;
+            }
+            
+            const modal = document.getElementById('anomalyModal');
+            const editId = modal.dataset.editId;
+            
+            try {
+                let anomaly;
+                if (editId) {
+                    // Edit existing
+                    anomaly = app.personDb.anomalies.get(editId);
+                    if (!anomaly) {
+                        notify('Anomalia nie została znaleziona', 'error');
+                        return;
+                    }
+                } else {
+                    // Create new
+                    anomaly = new ACTA.AnomalyModel();
+                    anomaly.id = 'ANOMALY_' + Date.now();
+                }
+                
+                anomaly.type = type;
+                anomaly.description = description;
+                anomaly.resolution = resolution;
+                anomaly.confidence = confidence;
+                anomaly.comments = comments;
+                
+                if (!editId) {
+                    app.personDb.addAnomaly(anomaly);
+                }
+                
+                hideAnomalyModal();
+                renderAnomaliesList();
+                saveStorage();
+                
+                notify(editId ? 'Anomalia zaktualizowana' : 'Anomalia dodana', 'success');
+                
+            } catch (error) {
+                console.error('Error saving anomaly:', error);
+                notify('Błąd podczas zapisywania anomalii', 'error');
+            }
+        }
+        
+        function hideAnomalyModal() {
+            const modal = document.getElementById('anomalyModal');
+            modal.style.display = 'none';
+        }
+        
+        function renderAnomaliesList() {
+            const list = document.getElementById('anomaliesList');
+            if (!app.personDb || !app.personDb.anomalies) {
+                list.innerHTML = '<div class="empty-state">Brak anomalii</div>';
+                return;
+            }
+            
+            const anomalies = app.personDb.anomalies;
+            if (anomalies.length === 0) {
+                list.innerHTML = '<div class="empty-state">Brak anomalii</div>';
+                return;
+            }
+            
+            list.innerHTML = anomalies.map(anomaly => `
+                <div class="anomalies-item" onclick="editAnomaly('${anomaly.id}')">
+                    <div><strong>${anomaly.type}</strong></div>
+                    <div>${anomaly.description}</div>
+                    <div style="font-size: 10px; color: #888;">Pewność: ${anomaly.confidence}</div>
+                </div>
+            `).join('');
+        }
+        
+        function addNewAnomaly() {
+            showAnomalyModal();
+        }
+        
+        function editAnomaly(anomalyId) {
+            if (!app.personDb || !app.personDb.anomalies) {
+                notify('Baza danych nie jest dostępna', 'error');
+                return;
+            }
+            
+            const anomaly = app.personDb.anomalies.get(anomalyId);
+            if (!anomaly) {
+                notify('Anomalia nie została znaleziona', 'error');
+                return;
+            }
+            
+            showAnomalyModal(anomaly);
+        }
+        
+        function exportAnomalies() {
+            if (!app.personDb || !app.personDb.anomalies) {
+                notify('Brak anomalii do eksportu', 'info');
+                return;
+            }
+            
+            const anomalies = Array.from(app.personDb.anomalies.values());
+            if (anomalies.length === 0) {
+                notify('Brak anomalii do eksportu', 'info');
+                return;
+            }
+            
+            const exportData = {
+                exportType: 'ACTACOM_ANOMALIES',
+                exportDate: new Date().toISOString(),
+                version: '1.0',
+                anomalies: anomalies.map(a => a.toJSON())
+            };
+            
+            const blob = new Blob([JSON.stringify(exportData, null, 2)], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `anomalies_${new Date().toISOString().split('T')[0]}.json`;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+            
+            notify(`Wyeksportowano ${anomalies.length} anomalii`, 'success');
+        }
     </script>
     
     <!-- OpenCV.js - Asynchroniczne załadowanie -->

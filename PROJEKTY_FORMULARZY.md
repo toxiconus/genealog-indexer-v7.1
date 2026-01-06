@@ -1,7 +1,126 @@
 # Projekty Formularzy Genealogicznych - UI/UX
 
-**Data**: 4 stycznia 2026  
-**Status**: Propozycje do implementacji
+**Data**: 6 stycznia 2026  
+**Status**: Zaktualizowane dla ACTA v3.2 z ACTACOM 1.0
+
+---
+
+## 🎯 Rozszerzenia ACTACOM 1.0 w Formularzach
+
+### Nowe pola dla wszystkich typów aktów:
+
+#### Hipotezy Genealogiczne (Hypothesis)
+```
+[≡ Hipotezy] ◀─ Accordion
+├─ Czy to hipoteza? [□] Tak
+├─ Poziom pewności [1-5] [★★★★☆]
+├─ Uzasadnienie [____________________]
+├─ Alternatywne teorie [Lista ▼]
+├─ Dowody potwierdzające [Lista]
+└─ Dowody przeczące [Lista]
+```
+
+#### Luki Genealogiczne (Gaps)
+```
+[≡ Luki] ◀─ Accordion
+├─ Typ luki [▼] MISSING_GENERATION | MISSING_SIBLING | MISSING_PARENT
+├─ Opis problemu [____________________]
+├─ Możliwe przyczyny [Lista ▼]
+├─ Strategia rozwiązania [____________________]
+└─ Priorytet badania [Wysoki/Średni/Niski]
+```
+
+#### Teorie Genealogiczne (Theories)
+```
+[≡ Teorie] ◀─ Accordion
+├─ Powiązane teorie [Lista ▼]
+├─ Konflikty z innymi teoriami [Lista]
+├─ Źródła potwierdzające [Lista]
+├─ Źródła przeczące [Lista]
+└─ Status teorii [Aktywna/Archiwalna/Odrzucona]
+```
+
+#### Weryfikacja Wieku (Age Analysis)
+```
+[≡ Analiza wieku] ◀─ Accordion
+├─ Oczekiwany wiek [___] lat
+├─ Wariancja [±___] lat
+├─ Flaga [□] Podejrzany wiek
+├─ Kontekst historyczny [____________________]
+├─ Wzorce rodzinne [____________________]
+└─ Notatki weryfikacji [____________________]
+```
+
+#### Śledzenie Zmian (Change Log)
+```
+[≡ Historia zmian] ◀─ Accordion
+├─ Data zmiany [___]
+├─ Typ zmiany [Dodanie|Modyfikacja|Usunięcie]
+├─ Autor zmiany [___]
+├─ Opis zmiany [____________________]
+└─ Powód zmiany [____________________]
+```
+
+#### Log Badań (Research Log)
+```
+[≡ Log badań] ◀─ Accordion
+├─ Data badania [___]
+├─ Typ badania [Archiwum|DNA|Wywiad]
+├─ Źródło [___]
+├─ Wyniki [____________________]
+├─ Następne kroki [____________________]
+└─ Priorytet [Wysoki/Średni/Niski]
+```
+
+#### Rozszerzone Źródła (Source Classification)
+```
+[≡ Klasyfikacja źródła] ◀─ Accordion
+├─ Typ źródła [Pierwotne/Wtórne/Trzeciorzędne]
+├─ Wiarygodność [1-5] [★★★★☆]
+├─ Data powstania [___]
+├─ Autor/Instytucja [___]
+├─ Stan zachowania [Dobry/Średni/Zły]
+└─ Notatki o źródle [____________________]
+```
+
+#### Wzorce (Patterns)
+```
+[≡ Wzorce] ◀─ Accordion
+├─ Typ wzorca [Nazwiskowy|Migracyjny|Zawodowy]
+├─ Opis wzorca [____________________]
+├─ Częstość występowania [___]
+├─ Powiązane osoby [Lista]
+└─ Znaczenie dla genealogii [____________________]
+```
+
+#### Kontekst Historyczny (Historical Context)
+```
+[≡ Kontekst historyczny] ◀─ Accordion
+├─ Wydarzenia historyczne [Lista ▼]
+├─ Wpływ na życie [____________________]
+├─ Zmiany nazwisk/miejsc [Lista]
+├─ Migracje przymusowe [□] Tak
+└─ Kontekst kulturowy [____________________]
+```
+
+#### Integracja DNA (DNA Matches)
+```
+[≡ DNA] ◀─ Accordion
+├─ Matches DNA [Lista ▼]
+├─ Poziom pokrewieństwa [___]
+├─ Potwierdzone relacje [Lista]
+├─ Konflikty z drzewem [Lista]
+└─ Rekomendacje dalszych testów [____________________]
+```
+
+### Przyciski szybkiego dostępu ACTACOM:
+```
+[💡 Hipoteza] - Dodaj nową hipotezę
+[🔍 Luka] - Oznacz lukę genealogiczną
+[🧬 DNA] - Dodaj match DNA
+[📝 Log] - Dodaj wpis do logu badań
+[⚖️ Konflikt] - Oznacz konflikt danych
+```
 
 ---
 
