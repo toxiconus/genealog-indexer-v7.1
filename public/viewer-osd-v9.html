@@ -2680,142 +2680,53 @@
                 });
             }
             
-            // Toolbar button listeners (safe after DOM loaded)
-            // Find by text content "Otwórz"
-            let addImagesBtn = document.getElementById('openBtn');
-            console.log('🔍 addImagesBtn found:', !!addImagesBtn, addImagesBtn?.title);
-            if (addImagesBtn) addImagesBtn.addEventListener('click', addImages);
-            
-            const postprocessBtn = document.getElementById('postprocessBtn');
-            if (postprocessBtn) postprocessBtn.addEventListener('click', togglePostprocessPanel);
-            
-            const actsBtn = document.getElementById('toggleActsBtn');
-            if (actsBtn) actsBtn.addEventListener('click', toggleActsPanel);
-            
-            // Inne przyciski toolbar
-            const sortBtn = document.getElementById('sortBtn');
-            if (sortBtn) sortBtn.addEventListener('click', sortImages);
-            
-            const roiBtn = document.getElementById('roiBtn');
-            if (roiBtn) roiBtn.addEventListener('click', toggleROI);
-            
-            const actBtn = document.getElementById('actBtn');
-            if (actBtn) actBtn.addEventListener('click', toggleActMode);
-            
-            const clearStorageBtn = document.getElementById('clearStorageBtn');
-            if (clearStorageBtn) {
-                clearStorageBtn.addEventListener('click', () => {
-                    if (confirm('⚠️ Wyczyść CAŁE localStorage? Wszystkie dane będą usunięte.')) {
-                        localStorage.clear();
-                        notify('✅ localStorage wyczyszczony. Odśwież stronę.', 'success');
-                        setTimeout(() => location.reload(), 1500);
+            // ✅ NOWE: Event delegation na document - działa zawsze!
+            document.addEventListener('click', (e) => {
+                const btn = e.target.closest('button[id]');
+                if (!btn) return;
+                
+                const btnId = btn.id;
+                console.log(`🖱️ Button clicked: ${btnId}`);
+                
+                // Mapuj ID do funkcji
+                const handlers = {
+                    'exportBtn': () => { console.log('→ exportData'); exportData('simple'); },
+                    'importCsvBtn': () => { console.log('→ importCSV'); importCSV(); },
+                    'importJsonBtn': () => { console.log('→ importJSON'); importJSON(); },
+                    'clearRoiBtn': () => { console.log('→ clearAllROIs'); clearAllROIs(); },
+                    'formBtn': () => { console.log('→ toggleFloatingForm'); toggleFloatingForm(); },
+                    'pinsBtn': () => { console.log('→ showAllPinups'); showAllPinups(); },
+                    'clearPinsBtn': () => { console.log('→ clearPinups'); clearPinups(); },
+                    'zoomFitBtn': () => { console.log('→ zoomReset'); zoomReset(); },
+                    'fullscreenBtn': () => { console.log('→ toggleFullscreen'); toggleFullscreen(); },
+                    'toggleThumbsBtn': () => { console.log('→ toggleThumbsPanel'); toggleThumbsPanel(); },
+                    'firebaseBtn': () => { console.log('→ exportFromLocalStorageToFirestore'); exportFromLocalStorageToFirestore(); },
+                    'openBtn': () => { console.log('→ addImages'); addImages(); },
+                    'postprocessBtn': () => { console.log('→ togglePostprocessPanel'); togglePostprocessPanel(); },
+                    'toggleActsBtn': () => { console.log('→ toggleActsPanel'); toggleActsPanel(); },
+                    'sortBtn': () => { console.log('→ sortImages'); sortImages(); },
+                    'roiBtn': () => { console.log('→ toggleROI'); toggleROI(); },
+                    'actBtn': () => { console.log('→ toggleActMode'); toggleActMode(); },
+                    'clearStorageBtn': () => {
+                        if (confirm('⚠️ Wyczyść CAŁE localStorage? Wszystkie dane będą usunięte.')) {
+                            localStorage.clear();
+                            notify('✅ localStorage wyczyszczony. Odśwież stronę.', 'success');
+                            setTimeout(() => location.reload(), 1500);
+                        }
                     }
-                });
-            }
+                };
+                
+                if (handlers[btnId]) {
+                    try {
+                        handlers[btnId]();
+                    } catch (error) {
+                        console.error(`❌ Error in ${btnId}:`, error);
+                        notify(`Błąd: ${error.message}`, 'error');
+                    }
+                }
+            });
             
-            // Export/Import buttons
-            const exportBtn = document.getElementById('exportBtn');
-            console.log('🔍 exportBtn found:', !!exportBtn, exportBtn?.title);
-            if (exportBtn) {
-                exportBtn.addEventListener('click', () => {
-                    console.log('✅ exportBtn clicked');
-                    exportData('simple');
-                });
-            }
-            
-            const importCsvBtn = document.getElementById('importCsvBtn');
-            console.log('🔍 importCsvBtn found:', !!importCsvBtn, importCsvBtn?.title);
-            if (importCsvBtn) {
-                importCsvBtn.addEventListener('click', () => {
-                    console.log('✅ importCsvBtn clicked');
-                    importCSV();
-                });
-            }
-            
-            const importJsonBtn = document.getElementById('importJsonBtn');
-            console.log('🔍 importJsonBtn found:', !!importJsonBtn, importJsonBtn?.title);
-            if (importJsonBtn) {
-                importJsonBtn.addEventListener('click', () => {
-                    console.log('✅ importJsonBtn clicked');
-                    importJSON();
-                });
-            }
-            
-            // Form & ROI buttons
-            const clearRoiBtn = document.getElementById('clearRoiBtn');
-            console.log('🔍 clearRoiBtn found:', !!clearRoiBtn, clearRoiBtn?.title);
-            if (clearRoiBtn) {
-                clearRoiBtn.addEventListener('click', () => {
-                    console.log('✅ clearRoiBtn clicked');
-                    clearAllROIs();
-                });
-            }
-            
-            const formBtn = document.getElementById('formBtn');
-            console.log('🔍 formBtn found:', !!formBtn, formBtn?.title);
-            if (formBtn) {
-                formBtn.addEventListener('click', () => {
-                    console.log('✅ formBtn clicked');
-                    toggleFloatingForm();
-                });
-            }
-            
-            const pinsBtn = document.getElementById('pinsBtn');
-            console.log('🔍 pinsBtn found:', !!pinsBtn, pinsBtn?.title);
-            if (pinsBtn) {
-                pinsBtn.addEventListener('click', () => {
-                    console.log('✅ pinsBtn clicked');
-                    showAllPinups();
-                });
-            }
-            
-            const clearPinsBtn = document.getElementById('clearPinsBtn');
-            console.log('🔍 clearPinsBtn found:', !!clearPinsBtn, clearPinsBtn?.title);
-            if (clearPinsBtn) {
-                clearPinsBtn.addEventListener('click', () => {
-                    console.log('✅ clearPinsBtn clicked');
-                    clearPinups();
-                });
-            }
-            
-            // View buttons
-            const zoomFitBtn = document.getElementById('zoomFitBtn');
-            console.log('🔍 zoomFitBtn found:', !!zoomFitBtn, zoomFitBtn?.title);
-            if (zoomFitBtn) {
-                zoomFitBtn.addEventListener('click', () => {
-                    console.log('✅ zoomFitBtn clicked');
-                    zoomReset();
-                });
-            }
-            
-            const fullscreenBtn = document.getElementById('fullscreenBtn');
-            console.log('🔍 fullscreenBtn found:', !!fullscreenBtn, fullscreenBtn?.title);
-            if (fullscreenBtn) {
-                fullscreenBtn.addEventListener('click', () => {
-                    console.log('✅ fullscreenBtn clicked');
-                    toggleFullscreen();
-                });
-            }
-            
-            // Panel buttons
-            const toggleThumbsBtn = document.getElementById('toggleThumbsBtn');
-            console.log('🔍 toggleThumbsBtn found:', !!toggleThumbsBtn, toggleThumbsBtn?.title);
-            if (toggleThumbsBtn) {
-                toggleThumbsBtn.addEventListener('click', () => {
-                    console.log('✅ toggleThumbsBtn clicked');
-                    toggleThumbsPanel();
-                });
-            }
-            
-            // Firebase button
-            const firebaseBtn = document.getElementById('firebaseBtn');
-            console.log('🔍 firebaseBtn found:', !!firebaseBtn, firebaseBtn?.title);
-            if (firebaseBtn) {
-                firebaseBtn.addEventListener('click', () => {
-                    console.log('✅ firebaseBtn clicked');
-                    exportFromLocalStorageToFirestore();
-                });
-            }
+            console.log('✅ Event delegation ready for all buttons');
             
             // Close button in acts panel
             const actsPanel = document.getElementById('actsPanel');
