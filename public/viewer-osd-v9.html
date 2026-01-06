@@ -3392,39 +3392,39 @@
             }
             
             // Metadata dla osób i nowe pola ACTA v3
-            const confidenceField = form.querySelector('[name="confidence"]');
-            const sourceTextField = form.querySelector('[name="source_text"]');
-            const notesField = form.querySelector('[name="notes"]');
+            let confidenceField = form.querySelector('[name="confidence"]');
+            let sourceTextField = form.querySelector('[name="source_text"]');
+            // notesField już zdeklarowany wyżej!
             
             // Nowe pola ACTA v3
-            const dnaTestTypeField = form.querySelector('[name="dna_test_type"]');
-            const dnaResultsField = form.querySelector('[name="dna_results"]');
-            const haplogroupField = form.querySelector('[name="haplogroup"]');
-            const dnaSourceField = form.querySelector('[name="dna_source"]');
+            let dnaTestTypeField = form.querySelector('[name="dna_test_type"]');
+            let dnaResultsField = form.querySelector('[name="dna_results"]');
+            let haplogroupField = form.querySelector('[name="haplogroup"]');
+            let dnaSourceField = form.querySelector('[name="dna_source"]');
             
-            const medicalConditionField = form.querySelector('[name="medical_condition"]');
-            const conditionOnsetField = form.querySelector('[name="condition_onset"]');
-            const medicalSourceField = form.querySelector('[name="medical_source"]');
+            let medicalConditionField = form.querySelector('[name="medical_condition"]');
+            let conditionOnsetField = form.querySelector('[name="condition_onset"]');
+            let medicalSourceField = form.querySelector('[name="medical_source"]');
             
-            const migrationFromField = form.querySelector('[name="migration_from"]');
-            const migrationToField = form.querySelector('[name="migration_to"]');
-            const migrationDateField = form.querySelector('[name="migration_date"]');
-            const migrationReasonField = form.querySelector('[name="migration_reason"]');
-            const migrationSourceField = form.querySelector('[name="migration_source"]');
+            let migrationFromField = form.querySelector('[name="migration_from"]');
+            let migrationToField = form.querySelector('[name="migration_to"]');
+            let migrationDateField = form.querySelector('[name="migration_date"]');
+            let migrationReasonField = form.querySelector('[name="migration_reason"]');
+            let migrationSourceField = form.querySelector('[name="migration_source"]');
             
-            const assetTypeField = form.querySelector('[name="asset_type"]');
-            const assetValueField = form.querySelector('[name="asset_value"]');
-            const assetDateField = form.querySelector('[name="asset_date"]');
-            const assetSourceField = form.querySelector('[name="asset_source"]');
+            let assetTypeField = form.querySelector('[name="asset_type"]');
+            let assetValueField = form.querySelector('[name="asset_value"]');
+            let assetDateField = form.querySelector('[name="asset_date"]');
+            let assetSourceField = form.querySelector('[name="asset_source"]');
             
-            const patronymicField = form.querySelector('[name="patronymic"]');
-            const clanTribeField = form.querySelector('[name="clan_tribe"]');
-            const religionField = form.querySelector('[name="religion"]');
+            let patronymicField = form.querySelector('[name="patronymic"]');
+            let clanTribeField = form.querySelector('[name="clan_tribe"]');
+            let religionField = form.querySelector('[name="religion"]');
             
-            const aiGeneratedField = form.querySelector('[name="ai_generated"]');
-            const parentMatchField = form.querySelector('[name="parent_match"]');
-            const nameMatchField = form.querySelector('[name="name_match"]');
-            const locationMatchField = form.querySelector('[name="location_match"]');
+            let aiGeneratedField = form.querySelector('[name="ai_generated"]');
+            let parentMatchField = form.querySelector('[name="parent_match"]');
+            let nameMatchField = form.querySelector('[name="name_match"]');
+            let locationMatchField = form.querySelector('[name="location_match"]');
             
             // Przypisz metadata i nowe pola ACTA v3 do wszystkich osób w tym evencie
             event.roles.forEach(role => {
@@ -4079,8 +4079,8 @@
                     const sourceTextField = form.querySelector('[name="source_text"]');
                     if (sourceTextField) sourceTextField.value = person.sourceText || '';
                     
-                    const notesField = form.querySelector('[name="notes"]');
-                    if (notesField) notesField.value = person.notes || '';
+                    let notesFieldInner = form.querySelector('[name="notes"]');
+                    if (notesFieldInner) notesFieldInner.value = person.notes || '';
                     
                     // Nowe pola ACTA v3
                     // DNA
