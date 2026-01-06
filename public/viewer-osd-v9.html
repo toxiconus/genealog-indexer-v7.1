@@ -1547,6 +1547,14 @@
             autoLoadFolder: true  // Włącz automatyczne ładowanie folderu przy starcie
         };
         
+        // ✅ v9.2: Required fields per act type
+        const requiredFields = {
+            'chrzest': ['child_first_name', 'father_name', 'mother_name'],
+            'małżeństwo': ['groom_first_name', 'bride_first_name'],
+            'urodzenie': ['child_first_name', 'father_name', 'mother_name'],
+            'zgon': ['deceased_first_name', 'deceased_last_name']
+        };
+        
         // ===== POSTPROCESSING STATE & PRESETS (MUST BE BEFORE setupPostprocessSliders) =====
         const postprocessState = {
             levels: 0,               // -100 to 100 (shadows/highlights)
@@ -1678,6 +1686,11 @@
             
             loadFallbackTemplates();
             console.log('📍 Templates loaded:', app.templates.length);
+            
+            // ✅ v9.2: Load custom fields from localStorage
+            loadCustomFieldsFromStorage();
+            console.log('📍 Custom fields loaded');
+            
             initViewer();
             console.log('📍 Viewer initialized');
             setupDrawingCanvas();
@@ -5080,6 +5093,77 @@
             }
         }
         
+        // ✅ v9.2: Load custom fields from localStorage and merge with templates
+        function loadCustomFieldsFromStorage() {
+            try {
+                const stored = localStorage.getItem('genealog-custom-fields');
+                if (!stored) return;
+                
+                const customFields = JSON.parse(stored);
+                
+                app.templates.forEach(template => {
+                    if (customFields[template.id]) {
+                        template.sections.forEach(section => {
+                            customFields[template.id].forEach(field => {
+                                // Check if field already exists
+                                if (!section.fields.some(f => f.id === field.id)) {
+                                    section.fields.push(field);
+                                }
+                            });
+                        });
+                    }
+                });
+                
+                console.log(`✅ Loaded ${Object.keys(customFields).length} custom field sets from localStorage`);
+            } catch(e) {
+                console.warn('⚠️ Error loading custom fields:', e.message);
+            }
+        }
+        
+        // ✅ v9.2: Validate form fields against required fields for current act type
+        function validateRequiredFields(act) {
+            const required = requiredFields[act.type] || [];
+            const form = document.querySelector(`#form-${act.type}`);
+            if (!form) return { isValid: true, missing: [] };
+            
+            const missing = [];
+            required.forEach(fieldId => {
+                const input = form.querySelector(`[data-field="${fieldId}"]`);
+                if (!input || !input.value.trim()) {
+                    missing.push(fieldId);
+                    // Highlight missing field
+                    if (input) {
+                        input.style.borderColor = '#ff4444';
+                        input.style.backgroundColor = 'rgba(255,0,0,0.1)';
+                    }
+                }
+            });
+            
+            return {
+                isValid: missing.length === 0,
+                missing: missing
+            };
+        }
+        
+        // ✅ v9.2: Save custom field to localStorage
+        function saveCustomFieldToStorage(actType, field) {
+            try {
+                const customFields = JSON.parse(localStorage.getItem('genealog-custom-fields') || '{}');
+                if (!customFields[actType]) {
+                    customFields[actType] = [];
+                }
+                
+                // Don't duplicate
+                if (!customFields[actType].some(f => f.id === field.id)) {
+                    customFields[actType].push(field);
+                    localStorage.setItem('genealog-custom-fields', JSON.stringify(customFields));
+                    console.log(`💾 Saved custom field "${field.label}" to ${actType}`);
+                }
+            } catch(e) {
+                console.warn('⚠️ Error saving custom field:', e.message);
+            }
+        }
+        
         function renderFloatingForm() {
             const content = document.getElementById('floatingFormContent');
             content.innerHTML = '';
@@ -5192,16 +5276,23 @@
                     group.className = 'form-group';
                     group.style.marginBottom = '10px';
                     
+                    // ✅ v9.2: Check if field is required
+                    const isRequired = requiredFields[act.type]?.includes(field.id) || false;
+                    
                     const label = document.createElement('label');
-                    label.textContent = field.label;
+                    label.textContent = field.label + (isRequired ? ' *' : '');
                     label.style.fontSize = '10px';
+                    label.style.color = isRequired ? '#ff6b6b' : '#aaa';  // Red for required
+                    label.style.fontWeight = isRequired ? '600' : 'normal';
                     
                     const input = document.createElement('input');
                     input.type = field.type || 'text';
                     input.className = 'field-input';
                     input.dataset.field = field.id;
+                    input.dataset.required = isRequired ? 'true' : 'false';
                     input.placeholder = field.label;
                     input.value = getFieldValue(field.id);
+                    input.style.borderColor = isRequired && !input.value ? '#ff4444' : '#3a3a3a';
                     
                     // Auto-save na change
                     input.addEventListener('change', saveFormToAct);
@@ -5237,14 +5328,19 @@
             const fieldName = prompt('🔧 Wpisz nazwę nowego pola (np. "Dodatkowe imię"):');
             if (!fieldName) return;
             
-            // Dodaj do szablonu (sesjnie)
-            if (!sectionDef.fields) sectionDef.fields = [];
-            sectionDef.fields.push({
+            const fieldDef = {
                 id: fieldId,
                 label: fieldName,
                 type: 'text',
                 applicableTypes: [actType]
-            });
+            };
+            
+            // Dodaj do szablonu (sesyjnie)
+            if (!sectionDef.fields) sectionDef.fields = [];
+            sectionDef.fields.push(fieldDef);
+            
+            // ✅ v9.2: Save to localStorage for persistence
+            saveCustomFieldToStorage(actType, fieldDef);
             
             // Utwórz input w UI
             const group = document.createElement('div');
@@ -5276,7 +5372,7 @@
             
             input.focus();
             saveStorage();  // Zapisz zmianę
-            notify(`✅ Pole "${fieldName}" dodane`, 'success');
+            notify(`✅ Pole "${fieldName}" dodane i zapisane`, 'success');
         }
         
         function positionFloatingFormNearAct() {
