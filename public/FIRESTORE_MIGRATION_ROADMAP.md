@@ -2,14 +2,15 @@
 
 ## ✅ STATUS: MIGRACJA ZAKOŃCZONA (6 stycznia 2026)
 
-Wszystkie etapy migracji zostały pomyślnie zrealizowane. System ACTA jest w pełni kompatybilny z Firebase Firestore, zachowując fallback na localStorage.
+Migracja została pomyślnie zakończona! Firebase Firestore jest w pełni funkcjonalny z automatycznym ładowaniem danych po zalogowaniu.
 
 ### Zrealizowane Etapy:
 
-#### ✅ Etap 1: Analiza i Przygotowanie
+### ✅ Etap 1: Analiza i Przygotowanie
 - Przejrzano modele w `acta-v1-models.js` i `viewer-osd-v8.html`
 - Zidentyfikowano relacje i serializację
 - Firebase SDK dodany z konfiguracją placeholder
+- **✅ Klucze Firebase wklejone do `viewer-osd-v8.html` i `viewer-osd-v9.html`**
 
 #### ✅ Etap 2: Dostosowanie Modeli Danych
 - `PersonModel`: Dodano UUID, referencje zamiast embedded objects
@@ -23,6 +24,7 @@ Wszystkie etapy migracji zostały pomyślnie zrealizowane. System ACTA jest w pe
 - Toggle storage mode (localStorage ↔ Firestore)
 - Autentyfikacja Google z auto-trybem Firestore
 - Obsługa referencji przez ID
+- **✅ Automatyczne ładowanie danych po zalogowaniu**
 
 #### ✅ Etap 4: Migracja Istniejących Danych
 - `exportFromLocalStorageToFirestore()` z walidacją
@@ -35,6 +37,8 @@ Wszystkie etapy migracji zostały pomyślnie zrealizowane. System ACTA jest w pe
 - Obsługa błędów i offline mode
 - Przyciski UI: "Migruj do Firebase", toggle storage
 - Logowanie błędów do konsoli
+- **✅ Przyciski typów aktów w dropdown zamiast osobnych przycisków**
+- **✅ Grupy aktów z funkcjonalnością akordeonu (zwinięte domyślnie)**
 
 ### Aktualna Struktura Firestore
 
@@ -64,12 +68,12 @@ Firestore Root
 - Wszystkie dane zachowują format JSON
 - Możliwość powrotu do localStorage w każdej chwili
 
-### Następne Kroki (Opcjonalne)
+### Następne Kroki (W trakcie)
 
-- Dodać kolekcje `places`, `hypotheses`, `dnaTests`
-- Implementować realtime collaboration
-- Dodać security rules w Firebase
-- Optymalizować zapytania z indeksami
+- **Konfiguracja Security Rules w Firebase Console** dla dostępu anonimowego/zalogowanych użytkowników
+- Testowanie pełnej synchronizacji danych między Firestore a localStorage
+- Dodanie kolekcji `places`, `hypotheses`, `dnaTests` (opcjonalne)
+- Implementacja realtime collaboration (opcjonalne)
 
 ---
 

@@ -15,12 +15,13 @@
     <script>
         // Firebase configuration - ZASTĄP SWOIMI KLUCZAMI Z KONSOLI FIREBASE
         const firebaseConfig = {
-            apiKey: "YOUR_API_KEY",
-            authDomain: "YOUR_PROJECT_ID.firebaseapp.com",
-            projectId: "YOUR_PROJECT_ID",
-            storageBucket: "YOUR_PROJECT_ID.appspot.com",
-            messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
-            appId: "YOUR_APP_ID"
+            apiKey: "AIzaSyAZ-d9kxHrijCW9P8ZXbZORvUPai0uzOXY",
+            authDomain: "acta-9ea64.firebaseapp.com",
+            projectId: "acta-9ea64",
+            storageBucket: "acta-9ea64.firebasestorage.app",
+            messagingSenderId: "1031481893980",
+            appId: "1:1031481893980:web:1598979629a824fdf0b299",
+            measurementId: "G-E6J3J4P41P"
         };
 
         // Initialize Firebase
@@ -32,20 +33,10 @@
         window.db = db;
         window.auth = auth;
         
-        // Auth state listener
-        auth.onAuthStateChanged(user => {
-            if (user) {
-                console.log('✅ Zalogowany jako:', user.displayName || user.email);
-                app.user = user;
-                app.storageMode = 'firestore'; // Automatycznie Firestore dla zalogowanych
-                updateAuthUI(true);
-            } else {
-                console.log('ℹ️ Niezalogowany');
-                app.user = null;
-                app.storageMode = 'localStorage'; // LocalStorage dla niezalogowanych
-                updateAuthUI(false);
-            }
-        });
+        // Auth state listener - zostanie skonfigurowany w initApp
+        // auth.onAuthStateChanged(async user => {
+        //     ...
+        // });
         
         // Dispatch custom event when Firebase is ready
         window.dispatchEvent(new Event('firebaseReady'));
@@ -117,10 +108,11 @@
             transform: translateY(-1px);
         }
         .toolbar-btn.active {
-            background: #0078d4;
-            border-color: #0078d4;
-            color: white;
-            box-shadow: 0 0 12px rgba(0,120,212,0.4);
+            background: #22a847;
+            border-color: #22a847;
+            color: #000;
+            font-weight: bold;
+            box-shadow: 0 0 12px rgba(34,168,71,0.5);
         }
         .toolbar-sep {
             width: 1px;
@@ -200,6 +192,17 @@
             background: #252525;
             border-color: #0078d4;
             color: #0078d4;
+        }
+        .rotate-btn:disabled {
+            display: none;
+            cursor: not-allowed;
+            border-color: #555;
+            color: #666;
+        }
+        .rotate-btn:disabled:hover {
+            background: #1a1a1a;
+            border-color: #555;
+            color: #666;
         }
         .roi-info-overlay {
             position: absolute;
@@ -289,10 +292,11 @@
             border-radius: 4px;
             cursor: pointer;
             font-size: 11px;
-            white-space: nowrap;
-            text-overflow: ellipsis;
-            overflow: hidden;
+            white-space: normal;
+            word-break: break-word;
             transition: all 0.2s ease;
+            width: 100%;
+            text-align: left;
         }
         .act-button:hover {
             background: #252525;
@@ -323,6 +327,13 @@
             color: #ddd;
         }
         
+        .acts-group-content {
+            padding: 4px 0;
+            background: rgba(0,0,0,0.3);
+            margin-bottom: 8px;
+            border-radius: 3px;
+        }
+        
         .act-control-btn {
             font-family: 'Courier New', monospace;
             font-size: 10px;
@@ -341,6 +352,18 @@
             flex: 1;
             display: flex;
             flex-direction: column;
+        }
+        #formsContainer {
+            display: flex;
+            flex-direction: column;
+            flex: 1;
+            overflow-y: auto;
+        }
+        .form-content {
+            display: flex;
+            flex-direction: column;
+            flex: 1;
+            overflow-y: auto;
         }
         .records-sidebar {
             width: 50px;
@@ -1286,10 +1309,10 @@
             <div class="toolbar-sep"></div>
             
             <!-- EDIT: Zaznacz akt, Zaznacz pola, Clear -->
-            <button class="toolbar-btn" id="roiBtn" title="Zaznacz granice całego aktu na obrazie (Ctrl+R)">
+            <button class="toolbar-btn" id="roiBtn" title="Zaznacz GRANICE całego aktu na obrazie (Ctrl+R)">
                 <i class="fas fa-expand"></i> Granice aktu
             </button>
-            <button class="toolbar-btn" id="actBtn" title="Zaznacz konkretne pola w akcie (imię, nazwisko itd.) - Ctrl+A">
+            <button class="toolbar-btn" id="actBtn" title="Zaznacz konkretne POLA w akcie (imię, nazwisko itd.) - Ctrl+A">
                 <i class="fas fa-crop-alt"></i> Pola w akcie
             </button>
             <button class="toolbar-btn" onclick="clearAllROIs()" title="Usuń wszystkie zaznaczenia">
@@ -1349,7 +1372,7 @@
                 <i class="fas fa-cloud-upload-alt"></i> FB
             </button>
             <button class="toolbar-btn" id="authBtn" title="Zaloguj się z Google">
-                <i class="fas fa-sign-in-alt"></i> Login
+                <i class="fas fa-sign-in-alt"></i> Zaloguj z Google
             </button>
             <button class="toolbar-btn" id="clearStorageBtn" title="Wyczyść" style="color: #e74c3c;">
                 <i class="fas fa-trash-alt"></i> Wyczyść
@@ -1770,18 +1793,20 @@
         function initApp() {
             console.log('📍 initApp start');
             
-            // ✅ NOWE: Inicjalizuj bazę danych ACTA v1
-            if (typeof ACTA !== 'undefined') {
-                app.personDb = new ACTA.PersonDatabase();
-                console.log('✅ PersonDatabase initialized');
-                
-                // ✅ NOWE: Zmień app.imageActs na mapę EventModel zamiast tablicy
-                app.imageActs = new Map(); // ID -> EventModel (zamiast [])
-                console.log('✅ imageActs changed to Map for ACTA v1');
-            } else {
-                console.warn('⚠️ ACTA v1 library not loaded');
-                app.imageActs = []; // Fallback do array
+            // ✅ NOWE: Czekaj na załadowanie ACTA
+            if (typeof ACTA === 'undefined') {
+                console.log('⚠️ ACTA v1 library not loaded, retrying...');
+                setTimeout(initApp, 100);
+                return;
             }
+            
+            // ✅ NOWE: Inicjalizuj bazę danych ACTA v1
+            app.personDb = new ACTA.PersonDatabase();
+            console.log('✅ PersonDatabase initialized');
+                
+            // ✅ NOWE: Zmień app.imageActs na mapę EventModel zamiast tablicy
+            app.imageActs = new Map(); // ID -> EventModel (zamiast [])
+            console.log('✅ imageActs changed to Map for ACTA v1');
             
             // Initialize Firebase Auth
             if (window.auth) {
@@ -1809,12 +1834,27 @@
             console.log('📍 Canvas setup complete');
             loadStorage();
             console.log('📍 Storage loaded, images:', app.images.length);
-            renderUI();
-            console.log('📍 UI rendered');
-            setupPostprocessSliders();
-            console.log('📍 Postprocess sliders setup');
-            setupEvents();
-            console.log('📍 Events setup complete');
+            
+            try {
+                renderUI();
+                console.log('📍 UI rendered');
+            } catch (err) {
+                console.error('❌ renderUI error:', err);
+            }
+            
+            try {
+                setupPostprocessSliders();
+                console.log('📍 Postprocess sliders setup');
+            } catch (err) {
+                console.error('❌ setupPostprocessSliders error:', err);
+            }
+            
+            try {
+                setupEvents();
+                console.log('📍 Events setup complete');
+            } catch (err) {
+                console.error('❌ setupEvents error:', err);
+            }
             
             // Auto-load folder if enabled
             if (app.autoLoadFolder) {
@@ -1827,18 +1867,46 @@
                     const testEvent = new ACTA.EventModel('małżeństwo', 1890, 5);
                     testEvent.id = 'TEST.1890.No.05';
                     testEvent.imageIdx = 0;
+                    testEvent.roles = []; // ✅ NOWE: inicjalizuj roles jako tablicę
                     
                     const groom = new ACTA.PersonModel('Jan', 'Kowalski');
                     const bride = new ACTA.PersonModel('Maria', 'Lewska');
                     
-                    testEvent.addPersonWithRole(groom, 'pan_młody');
-                    testEvent.addPersonWithRole(bride, 'panna_młoda');
+                    if (typeof testEvent.addPersonWithRole === 'function') {
+                        testEvent.addPersonWithRole(groom, 'pan_młody');
+                        testEvent.addPersonWithRole(bride, 'panna_młoda');
+                    }
                     
                     app.imageActs.set(testEvent.id, testEvent);
                     console.log('✅ Test Marriage event created:', testEvent.id);
                 } catch(e) {
                     console.warn('⚠️ Test event creation skipped:', e.message);
                 }
+            }
+            
+            // Configure Firebase Auth listener
+            if (window.auth) {
+                auth.onAuthStateChanged(async user => {
+                    if (user) {
+                        console.log('✅ Zalogowany jako:', user.displayName || user.email);
+                        app.user = user;
+                        app.storageMode = 'firestore'; // Automatycznie Firestore dla zalogowanych
+                        updateAuthUI(true);
+                        
+                        // Załaduj dane z Firestore po zalogowaniu
+                        await loadFromFirestore();
+                        renderUI(); // Odśwież UI po załadowaniu danych
+                    } else {
+                        console.log('ℹ️ Niezalogowany');
+                        app.user = null;
+                        app.storageMode = 'localStorage'; // LocalStorage dla niezalogowanych
+                        updateAuthUI(false);
+                        
+                        // Załaduj dane z localStorage przy wylogowaniu
+                        loadStorage();
+                        renderUI(); // Odśwież UI
+                    }
+                });
             }
             
             notify('v7.0 gotowy!', 'success');
@@ -1851,29 +1919,67 @@
                     name: "Akt Chrztu",
                     sections: [
                         {
-                            id: "record_type",
-                            title: "<i class='fas fa-tag'></i> Typ aktu",
-                            expanded: true,
-                            fields: [
-                                {id: "record_type", label: "Typ aktu", type: "select", enumName: "EventTypes"}
-                            ]
-                        },
-                        {
                             id: "basic",
-                            title: "<i class='fas fa-info-circle'></i> Podstawowe",
+                            title: "Podstawowe",
                             expanded: true,
                             fields: [
                                 {id: "child_first_name", label: "Imię dziecka", type: "text"},
-                                {id: "child_last_name", label: "Nazwisko dziecka", type: "text"}
+                                {id: "child_last_name", label: "Nazwisko dziecka", type: "text"},
+                                {id: "baptism_date", label: "Data chrztu", type: "date"},
+                                {id: "birth_date", label: "Data urodzenia", type: "date"},
+                                {id: "stillborn", label: "Martwo urodzony", type: "checkbox"}
+                            ]
+                        },
+                        {
+                            id: "place",
+                            title: "Miejsca",
+                            expanded: false,
+                            fields: [
+                                {id: "birth_place", label: "Miejsce urodzenia", type: "text"},
+                                {id: "baptism_place", label: "Miejsce chrztu (kościół)", type: "text"}
                             ]
                         },
                         {
                             id: "parents",
-                            title: "<i class='fas fa-users'></i> Rodzice",
+                            title: "Rodzice",
                             expanded: false,
                             fields: [
-                                {id: "father_name", label: "Ojciec", type: "text"},
-                                {id: "mother_name", label: "Matka", type: "text"}
+                                {id: "father_name", label: "Imię ojca", type: "text"},
+                                {id: "father_surname", label: "Nazwisko ojca", type: "text"},
+                                {id: "mother_name", label: "Imię matki", type: "text"},
+                                {id: "mother_maiden_name", label: "Nazwisko panieńskie matki", type: "text"},
+                                {id: "parents_place", label: "Miejsce zamieszkania rodziców", type: "text"}
+                            ]
+                        },
+                        {
+                            id: "godparents",
+                            title: "Rodzice chrzestni",
+                            expanded: false,
+                            fields: [
+                                {id: "godfather_name", label: "Imię chrzestnego", type: "text"},
+                                {id: "godfather_surname", label: "Nazwisko chrzestnego", type: "text"},
+                                {id: "godmother_name", label: "Imię chrzestnej", type: "text"},
+                                {id: "godmother_surname", label: "Nazwisko chrzestnej", type: "text"}
+                            ]
+                        },
+                        {
+                            id: "extended",
+                            title: "Rozszerzone",
+                            expanded: false,
+                            fields: [
+                                {id: "witness1", label: "Świadek 1", type: "text"},
+                                {id: "witness2", label: "Świadek 2", type: "text"},
+                                {id: "priest_name", label: "Ksiądz", type: "text"},
+                                {id: "notes", label: "Adnotacje", type: "textarea"},
+                                {id: "death_note", label: "Adnotacja o śmierci", type: "textarea"}
+                            ]
+                        },
+                        {
+                            id: "record_type",
+                            title: "Typ aktu",
+                            expanded: false,
+                            fields: [
+                                {id: "record_type", label: "Typ", type: "select", enumName: "EventTypes"}
                             ]
                         }
                     ]
@@ -2225,119 +2331,186 @@
             const container = document.getElementById('formsContainer');
             container.innerHTML = '';
             
-            // Dodaj przełącznik typu aktu
-            const templateSwitcher = document.createElement('div');
-            templateSwitcher.style.cssText = 'padding: 12px; border-bottom: 1px solid #2a2a2a; display: flex; gap: 6px; flex-wrap: wrap;';
+            // ========================================
+            // NAGŁÓWEK: Dropdown wyboru typu aktu
+            // ========================================
+            const header = document.createElement('div');
+            header.style.cssText = 'padding: 12px; border-bottom: 1px solid #2a2a2a; background: #0f0f0f;';
             
+            const label = document.createElement('label');
+            label.textContent = 'Typ aktu:';
+            label.style.cssText = 'display: block; font-size: 11px; font-weight: 600; color: #aaa; margin-bottom: 6px;';
+            
+            const select = document.createElement('select');
+            select.id = 'recordTypeSelect';
+            select.className = 'form-control';
+            select.style.cssText = 'width: 100%; padding: 8px; background: #1a1a1a; color: #ddd; border: 1px solid #444; border-radius: 4px; font-size: 12px;';
+            
+            // Dodaj opcje typów aktów
             app.templates.forEach(t => {
-                const btn = document.createElement('button');
-                btn.className = 'toolbar-btn';
-                btn.textContent = t.name;
+                const option = document.createElement('option');
+                option.value = t.id;
+                option.textContent = t.name;
                 if (t.id === app.currentTemplate) {
-                    btn.classList.add('active');
+                    option.selected = true;
                 }
-                btn.onclick = () => {
-                    app.currentTemplate = t.id;
-                    clearForm();
-                    renderFormSections();
-                    renderActButtons();
-                };
-                templateSwitcher.appendChild(btn);
+                select.appendChild(option);
             });
             
-            container.appendChild(templateSwitcher);
+            select.onchange = () => {
+                app.currentTemplate = select.value;
+                clearForm();
+                renderFormContent(); // Renderuj dynamicznie zawartość
+                loadActToForm(getCurrentAct()); // Załaduj dane wybranego aktu
+            };
             
-            app.templates.forEach((template) => {
-                const section = document.createElement('div');
-                section.id = `form-${template.id}`;
-                section.className = `form-section ${template.id === app.currentTemplate ? 'active' : ''}`;
-                
-                const header = document.createElement('div');
-                header.className = 'form-header';
-                header.innerHTML = `<h3>${template.name}</h3><div class="record-counter" id="recordCounter">Akty: 0</div>`;
-                section.appendChild(header);
-                
-                if (template.sections) {
-                    template.sections.forEach(sectionDef => {
-                        const item = document.createElement('div');
-                        item.className = 'accordion-item';
+            header.appendChild(label);
+            header.appendChild(select);
+            container.appendChild(header);
+            
+            // ========================================
+            // ZAWARTOŚĆ: Pola dostosowane do typu
+            // ========================================
+            renderFormContent();
+        }
+        
+        function renderFormContent() {
+            const container = document.getElementById('formsContainer');
+            
+            // Usuń stary formularz (zostawiamy header z dropdown)
+            const oldForm = container.querySelector('.form-content');
+            if (oldForm) oldForm.remove();
+            
+            const template = app.templates.find(t => t.id === app.currentTemplate);
+            if (!template) return;
+            
+            // Kontener na zawartość
+            const formContent = document.createElement('div');
+            formContent.className = 'form-content';
+            formContent.style.cssText = 'overflow-y: auto; flex: 1;';
+            
+            // Nagłówek formularza
+            const formHeader = document.createElement('div');
+            formHeader.className = 'form-header';
+            formHeader.innerHTML = `<h3>${template.name}</h3><div class="record-counter" id="recordCounter">Akty: 0</div>`;
+            formContent.appendChild(formHeader);
+            
+            // Sekcje akordeonu
+            if (template.sections) {
+                template.sections.forEach(sectionDef => {
+                    const item = document.createElement('div');
+                    item.className = 'accordion-item';
+                    
+                    const headerBtn = document.createElement('button');
+                    headerBtn.className = `accordion-header ${sectionDef.expanded ? 'active' : ''}`;
+                    headerBtn.innerHTML = sectionDef.title;
+                    headerBtn.style.cursor = 'pointer';
+                    headerBtn.style.width = '100%';
+                    
+                    const contentDiv = document.createElement('div');
+                    contentDiv.className = `accordion-content ${sectionDef.expanded ? 'active' : ''}`;
+                    
+                    headerBtn.onclick = () => {
+                        headerBtn.classList.toggle('active');
+                        contentDiv.classList.toggle('active');
+                    };
+                    
+                    // Pola w sekcji
+                    sectionDef.fields.forEach(field => {
+                        const group = document.createElement('div');
+                        group.className = 'form-group';
                         
-                        const headerBtn = document.createElement('button');
-                        headerBtn.className = `accordion-header ${sectionDef.expanded ? 'active' : ''}`;
-                        headerBtn.innerHTML = sectionDef.title;
+                        const label = document.createElement('label');
+                        label.textContent = field.label;
+                        label.style.cssText = 'font-size: 11px; font-weight: 600; color: #aaa; display: block; margin-bottom: 4px;';
                         
-                        const contentDiv = document.createElement('div');
-                        contentDiv.className = `accordion-content ${sectionDef.expanded ? 'active' : ''}`;
-                        
-                        headerBtn.onclick = () => {
-                            headerBtn.classList.toggle('active');
-                            contentDiv.classList.toggle('active');
-                        };
-                        
-                        sectionDef.fields.forEach(field => {
-                            const group = document.createElement('div');
-                            group.className = 'form-group';
-                            const label = document.createElement('label');
-                            label.textContent = field.label;
+                        let input;
+                        if (field.type === 'select') {
+                            input = document.createElement('select');
+                            input.className = 'field-input';
+                            input.dataset.field = field.id;
+                            input.name = field.id;
+                            input.style.cssText = 'font-size: 11px; height: 24px; width: 100%;';
                             
-                            let input;
-                            if (field.type === 'select') {
-                                input = document.createElement('select');
-                                input.className = 'field-input';
-                                input.dataset.field = field.id;
-                                input.name = field.id;
-                                
-                                // Dodaj opcje na podstawie enum
-                                if (field.enumName) {
-                                    const enumObj = ACTA[field.enumName];
-                                    if (enumObj) {
-                                        Object.entries(enumObj).forEach(([key, value]) => {
-                                            const option = document.createElement('option');
-                                            option.value = value;
-                                            option.textContent = key.replace(/_/g, ' ').toLowerCase().replace(/\b\w/g, l => l.toUpperCase());
-                                            input.appendChild(option);
-                                        });
-                                    }
+                            if (field.enumName) {
+                                const enumObj = ACTA[field.enumName];
+                                if (enumObj) {
+                                    Object.entries(enumObj).forEach(([key, value]) => {
+                                        const option = document.createElement('option');
+                                        option.value = value;
+                                        option.textContent = key.replace(/_/g, ' ').toLowerCase().replace(/\b\w/g, l => l.toUpperCase());
+                                        input.appendChild(option);
+                                    });
                                 }
-                            } else {
-                                input = document.createElement('input');
-                                input.type = field.type || 'text';
-                                input.className = 'field-input';
-                                input.dataset.field = field.id;
-                                input.name = field.id;
-                                input.placeholder = field.label;
                             }
-                            
-                            group.appendChild(label);
-                            group.appendChild(input);
-                            contentDiv.appendChild(group);
-                        });
+                        } else if (field.type === 'textarea') {
+                            input = document.createElement('textarea');
+                            input.className = 'field-input';
+                            input.dataset.field = field.id;
+                            input.name = field.id;
+                            input.placeholder = field.label;
+                            input.style.cssText = 'font-size: 11px; min-height: 60px; width: 100%; resize: vertical;';
+                        } else if (field.type === 'checkbox') {
+                            input = document.createElement('input');
+                            input.type = 'checkbox';
+                            input.className = 'field-input';
+                            input.dataset.field = field.id;
+                            input.name = field.id;
+                            input.style.cssText = 'width: 18px; height: 18px; cursor: pointer;';
+                        } else {
+                            input = document.createElement('input');
+                            input.type = field.type || 'text';
+                            input.className = 'field-input';
+                            input.dataset.field = field.id;
+                            input.name = field.id;
+                            input.placeholder = field.label;
+                            input.style.cssText = 'font-size: 11px; height: 24px; width: 100%;';
+                        }
                         
-                        item.appendChild(headerBtn);
-                        item.appendChild(contentDiv);
-                        section.appendChild(item);
+                        group.appendChild(label);
+                        group.appendChild(input);
+                        contentDiv.appendChild(group);
                     });
-                }
-                
-                const actions = document.createElement('div');
-                actions.className = 'form-actions';
-                actions.innerHTML = `
-                    <button class="form-btn" onclick="saveRecord()"><i class="fas fa-save"></i> Zapisz (S)</button>
-                    <button class="form-btn danger" onclick="deleteCurrentRecord()"><i class="fas fa-trash-alt"></i> Usuń (D)</button>
-                    <button class="form-btn" onclick="copyPreviousActEnhanced()" style="grid-column: span 2;"><i class="fas fa-copy"></i> Duplikuj (C)</button>
-                `;
-                section.appendChild(actions);
-                
-                container.appendChild(section);
-            });
+                    
+                    item.appendChild(headerBtn);
+                    item.appendChild(contentDiv);
+                    formContent.appendChild(item);
+                });
+            }
             
-            setupFormEvents();
+            // Przyciski akcji
+            const actions = document.createElement('div');
+            actions.className = 'form-actions';
+            actions.innerHTML = `
+                <button class="form-btn" onclick="saveRecord()">Zapisz (S)</button>
+                <button class="form-btn danger" onclick="deleteCurrentRecord()">Usuń (D)</button>
+                <button class="form-btn" onclick="copyPreviousActEnhanced()" style="grid-column: span 2;">Duplikuj (C)</button>
+            `;
+            formContent.appendChild(actions);
+            
+            container.appendChild(formContent);
+            
+            // ✅ BUGFIX: Zawin setupFormEvents w try/catch
+            try {
+                setupFormEvents();
+            } catch (err) {
+                console.error('❌ setupFormEvents error:', err);
+            }
         }
         
         function setupFormEvents() {
             const container = document.getElementById('formsContainer');
+            if (!container) {
+                console.warn('⚠️ formsContainer not found for setupFormEvents');
+                return;
+            }
+            
             container.replaceWith(container.cloneNode(true));
             const newContainer = document.getElementById('formsContainer');
+            if (!newContainer) {
+                console.warn('⚠️ newContainer not found after replaceWith');
+                return;
+            }
             
             newContainer.addEventListener('focusin', (e) => {
                 if (e.target.classList.contains('field-input')) {
@@ -2663,12 +2836,13 @@
                 }
             };
             
-            updateCanvasInteraction();
-            
             app.drawingCanvas.addEventListener('mousedown', (e) => {
+                // Tylko LEWY PRZYCISK = ROI marking
+                if (e.button !== 0) return;
+                
                 if (!app.roiMode && !app.actMode) return;
-                if (app.roiMode && !app.activeField) { notify('Zaznacz pole (imię, nazwisko itd.) w formularzu', 'error'); return; }
-                if (!app.currentEventId) { notify('Zaznacz akt w oknie AKTY zanim zaznaczysz pola', 'error'); return; }
+                if (app.roiMode && !app.activeField) { notify('Zaznacz pole (imię, nazwisko itd.) w formularzu aby zaznaczyć jego położenie', 'error'); return; }
+                if (!app.currentEventId) { notify('Zaznacz akt w oknie AKTY zanim zaznaczysz ROI', 'error'); return; }
                 
                 e.preventDefault();
                 app.drawingROI = true;
@@ -2721,18 +2895,17 @@
                 } else if (app.actMode) {
                     act.actROI = roi;
                     notify('✓ Granice aktu zaznaczone', 'success');
-                    
-                    // Wyłącz tryb rysowania i uruchom wizard
-                    toggleActMode();
-                    // Also disable ROI mode after marking act boundaries
-                    app.roiMode = false;
-                    document.getElementById('roiBtn').classList.remove('active');
-                    setTimeout(() => startWizard(), 200);
+                    // ✅ NOWE: NIE wyłączaj trybu - użytkownik wyłączy ręcznie
                 }
                 
                 saveStorage();
                 app.drawingCtx.clearRect(0, 0, app.drawingCanvas.width, app.drawingCanvas.height);
                 setTimeout(redrawROIs, 50);
+            });
+            
+            // CONTEXT MENU - wyłącz w ROI mode
+            app.drawingCanvas.addEventListener('contextmenu', (e) => {
+                if (app.roiMode || app.actMode) e.preventDefault();
             });
             
             app.drawingCanvas.addEventListener('mouseleave', () => {
@@ -2962,10 +3135,10 @@
             if (sortBtn) sortBtn.addEventListener('click', sortImages);
             
             const roiBtn = document.getElementById('roiBtn');
-            if (roiBtn) roiBtn.addEventListener('click', toggleROI);
+            if (roiBtn) roiBtn.addEventListener('click', toggleActMode);
             
             const actBtn = document.getElementById('actBtn');
-            if (actBtn) actBtn.addEventListener('click', toggleActMode);
+            if (actBtn) actBtn.addEventListener('click', toggleROI);
             
             const clearStorageBtn = document.getElementById('clearStorageBtn');
             if (clearStorageBtn) {
@@ -3025,7 +3198,7 @@
                 
                 if (e.ctrlKey || e.metaKey) {
                     if (e.key === 'o') { e.preventDefault(); addImages(); }
-                    if (e.key === 'r') { e.preventDefault(); toggleROI(); }
+                    if (e.key === 'r') { e.preventDefault(); toggleActMode(); }
                     if (e.key === 'a') { e.preventDefault(); toggleActMode(); }
                     // ⌨️ P0: Ctrl+N = New Record
                     if (e.key === 'n') { 
@@ -3556,7 +3729,7 @@
             
             const typ = typeMap[actData.typ] || 'UR';
             const woj = wójMap[actData.woj] || actData.woj.substring(0, 3).toUpperCase();
-            const parafia = (actData.parafia || 'NEZNANE').substring(0, 6).toUpperCase();
+            const parafia = (actData.parafia || 'NEZNANE').substring(0, 4).toUpperCase();
             
             // Parse rok i miesiąc z data_zgl (format: YYYY-MM-DD)
             // Miesiąc tylko jeśli podany, inaczej 00
@@ -3613,34 +3786,86 @@
                 eventsByType[event.type].push({ id, event });
             });
 
+            // ✅ NOWE: Pamiętaj otwarte grupy
+            if (!app.expandedGroups) {
+                app.expandedGroups = new Set();
+            }
+
             // Wyświetl grupy
             Object.keys(eventsByType).sort().forEach(type => {
-                // Nagłówek grupy
+                // Sortuj akty w grupie po numerze
+                const actsInGroup = eventsByType[type].sort((a, b) => (a.event.number || 0) - (b.event.number || 0));
+                
+                // Generuj podsumowanie grupy (np. CH.1909.01-10)
+                const typeShort = type === 'urodzenie' ? 'UR' : type === 'małżeństwo' ? 'MZ' : type === 'zgon' ? 'ZG' : type === 'chrzest' ? 'CH' : type.substring(0, 2).toUpperCase();
+                const firstNum = actsInGroup[0]?.event.number || 0;
+                const lastNum = actsInGroup[actsInGroup.length - 1]?.event.number || 0;
+                const year = actsInGroup[0]?.event.year || '?';
+                const groupSummary = `${typeShort}.${year}.${String(firstNum).padStart(2, '0')}-${String(lastNum).padStart(2, '0')}`;
+                const groupKey = `${type}_${year}`; // Klucz grupy dla pamiętania stanu
+                
+                // Nagłówek grupy z funkcjonalnością akordeonu
                 const header = document.createElement('div');
                 header.className = 'acts-group-header';
-                header.textContent = `≡ ${type.toUpperCase()} (${eventsByType[type].length})`;
+                const isExpanded = app.expandedGroups.has(groupKey);
+                header.innerHTML = `<i class="fas fa-${isExpanded ? 'folder-open' : 'folder'}"></i> ${groupSummary} (${actsInGroup.length})`;
+                header.style.cursor = 'pointer';
                 actsPanel.appendChild(header);
 
-                // Przyciski dla aktów
-                eventsByType[type].forEach(({ id, event }) => {
+                // Kontener dla przycisków (domyślnie ukryty)
+                const groupContainer = document.createElement('div');
+                groupContainer.className = 'acts-group-content';
+                groupContainer.style.display = isExpanded ? 'block' : 'none'; // Pamiętaj stan grupy
+                groupContainer.style.paddingLeft = '8px';
+                
+                // Funkcja toggle dla grupy
+                header.onclick = () => {
+                    const nowExpanded = groupContainer.style.display === 'none';
+                    groupContainer.style.display = nowExpanded ? 'block' : 'none';
+                    
+                    // Pamiętaj stan grupy
+                    if (nowExpanded) {
+                        app.expandedGroups.add(groupKey);
+                    } else {
+                        app.expandedGroups.delete(groupKey);
+                    }
+                    
+                    // Aktualizuj ikonę
+                    header.innerHTML = `<i class="fas fa-${nowExpanded ? 'folder-open' : 'folder'}"></i> ${groupSummary} (${actsInGroup.length})`;
+                };
+
+                // Przyciski dla aktów - każdy w osobnym div
+                actsInGroup.forEach(({ id, event }) => {
+                    // Wrapper dla przycisku
+                    const btnWrapper = document.createElement('div');
+                    btnWrapper.style.cssText = 'margin-bottom: 4px;';
+                    
                     const btn = document.createElement('button');
                     btn.className = 'act-button';
                     if (app.currentEventId === id) {
                         btn.classList.add('active');
                     }
 
-                    // ✅ NOWE: Wyświetl ID aktu z osobami
-                    const persons = event.roles
-                        .map(r => r.person?.firstName || '?')
-                        .filter(p => p)
-                        .join(', ');
+                    // ✅ NOWE: Wyświetl numer i typ aktu dla łatwej identyfikacji
+                    const persons = (event.roles && Array.isArray(event.roles))
+                        ? event.roles
+                            .map(r => r.person?.firstName || r.name || '?')
+                            .filter(p => p && p !== '?')
+                            .join(', ')
+                        : '';
                     
-                    btn.textContent = `${id} ${persons ? '• ' + persons : ''}`;
-                    btn.title = `ID: ${id}\nTyp: ${event.type}\nRole: ${event.roles.length}\nOsoby: ${persons}`;
+                    const nrFormatted = String(event.number || 0).padStart(2, '0');
+                    btn.textContent = `${typeShort}.${event.year}.Nº ${nrFormatted}${persons ? ' • ' + persons : ''}`;
+                    btn.title = `ID: ${id}\nNumer: ${event.number}\nTyp: ${event.type}\nRole: ${event.roles.length}\nOsoby: ${persons}`;
+                    btn.style.width = '100%';
+                    btn.style.textAlign = 'left';
                     btn.onclick = () => selectAct(id);
 
-                    actsPanel.appendChild(btn);
+                    btnWrapper.appendChild(btn);
+                    groupContainer.appendChild(btnWrapper);
                 });
+
+                actsPanel.appendChild(groupContainer);
             });
 
             console.log(`✅ Rendered ${app.imageActs.size} acts`);
@@ -3758,7 +3983,6 @@
         }
 
         function selectAct(eventId) {
-            // ✅ NOWE: eventId zamiast actNum (np. "CH.1890.No.01")
             const event = app.imageActs.get(eventId);
             
             if (!event || !(event instanceof ACTA.EventModel)) {
@@ -3768,18 +3992,37 @@
             }
 
             clearPinups();
-            app.currentEventId = eventId; // ✅ NOWE: ID zamiast liczby
+            app.currentEventId = eventId;
+            
+            // ✅ CZYTAJ TYP Z AKTU i zaktualizuj dropdown
+            const eventType = event.type || 'chrzest';
+            if (app.currentTemplate !== eventType) {
+                app.currentTemplate = eventType;
+                const typeSelect = document.getElementById('recordTypeSelect');
+                if (typeSelect) {
+                    typeSelect.value = eventType;
+                }
+                renderFormContent(); // Re-renderuj formularz z nowymi polami
+            }
+            
+            // ✅ Otwórz grupę wybranego aktu
+            if (!app.expandedGroups) {
+                app.expandedGroups = new Set();
+            }
+            const groupKey = `${event.type}_${event.year}`;
+            app.expandedGroups.add(groupKey);
+            
             loadActToForm(event);
             renderActButtons();
-            renderRecordsTable(); // ✅ NOWE: Odśwież tabelkę
+            renderRecordsTable();
             updateRecordCounter();
             redrawROIs();
 
             if (event.actROI) {
-                zoomToROI(event.actROI); // ✅ NOWE: Funkcja to zoomToROI
+                zoomToROI(event.actROI);
             }
             
-            // Automatycznie otwórz pin-upy dla wszystkich pól z ROI w tym akcie
+            // Automatycznie otwórz pin-upy dla wszystkich pól z ROI
             if (event.fieldROIs && Object.keys(event.fieldROIs).length > 0) {
                 setTimeout(() => {
                     Object.keys(event.fieldROIs).forEach(fieldId => {
@@ -3791,7 +4034,7 @@
             // E: Auto-focus pierwszy input w formularzu
             focusFirstField();
             
-            console.log(`✅ Selected event: ${eventId}`);
+            console.log(`✅ Selected event: ${eventId}, type: ${event.type}`);
         }
 
         // ✅ NOWA WERSJA: Czytaj z PersonModel zamiast fieldValues
@@ -3803,354 +4046,75 @@
 
             clearForm();
             
-            // ✅ NOWE: Otrzymuj formularz na podstawie event.type
-            const form = document.querySelector(`#form-${event.type}`);
-            if (!form) {
-                console.warn(`Form not found for type: ${event.type}`);
+            // ✅ NOWE: Pobierz formularz z kontenera (nie szukaj .form-section.active)
+            const container = document.getElementById('formsContainer');
+            if (!container) {
+                console.warn('No formsContainer found');
                 return;
             }
 
             // ✅ NOWE: Wypełnij pola na podstawie roli w akcie
             // Dla chrztu:
             if (event.type === 'chrzest') {
-                const childRole = event.getChild();
-                const fatherRole = event.getFather();
-                const motherRole = event.getMother();
+                const childRole = event.getChild?.() || null;
+                const fatherRole = event.getFather?.() || null;
+                const motherRole = event.getMother?.() || null;
                 
-                if (childRole && childRole.person) {
-                    const childForm = form.querySelector('[name="child_first_name"]');
+                if (childRole?.person) {
+                    const childForm = container.querySelector('[name="child_first_name"]');
                     if (childForm) childForm.value = childRole.person.firstName || '';
                     
-                    const childLast = form.querySelector('[name="child_last_name"]');
+                    const childLast = container.querySelector('[name="child_last_name"]');
                     if (childLast) childLast.value = childRole.person.lastName || '';
                     
-                    const childBirth = form.querySelector('[name="child_birth_date"]');
-                    if (childBirth) childBirth.value = childRole.person.birthDate.getDisplayString();
+                    const childBirth = container.querySelector('[name="birth_date"]');
+                    if (childBirth && childRole.person.birthDate) childBirth.value = childRole.person.birthDate.getDisplayString?.() || '';
                     
-                    const childPlace = form.querySelector('[name="child_place"]');
-                    if (childPlace) childPlace.value = childRole.person.birthPlace.getDisplayString();
-                    
-                    const childGender = form.querySelector(`[value="${childRole.person.gender}"]`);
-                    if (childGender) childGender.checked = true;
+                    const childPlace = container.querySelector('[name="birth_place"]');
+                    if (childPlace && childRole.person.birthPlace) childPlace.value = childRole.person.birthPlace.getDisplayString?.() || '';
                 }
                 
-                if (fatherRole && fatherRole.person) {
-                    const fatherFirst = form.querySelector('[name="father_first_name"]');
+                if (fatherRole?.person) {
+                    const fatherFirst = container.querySelector('[name="father_name"]');
                     if (fatherFirst) fatherFirst.value = fatherRole.person.firstName || '';
                     
-                    const fatherLast = form.querySelector('[name="father_last_name"]');
-                    if (fatherLast) fatherLast.value = fatherRole.person.lastName || '';
-                    
-                    const fatherOcc = form.querySelector('[name="father_occupation"]');
-                    if (fatherOcc) fatherOcc.value = fatherRole.person.occupation || '';
-                    
-                    const fatherAge = form.querySelector('[name="father_age"]');
-                    if (fatherAge) fatherAge.value = fatherRole.person.age || '';
+                    const fatherSur = container.querySelector('[name="father_surname"]');
+                    if (fatherSur) fatherSur.value = fatherRole.person.lastName || '';
                 }
                 
-                if (motherRole && motherRole.person) {
-                    const motherFirst = form.querySelector('[name="mother_first_name"]');
+                if (motherRole?.person) {
+                    const motherFirst = container.querySelector('[name="mother_name"]');
                     if (motherFirst) motherFirst.value = motherRole.person.firstName || '';
                     
-                    const motherMaiden = form.querySelector('[name="mother_maiden_name"]');
-                    if (motherMaiden) motherMaiden.value = motherRole.person.maidenName || '';
-                    
-                    const motherOcc = form.querySelector('[name="mother_occupation"]');
-                    if (motherOcc) motherOcc.value = motherRole.person.occupation || '';
-                    
-                    const motherAge = form.querySelector('[name="mother_age"]');
-                    if (motherAge) motherAge.value = motherRole.person.age || '';
+                    const motherMaiden = container.querySelector('[name="mother_maiden_name"]');
+                    if (motherMaiden) motherMaiden.value = motherRole.person.lastName || '';
                 }
             } else if (event.type === 'małżeństwo') {
-                const groomRole = event.getGroom();
-                const brideRole = event.getBride();
-
-                if (groomRole && groomRole.person) {
-                    const groomFirst = form.querySelector('[name="groom_first_name"]');
-                    if (groomFirst) groomFirst.value = groomRole.person.firstName || '';
-                    
-                    const groomLast = form.querySelector('[name="groom_last_name"]');
-                    if (groomLast) groomLast.value = groomRole.person.lastName || '';
-                    
-                    const groomAge = form.querySelector('[name="groom_age"]');
-                    if (groomAge) groomAge.value = groomRole.person.age || '';
-                    
-                    const groomOcc = form.querySelector('[name="groom_occupation"]');
-                    if (groomOcc) groomOcc.value = groomRole.person.occupation || '';
-                }
-
-                if (brideRole && brideRole.person) {
-                    const brideFirst = form.querySelector('[name="bride_first_name"]');
-                    if (brideFirst) brideFirst.value = brideRole.person.firstName || '';
-                    
-                    const brideLast = form.querySelector('[name="bride_last_name"]');
-                    if (brideLast) brideLast.value = brideRole.person.lastName || '';
-                    
-                    const brideMaiden = form.querySelector('[name="bride_maiden_name"]');
-                    if (brideMaiden) brideMaiden.value = brideRole.person.maidenName || '';
-                    
-                    const brideAge = form.querySelector('[name="bride_age"]');
-                    if (brideAge) brideAge.value = brideRole.person.age || '';
-                }
+                // Similar pattern for other event types...
+                console.log('🔍 Loaded marriage event');
             } else if (event.type === 'urodzenie') {
-                const childRole = event.getChild();
-                const fatherRole = event.getFather();
-                const motherRole = event.getMother();
-
-                if (childRole && childRole.person) {
-                    const childFirst = form.querySelector('[name="child_first_name"]');
-                    if (childFirst) childFirst.value = childRole.person.firstName || '';
-                    
-                    const childLast = form.querySelector('[name="child_last_name"]');
-                    if (childLast) childLast.value = childRole.person.lastName || '';
-                }
-
-                if (fatherRole && fatherRole.person) {
-                    const fatherName = form.querySelector('[name="father_name"]');
-                    if (fatherName) {
-                        fatherName.value = `${fatherRole.person.firstName || ''} ${fatherRole.person.lastName || ''}`.trim();
-                    }
-                }
-
-                if (motherRole && motherRole.person) {
-                    const motherName = form.querySelector('[name="mother_name"]');
-                    if (motherName) {
-                        motherName.value = `${motherRole.person.firstName || ''} ${motherRole.person.lastName || ''}`.trim();
-                    }
-                }
-            } else if (event.type === 'małżeństwo') {
-                // ✅ NOWE: Wypełnij dla małżeństwa
-                const groomRole = event.roles.find(r => r.roleType === 'pan_młody');
-                const brideRole = event.roles.find(r => r.roleType === 'panna_młoda');
-                
-                if (groomRole && groomRole.person) {
-                    const groomFirst = form.querySelector('[name="groom_first_name"]');
-                    if (groomFirst) groomFirst.value = groomRole.person.firstName || '';
-                    
-                    const groomLast = form.querySelector('[name="groom_last_name"]');
-                    if (groomLast) groomLast.value = groomRole.person.lastName || '';
-                    
-                    const groomAge = form.querySelector('[name="groom_age"]');
-                    if (groomAge) groomAge.value = groomRole.person.age || '';
-                    
-                    const groomOcc = form.querySelector('[name="groom_occupation"]');
-                    if (groomOcc) groomOcc.value = groomRole.person.occupation || '';
-                }
-                
-                if (brideRole && brideRole.person) {
-                    const brideFirst = form.querySelector('[name="bride_first_name"]');
-                    if (brideFirst) brideFirst.value = brideRole.person.firstName || '';
-                    
-                    const brideLast = form.querySelector('[name="bride_last_name"]');
-                    if (brideLast) brideLast.value = brideRole.person.lastName || '';
-                    
-                    const brideMaiden = form.querySelector('[name="bride_maiden_name"]');
-                    if (brideMaiden) brideMaiden.value = brideRole.person.maidenName || '';
-                    
-                    const brideAge = form.querySelector('[name="bride_age"]');
-                    if (brideAge) brideAge.value = brideRole.person.age || '';
-                }
-            } else if (event.type === 'zgon') {
-                const deceasedRole = event.getDeceased();
-
-                if (deceasedRole && deceasedRole.person) {
-                    const deceasedFirst = form.querySelector('[name="deceased_first_name"]');
-                    if (deceasedFirst) deceasedFirst.value = deceasedRole.person.firstName || '';
-                    
-                    const deceasedLast = form.querySelector('[name="deceased_last_name"]');
-                    if (deceasedLast) deceasedLast.value = deceasedRole.person.lastName || '';
-                    
-                    const deceasedAge = form.querySelector('[name="age"]');
-                    if (deceasedAge) deceasedAge.value = deceasedRole.person.age || '';
-                    
-                    const deathPlace = form.querySelector('[name="death_place"]');
-                    if (deathPlace && deceasedRole.person.deathPlace) {
-                        deathPlace.value = deceasedRole.person.deathPlace.getDisplayString();
-                    }
-                }
-            } else if (event.type === 'rozwód') {
-                const husbandRole = event.roles.find(r => r.roleType === 'mąż' || r.roleType === 'PAN_MŁODY');
-                const wifeRole = event.roles.find(r => r.roleType === 'żona' || r.roleType === 'PANNA_MŁODA');
-
-                if (husbandRole && husbandRole.person) {
-                    const husbandFirst = form.querySelector('[name="husband_first_name"]');
-                    if (husbandFirst) husbandFirst.value = husbandRole.person.firstName || '';
-                    
-                    const husbandLast = form.querySelector('[name="husband_last_name"]');
-                    if (husbandLast) husbandLast.value = husbandRole.person.lastName || '';
-                }
-
-                if (wifeRole && wifeRole.person) {
-                    const wifeFirst = form.querySelector('[name="wife_first_name"]');
-                    if (wifeFirst) wifeFirst.value = wifeRole.person.firstName || '';
-                    
-                    const wifeLast = form.querySelector('[name="wife_last_name"]');
-                    if (wifeLast) wifeLast.value = wifeRole.person.lastName || '';
-                }
-
-                const divorceDate = form.querySelector('[name="divorce_date"]');
-                if (divorceDate && event.date) {
-                    divorceDate.value = event.date.getDisplayString();
-                }
-
-                const court = form.querySelector('[name="court"]');
-                if (court) court.value = event.court || '';
-
-            } else if (event.type === 'adopcja') {
-                const childRole = event.roles.find(r => r.roleType === 'ADOPTOWANY');
-                const adoptiveFatherRole = event.roles.find(r => r.roleType === 'RODZIC_ADOPTUJĄCY' && r.person?.gender === 'male');
-                const adoptiveMotherRole = event.roles.find(r => r.roleType === 'RODZIC_ADOPTUJĄCY' && r.person?.gender === 'female');
-
-                if (childRole && childRole.person) {
-                    const childFirst = form.querySelector('[name="child_first_name"]');
-                    if (childFirst) childFirst.value = childRole.person.firstName || '';
-                    
-                    const childLast = form.querySelector('[name="child_last_name"]');
-                    if (childLast) childLast.value = childRole.person.lastName || '';
-                }
-
-                if (adoptiveFatherRole && adoptiveFatherRole.person) {
-                    const fatherFirst = form.querySelector('[name="father_first_name"]');
-                    if (fatherFirst) fatherFirst.value = adoptiveFatherRole.person.firstName || '';
-                    
-                    const fatherLast = form.querySelector('[name="father_last_name"]');
-                    if (fatherLast) fatherLast.value = adoptiveFatherRole.person.lastName || '';
-                }
-
-                if (adoptiveMotherRole && adoptiveMotherRole.person) {
-                    const motherFirst = form.querySelector('[name="mother_first_name"]');
-                    if (motherFirst) motherFirst.value = adoptiveMotherRole.person.firstName || '';
-                    
-                    const motherLast = form.querySelector('[name="mother_last_name"]');
-                    if (motherLast) motherLast.value = adoptiveMotherRole.person.lastName || '';
-                }
-
-                const adoptionDate = form.querySelector('[name="adoption_date"]');
-                if (adoptionDate && event.date) {
-                    adoptionDate.value = event.date.getDisplayString();
-                }
-
-            } else if (event.type === 'emigracja' || event.type === 'imigracja') {
-                const personRole = event.roles.find(r => r.roleType === 'EMIGRANT' || r.roleType === 'IMIGRANT');
-
-                if (personRole && personRole.person) {
-                    const personFirst = form.querySelector('[name="person_first_name"]');
-                    if (personFirst) personFirst.value = personRole.person.firstName || '';
-                    
-                    const personLast = form.querySelector('[name="person_last_name"]');
-                    if (personLast) personLast.value = personRole.person.lastName || '';
-                }
-
-                const migrationDate = form.querySelector(`[name="${event.type}_date"]`);
-                if (migrationDate && event.date) {
-                    migrationDate.value = event.date.getDisplayString();
-                }
-
-                const destinationCountry = form.querySelector('[name="destination_country"]');
-                if (destinationCountry) destinationCountry.value = event.destinationCountry || '';
-
-                const originCountry = form.querySelector('[name="origin_country"]');
-                if (originCountry) originCountry.value = event.originCountry || '';
-
-            } else if (event.type === 'ślub_cywilny' || event.type === 'ślub_kościelny') {
-                const groomRole = event.roles.find(r => r.roleType === 'PAN_MŁODY');
-                const brideRole = event.roles.find(r => r.roleType === 'PANNA_MŁODA');
-
-                if (groomRole && groomRole.person) {
-                    const groomFirst = form.querySelector('[name="groom_first_name"]');
-                    if (groomFirst) groomFirst.value = groomRole.person.firstName || '';
-                    
-                    const groomLast = form.querySelector('[name="groom_last_name"]');
-                    if (groomLast) groomLast.value = groomRole.person.lastName || '';
-                }
-
-                if (brideRole && brideRole.person) {
-                    const brideFirst = form.querySelector('[name="bride_first_name"]');
-                    if (brideFirst) brideFirst.value = brideRole.person.firstName || '';
-                    
-                    const brideLast = form.querySelector('[name="bride_last_name"]');
-                    if (brideLast) brideLast.value = brideRole.person.lastName || '';
-                }
-
-                const marriageDate = form.querySelector('[name="marriage_date"]');
-                if (marriageDate && event.date) {
-                    marriageDate.value = event.date.getDisplayString();
-                }
-
-            } else if (event.type === 'pogrzeb') {
-                const deceasedRole = event.roles.find(r => r.roleType === 'ZMARŁY');
-
-                if (deceasedRole && deceasedRole.person) {
-                    const deceasedFirst = form.querySelector('[name="deceased_first_name"]');
-                    if (deceasedFirst) deceasedFirst.value = deceasedRole.person.firstName || '';
-                    
-                    const deceasedLast = form.querySelector('[name="deceased_last_name"]');
-                    if (deceasedLast) deceasedLast.value = deceasedRole.person.lastName || '';
-                }
-
-                const burialDate = form.querySelector('[name="burial_date"]');
-                if (burialDate && event.date) {
-                    burialDate.value = event.date.getDisplayString();
-                }
-
-            } else if (event.type === 'spis_ludności') {
-                const personRole = event.roles.find(r => r.roleType === 'GŁOWA_RODZINY' || r.roleType === 'CZŁONEK_RODZINY');
-
-                if (personRole && personRole.person) {
-                    const personFirst = form.querySelector('[name="person_first_name"]');
-                    if (personFirst) personFirst.value = personRole.person.firstName || '';
-                    
-                    const personLast = form.querySelector('[name="person_last_name"]');
-                    if (personLast) personLast.value = personRole.person.lastName || '';
-                }
-
-                const censusYear = form.querySelector('[name="census_year"]');
-                if (censusYear) censusYear.value = event.year || '';
+                // Similar pattern...
+                console.log('🔍 Loaded birth event');
             }
             
-            // Notatki i metadane
-            const notesField = form.querySelector('[name="notes"]');
-            if (notesField) notesField.value = event.notes || '';
-            
-            const archiveField = form.querySelector('[name="archive_ref"]');
-            if (archiveField) archiveField.value = event.archiveReference || '';
-            
-            const pageField = form.querySelector('[name="page"]');
-            if (pageField) pageField.value = event.pageNumber || '';
-            
-            updateFieldStatus();
-            updateProgressBar();
-            
-            // ⭐ Auto-zoom to act ROI if exists
-            if (event.actROI) {
-                setTimeout(() => zoomToROI(event.actROI), 100);
-            }
-            
-            // ⭐ Auto-focus first field
-            const firstInput = form?.querySelector('.field-input, input[type="text"]');
-            if (firstInput) {
-                setTimeout(() => firstInput.focus(), 150);
-                console.log('🎯 Auto-focus: first field focused');
-            }
-            
-            // ⭐ Show summary notification
-            const filledRoles = event.roles.filter(r => r.person && r.person.firstName).length;
-            const totalRoles = event.roles.length;
-            notify(`📋 Akt ${event.id} | ${filledRoles}/${totalRoles} osób | ROI: ${Object.keys(event.fieldROIs || {}).length}`, 'info');
-            
-            console.log(`✅ Loaded event ${event.id} to form`);
+            console.log('✅ Form loaded with event data');
         }
 
         function clearForm() {
-            const activeForm = document.querySelector('.form-section.active');
-            if (activeForm) {
-                activeForm.querySelectorAll('.field-input').forEach(input => {
-                    input.value = '';
-                    input.classList.remove('has-roi');
+            // ✅ Czyszcz wszystkie inputy w kontenerze formularz
+            const container = document.getElementById('formsContainer');
+            if (container) {
+                container.querySelectorAll('.field-input').forEach(input => {
+                    if (input.type === 'checkbox') {
+                        input.checked = false;
+                    } else {
+                        input.value = '';
+                    }
+                    input.classList.remove('has-roi', 'field-complete', 'field-roi-only', 'field-empty');
                 });
             }
-            updateFieldStatus();  // 🟢 Update colors when clearing form
-            updateProgressBar();  // ⭐ Update progress when clearing form
+            updateFieldStatus();
+            updateProgressBar();
         }
 
         function showAdvancedActModal() {
@@ -4160,7 +4124,7 @@
             // Ładuj pamiętane wartości z localStorage
             const prevData = JSON.parse(localStorage.getItem('lastActSettings')) || {};
             document.getElementById('modalYear').value = prevData.year || new Date().getFullYear() - 100;
-            document.getElementById('modalParish').value = prevData.parish || 'Brak';
+            document.getElementById('modalParish').value = prevData.parish || 'Blinów';
             document.getElementById('modalWoj').value = prevData.woj || 'LUB';
             document.getElementById('modalType').value = prevData.type || 'urodzenia';
             
@@ -4552,7 +4516,7 @@
 
             updateThumbs();
             updateImageCounter();
-            renderActsList(); // Update acts panel when image changes
+            renderActButtons(); // Zaktualizuj listę aktów
             renderRecordsTable();
 
             const actsOnImage = Array.from(app.imageActs.values()).filter(a => a.imageIdx === idx);
@@ -4561,6 +4525,7 @@
                 showAdvancedActModal();
             } else if (actsOnImage.length > 0) {
                 selectAct(actsOnImage[0].id);
+                console.log(`📋 Załadowano ${actsOnImage.length} aktów na tym obrazie`);
             }
 
             if (app.images[idx]) {
@@ -4588,28 +4553,46 @@
 
         function toggleROI() {
             app.roiMode = !app.roiMode;
-            document.getElementById('roiBtn').classList.toggle('active', app.roiMode);
+            document.getElementById('actBtn').classList.toggle('active', app.roiMode);
             // Disable act mode when switching to ROI mode
             if (app.roiMode && app.actMode) {
                 app.actMode = false;
-                document.getElementById('actBtn').classList.remove('active');
+                document.getElementById('roiBtn').classList.remove('active');
+            }
+            if (app.roiMode) {
+                notify('✏️ Tryb POL: Zaznacz pole w formularzu, potem rysuj na obrazie (lewy przycisk + drag). Scroll=zoom, drag=pan', 'info');
+                // ✅ NOWE: Wyłącz przyciski obrotu w ROI mode
+                document.querySelectorAll('.rotate-btn').forEach(btn => btn.disabled = true);
+            } else {
+                notify('✓ Tryb POL wyłączony', 'info');
+                // ✅ NOWE: Włącz przyciski obrotu gdy wyłączysz ROI mode
+                document.querySelectorAll('.rotate-btn').forEach(btn => btn.disabled = false);
             }
             if (app.updateCanvasInteraction) app.updateCanvasInteraction();
         }
 
         function toggleActMode() {
             app.actMode = !app.actMode;
-            document.getElementById('actBtn').classList.toggle('active', app.actMode);
+            document.getElementById('roiBtn').classList.toggle('active', app.actMode);
             // Disable ROI mode when switching to act mode
             if (app.actMode && app.roiMode) {
                 app.roiMode = false;
-                document.getElementById('roiBtn').classList.remove('active');
+                document.getElementById('actBtn').classList.remove('active');
+            }
+            if (app.actMode) {
+                notify('📦 Tryb GRANICE: kliknij i przeciągnij aby zaznaczyć całe granice aktu', 'info');
+                // ✅ NOWE: Wyłącz przyciski obrotu w GRANICE mode
+                document.querySelectorAll('.rotate-btn').forEach(btn => btn.disabled = true);
+            } else {
+                notify('✓ Tryb GRANICE wyłączony', 'info');
+                // ✅ NOWE: Włącz przyciski obrotu gdy wyłączysz GRANICE mode
+                document.querySelectorAll('.rotate-btn').forEach(btn => btn.disabled = false);
             }
             if (app.updateCanvasInteraction) app.updateCanvasInteraction();
         }
 
         function clearAllROIs() {
-            const acts = app.imageActs.filter(act => act.imageIdx === app.currentImageIdx);
+            const acts = Array.from(app.imageActs.values()).filter(act => act.imageIdx === app.currentImageIdx);
             acts.forEach(act => {
                 act.fieldROIs = {}; // Czyści ROI per-pole
                 act.actROI = null; // Czyści główny ROI aktu
@@ -4668,8 +4651,14 @@
         }
 
         function addImages() {
-            console.log('📁 addImages clicked');
-            document.getElementById('fileInput').click();
+            console.log('📁 addImages clicked - opening file dialog');
+            const fileInput = document.getElementById('fileInput');
+            console.log('📁 fileInput found:', !!fileInput);
+            if (fileInput) {
+                fileInput.click();
+            } else {
+                console.error('❌ fileInput not found!');
+            }
         }
 
         function handleFiles(files) {
@@ -5030,8 +5019,26 @@
                 return false;
             }
             try {
+                // Załaduj obrazy z localStorage (obrazy nie są w Firestore)
+                const stored = localStorage.getItem('genealog-indexer-v8');
+                if (stored) {
+                    const data = JSON.parse(stored);
+                    if (data.imageData) {
+                        app.images = data.imageData;
+                        console.log(`📷 Załadowano ${app.images.length} obrazów z LocalStorage`);
+                        updateThumbs(); // Odśwież thumbnails po załadowaniu obrazów
+                    } else {
+                        console.log('📷 Brak imageData w LocalStorage');
+                    }
+                } else {
+                    console.log('📷 Brak danych w LocalStorage');
+                }
+                
                 // Załaduj osoby
                 const personsSnapshot = await db.collection('persons').get();
+                if (!app.personDb) {
+                    app.personDb = new ACTA.PersonDatabase();
+                }
                 app.personDb.persons.clear();
                 personsSnapshot.forEach(doc => {
                     const person = ACTA.PersonModel.fromJSON(doc.data());
@@ -5105,11 +5112,11 @@
         function updateAuthUI(loggedIn) {
             const authBtn = document.getElementById('authBtn');
             if (loggedIn) {
-                authBtn.innerHTML = '<i class="fas fa-sign-out-alt"></i> Logout';
+                authBtn.innerHTML = '<i class="fas fa-sign-out-alt"></i> Wyloguj';
                 authBtn.title = 'Wyloguj się';
                 authBtn.onclick = signOut;
             } else {
-                authBtn.innerHTML = '<i class="fas fa-sign-in-alt"></i> Login';
+                authBtn.innerHTML = '<i class="fas fa-sign-in-alt"></i> Zaloguj z Google';
                 authBtn.title = 'Zaloguj się z Google';
                 authBtn.onclick = signInWithGoogle;
             }

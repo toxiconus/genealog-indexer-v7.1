@@ -107,6 +107,63 @@ const RelationTypes = {
 };
 
 // ============================================================================
+// STARE ENUMY (zachowane dla kompatybilności wstecznej)
+// ============================================================================
+
+const Occupations = [
+  'chłopi',
+  'robotnicy',
+  'kupcy',
+  'urzędnicy',
+  'wojsko'
+];
+
+const Diseases = [
+  'gruźlica',
+  'dur brzuszny',
+  'cholera',
+  'dyzenteria',
+  'odra'
+];
+
+const CivilStatus = [
+  'kawaler',
+  'panna',
+  'żonaty',
+  'zamężna',
+  'wdowiec',
+  'wdowa'
+];
+
+const Nationalities = [
+  'polska',
+  'niemiecka',
+  'żydowska',
+  'ukraińska',
+  'rosyjska'
+];
+
+const Citizenships = [
+  'polskie',
+  'niemieckie',
+  'austriackie',
+  'rosyjskie'
+];
+
+const EducationLevels = [
+  'analfabeta',
+  'podstawowe',
+  'średnie',
+  'wyższe'
+];
+
+const SocialStatuses = [
+  'niski',
+  'średni',
+  'wysoki'
+];
+
+// ============================================================================
 // KLASY WSPOMAGAJĄCE - Daty i Miejsca
 // ============================================================================
 
@@ -1194,6 +1251,7 @@ class EventModel {
     this.sourceId = null;
     this.recordId = null; // np. 'LIN1789_CHR_042'
     this.year = year;
+    this.number = number || 1; // ✅ NOWE: zmienione z recordNumber na number
     this.recordNumber = number || 1;
     this.parish = null;
     this.date = new HistoricalDate();
@@ -1201,6 +1259,7 @@ class EventModel {
     
     // Uczestnicy
     this.involvedPersons = []; // [{personId?: string, role: RoleTypes, name: string, surname: string, confidence?: number}]
+    this.roles = []; // ✅ NOWE: inicjalizacja roli jako pusta tablica
     
     // Szczegóły specyficzne dla typu
     this.details = {}; // pola specyficzne dla typu aktu
@@ -1339,35 +1398,36 @@ class EventModel {
     return {
       id: this.id,
       recordType: this.recordType, // Zamiast type
+      type: this.type, // ✅ NOWE: alias
       year: this.year,
       number: this.number,
-      date: this.date.toJSON(),
-      place: this.place.toJSON(),
+      date: this.date ? this.date.toJSON() : null,
+      place: this.place ? this.place.toJSON() : null,
       
       // Firestore: denormalizacja
-      involvedPersons: this.involvedPersons,
-      roles: this.roles.map(r => r.toJSON()),
-      details: this.details,
+      involvedPersons: this.involvedPersons || [],
+      roles: (this.roles && Array.isArray(this.roles)) ? this.roles.map(r => r && typeof r.toJSON === 'function' ? r.toJSON() : r) : [],
+      details: this.details || {},
       
-      relationships: this.relationships.map(r => r.toJSON()),
-      sources: this.sources,
-      archiveReference: this.archiveReference,
-      bookNumber: this.bookNumber,
-      pageNumber: this.pageNumber,
-      officialName: this.officialName,
-      actROI: this.actROI,
-      fieldROIs: this.fieldROIs,
+      relationships: (this.relationships && Array.isArray(this.relationships)) ? this.relationships.map(r => r && typeof r.toJSON === 'function' ? r.toJSON() : r) : [],
+      sources: this.sources || [],
+      archiveReference: this.archiveReference || '',
+      bookNumber: this.bookNumber || '',
+      pageNumber: this.pageNumber || '',
+      officialName: this.officialName || '',
+      actROI: this.actROI || null,
+      fieldROIs: this.fieldROIs || {},
       
       // Firestore: podkolekcja provenance
-      provenance: this.provenance.map(p => ({
+      provenance: (this.provenance && Array.isArray(this.provenance)) ? this.provenance.map(p => ({
         ...p,
-        date: p.date.toISOString()
-      })),
+        date: p && p.date ? (typeof p.date === 'string' ? p.date : p.date.toISOString()) : new Date().toISOString()
+      })) : [],
       
-      confidence: this.confidence,
-      notes: this.notes,
-      tags: this.tags,
-      lastModified: this.lastModified.toISOString(),
+      confidence: this.confidence || 100,
+      notes: this.notes || '',
+      tags: this.tags || [],
+      lastModified: this.lastModified ? this.lastModified.toISOString() : new Date().toISOString(),
       
       // ACTACOM: Przyczyna zgonu
       deathCause: this.deathCause ? {
@@ -2494,90 +2554,9 @@ class SourceModel {
   }
 }
 
-const Diseases = {
-  PNEUMONIA: 'Zapalenie płuc',
-  TUBERCULOSIS: 'Gruźlica',
-  TYPHUS: 'Dur brzuszny',
-  CHOLERA: 'Cholera',
-  SMALLPOX: 'Ospa',
-  DYSENTERY: 'Czerwonka',
-  INFLUENZA: 'Grypa',
-  CHILDBED_FEVER: 'Gorączka połogowa',
-  CANCER: 'Nowotwór',
-  ACCIDENT: 'Wypadek'
-};
-
-const CivilStatus = {
-  SINGLE: 'panna/kawaler',
-  MARRIED: 'żonaty/zamężna',
-  WIDOWED: 'wdowiec/wdowa',
-  DIVORCED: 'rozwiedziony/rozwiedziona',
-  ANNULLED: 'pozbawiony praw małżeńskich'
-};
-
-const Nationalities = {
-  POLISH: 'polska',
-  GERMAN: 'niemiecka',
-  RUSSIAN: 'rosyjska',
-  UKRAINIAN: 'ukraińska',
-  BELARUSIAN: 'białoruska',
-  LITHUANIAN: 'litewska',
-  JEWISH: 'żydowska',
-  OTHER: 'inna'
-};
-
-const Citizenships = {
-  POLISH: 'polskie',
-  GERMAN: 'niemieckie',
-  RUSSIAN: 'rosyjskie',
-  AUSTRIAN: 'austriackie',
-  PRUSSIAN: 'pruskie',
-  OTHER: 'inne'
-};
-
-const EducationLevels = {
-  NONE: 'brak',
-  BASIC: 'podstawowe',
-  SECONDARY: 'średnie',
-  HIGHER: 'wyższe',
-  UNIVERSITY: 'uniwersyteckie'
-};
-
-const SocialStatuses = {
-  NOBILITY: 'szlachta',
-  CLERGY: 'duchowieństwo',
-  BURGHER: 'mieszczaństwo',
-  PEASANT: 'chłopi',
-  WORKER: 'robotnicy',
-  MERCHANT: 'kupcy',
-  OFFICIAL: 'urzędnicy',
-  MILITARY: 'wojsko'
-};
-
 // ============================================================================
 // EXPORT (dla CommonJS / ES6)
 // ============================================================================
-
-module.exports = {
-  HistoricalDate,
-  HistoricalPlace,
-  PersonModel,
-  RelationshipModel,
-  EventModel,
-  PersonDatabase,
-  SourceModel,
-  TranscriptionModel,
-  HypothesisModel,
-  AnomalyModel,
-  
-  // **NOWE ACTACOM 1.0: Enumy**
-  EventTypes,
-  RoleTypes,
-  SourceTypes,
-  DeathCategories,
-  RelationTypes,
-  RecordTypes
-};
 
 // Dla globalnego scope (HTML <script>)
 if (typeof window !== 'undefined') {
