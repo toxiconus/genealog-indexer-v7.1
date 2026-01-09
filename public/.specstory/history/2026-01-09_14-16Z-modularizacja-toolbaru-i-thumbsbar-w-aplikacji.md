@@ -4379,7 +4379,7 @@ Teraz powinno działać prawidłowo:
 
 ---
 
-_**User (2026-01-09 14:49Z)**_
+_**User (2026-01-09 14:51Z)**_
 
 zaznaczam roi dal aktu - zaznacz graniece aktu rysyje ramkę ziolona i puszczam - ramka nazywa sie dobrze ale sie zmniejsza na około 2/3 prawidłowej wysokosci i odpala wizard zaznacz imie dziecka  - wyłaczaliśmy wizard w trybie aktu
 
@@ -4456,6 +4456,151 @@ Odczytaj [](file:///j%3A/projekt%202025/projekt-akta-v2/public/viewer-osd-v9.htm
 
 ---
 
+<tool-use data-tool-type="unknown" data-tool-name="copilot_replaceString">
+<details>
+<summary>Tool use: **copilot_replaceString**</summary>
+
+Additional data:
+
+```json
+{
+  "vscodeToolId": "copilot_replaceString",
+  "isHidden": true
+}
+```
+Result:
+
+```json
+{
+  "invocationMessage": "Korzystanie z \"Zamień ciąg w pliku\"",
+  "isConfirmed": {
+    "type": 1
+  },
+  "content": "&#96;&#96;&#96;html\n\r\n                // Najpierw narysuj zapisane ROI\r\n                redrawSavedROIsOnCanvas();\r\n                \r\n                // Potem narysuj aktualnie rysowany prostokąt na wierzchu\n&#96;&#96;&#96;\n\n",
+  "textEditContent": "\r\n                // Najpierw narysuj zapisane ROI\r\n                redrawSavedROIsOnCanvas();\r\n                \r\n                // Potem narysuj aktualnie rysowany prostokąt na wierzchu",
+  "toolCallResult": null
+}
+```
+Status: **completed**
+
+
+</details>
+</tool-use>
+
+---
+
+<tool-use data-tool-type="read" data-tool-name="copilot_readFile">
+<details>
+<summary>Tool use: **copilot_readFile** • Czytanie [](file:///j%3A/projekt%202025/projekt-akta-v2/public/viewer-osd-v9.html#2475-2475), wiersze 2475 do 2500</summary>
+
+
+Odczytaj [](file:///j%3A/projekt%202025/projekt-akta-v2/public/viewer-osd-v9.html#2475-2475), wiersze 2475 do 2500
+
+</details>
+</tool-use>
+
+---
+
+<tool-use data-tool-type="read" data-tool-name="copilot_readFile">
+<details>
+<summary>Tool use: **copilot_readFile** • Czytanie [](file:///j%3A/projekt%202025/projekt-akta-v2/public/viewer-osd-v9.html#5768-5768), wiersze 5768 do 5850</summary>
+
+
+Odczytaj [](file:///j%3A/projekt%202025/projekt-akta-v2/public/viewer-osd-v9.html#5768-5768), wiersze 5768 do 5850
+
+</details>
+</tool-use>
+
+---
+
+<tool-use data-tool-type="search" data-tool-name="copilot_findTextInFiles">
+<details>
+<summary>Tool use: **copilot_findTextInFiles** • Wyszukiwanie tekstu `startWizard()` (`**/viewer-osd-v9.html`)</summary>
+
+
+No results found
+</details>
+</tool-use>
+
+---
+
+<tool-use data-tool-type="unknown" data-tool-name="copilot_getErrors">
+<details>
+<summary>Tool use: **copilot_getErrors**</summary>
+
+
+Parameters:
+
+```json
+{
+  "file_path": "j%3A/projekt%202025/projekt-akta-v2/public/viewer-osd-v9.html",
+  "relativeWorkspacePath": "viewer-osd-v9.html"
+}
+```
+Additional data:
+
+```json
+{
+  "vscodeToolId": "copilot_getErrors",
+  "isHidden": false
+}
+```
+Result:
+
+```json
+{
+  "invocationMessage": "Sprawdzanie [](file:///j%3A/projekt%202025/projekt-akta-v2/public/viewer-osd-v9.html)",
+  "pastTenseMessage": "Sprawdzono [](file:///j%3A/projekt%202025/projekt-akta-v2/public/viewer-osd-v9.html), nie znaleziono żadnych problemów",
+  "isConfirmed": {
+    "type": 1
+  },
+  "content": "",
+  "textEditContent": "",
+  "toolCallResult": null
+}
+```
+Status: **completed**
+
+
+</details>
+</tool-use>
+
+---
+
+<tool-use data-tool-type="unknown" data-tool-name="copilot_openSimpleBrowser">
+<details>
+<summary>Tool use: **copilot_openSimpleBrowser**</summary>
+
+Additional data:
+
+```json
+{
+  "vscodeToolId": "copilot_openSimpleBrowser",
+  "isHidden": false
+}
+```
+Result:
+
+```json
+{
+  "invocationMessage": "Otwieranie prostej przeglądarki pod adresem http://localhost:8000/viewer-osd-v9.html",
+  "pastTenseMessage": "Otwarto prostą przeglądarkę pod adresem http://localhost:8000/viewer-osd-v9.html",
+  "isConfirmed": {
+    "type": 1
+  },
+  "content": "",
+  "textEditContent": "",
+  "toolCallResult": null
+}
+```
+Status: **completed**
+
+
+</details>
+</tool-use>
+
+---
+
 Użytkownik opisuje problem:
 1. Zaznacza granice aktu (roiBtn -> actMode)
 2. Rysuje zieloną ramkę
@@ -4510,7 +4655,381 @@ app.drawingCtx.clearRect(0, 0, app.drawingCanvas.width, app.drawingCanvas.height
 redrawSavedROIsOnCanvas();  // To znowu czyści i rysuje!
 ```
 
-A `redrawSavedROIsOnCanvas()` znowu robi 
+A `redrawSavedROIsOnCanvas()` znowu robi `clearRect()`. To może powodować miganie i problemy.
+
+Lepiej byłoby aby w `mousemove` nie wywoływać `redrawSavedROIsOnCanvas()`, a zamiast tego rysować tylko aktualnie rysowany prostokąt na wierzchu. Naprawiam to: Teraz muszę upewnić się że w mouseup nie będzie już czyszczenia canvas'a zaraz po zaznaczeniu. Czytam ten kod: Ok kod wygląda dobry. Problem może być jeszcze w czymś innym. Czytam uważnie komunikat użytkownika: "zaznaczam roi dal aktu" - może to być typo? Potem mówi "zaznacz graniece aktu" czyli "Granice aktu" (roiBtn).
+
+Czytam funkcję `startWizard()` aby zobaczyć czy gdzieś indziej się odpala: Widać że `startWizard()` dodaje event listener na mouseup: `app.drawingCanvas.addEventListener('mouseup', waitForROI);`. To może być punkt kolizji!
+
+Problem może być taki że gdy startWizard() jest wywoływany (albo i nie), to może być listener na mouseup. Ale nie powinno to się zdarzać bo usunąłem `startWizard()` z kodu.
+
+Czekaj - jest jeden problem! Czytając ponownie komunikat użytkownika: "odpala wizard zaznacz imie dziecka" - to jest pole z formularza. A wizard się odpala gdy ktoś kliknie przycisk do uruchomienia wizarda czy coś podobnego?
+
+Szukam gdzie się kliknie przycisk do wizarda: Dobrze - `startWizard()` się nigdzie nie odpala (już go usunąłem z mouseup).
+
+Może problem jest taki że użytkownik ma włączone coś innego? Czytam uważnie: "odpala wizard zaznacz imie dziecka" - to brzmi jak prompt z `processNextField()`.
+
+Czekaj! Widzę że w `startWizard()` jest:
+```javascript
+if (!app.roiMode) toggleROI();
+```
+
+To oznacza że wizard włącza tryb ROI. Może jest problem z kolizją trybów?
+
+Ale czekaj - `startWizard()` nie powinien być wywoływany w ogóle teraz bo go usunąłem z mouseup.
+
+Może problem jest taki że użytkownik ma jeszcze starą wersję w cache przeglądarki? Czytam poniżej aby upewnić się: Przeładuj przeglądarkę aby mieć pewność że masz najnowszą wersję: Gotowe! Naprawiłem trzy rzeczy:
+
+## Podsumowanie zmian:
+
+### 1. **Usunięty wizard z trybu zaznaczania granic aktu** ✅
+- Usunąłem `startWizard()` z event handlera mouseup
+- Teraz zaznaczenie granicy aktu nie odpala wizarda (jak chciałeś)
+
+### 2. **Optymalizacja rysowania w mousemove** ✅
+- Zmienił strukturę mousemove: najpierw `redrawSavedROIsOnCanvas()` (rysuje zapisane ROI), potem rysuje aktualnie rysowany prostokąt na wierzchu
+- Wcześniej było duplikowanie `clearRect()` co mogło powodować mignięcie
+
+### 3. **Prawidłowe mapowanie przycisków** (z poprzedniej naprawy)
+- **"Granice aktu"** (roiBtn) → zaznaczanie całego aktu (actMode)
+- **"Pola w akcie"** (actBtn) → zaznaczanie konkretnych pól (roiMode)
+
+**Ustaw Ctrl+F5** aby wymusić przeładowanie bez cache'a i przetestuj zaznaczanie granic aktu. Ramka powinna teraz być prawidłowego rozmiaru i nie powinien się odpalać wizard.
+
+---
+
+_**User (2026-01-09 14:51Z)**_
+
+wypchnij do git  i opisz problem bo bez zmian . błedy f12: 📍 initApp start
+viewer-osd-v9.html:1659 ✅ PersonDatabase initialized
+viewer-osd-v9.html:1663 ✅ imageActs changed to Map for ACTA v1
+viewer-osd-v9.html:1688 📍 Templates loaded: 4
+viewer-osd-v9.html:1692 📍 Custom fields loaded
+viewer-osd-v9.html:2349 📍 Creating OpenSeadragon instance...
+viewer-osd-v9.html:2386 📍 OpenSeadragon instance created, viewer: true
+viewer-osd-v9.html:1695 📍 Viewer initialized
+viewer-osd-v9.html:1697 📍 Canvas setup complete
+viewer-osd-v9.html:1699 📍 Storage loaded, images: 0
+viewer-osd-v9.html:5053 🔄 Realtime listeners setup for Firebase
+viewer-osd-v9.html:1701 📍 Realtime listeners setup
+viewer-osd-v9.html:1703 📍 Auto-save started
+viewer-osd-v9.html:1705 📍 UI rendered
+viewer-osd-v9.html:6329 ✅ Preset buttons added: 10 presets
+viewer-osd-v9.html:1707 📍 Postprocess sliders setup
+viewer-osd-v9.html:2763 ⚙️ setupEvents starting...
+viewer-osd-v9.html:2829 ✅ Event delegation ready for all buttons
+viewer-osd-v9.html:2923 ✅ setupEvents completed successfully
+viewer-osd-v9.html:1709 📍 Events setup complete
+viewer-osd-v9.html:1730 ✅ Test Marriage event created: TEST.1890.No.05
+viewer-osd-v9.html:1713  File chooser dialog can only be shown with a user activation.
+(anonymous) @ viewer-osd-v9.html:1713
+identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyAZ-d9kxHrijCW9P8ZXbZORvUPai0uzOXY:1   Failed to load resource: the server responded with a status of 400 ()
+viewer-osd-v9.html:1674  ⚠️ Firebase auth optional: FirebaseError: Firebase: This operation is restricted to administrators only. (auth/admin-restricted-operation).
+    at z (assert.ts:136:55)
+    at j (assert.ts:65:9)
+    at ie (index.ts:195:9)
+    at async se (index.ts:216:9)
+    at async anonymous.ts:47:9
+(anonymous) @ viewer-osd-v9.html:1674
+viewer-osd-v9.html:6241 ✅ Rendered records table: 1 events
+acta-v1-models.js:256  Uncaught TypeError: Cannot read properties of null (reading 'name')
+viewer-osd-v9.html:5013  ❌ Błąd ładowania z Firebase: TypeError: Cannot read properties of null (reading 'name')
+    at HistoricalPlace.fromJSON (acta-v1-models.js:256:42)
+    at EventModel.fromJSON (acta-v1-models.js:1470:35)
+    at viewer-osd-v9.html:5006:51
+    at database.ts:1246:16
+    at index.esm2017.js:20411:15
+    at index.esm2017.js:14940:53
+    at ms.inorderTraversal (index.esm2017.js:2512:49)
+    at ms.inorderTraversal (index.esm2017.js:2512:26)
+    at ms.inorderTraversal (index.esm2017.js:2512:26)
+    at ms.inorderTraversal (index.esm2017.js:2512:26)
+loadFromFirebase @ viewer-osd-v9.html:5013
+viewer-osd-v9.html:5165  ❌ Błąd ładowania: ReferenceError: loadFromLocalStorage is not defined
+    at loadFromFirebase (viewer-osd-v9.html:5015:17)
+    at async loadStorage (viewer-osd-v9.html:5108:21)
+loadStorage @ viewer-osd-v9.html:5165
+viewer-osd-v9.html:2789 🖱️ Button clicked: openBtn
+viewer-osd-v9.html:2804 → addImages
+viewer-osd-v9.html:4732 📁 addImages clicked
+viewer-osd-v9.html:4737 📁 handleFiles called with 1 files
+viewer-osd-v9.html:4739 🖼️ Found 1 image files
+viewer-osd-v9.html:4743 📄 Processing file: _11977.JPG
+viewer-osd-v9.html:4746 ✅ File loaded: _11977.JPG data length: 2176775
+viewer-osd-v9.html:4754 🎉 All images loaded, sorting and updating UI
+viewer-osd-v9.html:4603 🖼️ selectImage called with idx: 0
+viewer-osd-v9.html:4611 ✅ Set currentImageIdx to: 0
+viewer-osd-v9.html:4628 📸 Opening image: _11977.JPG
+viewer-osd-v9.html:4629 📊 Image data length: 2176775
+viewer-osd-v9.html:4637 ✅ Image loaded in OSD
+viewer-osd-v9.html:4603 🖼️ selectImage called with idx: 0
+viewer-osd-v9.html:4611 ✅ Set currentImageIdx to: 0
+viewer-osd-v9.html:4628 📸 Opening image: _11977.JPG
+viewer-osd-v9.html:4629 📊 Image data length: 2176775
+viewer-osd-v9.html:4637 ✅ Image loaded in OSD
+viewer-osd-v9.html:3640 📝 Generated ID: CH.LUB.BRAK.1926.00.00001.00 from: Object
+viewer-osd-v9.html:3640 📝 Generated ID: CH.LUB.BRAK.1926.00.00002.00 from: Object
+viewer-osd-v9.html:3640 📝 Generated ID: CH.LUB.BRAK.1926.00.00003.00 from: Object
+viewer-osd-v9.html:3640 📝 Generated ID: CH.LUB.BRAK.1926.00.00004.00 from: Object
+viewer-osd-v9.html:3640 📝 Generated ID: CH.LUB.BRAK.1926.00.00005.00 from: Object
+viewer-osd-v9.html:3640 📝 Generated ID: CH.LUB.BRAK.1926.00.00006.00 from: Object
+viewer-osd-v9.html:3640 📝 Generated ID: CH.LUB.BRAK.1926.00.00007.00 from: Object
+viewer-osd-v9.html:3640 📝 Generated ID: CH.LUB.BRAK.1926.00.00008.00 from: Object
+viewer-osd-v9.html:3640 📝 Generated ID: CH.LUB.BRAK.1926.00.00009.00 from: Object
+viewer-osd-v9.html:3640 📝 Generated ID: CH.LUB.BRAK.1926.00.00010.00 from: Object
+viewer-osd-v9.html:3711 ✅ Rendered 10 acts
+viewer-osd-v9.html:6241 ✅ Rendered records table: 10 events
+viewer-osd-v9.html:2789 🖱️ Button clicked: modalOK
+acta-v1-models.js:256  Uncaught TypeError: Cannot read properties of null (reading 'name')
+viewer-osd-v9.html:4948 ✓ Dane zapisane do Firebase
+viewer-osd-v9.html:4980 ✓ Dane zapisane do LocalStorage (ACTA v1 with Registry)
+viewer-osd-v9.html:4981   - Akty: 10
+viewer-osd-v9.html:4982   - Osoby: 0
+viewer-osd-v9.html:4983   - Rozmiar: 5 KB
+viewer-osd-v9.html:2789 🖱️ Button clicked: roiBtn
+viewer-osd-v9.html:2808 → toggleActMode
+viewer-osd-v9.html:4190 🎯 Auto-focus: first field focused
+viewer-osd-v9.html:4198 ✅ Loaded event CH.LUB.BRAK.1926.00.00001.00 to form
+viewer-osd-v9.html:3711 ✅ Rendered 10 acts
+viewer-osd-v9.html:6241 ✅ Rendered records table: 10 events
+viewer-osd-v9.html:3860 ✅ Selected event: CH.LUB.BRAK.1926.00.00001.00
+acta-v1-models.js:256  Uncaught TypeError: Cannot read properties of null (reading 'name')
+viewer-osd-v9.html:4948 ✓ Dane zapisane do Firebase
+viewer-osd-v9.html:4980 ✓ Dane zapisane do LocalStorage (ACTA v1 with Registry)
+viewer-osd-v9.html:4981   - Akty: 10
+viewer-osd-v9.html:4982   - Osoby: 0
+viewer-osd-v9.html:4983   - Rozmiar: 5 KB
+viewer-osd-v9.html:4890 💾 Auto-saved
+acta-v1-models.js:256  Uncaught TypeError: Cannot read properties of null (reading 'name')
+viewer-osd-v9.html:4948 ✓ Dane zapisane do Firebase
+viewer-osd-v9.html:4980 ✓ Dane zapisane do LocalStorage (ACTA v1 with Registry)
+viewer-osd-v9.html:4981   - Akty: 10
+viewer-osd-v9.html:4982   - Osoby: 0
+viewer-osd-v9.html:4983   - Rozmiar: 5 KB
+[NEW] Explain Console errors by using Copilot in Edge: click
+         
+         to explain an error. 
+        Learn more
+
+---
+
+_**Agent (model copilot/claude-haiku-4.5)**_
+
+<tool-use data-tool-type="unknown" data-tool-name="mcp_gitkraken_git_add_or_commit">
+<details>
+<summary>Tool use: **mcp_gitkraken_git_add_or_commit**</summary>
+
+
+Parameters:
+
+```json
+{
+  "kind": "input",
+  "rawInput": {
+    "directory": "j:\\projekt 2025\\projekt-akta-v2",
+    "action": "add"
+  }
+}
+```
+Additional data:
+
+```json
+{
+  "vscodeToolId": "mcp_gitkraken_git_add_or_commit",
+  "isHidden": false
+}
+```
+Result:
+
+```json
+{
+  "invocationMessage": "Uruchamianie &#96;git_add_or_commit&#96;",
+  "pastTenseMessage": "Uruchomiono &#96;git_add_or_commit&#96; ",
+  "resultDetails": {
+    "input": "{\n  \"directory\": \"j:\\\\projekt 2025\\\\projekt-akta-v2\",\n  \"action\": \"add\"\n}",
+    "output": [
+      {
+        "type": "embed",
+        "isText": true,
+        "value": "{\"data\":{\"output\":\"\"}}"
+      }
+    ],
+    "isError": false
+  },
+  "isConfirmed": {
+    "type": 3,
+    "scope": "profile"
+  },
+  "content": "",
+  "textEditContent": "",
+  "toolCallResult": null
+}
+```
+Status: **completed**
+
+
+</details>
+</tool-use>
+
+---
+
+<tool-use data-tool-type="unknown" data-tool-name="mcp_gitkraken_git_add_or_commit">
+<details>
+<summary>Tool use: **mcp_gitkraken_git_add_or_commit**</summary>
+
+
+Parameters:
+
+```json
+{
+  "kind": "input",
+  "rawInput": {
+    "action": "commit",
+    "directory": "j:\\projekt 2025\\projekt-akta-v2",
+    "message": "Fix: ROI canvas redraw, remove wizard from act mode, fix button mapping\n\n- Zmieniono z-index canvas'a z 50 na 150 aby zaznaczenia były widoczne\n- Dodano funkcję redrawSavedROIsOnCanvas() do rysowania zaznaczonych ROI dla WSZYSTKICH aktów\n- Zaznaczenia aktów wybranych (zielone) vs pozostałych (szare) aby było wizualnie jasne\n- Event listeners w OSD (zoom, pan, rotate) teraz przerysowują canvas\n- Usunięto startWizard() z mouseup - wizard nie powinien się odpalać w trybie zaznaczania granic aktu\n- NAPRAWIONO mapowanie przycisków: roiBtn→toggleActMode(), actBtn→toggleROI()\n- Optymalizacja mousemove - redrawSavedROIsOnCanvas() rysuje zapisane ROI, potem aktualnie rysowany prostokąt\n- Timeout mouseup zmieniony z 0 na 50ms dla stabilności\n\nBŁĘDY DO NAPRAWY:\n1. HistoricalPlace.fromJSON acta-v1-models.js:256 - null .name (Firebase load)\n2. loadFromLocalStorage undefined - należy znaleźć i naprawić"
+  }
+}
+```
+Additional data:
+
+```json
+{
+  "vscodeToolId": "mcp_gitkraken_git_add_or_commit",
+  "isHidden": false
+}
+```
+Result:
+
+```json
+{
+  "invocationMessage": "Uruchamianie &#96;git_add_or_commit&#96;",
+  "pastTenseMessage": "Uruchomiono &#96;git_add_or_commit&#96; ",
+  "resultDetails": {
+    "input": "{\n  \"action\": \"commit\",\n  \"directory\": \"j:\\\\projekt 2025\\\\projekt-akta-v2\",\n  \"message\": \"Fix: ROI canvas redraw, remove wizard from act mode, fix button mapping\\n\\n- Zmieniono z-index canvas'a z 50 na 150 aby zaznaczenia były widoczne\\n- Dodano funkcję redrawSavedROIsOnCanvas() do rysowania zaznaczonych ROI dla WSZYSTKICH aktów\\n- Zaznaczenia aktów wybranych (zielone) vs pozostałych (szare) aby było wizualnie jasne\\n- Event listeners w OSD (zoom, pan, rotate) teraz przerysowują canvas\\n- Usunięto startWizard() z mouseup - wizard nie powinien się odpalać w trybie zaznaczania granic aktu\\n- NAPRAWIONO mapowanie przycisków: roiBtn→toggleActMode(), actBtn→toggleROI()\\n- Optymalizacja mousemove - redrawSavedROIsOnCanvas() rysuje zapisane ROI, potem aktualnie rysowany prostokąt\\n- Timeout mouseup zmieniony z 0 na 50ms dla stabilności\\n\\nBŁĘDY DO NAPRAWY:\\n1. HistoricalPlace.fromJSON acta-v1-models.js:256 - null .name (Firebase load)\\n2. loadFromLocalStorage undefined - należy znaleźć i naprawić\"\n}",
+    "output": [
+      {
+        "type": "embed",
+        "isText": true,
+        "value": "{\"data\":{\"output\":\"[master 3e3e2ab] Fix: ROI canvas redraw, remove wizard from act mode, fix button mapping\\n 20 files changed, 6919 insertions(+), 325 deletions(-)\\n create mode 100644 public/.specstory/history/2026-01-09_14-16Z-modularizacja-toolbaru-i-thumbsbar-w-aplikacji.md\\n create mode 100644 public/v10/DEBUG_CONSOLE.md\\n create mode 100644 public/v10/MODULES_CHECKLIST.md\\n create mode 100644 public/v10/QUICK_START_V10.md\\n create mode 100644 public/v10/QUICK_VERIFY.md\\n create mode 100644 public/v10/READY.md\\n create mode 100644 public/v10/START_TUTAJ.md\\n create mode 100644 public/v10/TESTING_PLAN.md\\n create mode 100644 public/v10/js/app-state.js\\n create mode 100644 public/v10/js/main.js\\n create mode 100644 public/v10/js/thumbs.js\\n create mode 100644 public/v10/js/toolbar.js\\n create mode 100644 public/v10/test-data.js\\n\"}}"
+      }
+    ],
+    "isError": false
+  },
+  "isConfirmed": {
+    "type": 3,
+    "scope": "profile"
+  },
+  "content": "",
+  "textEditContent": "",
+  "toolCallResult": null
+}
+```
+Status: **completed**
+
+
+</details>
+</tool-use>
+
+---
+
+<tool-use data-tool-type="unknown" data-tool-name="mcp_gitkraken_git_push">
+<details>
+<summary>Tool use: **mcp_gitkraken_git_push**</summary>
+
+
+Parameters:
+
+```json
+{
+  "kind": "input",
+  "rawInput": {
+    "directory": "j:\\projekt 2025\\projekt-akta-v2"
+  }
+}
+```
+Additional data:
+
+```json
+{
+  "vscodeToolId": "mcp_gitkraken_git_push",
+  "isHidden": false
+}
+```
+Result:
+
+```json
+{
+  "invocationMessage": "Uruchamianie &#96;git_push&#96;",
+  "pastTenseMessage": "Uruchomiono &#96;git_push&#96; ",
+  "resultDetails": {
+    "input": "{\n  \"directory\": \"j:\\\\projekt 2025\\\\projekt-akta-v2\"\n}",
+    "output": [
+      {
+        "type": "embed",
+        "isText": true,
+        "value": "{\"data\":{\"output\":\"\"}}"
+      }
+    ],
+    "isError": false
+  },
+  "isConfirmed": {
+    "type": 3,
+    "scope": "profile"
+  },
+  "content": "",
+  "textEditContent": "",
+  "toolCallResult": null
+}
+```
+Status: **completed**
+
+
+</details>
+</tool-use>
+
+---
+
+<tool-use data-tool-type="search" data-tool-name="copilot_findTextInFiles">
+<details>
+<summary>Tool use: **copilot_findTextInFiles** • Wyszukiwanie tekstu `loadFromLocalStorage` (`**/viewer-osd-v9.html`)</summary>
+
+
+No results found
+</details>
+</tool-use>
+
+---
+
+Użytkownik mówi że bez zmian i pokazuje błędy z F12. Kluczowy błąd to:
+
+```
+acta-v1-models.js:256  Uncaught TypeError: Cannot read properties of null (reading 'name')
+viewer-osd-v9.html:5013  ❌ Błąd ładowania z Firebase: TypeError: Cannot read properties of null (reading 'name')
+    at HistoricalPlace.fromJSON (acta-v1-models.js:256:42)
+```
+
+To jest błąd w acta-v1-models.js gdzie `HistoricalPlace.fromJSON` próbuje czytać `.name` z null.
+
+Drugi błąd to:
+```
+viewer-osd-v9.html:5165  ❌ Błąd ładowania: ReferenceError: loadFromLocalStorage is not defined
+    at loadFromFirebase (viewer-osd-v9.html:5015:17)
+```
+
+To sugeruje że funkcja `loadFromLocalStorage` jest gdzieś wywoływana ale nie jest zdefiniowana.
+
+Użytkownik chce żeby:
+1. Wysłać to do git
+2. Opisać problem
+
+Ale najpierw muszę sprawdzić kod. Problem z ROI zaznaczeniami może być niezwiązany z tymi błędami Firebase. Użytkownik mówi "bez zmian" - czyli zaznaczenia ROI nie działa jak powinno?
+
+Ale najpierw muszę wysłać to do gita i opisać problem z błędami które widzi.Rozumiem - są błędy w konsoli. Główne problemy:
+
+1. **`Cannot read properties of null (reading 'name')` w acta-v1-models.js:256** - HistoricalPlace.fromJSON dostaje null
+2. **`loadFromLocalStorage is not defined`** - funkcja jest wywoływana ale nie istnieje
+
+Najpierw wypchnę na git i opiszę, a potem naprawię błędy: Wysłane do git'a. Teraz naprawiam błędy. Czytam gdzie jest `loadFromLocalStorage`: 
 
 ---
 

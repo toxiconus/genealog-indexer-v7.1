@@ -253,6 +253,10 @@ class HistoricalPlace {
   }
 
   static fromJSON(data) {
+    if (!data || !data.name) {
+      console.warn('⚠️ Invalid HistoricalPlace data:', data);
+      return null;
+    }
     const obj = new HistoricalPlace(data.name, data.type);
     obj.coordinates = data.coordinates;
     obj.confidence = data.confidence;
@@ -845,10 +849,10 @@ class PersonModel {
     
     person.gender = data.gender;
     person.birthDate = HistoricalDate.fromJSON(data.birthDate);
-    person.birthPlace = HistoricalPlace.fromJSON(data.birthPlace);
+    person.birthPlace = data.birthPlace ? HistoricalPlace.fromJSON(data.birthPlace) : null;
     person.confirmationDate = data.confirmationDate ? HistoricalDate.fromJSON(data.confirmationDate) : new HistoricalDate();
     person.deathDate = HistoricalDate.fromJSON(data.deathDate);
-    person.deathPlace = HistoricalPlace.fromJSON(data.deathPlace);
+    person.deathPlace = data.deathPlace ? HistoricalPlace.fromJSON(data.deathPlace) : null;
     person.causeOfDeath = data.causeOfDeath || null;
     person.age = data.age;
     person.occupation = data.occupation;
@@ -859,7 +863,7 @@ class PersonModel {
       toDate: h.toDate ? HistoricalDate.fromJSON(h.toDate) : null
     })) : [];
     person.civilStatus = data.civilStatus;
-    person.residence = HistoricalPlace.fromJSON(data.residence);
+    person.residence = data.residence ? HistoricalPlace.fromJSON(data.residence) : null;
     person.religion = data.religion;
     person.nationality = data.nationality || null;
     person.citizenship = data.citizenship || null;
@@ -875,8 +879,8 @@ class PersonModel {
     // **NOWE: Migracje**
     person.migrations = data.migrations ? data.migrations.map(m => ({
       ...m,
-      from: HistoricalPlace.fromJSON(m.from),
-      to: HistoricalPlace.fromJSON(m.to),
+      from: m.from ? HistoricalPlace.fromJSON(m.from) : null,
+      to: m.to ? HistoricalPlace.fromJSON(m.to) : null,
       date: HistoricalDate.fromJSON(m.date)
     })) : [];
     
@@ -1467,7 +1471,7 @@ class EventModel {
     const event = new EventModel(recordType, data.year, data.number);
     event.id = data.id;
     event.date = HistoricalDate.fromJSON(data.date);
-    event.place = HistoricalPlace.fromJSON(data.place);
+    event.place = data.place ? HistoricalPlace.fromJSON(data.place) : null;
     
     // Firestore: denormalizacja
     event.involvedPersons = data.involvedPersons || [];
@@ -1519,7 +1523,7 @@ class EventModel {
       placeOfDeath: data.deathCause.placeOfDeath,
       burialInfo: data.deathCause.burialInfo ? {
         date: HistoricalDate.fromJSON(data.deathCause.burialInfo.date),
-        place: HistoricalPlace.fromJSON(data.deathCause.burialInfo.place),
+        place: data.deathCause.burialInfo.place ? HistoricalPlace.fromJSON(data.deathCause.burialInfo.place) : null,
         cemetery: data.deathCause.burialInfo.cemetery
       } : null
     } : null;
