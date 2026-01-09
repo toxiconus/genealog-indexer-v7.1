@@ -3679,7 +3679,15 @@
 
             actsPanel.innerHTML = '';
 
-            if (app.imageActs.size === 0) {
+            // ✅ NAPRAWA: Filtruj akty tylko dla aktualnego obrazu
+            const currentImageActs = new Map();
+            app.imageActs.forEach((event, id) => {
+                if (event.imageIdx === app.currentImageIdx) {
+                    currentImageActs.set(id, event);
+                }
+            });
+
+            if (currentImageActs.size === 0) {
                 const emptyMsg = document.createElement('div');
                 emptyMsg.style.cssText = 'padding: 12px; color: #888; font-size: 11px; text-align: center;';
                 emptyMsg.textContent = '(Brak aktów)';
@@ -3689,7 +3697,7 @@
 
             // Grupuj akty po typie
             const eventsByType = {};
-            app.imageActs.forEach((event, id) => {
+            currentImageActs.forEach((event, id) => {
                 if (!eventsByType[event.type]) {
                     eventsByType[event.type] = [];
                 }
@@ -3726,7 +3734,7 @@
                 });
             });
 
-            console.log(`✅ Rendered ${app.imageActs.size} acts`);
+            console.log(`✅ Rendered ${currentImageActs.size} acts for image ${app.currentImageIdx}`);
         }
 
         function showActContextMenuPanel(eventId, event, btnElement) {
