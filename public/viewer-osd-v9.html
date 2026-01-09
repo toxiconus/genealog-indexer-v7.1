@@ -2594,12 +2594,16 @@
                 const img2 = item.viewportToImageCoordinates(p2);
                 const size = item.getContentSize();
                 
-                return {
+                const roi = {
                     x: img1.x / size.x,
                     y: img1.y / size.y,
                     w: (img2.x - img1.x) / size.x,
                     h: (img2.y - img1.y) / size.y
                 };
+                
+                console.log('📐 screenToImageRect: screen[' + x + ',' + y + ',' + w + ',' + h + '] -> image[' + roi.x.toFixed(3) + ',' + roi.y.toFixed(3) + ',' + roi.w.toFixed(3) + ',' + roi.h.toFixed(3) + ']');
+                
+                return roi;
             } catch (err) {
                 console.error('Błąd konwersji:', err);
                 return null;
@@ -4228,7 +4232,7 @@
             const lastPrevNr = prevActs.length > 0 ? prevActs[prevActs.length - 1].number || 0 : 0;
             const hasPrev = prevActs.length > 0;
             const defaultFirst = hasPrev ? lastPrevNr + 1 : 1;
-            const defaultLast = defaultFirst + (prevActs.length || 10) - 1;
+            const defaultLast = defaultFirst + (hasPrev ? prevActs.length : 1) - 1;
 
             document.getElementById('modalFirstNr').value = defaultFirst;
             document.getElementById('modalLastNr').value = defaultLast;
