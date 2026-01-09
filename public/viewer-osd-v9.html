@@ -3682,6 +3682,25 @@
             notify(`✅ Usunięto akt ${eventId}`, 'success');
         }
 
+        function clearAllActsOnImage() {
+            // ✅ NOWE: Usuń wszystkie akty z aktualnego obrazu
+            const actsToDelete = Array.from(app.imageActs.entries())
+                .filter(([id, event]) => event.imageIdx === app.currentImageIdx)
+                .map(([id]) => id);
+            
+            actsToDelete.forEach(id => app.imageActs.delete(id));
+
+            app.currentEventId = null;
+            clearForm();
+            renderActButtons();
+            renderRecordsTable();
+            redrawROIs();
+            updateRecordCounter();
+            saveStorage();
+
+            notify('Wszystkie akty usunięte z tego obrazu', 'success');
+        }
+
         function clearAllROIs() {
             try {
                 console.log('🗑️ Clearing all ROIs...');
@@ -3731,9 +3750,6 @@
                 console.error('❌ Error clearing ROIs:', e);
                 notify('Błąd podczas czyszczenia ROI', 'error');
             }
-        }
-            
-            notify('Wszystkie akty usunięte z tego obrazu', 'success');
         }
 
         function updateRecordCounter() {
