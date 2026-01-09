@@ -2525,6 +2525,9 @@
             
             // Rysuj zaznaczenia dla WSZYSTKICH aktów na bieżącym obrazie
             app.imageActs.forEach((act, eventId) => {
+                // ✅ NOWE: Rysuj TYLKO akty na bieżącym obrazie
+                if (act.imageIdx !== app.currentImageIdx) return;
+                
                 // Rysuj fieldROIs dla bieżącego aktu (tylko gdy jest wybrany)
                 if (eventId === app.currentEventId && app.roiMode && act.fieldROIs) {
                     Object.entries(act.fieldROIs).forEach(([fieldId, roi]) => {
@@ -2667,6 +2670,9 @@
             
             // Iterate all events in Map and draw their ROIs
             app.imageActs.forEach((event, eventId) => {
+                // ✅ NOWE: Rysuj TYLKO akty na bieżącym obrazie
+                if (event.imageIdx !== app.currentImageIdx) return;
+                
                 if (!event.actROI) return;
                 
                 const imgRect = new OpenSeadragon.Rect(
@@ -4603,11 +4609,47 @@
             updateRecordCounter();
         }
 
+        function clearImageData(imageIdx) {
+            // ✅ NOWE: Usuń akty dla konkretnego obrazu
+            const actsToDelete = Array.from(app.imageActs.entries())
+                .filter(([id, event]) => event.imageIdx === imageIdx)
+                .map(([id]) => id);
+            
+            actsToDelete.forEach(id => {
+                app.imageActs.delete(id);
+            });
+            
+            // Resetuj UI
+            app.currentEventId = null;
+            app.roiMode = false;
+            app.actMode = false;
+            document.getElementById('roiBtn').classList.remove('active');
+            document.getElementById('actBtn').classList.remove('active');
+            
+            // Wyczyść overlaye
+            app.roiOverlays.forEach(overlay => {
+                try {
+                    app.viewer.removeOverlay(overlay);
+                } catch (e) {
+                    // Overlay może być już usunięty
+                }
+            });
+            app.roiOverlays = [];
+            app.overlayMap.clear();
+            
+            console.log(`🗑️ Cleared ${actsToDelete.length} acts from image ${imageIdx}`);
+        }
+
         function selectImage(idx, autoSelect = false) {
             console.log('🖼️ selectImage called with idx:', idx);
             if (idx < 0 || idx >= app.images.length) {
                 console.log('❌ Invalid image index:', idx, 'max:', app.images.length);
                 return;
+            }
+
+            // ✅ NOWE: Wyczyść dane poprzedniego obrazu zanim zmienisz indeks
+            if (app.currentImageIdx !== null && app.currentImageIdx !== undefined) {
+                clearImageData(app.currentImageIdx);
             }
 
             app.currentImageIdx = idx;
