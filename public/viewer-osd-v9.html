@@ -5230,6 +5230,12 @@
                     
                     console.log(`✓ Dane załadowane z LocalStorage (v${data.version || '?'})`);
                     updateThumbs();
+                    
+                    // Jeśli są obrazy, wybierz pierwszy
+                    if (app.images.length > 0) {
+                        selectImage(app.currentImageIdx, true);
+                    }
+                    
                     return;
                 }
                 
