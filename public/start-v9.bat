@@ -23,6 +23,19 @@ if %errorlevel% neq 0 (
     exit /b 1
 )
 
+REM Zabij istniejące procesy Python używające portu 8001
+echo Killing existing processes on port 8001...
+powershell -Command "Get-NetTCPConnection -LocalPort 8001 -ErrorAction SilentlyContinue | ForEach-Object { Stop-Process -Id $_.OwningProcess -Force }" >nul 2>&1
+
+REM Alternatywna metoda dla starszych systemów
+for /f "tokens=5" %%a in ('netstat -ano ^| findstr :8001 ^| findstr LISTENING') do (
+    echo Killing process %%a using port 8001...
+    taskkill /PID %%a /F >nul 2>&1
+)
+
+REM Czekaj chwilę aż procesy zostaną zabite
+timeout /t 1 /nobreak >nul
+
 echo ============================================
 echo Starting Genealog Indexer v9...
 echo ============================================
@@ -38,7 +51,7 @@ echo   • Firebase Firestore support
 echo   • Auto-save on field changes
 echo   • Dark theme UI with collapsible sections
 echo.
-echo Opening: http://localhost:8000/viewer-osd-v9.html
+echo Opening: http://localhost:8001/viewer-osd-v9.html
 echo.
 echo Press Ctrl+C to stop the server
 echo ============================================
@@ -46,15 +59,15 @@ echo.
 
 REM Uruchomienie Python HTTP server w tle i otwarcie przeglądarki
 echo Starting Python HTTP server...
-start /B python -m http.server 8000 >nul 2>&1
+start /B python -m http.server 8001 >nul 2>&1
 
 REM Czekaj chwilę aż serwer się uruchomi
 timeout /t 2 /nobreak >nul
 
 REM Otwórz przeglądarkę
-start http://localhost:8000/viewer-osd-v9.html
+start http://localhost:8001/viewer-osd-v9.html
 
 echo.
-echo Server is running at: http://localhost:8000/viewer-osd-v9.html
+echo Server is running at: http://localhost:8001/viewer-osd-v9.html
 echo Press Ctrl+C in the command prompt to stop the server
 echo.
