@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Genealog Indexer v10 - ACTA v1 Integration</title>
+    
+    <!-- External Libraries -->
+    <script src="https://openseadragon.github.io/openseadragon/openseadragon.min.js"></script>
+    <script src="https://unpkg.com/tesseract.js@5.1.0/dist/tesseract.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <script src="../acta-v1-models.js"></script>
+    
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
+
+    <!-- Stylesheets - v10 modułowe -->
+    <link rel="stylesheet" href="css/themes.css">
+    <link rel="stylesheet" href="css/layout.css">
+    <link rel="stylesheet" href="css/toolbar.css">
+    <link rel="stylesheet" href="css/thumbnails.css">
+    <link rel="stylesheet" href="css/viewer.css">
+    <link rel="stylesheet" href="css/forms.css">
+    <link rel="stylesheet" href="css/form-chrztów.css">
+    <link rel="stylesheet" href="css/form-małżeństw.css">
+    <link rel="stylesheet" href="css/form-zgonów.css">
+    <link rel="stylesheet" href="css/tables.css">
+</head>
+<body>
+    <!-- ===== MAIN APPLICATION CONTAINER ===== -->
+    <div id="app">
+        
+        <!-- ===== 1. TOOLBAR - TOP PANEL ===== -->
+        <div id="toolbar" class="toolbar"></div>
+        
+        <!-- ===== 2. MAIN CONTENT AREA ===== -->
+        <div id="main-content" class="main-content">
+            
+            <!-- 2a. LEFT SIDEBAR - Miniatures/Thumbnails -->
+            <div id="thumbnails-container" class="thumbnails-bar">
+                <div id="thumbnails-panel"></div>
+            </div>
+            
+            <!-- 2b. ACTS PANEL - List of acts -->
+            <div id="acts-panel" class="acts-panel">
+                <div id="actsContainer" class="acts-container"></div>
+            </div>
+            
+            <!-- 2c. CENTER - Image Viewer -->
+            <div id="viewer-panel" class="viewer-panel">
+                <div id="viewer-container" class="viewer-container">
+                    <div id="viewer"></div>
+                    <img id="imageFallback" alt="Fallback image">
+                    <canvas id="drawingCanvas"></canvas>
+                    
+                    <!-- Rotate Controls -->
+                    <div class="rotate-controls">
+                        <button class="rotate-btn" id="rotateLeftBtn" title="Rotate Left (Q)">
+                            <i class="fas fa-redo-alt" style="transform: scaleX(-1);"></i>
+                        </button>
+                        <button class="rotate-btn" id="rotateRightBtn" title="Rotate Right (E)">
+                            <i class="fas fa-redo-alt"></i>
+                        </button>
+                    </div>
+                    
+                    <!-- ROI Info Overlay -->
+                    <div class="roi-info-overlay" id="roiInfo"></div>
+                </div>
+            </div>
+            
+            <!-- 2c. RIGHT PANEL - Forms -->
+            <div id="right-panel" class="right-panel">
+                <div class="right-panel-header">
+                    <h3>Dane Aktu</h3>
+                    <button id="toggleRightPanel" class="panel-toggle-btn">
+                        <i class="fas fa-chevron-right"></i>
+                    </button>
+                </div>
+                
+                <!-- Act Type Selector -->
+                <div class="form-type-selector">
+                    <select id="actTypeSelector">
+                        <option value="chrztów">📜 Chrzty</option>
+                        <option value="małżeństw">💍 Małżeństwa</option>
+                        <option value="zgonów">⚰️ Zgony</option>
+                    </select>
+                </div>
+                
+                <!-- Forms Container -->
+                <div id="forms-container" class="forms-container"></div>
+            </div>
+        </div>
+        
+        <!-- ===== 3. BOTTOM PANEL - Tables & Data ===== -->
+        <div id="bottom-tables-container" class="bottom-tables-container">
+            <div id="bottom-tables" class="bottom-tables"></div>
+        </div>
+    </div>
+
+    <!-- ===== MODALS & POPUPS ===== -->
+    <div id="modals-container" class="modals-container"></div>
+    
+    <!-- ===== NOTIFICATIONS AREA ===== -->
+    <div id="notifications" class="notifications-area"></div>
+
+    <!-- ===== FIREBASE INITIALIZATION ===== -->
+    <script>
+        const firebaseConfig = {
+            apiKey: "AIzaSyAZ-d9kxHrijCW9P8ZXbZORvUPai0uzOXY",
+            authDomain: "acta-9ea64.firebaseapp.com",
+            projectId: "acta-9ea64",
+            storageBucket: "acta-9ea64.firebasestorage.app",
+            messagingSenderId: "1031481893980",
+            appId: "1:1031481893980:web:1598979629a824fdf0b299",
+            measurementId: "G-E6J3J4P41P"
+        };
+
+        firebase.initializeApp(firebaseConfig);
+        const db = firebase.firestore();
+        const auth = firebase.auth();
+
+        window.db = db;
+        window.auth = auth;
+        
+        window.dispatchEvent(new Event('firebaseReady'));
+    </script>
+
+    <!-- ===== APPLICATION MODULES (v10) ===== -->
+    <!-- Config & Constants -->
+    <script src="js/config.js"></script>
+    
+    <!-- Core Modules -->
+    <script src="js/modules/toolbar.js"></script>
+    <script src="js/modules/thumbnails.js"></script>
+    <script src="js/modules/viewer.js"></script>
+    <script src="js/modules/roi.js"></script>
+    <script src="js/modules/database.js"></script>
+    <script src="js/modules/search.js"></script>
+    <script src="js/modules/ocr.js"></script>
+    <script src="js/modules/keyboard.js"></script>
+    
+    <!-- Forms -->
+    <script src="js/modules/forms-base.js"></script>
+    <script src="js/modules/form-chrztów.js"></script>
+    <script src="js/modules/form-małżeństw.js"></script>
+    <script src="js/modules/form-zgonów.js"></script>
+    
+    <!-- Tables -->
+    <script src="js/modules/tables.js"></script>
+    
+    <!-- Application Bootstrap -->
+    <script src="js/app.js"></script>
+</body>
+</html>

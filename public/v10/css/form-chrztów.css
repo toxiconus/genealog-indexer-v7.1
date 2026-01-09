@@ -1,0 +1,117 @@
+/* ===== FORMULARZ CHRZCIÓW ===== */
+
+#form-chrztów {
+    /* Specyficzne style dla formularza chrzciów */
+}
+
+.form-section-chrztów {
+    /* Jeśli potrzebne są różne sekcje */
+}
+
+/* ===== SEKCJA: DZIECKO ===== */
+.chrztów-child-section {
+    background: var(--color-bg-dark);
+    padding: var(--spacing-lg);
+    border-radius: var(--radius-md);
+    border-left: 4px solid #e91e63;
+    margin-bottom: var(--spacing-lg);
+}
+
+.chrztów-child-section h4 {
+    font-size: var(--font-size-sm);
+    color: #e91e63;
+    margin-bottom: var(--spacing-md);
+    text-transform: uppercase;
+    font-weight: var(--font-weight-semibold);
+}
+
+/* ===== SEKCJA: RODZICE ===== */
+.chrztów-parents-section {
+    background: var(--color-bg-dark);
+    padding: var(--spacing-lg);
+    border-radius: var(--radius-md);
+    border-left: 4px solid #2196F3;
+    margin-bottom: var(--spacing-lg);
+}
+
+.chrztów-parents-section h4 {
+    font-size: var(--font-size-sm);
+    color: #2196F3;
+    margin-bottom: var(--spacing-md);
+    text-transform: uppercase;
+    font-weight: var(--font-weight-semibold);
+}
+
+/* ===== SEKCJA: CHRZESTNI ===== */
+.chrztów-godparents-section {
+    background: var(--color-bg-dark);
+    padding: var(--spacing-lg);
+    border-radius: var(--radius-md);
+    border-left: 4px solid #FF9800;
+    margin-bottom: var(--spacing-lg);
+}
+
+.chrztów-godparents-section h4 {
+    font-size: var(--font-size-sm);
+    color: #FF9800;
+    margin-bottom: var(--spacing-md);
+    text-transform: uppercase;
+    font-weight: var(--font-weight-semibold);
+}
+
+/* ===== SEKCJA: PARAFIA ===== */
+.chrztów-parish-section {
+    background: var(--color-bg-dark);
+    padding: var(--spacing-lg);
+    border-radius: var(--radius-md);
+    border-left: 4px solid #4CAF50;
+    margin-bottom: var(--spacing-lg);
+}
+
+.chrztów-parish-section h4 {
+    font-size: var(--font-size-sm);
+    color: #4CAF50;
+    margin-bottom: var(--spacing-md);
+    text-transform: uppercase;
+    font-weight: var(--font-weight-semibold);
+}
+
+/* ===== LAYOUT: 2-KOLUMNY DLA IMION/NAZWISK ===== */
+.form-row-2col {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--spacing-lg);
+    margin-bottom: var(--spacing-lg);
+}
+
+.form-row-3col {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: var(--spacing-lg);
+    margin-bottom: var(--spacing-lg);
+}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 600px) {
+    .form-row-2col,
+    .form-row-3col {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* ===== CUSTOM COLORS - CHRZTY ===== */
+.field-child {
+    --field-color: #e91e63;
+}
+
+.field-parent {
+    --field-color: #2196F3;
+}
+
+.field-godparent {
+    --field-color: #FF9800;
+}
+
+.field-parish {
+    --field-color: #4CAF50;
+}

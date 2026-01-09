@@ -1,0 +1,280 @@
+/* ===== MAIN LAYOUT ===== */
+/* CSS Grid for main application structure */
+
+#app {
+    display: grid;
+    grid-template-rows: auto 1fr 25%;
+    grid-template-columns: 1fr;
+    height: 100vh;
+    width: 100%;
+    gap: 0;
+}
+
+/* ===== TOOLBAR ===== */
+#toolbar {
+    grid-row: 1;
+    z-index: var(--z-toolbar);
+}
+
+/* ===== MAIN CONTENT ===== */
+#main-content {
+    grid-row: 2;
+    display: grid;
+    grid-template-columns: 100px 140px 1fr 300px;
+    gap: 0;
+    overflow: hidden;
+    background-color: var(--color-bg-app);
+}
+
+#main-content.thumbs-collapsed {
+    grid-template-columns: 0px 140px 1fr 300px;
+}
+
+#main-content.acts-collapsed {
+    grid-template-columns: 100px 0px 1fr 300px;
+}
+
+#main-content.right-collapsed {
+    grid-template-columns: 100px 140px 1fr 0px;
+}
+
+/* Thumbnails Panel */
+#thumbnails-container {
+    grid-column: 1;
+    background-color: var(--color-bg-panel);
+    border-right: 1px solid var(--color-border);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Viewer Panel */
+#viewer-panel {
+    grid-column: 3;
+    background-color: var(--color-bg-darker);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+#viewer-container {
+    flex: 1;
+    position: relative;
+    overflow: hidden;
+}
+
+#viewer {
+    width: 100%;
+    height: 100%;
+    cursor: grab;
+}
+
+#viewer.dragging {
+    cursor: grabbing;
+}
+
+#imageFallback {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    display: none;
+}
+
+#imageFallback.active {
+    display: block;
+}
+
+/* Drawing Canvas */
+#drawingCanvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+    cursor: crosshair !important;
+    z-index: 50;
+    pointer-events: none;
+}
+
+/* Right Panel */
+#right-panel {
+    grid-column: 4;
+    background: linear-gradient(180deg, var(--color-bg-panel) 0%, var(--color-bg-dark) 100%);
+    border-left: 1px solid var(--color-border);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    min-width: 300px;
+}
+
+#right-panel.collapsed {
+    min-width: 0;
+    border: none;
+}
+
+.right-panel-header {
+    padding: var(--spacing-lg);
+    border-bottom: 1px solid var(--color-border);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-shrink: 0;
+}
+
+.right-panel-header h3 {
+    font-size: var(--font-size-lg);
+    color: var(--color-text);
+    font-weight: var(--font-weight-semibold);
+}
+
+/* ===== BOTTOM TABLES ===== */
+#bottom-tables-container {
+    grid-row: 3;
+    background-color: var(--color-bg-panel);
+    border-top: 1px solid var(--color-border);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    min-height: 150px;
+    max-height: 400px;
+    resize: vertical;
+}
+
+#bottom-tables {
+    flex: 1;
+    overflow-y: auto;
+    overflow-x: auto;
+}
+
+/* ===== RESPONSIVE - TABLET ===== */
+@media (max-width: 1200px) {
+    #main-content {
+        grid-template-columns: 80px 120px 1fr 250px;
+    }
+    
+    #right-panel {
+        min-width: 250px;
+    }
+}
+
+/* ===== RESPONSIVE - SMALL SCREEN ===== */
+@media (max-width: 768px) {
+    #main-content {
+        grid-template-columns: 1fr;
+    }
+    
+    #thumbnails-container,
+    #right-panel {
+        display: none;
+    }
+    
+    #viewer-panel {
+        grid-column: 1;
+    }
+    
+    #bottom-tables-container {
+        min-height: 100px;
+    }
+}
+
+/* ===== DRAG & DROP INDICATOR ===== */
+.viewer-container.drag-over {
+    border: 4px dashed var(--color-primary) !important;
+    background-color: rgba(0, 120, 212, 0.05) !important;
+}
+
+/* ===== MODALS CONTAINER ===== */
+#modals-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: var(--z-modals);
+    pointer-events: none;
+}
+
+#modals-container .modal {
+    pointer-events: all;
+}
+
+/* ===== NOTIFICATIONS ===== */
+#notifications {
+    position: fixed;
+    top: var(--spacing-xl);
+    right: var(--spacing-xl);
+    z-index: var(--z-notifications);
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-md);
+}
+
+.notification {
+    padding: var(--spacing-lg);
+    border-radius: var(--radius-md);
+    background-color: var(--color-bg-panel);
+    border-left: 4px solid var(--color-border);
+    min-width: 300px;
+    animation: slideIn 0.3s ease;
+}
+
+.notification.success {
+    border-left-color: var(--color-success);
+    background-color: rgba(16, 185, 129, 0.1);
+}
+
+.notification.error {
+    border-left-color: var(--color-error);
+    background-color: rgba(239, 68, 68, 0.1);
+}
+
+.notification.warning {
+    border-left-color: var(--color-warning);
+    background-color: rgba(251, 191, 36, 0.1);
+}
+
+.notification.info {
+    border-left-color: var(--color-info);
+    background-color: rgba(6, 182, 212, 0.1);
+}
+
+@keyframes slideIn {
+    from {
+        transform: translateX(400px);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+/* ===== UTILITIES ===== */
+.hidden {
+    display: none !important;
+}
+
+.invisible {
+    visibility: hidden !important;
+}
+
+.overflow-auto {
+    overflow: auto;
+}
+
+.overflow-hidden {
+    overflow: hidden;
+}
+
+.flex-center {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.flex-between {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}

@@ -1,0 +1,254 @@
+/* ===== THUMBNAILS PANEL STYLES ===== */
+
+.thumbnails-container {
+    display: flex;
+    flex-direction: column;
+}
+
+.thumbnails-panel {
+    flex: 1;
+    background-color: var(--color-bg-panel);
+    overflow-y: auto;
+    overflow-x: hidden;
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-sm);
+    padding: var(--spacing-md);
+}
+
+/* ===== THUMBNAIL ITEM ===== */
+.thumbnail-item {
+    background: var(--color-bg-dark);
+    border: 2px solid var(--color-border);
+    border-radius: var(--radius-md);
+    cursor: pointer;
+    overflow: hidden;
+    transition: all var(--transition-fast);
+    flex-shrink: 0;
+    aspect-ratio: 3/4;
+    position: relative;
+}
+
+.thumbnail-item:hover {
+    border-color: var(--color-primary);
+    box-shadow: 0 0 8px rgba(0, 120, 212, 0.3);
+    transform: translateY(-2px);
+}
+
+.thumbnail-item.active {
+    border-color: var(--color-primary);
+    box-shadow: 0 0 12px rgba(0, 120, 212, 0.5);
+    background: rgba(0, 120, 212, 0.1);
+}
+
+/* Thumbnail Image */
+.thumbnail-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* Thumbnail Loading State */
+.thumbnail-item.loading {
+    background: linear-gradient(90deg, var(--color-bg-dark), var(--color-bg-hover), var(--color-bg-dark));
+    background-size: 200% 100%;
+    animation: shimmer 2s infinite;
+}
+
+@keyframes shimmer {
+    0% {
+        background-position: -200% 0;
+    }
+    100% {
+        background-position: 200% 0;
+    }
+}
+
+/* Thumbnail Badge */
+.thumbnail-badge {
+    position: absolute;
+    top: var(--spacing-md);
+    right: var(--spacing-md);
+    background: var(--color-primary);
+    color: white;
+    padding: var(--spacing-xs) var(--spacing-sm);
+    border-radius: var(--radius-sm);
+    font-size: var(--font-size-xs);
+    font-weight: var(--font-weight-semibold);
+}
+
+.thumbnail-badge.count {
+    background: rgba(0, 120, 212, 0.9);
+}
+
+.thumbnail-badge.status {
+    background: var(--color-success);
+}
+
+/* Thumbnail Status */
+.thumbnail-status {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: rgba(0, 0, 0, 0.7);
+    color: var(--color-text);
+    padding: var(--spacing-sm);
+    font-size: var(--font-size-xs);
+    text-align: center;
+}
+
+/* ===== THUMBNAIL LIST HEADER ===== */
+.thumbnails-header {
+    padding: var(--spacing-lg);
+    border-bottom: 1px solid var(--color-border);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-shrink: 0;
+}
+
+.thumbnails-header h3 {
+    font-size: var(--font-size-sm);
+    color: var(--color-text);
+    font-weight: var(--font-weight-semibold);
+}
+
+.thumbnails-header-controls {
+    display: flex;
+    gap: var(--spacing-sm);
+}
+
+.thumbnails-header-btn {
+    background: var(--color-bg-dark);
+    border: 1px solid var(--color-border);
+    color: var(--color-text-light);
+    width: 24px;
+    height: 24px;
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: var(--font-size-xs);
+    transition: all var(--transition-fast);
+}
+
+.thumbnails-header-btn:hover {
+    background: var(--color-bg-hover);
+    border-color: var(--color-primary);
+    color: var(--color-primary);
+}
+
+/* ===== SCROLLBAR CUSTOMIZATION ===== */
+.thumbnails-panel::-webkit-scrollbar {
+    width: 6px;
+}
+
+.thumbnails-panel::-webkit-scrollbar-track {
+    background: var(--color-bg-dark);
+}
+
+.thumbnails-panel::-webkit-scrollbar-thumb {
+    background: var(--color-border);
+    border-radius: var(--radius-sm);
+}
+
+.thumbnails-panel::-webkit-scrollbar-thumb:hover {
+    background: var(--color-border-light);
+}
+
+/* ===== THUMBNAIL CONTEXT MENU ===== */
+.thumbnail-context-menu {
+    position: fixed;
+    background: var(--color-bg-panel);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    min-width: 150px;
+    box-shadow: var(--shadow-lg);
+    z-index: 300;
+    display: none;
+}
+
+.thumbnail-context-menu.active {
+    display: block;
+}
+
+.thumbnail-context-menu-item {
+    padding: var(--spacing-md) var(--spacing-lg);
+    cursor: pointer;
+    font-size: var(--font-size-xs);
+    color: var(--color-text);
+    border-bottom: 1px solid var(--color-border);
+    transition: all var(--transition-fast);
+}
+
+.thumbnail-context-menu-item:last-child {
+    border-bottom: none;
+}
+
+.thumbnail-context-menu-item:hover {
+    background: var(--color-bg-hover);
+    color: var(--color-primary);
+    padding-left: calc(var(--spacing-lg) + var(--spacing-sm));
+}
+
+.thumbnail-context-menu-item.danger:hover {
+    color: var(--color-error);
+}
+
+/* ===== EMPTY STATE ===== */
+.thumbnails-empty {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: var(--spacing-3xl);
+    text-align: center;
+    color: var(--color-text-light);
+    flex: 1;
+}
+
+.thumbnails-empty-icon {
+    font-size: 32px;
+    margin-bottom: var(--spacing-lg);
+    opacity: 0.5;
+}
+
+.thumbnails-empty-text {
+    font-size: var(--font-size-sm);
+    color: var(--color-text-muted);
+    margin-bottom: var(--spacing-md);
+}
+
+/* ===== THUMBNAIL INFO POPUP ===== */
+.thumbnail-info {
+    position: absolute;
+    bottom: 10px;
+    left: 10px;
+    background: rgba(0, 0, 0, 0.9);
+    color: var(--color-primary);
+    padding: var(--spacing-md);
+    border-radius: var(--radius-sm);
+    font-size: var(--font-size-xs);
+    display: none;
+    border: 1px solid var(--color-primary);
+    z-index: 10;
+}
+
+.thumbnail-info.visible {
+    display: block;
+}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 1200px) {
+    .thumbnail-item {
+        aspect-ratio: 2/3;
+    }
+}
+
+@media (max-width: 768px) {
+    .thumbnails-container {
+        display: none;
+    }
+}

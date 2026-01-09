@@ -1,0 +1,204 @@
+/* ===== FORMULARZ ZGONÓW ===== */
+
+#form-zgonów {
+    /* Specyficzne style dla formularza zgonów */
+}
+
+/* ===== SEKCJA: ZMARŁY ===== */
+.zgonów-deceased-section {
+    background: var(--color-bg-dark);
+    padding: var(--spacing-lg);
+    border-radius: var(--radius-md);
+    border-left: 4px solid #9C27B0;
+    margin-bottom: var(--spacing-lg);
+}
+
+.zgonów-deceased-section h4 {
+    font-size: var(--font-size-sm);
+    color: #9C27B0;
+    margin-bottom: var(--spacing-md);
+    text-transform: uppercase;
+    font-weight: var(--font-weight-semibold);
+}
+
+/* ===== SEKCJA: RODZICÓW ZMARŁEGO ===== */
+.zgonów-parents-section {
+    background: var(--color-bg-dark);
+    padding: var(--spacing-lg);
+    border-radius: var(--radius-md);
+    border-left: 4px solid #673AB7;
+    margin-bottom: var(--spacing-lg);
+}
+
+.zgonów-parents-section h4 {
+    font-size: var(--font-size-sm);
+    color: #673AB7;
+    margin-bottom: var(--spacing-md);
+    text-transform: uppercase;
+    font-weight: var(--font-weight-semibold);
+}
+
+/* ===== SEKCJA: PRZYCZYNA ZGONU ===== */
+.zgonów-cause-section {
+    background: var(--color-bg-dark);
+    padding: var(--spacing-lg);
+    border-radius: var(--radius-md);
+    border-left: 4px solid #D32F2F;
+    margin-bottom: var(--spacing-lg);
+}
+
+.zgonów-cause-section h4 {
+    font-size: var(--font-size-sm);
+    color: #D32F2F;
+    margin-bottom: var(--spacing-md);
+    text-transform: uppercase;
+    font-weight: var(--font-weight-semibold);
+}
+
+/* ===== SEKCJA: WIEK I DATA ===== */
+.zgonów-age-date-section {
+    background: var(--color-bg-dark);
+    padding: var(--spacing-lg);
+    border-radius: var(--radius-md);
+    border-left: 4px solid #F57C00;
+    margin-bottom: var(--spacing-lg);
+}
+
+.zgonów-age-date-section h4 {
+    font-size: var(--font-size-sm);
+    color: #F57C00;
+    margin-bottom: var(--spacing-md);
+    text-transform: uppercase;
+    font-weight: var(--font-weight-semibold);
+}
+
+/* ===== SEKCJA: PARAFIA ===== */
+.zgonów-parish-section {
+    background: var(--color-bg-dark);
+    padding: var(--spacing-lg);
+    border-radius: var(--radius-md);
+    border-left: 4px solid #388E3C;
+    margin-bottom: var(--spacing-lg);
+}
+
+.zgonów-parish-section h4 {
+    font-size: var(--font-size-sm);
+    color: #388E3C;
+    margin-bottom: var(--spacing-md);
+    text-transform: uppercase;
+    font-weight: var(--font-weight-semibold);
+}
+
+/* ===== SEKCJA: ZAGRZEBANIE ===== */
+.zgonów-burial-section {
+    background: var(--color-bg-dark);
+    padding: var(--spacing-lg);
+    border-radius: var(--radius-md);
+    border-left: 4px solid #455A64;
+    margin-bottom: var(--spacing-lg);
+}
+
+.zgonów-burial-section h4 {
+    font-size: var(--font-size-sm);
+    color: #455A64;
+    margin-bottom: var(--spacing-md);
+    text-transform: uppercase;
+    font-weight: var(--font-weight-semibold);
+}
+
+/* ===== AGE CALCULATOR ===== */
+.age-calculator {
+    background: rgba(0, 0, 0, 0.2);
+    padding: var(--spacing-md);
+    border-radius: var(--radius-md);
+    margin-bottom: var(--spacing-lg);
+    border-left: 3px solid #F57C00;
+}
+
+.age-result {
+    font-size: var(--font-size-sm);
+    color: var(--color-primary);
+    font-weight: var(--font-weight-semibold);
+}
+
+/* ===== CAUSE OF DEATH SELECTOR ===== */
+.death-cause-selector {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--spacing-md);
+    margin-bottom: var(--spacing-lg);
+}
+
+.death-cause-option {
+    padding: var(--spacing-md);
+    background: var(--color-bg-dark);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    cursor: pointer;
+    font-size: var(--font-size-sm);
+    text-align: center;
+    transition: all var(--transition-fast);
+}
+
+.death-cause-option:hover {
+    border-color: var(--color-primary);
+    background: rgba(0, 120, 212, 0.05);
+}
+
+.death-cause-option.active {
+    background: var(--color-primary);
+    border-color: var(--color-primary);
+    color: white;
+}
+
+/* ===== BURIAL INFORMATION ===== */
+.burial-info {
+    background: rgba(0, 0, 0, 0.2);
+    padding: var(--spacing-md);
+    border-radius: var(--radius-md);
+    border-left: 3px solid #455A64;
+}
+
+.burial-info-row {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: var(--spacing-sm);
+    font-size: var(--font-size-xs);
+    color: var(--color-text-light);
+}
+
+.burial-info-label {
+    font-weight: var(--font-weight-semibold);
+}
+
+/* ===== CUSTOM COLORS - ZGONY ===== */
+.field-deceased {
+    --field-color: #9C27B0;
+}
+
+.field-parents {
+    --field-color: #673AB7;
+}
+
+.field-cause {
+    --field-color: #D32F2F;
+}
+
+.field-age {
+    --field-color: #F57C00;
+}
+
+.field-parish {
+    --field-color: #388E3C;
+}
+
+.field-burial {
+    --field-color: #455A64;
+}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 600px) {
+    .death-cause-selector {
+        grid-template-columns: 1fr;
+    }
+}

@@ -1,0 +1,211 @@
+/* ===== FORMULARZ MAŁŻEŃSTW ===== */
+
+#form-małżeństw {
+    /* Specyficzne style dla formularza małżeństw */
+}
+
+/* ===== SEKCJA: ŽENICH (GROOM) ===== */
+.małżeństwa-groom-section {
+    background: var(--color-bg-dark);
+    padding: var(--spacing-lg);
+    border-radius: var(--radius-md);
+    border-left: 4px solid #1976D2;
+    margin-bottom: var(--spacing-lg);
+}
+
+.małżeństwa-groom-section h4 {
+    font-size: var(--font-size-sm);
+    color: #1976D2;
+    margin-bottom: var(--spacing-md);
+    text-transform: uppercase;
+    font-weight: var(--font-weight-semibold);
+}
+
+/* ===== SEKCJA: PANNA MŁODA (BRIDE) ===== */
+.małżeństwa-bride-section {
+    background: var(--color-bg-dark);
+    padding: var(--spacing-lg);
+    border-radius: var(--radius-md);
+    border-left: 4px solid #E81B8C;
+    margin-bottom: var(--spacing-lg);
+}
+
+.małżeństwa-bride-section h4 {
+    font-size: var(--font-size-sm);
+    color: #E81B8C;
+    margin-bottom: var(--spacing-md);
+    text-transform: uppercase;
+    font-weight: var(--font-weight-semibold);
+}
+
+/* ===== SEKCJA: ŚWIADKOWIE ===== */
+.małżeństwa-witnesses-section {
+    background: var(--color-bg-dark);
+    padding: var(--spacing-lg);
+    border-radius: var(--radius-md);
+    border-left: 4px solid #F57C00;
+    margin-bottom: var(--spacing-lg);
+}
+
+.małżeństwa-witnesses-section h4 {
+    font-size: var(--font-size-sm);
+    color: #F57C00;
+    margin-bottom: var(--spacing-md);
+    text-transform: uppercase;
+    font-weight: var(--font-weight-semibold);
+}
+
+/* ===== SEKCJA: PARAFIA ===== */
+.małżeństwa-parish-section {
+    background: var(--color-bg-dark);
+    padding: var(--spacing-lg);
+    border-radius: var(--radius-md);
+    border-left: 4px solid #388E3C;
+    margin-bottom: var(--spacing-lg);
+}
+
+.małżeństwa-parish-section h4 {
+    font-size: var(--font-size-sm);
+    color: #388E3C;
+    margin-bottom: var(--spacing-md);
+    text-transform: uppercase;
+    font-weight: var(--font-weight-semibold);
+}
+
+/* ===== SEKCJA: PRZESZKODY I DYSPENSA ===== */
+.małżeństwa-impediments-section {
+    background: var(--color-bg-dark);
+    padding: var(--spacing-lg);
+    border-radius: var(--radius-md);
+    border-left: 4px solid #D32F2F;
+    margin-bottom: var(--spacing-lg);
+}
+
+.małżeństwa-impediments-section h4 {
+    font-size: var(--font-size-sm);
+    color: #D32F2F;
+    margin-bottom: var(--spacing-md);
+    text-transform: uppercase;
+    font-weight: var(--font-weight-semibold);
+}
+
+/* ===== WITNESSES LIST ===== */
+.witnesses-list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-md);
+}
+
+.witness-item {
+    background: rgba(0, 0, 0, 0.2);
+    padding: var(--spacing-md);
+    border-radius: var(--radius-md);
+    border-left: 3px solid #F57C00;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.witness-name {
+    font-size: var(--font-size-sm);
+    color: var(--color-text);
+}
+
+.witness-remove-btn {
+    background: var(--color-error);
+    border: none;
+    color: white;
+    width: 24px;
+    height: 24px;
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all var(--transition-fast);
+}
+
+.witness-remove-btn:hover {
+    background: #a02318;
+}
+
+/* ===== ADD WITNESS BUTTON ===== */
+.add-witness-btn {
+    background: var(--color-bg-dark);
+    border: 1px dashed var(--color-border);
+    color: var(--color-text-light);
+    padding: var(--spacing-md) var(--spacing-lg);
+    border-radius: var(--radius-md);
+    cursor: pointer;
+    font-size: var(--font-size-sm);
+    transition: all var(--transition-fast);
+    width: 100%;
+    text-align: center;
+    margin-top: var(--spacing-md);
+}
+
+.add-witness-btn:hover {
+    border-color: var(--color-primary);
+    color: var(--color-primary);
+    background: rgba(0, 120, 212, 0.05);
+}
+
+/* ===== IMPEDIMENT CHECKBOXES ===== */
+.impediment-item {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-md);
+    padding: var(--spacing-md);
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: var(--radius-md);
+    margin-bottom: var(--spacing-sm);
+}
+
+.impediment-item input[type="checkbox"] {
+    width: 16px;
+    height: 16px;
+    cursor: pointer;
+    accent-color: var(--color-primary);
+}
+
+.impediment-item label {
+    flex: 1;
+    cursor: pointer;
+    margin: 0;
+    color: var(--color-text);
+    font-size: var(--font-size-sm);
+}
+
+/* ===== CUSTOM COLORS - MAŁŻEŃSTWA ===== */
+.field-groom {
+    --field-color: #1976D2;
+}
+
+.field-bride {
+    --field-color: #E81B8C;
+}
+
+.field-witness {
+    --field-color: #F57C00;
+}
+
+.field-parish {
+    --field-color: #388E3C;
+}
+
+.field-impediment {
+    --field-color: #D32F2F;
+}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 600px) {
+    .witness-item {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: var(--spacing-sm);
+    }
+    
+    .witness-remove-btn {
+        align-self: flex-end;
+    }
+}

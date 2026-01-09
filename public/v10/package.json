@@ -1,0 +1,14 @@
+{
+  "name": "akta-v10",
+  "version": "1.0.0",
+  "description": "Modular genealogical indexing application v10",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "devDependencies": {
+    "http-server": "^14.1.1",
+    "vite": "^5.0.0"
+  }
+}
