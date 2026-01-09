@@ -14,31 +14,13 @@ echo   ACTA v1 Models + Firebase Integration
 echo ============================================
 echo.
 
-REM Sprawdzenie czy Node.js jest zainstalowany
-where node >nul 2>nul
+REM Sprawdzenie czy Python jest zainstalowany
+where python >nul 2>nul
 if %errorlevel% neq 0 (
-    echo ERROR: Node.js not found!
-    echo Please install Node.js from https://nodejs.org/
+    echo ERROR: Python not found!
+    echo Please install Python from https://python.org/
     pause
     exit /b 1
-)
-
-REM Przejście do folderu głównego projektu (parent directory)
-cd /d "%~dp0.."
-
-REM Sprawdzenie czy package.json istnieje
-if not exist "package.json" (
-    echo ERROR: package.json not found in parent directory!
-    echo This file should be in: %cd%
-    pause
-    exit /b 1
-)
-
-REM Sprawdzenie czy node_modules istnieje, jeśli nie - instalacja
-if not exist "node_modules" (
-    echo Installing dependencies...
-    call npm install
-    echo.
 )
 
 echo ============================================
@@ -56,12 +38,23 @@ echo   • Firebase Firestore support
 echo   • Auto-save on field changes
 echo   • Dark theme UI with collapsible sections
 echo.
-echo Opening: http://localhost:5173/viewer-osd-v9.html
+echo Opening: http://localhost:8000/viewer-osd-v9.html
 echo.
 echo Press Ctrl+C to stop the server
 echo ============================================
 echo.
 
-call npm run dev
+REM Uruchomienie Python HTTP server w tle i otwarcie przeglądarki
+echo Starting Python HTTP server...
+start /B python -m http.server 8000 >nul 2>&1
 
-pause
+REM Czekaj chwilę aż serwer się uruchomi
+timeout /t 2 /nobreak >nul
+
+REM Otwórz przeglądarkę
+start http://localhost:8000/viewer-osd-v9.html
+
+echo.
+echo Server is running at: http://localhost:8000/viewer-osd-v9.html
+echo Press Ctrl+C in the command prompt to stop the server
+echo.
