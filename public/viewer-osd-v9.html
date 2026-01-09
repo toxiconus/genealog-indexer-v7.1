@@ -1221,6 +1221,9 @@
             <button class="toolbar-btn" id="clearFirebaseBtn" title="Wyczyść wszystkie dane z Firebase">
                 <i class="fas fa-trash-alt"></i> Clear Firebase
             </button>
+            <button class="toolbar-btn" id="clearAllBtn" title="Wyczyść wszystkie dane (localStorage + Firebase)">
+                <i class="fas fa-trash"></i> Clear All
+            </button>
             
             <div class="toolbar-sep"></div>
             
@@ -2807,6 +2810,7 @@
                     'importCsvBtn': () => { console.log('→ importCSV'); importCSV(); },
                     'importJsonBtn': () => { console.log('→ importJSON'); importJSON(); },
                     'clearFirebaseBtn': () => { console.log('→ clearFirebaseData'); clearFirebaseData(); },
+                    'clearAllBtn': () => { console.log('→ clearAllData'); clearAllData(); },
                     'clearRoiBtn': () => { console.log('→ clearAllROIs'); clearAllROIs(); },
                     'formBtn': () => { console.log('→ toggleFloatingForm'); toggleFloatingForm(); },
                     'pinsBtn': () => { console.log('→ showAllPinups'); showAllPinups(); },
@@ -5098,6 +5102,34 @@
                 console.error('❌ Błąd czyszczenia Firebase:', e);
                 notify('Błąd czyszczenia Firebase', 'error');
                 return false;
+            }
+        }
+
+        function clearAllData() {
+            try {
+                // Wyczyść localStorage
+                localStorage.removeItem('genealog-indexer-v9');
+                localStorage.removeItem('lastActSettings');
+                
+                // Wyczyść aplikację
+                app.images = [];
+                app.imageActs.clear();
+                app.personsRegistry.clear();
+                app.currentImageIdx = 0;
+                app.currentEventId = null;
+                
+                // Odśwież UI
+                updateThumbs();
+                renderActButtons();
+                renderRecordsTable();
+                updateRecordCounter();
+                
+                console.log('✅ Wszystkie dane wyczyszczone (localStorage + app state)');
+                notify('Wszystkie dane wyczyszczone', 'success');
+                
+            } catch (e) {
+                console.error('❌ Błąd czyszczenia danych:', e);
+                notify('Błąd czyszczenia danych', 'error');
             }
         }
 
@@ -7418,7 +7450,7 @@
         });
     </script>
     
-    <!-- Force cache refresh - timestamp: 2026-01-09 -->
+    <!-- Force cache refresh - timestamp: 2026-01-09 v2 -->
     <script async src="https://docs.opencv.org/4.8.0/opencv.js"></script>
     <script>
         // Callback gdy OpenCV jest gotowy
