@@ -1218,6 +1218,9 @@
             <button class="toolbar-btn" id="importJsonBtn" title="Import JSON">
                 <i class="fas fa-file-import"></i> JSON
             </button>
+            <button class="toolbar-btn" id="clearFirebaseBtn" title="Wyczyść wszystkie dane z Firebase">
+                <i class="fas fa-trash-alt"></i> Clear Firebase
+            </button>
             
             <div class="toolbar-sep"></div>
             
@@ -2803,6 +2806,7 @@
                     'exportBtn': () => { console.log('→ exportData'); exportData('simple'); },
                     'importCsvBtn': () => { console.log('→ importCSV'); importCSV(); },
                     'importJsonBtn': () => { console.log('→ importJSON'); importJSON(); },
+                    'clearFirebaseBtn': () => { console.log('→ clearFirebaseData'); clearFirebaseData(); },
                     'clearRoiBtn': () => { console.log('→ clearAllROIs'); clearAllROIs(); },
                     'formBtn': () => { console.log('→ toggleFloatingForm'); toggleFloatingForm(); },
                     'pinsBtn': () => { console.log('→ showAllPinups'); showAllPinups(); },
@@ -5059,6 +5063,41 @@
                 console.error('❌ Błąd ładowania z Firebase:', e);
                 // Fallback to LocalStorage
                 loadStorageData();
+            }
+        async function clearFirebaseData() {
+            if (!window.db) {
+                console.warn('⚠️ Firebase nie jest dostępny');
+                return false;
+            }
+            
+            try {
+                console.log('🗑️ Rozpoczynam czyszczenie Firebase...');
+                
+                // Usuń wszystkie dokumenty z kolekcji 'persons'
+                const personsSnap = await window.db.collection('persons').get();
+                const personsDeletes = [];
+                personsSnap.forEach(doc => {
+                    personsDeletes.push(doc.ref.delete());
+                });
+                
+                // Usuń wszystkie dokumenty z kolekcji 'events'
+                const eventsSnap = await window.db.collection('events').get();
+                const eventsDeletes = [];
+                eventsSnap.forEach(doc => {
+                    eventsDeletes.push(doc.ref.delete());
+                });
+                
+                // Wykonaj wszystkie usunięcia
+                await Promise.all([...personsDeletes, ...eventsDeletes]);
+                
+                console.log(`✅ Firebase wyczyszczony: ${personsDeletes.length} osób, ${eventsDeletes.length} aktów`);
+                notify(`Firebase wyczyszczony: ${personsDeletes.length} osób, ${eventsDeletes.length} aktów`, 'success');
+                return true;
+                
+            } catch (e) {
+                console.error('❌ Błąd czyszczenia Firebase:', e);
+                notify('Błąd czyszczenia Firebase', 'error');
+                return false;
             }
         }
 
