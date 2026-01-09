@@ -4242,7 +4242,7 @@
             const lastPrevNr = prevActs.length > 0 ? prevActs[prevActs.length - 1].number || 0 : 0;
             const hasPrev = prevActs.length > 0;
             const defaultFirst = hasPrev ? lastPrevNr + 1 : 1;
-            const defaultLast = defaultFirst + (hasPrev ? prevActs.length : 1) - 1;
+            const defaultLast = hasPrev ? defaultFirst + prevActs.length - 1 : defaultFirst + 9; // Domyślnie 10 aktów dla nowego obrazu
 
             document.getElementById('modalFirstNr').value = defaultFirst;
             document.getElementById('modalLastNr').value = defaultLast;
@@ -7418,7 +7418,7 @@
         });
     </script>
     
-    <!-- OpenCV.js - Asynchroniczne załadowanie -->
+    <!-- Force cache refresh - timestamp: 2026-01-09 -->
     <script async src="https://docs.opencv.org/4.8.0/opencv.js"></script>
     <script>
         // Callback gdy OpenCV jest gotowy
