@@ -115,6 +115,48 @@
             margin: 0 1px;
             flex-shrink: 0;
         }
+        /* Dropdown menu styles */
+        .dropdown {
+            position: relative;
+            display: inline-block;
+        }
+        .dropdown-toggle {
+            position: relative;
+        }
+        .dropdown-menu {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background: #1a1a1a;
+            border: 1px solid #3a3a3a;
+            border-radius: 4px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.5);
+            z-index: 1000;
+            min-width: 180px;
+            margin-top: 2px;
+        }
+        .dropdown-menu.show {
+            display: block;
+        }
+        .dropdown-item {
+            padding: 8px 12px;
+            color: #ddd;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 11px;
+            transition: background 0.15s ease;
+        }
+        .dropdown-item:hover {
+            background: #2d2d2d;
+            color: #0078d4;
+        }
+        .dropdown-item i {
+            width: 14px;
+            text-align: center;
+        }
         .main-content {
             flex: 1;
             display: grid;
@@ -1218,12 +1260,27 @@
             <button class="toolbar-btn" id="importJsonBtn" title="Import JSON">
                 <i class="fas fa-file-import"></i> JSON
             </button>
-            <button class="toolbar-btn" id="clearFirebaseBtn" title="Wyczyść wszystkie dane z Firebase">
-                <i class="fas fa-trash-alt"></i> Clear Firebase
-            </button>
-            <button class="toolbar-btn" id="clearAllBtn" title="Wyczyść wszystkie dane (localStorage + Firebase)">
-                <i class="fas fa-trash"></i> Clear All
-            </button>
+            
+            <!-- CLEAR MENU -->
+            <div class="dropdown">
+                <button class="toolbar-btn dropdown-toggle" id="clearBtn" title="Opcje czyszczenia danych">
+                    <i class="fas fa-trash"></i> Clear <i class="fas fa-caret-down" style="margin-left: 4px;"></i>
+                </button>
+                <div class="dropdown-menu" id="clearDropdown">
+                    <div class="dropdown-item" id="clearRoiOption" title="Usuń wszystkie zaznaczenia ROI">
+                        <i class="fas fa-trash-alt"></i> Wyczyść ROI
+                    </div>
+                    <div class="dropdown-item" id="clearLocalOption" title="Wyczyść localStorage">
+                        <i class="fas fa-database"></i> Wyczyść Local Storage
+                    </div>
+                    <div class="dropdown-item" id="clearFirebaseOption" title="Wyczyść wszystkie dane z Firebase">
+                        <i class="fas fa-cloud"></i> Wyczyść Firebase
+                    </div>
+                    <div class="dropdown-item" id="clearAllOption" title="Wyczyść wszystkie dane (localStorage + Firebase)">
+                        <i class="fas fa-bomb"></i> Wyczyść Wszystko
+                    </div>
+                </div>
+            </div>
             
             <div class="toolbar-sep"></div>
             
@@ -2809,8 +2866,6 @@
                     'exportBtn': () => { console.log('→ exportData'); exportData('simple'); },
                     'importCsvBtn': () => { console.log('→ importCSV'); importCSV(); },
                     'importJsonBtn': () => { console.log('→ importJSON'); importJSON(); },
-                    'clearFirebaseBtn': () => { console.log('→ clearFirebaseData'); clearFirebaseData(); },
-                    'clearAllBtn': () => { console.log('→ clearAllData'); clearAllData(); },
                     'clearRoiBtn': () => { console.log('→ clearAllROIs'); clearAllROIs(); },
                     'formBtn': () => { console.log('→ toggleFloatingForm'); toggleFloatingForm(); },
                     'pinsBtn': () => { console.log('→ showAllPinups'); showAllPinups(); },
@@ -2844,7 +2899,51 @@
                 }
             });
             
-            console.log('✅ Event delegation ready for all buttons');
+            // Dropdown menu handling
+            const clearBtn = document.getElementById('clearBtn');
+            const clearDropdown = document.getElementById('clearDropdown');
+            
+            if (clearBtn && clearDropdown) {
+                // Toggle dropdown
+                clearBtn.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    clearDropdown.classList.toggle('show');
+                });
+                
+                // Close dropdown when clicking outside
+                document.addEventListener('click', (e) => {
+                    if (!clearBtn.contains(e.target) && !clearDropdown.contains(e.target)) {
+                        clearDropdown.classList.remove('show');
+                    }
+                });
+                
+                // Handle dropdown options
+                document.getElementById('clearRoiOption')?.addEventListener('click', () => {
+                    clearDropdown.classList.remove('show');
+                    clearAllROIs();
+                });
+                
+                document.getElementById('clearLocalOption')?.addEventListener('click', () => {
+                    clearDropdown.classList.remove('show');
+                    if (confirm('⚠️ Wyczyść CAŁE localStorage? Wszystkie dane będą usunięte.')) {
+                        localStorage.clear();
+                        notify('✅ localStorage wyczyszczony. Odśwież stronę.', 'success');
+                        setTimeout(() => location.reload(), 1500);
+                    }
+                });
+                
+                document.getElementById('clearFirebaseOption')?.addEventListener('click', () => {
+                    clearDropdown.classList.remove('show');
+                    clearFirebaseData();
+                });
+                
+                document.getElementById('clearAllOption')?.addEventListener('click', () => {
+                    clearDropdown.classList.remove('show');
+                    clearAllData();
+                });
+            }
+            
+            console.log('✅ Event delegation and dropdown ready');
             
             // Close button in acts panel
             const actsPanel = document.getElementById('actsPanel');
@@ -3583,21 +3682,56 @@
             notify(`✅ Usunięto akt ${eventId}`, 'success');
         }
 
-        function clearAllActsOnImage() {
-            // ✅ NOWE: Pracuj z Map zamiast array
-            const idsToDelete = Array.from(app.imageActs.entries())
-                .filter(([id, event]) => event.imageIdx === app.currentImageIdx)
-                .map(([id]) => id);
-            
-            idsToDelete.forEach(id => app.imageActs.delete(id));
-
-            app.currentEventId = null;
-            clearForm();
-            renderActButtons();
-            renderRecordsTable(); // ✅ NOWE
-            redrawROIs();
-            updateRecordCounter();
-            saveStorage();
+        function clearAllROIs() {
+            try {
+                console.log('🗑️ Clearing all ROIs...');
+                
+                // Wyczyść canvas
+                if (app.drawingCanvas) {
+                    const ctx = app.drawingCanvas.getContext('2d');
+                    ctx.clearRect(0, 0, app.drawingCanvas.width, app.drawingCanvas.height);
+                }
+                
+                // Wyczyść overlaye
+                app.roiOverlays.forEach(overlay => {
+                    try {
+                        app.viewer.removeOverlay(overlay);
+                    } catch (e) {
+                        // Overlay może być już usunięty
+                    }
+                });
+                app.roiOverlays = [];
+                app.overlayMap.clear();
+                
+                // Wyczyść fieldROIs z wszystkich aktów
+                app.imageActs.forEach((event, id) => {
+                    if (event.fieldROIs) {
+                        event.fieldROIs = {};
+                    }
+                    if (event.actROI) {
+                        event.actROI = null;
+                    }
+                });
+                
+                // Resetuj tryby rysowania
+                app.roiMode = false;
+                app.actMode = false;
+                document.getElementById('roiBtn').classList.remove('active');
+                document.getElementById('actBtn').classList.remove('active');
+                
+                // Odśwież UI
+                redrawROIs();
+                renderActButtons();
+                
+                saveStorage();
+                notify('✅ Wszystkie ROI wyczyszczone', 'success');
+                console.log('✅ All ROIs cleared');
+                
+            } catch (e) {
+                console.error('❌ Error clearing ROIs:', e);
+                notify('Błąd podczas czyszczenia ROI', 'error');
+            }
+        }
             
             notify('Wszystkie akty usunięte z tego obrazu', 'success');
         }

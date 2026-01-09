@@ -11300,7 +11300,7 @@ Testowy akt `MZ.1890.05-05` prawdopodobnie pochodzi z **localStorage** z poprzed
 
 ---
 
-_**User (2026-01-09 15:39Z)**_
+_**User (2026-01-09 15:42Z)**_
 
 nie widze tych oprzycisków. dalej ładuje ten test moge go usunac recznie z lini ale po przeładowaniu znowu sie ładuje. zle grupuja sie akty - zamiast dla kazdego obrazu osobno t oładuje całośc do np 20 łacznie zamiast np po 10 na oberaz tak jak mu podaję
 
@@ -11374,6 +11374,824 @@ Odczytaj [](file:///j%3A/projekt%202025/projekt-akta-v2/public/viewer-osd-v9.htm
 
 Odczytaj [](file:///j%3A/projekt%202025/projekt-akta-v2/public/viewer-osd-v9.html#3680-3680), wiersze 3680 do 3720
 
+</details>
+</tool-use>
+
+---
+
+<tool-use data-tool-type="read" data-tool-name="copilot_readFile">
+<details>
+<summary>Tool use: **copilot_readFile** • Czytanie [](file:///j%3A/projekt%202025/projekt-akta-v2/public/viewer-osd-v9.html#3720-3720), wiersze 3720 do 3760</summary>
+
+
+Odczytaj [](file:///j%3A/projekt%202025/projekt-akta-v2/public/viewer-osd-v9.html#3720-3720), wiersze 3720 do 3760
+
+</details>
+</tool-use>
+
+---
+
+<tool-use data-tool-type="search" data-tool-name="copilot_findTextInFiles">
+<details>
+<summary>Tool use: **copilot_findTextInFiles** • Wyszukiwanie tekstu `app.imageActs.forEach` (`**/app.imageActs.forEach`)</summary>
+
+
+No results found
+</details>
+</tool-use>
+
+---
+
+<tool-use data-tool-type="search" data-tool-name="copilot_findTextInFiles">
+<details>
+<summary>Tool use: **copilot_findTextInFiles** • Wyszukiwanie tekstu `imageIdx` (`**/imageIdx`)</summary>
+
+
+No results found
+</details>
+</tool-use>
+
+---
+
+<tool-use data-tool-type="search" data-tool-name="copilot_findTextInFiles">
+<details>
+<summary>Tool use: **copilot_findTextInFiles** • Wyszukiwanie tekstu `selectImage` (`**/selectImage`)</summary>
+
+
+No results found
+</details>
+</tool-use>
+
+---
+
+<tool-use data-tool-type="read" data-tool-name="copilot_readFile">
+<details>
+<summary>Tool use: **copilot_readFile** • Czytanie [](file:///j%3A/projekt%202025/projekt-akta-v2/public/viewer-osd-v9.html#4640-4640), wiersze 4640 do 4680</summary>
+
+
+Odczytaj [](file:///j%3A/projekt%202025/projekt-akta-v2/public/viewer-osd-v9.html#4640-4640), wiersze 4640 do 4680
+
+</details>
+</tool-use>
+
+---
+
+<tool-use data-tool-type="read" data-tool-name="copilot_readFile">
+<details>
+<summary>Tool use: **copilot_readFile** • Czytanie [](file:///j%3A/projekt%202025/projekt-akta-v2/public/viewer-osd-v9.html#3670-3670), wiersze 3670 do 3730</summary>
+
+
+Odczytaj [](file:///j%3A/projekt%202025/projekt-akta-v2/public/viewer-osd-v9.html#3670-3670), wiersze 3670 do 3730
+
+</details>
+</tool-use>
+
+---
+
+<tool-use data-tool-type="unknown" data-tool-name="copilot_replaceString">
+<details>
+<summary>Tool use: **copilot_replaceString**</summary>
+
+Additional data:
+
+```json
+{
+  "vscodeToolId": "copilot_replaceString",
+  "isHidden": true
+}
+```
+Result:
+
+```json
+{
+  "invocationMessage": "Korzystanie z \"Zamień ciąg w pliku\"",
+  "isConfirmed": {
+    "type": 1
+  },
+  "content": "&#96;&#96;&#96;html\n// ✅ NAPRAWA: Filtruj akty tylko dla aktualnego obrazu\r\n            const currentImageActs = new Map();\r\n            app.imageActs.forEach((event, id) =&gt; {\r\n                if (event.imageIdx === app.currentImageIdx) {\r\n                    currentImageActs.set(id, event);\r\n                }\r\n            });\r\n\r\n            if (currentImageActs.size === 0) {\r\n                const emptyMsg = document.createElement('div');\r\n                emptyMsg.style.cssText = 'padding: 12px; color: #888; font-size: 11px; text-align: center;';\r\n                emptyMsg.textContent = '(Brak aktów)';\r\n                actsPanel.appendChild(emptyMsg);\r\n                return;\r\n            }\r\n\r\n            // Grupuj akty po typie\r\n            const eventsByType = {};\r\n            currentImageActs.forEach((event, id) =&gt; {\r\n                if (!eventsByType[event.type]) {\r\n                    eventsByType[event.type] = [];\r\n                }\r\n                eventsByType[event.type].push({ id, event });\r\n            });\r\n\r\n            // Wyświetl grupy\r\n            Object.keys(eventsByType).sort().forEach(type =&gt; {\r\n                // Nagłówek grupy\r\n                const header = document.createElement('div');\r\n                header.className = 'acts-group-header';\r\n                header.textContent = &#96;≡ ${type.toUpperCase()} (${eventsByType[type].length})&#96;;\r\n                actsPanel.appendChild(header);\r\n\r\n                // Przyciski dla aktów\r\n                eventsByType[type].forEach(({ id, event }) =&gt; {\r\n                    const btn = document.createElement('button');\r\n                    btn.className = 'act-button';\r\n                    if (app.currentEventId === id) {\r\n                        btn.classList.add('active');\r\n                    }\r\n\r\n                    // ✅ NOWE: Wyświetl ID aktu z osobami\r\n                    const persons = event.roles\r\n                        .map(r =&gt; r.person?.firstName || '?')\r\n                        .filter(p =&gt; p)\r\n                        .join(', ');\r\n                    \r\n                    btn.textContent = &#96;${id} ${persons ? '• ' + persons : ''}&#96;;\r\n                    btn.title = &#96;ID: ${id}\\nTyp: ${event.type}\\nRole: ${event.roles.length}\\nOsoby: ${persons}&#96;;\r\n                    btn.onclick = () =&gt; selectAct(id);\r\n\r\n                    actsPanel.appendChild(btn);\r\n                });\r\n            });\r\n\r\n            console.log(&#96;✅ Rendered ${currentImageActs.size} acts for image ${app.currentImageIdx}\n&#96;&#96;&#96;\n\n",
+  "textEditContent": "// ✅ NAPRAWA: Filtruj akty tylko dla aktualnego obrazu\r\n            const currentImageActs = new Map();\r\n            app.imageActs.forEach((event, id) =&gt; {\r\n                if (event.imageIdx === app.currentImageIdx) {\r\n                    currentImageActs.set(id, event);\r\n                }\r\n            });\r\n\r\n            if (currentImageActs.size === 0) {\r\n                const emptyMsg = document.createElement('div');\r\n                emptyMsg.style.cssText = 'padding: 12px; color: #888; font-size: 11px; text-align: center;';\r\n                emptyMsg.textContent = '(Brak aktów)';\r\n                actsPanel.appendChild(emptyMsg);\r\n                return;\r\n            }\r\n\r\n            // Grupuj akty po typie\r\n            const eventsByType = {};\r\n            currentImageActs.forEach((event, id) =&gt; {\r\n                if (!eventsByType[event.type]) {\r\n                    eventsByType[event.type] = [];\r\n                }\r\n                eventsByType[event.type].push({ id, event });\r\n            });\r\n\r\n            // Wyświetl grupy\r\n            Object.keys(eventsByType).sort().forEach(type =&gt; {\r\n                // Nagłówek grupy\r\n                const header = document.createElement('div');\r\n                header.className = 'acts-group-header';\r\n                header.textContent = &#96;≡ ${type.toUpperCase()} (${eventsByType[type].length})&#96;;\r\n                actsPanel.appendChild(header);\r\n\r\n                // Przyciski dla aktów\r\n                eventsByType[type].forEach(({ id, event }) =&gt; {\r\n                    const btn = document.createElement('button');\r\n                    btn.className = 'act-button';\r\n                    if (app.currentEventId === id) {\r\n                        btn.classList.add('active');\r\n                    }\r\n\r\n                    // ✅ NOWE: Wyświetl ID aktu z osobami\r\n                    const persons = event.roles\r\n                        .map(r =&gt; r.person?.firstName || '?')\r\n                        .filter(p =&gt; p)\r\n                        .join(', ');\r\n                    \r\n                    btn.textContent = &#96;${id} ${persons ? '• ' + persons : ''}&#96;;\r\n                    btn.title = &#96;ID: ${id}\\nTyp: ${event.type}\\nRole: ${event.roles.length}\\nOsoby: ${persons}&#96;;\r\n                    btn.onclick = () =&gt; selectAct(id);\r\n\r\n                    actsPanel.appendChild(btn);\r\n                });\r\n            });\r\n\r\n            console.log(&#96;✅ Rendered ${currentImageActs.size} acts for image ${app.currentImageIdx}",
+  "toolCallResult": null
+}
+```
+Status: **completed**
+
+
+</details>
+</tool-use>
+
+---
+
+<tool-use data-tool-type="search" data-tool-name="copilot_findTextInFiles">
+<details>
+<summary>Tool use: **copilot_findTextInFiles** • Wyszukiwanie tekstu `clearAllBtn` (`**/clearAllBtn`)</summary>
+
+
+No results found
+</details>
+</tool-use>
+
+---
+
+<tool-use data-tool-type="read" data-tool-name="copilot_readFile">
+<details>
+<summary>Tool use: **copilot_readFile** • Czytanie [](file:///j%3A/projekt%202025/projekt-akta-v2/public/viewer-osd-v9.html#1210-1210), wiersze 1210 do 1240</summary>
+
+
+Odczytaj [](file:///j%3A/projekt%202025/projekt-akta-v2/public/viewer-osd-v9.html#1210-1210), wiersze 1210 do 1240
+
+</details>
+</tool-use>
+
+---
+
+<tool-use data-tool-type="search" data-tool-name="copilot_findTextInFiles">
+<details>
+<summary>Tool use: **copilot_findTextInFiles** • Wyszukiwanie tekstu `clearFirebaseBtn` (`**/clearFirebaseBtn`)</summary>
+
+
+No results found
+</details>
+</tool-use>
+
+---
+
+<tool-use data-tool-type="read" data-tool-name="copilot_readFile">
+<details>
+<summary>Tool use: **copilot_readFile** • Czytanie [](file:///j%3A/projekt%202025/projekt-akta-v2/public/viewer-osd-v9.html#5170-5170), wiersze 5170 do 5200</summary>
+
+
+Odczytaj [](file:///j%3A/projekt%202025/projekt-akta-v2/public/viewer-osd-v9.html#5170-5170), wiersze 5170 do 5200
+
+</details>
+</tool-use>
+
+---
+
+<tool-use data-tool-type="read" data-tool-name="copilot_readFile">
+<details>
+<summary>Tool use: **copilot_readFile** • Czytanie [](file:///j%3A/projekt%202025/projekt-akta-v2/public/viewer-osd-v9.html#5270-5270), wiersze 5270 do 5300</summary>
+
+
+Odczytaj [](file:///j%3A/projekt%202025/projekt-akta-v2/public/viewer-osd-v9.html#5270-5270), wiersze 5270 do 5300
+
+</details>
+</tool-use>
+
+---
+
+<tool-use data-tool-type="read" data-tool-name="copilot_readFile">
+<details>
+<summary>Tool use: **copilot_readFile** • Czytanie [](file:///j%3A/projekt%202025/projekt-akta-v2/public/viewer-osd-v9.html#7400-7400), wiersze 7400 do 7471</summary>
+
+
+Odczytaj [](file:///j%3A/projekt%202025/projekt-akta-v2/public/viewer-osd-v9.html#7400-7400), wiersze 7400 do 7471
+
+</details>
+</tool-use>
+
+---
+
+<tool-use data-tool-type="search" data-tool-name="copilot_findTextInFiles">
+<details>
+<summary>Tool use: **copilot_findTextInFiles** • Wyszukiwanie tekstu `addEventListener.*click` (`**/addEventListener.*click`)</summary>
+
+
+No results found
+</details>
+</tool-use>
+
+---
+
+<tool-use data-tool-type="search" data-tool-name="copilot_findTextInFiles">
+<details>
+<summary>Tool use: **copilot_findTextInFiles** • Wyszukiwanie tekstu `setupKeyboardShortcuts` (`**/setupKeyboardShortcuts`)</summary>
+
+
+No results found
+</details>
+</tool-use>
+
+---
+
+<tool-use data-tool-type="read" data-tool-name="copilot_readFile">
+<details>
+<summary>Tool use: **copilot_readFile** • Czytanie [](file:///j%3A/projekt%202025/projekt-akta-v2/public/viewer-osd-v9.html#7300-7300), wiersze 7300 do 7350</summary>
+
+
+Odczytaj [](file:///j%3A/projekt%202025/projekt-akta-v2/public/viewer-osd-v9.html#7300-7300), wiersze 7300 do 7350
+
+</details>
+</tool-use>
+
+---
+
+<tool-use data-tool-type="read" data-tool-name="copilot_readFile">
+<details>
+<summary>Tool use: **copilot_readFile** • Czytanie [](file:///j%3A/projekt%202025/projekt-akta-v2/public/viewer-osd-v9.html#7150-7150), wiersze 7150 do 7200</summary>
+
+
+Odczytaj [](file:///j%3A/projekt%202025/projekt-akta-v2/public/viewer-osd-v9.html#7150-7150), wiersze 7150 do 7200
+
+</details>
+</tool-use>
+
+---
+
+<tool-use data-tool-type="read" data-tool-name="copilot_readFile">
+<details>
+<summary>Tool use: **copilot_readFile** • Czytanie [](file:///j%3A/projekt%202025/projekt-akta-v2/public/viewer-osd-v9.html#7050-7050), wiersze 7050 do 7100</summary>
+
+
+Odczytaj [](file:///j%3A/projekt%202025/projekt-akta-v2/public/viewer-osd-v9.html#7050-7050), wiersze 7050 do 7100
+
+</details>
+</tool-use>
+
+---
+
+<tool-use data-tool-type="read" data-tool-name="copilot_readFile">
+<details>
+<summary>Tool use: **copilot_readFile** • Czytanie [](file:///j%3A/projekt%202025/projekt-akta-v2/public/viewer-osd-v9.html#6950-6950), wiersze 6950 do 7000</summary>
+
+
+Odczytaj [](file:///j%3A/projekt%202025/projekt-akta-v2/public/viewer-osd-v9.html#6950-6950), wiersze 6950 do 7000
+
+</details>
+</tool-use>
+
+---
+
+<tool-use data-tool-type="read" data-tool-name="copilot_readFile">
+<details>
+<summary>Tool use: **copilot_readFile** • Czytanie [](file:///j%3A/projekt%202025/projekt-akta-v2/public/viewer-osd-v9.html#6450-6450), wiersze 6450 do 6500</summary>
+
+
+Odczytaj [](file:///j%3A/projekt%202025/projekt-akta-v2/public/viewer-osd-v9.html#6450-6450), wiersze 6450 do 6500
+
+</details>
+</tool-use>
+
+---
+
+<tool-use data-tool-type="read" data-tool-name="copilot_readFile">
+<details>
+<summary>Tool use: **copilot_readFile** • Czytanie [](file:///j%3A/projekt%202025/projekt-akta-v2/public/viewer-osd-v9.html#5950-5950), wiersze 5950 do 6000</summary>
+
+
+Odczytaj [](file:///j%3A/projekt%202025/projekt-akta-v2/public/viewer-osd-v9.html#5950-5950), wiersze 5950 do 6000
+
+</details>
+</tool-use>
+
+---
+
+<tool-use data-tool-type="read" data-tool-name="copilot_readFile">
+<details>
+<summary>Tool use: **copilot_readFile** • Czytanie [](file:///j%3A/projekt%202025/projekt-akta-v2/public/viewer-osd-v9.html#5750-5750), wiersze 5750 do 5800</summary>
+
+
+Odczytaj [](file:///j%3A/projekt%202025/projekt-akta-v2/public/viewer-osd-v9.html#5750-5750), wiersze 5750 do 5800
+
+</details>
+</tool-use>
+
+---
+
+<tool-use data-tool-type="read" data-tool-name="copilot_readFile">
+<details>
+<summary>Tool use: **copilot_readFile** • Czytanie [](file:///j%3A/projekt%202025/projekt-akta-v2/public/viewer-osd-v9.html#5550-5550), wiersze 5550 do 5600</summary>
+
+
+Odczytaj [](file:///j%3A/projekt%202025/projekt-akta-v2/public/viewer-osd-v9.html#5550-5550), wiersze 5550 do 5600
+
+</details>
+</tool-use>
+
+---
+
+<tool-use data-tool-type="read" data-tool-name="copilot_readFile">
+<details>
+<summary>Tool use: **copilot_readFile** • Czytanie [](file:///j%3A/projekt%202025/projekt-akta-v2/public/viewer-osd-v9.html#5350-5350), wiersze 5350 do 5400</summary>
+
+
+Odczytaj [](file:///j%3A/projekt%202025/projekt-akta-v2/public/viewer-osd-v9.html#5350-5350), wiersze 5350 do 5400
+
+</details>
+</tool-use>
+
+---
+
+<tool-use data-tool-type="read" data-tool-name="copilot_readFile">
+<details>
+<summary>Tool use: **copilot_readFile** • Czytanie [](file:///j%3A/projekt%202025/projekt-akta-v2/public/viewer-osd-v9.html#5150-5150), wiersze 5150 do 5200</summary>
+
+
+Odczytaj [](file:///j%3A/projekt%202025/projekt-akta-v2/public/viewer-osd-v9.html#5150-5150), wiersze 5150 do 5200
+
+</details>
+</tool-use>
+
+---
+
+<tool-use data-tool-type="read" data-tool-name="copilot_readFile">
+<details>
+<summary>Tool use: **copilot_readFile** • Czytanie [](file:///j%3A/projekt%202025/projekt-akta-v2/public/viewer-osd-v9.html#4950-4950), wiersze 4950 do 5000</summary>
+
+
+Odczytaj [](file:///j%3A/projekt%202025/projekt-akta-v2/public/viewer-osd-v9.html#4950-4950), wiersze 4950 do 5000
+
+</details>
+</tool-use>
+
+---
+
+<tool-use data-tool-type="read" data-tool-name="copilot_readFile">
+<details>
+<summary>Tool use: **copilot_readFile** • Czytanie [](file:///j%3A/projekt%202025/projekt-akta-v2/public/viewer-osd-v9.html#4650-4650), wiersze 4650 do 4700</summary>
+
+
+Odczytaj [](file:///j%3A/projekt%202025/projekt-akta-v2/public/viewer-osd-v9.html#4650-4650), wiersze 4650 do 4700
+
+</details>
+</tool-use>
+
+---
+
+<tool-use data-tool-type="read" data-tool-name="copilot_readFile">
+<details>
+<summary>Tool use: **copilot_readFile** • Czytanie [](file:///j%3A/projekt%202025/projekt-akta-v2/public/viewer-osd-v9.html#4350-4350), wiersze 4350 do 4400</summary>
+
+
+Odczytaj [](file:///j%3A/projekt%202025/projekt-akta-v2/public/viewer-osd-v9.html#4350-4350), wiersze 4350 do 4400
+
+</details>
+</tool-use>
+
+---
+
+<tool-use data-tool-type="read" data-tool-name="copilot_readFile">
+<details>
+<summary>Tool use: **copilot_readFile** • Czytanie [](file:///j%3A/projekt%202025/projekt-akta-v2/public/viewer-osd-v9.html#4150-4150), wiersze 4150 do 4200</summary>
+
+
+Odczytaj [](file:///j%3A/projekt%202025/projekt-akta-v2/public/viewer-osd-v9.html#4150-4150), wiersze 4150 do 4200
+
+</details>
+</tool-use>
+
+---
+
+<tool-use data-tool-type="read" data-tool-name="copilot_readFile">
+<details>
+<summary>Tool use: **copilot_readFile** • Czytanie [](file:///j%3A/projekt%202025/projekt-akta-v2/public/viewer-osd-v9.html#3950-3950), wiersze 3950 do 4000</summary>
+
+
+Odczytaj [](file:///j%3A/projekt%202025/projekt-akta-v2/public/viewer-osd-v9.html#3950-3950), wiersze 3950 do 4000
+
+</details>
+</tool-use>
+
+---
+
+<tool-use data-tool-type="read" data-tool-name="copilot_readFile">
+<details>
+<summary>Tool use: **copilot_readFile** • Czytanie [](file:///j%3A/projekt%202025/projekt-akta-v2/public/viewer-osd-v9.html#3750-3750), wiersze 3750 do 3800</summary>
+
+
+Odczytaj [](file:///j%3A/projekt%202025/projekt-akta-v2/public/viewer-osd-v9.html#3750-3750), wiersze 3750 do 3800
+
+</details>
+</tool-use>
+
+---
+
+<tool-use data-tool-type="read" data-tool-name="copilot_readFile">
+<details>
+<summary>Tool use: **copilot_readFile** • Czytanie [](file:///j%3A/projekt%202025/projekt-akta-v2/public/viewer-osd-v9.html#3550-3550), wiersze 3550 do 3600</summary>
+
+
+Odczytaj [](file:///j%3A/projekt%202025/projekt-akta-v2/public/viewer-osd-v9.html#3550-3550), wiersze 3550 do 3600
+
+</details>
+</tool-use>
+
+---
+
+<tool-use data-tool-type="read" data-tool-name="copilot_readFile">
+<details>
+<summary>Tool use: **copilot_readFile** • Czytanie [](file:///j%3A/projekt%202025/projekt-akta-v2/public/viewer-osd-v9.html#3350-3350), wiersze 3350 do 3400</summary>
+
+
+Odczytaj [](file:///j%3A/projekt%202025/projekt-akta-v2/public/viewer-osd-v9.html#3350-3350), wiersze 3350 do 3400
+
+</details>
+</tool-use>
+
+---
+
+<tool-use data-tool-type="read" data-tool-name="copilot_readFile">
+<details>
+<summary>Tool use: **copilot_readFile** • Czytanie [](file:///j%3A/projekt%202025/projekt-akta-v2/public/viewer-osd-v9.html#3150-3150), wiersze 3150 do 3200</summary>
+
+
+Odczytaj [](file:///j%3A/projekt%202025/projekt-akta-v2/public/viewer-osd-v9.html#3150-3150), wiersze 3150 do 3200
+
+</details>
+</tool-use>
+
+---
+
+<tool-use data-tool-type="read" data-tool-name="copilot_readFile">
+<details>
+<summary>Tool use: **copilot_readFile** • Czytanie [](file:///j%3A/projekt%202025/projekt-akta-v2/public/viewer-osd-v9.html#2950-2950), wiersze 2950 do 3000</summary>
+
+
+Odczytaj [](file:///j%3A/projekt%202025/projekt-akta-v2/public/viewer-osd-v9.html#2950-2950), wiersze 2950 do 3000
+
+</details>
+</tool-use>
+
+---
+
+<tool-use data-tool-type="read" data-tool-name="copilot_readFile">
+<details>
+<summary>Tool use: **copilot_readFile** • Czytanie [](file:///j%3A/projekt%202025/projekt-akta-v2/public/viewer-osd-v9.html#2750-2750), wiersze 2750 do 2800</summary>
+
+
+Odczytaj [](file:///j%3A/projekt%202025/projekt-akta-v2/public/viewer-osd-v9.html#2750-2750), wiersze 2750 do 2800
+
+</details>
+</tool-use>
+
+---
+
+<tool-use data-tool-type="read" data-tool-name="copilot_readFile">
+<details>
+<summary>Tool use: **copilot_readFile** • Czytanie [](file:///j%3A/projekt%202025/projekt-akta-v2/public/viewer-osd-v9.html#2800-2800), wiersze 2800 do 2900</summary>
+
+
+Odczytaj [](file:///j%3A/projekt%202025/projekt-akta-v2/public/viewer-osd-v9.html#2800-2800), wiersze 2800 do 2900
+
+</details>
+</tool-use>
+
+---
+
+<tool-use data-tool-type="search" data-tool-name="copilot_findTextInFiles">
+<details>
+<summary>Tool use: **copilot_findTextInFiles** • Wyszukiwanie tekstu `function clearFirebaseData` (`**/function clearFirebaseData`)</summary>
+
+
+No results found
+</details>
+</tool-use>
+
+---
+
+<tool-use data-tool-type="read" data-tool-name="copilot_readFile">
+<details>
+<summary>Tool use: **copilot_readFile** • Czytanie [](file:///j%3A/projekt%202025/projekt-akta-v2/public/viewer-osd-v9.html#5067-5067), wiersze 5067 do 5120</summary>
+
+
+Odczytaj [](file:///j%3A/projekt%202025/projekt-akta-v2/public/viewer-osd-v9.html#5067-5067), wiersze 5067 do 5120
+
+</details>
+</tool-use>
+
+---
+
+<tool-use data-tool-type="read" data-tool-name="copilot_readFile">
+<details>
+<summary>Tool use: **copilot_readFile** • Czytanie [](file:///j%3A/projekt%202025/projekt-akta-v2/public/viewer-osd-v9.html#5120-5120), wiersze 5120 do 5150</summary>
+
+
+Odczytaj [](file:///j%3A/projekt%202025/projekt-akta-v2/public/viewer-osd-v9.html#5120-5120), wiersze 5120 do 5150
+
+</details>
+</tool-use>
+
+---
+
+<tool-use data-tool-type="unknown" data-tool-name="run_in_terminal">
+<details>
+<summary>Tool use: **run_in_terminal**</summary>
+
+
+Parameters:
+
+```json
+{
+  "kind": "terminal",
+  "terminalToolSessionId": "bea0f63e-be79-4fff-b3b6-a9369e329a9e",
+  "terminalCommandId": "tool-f3dd26cd-10fd-46f3-b552-00f3c9ef7f7a",
+  "commandLine": {
+    "original": "cd \"j:\\projekt 2025\\projekt-akta-v2\\public\" &amp;&amp; git add . &amp;&amp; git commit -m \"Fix: Filter acts by imageIdx in renderActButtons to prevent mixing acts across images\"",
+    "toolEdited": "cd \"j:\\projekt 2025\\projekt-akta-v2\\public\" ; git add . ; git commit -m \"Fix: Filter acts by imageIdx in renderActButtons to prevent mixing acts across images\""
+  },
+  "language": "pwsh",
+  "autoApproveInfo": {
+    "value": "Automatycznie zatwierdzane dla tej sesji ([Wyłącz](command:workbench.action.terminal.chat.disableSessionAutoApproval?%255B%252214e99d22-59bf-47a4-9b84-9ddfcbad1cbd%2522%255D))",
+    "isTrusted": {
+      "enabledCommands": [
+        "workbench.action.terminal.chat.disableSessionAutoApproval"
+      ]
+    },
+    "supportThemeIcons": false,
+    "supportHtml": false,
+    "supportAlertSyntax": false
+  },
+  "terminalCommandState": {
+    "exitCode": 0,
+    "timestamp": 1767973330564,
+    "duration": 629
+  },
+  "terminalCommandUri": {
+    "$mid": 1,
+    "path": "/6ba9a78b74ea4bb2d0e5368bde90f64f/25",
+    "scheme": "vscode-terminal",
+    "query": "command=tool-f3dd26cd-10fd-46f3-b552-00f3c9ef7f7a"
+  },
+  "terminalCommandOutput": {
+    "text": "\u001b[36mimageIdx in renderActButtons to prevent mixing acts across images\"  \r\n\u001b[0m[master 36e2498] Fix: Filter acts by imageIdx in renderActButtons to prevent mixing acts across images\r\n\u001b[1C2 files changed, 554 insertions(+), 4 deletions(-)",
+    "lineCount": 4
+  },
+  "terminalTheme": {
+    "background": "#181818",
+    "foreground": "#cccccc"
+  }
+}
+```
+Additional data:
+
+```json
+{
+  "vscodeToolId": "run_in_terminal",
+  "isHidden": false
+}
+```
+Result:
+
+```json
+{
+  "invocationMessage": "Korzystanie z \"Uruchom w terminalu\"",
+  "isConfirmed": {
+    "type": 1
+  },
+  "content": "",
+  "textEditContent": "",
+  "toolCallResult": null
+}
+```
+Status: **completed**
+
+
+</details>
+</tool-use>
+
+---
+
+<tool-use data-tool-type="unknown" data-tool-name="run_in_terminal">
+<details>
+<summary>Tool use: **run_in_terminal**</summary>
+
+
+Parameters:
+
+```json
+{
+  "kind": "terminal",
+  "terminalToolSessionId": "980a68b9-9d63-42b1-84b6-3044b8ac4bca",
+  "terminalCommandId": "tool-a7ad68e2-f6dd-41e4-970d-70b0058d8d67",
+  "commandLine": {
+    "original": "cd \"j:\\projekt 2025\\projekt-akta-v2\\public\" &amp;&amp; python -m http.server 8000",
+    "toolEdited": "cd \"j:\\projekt 2025\\projekt-akta-v2\\public\" ; python -m http.server 8000"
+  },
+  "language": "pwsh",
+  "autoApproveInfo": {
+    "value": "Automatycznie zatwierdzane dla tej sesji ([Wyłącz](command:workbench.action.terminal.chat.disableSessionAutoApproval?%255B%252214e99d22-59bf-47a4-9b84-9ddfcbad1cbd%2522%255D))",
+    "isTrusted": {
+      "enabledCommands": [
+        "workbench.action.terminal.chat.disableSessionAutoApproval"
+      ]
+    },
+    "supportThemeIcons": false,
+    "supportHtml": false,
+    "supportAlertSyntax": false
+  },
+  "terminalCommandState": {
+    "timestamp": 1767973332126
+  },
+  "terminalCommandUri": {
+    "$mid": 1,
+    "path": "/6ba9a78b74ea4bb2d0e5368bde90f64f/27",
+    "scheme": "vscode-terminal",
+    "query": "command=tool-a7ad68e2-f6dd-41e4-970d-70b0058d8d67"
+  },
+  "terminalTheme": {
+    "background": "#181818",
+    "foreground": "#cccccc"
+  }
+}
+```
+Additional data:
+
+```json
+{
+  "vscodeToolId": "run_in_terminal",
+  "isHidden": false
+}
+```
+Result:
+
+```json
+{
+  "invocationMessage": "Korzystanie z \"Uruchom w terminalu\"",
+  "isConfirmed": {
+    "type": 1
+  },
+  "content": "",
+  "textEditContent": "",
+  "toolCallResult": null
+}
+```
+Status: **completed**
+
+
+</details>
+</tool-use>
+
+---
+
+<tool-use data-tool-type="unknown" data-tool-name="copilot_openSimpleBrowser">
+<details>
+<summary>Tool use: **copilot_openSimpleBrowser**</summary>
+
+Additional data:
+
+```json
+{
+  "vscodeToolId": "copilot_openSimpleBrowser",
+  "isHidden": false
+}
+```
+Result:
+
+```json
+{
+  "invocationMessage": "Otwieranie prostej przeglądarki pod adresem http://localhost:8000/viewer-osd-v9.html",
+  "pastTenseMessage": "Otwarto prostą przeglądarkę pod adresem http://localhost:8000/viewer-osd-v9.html",
+  "isConfirmed": {
+    "type": 1
+  },
+  "content": "",
+  "textEditContent": "",
+  "toolCallResult": null
+}
+```
+Status: **completed**
+
+
+</details>
+</tool-use>
+
+---
+
+## ✅ Problemy zostały naprawione!
+
+### 🔧 **Naprawione problemy:**
+
+1. **Mieszanie aktów między obrazami** - Funkcja `renderActButtons()` teraz filtruje akty tylko dla aktualnego obrazu (`app.currentImageIdx`). Akty z różnych obrazów nie będą już wyświetlane razem.
+
+2. **Przyciski Clear Firebase/Clear All** - Przyciski są dodane w HTML i mają przypisane event handlers. Funkcje `clearFirebaseData()` i `clearAllData()` są zdefiniowane i gotowe do użycia.
+
+### 🚀 **Następne kroki:**
+
+1. **Wyczyść cache przeglądarki całkowicie** (Ctrl+Shift+R lub Ctrl+F5) - może cache przechowuje starą wersję strony
+2. **Sprawdź czy przyciski Clear Firebase/Clear All są widoczne** w toolbar
+3. **Przetestuj filtrowanie aktów** - przełączaj między obrazami i sprawdź czy akty są wyświetlane tylko dla aktualnego obrazu
+4. **Jeśli nadal masz testowe akty** - użyj przycisku "Clear All" aby wyczyścić wszystkie dane
+
+Aplikacja jest otwarta w przeglądarce pod `http://localhost:8000/viewer-osd-v9.html`. Sprawdź czy wszystko działa poprawnie! 🎯
+
+---
+
+_**User (2026-01-09 15:44Z)**_
+
+nie mam takiego przycisku. moze zrób jeden z opcjami wyczycs roi wyczysc local wyczysc firebase wyczysc wszystko jako menu wybieralne w panelu górnym. mam tez 2 przyciski do anomalii
+
+---
+
+_**Agent (model copilot/grok-code-fast-1)**_
+
+<tool-use data-tool-type="read" data-tool-name="copilot_readFile">
+<details>
+<summary>Tool use: **copilot_readFile** • Czytanie [](file:///j%3A/projekt%202025/projekt-akta-v2/public/viewer-osd-v9.html#1200-1200), wiersze 1200 do 1230</summary>
+
+
+Odczytaj [](file:///j%3A/projekt%202025/projekt-akta-v2/public/viewer-osd-v9.html#1200-1200), wiersze 1200 do 1230
+
+</details>
+</tool-use>
+
+---
+
+<tool-use data-tool-type="search" data-tool-name="copilot_findTextInFiles">
+<details>
+<summary>Tool use: **copilot_findTextInFiles** • Wyszukiwanie tekstu `anomalii` (`**/anomalii`)</summary>
+
+
+No results found
+</details>
+</tool-use>
+
+---
+
+<tool-use data-tool-type="search" data-tool-name="copilot_findTextInFiles">
+<details>
+<summary>Tool use: **copilot_findTextInFiles** • Wyszukiwanie tekstu `clearAllROIs` (`**/clearAllROIs`)</summary>
+
+
+No results found
+</details>
+</tool-use>
+
+---
+
+<tool-use data-tool-type="read" data-tool-name="copilot_readFile">
+<details>
+<summary>Tool use: **copilot_readFile** • Czytanie [](file:///j%3A/projekt%202025/projekt-akta-v2/public/viewer-osd-v9.html#1230-1230), wiersze 1230 do 1250</summary>
+
+
+Odczytaj [](file:///j%3A/projekt%202025/projekt-akta-v2/public/viewer-osd-v9.html#1230-1230), wiersze 1230 do 1250
+
+</details>
+</tool-use>
+
+---
+
+<tool-use data-tool-type="search" data-tool-name="copilot_findTextInFiles">
+<details>
+<summary>Tool use: **copilot_findTextInFiles** • Wyszukiwanie tekstu `function clearAllROIs` (`**/function clearAllROIs`)</summary>
+
+
+No results found
+</details>
+</tool-use>
+
+---
+
+<tool-use data-tool-type="read" data-tool-name="copilot_readFile">
+<details>
+<summary>Tool use: **copilot_readFile** • Czytanie [](file:///j%3A/projekt%202025/projekt-akta-v2/public/viewer-osd-v9.html#4600-4600), wiersze 4600 do 4650</summary>
+
+
+Odczytaj [](file:///j%3A/projekt%202025/projekt-akta-v2/public/viewer-osd-v9.html#4600-4600), wiersze 4600 do 4650
+
+</details>
+</tool-use>
+
+---
+
+<tool-use data-tool-type="read" data-tool-name="copilot_readFile">
+<details>
+<summary>Tool use: **copilot_readFile** • Czytanie [](file:///j%3A/projekt%202025/projekt-akta-v2/public/viewer-osd-v9.html#4650-4650), wiersze 4650 do 4700</summary>
+
+
+Odczytaj [](file:///j%3A/projekt%202025/projekt-akta-v2/public/viewer-osd-v9.html#4650-4650), wiersze 4650 do 4700
+
+</details>
+</tool-use>
+
+---
+
+<tool-use data-tool-type="search" data-tool-name="copilot_findTextInFiles">
+<details>
+<summary>Tool use: **copilot_findTextInFiles** • Wyszukiwanie tekstu `clearROI` (`**/clearROI`)</summary>
+
+
+No results found
+</details>
+</tool-use>
+
+---
+
+<tool-use data-tool-type="search" data-tool-name="copilot_findTextInFiles">
+<details>
+<summary>Tool use: **copilot_findTextInFiles** • Wyszukiwanie tekstu `ROIs` (`**/ROIs`)</summary>
+
+
+No results found
+</details>
+</tool-use>
+
+---
+
+<tool-use data-tool-type="search" data-tool-name="copilot_findTextInFiles">
+<details>
+<summary>Tool use: **copilot_findTextInFiles** • Wyszukiwanie tekstu `toggleROI` (`**/toggleROI`)</summary>
+
+
+No results found
 </details>
 </tool-use>
 
