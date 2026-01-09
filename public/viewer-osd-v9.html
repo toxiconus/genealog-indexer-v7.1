@@ -234,7 +234,7 @@
             top: 0;
             left: 0;
             cursor: crosshair !important;
-            z-index: 50;
+            z-index: 150;
             pointer-events: none;
         }
         .right-panel {
@@ -2384,6 +2384,18 @@
                 });
 
                 console.log('📍 OpenSeadragon instance created, viewer:', !!app.viewer);
+                
+                // Dodaj event listeners do przerysowania canvas'a przy zmianach widoku
+                app.viewer.addHandler('zoom', () => {
+                    redrawSavedROIsOnCanvas();
+                });
+                app.viewer.addHandler('pan', () => {
+                    redrawSavedROIsOnCanvas();
+                });
+                app.viewer.addHandler('rotate', () => {
+                    redrawSavedROIsOnCanvas();
+                });
+                
                 resolve();
             });
         }
@@ -2427,9 +2439,11 @@
             
             app.drawingCanvas.addEventListener('mousemove', (e) => {
                 if (!app.drawingROI) return;
-                app.drawingCtx.clearRect(0, 0, app.drawingCanvas.width, app.drawingCanvas.height);
-                redrawROIs();
                 
+                // Najpierw narysuj zapisane ROI
+                redrawSavedROIsOnCanvas();
+                
+                // Potem narysuj aktualnie rysowany prostokąt na wierzchu
                 let x = app.roiStartX, y = app.roiStartY, w = e.offsetX - x, h = e.offsetY - y;
                 if (w < 0) { x += w; w = -w; }
                 if (h < 0) { y += h; h = -h; }
@@ -2470,29 +2484,102 @@
                     act.actROI = roi;
                     notify('✓ Granice aktu zaznaczone', 'success');
                     
-                    // Wyłącz tryb rysowania i uruchom wizard
+                    // Wyłącz tryb rysowania
                     toggleActMode();
                     // Also disable ROI mode after marking act boundaries
                     app.roiMode = false;
                     document.getElementById('roiBtn').classList.remove('active');
-                    setTimeout(() => startWizard(), 200);
+                    // Wizard wyłączony - nie odpala się w trybie zaznaczania granic aktu
                 }
                 
                 saveStorage();
-                app.drawingCtx.clearRect(0, 0, app.drawingCanvas.width, app.drawingCanvas.height);
-                setTimeout(redrawROIs, 50);
+                // Rysuj zaznaczenia na canvas'ie zamiast czyszczć
+                setTimeout(redrawSavedROIsOnCanvas, 50);
             });
             
             app.drawingCanvas.addEventListener('mouseleave', () => {
                 if (app.drawingROI) {
                     app.drawingROI = false;
                     updateCanvasInteraction();
-                    app.drawingCtx.clearRect(0, 0, app.drawingCanvas.width, app.drawingCanvas.height);
+                    redrawSavedROIsOnCanvas();
                 }
             });
             
             // Zapamiętaj funkcję aby mogła być wywołana z toggleROI/toggleActMode
             app.updateCanvasInteraction = updateCanvasInteraction;
+        }
+        
+        function redrawSavedROIsOnCanvas() {
+            // Rysuje wszystkie zapisane zaznaczenia ROI dla WSZYSTKICH aktów na bieżącym obrazie
+            if (!app.drawingCanvas || !app.drawingCtx) return;
+            
+            const viewer = app.viewer;
+            const item = viewer.world.getItemAt(0);
+            if (!item) return;
+            
+            const size = item.getContentSize();
+            const container = document.querySelector('.viewer-container');
+            
+            // Wyczyść canvas
+            app.drawingCtx.clearRect(0, 0, app.drawingCanvas.width, app.drawingCanvas.height);
+            
+            // Rysuj zaznaczenia dla WSZYSTKICH aktów na bieżącym obrazie
+            app.imageActs.forEach((act, eventId) => {
+                // Rysuj fieldROIs dla bieżącego aktu (tylko gdy jest wybrany)
+                if (eventId === app.currentEventId && app.roiMode && act.fieldROIs) {
+                    Object.entries(act.fieldROIs).forEach(([fieldId, roi]) => {
+                        const imgRect = new OpenSeadragon.Rect(
+                            roi.x * size.x, roi.y * size.y,
+                            roi.w * size.x, roi.h * size.y
+                        );
+                        const viewportRect = viewer.viewport.imageToViewportRectangle(imgRect);
+                        
+                        const x = viewportRect.x * container.offsetWidth;
+                        const y = viewportRect.y * container.offsetHeight;
+                        const w = viewportRect.width * container.offsetWidth;
+                        const h = viewportRect.height * container.offsetHeight;
+                        
+                        // Rysuj prostokąt pola
+                        app.drawingCtx.strokeStyle = '#0078d4';
+                        app.drawingCtx.fillStyle = 'rgba(0,120,212,0.15)';
+                        app.drawingCtx.lineWidth = 2;
+                        app.drawingCtx.strokeRect(x, y, w, h);
+                        app.drawingCtx.fillRect(x, y, w, h);
+                        
+                        // Rysuj label pola
+                        app.drawingCtx.fillStyle = '#0078d4';
+                        app.drawingCtx.font = 'bold 11px Arial';
+                        app.drawingCtx.fillText(fieldId, x + 4, y - 4);
+                    });
+                }
+                
+                // Rysuj actROI dla WSZYSTKICH aktów (zawsze widoczne)
+                if (act.actROI) {
+                    const imgRect = new OpenSeadragon.Rect(
+                        act.actROI.x * size.x, act.actROI.y * size.y,
+                        act.actROI.w * size.x, act.actROI.h * size.y
+                    );
+                    const viewportRect = viewer.viewport.imageToViewportRectangle(imgRect);
+                    
+                    const x = viewportRect.x * container.offsetWidth;
+                    const y = viewportRect.y * container.offsetHeight;
+                    const w = viewportRect.width * container.offsetWidth;
+                    const h = viewportRect.height * container.offsetHeight;
+                    
+                    // Inny kolor dla wybranego aktu
+                    const isSelected = eventId === app.currentEventId;
+                    app.drawingCtx.strokeStyle = isSelected ? '#10b981' : '#888';
+                    app.drawingCtx.fillStyle = isSelected ? 'rgba(16,185,129,0.2)' : 'rgba(136,136,136,0.05)';
+                    app.drawingCtx.lineWidth = isSelected ? 3 : 1;
+                    app.drawingCtx.strokeRect(x, y, w, h);
+                    app.drawingCtx.fillRect(x, y, w, h);
+                    
+                    // Rysuj label aktu
+                    app.drawingCtx.fillStyle = isSelected ? '#10b981' : '#999';
+                    app.drawingCtx.font = 'bold 11px Arial';
+                    app.drawingCtx.fillText(eventId, x + 4, y - 4);
+                }
+            });
         }
         
         function screenToImageRect(x, y, w, h) {
@@ -2718,8 +2805,8 @@
                     'postprocessBtn': () => { console.log('→ togglePostprocessPanel'); togglePostprocessPanel(); },
                     'toggleActsBtn': () => { console.log('→ toggleActsPanel'); toggleActsPanel(); },
                     'sortBtn': () => { console.log('→ sortImages'); sortImages(); },
-                    'roiBtn': () => { console.log('→ toggleROI'); toggleROI(); },
-                    'actBtn': () => { console.log('→ toggleActMode'); toggleActMode(); },
+                    'roiBtn': () => { console.log('→ toggleActMode'); toggleActMode(); },
+                    'actBtn': () => { console.log('→ toggleROI'); toggleROI(); },
                     'clearStorageBtn': () => {
                         if (confirm('⚠️ Wyczyść CAŁE localStorage? Wszystkie dane będą usunięte.')) {
                             localStorage.clear();
@@ -3752,6 +3839,7 @@
             renderRecordsTable(); // ✅ NOWE: Odśwież tabelkę
             updateRecordCounter();
             redrawROIs();
+            redrawSavedROIsOnCanvas();
 
             if (event.actROI) {
                 zoomToROI(event.actROI); // ✅ NOWE: Funkcja to zoomToROI
@@ -4556,6 +4644,7 @@
             }
 
             redrawROIs();
+            setTimeout(redrawSavedROIsOnCanvas, 100);
         }
 
         function toggleROI() {
@@ -6282,6 +6371,7 @@
                             url: processed
                         });
                         console.log('✅ Live preview updated');
+                        setTimeout(redrawSavedROIsOnCanvas, 100);
                     } catch (e) {
                         console.error('❌ Preview processing error:', e);
                     } finally {
@@ -6637,6 +6727,7 @@
                         type: 'image',
                         url: original.data
                     });
+                    setTimeout(redrawSavedROIsOnCanvas, 100);
                 }
             }
             

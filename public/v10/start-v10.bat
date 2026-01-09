@@ -1,14 +1,27 @@
 @echo off
-echo Starting Vite server for Akta v10...
 cd /d "%~dp0"
-if not exist node_modules (
-    echo Installing dependencies...
-    npm install
-)
-echo Starting development server...
+
 echo.
-echo Opening: http://localhost:5173/
+echo ========================================
+echo   Genealog Indexer v10 - START
+echo ========================================
 echo.
-echo Press Ctrl+C to stop the server
+echo Uruchamianie serwera HTTP na porcie 8000...
 echo.
-npm run dev
+
+REM Uruchom serwer w tle
+start python -m http.server 8000
+
+REM Czekaj aż serwer się uruchomi
+timeout /t 2 /nobreak
+
+REM Otwórz przeglądarkę
+echo Otwieranie przeglądarki...
+start http://localhost:8000/
+
+echo.
+echo ========================================
+echo   Serwer działa na: http://localhost:8000/
+echo   Aby zatrzymać: Zamknij okno serwera
+echo ========================================
+echo.

@@ -1,71 +1,48 @@
 /* ===== MAIN LAYOUT ===== */
 /* CSS Grid for main application structure */
 
-#app {
-    display: grid;
-    grid-template-rows: auto 1fr 25%;
-    grid-template-columns: 1fr;
+body {
+    margin: 0;
+    padding: 0;
+    font-family: var(--font-family);
+    background-color: var(--color-bg-app);
+    color: var(--color-text);
     height: 100vh;
     width: 100%;
-    gap: 0;
+    display: flex;
+    flex-direction: column;
 }
 
 /* ===== TOOLBAR ===== */
 #toolbar {
-    grid-row: 1;
+    flex: 0 0 auto;
     z-index: var(--z-toolbar);
 }
 
-/* ===== MAIN CONTENT ===== */
-#main-content {
-    grid-row: 2;
+/* ===== MAIN CONTAINER ===== */
+.main-container {
+    flex: 1;
     display: grid;
-    grid-template-columns: 100px 140px 1fr 300px;
+    grid-template-columns: 200px 1fr 300px; /* thumbs | viewer | right panel */
     gap: 0;
     overflow: hidden;
-    background-color: var(--color-bg-app);
-}
-
-#main-content.thumbs-collapsed {
-    grid-template-columns: 0px 140px 1fr 300px;
-}
-
-#main-content.acts-collapsed {
-    grid-template-columns: 100px 0px 1fr 300px;
-}
-
-#main-content.right-collapsed {
-    grid-template-columns: 100px 140px 1fr 0px;
 }
 
 /* Thumbnails Panel */
-#thumbnails-container {
+#thumbsBar {
     grid-column: 1;
     background-color: var(--color-bg-panel);
     border-right: 1px solid var(--color-border);
-    overflow: hidden;
-    display: flex;
-    flex-direction: column;
+    overflow-y: auto;
+    padding: var(--spacing-sm);
 }
 
-/* Viewer Panel */
-#viewer-panel {
-    grid-column: 3;
+/* Viewer */
+#viewer {
+    grid-column: 2;
     background-color: var(--color-bg-darker);
-    display: flex;
-    flex-direction: column;
-    overflow: hidden;
-}
-
-#viewer-container {
-    flex: 1;
     position: relative;
     overflow: hidden;
-}
-
-#viewer {
-    width: 100%;
-    height: 100%;
     cursor: grab;
 }
 
@@ -73,64 +50,17 @@
     cursor: grabbing;
 }
 
-#imageFallback {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    object-fit: contain;
-    display: none;
-}
-
-#imageFallback.active {
-    display: block;
-}
-
-/* Drawing Canvas */
-#drawingCanvas {
-    position: absolute;
-    top: 0;
-    left: 0;
-    cursor: crosshair !important;
-    z-index: 50;
-    pointer-events: none;
-}
-
 /* Right Panel */
-#right-panel {
-    grid-column: 4;
-    background: linear-gradient(180deg, var(--color-bg-panel) 0%, var(--color-bg-dark) 100%);
+#rightPanel {
+    grid-column: 3;
+    background-color: var(--color-bg-panel);
     border-left: 1px solid var(--color-border);
-    display: flex;
-    flex-direction: column;
-    overflow: hidden;
-    min-width: 300px;
-}
-
-#right-panel.collapsed {
-    min-width: 0;
-    border: none;
-}
-
-.right-panel-header {
-    padding: var(--spacing-lg);
-    border-bottom: 1px solid var(--color-border);
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    flex-shrink: 0;
-}
-
-.right-panel-header h3 {
-    font-size: var(--font-size-lg);
-    color: var(--color-text);
-    font-weight: var(--font-weight-semibold);
+    overflow-y: auto;
+    padding: var(--spacing-sm);
 }
 
 /* ===== BOTTOM TABLES ===== */
 #bottom-tables-container {
-    grid-row: 3;
     background-color: var(--color-bg-panel);
     border-top: 1px solid var(--color-border);
     display: flex;
@@ -149,37 +79,29 @@
 
 /* ===== RESPONSIVE - TABLET ===== */
 @media (max-width: 1200px) {
-    #main-content {
-        grid-template-columns: 80px 120px 1fr 250px;
-    }
-    
-    #right-panel {
-        min-width: 250px;
+    .main-container {
+        grid-template-columns: 150px 1fr 250px;
     }
 }
 
 /* ===== RESPONSIVE - SMALL SCREEN ===== */
 @media (max-width: 768px) {
-    #main-content {
+    .main-container {
         grid-template-columns: 1fr;
     }
-    
-    #thumbnails-container,
-    #right-panel {
+
+    #thumbsBar,
+    #rightPanel {
         display: none;
     }
-    
-    #viewer-panel {
+
+    #viewer {
         grid-column: 1;
-    }
-    
-    #bottom-tables-container {
-        min-height: 100px;
     }
 }
 
 /* ===== DRAG & DROP INDICATOR ===== */
-.viewer-container.drag-over {
+#viewer.drag-over {
     border: 4px dashed var(--color-primary) !important;
     background-color: rgba(0, 120, 212, 0.05) !important;
 }

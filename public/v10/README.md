@@ -1,4 +1,4 @@
-# Genealog Indexer v10 - README
+# Genealog Indexer v10 – Architektura modularna ✅
 
 ## 🎯 Projekt
 
@@ -11,70 +11,75 @@ Aplikacja webowa do indeksowania akt genealogicznych (chrzty, małżeństwa, zgo
 - 💾 Synchronizacji z Firebase
 - 📊 Eksportu do CSV/JSON
 
----
-
-## 📁 Struktura Projektu
-
-```
-genealog-indexer-v10/
-├── index.html                      Główny plik HTML
-├── css/
-│   ├── themes.css                 Zmienne, dark/light mode
-│   ├── layout.css                 CSS Grid layout
-│   ├── toolbar.css                Pasek ikon
-│   ├── thumbnails.css             Panel miniatur
-│   ├── viewer.css                 OpenSeadragon viewer
-│   ├── forms.css                  Wspólne style form
-│   ├── form-chrztów.css           Style formularza chrztu
-│   ├── form-małżeństw.css         Style formularza małżeństwa
-│   ├── form-zgonów.css            Style formularza zgonu
-│   └── tables.css                 Style tabel Excel-like
-├── js/
-│   ├── config.js                  Konfiguracja + stałe
-│   ├── app.js                     Bootstrap aplikacji
-│   └── modules/
-│       ├── toolbar.js             Pasek ikon/akcji
-│       ├── thumbnails.js          Panel miniatur
-│       ├── viewer.js              OpenSeadragon
-│       ├── roi.js                 Rysowanie ROI
-│       ├── database.js            Firebase operations
-│       ├── forms-base.js          Wspólna logika formularzy
-│       ├── form-chrztów.js        Logika formularza chrztu
-│       ├── form-małżeństw.js      Logika formularza małżeństwa
-│       ├── form-zgonów.js         Logika formularza zgonu
-│       ├── tables.js              Tabele CRUD
-│       ├── search.js              Szukanie i filtry
-│       ├── ocr.js                 Tesseract.js
-│       └── keyboard.js            Skróty klawiszowe
-├── V10_ARCHITEKTURA.md            Opis architektury
-├── PLAN_MIGRACJI_V10.md           Plan migracji z v9
-├── V10_QUICK_START.md             Szybki start
-└── V10_PODSUMOWANIE.md            To co robiliśmy
-```
+**Status:** 🟢 20% (Toolbar + Thumbs UKOŃCZONE)
 
 ---
 
-## 🚀 Szybki Start
+## 🚀 QUICK START
 
-### 1. Otwórz aplikację
+### 1. Uruchom serwer lokalny
 ```bash
-# W przeglądarce
-file:///path/to/v10/index.html
+cd v10
+python -m http.server 8000
+# lub
+npx http-server . -p 8000
 ```
 
-### 2. Sprawdź konsolę (F12)
+### 2. Otwórz stronę
 ```
-🚀 Inicjalizacja aplikacji v10...
-✅ Firebase gotowy
-📌 Toolbar init
-✅ Aplikacja zainicjalizowana
+http://localhost:8000/
 ```
 
-### 3. Testuj funkcjonalność
-- Drag & drop obrazu na viewer
-- Klikaj przyciski w toolbar
-- Zmień typ aktu (dropdown prawy panel)
-- Rysuj ROI na obrazie (kliknij i przeciągnij)
+### 3. Załaduj dane testowe (F12 Console)
+```javascript
+testData.load()   // Załaduj 3 testowe akty
+testData.log()    // Wyloguj localStorage
+testData.clear()  // Wyczyść wszystko
+```
+
+---
+
+## 📁 Struktura Projektu (NOWA – MODULARNA)
+
+```
+v10/
+├── index.html                      ✅ HTML skeleton
+├── test-data.js                    ✅ Test data + helpers
+├── QUICK_START_V10.md              ✅ Instrukcja uruchomienia
+├── MODULES_CHECKLIST.md            ✅ Checklist modułów
+├── TESTING_PLAN.md                 ✅ Scenariusze testów
+├── README.md                       ✅ Ten plik (updated)
+│
+├── css/
+│   ├── themes.css                  ✅ Zmienne CSS + reset
+│   ├── layout.css                  ✅ Flex layout główny
+│   ├── toolbar.css                 ✅ Style toolbar'a
+│   ├── thumbnails.css              ✅ Style miniatur
+│   ├── viewer.css                  🔄 Style viewera
+│   ├── forms.css                   🔄 Style formularzy
+│   ├── form-chrztów.css            🔄 Style formularza chrztu
+│   ├── form-małżeństw.css          🔄 Style formularza małżeństwa
+│   ├── form-zgonów.css             🔄 Style formularza zgonu
+│   └── tables.css                  🔄 Style tabel
+│
+└── js/
+    ├── main.js                     ✅ Inicjalizacja (ENTRY POINT)
+    ├── app-state.js                ✅ Globalny state
+    ├── toolbar.js                  ✅ Moduł toolbar
+    ├── thumbs.js                   ✅ Moduł miniatury
+    ├── config.js                   ✅ Konfiguracja
+    ├── forms.js                    🔄 [TO DO] Moduł formularzy
+    ├── viewer.js                   🔄 [TO DO] Moduł viewer
+    ├── storage.js                  🔄 [TO DO] Moduł storage
+    ├── table.js                    🔄 [TO DO] Moduł tabela
+    ├── ocr.js                      🔄 [TO DO] Moduł OCR
+    └── modules/                    🔄 [TO DO] Podmoduły specjalizowane
+```
+
+### Legenda:
+- ✅ = Gotowe, przetestowane
+- 🔄 = W przygotowaniu
+- 🔴 = Nie rozpoczęte
 
 ---
 

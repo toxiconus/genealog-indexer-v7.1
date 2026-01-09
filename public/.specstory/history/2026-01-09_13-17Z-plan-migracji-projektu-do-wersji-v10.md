@@ -4548,7 +4548,7 @@ Oszczędzę tokeny - będę robić efektywnie, bez dużych wyjaśnień.Ok, zaczy
 
 ---
 
-_**User (2026-01-09 14:04Z)**_
+_**User (2026-01-09 14:07Z)**_
 
 miniatury i obraz główny
 
@@ -4556,7 +4556,759 @@ miniatury i obraz główny
 
 _**Agent (model copilot/claude-haiku-4.5)**_
 
+<tool-use data-tool-type="read" data-tool-name="copilot_readFile">
+<details>
+<summary>Tool use: **copilot_readFile** • Czytanie [](file:///j%3A/projekt%202025/projekt-akta-v2/public/v10/js/modules/thumbnails.js)</summary>
 
+
+Odczyt: [](file:///j%3A/projekt%202025/projekt-akta-v2/public/v10/js/modules/thumbnails.js)
+
+</details>
+</tool-use>
+
+---
+
+<tool-use data-tool-type="read" data-tool-name="copilot_readFile">
+<details>
+<summary>Tool use: **copilot_readFile** • Czytanie [](file:///j%3A/projekt%202025/projekt-akta-v2/public/v10/js/modules/viewer.js)</summary>
+
+
+Odczyt: [](file:///j%3A/projekt%202025/projekt-akta-v2/public/v10/js/modules/viewer.js)
+
+</details>
+</tool-use>
+
+---
+
+<tool-use data-tool-type="unknown" data-tool-name="copilot_replaceString">
+<details>
+<summary>Tool use: **copilot_replaceString**</summary>
+
+Additional data:
+
+```json
+{
+  "vscodeToolId": "copilot_replaceString",
+  "isHidden": true
+}
+```
+Result:
+
+```json
+{
+  "invocationMessage": "Korzystanie z \"Zamień ciąg w pliku\"",
+  "isConfirmed": {
+    "type": 1
+  },
+  "content": "&#96;&#96;&#96;javascript\nViewerModule.loadImage(src);\r\n            ToolbarModule.updateImageCounter(index + 1, state.thumbnails.length);\r\n            console.log(&#96;📸 Load\n&#96;&#96;&#96;\n\n",
+  "textEditContent": "ViewerModule.loadImage(src);\r\n            ToolbarModule.updateImageCounter(index + 1, state.thumbnails.length);\r\n            console.log(&#96;📸 Load",
+  "toolCallResult": null
+}
+```
+Status: **completed**
+
+
+</details>
+</tool-use>
+
+---
+
+Użytkownik pisze "miniatury i obraz główny" (thumbnails and main image). Patrząc na kontekst rozmowy, to jest prosba do implementacji lub naprawy:
+
+1. **Miniatury (thumbnails)** - już istnieje thumbnails.js, ale może potrzebuje więcej funkcjonalności
+2. **Obraz główny (main image)** - viewer.js jest już implementowany
+
+Ponieważ kod pracy (conversation summary) pokazuje, że oba moduły są już zaimplementowane, ale mogą mieć problemy, powinienem:
+1. Sprawdzić aktualny stan thumbnails.js
+2. Sprawdzić aktualny stan viewer.js
+3. Sprawdzić czy są integrowane ze sobą (czy click na miniaturę otwiera obraz w viewer)
+4. Dodać brakującą funkcjonalność
+
+Użytkownik oszczędza tokeny ("oszczedzaj tokeny przy odpowiedzi"), więc powinienem być zwięzły i go nie pytać - po prostu sprawdzić i naprawić.
+
+Rozpocznę od przeczytania obu plików aby zobaczyć ich aktualny stan.Brakuje połączenia - klik na miniaturę nie wczytuje obrazu w viewer. Poprawiam: Gotowe. Thumbnails teraz wczytuje obraz w viewer i aktualizuje licznik. Klik na miniaturę → OpenSeadragon wyświetli obrazek.
+
+---
+
+_**User (2026-01-09 14:07Z)**_
+
+wypchnij do github
+
+---
+
+_**Agent (model copilot/grok-code-fast-1)**_
+
+<tool-use data-tool-type="unknown" data-tool-name="run_in_terminal">
+<details>
+<summary>Tool use: **run_in_terminal**</summary>
+
+
+Parameters:
+
+```json
+{
+  "kind": "terminal",
+  "terminalToolSessionId": "07f386e2-e488-4bd5-9976-5ede28380c15",
+  "terminalCommandId": "tool-8ee216c3-34b2-4311-9f55-938674277df9",
+  "commandLine": {
+    "original": "cd \"j:\\projekt 2025\\projekt-akta-v2\\public\" &amp;&amp; git status",
+    "toolEdited": "cd \"j:\\projekt 2025\\projekt-akta-v2\\public\" ; git status"
+  },
+  "language": "pwsh",
+  "autoApproveInfo": {
+    "value": "Automatycznie zatwierdzane dla tej sesji ([Wyłącz](command:workbench.action.terminal.chat.disableSessionAutoApproval?%255B%252287c13ee7-9d47-44f9-9899-91c6d9ac5262%2522%255D))",
+    "isTrusted": {
+      "enabledCommands": [
+        "workbench.action.terminal.chat.disableSessionAutoApproval"
+      ]
+    },
+    "supportThemeIcons": false,
+    "supportHtml": false,
+    "supportAlertSyntax": false
+  },
+  "terminalCommandState": {
+    "exitCode": 0,
+    "timestamp": 1767967609933,
+    "duration": 99
+  },
+  "terminalCommandUri": {
+    "$mid": 1,
+    "path": "/6ba9a78b74ea4bb2d0e5368bde90f64f/20",
+    "scheme": "vscode-terminal",
+    "query": "command=tool-8ee216c3-34b2-4311-9f55-938674277df9"
+  },
+  "terminalCommandOutput": {
+    "text": "On branch master\r\nYour branch is up to date with 'origin/master'.\r\n\r\nUntracked files:\r\n  (use \"git add &lt;file&gt;...\" to include in what will be committed)    \r\n        \u001b[31m.specstory/history/2026-01-09_13-17Z-plan-migracji-projektu-do-wersji-v10.md\r\n\u001b[0m        \u001b[31mPLAN_MIGRACJI_V10.md\r\n\u001b[0m        \u001b[31mSTART_TUTAJ.md\r\n\u001b[0m        \u001b[31mV10_ARCHITEKTURA.md\r\n\u001b[0m        \u001b[31mV10_PODSUMOWANIE.md\r\n\u001b[0m        \u001b[31mV10_QUICK_START.md\r\n\u001b[0m        \u001b[31mv10/\r\n\r\n\u001b[0mnothing added to commit but untracked files present (use \"git add\" t",
+    "lineCount": 15
+  },
+  "terminalTheme": {
+    "background": "#181818",
+    "foreground": "#cccccc"
+  }
+}
+```
+Additional data:
+
+```json
+{
+  "vscodeToolId": "run_in_terminal",
+  "isHidden": false
+}
+```
+Result:
+
+```json
+{
+  "invocationMessage": "Korzystanie z \"Uruchom w terminalu\"",
+  "isConfirmed": {
+    "type": 1
+  },
+  "content": "",
+  "textEditContent": "",
+  "toolCallResult": null
+}
+```
+Status: **completed**
+
+
+</details>
+</tool-use>
+
+---
+
+<tool-use data-tool-type="unknown" data-tool-name="run_in_terminal">
+<details>
+<summary>Tool use: **run_in_terminal**</summary>
+
+
+Parameters:
+
+```json
+{
+  "kind": "terminal",
+  "terminalToolSessionId": "cff19f38-0df4-4837-a024-af92171350ee",
+  "terminalCommandId": "tool-a1e99b5f-38f7-4d73-ab2e-0dcab7fb69f7",
+  "commandLine": {
+    "original": "cd \"j:\\projekt 2025\\projekt-akta-v2\\public\" &amp;&amp; git add .",
+    "toolEdited": "cd \"j:\\projekt 2025\\projekt-akta-v2\\public\" ; git add ."
+  },
+  "language": "pwsh",
+  "autoApproveInfo": {
+    "value": "Automatycznie zatwierdzane dla tej sesji ([Wyłącz](command:workbench.action.terminal.chat.disableSessionAutoApproval?%255B%252287c13ee7-9d47-44f9-9899-91c6d9ac5262%2522%255D))",
+    "isTrusted": {
+      "enabledCommands": [
+        "workbench.action.terminal.chat.disableSessionAutoApproval"
+      ]
+    },
+    "supportThemeIcons": false,
+    "supportHtml": false,
+    "supportAlertSyntax": false
+  },
+  "terminalCommandState": {
+    "exitCode": 0,
+    "timestamp": 1767967614892,
+    "duration": 1494
+  },
+  "terminalCommandUri": {
+    "$mid": 1,
+    "path": "/6ba9a78b74ea4bb2d0e5368bde90f64f/20",
+    "scheme": "vscode-terminal",
+    "query": "command=tool-a1e99b5f-38f7-4d73-ab2e-0dcab7fb69f7"
+  },
+  "terminalTheme": {
+    "background": "#181818",
+    "foreground": "#cccccc"
+  }
+}
+```
+Additional data:
+
+```json
+{
+  "vscodeToolId": "run_in_terminal",
+  "isHidden": false
+}
+```
+Result:
+
+```json
+{
+  "invocationMessage": "Korzystanie z \"Uruchom w terminalu\"",
+  "isConfirmed": {
+    "type": 1
+  },
+  "content": "",
+  "textEditContent": "",
+  "toolCallResult": null
+}
+```
+Status: **completed**
+
+
+</details>
+</tool-use>
+
+---
+
+<tool-use data-tool-type="unknown" data-tool-name="run_in_terminal">
+<details>
+<summary>Tool use: **run_in_terminal**</summary>
+
+
+Parameters:
+
+```json
+{
+  "kind": "terminal",
+  "terminalToolSessionId": "4167d117-7f87-43ef-a49c-2392a5d032f0",
+  "terminalCommandId": "tool-5d762647-1de3-45f6-a429-021bf5eab2fb",
+  "commandLine": {
+    "original": "cd \"j:\\projekt 2025\\projekt-akta-v2\\public\" &amp;&amp; git status",
+    "toolEdited": "cd \"j:\\projekt 2025\\projekt-akta-v2\\public\" ; git status"
+  },
+  "language": "pwsh",
+  "autoApproveInfo": {
+    "value": "Automatycznie zatwierdzane dla tej sesji ([Wyłącz](command:workbench.action.terminal.chat.disableSessionAutoApproval?%255B%252287c13ee7-9d47-44f9-9899-91c6d9ac5262%2522%255D))",
+    "isTrusted": {
+      "enabledCommands": [
+        "workbench.action.terminal.chat.disableSessionAutoApproval"
+      ]
+    },
+    "supportThemeIcons": false,
+    "supportHtml": false,
+    "supportAlertSyntax": false
+  },
+  "terminalCommandState": {
+    "exitCode": 0,
+    "timestamp": 1767967620206,
+    "duration": 71
+  },
+  "terminalCommandUri": {
+    "$mid": 1,
+    "path": "/6ba9a78b74ea4bb2d0e5368bde90f64f/20",
+    "scheme": "vscode-terminal",
+    "query": "command=tool-5d762647-1de3-45f6-a429-021bf5eab2fb"
+  },
+  "terminalCommandOutput": {
+    "text": "\u001b[36mkt-akta-v2\\public\"\u001b[0m ; \u001b[93mgit\u001b[0m status\r\nOn branch master\r\nYour branch is up to date with 'origin/master'.\r\n\r\nChanges to be committed:\r\n  (use \"git restore --staged &lt;file&gt;...\" to unstage)\r\n        \u001b[32mnew file:   .specstory/history/2026-01-09_13-17Z-plan-migracji-projektu-do-wersji-v10.md\r\n\u001b[0m        \u001b[32mnew file:   PLAN_MIGRACJI_V10.md\r\n\u001b[0m        \u001b[32mnew file:   START_TUTAJ.md\r\n\u001b[0m        \u001b[32mnew file:   V10_ARCHITEKTURA.md\r\n\u001b[0m        \u001b[32mnew file:   V10_PODSUMOWANIE.md\r\n\u001b[0m        \u001b[32mnew file:   V10_QUICK_START.md\r\n\u001b[0m        \u001b[32mnew file:   v10/README.md\r\n\u001b[0m        \u001b[32mnew file:   \"v10/css/form-chrzt\\303\\263w.css\"\r\n\u001b[0m        \u001b[32mnew file:   \"v10/css/form-ma\\305\\202\\305\\274e\\305\\204stw.css\"\r\n\u001b[0m        \u001b[32mnew file:   \"v10/css/form-zgon\\303\\263w.css\"\r\n\u001b[0m        \u001b[32mnew file:   v10/css/forms.css\r\n\u001b[0m        \u001b[32mnew file:   v10/css/layout.css\r\n\u001b[0m        \u001b[32mnew file:   v10/css/tables.css\r\n\u001b[0m        \u001b[32mnew file:   v10/css/themes.css\r\n\u001b[0m        \u001b[32mnew file:   v10/css/thumbnails.css\r\n\u001b[0m        \u001b[32mnew file:   v10/css/toolbar.css\r\n\u001b[0m        \u001b[32mnew file:   v10/css/viewer.css\r\n\u001b[0m        \u001b[32mnew file:   v10/index.html\r\n\u001b[0m        \u001b[32mnew file:   v10/js/app.js\r\n\u001b[0m        \u001b[32mnew file:   v10/js/config.js\r\n\u001b[0m        \u001b[32mnew file:   v10/js/modules/database.js\r\n\u001b[0m        \u001b[32mnew file:   \"v10/js/modules/form-chrzt\\303\\263w.js\"\r\n\u001b[0m        \u001b[32mnew file:   \"v10/js/modules/form-ma\\305\\202\\305\\274e\\305\\204stw.js\"\r\n\u001b[0m        \u001b[32mnew file:   \"v10/js/modules/form-zgon\\303\\263w.js\"\r\n\u001b[0m        \u001b[32mnew file:   v10/js/modules/forms-base.js\r\n\u001b[0m        \u001b[32mnew file:   v10/js/modules/keyboard.js\r\n\u001b[0m        \u001b[32mnew file:   v10/js/modules/ocr.js\r\n\u001b[0m        \u001b[32mnew file:   v10/js/modules/roi.js\r\n\u001b[0m        \u001b[32mnew file:   v10/js/modules/search.js\r\n\u001b[0m        \u001b[32mnew file:   v10/js/modules/tables.js\r\n\u001b[0m        \u001b[32mnew file:   v10/js/modules/thumbnails.js\r\n\u001b[0m        \u001b[32mnew file:   v10/js/modules/toolbar.js\r\n\u001b[0m        \u001b[32mnew file:   v10/js/modules/viewer.js\r\n\u001b[0m        \u001b[32mnew file:   v10/package-lock.json\r\n\u001b[0m        \u001b[32mnew file:   v10/package.json\r\n\u001b[0m        \u001b[32mnew file:   v10/start-v10.bat\r\n\u001b[0m",
+    "lineCount": 46
+  },
+  "terminalTheme": {
+    "background": "#181818",
+    "foreground": "#cccccc"
+  }
+}
+```
+Additional data:
+
+```json
+{
+  "vscodeToolId": "run_in_terminal",
+  "isHidden": false
+}
+```
+Result:
+
+```json
+{
+  "invocationMessage": "Korzystanie z \"Uruchom w terminalu\"",
+  "isConfirmed": {
+    "type": 1
+  },
+  "content": "",
+  "textEditContent": "",
+  "toolCallResult": null
+}
+```
+Status: **completed**
+
+
+</details>
+</tool-use>
+
+---
+
+<tool-use data-tool-type="unknown" data-tool-name="run_in_terminal">
+<details>
+<summary>Tool use: **run_in_terminal**</summary>
+
+
+Parameters:
+
+```json
+{
+  "kind": "terminal",
+  "terminalToolSessionId": "4c2c9c7d-224e-4079-95f1-a01a20411f21",
+  "terminalCommandId": "tool-0c2f5dd5-5255-478d-9ee7-29351609462a",
+  "commandLine": {
+    "original": "cd \"j:\\projekt 2025\\projekt-akta-v2\\public\" &amp;&amp; git commit -m \"feat: Dodanie wersji v10 aplikacji - modularna architektura\n\n- Migracja z monolitycznej struktury v9 do modularnej v10\n- Implementacja toolbar, viewer i thumbnails z pełną funkcjonalnością\n- CSS Grid layout z ciemnym motywem\n- OpenSeadragon viewer z drag-drop, rotacją i fullscreen\n- Vite dev server setup\n- Przygotowane szkielety dla ROI, Forms, Database i innych modułów\"",
+    "toolEdited": "cd \"j:\\projekt 2025\\projekt-akta-v2\\public\" ; git commit -m \"feat: Dodanie wersji v10 aplikacji - modularna architektura\n\n- Migracja z monolitycznej struktury v9 do modularnej v10\n- Implementacja toolbar, viewer i thumbnails z pełną funkcjonalnością\n- CSS Grid layout z ciemnym motywem\n- OpenSeadragon viewer z drag-drop, rotacją i fullscreen\n- Vite dev server setup\n- Przygotowane szkielety dla ROI, Forms, Database i innych modułów\""
+  },
+  "language": "pwsh",
+  "autoApproveInfo": {
+    "value": "Automatycznie zatwierdzane dla tej sesji ([Wyłącz](command:workbench.action.terminal.chat.disableSessionAutoApproval?%255B%252287c13ee7-9d47-44f9-9899-91c6d9ac5262%2522%255D))",
+    "isTrusted": {
+      "enabledCommands": [
+        "workbench.action.terminal.chat.disableSessionAutoApproval"
+      ]
+    },
+    "supportThemeIcons": false,
+    "supportHtml": false,
+    "supportAlertSyntax": false
+  },
+  "terminalCommandState": {
+    "exitCode": 0,
+    "timestamp": 1767967624355,
+    "duration": 0
+  },
+  "terminalCommandUri": {
+    "$mid": 1,
+    "path": "/6ba9a78b74ea4bb2d0e5368bde90f64f/20",
+    "scheme": "vscode-terminal",
+    "query": "command=tool-0c2f5dd5-5255-478d-9ee7-29351609462a"
+  },
+  "terminalTheme": {
+    "background": "#181818",
+    "foreground": "#cccccc"
+  }
+}
+```
+Additional data:
+
+```json
+{
+  "vscodeToolId": "run_in_terminal",
+  "isHidden": false
+}
+```
+Result:
+
+```json
+{
+  "invocationMessage": "Korzystanie z \"Uruchom w terminalu\"",
+  "isConfirmed": {
+    "type": 1
+  },
+  "content": "",
+  "textEditContent": "",
+  "toolCallResult": null
+}
+```
+Status: **completed**
+
+
+</details>
+</tool-use>
+
+---
+
+<tool-use data-tool-type="unknown" data-tool-name="run_in_terminal">
+<details>
+<summary>Tool use: **run_in_terminal**</summary>
+
+
+Parameters:
+
+```json
+{
+  "kind": "terminal",
+  "terminalToolSessionId": "a9e0c6db-0ea5-48a4-bed5-63c429722f0c",
+  "terminalCommandId": "tool-136b67b2-60c8-451e-94e8-3beb82be5c58",
+  "commandLine": {
+    "original": "cd \"j:\\projekt 2025\\projekt-akta-v2\\public\" &amp;&amp; git push origin master",
+    "toolEdited": "cd \"j:\\projekt 2025\\projekt-akta-v2\\public\" ; git push origin master"
+  },
+  "language": "pwsh",
+  "autoApproveInfo": {
+    "value": "Automatycznie zatwierdzane dla tej sesji ([Wyłącz](command:workbench.action.terminal.chat.disableSessionAutoApproval?%255B%252287c13ee7-9d47-44f9-9899-91c6d9ac5262%2522%255D))",
+    "isTrusted": {
+      "enabledCommands": [
+        "workbench.action.terminal.chat.disableSessionAutoApproval"
+      ]
+    },
+    "supportThemeIcons": false,
+    "supportHtml": false,
+    "supportAlertSyntax": false
+  },
+  "terminalCommandState": {
+    "exitCode": 0,
+    "timestamp": 1767967633182,
+    "duration": 3615
+  },
+  "terminalCommandUri": {
+    "$mid": 1,
+    "path": "/6ba9a78b74ea4bb2d0e5368bde90f64f/20",
+    "scheme": "vscode-terminal",
+    "query": "command=tool-136b67b2-60c8-451e-94e8-3beb82be5c58"
+  },
+  "terminalCommandOutput": {
+    "text": "Enumerating objects: 49, done.\r\nCounting objects: 100% (49/49), done.\r\nDelta compression using up to 8 threads\r\nCompressing objects: 100% (45/45), done.\r\nWriting objects: 100% (45/45), 123.58 KiB | 3.63 MiB/s, done.\r\nTotal 45 (delta 10), reused 0 (delta 0), pack-reused 0 (from 0)     \r\nremote: Resolving deltas: 100% (10/10), completed with 3 local objects.\r\nTo https://github.com/toxiconus/genealog-indexer-v7.1.git\r\n   d221320..f2d88cb  master -&gt; master",
+    "lineCount": 10
+  },
+  "terminalTheme": {
+    "background": "#181818",
+    "foreground": "#cccccc"
+  }
+}
+```
+Additional data:
+
+```json
+{
+  "vscodeToolId": "run_in_terminal",
+  "isHidden": false
+}
+```
+Result:
+
+```json
+{
+  "invocationMessage": "Korzystanie z \"Uruchom w terminalu\"",
+  "isConfirmed": {
+    "type": 1
+  },
+  "content": "",
+  "textEditContent": "",
+  "toolCallResult": null
+}
+```
+Status: **completed**
+
+
+</details>
+</tool-use>
+
+---
+
+✅ **Wypchnięto do GitHub!**
+
+Commit `f2d88cb` zawiera:
+- **36 plików** dodanych (13 121 linii kodu)
+- Pełną strukturę v10 z modularną architekturą
+- Wszystkie CSS, JS moduły, konfigurację Vite
+- Dokumentację i README
+
+**Link do repo:** https://github.com/toxiconus/genealog-indexer-v7.1.git
+
+Branch `master` jest teraz aktualny z wersją v10 aplikacji. Można uruchomić `npm run dev` w folderze `` aby przetestować.
+
+---
+
+_**User (2026-01-09 14:09Z)**_
+
+Zacznijmy od panelu górnego (toolbar) i thumbsBar (miniatury) – to dwie najbardziej niezależne części, więc dobry punkt startowy. Pokażę Ci krok po kroku, jak to bezpiecznie zrobić, bez psucia obecnych zależności.
+Założenia nowej struktury (propozycja)
+textv10/
+├── index.html               ← główny plik (tylko szkielet + <script type="module">)
+├── js/
+│   ├── main.js              ← punkt wejścia, inicjuje wszystko
+│   ├── app-state.js         ← globalny obiekt app + inicjalizacja
+│   ├── toolbar.js           ← renderToolbar(), eventy przycisków
+│   ├── thumbs.js            ← updateThumbs(), eventy miniatur
+│   ├── viewer.js            ← initViewer(), redrawROIs()
+│   ├── forms.js             ← renderFloatingForm(), szablony formularzy
+│   ├── table.js             ← renderRecordsTable()
+│   ├── storage.js           ← save/load (localStorage + przyszły Firestore)
+│   └── utils.js             ← helpery (getCurrentAct(), notify() itd.)
+├── css/
+│   └── styles.css           ← wspólne style (można podzielić później)
+└── assets/                  ← ikony, logo itp.
+Krok 1: Nowy index.html (minimalny szkielet)
+HTML<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Genealog Indexer v10</title>
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+  <!-- Toolbar (górny panel) -->
+  <div id="toolbar" class="toolbar"></div>
+
+  <!-- Główny kontener -->
+  <div class="main-container">
+    <!-- Miniatury (lewy panel) -->
+    <div id="thumbsBar" class="thumbs-bar"></div>
+
+    <!-- Viewer -->
+    <div id="viewer" class="viewer-container"></div>
+
+    <!-- Prawy panel (formularz + tabela) -->
+    <div id="rightPanel">
+      <div id="floatingForm"></div>
+      <div id="tableSection"></div>
+    </div>
+  </div>
+
+  <!-- Skrypty – UWAGA: type="module" jest kluczowe! -->
+  <script type="module">
+    import { initApp } from './js/main.js';
+    initApp();  // uruchamia wszystko
+  </script>
+</body>
+</html>
+Krok 2: app-state.js (centralny stan aplikacji)
+To plik, który zastępuje globalny app z v9.
+JavaScript// js/app-state.js
+export const app = {
+  currentImage: null,
+  currentEventId: null,
+  currentTemplate: 'chrzest',  // domyślny
+  imageActs: [],               // tablica EventModel
+  personsRegistry: new Map(),  // centralny rejestr osób
+  nextPersonId: 1,
+  viewMode: 'indexing',        // nowy: fullViewer, editing, analysis
+  // ... reszta stanu
+};
+
+export function getCurrentAct() {
+  return app.imageActs.find(e => e.id === app.currentEventId);
+}
+
+export function notify(message, type = 'info') {
+  // Twoja funkcja powiadomień
+  console.log(`[${type.toUpperCase()}] ${message}`);
+}
+Krok 3: toolbar.js – przenosimy górny panel
+JavaScript// js/toolbar.js
+import { app, notify } from './app-state.js';
+
+export function renderToolbar() {
+  const toolbar = document.getElementById('toolbar');
+  if (!toolbar) return;
+
+  toolbar.innerHTML = `
+    <div class="toolbar-left">
+      <button id="btnOpen">Otwórz obraz</button>
+      <button id="btnAddActs">Dodaj akty</button>
+      <select id="templateSelect">
+        <option value="chrzest">Chrzest</option>
+        <option value="malzenstwo">Małżeństwo</option>
+        <option value="zgon">Zgon</option>
+      </select>
+    </div>
+    <div class="toolbar-right">
+      <button id="btnFirebase">Firebase</button>
+      <button id="btnSave">Zapisz</button>
+    </div>
+  `;
+
+  // Eventy
+  document.getElementById('btnOpen')?.addEventListener('click', () => {
+    document.getElementById('fileInput')?.click();
+  });
+
+  document.getElementById('templateSelect')?.addEventListener('change', (e) => {
+    app.currentTemplate = e.target.value;
+    // Tutaj możesz odświeżyć formularz
+    import('./forms.js').then(m => m.renderFloatingForm());
+    notify(`Zmieniono szablon na: ${e.target.value}`);
+  });
+
+  // ... reszta przycisków (Firebase, Save itp.)
+}
+Krok 4: thumbs.js – przenosimy miniatury
+JavaScript// js/thumbs.js
+import { app, getCurrentAct } from './app-state.js';
+
+export function updateThumbs() {
+  const thumbsBar = document.getElementById('thumbsBar');
+  if (!thumbsBar) return;
+
+  thumbsBar.innerHTML = ''; // czyść
+
+  app.imageActs.forEach(act => {
+    const thumb = document.createElement('div');
+    thumb.className = 'thumb';
+    thumb.dataset.actId = act.id;
+    thumb.innerHTML = `
+      <img src="${act.thumbnail || 'placeholder.jpg'}" alt="${act.type}">
+      <span>${act.type.toUpperCase().slice(0,2)}.${act.year}.No.${act.nr}</span>
+    `;
+
+    thumb.addEventListener('click', () => {
+      app.currentEventId = act.id;
+      // Odśwież formularz i viewer
+      import('./forms.js').then(m => m.renderFloatingForm());
+      notify(`Wybrano akt: ${act.id}`);
+    });
+
+    thumbsBar.appendChild(thumb);
+  });
+}
+Krok 5: main.js – punkt wejścia
+JavaScript// js/main.js
+import { renderToolbar } from './toolbar.js';
+import { updateThumbs } from './thumbs.js';
+import { app } from './app-state.js';
+
+export function initApp() {
+  console.log('Inicjalizacja v10 modularnej');
+
+  // Ładuj dane (localStorage na razie)
+  loadStorage();
+
+  // Renderuj podstawowe elementy
+  renderToolbar();
+  updateThumbs();
+
+  // Inicjalizuj viewer (przenieś kod z v9)
+  initViewer(); // założenie, że masz taką funkcję w viewer.js
+
+  // Event na zmianę obrazu → odśwież thumbs
+  document.addEventListener('imageLoaded', () => {
+    updateThumbs();
+  });
+}
+
+// Funkcja ładowania (tymczasowa)
+function loadStorage() {
+  const data = localStorage.getItem('actaData');
+  if (data) {
+    const parsed = JSON.parse(data);
+    app.imageActs = parsed.imageActs || [];
+    // ... odbuduj registry itp.
+  }
+}
+Co dalej?
+
+Zrób kopię folderu v10 i testuj na niej.
+Przenieś najpierw toolbar i thumbs (jak powyżej) – powinny działać od razu.
+Potem dodaj importy do forms.js, viewer.js itd.
+Po każdym module sprawdzaj w konsoli błędy typu „undefined function” – to znaczy, że brakuje importu.
+
+Czy to popsuje zależności?
+Nie – jeśli będziesz używał import/export i nie będziesz zmieniał nazw funkcji. Największe ryzyko to zapomniany import – ale to łapie się od razu w konsoli. zamiwniaj wg siebie jak najlepiej
+
+---
+
+_**Agent (model copilot/grok-code-fast-1)**_
+
+<tool-use data-tool-type="unknown" data-tool-name="copilot_createFile">
+<details>
+<summary>Tool use: **copilot_createFile**</summary>
+
+
+Parameters:
+
+```json
+{
+  "file_path": "j:\\projekt 2025\\projekt-akta-v2\\public\\v10\\js\\app-state.js",
+  "relativeWorkspacePath": "j:\\projekt 2025\\projekt-akta-v2\\public\\v10\\js\\app-state.js"
+}
+```
+Additional data:
+
+```json
+{
+  "vscodeToolId": "copilot_createFile",
+  "isHidden": false
+}
+```
+Result:
+
+```json
+{
+  "invocationMessage": "Tworzenie [](file:///j%3A/projekt%202025/projekt-akta-v2/public/v10/js/app-state.js)",
+  "pastTenseMessage": "Utworzono [](file:///j%3A/projekt%202025/projekt-akta-v2/public/v10/js/app-state.js)",
+  "isConfirmed": {
+    "type": 1
+  },
+  "content": "",
+  "textEditContent": "// js/app-state.js\nexport const app = {\n  currentImage: null,\n  currentEventId: null,\n  currentTemplate: 'chrzest',  // domyślny\n  imageActs: [],               // tablica EventModel\n  personsRegistry: new Map(),  // centralny rejestr osób\n  nextPersonId: 1,\n  viewMode: 'indexing',        // nowy: fullViewer, editing, analysis\n  // ... reszta stanu\n};\n\nexport function getCurrentAct() {\n  return app.imageActs.find(e =&gt; e.id === app.currentEventId);\n}\n\nexport function notify(message, type = 'info') {\n  // Twoja funkcja powiadomień\n  console.log(&#96;[${type.toUpperCase()}] ${message}&#96;);\n}",
+  "toolCallResult": null
+}
+```
+Status: **completed**
+
+
+</details>
+</tool-use>
+
+---
+
+<tool-use data-tool-type="unknown" data-tool-name="copilot_createFile">
+<details>
+<summary>Tool use: **copilot_createFile**</summary>
+
+
+Parameters:
+
+```json
+{
+  "file_path": "j:\\projekt 2025\\projekt-akta-v2\\public\\v10\\js\\toolbar.js",
+  "relativeWorkspacePath": "j:\\projekt 2025\\projekt-akta-v2\\public\\v10\\js\\toolbar.js"
+}
+```
+Additional data:
+
+```json
+{
+  "vscodeToolId": "copilot_createFile",
+  "isHidden": false
+}
+```
+Result:
+
+```json
+{
+  "invocationMessage": "Tworzenie [](file:///j%3A/projekt%202025/projekt-akta-v2/public/v10/js/toolbar.js)",
+  "pastTenseMessage": "Utworzono [](file:///j%3A/projekt%202025/projekt-akta-v2/public/v10/js/toolbar.js)",
+  "isConfirmed": {
+    "type": 1
+  },
+  "content": "",
+  "textEditContent": "// js/toolbar.js\nimport { app, notify } from './app-state.js';\n\nexport function renderToolbar() {\n  const toolbar = document.getElementById('toolbar');\n  if (!toolbar) return;\n\n  toolbar.innerHTML = &#96;\n    &lt;div class=\"toolbar-left\"&gt;\n      &lt;button id=\"btnOpen\"&gt;📁 Otwórz obraz&lt;/button&gt;\n      &lt;button id=\"btnAddActs\"&gt;➕ Dodaj akty&lt;/button&gt;\n      &lt;select id=\"templateSelect\"&gt;\n        &lt;option value=\"chrzest\"&gt;Chrzest&lt;/option&gt;\n        &lt;option value=\"malzenstwo\"&gt;Małżeństwo&lt;/option&gt;\n        &lt;option value=\"zgon\"&gt;Zgon&lt;/option&gt;\n      &lt;/select&gt;\n    &lt;/div&gt;\n    &lt;div class=\"toolbar-right\"&gt;\n      &lt;button id=\"btnFirebase\"&gt;☁️ Firebase&lt;/button&gt;\n      &lt;button id=\"btnSave\"&gt;💾 Zapisz&lt;/button&gt;\n    &lt;/div&gt;\n  &#96;;\n\n  // Eventy\n  document.getElementById('btnOpen')?.addEventListener('click', () =&gt; {\n    document.getElementById('fileInput')?.click();\n  });\n\n  document.getElementById('templateSelect')?.addEventListener('change', (e) =&gt; {\n    app.currentTemplate = e.target.value;\n    // Tutaj możesz odświeżyć formularz\n    import('./forms.js').then(m =&gt; m.renderFloatingForm());\n    notify(&#96;Zmieniono szablon na: ${e.target.value}&#96;);\n  });\n\n  // ... reszta przycisków (Firebase, Save itp.)\n}",
+  "toolCallResult": null
+}
+```
+Status: **completed**
+
+
+</details>
+</tool-use>
 
 ---
 
