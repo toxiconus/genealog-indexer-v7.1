@@ -7591,15 +7591,6 @@
             console.log(`📋 D: Copy Previous - Akt ${app.currentEventId} ← Akt ${previousAct.id}`);
         }
         
-        // Inicjalizuj skróty przy starcie
-        setupKeyboardShortcuts();
-        
-        // TASK #2: Initialize search
-        setupSearchInput();
-        
-        // TASK #4: Initialize tab navigation
-        setupTabNavigation();
-        
         // Dodaj focus event do wachlarza
         document.addEventListener('click', (e) => {
             if (!e.target.classList.contains('suggestion')) {
