@@ -1713,25 +1713,25 @@
                 setTimeout(() => document.getElementById('folderInput').click(), 500);
             }
             
-            // ✅ TEST: Utwórz test event dla Marriage type
-            if (app.imageActs instanceof Map && app.imageActs.size === 0) {
-                try {
-                    const testEvent = new ACTA.EventModel('małżeństwo', 1890, 5);
-                    testEvent.id = 'TEST.1890.No.05';
-                    testEvent.imageIdx = 0;
-                    
-                    const groom = new ACTA.PersonModel('Jan', 'Kowalski');
-                    const bride = new ACTA.PersonModel('Maria', 'Lewska');
-                    
-                    testEvent.addPersonWithRole(groom, 'pan_młody');
-                    testEvent.addPersonWithRole(bride, 'panna_młoda');
-                    
-                    app.imageActs.set(testEvent.id, testEvent);
-                    console.log('✅ Test Marriage event created:', testEvent.id);
-                } catch(e) {
-                    console.warn('⚠️ Test event creation skipped:', e.message);
-                }
-            }
+            // ✅ TEST: Wyłączono test event - zaczyna z pustym interfejsem
+            // if (app.imageActs instanceof Map && app.imageActs.size === 0) {
+            //     try {
+            //         const testEvent = new ACTA.EventModel('małżeństwo', 1890, 5);
+            //         testEvent.id = 'TEST.1890.No.05';
+            //         testEvent.imageIdx = 0;
+            //         
+            //         const groom = new ACTA.PersonModel('Jan', 'Kowalski');
+            //         const bride = new ACTA.PersonModel('Maria', 'Lewska');
+            //         
+            //         testEvent.addPersonWithRole(groom, 'pan_młody');
+            //         testEvent.addPersonWithRole(bride, 'panna_młoda');
+            //         
+            //         app.imageActs.set(testEvent.id, testEvent);
+            //         console.log('✅ Test Marriage event created:', testEvent.id);
+            //     } catch(e) {
+            //         console.warn('⚠️ Test event creation skipped:', e.message);
+            //     }
+            // }
             
             notify('v7.0 gotowy!', 'success');
         }
@@ -5149,67 +5149,64 @@
 
         async function loadStorage() {
             try {
-                // Try Firebase first
-                if (window.db) {
-                    await loadFromFirebase();
-                    return;
-                }
-                
-                // Fallback to LocalStorage
+                // ✅ NOWE: Załaduj z localStorage NAJPIERW dla consistency
                 const stored = localStorage.getItem('genealog-indexer-v9');
-                if (!stored) {
-                    console.log('ℹ️ Brak danych w LocalStorage (nowa sesja)');
+                const hasLocalData = stored !== null;
+                
+                if (hasLocalData) {
+                    // Załaduj z localStorage (preferowany)
+                    const data = JSON.parse(stored);
+                    
+                    // ✅ NOWE: Załaduj obrazy
+                    if (data.imageData) {
+                        app.images = data.imageData;
+                        console.log(`📷 Załadowano ${app.images.length} obrazów z localStorage`);
+                    }
+
+                    // ✅ NOWE: Załaduj akty z ACTA v1 JSON
+                    if (data.imageActs && Array.isArray(data.imageActs)) {
+                        app.imageActs.clear(); // Wyczyść mapę
+                        
+                        data.imageActs.forEach(eventData => {
+                            const event = ACTA.EventModel.fromJSON(eventData);
+                            app.imageActs.set(event.id, event);
+                        });
+                        console.log(`✓ Załadowano ${data.imageActs.length} aktów z localStorage`);
+                    }
+
+                    // ✅ NOWE: Załaduj osoby
+                    if (data.personsRegistry && Array.isArray(data.personsRegistry)) {
+                        app.personsRegistry.clear();
+                        data.personsRegistry.forEach(([id, personData]) => {
+                            const person = ACTA.PersonModel.fromJSON(personData);
+                            app.personsRegistry.set(id, person);
+                        });
+                        console.log(`✓ Załadowano ${app.personsRegistry.size} osób z localStorage`);
+                    }
+
+                    // ✅ NOWE: Przywróć stan
+                    app.currentImageIdx = data.currentImageIndex || 0;
+                    app.currentEventId = data.currentEventId || null;
+                    app.currentTemplate = data.currentTemplate || 'birth';
+                    
+                    console.log(`✓ Dane załadowane z LocalStorage (v${data.version || '?'})`);
+                    updateThumbs();
                     return;
                 }
-
-                const data = JSON.parse(stored);
                 
-                // ✅ NOWE: Załaduj obrazy
-                if (data.imageData) {
-                    app.images = data.imageData;
-                    console.log(`📷 Załadowano ${app.images.length} obrazów`);
+                // ✅ NOWE: Jeśli brak danych w localStorage, spróbuj Firebase
+                if (window.db) {
+                    try {
+                        await loadFromFirebase();
+                        return;
+                    } catch (e) {
+                        console.error('⚠️ Firebase load error, using empty state:', e);
+                    }
                 }
-
-                // ✅ NOWE: Załaduj akty z ACTA v1 JSON
-                if (data.imageActs && Array.isArray(data.imageActs)) {
-                    app.imageActs.clear(); // Wyczyść mapę
-                    
-                    data.imageActs.forEach(eventData => {
-                        const event = ACTA.EventModel.fromJSON(eventData);
-                        app.imageActs.set(event.id, event);
-                    });
-                    
-                    console.log(`📋 Załadowano ${data.imageActs.length} aktów (ACTA v1)`);
-                }
-
-                // ✅ NOWE: Załaduj registry osób
-                if (data.personsRegistry) {
-                    app.personsRegistry.clear();
-                    data.personsRegistry.forEach(([id, personData]) => {
-                        const person = ACTA.PersonModel.fromJSON(personData);
-                        app.personsRegistry.set(id, person);
-                    });
-                    app.nextPersonId = data.nextPersonId || 1;
-                    console.log(`👥 Załadowano registry: ${app.personsRegistry.size} osób`);
-                }
-
-                // Przywróć stan
-                app.currentImageIdx = data.currentImageIndex || 0;
-                app.currentEventId = data.currentEventId || null; // ✅ NOWE
-                app.currentTemplate = data.currentTemplate || 'birth';
                 
-                console.log(`✓ Dane załadowane z LocalStorage (v${data.version || '?'})`);
-                
-                updateThumbs();
-                renderActButtons();
-                renderRecordsTable();
-                
-                if (app.images.length > 0) {
-                    selectImage(app.currentImageIdx, true);
-                }
+                console.log('ℹ️ Brak danych - zaczynam z pustym interfejsem');
             } catch (e) {
-                console.error('❌ Błąd ładowania:', e);
-                notify('Błąd ładowania danych', 'error');
+                console.error('❌ Błąd ładowania danych:', e);
             }
         }
         
