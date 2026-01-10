@@ -1747,28 +1747,28 @@
                 }
             } catch(e) {}
             
-            loadFallbackTemplates();
+            app.loadFallbackTemplates();
             console.log('📍 Templates loaded:', app.templates.length);
             
             // ✅ v9.2: Load custom fields from localStorage
-            loadCustomFieldsFromStorage();
+            app.loadCustomFieldsFromStorage();
             console.log('📍 Custom fields loaded');
             
-            initViewer();
+            app.initViewer();
             console.log('📍 Viewer initialized');
-            setupDrawingCanvas();
+            app.setupDrawingCanvas();
             console.log('📍 Canvas setup complete');
-            loadStorage();
+            app.loadStorage();
             console.log('📍 Storage loaded, images:', app.images.length);
-            setupRealtimeListener();
+            app.setupRealtimeListener();
             console.log('📍 Realtime listeners setup');
-            startAutoSave();
+            app.startAutoSave();
             console.log('📍 Auto-save started');
-            renderUI();
+            app.renderUI();
             console.log('📍 UI rendered');
-            setupPostprocessSliders();
+            app.setupPostprocessSliders();
             console.log('📍 Postprocess sliders setup');
-            setupEvents();
+            app.setupEvents();
             console.log('📍 Events setup complete');
             
             // Auto-load folder if enabled
