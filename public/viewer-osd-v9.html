@@ -3013,7 +3013,7 @@
                     // ⭐ P0: Ctrl+Shift+V = Copy Previous Record
                     if (e.key === 'V' && e.shiftKey) {
                         e.preventDefault();
-                        copyPreviousRecord();
+                        copyPreviousActEnhanced();
                         console.log('⌨️ Ctrl+Shift+V: Copy previous');
                     }
                 }
@@ -3038,70 +3038,69 @@
             });
             
             console.log('✅ setupEvents completed successfully');
-        }
-        
-        // Table editing listeners
-        const dataTable = document.getElementById('dataTable');
-        if (dataTable) {
-            dataTable.addEventListener('click', (e) => {
-                if (e.target.classList.contains('cell-editable')) {
-                    const input = document.createElement('input');
-                    input.value = e.target.textContent;
-                    input.style.width = '100%';
-                    e.target.innerHTML = '';
-                    e.target.appendChild(input);
-                    input.focus();
-                    
-                    input.addEventListener('blur', () => {
-                        const newValue = input.value;
-                        e.target.textContent = newValue;
-                        
-                        // Zapisz do aktu
-                        const rowIdx = e.target.parentNode.rowIndex - 1; // -1 dla thead
-                        const currentActs = Array.from(app.imageActs.values()).filter(a => a.imageIdx === app.currentImageIdx);
-                        const act = currentActs[rowIdx];
-                        const cellIdx = e.target.cellIndex - 1; // -1 dla checkbox
-                        
-                        // ✅ NOWE: Mapuj na właściwości EventModel zamiast fieldValues
-                        if (cellIdx === 1) { // child_first_name
-                            const child = act.getChild();
-                            if (child && child.person) child.person.firstName = newValue;
-                        } else if (cellIdx === 2) { // child_last_name
-                            const child = act.getChild();
-                            if (child && child.person) child.person.lastName = newValue;
-                        } else if (cellIdx === 3) { // child_birth_date
-                            const child = act.getChild();
-                            if (child && child.person) child.person.birthDate = new ACTA.HistoricalDate(newValue);
-                        } else if (cellIdx === 4) { // notes
-                            act.notes = newValue;
-                        }
-                        
-                        saveStorage();
-                        renderRecordsTable(); // Odśwież tabelę
-                    });
-                }
-            });
             
-            // Paste listener for table
-            dataTable.addEventListener('paste', (e) => {
-                e.preventDefault();
-                const pastedData = (e.clipboardData || window.clipboardData).getData('text');
-                const rows = pastedData.split('\n').map(row => row.split('\t'));
-                
-                const selectedRow = document.activeElement.closest('tr')?.rowIndex - 1 || 0;
-                // ✅ NOWA WERSJA: Filtruj akty z Map zamiast array.filter
-                const currentActs = Array.from(app.imageActs.values()).filter(a => a.imageIdx === app.currentImageIdx);
-                
-                rows.forEach((rowData, i) => {
-                    if (currentActs[selectedRow + i]) {
-                        const act = currentActs[selectedRow + i];
-                        // ✅ NOWA WERSJA: Użyj PersonModel zamiast fieldValues
-                        if (rowData[0] && act.getChild()) act.getChild().person.firstName = rowData[0];
-                        if (rowData[1] && act.getChild()) act.getChild().person.lastName = rowData[1];
-                        if (rowData[2] && act.getChild()) act.getChild().person.birthDate = new ACTA.HistoricalDate(rowData[2]);
-                        if (rowData[3]) act.notes = rowData[3];
+            // Table editing listeners
+            const dataTable = document.getElementById('dataTable');
+            if (dataTable) {
+                dataTable.addEventListener('click', (e) => {
+                    if (e.target.classList.contains('cell-editable')) {
+                        const input = document.createElement('input');
+                        input.value = e.target.textContent;
+                        input.style.width = '100%';
+                        e.target.innerHTML = '';
+                        e.target.appendChild(input);
+                        input.focus();
+                        
+                        input.addEventListener('blur', () => {
+                            const newValue = input.value;
+                            e.target.textContent = newValue;
+                            
+                            // Zapisz do aktu
+                            const rowIdx = e.target.parentNode.rowIndex - 1; // -1 dla thead
+                            const currentActs = Array.from(app.imageActs.values()).filter(a => a.imageIdx === app.currentImageIdx);
+                            const act = currentActs[rowIdx];
+                            const cellIdx = e.target.cellIndex - 1; // -1 dla checkbox
+                            
+                            // ✅ NOWE: Mapuj na właściwości EventModel zamiast fieldValues
+                            if (cellIdx === 1) { // child_first_name
+                                const child = act.getChild();
+                                if (child && child.person) child.person.firstName = newValue;
+                            } else if (cellIdx === 2) { // child_last_name
+                                const child = act.getChild();
+                                if (child && child.person) child.person.lastName = newValue;
+                            } else if (cellIdx === 3) { // child_birth_date
+                                const child = act.getChild();
+                                if (child && child.person) child.person.birthDate = new ACTA.HistoricalDate(newValue);
+                            } else if (cellIdx === 4) { // notes
+                                act.notes = newValue;
+                            }
+                            
+                            saveStorage();
+                            renderRecordsTable(); // Odśwież tabelę
+                        });
                     }
                 });
+                
+                // Paste listener for table
+                dataTable.addEventListener('paste', (e) => {
+                    e.preventDefault();
+                    const pastedData = (e.clipboardData || window.clipboardData).getData('text');
+                    const rows = pastedData.split('\n').map(row => row.split('\t'));
+                    
+                    const selectedRow = document.activeElement.closest('tr')?.rowIndex - 1 || 0;
+                    // ✅ NOWA WERSJA: Filtruj akty z Map zamiast array.filter
+                    const currentActs = Array.from(app.imageActs.values()).filter(a => a.imageIdx === app.currentImageIdx);
+                    
+                    rows.forEach((rowData, i) => {
+                        if (currentActs[selectedRow + i]) {
+                            const act = currentActs[selectedRow + i];
+                            // ✅ NOWA WERSJA: Użyj PersonModel zamiast fieldValues
+                            if (rowData[0] && act.getChild()) act.getChild().person.firstName = rowData[0];
+                            if (rowData[1] && act.getChild()) act.getChild().person.lastName = rowData[1];
+                            if (rowData[2] && act.getChild()) act.getChild().person.birthDate = new ACTA.HistoricalDate(rowData[2]);
+                            if (rowData[3]) act.notes = rowData[3];
+                        }
+                    });
                 
                 saveStorage();
                 renderRecordsTable();
@@ -7533,7 +7532,7 @@
                 }
             });
         }
-        
+
         // D: ENHANCED COPY PREVIOUS
         function copyPreviousActEnhanced() {
             if (!app.currentEventId) {
@@ -7591,12 +7590,16 @@
             console.log(`📋 D: Copy Previous - Akt ${app.currentEventId} ← Akt ${previousAct.id}`);
         }
         
+        // Inicjalizuj wszystkie event listeners
+        setupEvents();
+        
         // Dodaj focus event do wachlarza
         document.addEventListener('click', (e) => {
             if (!e.target.classList.contains('suggestion')) {
                 hideSuggestions();
             }
         });
+    };
     </script>
     
     <!-- Force cache refresh - timestamp: 2026-01-09 v2 -->
