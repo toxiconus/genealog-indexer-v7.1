@@ -7589,17 +7589,18 @@
             notify(`✨ Skopiowano z Aktu ${previousAct.id}`, 'success');
             console.log(`📋 D: Copy Previous - Akt ${app.currentEventId} ← Akt ${previousAct.id}`);
         }
-        
-        // Inicjalizuj wszystkie event listeners
-        setupEvents();
-        
-        // Dodaj focus event do wachlarza
-        document.addEventListener('click', (e) => {
-            if (!e.target.classList.contains('suggestion')) {
-                hideSuggestions();
-            }
-        });
     };
+
+    // Inicjalizuj wszystkie event listeners
+    setupEvents();
+    
+    // Dodaj focus event do wachlarza
+    document.addEventListener('click', (e) => {
+        if (!e.target.classList.contains('suggestion')) {
+            hideSuggestions();
+        }
+    });
+}
     </script>
     
     <!-- Force cache refresh - timestamp: 2026-01-09 v2 -->
