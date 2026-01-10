@@ -3761,10 +3761,10 @@
             
             counter.textContent = totalActs > 0 
                 ? `Akty: ${totalActs}${eventInfo}` 
-                : 'Brak akt�w';
+                : 'Brak aktów';
         }
 
-        async app.autoGenerateID = function(actData) {
+        app.autoGenerateID = async function(actData) {
             // Generuj ID w formacie: TYP.WOJ.PARAFIA.ROK.MIES.NR.SUF
             const typeMap = {
                 'chrzest': 'CH',
@@ -5111,7 +5111,7 @@
         }
 
         // Funkcja migracji danych z localStorage do Firestore
-        async app.exportFromLocalStorageToFirestore = function() {
+        app.exportFromLocalStorageToFirestore = async function() {
             if (!window.db) {
                 console.error('? Firebase nie jest zainicjalizowany');
                 return;
@@ -5137,7 +5137,7 @@
             }
         }
 
-        async app.saveToFirebase = function() {
+        app.saveToFirebase = async function() {
             if (!window.db) return;
             
             try {
@@ -5162,7 +5162,7 @@
             }
         }
 
-        async app.saveStorage = function() {
+        app.saveStorage = async function() {
             try {
                 // Save to Firebase if available
                 if (window.db) {
@@ -5198,7 +5198,7 @@
             }
         }
 
-        async app.loadFromFirebase = function() {
+        app.loadFromFirebase = async function() {
             if (!window.db) return;
             
             try {
@@ -5225,7 +5225,7 @@
                 // Fallback to LocalStorage
                 loadStorageData();
             }
-        async app.clearFirebaseData = function() {
+        app.clearFirebaseData = async function() {
             if (!window.db) {
                 console.warn('?? Firebase nie jest dost�pny');
                 return false;
@@ -5375,7 +5375,7 @@
             updateThumbs();
         }
 
-        async app.loadStorage = function() {
+        app.loadStorage = async function() {
             try {
                 // ? NOWE: Za�aduj z localStorage NAJPIERW dla consistency
                 const stored = localStorage.getItem('genealog-indexer-v9');
@@ -6150,7 +6150,7 @@
             notify(`Otworzono ${Object.keys(act.fieldROIs).length} pin-up�w`, 'success');
         }
 
-        async app.runOCRForPinup = function(pinupEl) {
+        app.runOCRForPinup = async function(pinupEl) {
             const fieldId = pinupEl.dataset.field;
             const act = getCurrentAct();
             if (!act || !act.fieldROIs || !act.fieldROIs[fieldId]) {
@@ -7613,4 +7613,6 @@
     </script>
 </body>
 </html>
+
+
 
