@@ -3001,72 +3001,10 @@
                 }
             });
 
-            // ===== "DODAJ DODATKOWE POLE" BUTTON =====
-            const addFieldDiv = document.createElement('div');
-            addFieldDiv.style.marginTop = '16px';
-            addFieldDiv.style.paddingTop = '12px';
-            addFieldDiv.style.borderTop = '1px solid #2a2a2a';
-
-            const addBtn = document.createElement('button');
-            addBtn.textContent = '+ Dodaj dodatkowe pole';
-            addBtn.style.cssText = 'background: #252525; border: 1px solid #3a3a3a; color: #ddd; padding: 6px 10px; border-radius: 3px; cursor: pointer; font-size: 10px; width: 100%;';
-            
-            addBtn.addEventListener('click', () => {
-                const select = document.createElement('select');
-                select.style.cssText = 'width: 100%; padding: 5px; background: #0f0f0f; border: 1px solid #3a3a3a; color: #ddd; border-radius: 3px; font-size: 11px; margin-top: 8px;';
-                
-                extraFields.forEach(f => {
-                    const option = document.createElement('option');
-                    option.value = f.id;
-                    option.textContent = f.label;
-                    select.appendChild(option);
-                });
-
-                const wrapper = document.createElement('div');
-                wrapper.style.marginTop = '8px';
-                wrapper.appendChild(select);
-                container.insertBefore(wrapper, addFieldDiv);
-
-                select.onchange = function() {
-                    const selectedId = this.value;
-                    const selectedField = extraFields.find(f => f.id === selectedId);
-                    const selectedLabel = selectedField.label;
-
-                    const newGroup = document.createElement('div');
-                    newGroup.className = 'form-group';
-                    newGroup.style.marginBottom = '8px';
-
-                    const newLabel = document.createElement('label');
-                    newLabel.textContent = selectedLabel;
-                    newLabel.style.cssText = 'display: block; font-size: 10px; color: #888; margin-bottom: 3px;';
-                    newGroup.appendChild(newLabel);
-
-                    const newInput = document.createElement('input');
-                    newInput.type = 'text';
-                    newInput.className = 'field-input';
-                    newInput.id = selectedId;
-                    newInput.placeholder = selectedLabel;
-                    newInput.value = act.fieldValues[selectedId] || '';
-                    newInput.style.cssText = 'width: 100%; padding: 5px; background: #0f0f0f; border: 1px solid #3a3a3a; color: #ddd; border-radius: 3px; font-size: 11px;';
-
-                    newInput.addEventListener('focus', () => newInput.placeholder = '');
-                    newInput.addEventListener('blur', () => {
-                        if (!newInput.value.trim()) newInput.placeholder = selectedLabel;
-                    });
-                    newInput.addEventListener('input', (e) => {
-                        act.fieldValues[selectedId] = e.target.value.trim();
-                        saveStorage();
-                    });
-
-                    newGroup.appendChild(newInput);
-                    container.insertBefore(newGroup, addFieldDiv);
-                    wrapper.remove();
-                    newInput.focus();
-                };
-            });
-
-            addFieldDiv.appendChild(addBtn);
-            container.appendChild(addFieldDiv);
+            // ===== "DODAJ DODATKOWE POLE" BUTTON - DISABLED IN V8.11 (All fields in fieldGroups) =====
+            // Button disabled since all fields are now in fieldGroups structure
+            // const addFieldDiv = document.createElement('div');
+            // ... button code removed ...
 
             // Focus first field
             container.querySelector('.field-input')?.focus();
