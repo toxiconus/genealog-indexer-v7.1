@@ -2787,32 +2787,12 @@
                     ]
                 },
                 {
-                    id: 'swiadek3',
-                    header: 'ŚWIADEK 3 (dodatkowy)',
-                    layout: 'grouped',
-                    fields: [
-                        { id: "swiadek3_imie", label: "Imię" },
-                        { id: "swiadek3_nazwisko", label: "Nazwisko" },
-                        { id: "swiadek3_zawod", label: "Zawód" },
-                        { id: "swiadek3_wiek", label: "Wiek" },
-                        { id: "swiadek3_miejsce", label: "Miejsce" }
-                    ]
-                },
-                {
                     id: 'ksiadz',
                     header: 'KSIĘŻA (udzielający chrztu)',
                     layout: 'inline2',
                     fields: [
                         { id: "ksiadz_imie", label: "Imię" },
                         { id: "ksiadz_nazwisko", label: "Nazwisko" }
-                    ]
-                },
-                {
-                    id: 'miejsce',
-                    header: null,
-                    layout: 'single',
-                    fields: [
-                        { id: "miejsce_chrztu", label: "Miejsce chrztu (kościół, kaplica)" }
                     ]
                 },
                 {
@@ -3001,10 +2981,53 @@
                 }
             });
 
-            // ===== "DODAJ DODATKOWE POLE" BUTTON - DISABLED IN V8.11 (All fields in fieldGroups) =====
-            // Button disabled since all fields are now in fieldGroups structure
-            // const addFieldDiv = document.createElement('div');
-            // ... button code removed ...
+            // ===== "DODAJ DOWOLNE DANE" BUTTON - ENABLED FOR CUSTOM DATA =====
+            // Pozwala dodać dowolne dodatkowe dane (małżeństwo, zgon, inne informacje ze chrztu)
+            const addFieldDiv = document.createElement('div');
+            addFieldDiv.style.marginTop = '16px';
+            addFieldDiv.style.paddingTop = '12px';
+            addFieldDiv.style.borderTop = '1px solid #2a2a2a';
+
+            const addBtn = document.createElement('button');
+            addBtn.textContent = '+ Dodaj dowolne dane';
+            addBtn.style.cssText = 'background: #252525; border: 1px solid #3a3a3a; color: #ddd; padding: 6px 10px; border-radius: 3px; cursor: pointer; font-size: 10px; width: 100%;';
+            
+            addBtn.addEventListener('click', () => {
+                const fieldLabel = prompt('Nazwa pola (np. Małżeństwo, Zgon, Notatka):');
+                if (!fieldLabel) return;
+                
+                const fieldId = fieldLabel.toLowerCase().replace(/\s+/g, '_');
+                if (!act.fieldValues) act.fieldValues = {};
+                
+                // Twórz pole
+                const fieldDiv = document.createElement('div');
+                fieldDiv.style.marginBottom = '4px';
+                
+                const label = document.createElement('label');
+                label.textContent = fieldLabel;
+                label.style.cssText = 'display: block; font-size: 10px; color: #10b981; margin-bottom: 2px; font-weight: 600;';
+                fieldDiv.appendChild(label);
+                
+                const input = document.createElement('input');
+                input.type = 'text';
+                input.className = 'field-input';
+                input.id = fieldId;
+                input.placeholder = fieldLabel;
+                input.value = act.fieldValues[fieldId] || '';
+                input.style.cssText = 'width: 100%; padding: 5px; background: #0f0f0f; border: 1px solid #3a3a3a; color: #ddd; border-radius: 3px; font-size: 11px;';
+                
+                input.addEventListener('input', (e) => {
+                    act.fieldValues[fieldId] = e.target.value.trim();
+                    saveStorage();
+                });
+                
+                fieldDiv.appendChild(input);
+                container.insertBefore(fieldDiv, addFieldDiv);
+                input.focus();
+            });
+
+            addFieldDiv.appendChild(addBtn);
+            container.appendChild(addFieldDiv);
 
             // Focus first field
             container.querySelector('.field-input')?.focus();
