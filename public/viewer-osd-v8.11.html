@@ -1240,6 +1240,119 @@
         .paste-overlay-btn.cancel:hover {
             background: #454545;
         }
+
+        /* === PRAWA BELKA – główne poprawki === */
+        #right-panel {
+            width: 368px;               /* trochę więcej niż 360 – lepiej na większości ekranów */
+            min-width: 340px;           /* bezpieczeństwo przed zbyt wąskim panelem */
+            padding: 20px 16px 24px;    /* więcej powietrza na dole */
+            box-sizing: border-box;
+        }
+
+        /* Grupy pól – wyraźniejsze oddzielenie */
+        .field-group {
+            background: #f9fafb;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            padding: 16px 14px 14px;
+            margin-bottom: 20px;        /* ← większy odstęp między grupami */
+            box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+        }
+
+        .field-group > h3, 
+        .field-group > .group-title {
+            margin: -20px 0 14px -12px;
+            padding: 4px 10px;
+            background: white;
+            display: inline-block;
+            font-size: 1.05rem;
+            font-weight: 600;
+            border-radius: 4px;
+            box-shadow: 0 1px 2px rgba(0,0,0,0.08);
+        }
+
+        /* Checkbox "to ojciec" – ładniej wygląda jako pierwszy element */
+        .field-group .checkbox-wrapper {
+            margin: 0 0 12px 0;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.95rem;
+            font-weight: 500;
+        }
+
+        /* Pojedyncze pola – lepsza czytelność */
+        .form-row,
+        .form-group {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+            gap: 14px 18px;             /* ← lepsze proporcje odstępów */
+            margin-bottom: 8px;
+        }
+
+        .form-row label,
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-size: 0.86rem;
+            color: #4b5563;
+            white-space: nowrap;        /* ← najważniejsze – długie etykiety się nie łamią */
+            overflow: hidden;
+            text-overflow: ellipsis;
+            max-width: 100%;
+        }
+
+        input[type="text"],
+        input[type="number"],
+        select,
+        textarea {
+            width: 100%;
+            padding: 9px 11px;
+            border: 1px solid #cbd5e1;
+            border-radius: 6px;
+            font-size: 0.96rem;
+            box-sizing: border-box;
+        }
+
+        /* Przyciski na dole – bardziej odporne na małe ekrany */
+        .form-actions,
+        #form-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-top: 20px;
+            padding-top: 16px;
+            border-top: 1px solid #e2e8f0;
+        }
+
+        .form-actions button,
+        #form-buttons button {
+            flex: 1 1 110px;            /* nie pozwolą przyciskom stać się za małe */
+            min-width: 100px;
+            padding: 10px 14px;
+        }
+
+        /* Responsywność – kiedy panel robi się naprawdę wąski */
+        @media (max-width: 460px) {
+            #right-panel {
+                width: 100%;
+                min-width: unset;
+                padding: 16px 12px;
+            }
+            
+            .form-row,
+            .form-group {
+                grid-template-columns: 1fr;     /* wszystko jeden pod drugim */
+            }
+            
+            .form-actions {
+                flex-direction: column;
+            }
+            
+            .form-actions button {
+                width: 100%;
+            }
+        }
     </style>
 </head>
 <body>
