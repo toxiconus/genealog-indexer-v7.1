@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Genealog Indexer v7.1 - Zaawansowany Indekser Akt z OCR</title>
+    <title>Genealog Indexer v8.1 - Zaawansowany Indekser Akt z OCR</title>
     <script src="https://openseadragon.github.io/openseadragon/openseadragon.min.js"></script>
     <script src="https://unpkg.com/tesseract.js@5.1.0/dist/tesseract.min.js"></script>
     <!-- Firebase SDK -->
@@ -104,23 +104,6 @@
             border-color: #0078d4;
             color: white;
             box-shadow: 0 0 12px rgba(0,120,212,0.4);
-        }
-        .toolbar-btn.disabled {
-            background: #1a1a1a;
-            border-color: #333;
-            color: #555;
-            opacity: 0.5;
-        }
-        .toolbar-btn.disabled:hover {
-            background: #1a1a1a;
-            border-color: #333;
-            color: #555;
-            transform: none;
-        }
-        #actBtn {
-            opacity: 0.4;
-            cursor: not-allowed;
-            pointer-events: none;
         }
         .toolbar-sep {
             width: 1px;
@@ -229,8 +212,8 @@
             background: rgba(255,152,0,0.2);
         }
         .act-overlay {
-            border: 2px solid #10b981;
-            background: none;
+            border: 3px solid #10b981;
+            background: rgba(16,185,129,0.1);
             pointer-events: none;
             z-index: 100;
         }
@@ -241,41 +224,6 @@
             cursor: crosshair !important;
             z-index: 50;
             pointer-events: none;
-        }
-        .context-menu {
-            position: fixed;
-            background: #2a2a2a;
-            border: 1px solid #10b981;
-            border-radius: 4px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.4);
-            z-index: 1000;
-            display: none;
-            min-width: 200px;
-        }
-        .context-menu.active {
-            display: block;
-        }
-        .context-menu-item {
-            padding: 10px 15px;
-            color: #fff;
-            cursor: pointer;
-            border-bottom: 1px solid #1a1a1a;
-            font-size: 13px;
-            transition: background 0.2s;
-        }
-        .context-menu-item:hover {
-            background: rgba(16,185,129,0.2);
-            color: #10b981;
-        }
-        .context-menu-item:last-child {
-            border-bottom: none;
-        }
-        .context-menu-item.danger {
-            color: #ff6b6b;
-        }
-        .context-menu-item.danger:hover {
-            background: rgba(255,107,107,0.1);
-            color: #ff8888;
         }
         .right-panel {
             background: linear-gradient(180deg, #1a1a1a 0%, #151515 100%);
@@ -1259,8 +1207,8 @@
             <button class="toolbar-btn" id="roiBtn" title="Zaznacz granice całego aktu na obrazie (Ctrl+R)">
                 <i class="fas fa-expand"></i> Granice aktu
             </button>
-            <button class="toolbar-btn" id="toggleBoundariesBtn" title="Włącz/wyłącz widoczność granic aktów">
-                <i class="fas fa-eye"></i> Widoczność granic
+            <button class="toolbar-btn" id="actBtn" title="Zaznacz konkretne pola w akcie (imię, nazwisko itd.) - Ctrl+A">
+                <i class="fas fa-crop-alt"></i> Pola w akcie
             </button>
             <button class="toolbar-btn" onclick="clearAllROIs()" title="Usuń wszystkie zaznaczenia">
                 <i class="fas fa-trash-alt"></i> Clear
@@ -1369,18 +1317,6 @@
                     <img id="imageFallback" />
                     <canvas id="drawingCanvas"></canvas>
                     <div class="roi-info-overlay" id="roiInfo">Tryb zaznaczania</div>
-                    <!-- Menu kontekstowe dla aktów -->
-                    <div class="context-menu" id="actContextMenu">
-                        <div class="context-menu-item" data-action="rename">Zmień nazwę aktu</div>
-                        <div class="context-menu-item" data-action="delete-roi">Usuń granice aktu</div>
-                        <div class="context-menu-item" data-action="delete-fields">Usuń pola w akcie</div>
-                        <div class="context-menu-item danger" data-action="delete-act">Usuń akt</div>
-                    </div>
-                    <!-- Menu kontekstowe dla obrazu -->
-                    <div class="context-menu" id="imageContextMenu">
-                        <div class="context-menu-item" data-action="delete-all-acts">Usuń wszystkie akty</div>
-                        <div class="context-menu-item" data-action="delete-all-rois">Usuń wszystkie granice</div>
-                    </div>
                     <!-- 💡 Suggestions Fan - Wachlarz podpowiedzi -->
                     <div id="suggestionsWachlarz" style="position: absolute; z-index: 200; pointer-events: none; display: none;"></div>
                     <div class="rotate-controls">
@@ -1588,8 +1524,7 @@
             wizardActive: false,
             wizardCurrentFieldIdx: 0,
             wizardFields: [],
-            autoLoadFolder: true,  // Włącz automatyczne ładowanie folderu przy starcie
-            showActBoundaries: true  // Włącz/wyłącz widoczność granic aktów
+            autoLoadFolder: true  // Włącz automatyczne ładowanie folderu przy starcie
         };
         
         // ===== POSTPROCESSING STATE & PRESETS (MUST BE BEFORE setupPostprocessSliders) =====
@@ -2208,9 +2143,9 @@
             updateCanvasInteraction();
             
             app.drawingCanvas.addEventListener('mousedown', (e) => {
-                if (!app.actMode) return;
-                // roiMode wyłączony
-                if (!app.currentActNum) { notify('Zaznacz akt w oknie AKTY zanim zaznaczysz granice', 'error'); return; }
+                if (!app.roiMode && !app.actMode) return;
+                if (app.roiMode && !app.activeField) { notify('Zaznacz pole (imię, nazwisko itd.) w formularzu', 'error'); return; }
+                if (!app.currentActNum) { notify('Zaznacz akt w oknie AKTY zanim zaznaczysz pola', 'error'); return; }
                 
                 e.preventDefault();
                 app.drawingROI = true;
@@ -2254,19 +2189,19 @@
                 const act = getCurrentAct();
                 if (!act) return;
                 
-                // roiMode wyłączony
-                /*
                 if (app.roiMode) {
                     // Normalizuj fieldId - zamień kropki na podkreślenia
                     const normalizedFieldId = app.activeField.dataset.field.replace(/\./g, '_');
                     act.fieldROIs[normalizedFieldId] = roi;
                     app.activeField.classList.add('has-roi');
-                    notify('Pole zaznaczone', 'success');
-                    setTimeout(() => startWizard(), 200);
-                } else */ if (app.actMode) {
+                    notify('✓ Pole zaznaczone', 'success');
+                } else if (app.actMode) {
                     act.actROI = roi;
                     notify('✓ Granice aktu zaznaczone', 'success');
-                    // Tryb actMode pozostaje włączony - user wyłączy manualnie gdy skończy zaznaczać wszystkie akty
+                    
+                    // Wyłącz tryb rysowania i uruchom wizard
+                    toggleActMode();
+                    setTimeout(() => startWizard(), 200);
                 }
                 
                 saveStorage();
@@ -2344,9 +2279,7 @@
             
             console.log('currentActs length:', currentActs.length, 'currentImageIdx:', app.currentImageIdx);
             
-            // ONLY draw act boundaries if showActBoundaries is true
-            if (app.showActBoundaries) {
-                currentActs.forEach(act => {
+            currentActs.forEach(act => {
                 if (!act.actROI) return;
                 
                 console.log('Drawing act overlay for act', act.actNum);
@@ -2370,18 +2303,11 @@
                 if (!div || app.needsFullRedraw) {
                     div = document.createElement('div');
                     div.className = 'act-overlay';
-                    div.style.border = act.actNum === app.currentActNum ? '2px solid #10b981' : '2px dashed #999';
-                    div.dataset.actNum = act.actNum;
+                    div.style.border = act.actNum === app.currentActNum ? '3px solid #10b981' : '2px dashed #666';
                     const label = document.createElement('div');
                     label.textContent = actName;
-                    label.style.cssText = 'color: #000000; font-size: 12px; font-weight: bold; padding: 4px 6px; background: none; text-decoration: none;';
+                    label.style.cssText = 'color: white; font-size: 12px; font-weight: bold; padding: 6px; background: rgba(16,185,129,0.8); text-decoration: overline;';
                     div.appendChild(label);
-                    
-                    // Context menu dla aktu
-                    div.addEventListener('contextmenu', (e) => {
-                        e.preventDefault();
-                        showActContextMenu(act.actNum, e.pageX, e.pageY);
-                    });
                     
                     viewer.addOverlay({ element: div, location: viewportRect });
                     app.roiOverlays.push(div);
@@ -2390,8 +2316,7 @@
                     viewer.removeOverlay(div);
                     viewer.addOverlay({ element: div, location: viewportRect });
                 }
-                });
-            }
+            });
             
             // Draw field ROIs ONLY for the currently selected act
             
@@ -2485,32 +2410,10 @@
             if (sortBtn) sortBtn.addEventListener('click', sortImages);
             
             const roiBtn = document.getElementById('roiBtn');
-            if (roiBtn) roiBtn.addEventListener('click', toggleActMode);
+            if (roiBtn) roiBtn.addEventListener('click', toggleROI);
             
-            const toggleBoundariesBtn = document.getElementById('toggleBoundariesBtn');
-            if (toggleBoundariesBtn) {
-                toggleBoundariesBtn.addEventListener('click', toggleActBoundaries);
-                // Ustaw stan początkowy przycisku
-                toggleBoundariesBtn.classList.toggle('disabled', !app.showActBoundaries);
-            }
-            
-            // const actBtn = document.getElementById('actBtn');
-            // if (actBtn) actBtn.addEventListener('click', toggleROI);
-            
-            // Context menu dla viewerContainer (obraz)
-            if (viewerContainer) {
-                viewerContainer.addEventListener('contextmenu', (e) => {
-                    const rect = viewerContainer.getBoundingClientRect();
-                    const clickedOnOverlay = e.target.closest('.act-overlay');
-                    if (!clickedOnOverlay) {
-                        e.preventDefault();
-                        showImageContextMenu(e.pageX, e.pageY);
-                    }
-                });
-            }
-            
-            // Setup context menu handlers
-            setupContextMenuHandlers();
+            const actBtn = document.getElementById('actBtn');
+            if (actBtn) actBtn.addEventListener('click', toggleActMode);
             
             const clearStorageBtn = document.getElementById('clearStorageBtn');
             if (clearStorageBtn) {
@@ -2855,8 +2758,7 @@
         }
 
         function showActContextMenuPanel(actNum, event, btnElement) {
-            // Menu kontekstowe dla konkretnego aktu (prawy klik na przycisku aktu w lewym oknie)
-            // Opcje: zmień nazwę, usuń granice, usuń pola, usuń akt
+            // Usuń istniejące menu
             const existingMenu = document.getElementById('actContextMenu');
             if (existingMenu) existingMenu.remove();
 
@@ -2869,34 +2771,31 @@
                 position: fixed;
                 top: ${rect.bottom + 5}px;
                 left: ${rect.left}px;
-                background: #2a2a2a;
-                border: 1px solid #10b981;
+                background: #1a1a1a;
+                border: 1px solid #333;
                 border-radius: 4px;
                 padding: 4px 0;
                 z-index: 1000;
                 box-shadow: 0 4px 12px rgba(0,0,0,0.5);
-                min-width: 200px;
+                min-width: 150px;
             `;
 
             const options = [
-                { label: 'Zmień nazwę aktu', action: () => editActName(actNum), color: '#ddd' },
-                { label: 'Usuń granice aktu', action: () => deleteActROIPanel(actNum), color: '#ff9800' },
-                { label: 'Usuń pola w akcie', action: () => deleteActFieldsPanel(actNum), color: '#ff9800' },
-                { label: 'Usuń akt', action: () => deleteActPanel(actNum), color: '#ff6b6b' }
+                { label: 'Zmień nazwę', action: () => editActName(actNum) },
+                { label: 'Usuń akt', action: () => deleteCurrentRecord() }
             ];
 
-            options.forEach((opt, idx) => {
+            options.forEach(opt => {
                 const item = document.createElement('div');
                 item.textContent = opt.label;
                 item.style.cssText = `
                     padding: 8px 12px;
                     cursor: pointer;
-                    color: ${opt.color};
+                    color: #ddd;
                     font-size: 12px;
                     transition: background 0.15s;
-                    ${idx < options.length - 1 ? 'border-bottom: 1px solid #1a1a1a;' : ''}
                 `;
-                item.onmouseover = () => item.style.background = 'rgba(255,152,0,0.1)';
+                item.onmouseover = () => item.style.background = '#333';
                 item.onmouseout = () => item.style.background = 'transparent';
                 item.onclick = () => {
                     opt.action();
@@ -2915,37 +2814,6 @@
                 }
             };
             setTimeout(() => document.addEventListener('click', closeMenu), 10);
-        }
-
-        function deleteActROIPanel(actNum) {
-            const act = app.imageActs.find(a => a.actNum === actNum && a.imageIdx === app.currentImageIdx);
-            if (act) {
-                act.actROI = null;
-                redrawROIs();
-                saveStorage();
-                renderActsList();
-                notify('Granice aktu usunięte', 'success');
-            }
-        }
-
-        function deleteActFieldsPanel(actNum) {
-            const act = app.imageActs.find(a => a.actNum === actNum && a.imageIdx === app.currentImageIdx);
-            if (act) {
-                act.fieldROIs = {};
-                redrawROIs();
-                saveStorage();
-                renderActsList();
-                notify('Pola w akcie usunięte', 'success');
-            }
-        }
-
-        function deleteActPanel(actNum) {
-            if (!confirm('Czy na pewno usunąć akt? Ta operacja nie może być cofnięta.')) return;
-            app.imageActs = app.imageActs.filter(a => a.actNum !== actNum);
-            renderActsList();
-            redrawROIs();
-            saveStorage();
-            notify('Akt usunięty', 'success');
         }
 
         function editActName(actNum) {
@@ -3406,169 +3274,16 @@
             redrawROIs();
         }
 
-        // function toggleROI() {
-        //     app.roiMode = !app.roiMode;
-        //     document.getElementById('actBtn').classList.toggle('active', app.roiMode);
-        //     if (app.updateCanvasInteraction) app.updateCanvasInteraction();
-        // }
-
-        function toggleActMode() {
-            app.actMode = !app.actMode;
-            document.getElementById('roiBtn').classList.toggle('active', app.actMode);
+        function toggleROI() {
+            app.roiMode = !app.roiMode;
+            document.getElementById('roiBtn').classList.toggle('active', app.roiMode);
             if (app.updateCanvasInteraction) app.updateCanvasInteraction();
         }
 
-        function toggleActBoundaries() {
-            app.showActBoundaries = !app.showActBoundaries;
-            const btn = document.getElementById('toggleBoundariesBtn');
-            if (btn) {
-                btn.classList.toggle('disabled', !app.showActBoundaries);
-            }
-            // Natychmiastowo zmień widoczność wszystkich granic aktów
-            document.querySelectorAll('.act-overlay').forEach(el => {
-                el.style.display = app.showActBoundaries ? 'block' : 'none';
-            });
-        }
-
-        // CONTEXT MENU - Menu kontekstowe dla aktów i obrazów
-        let contextMenuState = {
-            actNum: null,
-            x: 0,
-            y: 0
-        };
-
-        function showActContextMenu(actNum, x, y) {
-            contextMenuState.actNum = actNum;
-            contextMenuState.x = x;
-            contextMenuState.y = y;
-            const menu = document.getElementById('actContextMenu');
-            menu.style.left = x + 'px';
-            menu.style.top = y + 'px';
-            menu.classList.add('active');
-        }
-
-        function showImageContextMenu(x, y) {
-            contextMenuState.actNum = null;
-            contextMenuState.x = x;
-            contextMenuState.y = y;
-            const menu = document.getElementById('imageContextMenu');
-            menu.style.left = x + 'px';
-            menu.style.top = y + 'px';
-            menu.classList.add('active');
-        }
-
-        function hideContextMenus() {
-            document.getElementById('actContextMenu').classList.remove('active');
-            document.getElementById('imageContextMenu').classList.remove('active');
-        }
-
-        function deleteActROI() {
-            if (contextMenuState.actNum === null) return;
-            const act = app.imageActs.find(a => a.actNum === contextMenuState.actNum);
-            if (act) {
-                act.actROI = null;
-                redrawROIs();
-                saveStorage();
-                notify('Granice aktu usunięte', 'success');
-            }
-            hideContextMenus();
-        }
-
-        function deleteActFields() {
-            if (contextMenuState.actNum === null) return;
-            const act = app.imageActs.find(a => a.actNum === contextMenuState.actNum);
-            if (act) {
-                act.fieldROIs = {};
-                redrawROIs();
-                saveStorage();
-                notify('Pola w akcie usunięte', 'success');
-            }
-            hideContextMenus();
-        }
-
-        function deleteAct() {
-            if (contextMenuState.actNum === null) return;
-            if (!confirm('Czy na pewno usunąć akt? Ta operacja nie może być cofnięta.')) {
-                hideContextMenus();
-                return;
-            }
-            app.imageActs = app.imageActs.filter(a => a.actNum !== contextMenuState.actNum);
-            renderActButtons();
-            redrawROIs();
-            saveStorage();
-            notify('Akt usunięty', 'success');
-            hideContextMenus();
-        }
-
-        function deleteAllActsOnImage() {
-            if (!confirm('Czy na pewno usunąć WSZYSTKIE akty na tym obrazie? Ta operacja nie może być cofnięta.')) {
-                hideContextMenus();
-                return;
-            }
-            app.imageActs = app.imageActs.filter(a => a.imageIdx !== app.currentImageIdx);
-            renderActButtons();
-            redrawROIs();
-            saveStorage();
-            notify('Wszystkie akty na obrazie usunięte', 'success');
-            hideContextMenus();
-        }
-
-        function deleteAllROIsOnImage() {
-            const acts = app.imageActs.filter(act => act.imageIdx === app.currentImageIdx);
-            acts.forEach(act => {
-                act.actROI = null;
-                act.fieldROIs = {};
-            });
-            redrawROIs();
-            saveStorage();
-            notify('Wszystkie granice na obrazie usunięte', 'success');
-            hideContextMenus();
-        }
-
-        function setupContextMenuHandlers() {
-            // Ukryj menu przy kliknieciu poza
-            document.addEventListener('click', hideContextMenus);
-            document.addEventListener('contextmenu', (e) => {
-                if (!e.target.closest('.context-menu')) {
-                    hideContextMenus();
-                }
-            });
-            
-            // Handlery dla menu aktów
-            const actMenu = document.getElementById('actContextMenu');
-            actMenu.addEventListener('click', (e) => {
-                const action = e.target.dataset.action;
-                switch(action) {
-                    case 'delete-roi': deleteActROI(); break;
-                    case 'delete-fields': deleteActFields(); break;
-                    case 'delete-act': deleteAct(); break;
-                    case 'rename': {
-                        const act = app.imageActs.find(a => a.actNum === contextMenuState.actNum);
-                        if (act) {
-                            const newName = prompt('Nowa nazwa aktu:', act.name || '');
-                            if (newName !== null) {
-                                act.name = newName;
-                                saveStorage();
-                                renderActButtons();
-                                redrawROIs();
-                                notify('✓ Nazwa zmieniona', 'success');
-                            }
-                        }
-                        hideContextMenus();
-                        break;
-                    }
-                }
-            });
-            
-            // Handlery dla menu obrazu
-            const imageMenu = document.getElementById('imageContextMenu');
-            imageMenu.addEventListener('click', (e) => {
-                const action = e.target.dataset.action;
-                switch(action) {
-                    case 'delete-all-acts': deleteAllActsOnImage(); break;
-                    case 'delete-all-rois': deleteAllROIsOnImage(); break;
-                }
-            });
+        function toggleActMode() {
+            app.actMode = !app.actMode;
+            document.getElementById('actBtn').classList.toggle('active', app.actMode);
+            if (app.updateCanvasInteraction) app.updateCanvasInteraction();
         }
 
         function clearAllROIs() {
@@ -4403,10 +4118,7 @@
             sortedImageIndices.forEach((imageIdx, groupIndex) => {
                 const acts = groupedByImage[imageIdx];
                 
-                // ===== HEADER OBRAZU (lewe okno - lista aktów) =====
-                // Nagłówek wyświetla nazwę pliku obrazu np. "8098.jpg"
-                // Lewy klik: otwiera cały obraz
-                // Prawy klik: menu kontekstowe do operacji na całym obrazie (usuń wszystkie akty, usuń ROI itp.)
+                // Dodaj header grupy z nazwą obrazu
                 const header = document.createElement('div');
                 header.className = 'acts-group-header';
                 const imageName = app.images[imageIdx]?.name || `Obraz ${imageIdx + 1}`;
@@ -4422,22 +4134,13 @@
                     cursor: pointer;
                 `;
                 
-                // Lewy klik na header - pokaż cały obraz
+                // Klik na header - pokaż ten obraz
                 header.onclick = () => selectImage(imageIdx);
-                header.title = `Lewy klik: otwórz obraz\nPrawy klik: menu dla całego obrazu`;
-                
-                // Prawy klik - menu kontekstowe dla całego obrazu
-                header.oncontextmenu = (e) => {
-                    e.preventDefault();
-                    showImageHeaderContextMenu(imageIdx, e, header);
-                };
+                header.title = `Kliknij aby otworzyć ${imageName}`;
                 
                 actsList.appendChild(header);
                 
-                // ===== PRZYCISKI AKTÓW (poniżej headera) =====
-                // Każdy przycisk reprezentuje jeden akt w danym obrazie
-                // Lewy klik: wybierz akt i otwórz go (jeśli inny obraz - przełącz obraz)
-                // Prawy klik: menu kontekstowe dla konkretnego aktu (zmień nazwę, usuń granice, usuń akt itp.)
+                // Dodaj akty dla tego obrazu
                 acts.forEach(act => {
                     const btn = document.createElement('button');
                     btn.className = 'act-button' + (app.currentActNum === act.actNum ? ' active' : '');
@@ -4466,81 +4169,6 @@
                     actsList.appendChild(btn);
                 });
             });
-        }
-        
-        function showImageHeaderContextMenu(imageIdx, event, headerElement) {
-            // Menu kontekstowe dla headera obrazu (np. "8098.jpg")
-            // Opcje: Usuń wszystkie akty na obrazie, Usuń wszystkie ROI na obrazie
-            const menu = document.createElement('div');
-            menu.id = 'imageHeaderContextMenu';
-            menu.style.cssText = `
-                position: fixed;
-                top: ${event.pageY}px;
-                left: ${event.pageX}px;
-                background: #2a2a2a;
-                border: 1px solid #10b981;
-                border-radius: 4px;
-                padding: 4px 0;
-                z-index: 1000;
-                box-shadow: 0 4px 12px rgba(0,0,0,0.5);
-                min-width: 200px;
-            `;
-
-            const options = [
-                { label: 'Usuń wszystkie akty na obrazie', action: () => deleteAllActsOnImageFromPanel(imageIdx), color: '#ff6b6b' },
-                { label: 'Usuń wszystkie ROI na obrazie', action: () => deleteAllROIsOnImageFromPanel(imageIdx), color: '#ff9800' }
-            ];
-
-            options.forEach(opt => {
-                const item = document.createElement('div');
-                item.textContent = opt.label;
-                item.style.cssText = `
-                    padding: 8px 12px;
-                    cursor: pointer;
-                    color: ${opt.color};
-                    font-size: 12px;
-                    transition: background 0.15s;
-                    border-bottom: 1px solid #1a1a1a;
-                `;
-                item.onmouseover = () => item.style.background = 'rgba(255,107,107,0.1)';
-                item.onmouseout = () => item.style.background = 'transparent';
-                item.onclick = () => {
-                    opt.action();
-                    menu.remove();
-                };
-                menu.appendChild(item);
-            });
-
-            document.body.appendChild(menu);
-
-            // Zamknij menu przy kliknięciu poza
-            const closeMenu = (e) => {
-                if (!menu.contains(e.target) && e.target !== headerElement) {
-                    menu.remove();
-                    document.removeEventListener('click', closeMenu);
-                }
-            };
-            setTimeout(() => document.addEventListener('click', closeMenu), 10);
-        }
-
-        function deleteAllActsOnImageFromPanel(imageIdx) {
-            if (!confirm('Czy na pewno usunąć WSZYSTKIE akty na tym obrazie?')) return;
-            app.imageActs = app.imageActs.filter(a => a.imageIdx !== imageIdx);
-            renderActsList();
-            redrawROIs();
-            saveStorage();
-            notify('Wszystkie akty na obrazie usunięte', 'success');
-        }
-
-        function deleteAllROIsOnImageFromPanel(imageIdx) {
-            const acts = app.imageActs.filter(act => act.imageIdx === imageIdx);
-            acts.forEach(act => {
-                act.actROI = null;
-                act.fieldROIs = {};
-            });
-            redrawROIs();
-            saveStorage();
-            notify('Wszystkie ROI na obrazie usunięte', 'success');
         }
         
         function renderRecordsTable() {

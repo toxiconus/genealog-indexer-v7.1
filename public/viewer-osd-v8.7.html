@@ -1288,10 +1288,7 @@
             
             <div class="toolbar-sep"></div>
             
-            <!-- FORMS: Formularz, Pinupy, Clear -->
-            <button class="toolbar-btn" onclick="toggleFloatingForm()" title="Formularz">
-                <i class="fas fa-edit"></i> Form
-            </button>
+            <!-- FORMS: Pinupy, Clear -->
             <button class="toolbar-btn" onclick="showAllPinups()" title="Pinupy">
                 <i class="fas fa-thumbtack"></i> PIN
             </button>
@@ -1329,11 +1326,10 @@
                 <label>Województwo: <input id="modalWoj" type="text" value="LUB"></label><br>
                 <label>Typ aktu: 
                     <select id="modalType">
-                        <option value="urodzenia">Urodzenia</option>
-                        <option value="chrzest">Chrzest</option>
-                        <option value="malzenstwa">Małżeństwa</option>
-                        <option value="zgony">Zgony</option>
-                        <option value="inne">Inne</option>
+                        <option value="christening">Akt Chrztu</option>
+                        <option value="birth">Akt Urodzenia</option>
+                        <option value="marriage">Akt Małżeństwa</option>
+                        <option value="death">Akt Zgonu</option>
                     </select>
                 </label><br>
                 <label>Nr pierwszego aktu: <input id="modalFirstNr" type="number" value="1"></label><br>
@@ -1678,6 +1674,33 @@
         function initApp() {
             console.log('📍 DOMContentLoaded start');
             
+            // ===== AGGRESSIVE CLEANUP FOR OLD SCHEMA =====
+            try {
+                const stored = localStorage.getItem('genealog_data');
+                if (stored) {
+                    const data = JSON.parse(stored);
+                    // Detect if this is old schema (has 'chrzest' type)
+                    const hasOldSchema = data.imageActs?.some(act => 
+                        act.type === 'chrzest' || act.type === 'urodzenia' || act.type === 'malzenstwa' || act.type === 'zgony'
+                    );
+                    if (hasOldSchema) {
+                        console.warn('⚠️ Old schema detected - clearing localStorage');
+                        localStorage.clear();
+                    }
+                }
+            } catch(e) {}
+            
+            // ===== VERSION CHECK - RESET OLD DATA =====
+            const currentVersion = '8.7-dynamic-forms';
+            const storedVersion = localStorage.getItem('genealog_version');
+            if (storedVersion !== currentVersion) {
+                console.warn(`⚠️ Version change detected (${storedVersion} → ${currentVersion}) - clearing localStorage`);
+                localStorage.clear();
+                localStorage.setItem('genealog_version', currentVersion);
+            } else {
+                localStorage.setItem('genealog_version', currentVersion);
+            }
+            
             // Initialize Firebase Auth
             if (window.auth) {
                 auth.signInAnonymously().then(() => {
@@ -1721,6 +1744,31 @@
         
         function loadFallbackTemplates() {
             app.templates = [
+                {
+                    id: "christening",
+                    name: "Akt Chrztu",
+                    sections: [
+                        {
+                            id: "basic",
+                            title: "<i class='fas fa-water'></i> Podstawowe",
+                            expanded: true,
+                            fields: [
+                                {id: "child_first_name", label: "Imię dziecka", type: "text"},
+                                {id: "child_last_name", label: "Nazwisko dziecka", type: "text"},
+                                {id: "christening_date", label: "Data chrztu", type: "text"}
+                            ]
+                        },
+                        {
+                            id: "parents",
+                            title: "<i class='fas fa-users'></i> Rodzice",
+                            expanded: false,
+                            fields: [
+                                {id: "father_name", label: "Ojciec", type: "text"},
+                                {id: "mother_name", label: "Matka", type: "text"}
+                            ]
+                        }
+                    ]
+                },
                 {
                     id: "birth",
                     name: "Akt Urodzenia",
@@ -1801,176 +1849,169 @@
                     ]
                 }
             ];
-            app.currentTemplate = "birth";
+            app.currentTemplate = "christening";
         }
         
         function renderFormSections() {
+            // ===== Right panel - renders form for selected act =====
             const container = document.getElementById('formsContainer');
+            if (!container) return;
             container.innerHTML = '';
             
-            // Dodaj przełącznik typu aktu
-            const templateSwitcher = document.createElement('div');
-            templateSwitcher.style.cssText = 'padding: 12px; border-bottom: 1px solid #2a2a2a; display: flex; gap: 6px; flex-wrap: wrap;';
+            // Sprawdź czy mamy wybrany akt
+            if (!app.currentActNum) {
+                container.innerHTML = '<div style="padding: 12px; color: #666; font-size: 11px;">Wybierz akt z lewego panelu</div>';
+                return;
+            }
             
-            app.templates.forEach(t => {
-                const btn = document.createElement('button');
-                btn.className = 'toolbar-btn';
-                btn.textContent = t.name;
-                if (t.id === app.currentTemplate) {
-                    btn.classList.add('active');
-                }
-                btn.onclick = () => {
-                    app.currentTemplate = t.id;
-                    clearForm();
-                    renderFormSections();
-                    renderActButtons();
+            const act = app.imageActs.find(a => 
+                a.imageIdx === app.currentImageIdx && a.actNum === app.currentActNum
+            );
+            
+            if (!act) {
+                container.innerHTML = '<div style="padding: 12px; color: #888;">Akt nie znaleziony</div>';
+                return;
+            }
+            
+            // ===== RENDER DYNAMIC FORM FOR THIS ACT =====
+            // Skopiuj logikę z renderFloatingForm() ale do kontainera zamiast popupu
+            console.log('📋 renderFormSections - act:', act);
+            console.log('📋 act.type:', act.type);
+            console.log('📋 app.templates:', app.templates ? app.templates.map(t => t.id) : 'UNDEFINED');
+
+            // ===== SELECTOR TYPU AKTU – DROPDOWN W HEADERZE =====
+            const header = document.createElement('div');
+            header.style.cssText = 'padding: 12px; background: #252525; border-bottom: 1px solid #3a3a3a; border-radius: 4px 4px 0 0; display: flex; justify-content: space-between; align-items: center; gap: 12px;';
+            
+            const titleSpan = document.createElement('span');
+            titleSpan.textContent = 'Akt #' + act.actNum;
+            titleSpan.style.cssText = 'color: #0078d4; font-weight: 600; font-size: 12px;';
+            
+            const typeSelect = document.createElement('select');
+            typeSelect.style.cssText = 'padding: 4px 6px; background: #1a1a1a; border: 1px solid #0078d4; color: #ddd; border-radius: 3px; font-size: 11px; flex: 1;';
+            typeSelect.innerHTML = app.templates.map(t => 
+                `<option value="${t.id}" ${t.id === act.type ? 'selected' : ''}>${t.name}</option>`
+            ).join('');
+            
+            typeSelect.addEventListener('change', async (e) => {
+                console.log('✅ Select change event - new type:', e.target.value);
+                act.type = e.target.value;
+                
+                // Regenerate ID based on new type
+                const actData = {
+                    typ: act.type,
+                    woj: act.woj || 'WAR',
+                    parafia: act.parish || 'NEZNANE',
+                    data_zgl: `${act.year || 1900}-00-01`,
+                    nr_aktu: act.nr || 1,
+                    is_copy: false
                 };
-                templateSwitcher.appendChild(btn);
+                act.id = await autoGenerateID(actData);
+                console.log('🔄 Regenerated ID to:', act.id);
+                
+                saveStorage();
+                renderActsList(); // Update left panel with new ID
+                renderFormSections();
             });
             
-            container.appendChild(templateSwitcher);
-            
-            app.templates.forEach((template) => {
-                const section = document.createElement('div');
-                section.id = `form-${template.id}`;
-                section.className = `form-section ${template.id === app.currentTemplate ? 'active' : ''}`;
+            header.appendChild(titleSpan);
+            header.appendChild(typeSelect);
+            container.appendChild(header);
+
+            // ===== ŁADUJEMY SZABLON DLA AKTUALNEGO TYPU =====
+            const template = app.templates.find(t => t.id === act.type);
+            if (!template) {
+                console.error('❌ Template not found for type:', act.type);
+                console.error('Available templates:', app.templates.map(t => t.id));
+                container.innerHTML += '<p style="color: #888; padding: 12px;">Brak szablonu dla tego typu: ' + act.type + '</p>';
+                return;
+            }
+            console.log('✅ Template loaded:', template.name);
+
+            // ===== RENDERUJ SEKCJE I POLA =====
+            template.sections.forEach(sec => {
+                const secDiv = document.createElement('div');
+                secDiv.style.marginBottom = '12px';
                 
-                const header = document.createElement('div');
-                header.className = 'form-header';
-                header.innerHTML = `<h3>${template.name}</h3><div class="record-counter" id="recordCounter">Akty: 0</div>`;
-                section.appendChild(header);
-                
-                if (template.sections) {
-                    template.sections.forEach(sectionDef => {
-                        const item = document.createElement('div');
-                        item.className = 'accordion-item';
-                        
-                        const headerBtn = document.createElement('button');
-                        headerBtn.className = `accordion-header ${sectionDef.expanded ? 'active' : ''}`;
-                        headerBtn.innerHTML = sectionDef.title;
-                        
-                        const contentDiv = document.createElement('div');
-                        contentDiv.className = `accordion-content ${sectionDef.expanded ? 'active' : ''}`;
-                        
-                        headerBtn.onclick = () => {
-                            headerBtn.classList.toggle('active');
-                            contentDiv.classList.toggle('active');
-                        };
-                        
-                        sectionDef.fields.forEach(field => {
-                            const group = document.createElement('div');
-                            group.className = 'form-group';
-                            const label = document.createElement('label');
-                            label.textContent = field.label;
-                            const input = document.createElement('input');
-                            input.type = field.type || 'text';
-                            input.className = 'field-input';
-                            input.dataset.field = field.id;
-                            input.placeholder = field.label;
-                            group.appendChild(label);
-                            group.appendChild(input);
-                            contentDiv.appendChild(group);
-                        });
-                        
-                        item.appendChild(headerBtn);
-                        item.appendChild(contentDiv);
-                        section.appendChild(item);
+                const secTitle = document.createElement('div');
+                secTitle.innerHTML = sec.title || sec.id;
+                secTitle.style.cssText = 'color: #0078d4; font-weight: 600; font-size: 11px; margin-bottom: 6px; border-bottom: 1px solid #2a2a2a; padding-bottom: 4px;';
+                secDiv.appendChild(secTitle);
+
+                sec.fields.forEach(f => {
+                    // Filtrujemy pola – jeśli mają applicableTypes, sprawdzamy czy pasują
+                    if (f.applicableTypes && !f.applicableTypes.includes(act.type)) {
+                        return;  // Pomiń pole jeśli nie pasuje do typu
+                    }
+
+                    const group = document.createElement('div');
+                    group.className = 'form-group';
+                    group.style.marginBottom = '8px';
+                    
+                    const label = document.createElement('label');
+                    label.textContent = f.label;
+                    label.style.cssText = 'display: block; font-size: 10px; color: #888; margin-bottom: 3px;';
+                    group.appendChild(label);
+                    
+                    const input = document.createElement('input');
+                    input.type = f.type || 'text';
+                    input.className = 'field-input';
+                    input.dataset.field = f.id;
+                    input.placeholder = f.label;
+                    input.value = act.fieldValues[f.id] || '';
+                    input.style.cssText = 'width: 100%; padding: 5px; background: #0f0f0f; border: 1px solid #3a3a3a; color: #ddd; border-radius: 3px; font-size: 11px;';
+                    
+                    if (act.fieldROIs && act.fieldROIs[f.id]) {
+                        input.classList.add('has-roi');
+                        input.style.borderLeft = '4px solid #10b981';
+                    }
+                    
+                    input.addEventListener('input', (e) => {
+                        act.fieldValues[f.id] = e.target.value;
+                        saveStorage();
                     });
-                }
-                
-                const actions = document.createElement('div');
-                actions.className = 'form-actions';
-                actions.innerHTML = `
-                    <button class="form-btn" onclick="saveRecord()"><i class="fas fa-save"></i> Zapisz (S)</button>
-                    <button class="form-btn danger" onclick="deleteCurrentRecord()"><i class="fas fa-trash-alt"></i> Usuń (D)</button>
-                    <button class="form-btn" onclick="copyPreviousActEnhanced()" style="grid-column: span 2;"><i class="fas fa-copy"></i> Duplikuj (C)</button>
-                `;
-                section.appendChild(actions);
-                
-                container.appendChild(section);
+                    
+                    group.appendChild(input);
+                    secDiv.appendChild(group);
+                });
+
+                container.appendChild(secDiv);
             });
+
+            // ===== PRZYCISK "DODAJ NIESTANDARDOWE POLE" =====
+            const addFieldDiv = document.createElement('div');
+            addFieldDiv.style.marginTop = '12px';
+            addFieldDiv.style.paddingTop = '12px';
+            addFieldDiv.style.borderTop = '1px solid #2a2a2a';
+
+            const addBtn = document.createElement('button');
+            addBtn.textContent = '+ Dodaj pole';
+            addBtn.style.cssText = 'background: #252525; border: 1px solid #3a3a3a; color: #ddd; padding: 6px 10px; border-radius: 3px; cursor: pointer; font-size: 10px; width: 100%;';
             
-            setupFormEvents();
+            addBtn.addEventListener('click', () => {
+                const fieldId = prompt('ID pola (np. custom_note):');
+                if (!fieldId) return;
+                
+                const fieldLabel = prompt('Nazwa pola:', fieldId);
+                if (!fieldLabel) return;
+                
+                // Dodaj pole do aktualnego aktu
+                if (!act.fieldValues) act.fieldValues = {};
+                act.fieldValues[fieldId] = '';
+                
+                saveStorage();
+                renderFormSections();  // Odśwież z nowym polem
+            });
+
+            addFieldDiv.appendChild(addBtn);
+            container.appendChild(addFieldDiv);
+
+            // Focus na pierwsze pole
+            container.querySelector('.field-input')?.focus();
         }
         
         function setupFormEvents() {
-            const container = document.getElementById('formsContainer');
-            container.replaceWith(container.cloneNode(true));
-            const newContainer = document.getElementById('formsContainer');
-            
-            newContainer.addEventListener('focusin', (e) => {
-                if (e.target.classList.contains('field-input')) {
-                    app.activeField = e.target;
-                    app.needsFullRedraw = false;
-                    redrawROIs();
-                    updateFieldStatus();  // 🟢 Update colors when field gets focus
-                    updateProgressBar();  // ⭐ Update progress on focus change
-                    
-                    // ⭐ Auto-zoom to ROI field if exists
-                    const act = getCurrentAct();
-                    if (act && act.fieldROIs) {
-                        const fieldId = e.target.dataset.field;
-                        const roi = act.fieldROIs[fieldId];
-                        if (roi) {
-                            zoomToROI(roi);  // ✨ Use new zoomToROI function
-                            console.log('🔍 AUTO-ZOOM to field ROI:', fieldId);
-                        }
-                    }
-                }
-            });
-            
-            // ⌨️ P0: TAB NAVIGATION - Tab/Shift+Tab moves between fields
-            newContainer.addEventListener('keydown', (e) => {
-                if (!e.target.classList.contains('field-input')) return;
-                
-                if (e.key === 'Tab') {
-                    e.preventDefault();
-                    
-                    // Get all visible inputs
-                    const activeForm = document.querySelector('.form-section.active');
-                    if (!activeForm) return;
-                    
-                    const inputs = Array.from(activeForm.querySelectorAll('.field-input'));
-                    const currentIdx = inputs.indexOf(e.target);
-                    
-                    let nextIdx;
-                    if (e.shiftKey) {
-                        // Shift+Tab: go to previous field
-                        nextIdx = currentIdx > 0 ? currentIdx - 1 : inputs.length - 1;
-                    } else {
-                        // Tab: go to next field
-                        nextIdx = currentIdx < inputs.length - 1 ? currentIdx + 1 : 0;
-                    }
-                    
-                    inputs[nextIdx]?.focus();
-                    console.log('⌨️ Tab navigation:', e.shiftKey ? '⬆️ prev' : '⬇️ next', `(${nextIdx + 1}/${inputs.length})`);
-                }
-                
-                // ⌨️ P0: ENTER KEY - Save record and clear
-                if (e.key === 'Enter') {
-                    e.preventDefault();
-                    saveRecord();
-                    console.log('✅ Record saved, Enter pressed');
-                    clearForm();
-                    // Auto-focus first field for next record
-                    const activeForm = document.querySelector('.form-section.active');
-                    const firstInput = activeForm?.querySelector('.field-input');
-                    if (firstInput) firstInput.focus();
-                }
-                
-                // 🟢 P0: Update field color after any input
-                updateFieldStatus();
-            });
-            
-            // 🟢 P0: Live color update on input change
-            newContainer.addEventListener('input', (e) => {
-                if (!e.target.classList.contains('field-input')) return;
-                updateFieldStatus();
-                updateProgressBar();
-                
-                // 💡 A: Show suggestions fan when typing
-                showSuggestionsForField(e.target);
-            });  // ⭐ Update progress on every keystroke
+            // ===== DEPRECATED - old form events not needed =====
         }
         
         // ⭐ P0: Update Progress Bar - Show N/M fields complete
@@ -2050,7 +2091,7 @@
                         
                         saveStorage();
                         renderActButtons();
-                        loadActToForm(getCurrentAct());
+                        renderFormSections();
                         updateProgressBar();
                         
                         const count = app.imageActs.length;
@@ -2726,8 +2767,8 @@
             // Copy fieldValues from previous
             currentAct.fieldValues = { ...previousAct.fieldValues };
             
-            // Load into form
-            loadActToForm(currentAct);
+            // Render form with new data
+            renderFormSections();
             saveStorage();
             
             notify(`✨ Skopiowano z Aktu ${previousAct.actNum}`, 'success');
@@ -2793,6 +2834,12 @@
         async function autoGenerateID(actData) {
             // Generuj ID w formacie: TYP.WOJ.PARAFIA.ROK.MIES.NR.SUF
             const typeMap = {
+                // New template names (v8.7)
+                'christening': 'CH',
+                'birth': 'UR',
+                'marriage': 'MZ',
+                'death': 'ZG',
+                // Old Polish names (legacy support)
                 'chrzest': 'CH',
                 'urodzenie': 'UR',
                 'małżeństwo': 'MZ',
@@ -3002,7 +3049,8 @@
 
             clearPinups();
             app.currentActNum = actNum;
-            loadActToForm(act);
+            // loadActToForm(act);  // ❌ DEPRECATED - renderFormSections renderuje dynamicznie
+            renderFormSections();  // Renderuj formularz w prawym panelu
             renderActButtons();
             updateRecordCounter();
             redrawROIs();
@@ -3085,7 +3133,7 @@
             document.getElementById('modalYear').value = prevData.year || new Date().getFullYear() - 100;
             document.getElementById('modalParish').value = prevData.parish || 'Brak';
             document.getElementById('modalWoj').value = prevData.woj || 'LUB';
-            document.getElementById('modalType').value = prevData.type || 'urodzenia';
+            document.getElementById('modalType').value = prevData.type || 'christening';
             
             // Szukaj ostatniego aktu z POPRZEDNIEGO obrazu
             const prevActs = app.imageActs.filter(a => a.imageIdx === app.currentImageIdx - 1).sort((a,b) => (a.nr || 0) - (b.nr || 0)) || [];
@@ -3243,6 +3291,7 @@
                 const act = {
                     imageIdx: app.currentImageIdx,
                     actNum: i,
+                    type: 'christening',  // Domyślny typ - będzie można zmienić w selectorze
                     fieldValues: {},
                     fieldROIs: {},
                     actROI: null,
@@ -3253,6 +3302,7 @@
 
             saveStorage();
             renderActButtons();
+            renderFormSections();  // Odśwież prawy panel - listę aktów
             selectAct(1);
             updateRecordCounter();
             notify(`Utworzono ${count} aktów`, 'success');
@@ -3840,7 +3890,14 @@
                 if (stored) {
                     const data = JSON.parse(stored);
                     app.imageActs = data.imageActs || [];
-                    app.currentTemplate = data.currentTemplate || 'birth';
+                    // Migr: ustaw typ na christening jeśli brakuje lub mapuj stare nazwy
+                    app.imageActs.forEach(act => {
+                        if (!act.type || act.type === 'chrzest') act.type = 'christening';
+                        if (act.type === 'urodzenia') act.type = 'birth';
+                        if (act.type === 'malzenstwa') act.type = 'marriage';
+                        if (act.type === 'zgony') act.type = 'death';
+                    });
+                    app.currentTemplate = data.currentTemplate || 'christening';
                     console.log('📂 Loaded acts from localStorage:', app.imageActs.length);
                 }
                 updateThumbs();
@@ -3852,7 +3909,12 @@
             db.collection('records').get().then((querySnapshot) => {
                 app.imageActs = [];
                 querySnapshot.forEach((docSnap) => {
-                    app.imageActs.push(docSnap.data());
+                    const act = docSnap.data();
+                    if (!act.type || act.type === 'chrzest') act.type = 'christening';
+                    if (act.type === 'urodzenia') act.type = 'birth';
+                    if (act.type === 'malzenstwa') act.type = 'marriage';
+                    if (act.type === 'zgony') act.type = 'death';
+                    app.imageActs.push(act);
                 });
                 console.log('📂 Loaded acts from Firestore:', app.imageActs.length);
                 
@@ -3860,7 +3922,7 @@
                 return db.collection('settings').doc('currentTemplate').get();
             }).then((docSnap) => {
                 if (docSnap.exists) {
-                    app.currentTemplate = docSnap.data().value || 'birth';
+                    app.currentTemplate = docSnap.data().value || 'christening';
                 }
                 updateThumbs();
                 if (app.images.length > 0) selectImage(0, true);
@@ -3871,7 +3933,14 @@
                 if (stored) {
                     const data = JSON.parse(stored);
                     app.imageActs = data.imageActs || [];
-                    app.currentTemplate = data.currentTemplate || 'birth';
+                    // Migr: ustaw typ na christening
+                    app.imageActs.forEach(act => {
+                        if (!act.type || act.type === 'chrzest') act.type = 'christening';
+                        if (act.type === 'urodzenia') act.type = 'birth';
+                        if (act.type === 'malzenstwa') act.type = 'marriage';
+                        if (act.type === 'zgony') act.type = 'death';
+                    });
+                    app.currentTemplate = data.currentTemplate || 'christening';
                     console.log('📂 Loaded acts from localStorage (fallback):', app.imageActs.length);
                     updateThumbs();
                     if (app.images.length > 0) selectImage(0, true);
@@ -3893,61 +3962,140 @@
                 form.classList.remove('visible');
             }
         }
-        
         function renderFloatingForm() {
-            const content = document.getElementById('floatingFormContent');
-            content.innerHTML = '';
-            
-            const template = app.templates.find(t => t.id === app.currentTemplate);
-            if (!template || !app.currentActNum) return;
-            
+            const container = document.getElementById('floatingFormContent');
+            if (!container) {
+                console.warn('❌ floatingFormContent not found in DOM');
+                return;
+            }
+            container.innerHTML = '';
+
             const act = getCurrentAct();
-            if (!act) return;
+            if (!act) {
+                container.innerHTML = '<p>Brak wybranego aktu</p>';
+                return;
+            }
             
-            template.sections.forEach(sectionDef => {
-                const section = document.createElement('div');
-                section.style.marginBottom = '16px';
-                
-                const title = document.createElement('div');
-                title.innerHTML = sectionDef.title;
-                title.style.color = '#0078d4';
-                title.style.fontWeight = '600';
-                title.style.fontSize = '12px';
-                title.style.marginBottom = '8px';
-                section.appendChild(title);
-                
-                sectionDef.fields.forEach(field => {
-                    const group = document.createElement('div');
-                    group.className = 'form-group';
-                    group.style.marginBottom = '10px';
-                    
-                    const label = document.createElement('label');
-                    label.textContent = field.label;
-                    label.style.fontSize = '10px';
-                    
-                    const input = document.createElement('input');
-                    input.type = field.type || 'text';
-                    input.className = 'field-input';
-                    input.dataset.field = field.id;
-                    input.placeholder = field.label;
-                    input.value = act.fieldValues[field.id] || '';
-                    
-                    if (act.fieldROIs && act.fieldROIs[field.id]) {
-                        input.classList.add('has-roi');
-                    }
-                    
-                    group.appendChild(label);
-                    group.appendChild(input);
-                    section.appendChild(group);
-                });
-                
-                content.appendChild(section);
+            console.log('📋 renderFloatingForm - act:', act);
+            console.log('📋 act.type:', act.type);
+            console.log('📋 app.templates:', app.templates ? app.templates.map(t => t.id) : 'UNDEFINED');
+
+            // ===== SELECTOR TYPU AKTU – DROPDOWN W HEADERZE =====
+            const header = document.createElement('div');
+            header.style.cssText = 'padding: 12px; background: #252525; border-bottom: 1px solid #3a3a3a; border-radius: 4px 4px 0 0; display: flex; justify-content: space-between; align-items: center; gap: 12px;';
+            
+            const titleSpan = document.createElement('span');
+            titleSpan.textContent = 'Akt #' + act.actNum;
+            titleSpan.style.cssText = 'color: #0078d4; font-weight: 600; font-size: 12px;';
+            
+            const typeSelect = document.createElement('select');
+            typeSelect.style.cssText = 'padding: 4px 6px; background: #1a1a1a; border: 1px solid #0078d4; color: #ddd; border-radius: 3px; font-size: 11px; flex: 1;';
+            typeSelect.innerHTML = app.templates.map(t => 
+                `<option value="${t.id}" ${t.id === act.type ? 'selected' : ''}>${t.name}</option>`
+            ).join('');
+            
+            typeSelect.addEventListener('change', (e) => {
+                console.log('✅ Select change event - new type:', e.target.value);
+                act.type = e.target.value;
+                saveStorage();
+                renderFloatingForm();
             });
             
+            header.appendChild(titleSpan);
+            header.appendChild(typeSelect);
+            container.appendChild(header);
+
+            // ===== ŁADUJEMY SZABLON DLA AKTUALNEGO TYPU =====
+            const template = app.templates.find(t => t.id === act.type);
+            if (!template) {
+                console.error('❌ Template not found for type:', act.type);
+                console.error('Available templates:', app.templates.map(t => t.id));
+                container.innerHTML += '<p style="color: #888;">Brak szablonu dla tego typu: ' + act.type + '</p>';
+                return;
+            }
+            console.log('✅ Template loaded:', template.name);
+
+            // ===== RENDERUJ SEKCJE I POLA =====
+            template.sections.forEach(sec => {
+                const secDiv = document.createElement('div');
+                secDiv.style.marginBottom = '12px';
+                
+                const secTitle = document.createElement('div');
+                secTitle.innerHTML = sec.title || sec.id;
+                secTitle.style.cssText = 'color: #0078d4; font-weight: 600; font-size: 11px; margin-bottom: 6px; border-bottom: 1px solid #2a2a2a; padding-bottom: 4px;';
+                secDiv.appendChild(secTitle);
+
+                sec.fields.forEach(f => {
+                    // Filtrujemy pola – jeśli mają applicableTypes, sprawdzamy czy pasują
+                    if (f.applicableTypes && !f.applicableTypes.includes(act.type)) {
+                        return;  // Pomiń pole jeśli nie pasuje do typu
+                    }
+
+                    const group = document.createElement('div');
+                    group.className = 'form-group';
+                    group.style.marginBottom = '8px';
+                    
+                    const label = document.createElement('label');
+                    label.textContent = f.label;
+                    label.style.cssText = 'display: block; font-size: 10px; color: #888; margin-bottom: 3px;';
+                    group.appendChild(label);
+                    
+                    const input = document.createElement('input');
+                    input.type = f.type || 'text';
+                    input.className = 'field-input';
+                    input.dataset.field = f.id;
+                    input.placeholder = f.label;
+                    input.value = act.fieldValues[f.id] || '';
+                    input.style.cssText = 'width: 100%; padding: 5px; background: #0f0f0f; border: 1px solid #3a3a3a; color: #ddd; border-radius: 3px; font-size: 11px;';
+                    
+                    if (act.fieldROIs && act.fieldROIs[f.id]) {
+                        input.classList.add('has-roi');
+                        input.style.borderLeft = '4px solid #10b981';
+                    }
+                    
+                    input.addEventListener('input', (e) => {
+                        act.fieldValues[f.id] = e.target.value;
+                        saveStorage();
+                    });
+                    
+                    group.appendChild(input);
+                    secDiv.appendChild(group);
+                });
+
+                container.appendChild(secDiv);
+            });
+
+            // ===== PRZYCISK "DODAJ NIESTANDARDOWE POLE" =====
+            const addFieldDiv = document.createElement('div');
+            addFieldDiv.style.marginTop = '12px';
+            addFieldDiv.style.paddingTop = '12px';
+            addFieldDiv.style.borderTop = '1px solid #2a2a2a';
+
+            const addBtn = document.createElement('button');
+            addBtn.textContent = '+ Dodaj pole';
+            addBtn.style.cssText = 'background: #252525; border: 1px solid #3a3a3a; color: #ddd; padding: 6px 10px; border-radius: 3px; cursor: pointer; font-size: 10px; width: 100%;';
+            
+            addBtn.addEventListener('click', () => {
+                const fieldId = prompt('ID pola (np. custom_note):');
+                if (!fieldId) return;
+                
+                const fieldLabel = prompt('Nazwa pola:', fieldId);
+                if (!fieldLabel) return;
+                
+                // Dodaj pole do aktualnego aktu
+                if (!act.fieldValues) act.fieldValues = {};
+                act.fieldValues[fieldId] = '';
+                
+                saveStorage();
+                renderFloatingForm();  // Odśwież z nowym polem
+            });
+
+            addFieldDiv.appendChild(addBtn);
+            container.appendChild(addFieldDiv);
+
             // Focus na pierwsze pole
-            content.querySelector('.field-input')?.focus();
+            container.querySelector('.field-input')?.focus();
         }
-        
         function positionFloatingFormNearAct() {
             const form = document.getElementById('floatingForm');
             const act = getCurrentAct();
@@ -5533,6 +5681,7 @@
                             const newAct = {
                                 actNum: newActNum,
                                 imageIdx: app.currentImageIdx,
+                                type: 'birth',  // Domyślny typ
                                 fieldValues: {},
                                 fieldROIs: {},
                                 actROI: null,
@@ -5629,7 +5778,7 @@
             
             // Kopiuj wartości pól
             currentAct.fieldValues = { ...previousAct.fieldValues };
-            loadActToForm(currentAct);
+            renderFormSections();
             
             // Kopiuj ROI'e jeśli istnieją
             if (previousAct.fieldROIs && Object.keys(previousAct.fieldROIs).length > 0) {

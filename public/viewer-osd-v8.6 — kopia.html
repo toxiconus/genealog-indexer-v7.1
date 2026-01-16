@@ -105,18 +105,6 @@
             color: white;
             box-shadow: 0 0 12px rgba(0,120,212,0.4);
         }
-        .toolbar-btn.disabled {
-            background: #1a1a1a;
-            border-color: #333;
-            color: #555;
-            opacity: 0.5;
-        }
-        .toolbar-btn.disabled:hover {
-            background: #1a1a1a;
-            border-color: #333;
-            color: #555;
-            transform: none;
-        }
         #actBtn {
             opacity: 0.4;
             cursor: not-allowed;
@@ -1259,9 +1247,6 @@
             <button class="toolbar-btn" id="roiBtn" title="Zaznacz granice całego aktu na obrazie (Ctrl+R)">
                 <i class="fas fa-expand"></i> Granice aktu
             </button>
-            <button class="toolbar-btn" id="toggleBoundariesBtn" title="Włącz/wyłącz widoczność granic aktów">
-                <i class="fas fa-eye"></i> Widoczność granic
-            </button>
             <button class="toolbar-btn" onclick="clearAllROIs()" title="Usuń wszystkie zaznaczenia">
                 <i class="fas fa-trash-alt"></i> Clear
             </button>
@@ -1588,8 +1573,7 @@
             wizardActive: false,
             wizardCurrentFieldIdx: 0,
             wizardFields: [],
-            autoLoadFolder: true,  // Włącz automatyczne ładowanie folderu przy starcie
-            showActBoundaries: true  // Włącz/wyłącz widoczność granic aktów
+            autoLoadFolder: true  // Włącz automatyczne ładowanie folderu przy starcie
         };
         
         // ===== POSTPROCESSING STATE & PRESETS (MUST BE BEFORE setupPostprocessSliders) =====
@@ -2344,9 +2328,7 @@
             
             console.log('currentActs length:', currentActs.length, 'currentImageIdx:', app.currentImageIdx);
             
-            // ONLY draw act boundaries if showActBoundaries is true
-            if (app.showActBoundaries) {
-                currentActs.forEach(act => {
+            currentActs.forEach(act => {
                 if (!act.actROI) return;
                 
                 console.log('Drawing act overlay for act', act.actNum);
@@ -2390,8 +2372,7 @@
                     viewer.removeOverlay(div);
                     viewer.addOverlay({ element: div, location: viewportRect });
                 }
-                });
-            }
+            });
             
             // Draw field ROIs ONLY for the currently selected act
             
@@ -2486,13 +2467,6 @@
             
             const roiBtn = document.getElementById('roiBtn');
             if (roiBtn) roiBtn.addEventListener('click', toggleActMode);
-            
-            const toggleBoundariesBtn = document.getElementById('toggleBoundariesBtn');
-            if (toggleBoundariesBtn) {
-                toggleBoundariesBtn.addEventListener('click', toggleActBoundaries);
-                // Ustaw stan początkowy przycisku
-                toggleBoundariesBtn.classList.toggle('disabled', !app.showActBoundaries);
-            }
             
             // const actBtn = document.getElementById('actBtn');
             // if (actBtn) actBtn.addEventListener('click', toggleROI);
@@ -3416,18 +3390,6 @@
             app.actMode = !app.actMode;
             document.getElementById('roiBtn').classList.toggle('active', app.actMode);
             if (app.updateCanvasInteraction) app.updateCanvasInteraction();
-        }
-
-        function toggleActBoundaries() {
-            app.showActBoundaries = !app.showActBoundaries;
-            const btn = document.getElementById('toggleBoundariesBtn');
-            if (btn) {
-                btn.classList.toggle('disabled', !app.showActBoundaries);
-            }
-            // Natychmiastowo zmień widoczność wszystkich granic aktów
-            document.querySelectorAll('.act-overlay').forEach(el => {
-                el.style.display = app.showActBoundaries ? 'block' : 'none';
-            });
         }
 
         // CONTEXT MENU - Menu kontekstowe dla aktów i obrazów
