@@ -2714,7 +2714,6 @@
                 {
                     id: 'zglaszajacy',
                     header: 'OSOBA ZGŁASZAJĄCA',
-                    checkbox: { id: 'zglaszajacy_ojciec', label: 'to ojciec' },
                     layout: 'grouped',  // 2-wierszowy
                     fields: [
                         { id: "zglaszajacy_imie", label: "Imię" },
@@ -2723,6 +2722,13 @@
                         { id: "zglaszajacy_wiek", label: "Wiek" },
                         { id: "zglaszajacy_miejsce", label: "Miejsce" }
                     ]
+                },
+                {
+                    id: 'zglaszajacy_ojciec_check',
+                    header: null,
+                    checkbox: { id: 'zglaszajacy_ojciec', label: 'Osoba zgłaszająca to ojciec' },
+                    layout: 'single',
+                    fields: []
                 },
                 {
                     id: 'swiadek1',
@@ -2955,29 +2961,72 @@
                     
                 } else {
                     // Layout 'single' - jedno pole na linię
-                    group.fields.forEach(field => {
-                        const fieldDiv = document.createElement('div');
-                        fieldDiv.style.marginBottom = '4px';
-                        const label = document.createElement('label');
-                        label.textContent = field.label;
-                        label.style.cssText = 'display: block; font-size: 10px; color: #888; margin-bottom: 2px;';
-                        fieldDiv.appendChild(label);
+                    
+                    // Jeśli grupa ma checkbox ale bez headera, renderuj checkbox jako pole
+                    if (group.checkbox && !group.header && group.fields.length === 0) {
+                        const checkboxDiv = document.createElement('div');
+                        checkboxDiv.style.marginBottom = '8px';
+                        checkboxDiv.style.paddingTop = '8px';
+                        checkboxDiv.style.borderTop = '1px solid #2a2a2a';
+                        checkboxDiv.style.display = 'flex';
+                        checkboxDiv.style.alignItems = 'center';
+                        checkboxDiv.style.gap = '8px';
                         
-                        const input = document.createElement('input');
-                        input.type = 'text';
-                        input.dataset.field = field.id;
-                        input.id = field.id;
-                        input.className = 'field-input';
-                        input.placeholder = field.label;
-                        input.value = act.fieldValues[field.id] || '';
-                        input.style.cssText = 'width: 100%; padding: 5px; background: #0f0f0f; border: 1px solid #3a3a3a; color: #ddd; border-radius: 3px; font-size: 11px;';
-                        input.addEventListener('input', (e) => { 
-                            act.fieldValues[field.id] = e.target.value.trim(); 
-                            saveStorage(); 
+                        const checkbox = document.createElement('input');
+                        checkbox.type = 'checkbox';
+                        checkbox.id = group.checkbox.id;
+                        checkbox.checked = act.fieldValues[group.checkbox.id] === true || act.fieldValues[group.checkbox.id] === 'true';
+                        checkbox.style.cssText = 'cursor: pointer; width: 16px; height: 16px;';
+                        checkbox.addEventListener('change', (e) => {
+                            act.fieldValues[group.checkbox.id] = e.target.checked;
+                            
+                            // AUTO-COPY ojciec z zgłaszającego jeśli checkbox zaznaczony
+                            if (group.checkbox.id === 'zglaszajacy_ojciec' && e.target.checked) {
+                                act.fieldValues['ojciec_imie'] = act.fieldValues['zglaszajacy_imie'] || '';
+                                act.fieldValues['ojciec_nazwisko'] = act.fieldValues['zglaszajacy_nazwisko'] || '';
+                                act.fieldValues['ojciec_zawod'] = act.fieldValues['zglaszajacy_zawod'] || '';
+                                act.fieldValues['ojciec_wiek'] = act.fieldValues['zglaszajacy_wiek'] || '';
+                                // Odśwież formularz aby pokazać zakopiowane dane
+                                setTimeout(() => renderFormSections(), 100);
+                            }
+                            
+                            saveStorage();
                         });
-                        fieldDiv.appendChild(input);
-                        container.appendChild(fieldDiv);
-                    });
+                        checkboxDiv.appendChild(checkbox);
+                        
+                        const checkboxLabel = document.createElement('label');
+                        checkboxLabel.textContent = group.checkbox.label;
+                        checkboxLabel.style.cssText = 'font-size: 11px; color: #ddd; cursor: pointer; margin: 0; flex: 1;';
+                        checkboxLabel.htmlFor = group.checkbox.id;
+                        checkboxDiv.appendChild(checkboxLabel);
+                        
+                        container.appendChild(checkboxDiv);
+                    } else {
+                        // Zwykłe pola single
+                        group.fields.forEach(field => {
+                            const fieldDiv = document.createElement('div');
+                            fieldDiv.style.marginBottom = '4px';
+                            const label = document.createElement('label');
+                            label.textContent = field.label;
+                            label.style.cssText = 'display: block; font-size: 10px; color: #888; margin-bottom: 2px;';
+                            fieldDiv.appendChild(label);
+                            
+                            const input = document.createElement('input');
+                            input.type = 'text';
+                            input.dataset.field = field.id;
+                            input.id = field.id;
+                            input.className = 'field-input';
+                            input.placeholder = field.label;
+                            input.value = act.fieldValues[field.id] || '';
+                            input.style.cssText = 'width: 100%; padding: 5px; background: #0f0f0f; border: 1px solid #3a3a3a; color: #ddd; border-radius: 3px; font-size: 11px;';
+                            input.addEventListener('input', (e) => { 
+                                act.fieldValues[field.id] = e.target.value.trim(); 
+                                saveStorage(); 
+                            });
+                            fieldDiv.appendChild(input);
+                            container.appendChild(fieldDiv);
+                        });
+                    }
                 }
             });
 
