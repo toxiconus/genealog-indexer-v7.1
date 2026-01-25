@@ -6,32 +6,48 @@
     <title>Genealog Indexer v7.1 - Zaawansowany Indekser Akt z OCR</title>
     <script src="https://openseadragon.github.io/openseadragon/openseadragon.min.js"></script>
     <script src="https://unpkg.com/tesseract.js@5.1.0/dist/tesseract.min.js"></script>
-    <!-- Firebase SDK -->
-    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
+    <!-- Supabase Client - import map + ESM module -->
+    <script type="importmap">
+    {
+      "imports": {
+        "@supabase/supabase-js": "https://esm.sh/@supabase/supabase-js@2"
+      }
+    }
+    </script>
+    <script type="module">
+      import { createClient } from '@supabase/supabase-js'
+      window.createSupabaseClient = createClient
+    </script>
     <script>
-        // Firebase configuration - ZASTĄP SWOIMI KLUCZAMI Z KONSOLI FIREBASE
-        const firebaseConfig = {
-            apiKey: "YOUR_API_KEY",
-            authDomain: "YOUR_PROJECT_ID.firebaseapp.com",
-            projectId: "YOUR_PROJECT_ID",
-            storageBucket: "YOUR_PROJECT_ID.appspot.com",
-            messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
-            appId: "YOUR_APP_ID"
-        };
+        // Supabase configuration - czekaj aż biblioteka się załaduje
+        const SUPABASE_URL = 'https://jbwkrconzozhgzikabmv.supabase.co';
+        const SUPABASE_KEY = 'sb_publishable_X0Qm9TSqq0nOOtCo8RycMQ_PeirqbMt';
+        let supabase = null;
 
-        // Initialize Firebase
-        firebase.initializeApp(firebaseConfig);
-        const db = firebase.firestore();
-        const auth = firebase.auth();
+        // Czekaj aż createSupabaseClient będzie dostępne (z importmap)
+        async function initSupabaseClient() {
+            let attempts = 0;
+            while (!window.createSupabaseClient && attempts < 100) {
+                await new Promise(r => setTimeout(r, 100));
+                attempts++;
+            }
+            
+            if (window.createSupabaseClient && typeof window.createSupabaseClient === 'function') {
+                console.log('✅ Supabase createClient loaded');
+                window.supabase_client = window.createSupabaseClient(SUPABASE_URL, SUPABASE_KEY);
+                console.log('✅ Supabase initialized');
+                window.dispatchEvent(new Event('supabaseReady'));
+            } else {
+                console.error('❌ Supabase library failed to load');
+            }
+        }
 
-        // Make db and auth available globally
-        window.db = db;
-        window.auth = auth;
-        
-        // Dispatch custom event when Firebase is ready
-        window.dispatchEvent(new Event('firebaseReady'));
+        // Inicjalizuj na DOMContentLoaded
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', initSupabaseClient);
+        } else {
+            initSupabaseClient();
+        }
     </script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <style>
@@ -1102,12 +1118,17 @@
             flex: 1;
             overflow: auto;
             position: relative;
+            overflow-x: auto;
+            overflow-y: auto;
+            height: 100%;
         }
         #dataTable {
             width: 100%;
+            min-width: 1400px;
             border-collapse: collapse;
             font-size: 11px;
             color: #ddd;
+            user-select: text;
         }
         #dataTable thead {
             background: #1a1a1a;
@@ -1373,7 +1394,23 @@
             
             <div class="toolbar-sep"></div>
             
-            <!-- FILE OPS: Otwórz, Sort, Export, Import -->
+            <!-- AUTH: Google Login -->
+            <button class="toolbar-btn" id="authBtn" title="Zaloguj się z Google">
+                <i class="fab fa-google"></i> Login
+            </button>
+            
+            <!-- SUPABASE: Load/Save -->
+            <button class="toolbar-btn" onclick="loadFromSupabase()" title="Załaduj dane z Supabase (baza PostgreSQL, bez limitów)">
+                <i class="fas fa-database"></i> Ładuj Supabase
+            </button>
+            <button class="toolbar-btn" onclick="exportFromLocalStorageToSupabase()" title="Zapisz dane do Supabase" id="saveSupabaseBtn" style="display: none;">
+                <i class="fas fa-database"></i> Zapisz Supabase
+            </button>
+            <button class="toolbar-btn" onclick="checkLocalStorage()" title="Sprawdź localStorage">
+                <i class="fas fa-database"></i> Debug
+            </button>
+            
+            <div class="toolbar-sep"></div>
             <button class="toolbar-btn" id="openBtn" title="Dodaj obrazy (Ctrl+O)">
                 <i class="fas fa-folder-open"></i> Otwórz
             </button>
@@ -1442,9 +1479,12 @@
             
             <div class="toolbar-sep"></div>
             
-            <!-- ADVANCED: Firebase, Clear -->
-            <button class="toolbar-btn" onclick="exportFromLocalStorageToFirestore()" title="Firebase">
-                <i class="fas fa-cloud-upload-alt"></i> FB
+            <!-- ADVANCED: Supabase, Clear -->
+            <button class="toolbar-btn" onclick="loadFromSupabase()" title="Załaduj z Supabase (PostgreSQL, bez limitów)">
+                <i class="fas fa-database"></i> Ładuj DB
+            </button>
+            <button class="toolbar-btn" onclick="exportFromLocalStorageToSupabase()" title="Eksportuj do Supabase">
+                <i class="fas fa-database"></i> Zapisz DB
             </button>
             <button class="toolbar-btn" id="clearStorageBtn" title="Wyczyść" style="color: #e74c3c;">
                 <i class="fas fa-trash-alt"></i> Wyczyść
@@ -1579,11 +1619,17 @@
                     <thead>
                         <tr>
                             <th><input type="checkbox" id="selectAllCheckbox" title="Zaznacz wszystko"></th>
-                            <th>Akt</th>
+                            <th>ID źródłowe</th>
+                            <th>Numer aktu</th>
                             <th>Imię dziecka</th>
                             <th>Nazwisko dziecka</th>
-                            <th>Data urodzenia</th>
-                            <th>Notatki</th>
+                            <th>Ojciec (imię)</th>
+                            <th>Ojciec (nazwisko)</th>
+                            <th>Matka (imię)</th>
+                            <th>Matka (nazwisko)</th>
+                            <th>Lokacja / Miejsce</th>
+                            <th>Uwagi</th>
+                            <th>Opis źródła</th>
                         </tr>
                     </thead>
                     <tbody id="dataTableBody">
@@ -1591,7 +1637,6 @@
                 </table>
             </div>
         </div>
-        
         <!-- Paste Dialog -->
         <div class="paste-overlay" id="pasteOverlay">
             <div style="font-size: 12px; font-weight: 600; color: #0078d4;">Wklej dane (TSV/CSV)</div>
@@ -1803,12 +1848,17 @@
         let isProcessing = false;
         let opencvReady = false;
         
-        document.addEventListener('DOMContentLoaded', () => {
+        document.addEventListener('DOMContentLoaded', async () => {
+            // Poczekaj max 10 sekund na Supabase inicjalizację
+            await Promise.race([
+                new Promise(r => window.addEventListener('supabaseReady', r, { once: true })),
+                new Promise(r => setTimeout(r, 10000))
+            ]);
             // Initialize app directly
-            initApp();
+            await initApp();
         });
 
-        function initApp() {
+        async function initApp() {
             console.log('📍 DOMContentLoaded start');
             
             // ===== AGGRESSIVE CLEANUP FOR OLD SCHEMA =====
@@ -1838,19 +1888,50 @@
                 localStorage.setItem('genealog_version', currentVersion);
             }
             
-            // Initialize Firebase Auth
+            // Initialize Firebase Auth State Listener (legacy - kept for compatibility)
             if (window.auth) {
-                auth.signInAnonymously().then(() => {
-                    console.log('🔥 Firebase auth initialized');
-                }).catch((error) => {
-                    console.error('⚠️ Firebase auth optional:', error);
+                firebase.auth().onAuthStateChanged((user) => {
+                    if (user) {
+                        // User is signed in
+                        console.log('🔥 User signed in:', user.displayName);
+                        
+                        // Update UI
+                        const authBtn = document.getElementById('authBtn');
+                        if (authBtn) {
+                            authBtn.innerHTML = '<i class="fas fa-user-check"></i> ' + user.displayName.split(' ')[0];
+                            authBtn.title = 'Wyloguj się';
+                            authBtn.onclick = signOut;
+                        }
+                        
+                        // Enable Supabase (no auth required)
+                        app.storageMode = 'supabase';
+                        
+                    } else {
+                        // User is signed out
+                        console.log('💤 User signed out');
+                        
+                        // Update UI
+                        const authBtn = document.getElementById('authBtn');
+                        if (authBtn) {
+                            authBtn.innerHTML = '<i class="fab fa-google"></i> Login';
+                            authBtn.title = 'Zaloguj się z Google (opcjonalnie)';
+                            authBtn.onclick = signInWithGoogle;
+                        }
+                        
+                        // Supabase works without auth (public table)
+                        app.storageMode = 'supabase';
+                    }
                 });
+            } else {
+                // No Firebase - use Supabase directly
+                console.log('✅ Using Supabase directly (no auth required)');
+                app.storageMode = 'supabase';
             }
             
             // Clear old oversized data from localStorage
             try {
                 const oldData = localStorage.getItem('genealog_data');
-                if (oldData && oldData.length > 1000000) {
+                if (oldData && oldData.length > 5000000) { // Zwiększono limit z 1MB na 5MB
                     console.log('🧹 Clearing oversized localStorage data');
                     localStorage.removeItem('genealog_data');
                 }
@@ -1862,7 +1943,7 @@
             console.log('📍 Viewer initialized');
             setupDrawingCanvas();
             console.log('📍 Canvas setup complete');
-            loadStorage();
+            await loadStorage();
             console.log('📍 Storage loaded, images:', app.images.length);
             renderUI();
             console.log('📍 UI rendered');
@@ -2062,8 +2143,10 @@
             header.style.cssText = 'padding: 12px; background: #252525; border-bottom: 1px solid #3a3a3a; border-radius: 4px 4px 0 0; display: flex; justify-content: space-between; align-items: center; gap: 12px;';
             
             const titleSpan = document.createElement('span');
-            titleSpan.textContent = 'Akt #' + act.actNum;
-            titleSpan.style.cssText = 'color: #0078d4; font-weight: 600; font-size: 12px;';
+            // Pokaż skrót do indeksacji (CH.1783.No.1) z pełnym ID w tooltip
+            titleSpan.textContent = 'Akt: ' + act.actNum + ' (' + (act.original_id || act.id) + ')';
+            titleSpan.style.cssText = 'color: #0078d4; font-weight: 600; font-size: 12px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;';
+            titleSpan.title = 'ID źródłowe: ' + (act.original_id || act.id);
             
             const typeSelect = document.createElement('select');
             typeSelect.style.cssText = 'padding: 4px 6px; background: #1a1a1a; border: 1px solid #0078d4; color: #ddd; border-radius: 3px; font-size: 11px; flex: 1;';
@@ -2810,6 +2893,90 @@
 
             container.appendChild(headerWrapper);
 
+            // ===== KOMPLETNA LISTA WSZYSTKICH MOŻLIWYCH PÓL Z AKTÓW METRYKALNYCH =====
+            // Do użytku w "+ Dodaj dowolne dane" - pozwala dodać pola z innych typów aktów
+            const allAvailableFields = [
+                // WSPÓLNE DLA WSZYSTKICH TYPÓW
+                { id: 'numer_aktu', label: 'Numer aktu', category: 'Wspólne' },
+                { id: 'data_aktu', label: 'Data aktu', category: 'Wspólne' },
+                { id: 'parafia', label: 'Parafia/Miejsce', category: 'Wspólne' },
+                { id: 'ksiadz_urzednik', label: 'Ksiądz/Urzędnik', category: 'Wspólne' },
+                { id: 'jezyk_aktu', label: 'Język aktu', category: 'Wspólne' },
+                { id: 'uwagi_marginalne', label: 'Uwagi marginalne', category: 'Wspólne' },
+                { id: 'zrodlo_ksiega', label: 'Źródło/Księga', category: 'Wspólne' },
+                
+                // URODZENIA/CHRZTY
+                { id: 'data_urodzenia', label: 'Data urodzenia', category: 'Urodzenia/Chrzty' },
+                { id: 'miejsce_urodzenia', label: 'Miejsce urodzenia', category: 'Urodzenia/Chrzty' },
+                { id: 'dziecko_imie', label: 'Imię dziecka', category: 'Urodzenia/Chrzty' },
+                { id: 'dziecko_plec', label: 'Płeć dziecka', category: 'Urodzenia/Chrzty' },
+                { id: 'legitymizacja', label: 'Legitymizacja', category: 'Urodzenia/Chrzty' },
+                { id: 'ojciec_imie', label: 'Imię ojca', category: 'Urodzenia/Chrzty' },
+                { id: 'ojciec_nazwisko', label: 'Nazwisko ojca', category: 'Urodzenia/Chrzty' },
+                { id: 'ojciec_wiek', label: 'Wiek ojca', category: 'Urodzenia/Chrzty' },
+                { id: 'ojciec_zawod', label: 'Zawód ojca', category: 'Urodzenia/Chrzty' },
+                { id: 'ojciec_miejsce', label: 'Miejsce zamieszkania ojca', category: 'Urodzenia/Chrzty' },
+                { id: 'matka_imie', label: 'Imię matki', category: 'Urodzenia/Chrzty' },
+                { id: 'matka_nazwisko', label: 'Nazwisko matki', category: 'Urodzenia/Chrzty' },
+                { id: 'matka_panienskie', label: 'Nazwisko panieńskie matki', category: 'Urodzenia/Chrzty' },
+                { id: 'matka_lata', label: 'Wiek matki', category: 'Urodzenia/Chrzty' },
+                { id: 'matka_zawod', label: 'Zawód matki', category: 'Urodzenia/Chrzty' },
+                { id: 'matka_miejsce', label: 'Miejsce zamieszkania matki', category: 'Urodzenia/Chrzty' },
+                { id: 'data_chrztu', label: 'Data chrztu', category: 'Urodzenia/Chrzty' },
+                { id: 'imie_nadane_chrzest', label: 'Imię nadane na chrzcie', category: 'Urodzenia/Chrzty' },
+                { id: 'chrzestny_ojciec_imie', label: 'Imię ojca chrzestnego', category: 'Urodzenia/Chrzty' },
+                { id: 'chrzestny_ojciec_nazwisko', label: 'Nazwisko ojca chrzestnego', category: 'Urodzenia/Chrzty' },
+                { id: 'chrzestny_ojciec_zawod', label: 'Zawód ojca chrzestnego', category: 'Urodzenia/Chrzty' },
+                { id: 'chrzestna_matka_imie', label: 'Imię matki chrzestnej', category: 'Urodzenia/Chrzty' },
+                { id: 'chrzestna_matka_nazwisko', label: 'Nazwisko matki chrzestnej', category: 'Urodzenia/Chrzty' },
+                { id: 'chrzestna_matka_zawod', label: 'Zawód matki chrzestnej', category: 'Urodzenia/Chrzty' },
+                { id: 'swiadek1_imie', label: 'Świadek 1 - Imię', category: 'Urodzenia/Chrzty' },
+                { id: 'swiadek1_nazwisko', label: 'Świadek 1 - Nazwisko', category: 'Urodzenia/Chrzty' },
+                { id: 'swiadek2_imie', label: 'Świadek 2 - Imię', category: 'Urodzenia/Chrzty' },
+                { id: 'swiadek2_nazwisko', label: 'Świadek 2 - Nazwisko', category: 'Urodzenia/Chrzty' },
+                
+                // MAŁŻEŃSTWA/ŚLUBY
+                { id: 'data_slubu', label: 'Data ślubu', category: 'Małżeństwa/Śluby' },
+                { id: 'miejsce_slubu', label: 'Miejsce ślubu', category: 'Małżeństwa/Śluby' },
+                { id: 'pan_mlody_imie', label: 'Imię pana młodego', category: 'Małżeństwa/Śluby' },
+                { id: 'pan_mlody_nazwisko', label: 'Nazwisko pana młodego', category: 'Małżeństwa/Śluby' },
+                { id: 'pan_mlody_wiek', label: 'Wiek pana młodego', category: 'Małżeństwa/Śluby' },
+                { id: 'pan_mlody_stan', label: 'Stan cywilny pana młodego', category: 'Małżeństwa/Śluby' },
+                { id: 'pan_mlody_zawod', label: 'Zawód pana młodego', category: 'Małżeństwa/Śluby' },
+                { id: 'pan_mlody_urodzenie', label: 'Miejsce urodzenia pana młodego', category: 'Małżeństwa/Śluby' },
+                { id: 'pan_mlody_zamieszkanie', label: 'Miejsce zamieszkania pana młodego', category: 'Małżeństwa/Śluby' },
+                { id: 'pan_mlody_rodzice', label: 'Imiona rodziców pana młodego', category: 'Małżeństwa/Śluby' },
+                { id: 'panna_mloda_imie', label: 'Imię panny młodej', category: 'Małżeństwa/Śluby' },
+                { id: 'panna_mloda_nazwisko_panienskie', label: 'Nazwisko panieńskie panny młodej', category: 'Małżeństwa/Śluby' },
+                { id: 'panna_mloda_wiek', label: 'Wiek panny młodej', category: 'Małżeństwa/Śluby' },
+                { id: 'panna_mloda_stan', label: 'Stan cywilny panny młodej', category: 'Małżeństwa/Śluby' },
+                { id: 'panna_mloda_zawod', label: 'Zawód panny młodej', category: 'Małżeństwa/Śluby' },
+                { id: 'panna_mloda_urodzenie', label: 'Miejsce urodzenia panny młodej', category: 'Małżeństwa/Śluby' },
+                { id: 'panna_mloda_zamieszkanie', label: 'Miejsce zamieszkania panny młodej', category: 'Małżeństwa/Śluby' },
+                { id: 'panna_mloda_rodzice', label: 'Imiona rodziców panny młodej', category: 'Małżeństwa/Śluby' },
+                { id: 'zapowiedzi_daty', label: 'Daty zapowiedzi', category: 'Małżeństwa/Śluby' },
+                { id: 'dyspensa', label: 'Dyspensa', category: 'Małżeństwa/Śluby' },
+                { id: 'swiadkowie_slubu', label: 'Świadkowie ślubu', category: 'Małżeństwa/Śluby' },
+                
+                // ZGONY/POGRZEBY
+                { id: 'data_zgonu', label: 'Data zgonu', category: 'Zgony/Pogrzeby' },
+                { id: 'miejsce_zgonu', label: 'Miejsce zgonu', category: 'Zgony/Pogrzeby' },
+                { id: 'data_pogrzebu', label: 'Data pogrzebu', category: 'Zgony/Pogrzeby' },
+                { id: 'miejsce_pogrzebu', label: 'Miejsce pogrzebu', category: 'Zgony/Pogrzeby' },
+                { id: 'zmarly_imie', label: 'Imię zmarłego', category: 'Zgony/Pogrzeby' },
+                { id: 'zmarly_nazwisko', label: 'Nazwisko zmarłego', category: 'Zgony/Pogrzeby' },
+                { id: 'zmarly_wiek', label: 'Wiek zmarłego', category: 'Zgony/Pogrzeby' },
+                { id: 'zmarly_plec', label: 'Płeć zmarłego', category: 'Zgony/Pogrzeby' },
+                { id: 'zmarly_stan', label: 'Stan cywilny zmarłego', category: 'Zgony/Pogrzeby' },
+                { id: 'zmarly_zawod', label: 'Zawód zmarłego', category: 'Zgony/Pogrzeby' },
+                { id: 'zmarly_urodzenie', label: 'Miejsce urodzenia zmarłego', category: 'Zgony/Pogrzeby' },
+                { id: 'zmarly_zamieszkanie', label: 'Miejsce zamieszkania zmarłego', category: 'Zgony/Pogrzeby' },
+                { id: 'zmarly_rodzice', label: 'Imiona rodziców zmarłego', category: 'Zgony/Pogrzeby' },
+                { id: 'zmarly_malzenyk', label: 'Imię małżonka', category: 'Zgony/Pogrzeby' },
+                { id: 'przyczyna_zgonu', label: 'Przyczyna zgonu', category: 'Zgony/Pogrzeby' },
+                { id: 'swiadkowie_zgonu', label: 'Świadkowie/informatorzy', category: 'Zgony/Pogrzeby' }
+            ];
+
             // ===== RENDERUJ GRUPY PÓL (fieldGroups) - V8.11 STRUKTURA =====
             // Pola są zorganizowane w grupy z inteligentnym layoutem
             // Layout types: 'inline2' (2 pola obok siebie), 'grouped' (2-wierszowy: imie+nazwisko, zawód+wiek+miejsce), 'single' (jedno pole)
@@ -2882,8 +3049,10 @@
                     fields: [
                         { id: "matka_imie", label: "Imię" },
                         { id: "matka_nazwisko", label: "Nazwisko" },
-                        { id: "matka_panienskie", label: "Nazwisko panieńskie" },
-                        { id: "matka_lata", label: "Lata, miejsce, zawód" }
+                        { id: "matka_panienskie", label: "Panieńskie" },
+                        { id: "matka_lata", label: "Wiek" },
+                        { id: "matka_miejsce", label: "Miejsce" },
+                        { id: "matka_zawod", label: "Zawód" }
                     ]
                 },
                 {
@@ -2900,9 +3069,9 @@
                 {
                     id: 'imie_chrzest',
                     header: null,
-                    layout: 'single',
+                    layout: 'custom',
                     fields: [
-                        { id: "imie_nadane_chrzest", label: "Nadano imię na chrzcie (potwierdzenie)" }
+                        { id: "imie_nadane_chrzest", label: "Ochrzczono jako:" }
                     ]
                 },
                 {
@@ -3003,14 +3172,35 @@
                     container.appendChild(row);
                     
                 } else if (group.layout === 'grouped') {
-                    // Grouped: Wiersz 1 (2 pola: imie+nazwisko), Wiersz 2 (3 pola: zawód+wiek+miejsce)
+                    // Grouped: Dynamiczny layout
+                    // - Jeśli 4 pola: 2 + 2
+                    // - Jeśli 6 pól: 3 + 3
+                    // - Jeśli 4 pola ale grupa MATKA: 3 + 1 (dla złych definicji)
+                    
+                    const fieldCount = group.fields.length;
+                    let fieldsPerRow1, fieldsPerRow2;
+                    
+                    if (fieldCount === 4) {
+                        fieldsPerRow1 = 2;
+                        fieldsPerRow2 = 2;
+                    } else if (fieldCount === 6) {
+                        fieldsPerRow1 = 3;
+                        fieldsPerRow2 = 3;
+                    } else if (fieldCount === 3) {
+                        fieldsPerRow1 = 3;
+                        fieldsPerRow2 = 0;
+                    } else {
+                        fieldsPerRow1 = 2;
+                        fieldsPerRow2 = fieldCount - 2;
+                    }
                     
                     // Wiersz 1
-                    if (group.fields.length >= 2) {
+                    if (fieldsPerRow1 > 0) {
                         const row1 = document.createElement('div');
-                        row1.style.cssText = 'display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 4px;';
+                        const gridCols1 = '1fr '.repeat(fieldsPerRow1).trim();
+                        row1.style.cssText = `display: grid; grid-template-columns: ${gridCols1}; gap: 8px; margin-bottom: 4px;`;
                         
-                        for (let i = 0; i < 2; i++) {
+                        for (let i = 0; i < fieldsPerRow1 && i < group.fields.length; i++) {
                             const field = group.fields[i];
                             const fieldDiv = document.createElement('div');
                             const label = document.createElement('label');
@@ -3037,16 +3227,12 @@
                     }
                     
                     // Wiersz 2
-                    if (group.fields.length > 2) {
+                    if (fieldsPerRow2 > 0) {
                         const row2 = document.createElement('div');
-                        const remainingCount = group.fields.length - 2;
-                        // Inteligentna szerokość kolumn
-                        const gridCols = remainingCount === 1 ? '1fr' 
-                                       : remainingCount === 2 ? '1fr 1fr' 
-                                       : '1.5fr 0.5fr 1fr';  // Zawód + Wiek + Miejsce
-                        row2.style.cssText = `display: grid; grid-template-columns: ${gridCols}; gap: 8px; margin-bottom: 8px;`;
+                        const gridCols2 = '1fr '.repeat(fieldsPerRow2).trim();
+                        row2.style.cssText = `display: grid; grid-template-columns: ${gridCols2}; gap: 8px; margin-bottom: 8px;`;
                         
-                        for (let i = 2; i < group.fields.length; i++) {
+                        for (let i = fieldsPerRow1; i < fieldsPerRow1 + fieldsPerRow2 && i < group.fields.length; i++) {
                             const field = group.fields[i];
                             const fieldDiv = document.createElement('div');
                             const label = document.createElement('label');
@@ -3070,6 +3256,89 @@
                             row2.appendChild(fieldDiv);
                         }
                         container.appendChild(row2);
+                    }
+                    
+                } else if (group.layout === 'custom') {
+                    // Custom layout - dla pola "Ochrzczono jako:"
+                    if (group.id === 'imie_chrzest') {
+                        group.fields.forEach(field => {
+                            const fieldDiv = document.createElement('div');
+                            fieldDiv.style.marginBottom = '8px';
+                            
+                            const label = document.createElement('label');
+                            label.textContent = field.label;
+                            label.style.cssText = 'display: block; font-size: 10px; color: #888; margin-bottom: 2px;';
+                            fieldDiv.appendChild(label);
+                            
+                            // Container dla pola + przycisk
+                            const inputContainer = document.createElement('div');
+                            inputContainer.style.cssText = 'display: flex; gap: 6px; align-items: flex-start;';
+                            
+                            const input = document.createElement('input');
+                            input.type = 'text';
+                            input.dataset.field = field.id;
+                            input.id = field.id;
+                            input.className = 'field-input';
+                            input.placeholder = field.label;
+                            input.value = act.fieldValues[field.id] || '';
+                            
+                            // Jeśli pole jest puste, automatycznie załaduj imię dziecka na żółto
+                            const dzieckoImieDefault = act.fieldValues['dziecko_imie'] || '';
+                            if (!input.value && dzieckoImieDefault) {
+                                input.value = dzieckoImieDefault;
+                                act.fieldValues[field.id] = dzieckoImieDefault;
+                                act.fieldValues['imie_nadane_chrzest_suggested'] = true;
+                            }
+                            
+                            input.style.cssText = 'flex: 1; padding: 5px; background: #0f0f0f; border: 1px solid #3a3a3a; color: #ddd; border-radius: 3px; font-size: 11px;';
+                            input.addEventListener('input', (e) => { 
+                                act.fieldValues[field.id] = e.target.value.trim(); 
+                                saveStorage(); 
+                            });
+                            inputContainer.appendChild(input);
+                            
+                            // Przycisk "✓" - zatwierdza sugestię i zmienia na normalny widok
+                            const confirmBtn = document.createElement('button');
+                            confirmBtn.textContent = '✓';
+                            confirmBtn.title = 'Potwierdź wartość i zmień kolor na normalny';
+                            confirmBtn.style.cssText = 'padding: 5px 8px; background: #252525; border: 1px solid #3a3a3a; color: #fbbf24; border-radius: 3px; cursor: pointer; font-size: 11px; font-weight: bold; min-width: 32px; transition: all 0.2s;';
+                            
+                            confirmBtn.addEventListener('mouseover', (e) => {
+                                e.target.style.background = '#2d2d2d';
+                                e.target.style.borderColor = '#fbbf24';
+                                e.target.style.color = '#ffdd57';
+                            });
+                            
+                            confirmBtn.addEventListener('mouseout', (e) => {
+                                e.target.style.background = '#252525';
+                                e.target.style.borderColor = '#3a3a3a';
+                                e.target.style.color = '#fbbf24';
+                            });
+                            
+                            confirmBtn.addEventListener('click', (e) => {
+                                e.preventDefault();
+                                // Resetuj żółtą sugestię - przywróć normalny widok
+                                input.style.borderLeft = '';
+                                input.style.boxShadow = '';
+                                input.style.backgroundColor = '';
+                                input.style.background = '#0f0f0f';
+                                input.style.color = '#ddd';
+                                input.style.border = '1px solid #3a3a3a';
+                                act.fieldValues['imie_nadane_chrzest_suggested'] = false;
+                                saveStorage();
+                            });
+                            inputContainer.appendChild(confirmBtn);
+                            fieldDiv.appendChild(inputContainer);
+                            
+                            // Jeśli jest sugestia, zaznacz na żółto od razu
+                            if (act.fieldValues['imie_nadane_chrzest_suggested']) {
+                                input.style.borderLeft = '4px solid #fbbf24';
+                                input.style.boxShadow = '0 0 8px rgba(251,191,36,0.3)';
+                                input.style.backgroundColor = 'rgba(251,191,36,0.05)';
+                            }
+                            
+                            container.appendChild(fieldDiv);
+                        });
                     }
                     
                 } else {
@@ -3155,44 +3424,365 @@
             addBtn.style.cssText = 'background: #252525; border: 1px solid #3a3a3a; color: #ddd; padding: 6px 10px; border-radius: 3px; cursor: pointer; font-size: 10px; width: 100%;';
             
             addBtn.addEventListener('click', () => {
-                const fieldLabel = prompt('Nazwa pola (np. Małżeństwo, Zgon, Notatka):');
-                if (!fieldLabel) return;
+                // Zbierz wszystkie dostępne pola z allAvailableFields
+                const availableFieldsByCategory = {};
                 
-                const fieldId = fieldLabel.toLowerCase().replace(/\s+/g, '_');
-                if (!act.fieldValues) act.fieldValues = {};
-                
-                // Twórz pole
-                const fieldDiv = document.createElement('div');
-                fieldDiv.style.marginBottom = '4px';
-                
-                const label = document.createElement('label');
-                label.textContent = fieldLabel;
-                label.style.cssText = 'display: block; font-size: 10px; color: #10b981; margin-bottom: 2px; font-weight: 600;';
-                fieldDiv.appendChild(label);
-                
-                const input = document.createElement('input');
-                input.type = 'text';
-                input.className = 'field-input';
-                input.id = fieldId;
-                input.placeholder = fieldLabel;
-                input.value = act.fieldValues[fieldId] || '';
-                input.style.cssText = 'width: 100%; padding: 5px; background: #0f0f0f; border: 1px solid #3a3a3a; color: #ddd; border-radius: 3px; font-size: 11px;';
-                
-                input.addEventListener('input', (e) => {
-                    act.fieldValues[fieldId] = e.target.value.trim();
-                    saveStorage();
+                allAvailableFields.forEach(field => {
+                    // Sprawdź czy pole już istnieje w tym akcie
+                    if (!act.fieldValues[field.id]) {
+                        if (!availableFieldsByCategory[field.category]) {
+                            availableFieldsByCategory[field.category] = [];
+                        }
+                        availableFieldsByCategory[field.category].push(field);
+                    }
                 });
                 
-                fieldDiv.appendChild(input);
-                container.insertBefore(fieldDiv, addFieldDiv);
-                input.focus();
+                // Stwórz modal z listą pól pogrupowanych po kategoriach
+                const modalOverlay = document.createElement('div');
+                modalOverlay.style.cssText = 'position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); z-index: 2000; display: flex; align-items: center; justify-content: center;';
+                
+                const modal = document.createElement('div');
+                modal.style.cssText = 'background: #1a1a1a; border: 1px solid #3a3a3a; border-radius: 6px; padding: 20px; width: 90%; max-width: 500px; box-shadow: 0 4px 20px rgba(0,0,0,0.8); max-height: 80vh; overflow-y: auto;';
+                
+                const title = document.createElement('div');
+                title.textContent = 'Dodaj pole';
+                title.style.cssText = 'font-size: 13px; color: #0078d4; font-weight: 600; margin-bottom: 15px; text-transform: uppercase;';
+                modal.appendChild(title);
+                
+                // Lista dostępnych pól pogrupowana po kategoriach
+                if (Object.keys(availableFieldsByCategory).length > 0) {
+                    const listLabel = document.createElement('label');
+                    listLabel.textContent = 'Wszystkie dostępne pola:';
+                    listLabel.style.cssText = 'display: block; font-size: 10px; color: #888; margin-bottom: 10px; font-weight: 600; text-transform: uppercase;';
+                    modal.appendChild(listLabel);
+                    
+                    const fieldSelect = document.createElement('select');
+                    fieldSelect.style.cssText = 'width: 100%; padding: 8px; background: #0f0f0f; border: 1px solid #3a3a3a; color: #ddd; border-radius: 4px; font-size: 11px; margin-bottom: 15px; box-sizing: border-box;';
+                    
+                    const emptyOption = document.createElement('option');
+                    emptyOption.value = '';
+                    emptyOption.textContent = '-- Wybierz pole --';
+                    fieldSelect.appendChild(emptyOption);
+                    
+                    // Dodaj pola pogrupowane po kategoriach
+                    const categories = ['Wspólne', 'Urodzenia/Chrzty', 'Małżeństwa/Śluby', 'Zgony/Pogrzeby'];
+                    categories.forEach(category => {
+                        if (availableFieldsByCategory[category] && availableFieldsByCategory[category].length > 0) {
+                            const optgroup = document.createElement('optgroup');
+                            optgroup.label = category;
+                            
+                            availableFieldsByCategory[category].forEach(field => {
+                                const option = document.createElement('option');
+                                option.value = field.id;
+                                option.textContent = field.label;
+                                optgroup.appendChild(option);
+                            });
+                            
+                            fieldSelect.appendChild(optgroup);
+                        }
+                    });
+                    
+                    modal.appendChild(fieldSelect);
+                    
+                    // Przycisk do dodania z listy
+                    const addFromListBtn = document.createElement('button');
+                    addFromListBtn.textContent = 'Dodaj z szablonu';
+                    addFromListBtn.style.cssText = 'width: 100%; padding: 8px; background: #0078d4; border: none; color: white; border-radius: 4px; cursor: pointer; font-size: 11px; font-weight: 600; margin-bottom: 12px; transition: all 0.2s;';
+                    
+                    addFromListBtn.addEventListener('mouseover', (e) => {
+                        e.target.style.background = '#0099ff';
+                    });
+                    
+                    addFromListBtn.addEventListener('mouseout', (e) => {
+                        e.target.style.background = '#0078d4';
+                    });
+                    
+                    addFromListBtn.addEventListener('click', () => {
+                        const selectedId = fieldSelect.value;
+                        if (!selectedId) {
+                            alert('Wybierz pole z listy');
+                            return;
+                        }
+                        
+                        const selectedField = allAvailableFields.find(f => f.id === selectedId);
+                        if (!selectedField) return;
+                        
+                        addCustomField(selectedField.id, selectedField.label);
+                        document.body.removeChild(modalOverlay);
+                    });
+                    
+                    modal.appendChild(addFromListBtn);
+                    
+                    // Separator
+                    const separator = document.createElement('div');
+                    separator.style.cssText = 'height: 1px; background: #3a3a3a; margin: 12px 0;';
+                    modal.appendChild(separator);
+                }
+                
+                // Pole do wpisania własnej nazwy pola
+                const customLabel = document.createElement('label');
+                customLabel.textContent = 'Lub wpisz własne pole:';
+                customLabel.style.cssText = 'display: block; font-size: 10px; color: #888; margin-bottom: 6px; font-weight: 600; text-transform: uppercase;';
+                modal.appendChild(customLabel);
+                
+                const customInput = document.createElement('input');
+                customInput.type = 'text';
+                customInput.placeholder = 'np. Małżeństwo, Notatka...';
+                customInput.style.cssText = 'width: 100%; padding: 8px; background: #0f0f0f; border: 1px solid #3a3a3a; color: #ddd; border-radius: 4px; font-size: 11px; margin-bottom: 12px; box-sizing: border-box;';
+                modal.appendChild(customInput);
+                
+                // Przyciski
+                const buttonsDiv = document.createElement('div');
+                buttonsDiv.style.cssText = 'display: flex; gap: 8px;';
+                
+                const confirmBtn = document.createElement('button');
+                confirmBtn.textContent = 'Dodaj';
+                confirmBtn.style.cssText = 'flex: 1; padding: 8px; background: #107c10; border: none; color: white; border-radius: 4px; cursor: pointer; font-size: 11px; font-weight: 600; transition: all 0.2s;';
+                
+                confirmBtn.addEventListener('mouseover', (e) => {
+                    e.target.style.background = '#0d6a0d';
+                });
+                
+                confirmBtn.addEventListener('mouseout', (e) => {
+                    e.target.style.background = '#107c10';
+                });
+                
+                confirmBtn.addEventListener('click', () => {
+                    const fieldLabel = customInput.value.trim();
+                    if (!fieldLabel) {
+                        alert('Wpisz nazwę pola');
+                        return;
+                    }
+                    
+                    const fieldId = fieldLabel.toLowerCase().replace(/\s+/g, '_');
+                    addCustomField(fieldId, fieldLabel);
+                    document.body.removeChild(modalOverlay);
+                });
+                
+                const cancelBtn = document.createElement('button');
+                cancelBtn.textContent = 'Anuluj';
+                cancelBtn.style.cssText = 'flex: 1; padding: 8px; background: #3a3a3a; border: none; color: #ddd; border-radius: 4px; cursor: pointer; font-size: 11px; font-weight: 600; transition: all 0.2s;';
+                
+                cancelBtn.addEventListener('mouseover', (e) => {
+                    e.target.style.background = '#454545';
+                });
+                
+                cancelBtn.addEventListener('mouseout', (e) => {
+                    e.target.style.background = '#3a3a3a';
+                });
+                
+                cancelBtn.addEventListener('click', () => {
+                    document.body.removeChild(modalOverlay);
+                });
+                
+                buttonsDiv.appendChild(confirmBtn);
+                buttonsDiv.appendChild(cancelBtn);
+                modal.appendChild(buttonsDiv);
+                
+                modalOverlay.appendChild(modal);
+                document.body.appendChild(modalOverlay);
+                customInput.focus();
+                
+                // Helper function - dodaj pole do formularza
+                function addCustomField(fieldId, fieldLabel) {
+                    if (!act.fieldValues) act.fieldValues = {};
+                    
+                    // Twórz pole
+                    const fieldDiv = document.createElement('div');
+                    fieldDiv.style.marginBottom = '4px';
+                    
+                    const label = document.createElement('label');
+                    label.textContent = fieldLabel;
+                    label.style.cssText = 'display: block; font-size: 10px; color: #10b981; margin-bottom: 2px; font-weight: 600;';
+                    fieldDiv.appendChild(label);
+                    
+                    const input = document.createElement('input');
+                    input.type = 'text';
+                    input.className = 'field-input';
+                    input.id = fieldId;
+                    input.placeholder = fieldLabel;
+                    input.value = act.fieldValues[fieldId] || '';
+                    input.style.cssText = 'width: 100%; padding: 5px; background: #0f0f0f; border: 1px solid #3a3a3a; color: #ddd; border-radius: 3px; font-size: 11px;';
+                    
+                    input.addEventListener('input', (e) => {
+                        act.fieldValues[fieldId] = e.target.value.trim();
+                        saveStorage();
+                    });
+                    
+                    fieldDiv.appendChild(input);
+                    container.insertBefore(fieldDiv, addFieldDiv);
+                    input.focus();
+                    saveStorage();
+                }
             });
 
             addFieldDiv.appendChild(addBtn);
             container.appendChild(addFieldDiv);
 
+            // ===== LOGIC: Auto-suggest mother's surname from father =====
+            // Dodaj listener do pola ojciec_nazwisko aby sugerować nazwisko matki
+            const ojciecNazwiskoInput = document.getElementById('ojciec_nazwisko');
+            const matkaNazwiskoInput = document.getElementById('matka_nazwisko');
+            
+            if (ojciecNazwiskoInput && matkaNazwiskoInput) {
+                ojciecNazwiskoInput.addEventListener('input', (e) => {
+                    const ojciecNazwisko = e.target.value.trim();
+                    
+                    // Jeśli pole matki jest puste i wpisano nazwisko ojca
+                    if (ojciecNazwisko && !matkaNazwiskoInput.value.trim()) {
+                        // Zasugeruj nazwisko ojca dla matki ze wskaźnikiem niepewności (żółty kolor)
+                        matkaNazwiskoInput.value = ojciecNazwisko;
+                        matkaNazwiskoInput.style.borderLeft = '4px solid #fbbf24';  // 🟡 Żółty - sugestia
+                        matkaNazwiskoInput.style.boxShadow = '0 0 8px rgba(251,191,36,0.3)';
+                        matkaNazwiskoInput.title = 'Zasugerowane na podstawie nazwiska ojca - zmień jeśli nieprecyzyjne';
+                        // Zaznacz w fieldValues aby wiedzieć, że to sugestia
+                        act.fieldValues['matka_nazwisko_suggested'] = true;
+                        saveStorage();
+                    } else if (!ojciecNazwisko) {
+                        // Jeśli usunięto nazwisko ojca, usuń sugestię jeśli była
+                        if (act.fieldValues['matka_nazwisko_suggested']) {
+                            matkaNazwiskoInput.value = '';
+                            matkaNazwiskoInput.style.borderLeft = '';
+                            matkaNazwiskoInput.style.boxShadow = '';
+                            matkaNazwiskoInput.title = '';
+                            act.fieldValues['matka_nazwisko_suggested'] = false;
+                            saveStorage();
+                        }
+                    }
+                });
+            }
+            
+            // Jeśli już był wpisany ojciec przy otwarciu, zasugeruj nazwisko matki
+            if (ojciecNazwiskoInput && matkaNazwiskoInput) {
+                const ojciecNazwisko = ojciecNazwiskoInput.value.trim();
+                if (ojciecNazwisko && !matkaNazwiskoInput.value.trim() && !act.fieldValues['matka_nazwisko']) {
+                    matkaNazwiskoInput.value = ojciecNazwisko;
+                    matkaNazwiskoInput.style.borderLeft = '4px solid #fbbf24';  // 🟡 Żółty - sugestia
+                    matkaNazwiskoInput.style.boxShadow = '0 0 8px rgba(251,191,36,0.3)';
+                    matkaNazwiskoInput.title = 'Zasugerowane na podstawie nazwiska ojca - zmień jeśli nieprecyzyjne';
+                    act.fieldValues['matka_nazwisko_suggested'] = true;
+                }
+            }
+            
+            // ===== LOGIC: Add confirm button for matka_nazwisko when suggested =====
+            if (matkaNazwiskoInput && act.fieldValues['matka_nazwisko_suggested']) {
+                addConfirmButtonToField(matkaNazwiskoInput, 'matka_nazwisko_suggested');
+            }
+            
+            // ===== LOGIC: Auto-suggest priest info from previous act =====
+            const ksiadzImieInput = document.getElementById('ksiadz_imie');
+            const ksiadzNazwiskoInput = document.getElementById('ksiadz_nazwisko');
+            
+            if (ksiadzImieInput && ksiadzNazwiskoInput) {
+                // Szukaj poprzedniego aktu na tej samej lub poprzedniej stronie
+                let previousAct = null;
+                
+                // Najpierw spróbuj znaleźć poprzedni akt na tej samej stronie
+                if (app.currentActNum > 0 && app.imageActs[app.currentImageIdx]) {
+                    previousAct = app.imageActs[app.currentImageIdx][app.currentActNum - 1];
+                } else if (app.currentImageIdx > 0 && app.imageActs[app.currentImageIdx - 1]) {
+                    // Jeśli brak poprzedniego na tej stronie, weź ostatni z poprzedniej strony
+                    const prevImageActs = app.imageActs[app.currentImageIdx - 1];
+                    if (prevImageActs && prevImageActs.length > 0) {
+                        previousAct = prevImageActs[prevImageActs.length - 1];
+                    }
+                }
+                
+                if (previousAct && previousAct.fieldValues) {
+                    const prevKsIm = previousAct.fieldValues['ksiadz_imie'] || '';
+                    const prevKsNaz = previousAct.fieldValues['ksiadz_nazwisko'] || '';
+                    
+                    // Jeśli są dane księdza w poprzednim akcie i pola są puste
+                    if ((prevKsIm || prevKsNaz) && !ksiadzImieInput.value.trim() && !ksiadzNazwiskoInput.value.trim()) {
+                        // Zasugeruj dane księdza
+                        if (prevKsIm) {
+                            ksiadzImieInput.value = prevKsIm;
+                            ksiadzImieInput.style.borderLeft = '4px solid #fbbf24';
+                            ksiadzImieInput.style.boxShadow = '0 0 8px rgba(251,191,36,0.3)';
+                            ksiadzImieInput.style.backgroundColor = 'rgba(251,191,36,0.05)';
+                            act.fieldValues['ksiadz_imie_suggested'] = true;
+                            addConfirmButtonToField(ksiadzImieInput, 'ksiadz_imie_suggested');
+                        }
+                        
+                        if (prevKsNaz) {
+                            ksiadzNazwiskoInput.value = prevKsNaz;
+                            ksiadzNazwiskoInput.style.borderLeft = '4px solid #fbbf24';
+                            ksiadzNazwiskoInput.style.boxShadow = '0 0 8px rgba(251,191,36,0.3)';
+                            ksiadzNazwiskoInput.style.backgroundColor = 'rgba(251,191,36,0.05)';
+                            act.fieldValues['ksiadz_nazwisko_suggested'] = true;
+                            addConfirmButtonToField(ksiadzNazwiskoInput, 'ksiadz_nazwisko_suggested');
+                        }
+                        
+                        saveStorage();
+                    }
+                }
+            }
+            
+            // ===== LOGIC: Highlight ksiadz fields if already filled from suggestion =====
+            if (ksiadzImieInput && act.fieldValues['ksiadz_imie_suggested']) {
+                ksiadzImieInput.style.borderLeft = '4px solid #fbbf24';
+                ksiadzImieInput.style.boxShadow = '0 0 8px rgba(251,191,36,0.3)';
+                ksiadzImieInput.style.backgroundColor = 'rgba(251,191,36,0.05)';
+                addConfirmButtonToField(ksiadzImieInput, 'ksiadz_imie_suggested');
+            }
+            
+            if (ksiadzNazwiskoInput && act.fieldValues['ksiadz_nazwisko_suggested']) {
+                ksiadzNazwiskoInput.style.borderLeft = '4px solid #fbbf24';
+                ksiadzNazwiskoInput.style.boxShadow = '0 0 8px rgba(251,191,36,0.3)';
+                ksiadzNazwiskoInput.style.backgroundColor = 'rgba(251,191,36,0.05)';
+                addConfirmButtonToField(ksiadzNazwiskoInput, 'ksiadz_nazwisko_suggested');
+            }
+            
             // Focus first field
             container.querySelector('.field-input')?.focus();
+        }
+        
+        // ===== Helper function: Add confirm button next to input field =====
+        function addConfirmButtonToField(inputElement, suggestionFlagKey) {
+            // Sprawdź czy przycisk już istnieje
+            let existingBtn = inputElement.nextElementSibling;
+            if (existingBtn && existingBtn.dataset.confirmBtn === 'true') {
+                return; // Przycisk już istnieje
+            }
+            
+            // Stwórz container dla przycisku
+            const confirmBtn = document.createElement('button');
+            confirmBtn.textContent = '✓';
+            confirmBtn.title = 'Potwierdź wartość i zmień kolor na normalny';
+            confirmBtn.dataset.confirmBtn = 'true';
+            confirmBtn.style.cssText = 'padding: 5px 8px; background: #252525; border: 1px solid #3a3a3a; color: #fbbf24; border-radius: 3px; cursor: pointer; font-size: 11px; font-weight: bold; min-width: 32px; transition: all 0.2s; position: absolute; right: 0; top: 20px;';
+            
+            confirmBtn.addEventListener('mouseover', (e) => {
+                e.target.style.background = '#2d2d2d';
+                e.target.style.borderColor = '#fbbf24';
+                e.target.style.color = '#ffdd57';
+            });
+            
+            confirmBtn.addEventListener('mouseout', (e) => {
+                e.target.style.background = '#252525';
+                e.target.style.borderColor = '#3a3a3a';
+                e.target.style.color = '#fbbf24';
+            });
+            
+            confirmBtn.addEventListener('click', (e) => {
+                e.preventDefault();
+                // Resetuj żółtą sugestię - przywróć normalny widok
+                inputElement.style.borderLeft = '';
+                inputElement.style.boxShadow = '';
+                inputElement.style.backgroundColor = '';
+                // Upewnij się że pole ma normalny styl
+                inputElement.style.background = '#0f0f0f';
+                inputElement.style.color = '#ddd';
+                inputElement.style.border = '1px solid #3a3a3a';
+                app.imageActs[app.currentActNum][suggestionFlagKey] = false;
+                saveStorage();
+                // Usuń przycisk
+                confirmBtn.remove();
+            });
+            
+            // Umieść przycisk obok pola
+            inputElement.parentElement.style.position = 'relative';
+            inputElement.parentElement.appendChild(confirmBtn);
         }
         
         function setupFormEvents() {
@@ -3720,6 +4310,10 @@
                 toggleBoundariesBtn.classList.toggle('disabled', !app.showActBoundaries);
             }
             
+            // Auth button
+            const authBtn = document.getElementById('authBtn');
+            if (authBtn) authBtn.addEventListener('click', signInWithGoogle);
+            
             // const actBtn = document.getElementById('actBtn');
             // if (actBtn) actBtn.addEventListener('click', toggleROI);
             
@@ -3845,6 +4439,31 @@
         // Table editing listeners
         const dataTable = document.getElementById('dataTable');
         if (dataTable) {
+            // Copy selected rows to clipboard (Ctrl+C)
+            dataTable.addEventListener('copy', (e) => {
+                const selectedRows = document.querySelectorAll('#dataTableBody tr');
+                let textToCopy = [];
+                
+                selectedRows.forEach(row => {
+                    if (row.querySelector('.row-checkbox')?.checked) {
+                        const cells = row.querySelectorAll('td');
+                        const rowData = [];
+                        cells.forEach((cell, idx) => {
+                            if (idx > 0) { // Skip checkbox
+                                rowData.push(cell.textContent.trim());
+                            }
+                        });
+                        textToCopy.push(rowData.join('\t'));
+                    }
+                });
+                
+                if (textToCopy.length > 0) {
+                    e.preventDefault();
+                    e.clipboardData.setData('text/plain', textToCopy.join('\n'));
+                    notify(`📋 Skopiowano ${textToCopy.length} wierszy`, 'success');
+                }
+            });
+            
             dataTable.addEventListener('click', (e) => {
                 if (e.target.classList.contains('cell-editable')) {
                     const input = document.createElement('input');
@@ -3860,16 +4479,29 @@
                         
                         // Zapisz do aktu
                         const rowIdx = e.target.parentNode.rowIndex - 1; // -1 dla thead
-                        const currentActs = app.imageActs.filter(a => a.imageIdx === app.currentImageIdx);
-                        const act = currentActs[rowIdx];
+                        const act = app.imageActs[rowIdx];
                         const cellIdx = e.target.cellIndex - 1; // -1 dla checkbox
                         
-                        if (cellIdx === 1) act.fieldValues.child_first_name = newValue;
-                        else if (cellIdx === 2) act.fieldValues.child_last_name = newValue;
-                        else if (cellIdx === 3) act.fieldValues.child_birth_date = newValue;
-                        else if (cellIdx === 4) act.fieldValues.notes = newValue;
+                        if (act && act.fieldValues) {
+                            // Mapuj indeksy kolumn na fieldValues
+                            // 0=checkbox, 1=ID, 2=Akt, 3=Imię dziecka, 4=Nazwisko dziecka, 5=Ojciec imię, 6=Ojciec nazwisko, 7=Matka imię, 8=Matka nazwisko, 9=Lokacja, 10=Uwagi, 11=Opis źródła
+                            if (cellIdx === 1) act.id = newValue; // ID
+                            else if (cellIdx === 3) act.fieldValues.child_first_name = newValue; // Imię dziecka
+                            else if (cellIdx === 4) act.fieldValues.child_last_name = newValue; // Nazwisko dziecka
+                            else if (cellIdx === 5) act.fieldValues.father_first_name = newValue; // Ojciec imię
+                            else if (cellIdx === 6) act.fieldValues.father_last_name = newValue; // Ojciec nazwisko
+                            else if (cellIdx === 7) act.fieldValues.mother_first_name = newValue; // Matka imię
+                            else if (cellIdx === 8) act.fieldValues.mother_last_name = newValue; // Matka nazwisko
+                            else if (cellIdx === 9) act.fieldValues.location = newValue; // Lokacja
+                            else if (cellIdx === 10) act.fieldValues.notes = newValue; // Uwagi
+                            else if (cellIdx === 11) act.fieldValues.notes_org = newValue; // Opis źródła
+                            
+                            // Zapisz do Firestore jeśli dostępny
+                            if (window.db && act.id) {
+                                db.collection('public_imports').doc(act.id).update(act).catch(err => console.error('❌ Error saving:', err));
+                            }
+                        }
                         
-                        saveStorage();
                         renderRecordsTable(); // Odśwież tabelę
                     });
                 }
@@ -3882,19 +4514,29 @@
                 const rows = pastedData.split('\n').map(row => row.split('\t'));
                 
                 const selectedRow = document.activeElement.closest('tr')?.rowIndex - 1 || 0;
-                const currentActs = app.imageActs.filter(a => a.imageIdx === app.currentImageIdx);
                 
                 rows.forEach((rowData, i) => {
-                    if (currentActs[selectedRow + i]) {
-                        const act = currentActs[selectedRow + i];
-                        if (rowData[0]) act.fieldValues.child_first_name = rowData[0];
-                        if (rowData[1]) act.fieldValues.child_last_name = rowData[1];
-                        if (rowData[2]) act.fieldValues.child_birth_date = rowData[2];
-                        if (rowData[3]) act.fieldValues.notes = rowData[3];
+                    const act = app.imageActs[selectedRow + i];
+                    if (act && act.fieldValues) {
+                        // 0=ID, 1=Akt, 2=Imię dziecka, 3=Nazwisko dziecka, 4=Ojciec imię, 5=Ojciec nazwisko, 6=Matka imię, 7=Matka nazwisko, 8=Lokacja, 9=Uwagi, 10=Opis źródła
+                        if (rowData[0]) act.id = rowData[0];
+                        if (rowData[2]) act.fieldValues.child_first_name = rowData[2];
+                        if (rowData[3]) act.fieldValues.child_last_name = rowData[3];
+                        if (rowData[4]) act.fieldValues.father_first_name = rowData[4];
+                        if (rowData[5]) act.fieldValues.father_last_name = rowData[5];
+                        if (rowData[6]) act.fieldValues.mother_first_name = rowData[6];
+                        if (rowData[7]) act.fieldValues.mother_last_name = rowData[7];
+                        if (rowData[8]) act.fieldValues.location = rowData[8];
+                        if (rowData[9]) act.fieldValues.notes = rowData[9];
+                        if (rowData[10]) act.fieldValues.notes_org = rowData[10];
+                        
+                        // Zapisz do Firestore
+                        if (window.db && act.id) {
+                            db.collection('public_imports').doc(act.id).update(act).catch(err => console.error('❌ Error saving:', err));
+                        }
                     }
                 });
                 
-                saveStorage();
                 renderRecordsTable();
                 notify('📋 Wklejono dane', 'success');
             });
@@ -4865,6 +5507,80 @@
             }
         }
 
+        // Google Authentication
+        async function signInWithGoogle() {
+            try {
+                const provider = new firebase.auth.GoogleAuthProvider();
+                provider.addScope('email');
+                provider.addScope('profile');
+                
+                const result = await firebase.auth().signInWithPopup(provider);
+                const user = result.user;
+                
+                console.log('✅ Google sign-in successful:', user.displayName);
+                notify(`Zalogowano jako: ${user.displayName}`, 'success');
+                
+                // Update UI to show user is logged in
+                const authBtn = document.getElementById('authBtn');
+                if (authBtn) {
+                    authBtn.innerHTML = '<i class="fas fa-user-check"></i> ' + user.displayName.split(' ')[0];
+                    authBtn.title = 'Wyloguj się';
+                    authBtn.onclick = signOut;
+                }
+                
+                // Enable Firebase features
+                app.storageMode = 'firebase';
+                console.log('🔥 Switched to Firebase storage mode');
+                
+            } catch (error) {
+                console.error('❌ Google sign-in error:', error);
+                notify(`Błąd logowania: ${error.message}`, 'error');
+            }
+        }
+
+        async function signOut() {
+            try {
+                await firebase.auth().signOut();
+                console.log('👋 Signed out');
+                notify('Wylogowano', 'info');
+                
+                // Reset UI
+                const authBtn = document.getElementById('authBtn');
+                if (authBtn) {
+                    authBtn.innerHTML = '<i class="fab fa-google"></i> Login';
+                    authBtn.title = 'Zaloguj się z Google';
+                    authBtn.onclick = signInWithGoogle;
+                }
+                
+                // Switch back to local storage
+                app.storageMode = 'local';
+                console.log('💾 Switched to local storage mode');
+                
+            } catch (error) {
+                console.error('❌ Sign out error:', error);
+                notify(`Błąd wylogowania: ${error.message}`, 'error');
+            }
+        }
+
+        function checkLocalStorage() {
+            try {
+                const data = localStorage.getItem('genealog_data');
+                if (data) {
+                    const parsed = JSON.parse(data);
+                    const actsCount = parsed.imageActs?.length || 0;
+                    const imagesCount = parsed.images?.length || 0;
+                    console.log('📊 localStorage data:', { acts: actsCount, images: imagesCount, size: data.length });
+                    alert(`Dane w localStorage:\nAkty: ${actsCount}\nObrazy: ${imagesCount}\nRozmiar: ${(data.length/1024).toFixed(1)} KB`);
+                } else {
+                    console.log('❌ No data in localStorage');
+                    alert('Brak danych w localStorage');
+                }
+            } catch (error) {
+                console.error('❌ Error checking localStorage:', error);
+                alert('Błąd sprawdzania localStorage: ' + error.message);
+            }
+        }
+
         function addImages() {
             console.log('📁 addImages clicked');
             document.getElementById('fileInput').click();
@@ -4997,19 +5713,189 @@
             setTimeout(() => notification.remove(), 3000);
         }
 
-        // Funkcja migracji danych z localStorage do Firestore
-        async function exportFromLocalStorageToFirestore() {
-            if (!window.db) {
-                console.error('❌ Firebase nie jest zainicjalizowany');
+        // ===== LOAD FROM SUPABASE =====
+        async function loadFromSupabase() {
+            const supabase = window.supabase_client;
+            if (!supabase) {
+                console.error('❌ Supabase nie jest zainicjalizowany');
+                notify('❌ Supabase nie skonfigurowany', 'error');
                 return;
             }
+            
+            try {
+                notify('⏳ Ładowanie z Supabase...', 'info');
+                
+                // Licznik postępu
+                let counter = document.getElementById('imageCounter');
+                if (counter) counter.innerHTML = '⏳ Ładuję z Supabase...';
+                
+                // Ładuj z public_imports (nowe dane z importera) - z paginacją
+                console.log('📥 Loading from public_imports (Supabase)...');
+                
+                // Najpierw znajdź całkowitą liczbę rekordów
+                const { count: totalCount, error: countError } = await supabase
+                    .from('public_imports')
+                    .select('*', { count: 'exact', head: true });
+                
+                if (countError) {
+                    console.error('❌ Count error:', countError);
+                    notify(`⚠️ ${countError.message}`, 'error');
+                    return;
+                }
+                
+                console.log(`📊 Total records in Supabase: ${totalCount}`);
+                
+                // Ładuj w batches po 1000 (offset-based pagination)
+                let allData = [];
+                const pageSize = 1000;
+                
+                for (let offset = 0; offset < totalCount; offset += pageSize) {
+                    const { data, error } = await supabase
+                        .from('public_imports')
+                        .select('*')
+                        .range(offset, offset + pageSize - 1);
+                    
+                    if (error) {
+                        console.error(`❌ Błąd przy offset ${offset}:`, error);
+                        break;
+                    }
+                    
+                    if (data && data.length > 0) {
+                        allData.push(...data);
+                        console.log(`✅ Loaded batch ${offset}-${offset + data.length} (total: ${allData.length}/${totalCount})`);
+                        
+                        // Update licznik
+                        if (counter) {
+                            counter.innerHTML = `⏳ Ładuję ${allData.length}/${totalCount}...`;
+                        }
+                    } else {
+                        break;
+                    }
+                }
+                
+                console.log(`📂 Załadowano łącznie: ${allData.length} records`);
+                const data = allData;
+                const error = null;
+                
+                if (error) {
+                    console.error('❌ Supabase error:', error);
+                    notify(`⚠️ ${error.message}`, 'error');
+                    return;
+                }
+
+                if (!data || data.length === 0) {
+                    notify('⚠️ Brak danych w Supabase', 'warning');
+                    console.warn('Brak rekordów w public_imports');
+                    return;
+                }
+
+                // Przygotuj dane do załadowania - mapowanie FLAT STRUCTURE z Supabase na internal app format
+                const imageActs = data.map((row, idx) => {
+                    // Parsuj original_id aby wyciągnąć akt number
+                    // Format: "CH.LUB.BLIN.1783.001" -> "CH.1783.No.1"
+                    let actNum = `#${idx + 1}`;
+                    if (row.original_id) {
+                        const match = row.original_id.match(/CH\.LUB\.BLIN\.(\d+)\.(\d+)([a-z]?)$/i);
+                        if (match) {
+                            const year = match[1];
+                            const num = parseInt(match[2], 10); // Usunięcie wiodących zer
+                            const suffix = match[3] || ''; // Zachowanie sufixu (a, b, itd)
+                            actNum = `CH.${year}.No.${num}${suffix}`; // Format: CH.1410.No.1000
+                        }
+                    }
+                    
+                    return {
+                        id: row.id || row.original_id || `act_${idx}`,
+                        original_id: row.original_id,
+                        type: 'christening', // Wszystkie importowane to chrzty
+                        source: row.source || 'Supabase',
+                        imageIdx: 0,
+                        actNum: actNum, // Przerobiony numer aktu
+                        
+                        // fieldValues object - dla kompatybilności z szablonami
+                        fieldValues: {
+                            christening_year: row.christening_year || '',
+                            christening_act_number: row.christening_act_number || '',
+                            child_first_name: row.child_first_name || '',
+                            child_last_name: row.child_last_name || '',
+                            child_birth_date: row.child_birth_date || '',
+                            father_first_name: row.father_first_name || '',
+                            father_last_name: row.father_last_name || '',
+                            father_age: row.father_age || '',
+                            mother_first_name: row.mother_first_name || '',
+                            mother_last_name: row.mother_last_name || '',
+                            mother_age: row.mother_age || '',
+                            notes: row.notes || '',
+                            notes_org: row.notes_org || '',
+                            location: row.location || ''
+                        },
+                        
+                        // Flat fields too (dla wyświetlania)
+                        christening_year: row.christening_year || '',
+                        christening_act_number: row.christening_act_number || '',
+                        child_first_name: row.child_first_name || '',
+                        child_last_name: row.child_last_name || '',
+                        child_birth_date: row.child_birth_date || '',
+                        father_first_name: row.father_first_name || '',
+                        father_last_name: row.father_last_name || '',
+                        father_age: row.father_age || '',
+                        mother_first_name: row.mother_first_name || '',
+                        mother_last_name: row.mother_last_name || '',
+                        mother_age: row.mother_age || '',
+                        notes: row.notes || '',
+                        notes_org: row.notes_org || '',
+                        location: row.location || ''
+                    };
+                });
+
+                // Załaduj do app
+                app.imageActs = imageActs;
+                console.log('📂 Loaded from Supabase:', imageActs.length, 'records');
+                
+                // Aktualizuj licznik w toolbar
+                counter = document.getElementById('imageCounter');
+                if (counter) {
+                    counter.innerHTML = `📊 <strong>${imageActs.length} aktów</strong> / 6040 (${Math.round(imageActs.length/6040*100)}%)`;
+                    counter.style.color = imageActs.length === 6040 ? '#0f0' : (imageActs.length > 5000 ? '#ff0' : '#f00');
+                }
+                
+                updateThumbs();
+                renderRecordsTable(); // Wyświetl dane w tabeli
+                if (app.images.length > 0) selectImage(0, true);
+                
+                notify(`✅ Załadowano ${imageActs.length} aktów z Supabase (BEZ LIMITÓW!)`, 'success');
+                
+            } catch (error) {
+                console.error('❌ Error loading from Supabase:', error);
+                notify(`❌ Błąd: ${error.message}`, 'error');
+            }
+        }
+
+        // Stara funkcja - dla kompatybilności
+        async function loadFromFirestore() {
+            return loadFromSupabase();
+        }
+
+        // Funkcja migracji danych - nieużywana (baza na dysku)
+        async function exportFromLocalStorageToSupabase() {
+
+            const user = firebase.auth().currentUser;
+            if (!user) {
+                console.error('❌ Użytkownik nie jest zalogowany');
+                notify('❌ Musisz się zalogować, aby zapisywać do Firebase', 'error');
+                return;
+            }
+
             const stored = localStorage.getItem('genealog_data');
             if (!stored) {
                 console.log('ℹ️ Brak danych w localStorage do migracji');
+                notify('ℹ️ Brak danych do zapisania', 'info');
                 return;
             }
             const data = JSON.parse(stored);
             try {
+                notify('⏳ Zapisywanie do Firestore...', 'info');
+                console.log('🔄 Migruję dane do Firestore dla użytkownika:', user.email);
                 // Migruj imageActs
                 for (const act of data.imageActs || []) {
                     await db.collection('records').add(act);
@@ -5034,8 +5920,20 @@
                 }));
                 return;
             }
+
+            const user = firebase.auth().currentUser;
+            if (!user) {
+                console.warn('⚠️ Użytkownik nie zalogowany, zapis do localStorage');
+                // Fallback to localStorage
+                localStorage.setItem('genealog_data', JSON.stringify({
+                    imageActs: app.imageActs,
+                    currentTemplate: app.currentTemplate
+                }));
+                return;
+            }
             
             // Save to Firestore asynchronously
+            console.log('💾 Saving to Firestore for user:', user.email);
             db.collection('records').get().then(() => {
                 // Clear existing records first
                 return db.collection('records').get();
@@ -5068,69 +5966,51 @@
             });
         }
 
-        function loadStorage() {
-            if (!window.db) {
-                console.warn('⚠️ Firebase nie dostępny, ładowanie z localStorage');
-                const stored = localStorage.getItem('genealog_data');
-                if (stored) {
-                    const data = JSON.parse(stored);
-                    app.imageActs = data.imageActs || [];
-                    // Migr: ustaw typ na christening jeśli brakuje lub mapuj stare nazwy
-                    app.imageActs.forEach(act => {
-                        if (!act.type || act.type === 'chrzest') act.type = 'christening';
-                        if (act.type === 'urodzenia') act.type = 'birth';
-                        if (act.type === 'malzenstwa') act.type = 'marriage';
-                        if (act.type === 'zgony') act.type = 'death';
-                    });
-                    app.currentTemplate = data.currentTemplate || 'christening';
-                    console.log('📂 Loaded acts from localStorage:', app.imageActs.length);
-                }
-                updateThumbs();
-                if (app.images.length > 0) selectImage(0, true);
+        async function loadStorage() {
+            // PRIORITY: 1. Supabase (newest) 2. localStorage (fallback)
+            
+            console.log('🔄 Loading storage...');
+            console.log('✅ Supabase client status:', window.supabase_client ? '✅ Available' : '⚠️ Not ready');
+            app.imageActs = []; // Clear old data FIRST
+            
+            // Spróbuj Supabase najpierw
+            if (window.supabase_client) {
+                console.log('📥 Trying Supabase first...');
+                await loadFromSupabase(); // CZEKAJ na wynik!
                 return;
             }
             
-            // Load from Firestore
-            db.collection('records').get().then((querySnapshot) => {
-                app.imageActs = [];
-                querySnapshot.forEach((docSnap) => {
-                    const act = docSnap.data();
+            // Fallback do localStorage
+            console.log('⚠️ Supabase not available, trying localStorage...');
+            const stored = localStorage.getItem('genealog_data');
+            
+            let imageActs = [];
+            
+            // Handle normal stored data
+            if (stored) {
+                try {
+                    const data = JSON.parse(stored);
+                    imageActs = data.imageActs || [];
+                } catch (error) {
+                    console.error('❌ Error parsing stored data:', error);
+                }
+            }
+            
+            if (imageActs.length > 0) {
+                app.imageActs = imageActs;
+                // Migr: ustaw typ na christening jeśli brakuje lub mapuj stare nazwy
+                app.imageActs.forEach(act => {
                     if (!act.type || act.type === 'chrzest') act.type = 'christening';
                     if (act.type === 'urodzenia') act.type = 'birth';
                     if (act.type === 'malzenstwa') act.type = 'marriage';
                     if (act.type === 'zgony') act.type = 'death';
-                    app.imageActs.push(act);
                 });
-                console.log('📂 Loaded acts from Firestore:', app.imageActs.length);
-                
-                // Load settings
-                return db.collection('settings').doc('currentTemplate').get();
-            }).then((docSnap) => {
-                if (docSnap.exists) {
-                    app.currentTemplate = docSnap.data().value || 'christening';
-                }
-                updateThumbs();
-                if (app.images.length > 0) selectImage(0, true);
-            }).catch((error) => {
-                console.error('❌ Error loading from Firestore:', error);
-                // Fallback
-                const stored = localStorage.getItem('genealog_data');
-                if (stored) {
-                    const data = JSON.parse(stored);
-                    app.imageActs = data.imageActs || [];
-                    // Migr: ustaw typ na christening
-                    app.imageActs.forEach(act => {
-                        if (!act.type || act.type === 'chrzest') act.type = 'christening';
-                        if (act.type === 'urodzenia') act.type = 'birth';
-                        if (act.type === 'malzenstwa') act.type = 'marriage';
-                        if (act.type === 'zgony') act.type = 'death';
-                    });
-                    app.currentTemplate = data.currentTemplate || 'christening';
-                    console.log('📂 Loaded acts from localStorage (fallback):', app.imageActs.length);
-                    updateThumbs();
-                    if (app.images.length > 0) selectImage(0, true);
-                }
-            });
+                app.currentTemplate = (stored && JSON.parse(stored)).currentTemplate || 'christening';
+                console.log('📂 Loaded acts from localStorage:', app.imageActs.length);
+            }
+            updateThumbs();
+            renderRecordsTable(); // Wyświetl dane w tabeli
+            if (app.images.length > 0) selectImage(0, true);
         }
         
         function toggleFloatingForm(show = null) {
@@ -5170,8 +6050,10 @@
             header.style.cssText = 'padding: 12px; background: #252525; border-bottom: 1px solid #3a3a3a; border-radius: 4px 4px 0 0; display: flex; justify-content: space-between; align-items: center; gap: 12px;';
             
             const titleSpan = document.createElement('span');
-            titleSpan.textContent = 'Akt #' + act.actNum;
-            titleSpan.style.cssText = 'color: #0078d4; font-weight: 600; font-size: 12px;';
+            // Pokaż skrót do indeksacji (CH.1783.No.1) z pełnym ID w tooltip
+            titleSpan.textContent = 'Akt: ' + act.actNum + ' (' + (act.original_id || act.id) + ')';
+            titleSpan.style.cssText = 'color: #0078d4; font-weight: 600; font-size: 12px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;';
+            titleSpan.title = 'ID źródłowe: ' + (act.original_id || act.id);
             
             const typeSelect = document.createElement('select');
             typeSelect.style.cssText = 'padding: 4px 6px; background: #1a1a1a; border: 1px solid #0078d4; color: #ddd; border-radius: 3px; font-size: 11px; flex: 1;';
@@ -5882,8 +6764,10 @@
             
             tableBody.innerHTML = '';
             
-            // Filtruj akty dla bieżącego obrazu
-            const currentActs = app.imageActs.filter(a => a.imageIdx === app.currentImageIdx);
+            // Pokazuj WSZYSTKIE akty (nie filtruj po obrazach)
+            const currentActs = app.imageActs;
+            
+            console.log(`📊 Rendering ${currentActs.length} acts in table`);
             
             currentActs.forEach((act, index) => {
                 const row = tableBody.insertRow();
@@ -5895,30 +6779,59 @@
                 checkbox.className = 'row-checkbox';
                 checkboxCell.appendChild(checkbox);
                 
-                // Akt name
-                const actTypeShort = act.type.toUpperCase().substring(0, 2);
-                const actName = `${actTypeShort}.${act.year}.No.${act.nr.toString().padStart(2, '0')}`;
-                row.insertCell().textContent = actName;
+                // ID - pełne, źródłowe (do powiązania osób) - CH.LUB.BLIN.1783.001
+                row.insertCell().textContent = act.original_id || act.id || `#${index}`;
+                
+                // Numer aktu - tylko liczba/sufiks parsowany z original_id (1, 2, 3b itd)
+                let actNum = '';
+                if (act.original_id) {
+                    const match = act.original_id.match(/\.(\d+)([a-z]?)$/i);
+                    if (match) {
+                        actNum = parseInt(match[1], 10) + (match[2] || ''); // Usunięcie zer, zachowanie suffiksu
+                    }
+                }
+                row.insertCell().textContent = actNum || `#${index}`;
                 
                 // Imię dziecka
-                const firstNameCell = row.insertCell();
-                firstNameCell.textContent = act.fieldValues.child_first_name || '';
-                firstNameCell.className = 'cell-editable';
+                const childFirstName = act.fieldValues?.child_first_name || act.childName || '';
+                row.insertCell().textContent = childFirstName;
                 
-                // Nazwisko dziecka
-                const lastNameCell = row.insertCell();
-                lastNameCell.textContent = act.fieldValues.child_last_name || '';
-                lastNameCell.className = 'cell-editable';
+                // Nazwisko dziecka - szukaj w różnych polach
+                const childLastName = act.fieldValues?.child_last_name || 
+                                     act.fieldValues?.christening_name ||
+                                     act.childSurname || '';
+                row.insertCell().textContent = childLastName;
                 
-                // Data urodzenia
-                const birthDateCell = row.insertCell();
-                birthDateCell.textContent = act.fieldValues.child_birth_date || '';
-                birthDateCell.className = 'cell-editable';
+                // Ojciec - imię
+                const fatherName = act.fieldValues?.father_first_name || '';
+                row.insertCell().textContent = fatherName;
                 
-                // Notatki
-                const notesCell = row.insertCell();
-                notesCell.textContent = act.fieldValues.notes || '';
-                notesCell.className = 'cell-editable';
+                // Ojciec - nazwisko
+                const fatherLastName = act.fieldValues?.father_last_name || '';
+                row.insertCell().textContent = fatherLastName;
+                
+                // Matka - imię
+                const motherName = act.fieldValues?.mother_first_name || '';
+                row.insertCell().textContent = motherName;
+                
+                // Matka - nazwisko - szukaj w różnych polach
+                const motherLastName = act.fieldValues?.mother_last_name || 
+                                      act.fieldValues?.mother_maiden_name || '';
+                row.insertCell().textContent = motherLastName;
+                
+                // Lokacja - szukaj w różnych polach
+                const location = act.fieldValues?.location || 
+                                act.fieldValues?.child_birth_date ||
+                                act.location || '';
+                row.insertCell().textContent = location;
+                
+                // Notatki (uwagi)
+                const notes = act.fieldValues?.notes || act.notes || '';
+                row.insertCell().textContent = notes;
+                
+                // Opis źródła (uwagi_org)
+                const notesOrg = act.fieldValues?.notes_org || '';
+                row.insertCell().textContent = notesOrg;
             });
         }
         
@@ -6995,6 +7908,13 @@
                 hideSuggestions();
             }
         });
+        
+        // ===== EXPOSE FUNCTIONS TO WINDOW =====
+        window.loadFromSupabase = loadFromSupabase;
+        window.loadFromFirestore = loadFromFirestore;
+        window.exportFromLocalStorageToSupabase = exportFromLocalStorageToSupabase;
+        window.initApp = initApp;
+        window.saveStorage = saveStorage;
     </script>
     
     <!-- OpenCV.js - Asynchroniczne załadowanie -->

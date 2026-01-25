@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <title>Sprawdź ilość rekordów w Supabase</title>
+    <style>
+        body { font-family: monospace; padding: 30px; background: #1a1a1a; color: #0f0; }
+        .status { margin: 15px 0; padding: 10px; border-left: 4px solid #0f0; background: #0a0a0a; }
+        .error { border-left-color: #f00; color: #f00; }
+        .info { border-left-color: #0ff; color: #0ff; }
+    </style>
+</head>
+<body>
+    <h1>📊 Licznik Rekordów Supabase</h1>
+    <div id="output"></div>
+
+    <script type="importmap">
+    {
+      "imports": {
+        "@supabase/supabase-js": "https://esm.sh/@supabase/supabase-js@2"
+      }
+    }
+    </script>
+    <script type="module">
+      import { createClient } from '@supabase/supabase-js'
+      window.createSupabaseClient = createClient
+    </script>
+
+    <script>
+        function log(msg, type = 'info') {
+            const div = document.createElement('div');
+            div.className = `status ${type}`;
+            div.textContent = msg;
+            document.getElementById('output').appendChild(div);
+        }
+
+        const SUPABASE_URL = 'https://jbwkrconzozhgzikabmv.supabase.co';
+        const SUPABASE_KEY = 'sb_publishable_X0Qm9TSqq0nOOtCo8RycMQ_PeirqbMt';
+
+        async function checkRecords() {
+            log('⏳ Czekanie na Supabase...', 'info');
+            
+            // Wait for Supabase
+            let attempts = 0;
+            while (!window.createSupabaseClient && attempts < 50) {
+                await new Promise(r => setTimeout(r, 100));
+                attempts++;
+            }
+
+            if (!window.createSupabaseClient) {
+                log('❌ Nie udało się załadować Supabase', 'error');
+                return;
+            }
+
+            log('✅ Supabase załadowany', 'info');
+
+            try {
+                const client = window.createSupabaseClient(SUPABASE_URL, SUPABASE_KEY);
+                
+                // Policz rekordy
+                log('⏳ Liczenie rekordów...', 'info');
+                const { count, error } = await client
+                    .from('public_imports')
+                    .select('*', { count: 'exact', head: true });
+
+                if (error) {
+                    log(`❌ Błąd: ${error.message}`, 'error');
+                    return;
+                }
+
+                log(`✅ CAŁKOWITA LICZBA REKORDÓW: ${count}`, 'info');
+
+                if (count === 6040) {
+                    log('✅✅✅ WSZYSTKIE 6040 REKORDÓW W SUPABASE!', 'info');
+                } else if (count < 6040) {
+                    log(`⚠️ BRAKUJE! Powinno być 6040, jest ${count} (brak ${6040 - count})`, 'error');
+                } else {
+                    log(`⚠️ ZA DUŻO! Powinno być 6040, jest ${count}`, 'error');
+                }
+
+                // Sprawdź kilka przykładowych rekordów
+                log('⏳ Sprawdzam przykładowe rekordy...', 'info');
+                const { data, error: dataError } = await client
+                    .from('public_imports')
+                    .select('id, original_id, child_first_name, child_last_name, christening_year')
+                    .limit(5);
+
+                if (!dataError && data) {
+                    log(`📋 Przykład (${data.length} rekordów):`, 'info');
+                    data.forEach((row, idx) => {
+                        log(`  ${idx + 1}. ID: ${row.id}, Original: ${row.original_id}, Dziecko: ${row.child_first_name} ${row.child_last_name}, Rok: ${row.christening_year}`, 'info');
+                    });
+                }
+
+            } catch (error) {
+                log(`❌ Wyjątek: ${error.message}`, 'error');
+            }
+        }
+
+        // Start po załadowaniu
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', () => setTimeout(checkRecords, 500));
+        } else {
+            setTimeout(checkRecords, 500);
+        }
+    </script>
+</body>
+</html>

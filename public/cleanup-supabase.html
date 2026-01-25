@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <title>Wyczyść Supabase</title>
+    <style>
+        body { font-family: monospace; padding: 30px; background: #1a1a1a; color: #fff; }
+        .status { margin: 15px 0; padding: 10px; border-left: 4px solid #0f0; background: #0a0a0a; }
+        .error { border-left-color: #f00; color: #f00; }
+        button { padding: 10px 20px; background: #f00; color: white; border: none; cursor: pointer; margin: 10px 0; }
+        button:hover { background: #c00; }
+    </style>
+</head>
+<body>
+    <h1>🧹 WYCZYŚĆ SUPABASE</h1>
+    <p>⚠️ OSTRZEŻENIE: To usunie WSZYSTKIE rekordy z public_imports!</p>
+    <button onclick="truncateTable()">🗑️ WYCZYŚĆ TABELĘ (16220 rekordów)</button>
+    <div id="output"></div>
+
+    <script type="importmap">
+    {
+      "imports": {
+        "@supabase/supabase-js": "https://esm.sh/@supabase/supabase-js@2"
+      }
+    }
+    </script>
+    <script type="module">
+      import { createClient } from '@supabase/supabase-js'
+      
+      function log(msg, type = 'info') {
+          const div = document.createElement('div');
+          div.className = `status ${type}`;
+          div.textContent = msg;
+          document.getElementById('output').appendChild(div);
+          console.log(msg);
+      }
+
+      const SUPABASE_URL = 'https://jbwkrconzozhgzikabmv.supabase.co';
+      const SUPABASE_KEY = 'sb_publishable_X0Qm9TSqq0nOOtCo8RycMQ_PeirqbMt';
+
+      async function truncateTable() {
+          if (!confirm('⚠️ NA PEWNO? To usunie WSZYSTKIE rekordy!')) {
+              log('❌ Anulowano', 'error');
+              return;
+          }
+
+          log('⏳ Inicjalizowanie Supabase...', 'info');
+          
+          try {
+              const client = createClient(SUPABASE_URL, SUPABASE_KEY);
+              log('✅ Supabase załadowany', 'info');
+              
+              log('⏳ Usuwam wszystkie rekordy...', 'info');
+              const { error } = await client
+                  .from('public_imports')
+                  .delete()
+                  .gte('id', 0);
+
+              if (error) {
+                  log(`❌ Błąd: ${error.message}`, 'error');
+                  return;
+              }
+
+              log('✅ Tabela wyczyszczona!', 'info');
+              log('🔄 Następnie:', 'info');
+              log('1. Otwórz import-ch-blin.html', 'info');
+              log('2. Załaduj plik CH BLIN.txt', 'info');
+              log('3. Kliknij EKSPORTUJ DO SUPABASE', 'info');
+              log('4. Czekaj aż pasek postępu dojdzie do 100%', 'info');
+
+          } catch (error) {
+              log(`❌ Wyjątek: ${error.message}`, 'error');
+          }
+      }
+
+      // Expose to window for button
+      window.truncateTable = truncateTable;
+      
+      log('✅ Skrypt załadowany - możesz kliknąć przycisk', 'info');
+    </script>
+</body>
+</html>

@@ -1,0 +1,1076 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Importer danych CH Blinów → Supabase</title>
+    <!-- Supabase Client - import map + ESM module -->
+    <script type="importmap">
+    {
+      "imports": {
+        "@supabase/supabase-js": "https://esm.sh/@supabase/supabase-js@2"
+      }
+    }
+    </script>
+    <script type="module">
+      import { createClient } from '@supabase/supabase-js'
+      window.createSupabaseClient = createClient
+    </script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            overflow: hidden;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+        
+        .header h1 {
+            font-size: 2em;
+            margin-bottom: 10px;
+        }
+        
+        .content {
+            padding: 30px;
+        }
+        
+        .section {
+            margin-bottom: 30px;
+        }
+        
+        .section h2 {
+            color: #333;
+            margin-bottom: 15px;
+            border-bottom: 2px solid #667eea;
+            padding-bottom: 10px;
+        }
+        
+        textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9em;
+            min-height: 300px;
+            resize: vertical;
+        }
+        
+        button {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 1em;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            margin-right: 10px;
+            margin-top: 10px;
+        }
+        
+        .btn-primary {
+            background: #667eea;
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            background: #5568d3;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+        
+        .btn-secondary {
+            background: #6c757d;
+            color: white;
+        }
+        
+        .btn-secondary:hover {
+            background: #5a6268;
+        }
+        
+        .btn-success {
+            background: #28a745;
+            color: white;
+        }
+        
+        .btn-success:hover {
+            background: #218838;
+        }
+        
+        .btn-danger {
+            background: #dc3545;
+            color: white;
+        }
+        
+        .btn-danger:hover {
+            background: #c82333;
+        }
+        
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+        
+        .stat-card {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 8px;
+            border-left: 4px solid #667eea;
+            text-align: center;
+        }
+        
+        .stat-value {
+            font-size: 1.8em;
+            font-weight: bold;
+            color: #667eea;
+        }
+        
+        .stat-label {
+            font-size: 0.85em;
+            color: #666;
+            margin-top: 5px;
+        }
+        
+        .table-wrapper {
+            overflow-x: auto;
+            margin-top: 20px;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+        }
+        
+        th {
+            background: #667eea;
+            color: white;
+            padding: 12px;
+            text-align: left;
+            font-weight: 600;
+        }
+        
+        td {
+            padding: 12px;
+            border-bottom: 1px solid #ddd;
+        }
+        
+        tr:hover {
+            background: #f8f9fa;
+        }
+        
+        .message {
+            padding: 12px;
+            border-radius: 6px;
+            margin: 15px 0;
+            display: none;
+        }
+        
+        .message.success {
+            background: #d4edda;
+            border-left: 4px solid #28a745;
+            color: #155724;
+            display: block;
+        }
+        
+        .message.error {
+            background: #f8d7da;
+            border-left: 4px solid #dc3545;
+            color: #721c24;
+            display: block;
+        }
+        
+        .message.info {
+            background: #d1ecf1;
+            border-left: 4px solid #17a2b8;
+            color: #0c5460;
+            display: block;
+        }
+        
+        .field-mapping {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin: 20px 0;
+        }
+        
+        .mapping-item {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 6px;
+            border: 1px solid #ddd;
+        }
+        
+        .mapping-item label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #333;
+        }
+        
+        .mapping-item select,
+        .mapping-item input {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        
+        .hint {
+            background: #e7f3ff;
+            border-left: 4px solid #2196F3;
+            padding: 12px;
+            border-radius: 4px;
+            font-size: 0.9em;
+            color: #1976d2;
+            margin: 15px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>📥 Importer danych CH Blinów</h1>
+            <p>Zaimportuj dane genealogiczne do Genealog Indexer'a</p>
+        </div>
+        
+        <div class="content">
+            <!-- KROK 1: Wklejenie danych -->
+            <div class="section">
+                <h2>1️⃣ Wklej dane z CH BLIN.txt</h2>
+                <textarea id="sourceData" placeholder="Wklej tutaj zawartość CH BLIN.txt (Tab-separated)..."></textarea>
+                <button class="btn-primary" onclick="parseData()">📊 Przeanalizuj dane</button>
+                <button class="btn-secondary" onclick="clearInput()">🧹 Wyczyść</button>
+                <div id="message" class="message"></div>
+            </div>
+            
+            <!-- KROK 2: Mapowanie kolumn -->
+            <div class="section" id="mappingSection" style="display: none;">
+                <h2>2️⃣ Mapowanie kolumn</h2>
+                <div class="hint">
+                    ✓ System automatycznie wykrył nagłówki. Jeśli potrzebujesz dostosować mapowanie, zmień wartości poniżej.
+                </div>
+                <div class="field-mapping" id="mappingControls"></div>
+            </div>
+            
+            <!-- KROK 3: Podgląd -->
+            <div class="section" id="previewSection" style="display: none;">
+                <h2>3️⃣ Podgląd danych</h2>
+                <div class="stats" id="statsContainer"></div>
+                <div class="table-wrapper">
+                    <table>
+                        <thead id="previewHead"></thead>
+                        <tbody id="previewBody"></tbody>
+                    </table>
+                </div>
+            </div>
+            
+            <!-- KROK 4: Export -->
+            <div class="section" id="exportSection" style="display: none;">
+                <h2>4️⃣ Eksportuj dane</h2>
+                <p style="margin-bottom: 15px;">Wybierz format eksportu:</p>
+                <button class="btn-success" onclick="exportAsJSON()">💾 Export JSON (do localStorage)</button>
+                <button class="btn-success" onclick="exportAsCSV()">📋 Export CSV</button>
+                <button class="btn-success" onclick="exportAsSupabase()">🚀 Export do Supabase</button>
+                <button class="btn-primary" onclick="downloadToIndexer()">🎯 Załaduj do Indexer'a</button>
+                <button class="btn-secondary" onclick="checkImporterLocalStorage()" style="margin-left: 10px;">🔍 Sprawdź localStorage</button>
+                <button class="btn-secondary" onclick="showDebugData()" style="margin-left: 10px;">🐛 Debug: Pokaż dane</button>
+                
+                <!-- Pasek postępu -->
+                <div id="progressContainer" style="display: none; margin-top: 20px;">
+                    <h3>📊 Postęp eksportu</h3>
+                    <div style="background: #333; border-radius: 5px; overflow: hidden; height: 30px; margin: 10px 0;">
+                        <div id="progressBar" style="background: linear-gradient(90deg, #0f0, #0f0); height: 100%; width: 0%; transition: width 0.3s; display: flex; align-items: center; justify-content: center; color: #000; font-weight: bold; font-size: 12px;"></div>
+                    </div>
+                    <div id="progressText" style="color: #0f0; font-size: 14px; text-align: center;"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        // Supabase configuration
+        var SUPABASE_URL = 'https://jbwkrconzozhgzikabmv.supabase.co';
+        var SUPABASE_KEY = 'sb_publishable_X0Qm9TSqq0nOOtCo8RycMQ_PeirqbMt';
+        var supabase = null;
+
+        // Get or create supabase instance
+        async function getSupabaseClient() {
+            // Najpierw sprawdź czy supabase JUŻ jest inicjalizowany
+            if (supabase && typeof supabase.from === 'function') {
+                return supabase;
+            }
+            
+            if (!supabase) {
+                if (window.createSupabaseClient && typeof window.createSupabaseClient === 'function') {
+                    console.log('🔍 Calling createSupabaseClient (ESM import)...');
+                    supabase = window.createSupabaseClient(SUPABASE_URL, SUPABASE_KEY);
+                    
+                    console.log('🔍 After createSupabaseClient, supabase.from exists?', 'from' in supabase);
+                    console.log('🔍 supabase type:', typeof supabase);
+                    
+                    if (supabase && typeof supabase.from === 'function') {
+                        console.log('✅ Supabase client created successfully!');
+                        return supabase;
+                    } else {
+                        console.error('❌ createSupabaseClient nie zwrócił obiektu z metodą from');
+                        return null;
+                    }
+                } else {
+                    console.error('❌ window.createSupabaseClient not available');
+                    return null;
+                }
+            }
+            return supabase;
+        }
+
+        // Initialize Supabase when library is loaded
+        function initSupabase() {
+            supabase = getSupabaseClient();
+            if (supabase) {
+                console.log('✅ Supabase initialized');
+                console.log('  supabase.from:', typeof supabase.from);
+            }
+        }
+
+        // Wait for supabase to be ready
+        async function waitForSupabase(timeout = 10000) {
+            const startTime = Date.now();
+            while (!window.createSupabaseClient) {
+                if (Date.now() - startTime > timeout) {
+                    console.error('❌ Timeout waiting for createSupabaseClient');
+                    return false;
+                }
+                await new Promise(resolve => setTimeout(resolve, 100));
+            }
+            console.log('✅ createSupabaseClient ready');
+            return true;
+        }
+
+        // Try to init immediately and on load
+        if (document.readyState === 'loading') {
+            window.addEventListener('load', async () => {
+                await waitForSupabase();
+                initSupabase();
+            });
+        } else {
+            waitForSupabase().then(() => initSupabase());
+        }
+
+        let parsedData = [];
+        let columnHeaders = [];
+        let fieldMapping = {
+            record_id: 'ID',                          // ✓ Identyfikator aktu
+            christening_year: 'ROK',                  // ✓ Rok
+            christening_act_number: 'NR.',            // ✓ Numer aktu (UPPERCASE, bez spacji)
+            child_last_name: 'NAZWISKO',              // ✓ Nazwisko dziecka (UPPERCASE)
+            child_first_name: 'IMIĘ',                 // ✓ Imię dziecka (UPPERCASE)
+            child_location: 'MIEJSCOWOŚĆ',            // ✓ Miejscowość (UPPERCASE)
+            father_first_name: 'IMIĘO',               // ✓ Imię ojca (UPPERCASE, bez spacji)
+            father_last_name: 'NAZWISKOO',            // ✓ Nazwisko ojca (UPPERCASE)
+            father_age: 'WO',                         // ✓ Wiek ojca (UPPERCASE)
+            mother_first_name: 'IM',                  // ✓ Imię matki
+            mother_last_name: 'NM',                   // ✓ Nazwisko matki
+            mother_age: 'WM',                         // ✓ Wiek matki (UPPERCASE)
+            notes: 'UWAGI',                           // ✓ Uwagi (UPPERCASE)
+            notes_org: 'UWAGI ORG'                    // ✓ Uwagi organizacyjne
+        };
+        
+        function showMessage(text, type = 'info') {
+            const msg = document.getElementById('message');
+            msg.textContent = text;
+            msg.className = 'message ' + type;
+        }
+        
+        function notify(message, type = 'info') {
+            showMessage(message, type);
+        }
+        
+        function parseData() {
+            const sourceText = document.getElementById('sourceData').value.trim();
+            
+            if (!sourceText) {
+                showMessage('❌ Wklej dane przed analizą', 'error');
+                return;
+            }
+            
+            try {
+                const lines = sourceText.split('\n').map(l => l.trim()).filter(l => l);
+                if (lines.length < 2) {
+                    showMessage('❌ Minimum 2 linie wymagane (nagłówek + dane)', 'error');
+                    return;
+                }
+                
+                // Parse headers - UPPERCASE + trim dla spójności
+                columnHeaders = lines[0].split('\t').map(h => h.trim().toUpperCase());
+                console.log('📋 Found headers (normalized):', columnHeaders);
+                console.log('📋 Field mapping:', fieldMapping);
+                
+                // Debug: pokaż jakie kolumny znaleziono i czy się mapują
+                let debugMsg = '🔍 Znalezione kolumny:\n';
+                columnHeaders.forEach(col => {
+                    const mapped = Object.entries(fieldMapping).find(([k, v]) => v === col);
+                    debugMsg += `  • "${col}" ${mapped ? `✅ → ${mapped[0]}` : '❌ niezmapowana'}\n`;
+                });
+                console.log(debugMsg);
+                
+                // Parse data rows
+                parsedData = [];
+                for (let i = 1; i < lines.length; i++) {
+                    const values = lines[i].split('\t');
+                    if (values.length > 0 && values[0].trim()) {
+                        parsedData.push(values);
+                    }
+                }
+                
+                showMessage(`✅ Wczytano ${parsedData.length} rekordów z ${columnHeaders.length} kolumnami`, 'success');
+                
+                // Show next steps
+                document.getElementById('mappingSection').style.display = 'block';
+                document.getElementById('previewSection').style.display = 'block';
+                document.getElementById('exportSection').style.display = 'block';
+                
+                renderMapping();
+                renderPreview();
+                
+            } catch (error) {
+                showMessage(`❌ Błąd: ${error.message}`, 'error');
+                console.error(error);
+            }
+        }
+        
+        function renderMapping() {
+            const container = document.getElementById('mappingControls');
+            container.innerHTML = '';
+            
+            const fields = [
+                { key: 'record_id', label: '🆔 Identyfikator aktu', required: true },
+                { key: 'christening_year', label: '📅 Rok chrztu', required: true },
+                { key: 'christening_act_number', label: '🔢 Numer aktu', required: true },
+                { key: 'child_first_name', label: '👶 Imię dziecka', required: true },
+                { key: 'child_last_name', label: '👶 Nazwisko dziecka', required: true },
+                { key: 'child_location', label: '📍 Miejscowość dziecka', required: false },
+                { key: 'father_first_name', label: '👨 Imię ojca', required: true },
+                { key: 'father_last_name', label: '👨 Nazwisko ojca', required: true },
+                { key: 'father_age', label: '👨 Wiek ojca', required: false },
+                { key: 'mother_first_name', label: '👩 Imię matki', required: true },
+                { key: 'mother_last_name', label: '👩 Nazwisko matki', required: true },
+                { key: 'mother_age', label: '👩 Wiek matki', required: false },
+                { key: 'notes', label: '📝 Uwagi/Notatki', required: false },
+                { key: 'notes_org', label: '📋 Uwagi organizacyjne', required: false }
+            ];
+            
+            fields.forEach(field => {
+                const div = document.createElement('div');
+                div.className = 'mapping-item';
+                const required = field.required ? '⚠️ Wymagane' : 'Opcjonalne';
+                div.innerHTML = `
+                    <label>${field.label} <span style="font-size: 0.8em; color: #999;">${required}</span></label>
+                    <select onchange="updateMapping('${field.key}', this.value)">
+                        <option value="">-- Nie mapuj --</option>
+                        ${columnHeaders.map((h, i) => `<option value="${h}" ${fieldMapping[field.key] === h ? 'selected' : ''}>${h}</option>`).join('')}
+                    </select>
+                `;
+                container.appendChild(div);
+            });
+        }
+        
+        function updateMapping(fieldKey, columnName) {
+            // Normalize: uppercase i trim
+            fieldMapping[fieldKey] = columnName ? columnName.trim().toUpperCase() : null;
+            renderPreview();
+        }
+        
+        function renderPreview() {
+            const previewHead = document.getElementById('previewHead');
+            const previewBody = document.getElementById('previewBody');
+            const statsContainer = document.getElementById('statsContainer');
+            
+            previewHead.innerHTML = '<tr><th>#</th><th>ID</th><th>Imię</th><th>Nazwisko</th><th>Rok</th><th>Nr.</th><th>Miejsc.</th><th>Ojciec</th><th>Wiek O</th><th>Matka</th><th>Wiek M</th><th>Uwagi</th><th>Uwagi org</th></tr>';
+            previewBody.innerHTML = '';
+            
+            let validCount = 0;
+            let filledCount = 0;
+            
+            const getColValue = (row, key) => {
+                const colName = fieldMapping[key];
+                if (!colName) return '';
+                const colIdx = columnHeaders.indexOf(colName);
+                return colIdx >= 0 ? (row[colIdx] || '').trim() : '';
+            };
+            
+            parsedData.slice(0, 100).forEach((row, idx) => {
+                const id = getColValue(row, 'record_id');
+                const firstName = getColValue(row, 'child_first_name');
+                const lastName = getColValue(row, 'child_last_name');
+                const year = getColValue(row, 'christening_year');
+                const num = getColValue(row, 'christening_act_number');
+                const location = getColValue(row, 'child_location');
+                const fatherFirstName = getColValue(row, 'father_first_name');
+                const fatherLastName = getColValue(row, 'father_last_name');
+                const fatherAge = getColValue(row, 'father_age');
+                const motherFirstName = getColValue(row, 'mother_first_name');
+                const motherLastName = getColValue(row, 'mother_last_name');
+                const motherAge = getColValue(row, 'mother_age');
+                const notes = getColValue(row, 'notes');
+                const notesOrg = getColValue(row, 'notes_org');
+                
+                if (firstName || lastName) validCount++;
+                if (firstName && lastName && year) filledCount++;
+                
+                const fatherName = (fatherFirstName + ' ' + fatherLastName).trim();
+                const motherName = (motherFirstName + ' ' + motherLastName).trim();
+                
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td>${idx + 1}</td>
+                    <td style="font-size: 0.8em; color: #0078d4;">${id}</td>
+                    <td>${firstName}</td>
+                    <td><strong>${lastName}</strong></td>
+                    <td style="text-align: center;">${year}</td>
+                    <td style="text-align: center;">${num}</td>
+                    <td style="font-size: 0.85em;">${location}</td>
+                    <td style="font-size: 0.85em;">${fatherName}</td>
+                    <td style="text-align: center;">${fatherAge}</td>
+                    <td style="font-size: 0.85em;">${motherName}</td>
+                    <td style="text-align: center;">${motherAge}</td>
+                    <td style="font-size: 0.8em; color: #666;">${notes}</td>
+                    <td style="font-size: 0.8em; color: #999;">${notesOrg}</td>
+                `;
+                previewBody.appendChild(tr);
+            });
+            
+            statsContainer.innerHTML = `
+                <div class="stat-card">
+                    <div class="stat-value">${parsedData.length}</div>
+                    <div class="stat-label">Razem rekordów</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value">${validCount}</div>
+                    <div class="stat-label">Z imieniem/nazwiskiem</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value">${filledCount}</div>
+                    <div class="stat-label">Kompletne (3+ pola)</div>
+                </div>
+            `;
+        }
+        
+        function convertToIndexerFormat() {
+            const acts = [];
+            
+            parsedData.forEach((row, idx) => {
+                // Mapuj wszystkie kolumny
+                const getColValue = (key) => {
+                    const colName = fieldMapping[key];
+                    if (!colName) return '';
+                    const colIdx = columnHeaders.indexOf(colName);
+                    return colIdx >= 0 ? (row[colIdx] || '').trim() : '';
+                };
+                
+                const recordId = getColValue('record_id');
+                const firstName = getColValue('child_first_name');
+                const lastName = getColValue('child_last_name');
+                
+                if (!firstName && !lastName) return; // Skip empty rows
+                
+                const act = {
+                    id: recordId || `CH.LUB.BLIN.${idx}`,
+                    imageIdx: 0,
+                    actNum: idx + 1,
+                    type: 'christening',
+                    timestamp: new Date().toISOString(),
+                    fieldValues: {
+                        // Metadane
+                        christening_year: getColValue('christening_year'),
+                        christening_act_number: getColValue('christening_act_number'),
+                        
+                        // Dziecko
+                        child_first_name: firstName,
+                        child_last_name: lastName,
+                        child_birth_date: getColValue('child_location'),
+                        
+                        // Ojciec
+                        father_first_name: getColValue('father_first_name'),
+                        father_last_name: getColValue('father_last_name'),
+                        father_age: getColValue('father_age'),
+                        father_info: `${getColValue('father_first_name')} ${getColValue('father_last_name')}, wiek: ${getColValue('father_age')}`,
+                        
+                        // Matka
+                        mother_first_name: getColValue('mother_first_name'),
+                        mother_last_name: getColValue('mother_last_name'),
+                        mother_age: getColValue('mother_age'),
+                        mother_maiden_name: '',
+                        mother_info: `${getColValue('mother_first_name')} ${getColValue('mother_last_name')}, wiek: ${getColValue('mother_age')}`,
+                        
+                        // Inne
+                        christening_registration_date: '',
+                        christening_name: '',
+                        reporter_info: '',
+                        witness1_info: '',
+                        witness2_info: '',
+                        notes: getColValue('notes'),
+                        notes_org: getColValue('notes_org')
+                    },
+                    fieldROIs: {},
+                    actROI: null
+                };
+                
+                acts.push(act);
+            });
+            
+            return acts;
+        }
+        
+        function exportAsJSON() {
+            const acts = convertToIndexerFormat();
+            const data = {
+                imageActs: acts,
+                timestamp: new Date().toISOString(),
+                source: 'CH_BLIN_IMPORT',
+                recordCount: acts.length
+            };
+            
+            const json = JSON.stringify(data, null, 2);
+            downloadFile(json, 'CH_BLIN_IMPORT.json', 'application/json');
+            showMessage(`✅ Eksportowano ${acts.length} aktów do JSON`, 'success');
+        }
+        
+        function exportAsCSV() {
+            let csv = 'ID,Imię dziecka,Nazwisko dziecka,Rok,Nr.,Miejscowość,Imię ojca,Nazwisko ojca,Wiek ojca,Imię matki,Nazwisko matki,Wiek matki,Uwagi,Uwagi org\n';
+            
+            const getColValue = (row, key) => {
+                const colName = fieldMapping[key];
+                if (!colName) return '';
+                const colIdx = columnHeaders.indexOf(colName);
+                return colIdx >= 0 ? (row[colIdx] || '').trim() : '';
+            };
+            
+            parsedData.forEach(row => {
+                const id = getColValue(row, 'record_id');
+                const firstName = getColValue(row, 'child_first_name');
+                const lastName = getColValue(row, 'child_last_name');
+                const year = getColValue(row, 'christening_year');
+                const num = getColValue(row, 'christening_act_number');
+                const location = getColValue(row, 'child_location');
+                const fatherFirstName = getColValue(row, 'father_first_name');
+                const fatherLastName = getColValue(row, 'father_last_name');
+                const fatherAge = getColValue(row, 'father_age');
+                const motherFirstName = getColValue(row, 'mother_first_name');
+                const motherLastName = getColValue(row, 'mother_last_name');
+                const motherAge = getColValue(row, 'mother_age');
+                const notes = getColValue(row, 'notes');
+                const notesOrg = getColValue(row, 'notes_org');
+                
+                csv += `"${id}","${firstName}","${lastName}","${year}","${num}","${location}","${fatherFirstName}","${fatherLastName}","${fatherAge}","${motherFirstName}","${motherLastName}","${motherAge}","${notes}","${notesOrg}"\n`;
+            });
+            
+            downloadFile(csv, 'CH_BLIN_IMPORT.csv', 'text/csv;charset=utf-8');
+            showMessage(`✅ Eksportowano do CSV`, 'success');
+        }
+        
+        async function exportAsSupabase() {
+            console.log('🚀 exportAsSupabase called');
+            const acts = convertToIndexerFormat();
+            
+            // Czekaj aż biblioteka się załaduje
+            const libReady = await waitForSupabase(5000);
+            if (!libReady) {
+                showMessage('❌ Supabase library timeout - spróbuj ponownie', 'error');
+                return;
+            }
+            
+            // Inicjalizuj jeśli jeszcze nie
+            if (!supabase) {
+                console.log('⏳ Inicjalizuję Supabase...');
+                initSupabase();
+            }
+            
+            if (!supabase) {
+                console.error('❌ Supabase client undefined');
+                showMessage('❌ Supabase nie jest dostępny - czekaj chwilę i spróbuj ponownie', 'error');
+                return;
+            }
+            
+            try {
+                console.log('📤 Wysyłanie ' + acts.length + ' aktów do Supabase...');
+                showMessage('⏳ Wysyłanie do Supabase...', 'info');
+                
+                // Użyj sendActualData() która obsługuje batching
+                await sendActualData(acts);
+                
+            } catch (error) {
+                console.error('❌ Export error:', error);
+                showMessage(`❌ Błąd: ${error.message}`, 'error');
+            }
+        }
+        
+        function downloadToIndexer() {
+            console.log('🎯 downloadToIndexer called');
+            const acts = convertToIndexerFormat();
+            console.log('📊 Converted acts:', acts.length);
+            
+            const jsonStr = JSON.stringify({
+                imageActs: acts,
+                timestamp: new Date().toISOString()
+            });
+            const sizeKB = (jsonStr.length / 1024).toFixed(1);
+            
+            console.log(`📊 Data size: ${sizeKB} KB`);
+            
+            // Jeśli dane są małe (<4MB), zapisz do localStorage
+            if (jsonStr.length < 4000000) {
+                console.log('✅ Data fits in localStorage, saving...');
+                try {
+                    const existing = JSON.parse(localStorage.getItem('genealog_data') || '{}');
+                    const merged = {
+                        ...existing,
+                        imageActs: [...(existing.imageActs || []), ...acts]
+                    };
+                    localStorage.setItem('genealog_data', JSON.stringify(merged));
+                    console.log('💾 Saved to localStorage, total acts:', merged.imageActs.length);
+                    showMessage(`✅ Załadowano ${acts.length} aktów do localStorage (${sizeKB} KB)!\n\n⏭️ Otwórz viewer-osd-v8.11.html`, 'success');
+                } catch (error) {
+                    console.error('❌ localStorage error:', error);
+                    showMessage(`⚠️ localStorage error: ${error.message}\n\nWysyłam do Firestore zamiast...`, 'error');
+                    sendToFirestore(acts);
+                }
+            } else {
+                // Dane za duże na localStorage - wyślij do Firestore
+                console.log(`⚠️ Data too large for localStorage (${sizeKB} KB), sending to Firestore...`);
+                showMessage(`📤 Dane za duże na localStorage (${sizeKB} KB)\n\nWysyłam bezpośrednio do Firestore...`, 'info');
+                sendToFirestore(acts);
+            }
+        }
+        
+        function sendToFirestore(acts) {
+            if (!db) {
+                showMessage('❌ Firebase nie dostępny', 'error');
+                return;
+            }
+            
+            console.log('🔥 Sending ' + acts.length + ' acts to Firestore...');
+            console.log('📍 Collection: public_imports');
+            showMessage(`📤 Wysyłam ${acts.length} aktów do Firestore...\n\nTo może potrwać kilka sekund...`, 'info');
+            
+            // Test - wyślij jeden dokument na test
+            const testDoc = db.collection('public_imports').doc('_test_' + Date.now());
+            testDoc.set({
+                test: true,
+                timestamp: new Date().toISOString()
+            })
+            .then(() => {
+                console.log('✅ Test write succeeded!');
+                testDoc.delete(); // Usuń test doc
+                sendActualData(acts);
+            })
+            .catch(error => {
+                console.error('❌ Test write failed:', error);
+                showMessage(
+                    `❌ Nie mogę pisać do Firestore!\n\n` +
+                    `Błąd: ${error.message}\n\n` +
+                    `Sprawdź:\n` +
+                    `1. Firebase Console → Security Rules\n` +
+                    `2. Czy public_imports collection jest dostępna?\n` +
+                    `3. Czy masz internet?\n\n` +
+                    `Fallback: Pobieranie jako JSON...`,
+                    'error'
+                );
+                // Fallback - pobierz JSON
+                const json = JSON.stringify({
+                    imageActs: acts,
+                    timestamp: new Date().toISOString(),
+                    source: 'CH_BLIN_IMPORT'
+                }, null, 2);
+                downloadFile(json, 'CH_BLIN_IMPORT.json', 'application/json');
+            });
+        }
+        
+        async function sendActualData(acts) {
+            console.log('📥 Sending actual data to Supabase... ilość aktów:', acts.length);
+            
+            // Pokaż pasek postępu
+            document.getElementById('progressContainer').style.display = 'block';
+            
+            // Czekaj aż biblioteka będzie dostępna
+            const libReady = await waitForSupabase(5000);
+            if (!libReady) {
+                console.error('❌ Supabase library nie załadowała się');
+                showMessage('❌ Supabase library timeout', 'error');
+                return;
+            }
+            
+            // Pobierz client (teraz asynchronicznie)
+            const client = await getSupabaseClient();
+            if (!client) {
+                console.error('❌ Nie mogę utworzyć Supabase client');
+                showMessage('❌ Supabase client creation failed', 'error');
+                return;
+            }
+            
+            if (typeof client.from !== 'function') {
+                console.error('❌ client.from is not a function. client:', client);
+                console.error('  client keys:', Object.keys(client || {}));
+                showMessage('❌ Supabase client.from is not available', 'error');
+                return;
+            }
+            
+            const totalActs = acts.length;
+            const batchId = Date.now();
+            const batchSize = 100; // Supabase batch size (RLS friendly)
+            
+            let processedCount = 0;
+            let errorCount = 0;
+            
+            // Podziel na mniejsze batche
+            for (let batchStart = 0; batchStart < totalActs; batchStart += batchSize) {
+                const batchEnd = Math.min(batchStart + batchSize, totalActs);
+                const batchActsSlice = acts.slice(batchStart, batchEnd);
+                
+                // Przygotuj dane do wstawienia - FLAT STRUCTURE dla Supabase
+                const dataToInsert = batchActsSlice.map((act, idx) => {
+                    const row = {
+                        // Zawsze wygeneruj unikalny ID aby uniknąć duplikatów (PK)
+                        // Format: CH.BLIN.TIMESTAMP.GLOBAL_INDEX
+                        id: `CH.BLIN.${batchId}.${String(batchStart + idx).padStart(5, '0')}`,
+                        // Przechowaj oryginalne ID z danych
+                        original_id: act.id,
+                        source: 'CH_BLIN',
+                        
+                        // fieldValues - rozpakuj do płaskiej struktury
+                        christening_year: act.fieldValues?.christening_year,
+                        christening_act_number: act.fieldValues?.christening_act_number,
+                        child_first_name: act.fieldValues?.child_first_name,
+                        child_last_name: act.fieldValues?.child_last_name,
+                        child_birth_date: act.fieldValues?.child_birth_date,
+                        father_first_name: act.fieldValues?.father_first_name,
+                        father_last_name: act.fieldValues?.father_last_name,
+                        father_age: act.fieldValues?.father_age,
+                        mother_first_name: act.fieldValues?.mother_first_name,
+                        mother_last_name: act.fieldValues?.mother_last_name,
+                        mother_age: act.fieldValues?.mother_age,
+                        notes: act.fieldValues?.notes,
+                        notes_org: act.fieldValues?.notes_org,
+                        location: act.fieldValues?.location || act.fieldValues?.child_birth_date
+                    };
+                    
+                    // Usuń undefined i null wartości aby mieć czystsze inserty
+                    Object.keys(row).forEach(key => {
+                        if (row[key] === undefined || row[key] === null || row[key] === '') {
+                            delete row[key];
+                        }
+                    });
+                    
+                    return row;
+                });
+                
+                console.log(`📦 Batch ${batchStart/batchSize + 1}: ${batchActsSlice.length} rekordów`);
+                console.log('📤 Wysyłane dane (pierwsze 2):', dataToInsert.slice(0, 2));
+                
+                // Wyślij do Supabase
+                const { data, error } = await client
+                    .from('public_imports')
+                    .insert(dataToInsert);
+                
+                if (error) {
+                    console.error(`❌ Batch error (${batchStart}-${batchEnd}):`, error);
+                    console.error('   Details:', error.details);
+                    console.error('   Message:', error.message);
+                    console.error('   Code:', error.code);
+                    console.error('   Hint:', error.hint);
+                    errorCount++;
+                    showMessage(`❌ Błąd batch: ${error.message}\n\nCode: ${error.code}\nDetails: ${error.details}`, 'error');
+                } else {
+                    processedCount += batchActsSlice.length;
+                    const batchNum = Math.ceil(processedCount / batchSize);
+                    const totalBatches = Math.ceil(totalActs / batchSize);
+                    
+                    // Aktualizuj pasek postępu
+                    const percent = Math.round((processedCount / totalActs) * 100);
+                    document.getElementById('progressBar').style.width = percent + '%';
+                    document.getElementById('progressBar').textContent = percent + '%';
+                    document.getElementById('progressText').textContent = `Wysłano ${batchNum}/${totalBatches} batchy (${processedCount}/${totalActs} aktów)`;
+                    
+                    console.log(`✅ Batch ${batchNum}/${totalBatches} sent (${processedCount}/${totalActs} acts)`);
+                    showMessage(`⏳ Wysłano ${batchNum}/${totalBatches} batchy...`, 'info');
+                }
+            }
+            
+            if (errorCount === 0) {
+                console.log(`✅✅ ALL ${totalActs} ACTS SENT TO SUPABASE!`);
+                console.log(`📍 Batch ID: ${batchId}`);
+                console.log(`🎉 Table: public_imports`);
+                
+                // Koniec - pasek na 100%
+                document.getElementById('progressBar').style.width = '100%';
+                document.getElementById('progressBar').textContent = '100%';
+                document.getElementById('progressBar').style.background = 'linear-gradient(90deg, #0f0, #00ff00)';
+                document.getElementById('progressText').textContent = `✅ Wszystkie ${totalActs} aktów wysłane!`;
+                
+                showMessage(
+                    `✅ Wysłano ${totalActs} aktów do Supabase!\n\n` +
+                    `📍 Table: public_imports\n` +
+                    `📋 Batch ID: ${batchId}\n\n` +
+                    `⏭️ Kroki:\n` +
+                    `1. Otwórz viewer-osd-v8.11.html\n` +
+                    `2. Dane powinny się załadować\n` +
+                    `3. Brak limitów reads!`,
+                    'success'
+                );
+            } else {
+                showMessage(`⚠️ ${processedCount}/${totalActs} wysłano, ${errorCount} błędów`, 'warning');
+            }
+        }
+        
+        function splitAndStorageData(merged, newActsCount) {
+            console.log('🔀 Splitting data into parts...');
+            const acts = merged.imageActs || [];
+            const partsNeeded = Math.ceil(acts.length / 1000);
+            
+            try {
+                // Store metadata
+                localStorage.setItem('genealog_data_split', JSON.stringify({
+                    _split: true,
+                    totalParts: partsNeeded,
+                    totalActs: acts.length,
+                    timestamp: new Date().toISOString()
+                }));
+                
+                // Store parts
+                for (let i = 0; i < partsNeeded; i++) {
+                    const start = i * 1000;
+                    const end = Math.min(start + 1000, acts.length);
+                    const part = {
+                        part: i + 1,
+                        totalParts: partsNeeded,
+                        acts: acts.slice(start, end)
+                    };
+                    localStorage.setItem(`genealog_data_part_${i+1}`, JSON.stringify(part));
+                }
+                
+                showMessage(`✅ Załadowano ${newActsCount} aktów (podzielone na ${partsNeeded} części)!`, 'success');
+                console.log(`✅ Data split into ${partsNeeded} parts`);
+            } catch (error) {
+                console.error('❌ Split storage error:', error);
+                showMessage(`❌ Błąd podziału danych: ${error.message}`, 'error');
+            }
+        }
+        
+        function checkImporterLocalStorage() {
+            try {
+                const splitMeta = localStorage.getItem('genealog_data_split');
+                if (splitMeta) {
+                    const meta = JSON.parse(splitMeta);
+                    const sizeKB = (splitMeta.length / 1024).toFixed(1);
+                    alert(`✅ localStorage (podzielone):\n\nCzęści: ${meta.totalParts}\nAkty: ${meta.totalActs}\n\nGotowe do viewer-osd-v8.11.html`);
+                    return;
+                }
+                
+                const data = localStorage.getItem('genealog_data');
+                if (data) {
+                    let displayData = data;
+                    let info = '';
+                    
+                    // Check if compressed
+                    try {
+                        const parsed = JSON.parse(data);
+                        if (parsed._compressed) {
+                            info = `\n(Skompresowane: ${(data.length/1024).toFixed(1)} KB)`;
+                            displayData = `Dane skompresowane (${parsed._originalSize} bajtów)`;
+                        }
+                    } catch (e) {}
+                    
+                    const parsed = displayData.startsWith('{') ? JSON.parse(displayData) : { _compressed: true };
+                    const actsCount = parsed.imageActs?.length || '?';
+                    const sizeKB = (data.length / 1024).toFixed(1);
+                    console.log('📊 localStorage:', { acts: actsCount, size: sizeKB + ' KB' });
+                    alert(`✅ localStorage ma dane:\n\nAkty: ${actsCount}\nRozmiar: ${sizeKB} KB${info}\n\nGotowe do otwarcia viewer-osd-v8.11.html`);
+                } else {
+                    console.log('❌ localStorage pusty');
+                    alert('❌ localStorage jest pusty\n\nKliki: Przeanalizuj → Załaduj do Indexer\'a');
+                }
+            } catch (error) {
+                console.error('❌ Error:', error);
+                alert('❌ Błąd: ' + error.message);
+            }
+        }
+        
+        function showDebugData() {
+            console.clear();
+            console.log('=== 🐛 DEBUG DANE IMPORTU ===');
+            console.log('📋 Kolumny znalezione:', columnHeaders);
+            console.log('🗺️  Mapowanie pól:', fieldMapping);
+            
+            if (parsedData.length === 0) {
+                alert('❌ Brak danych do analizy. Najpierw wczytaj plik.');
+                return;
+            }
+            
+            // Sprawdź pierwsze 3 wiersze
+            let debug = '🐛 PIERWSZE 3 WIERSZE DANYCH:\n\n';
+            for (let i = 0; i < Math.min(3, parsedData.length); i++) {
+                const row = parsedData[i];
+                debug += `Wiersz ${i + 1}:\n`;
+                columnHeaders.forEach((col, idx) => {
+                    const val = (row[idx] || '').substring(0, 50);
+                    debug += `  ${col}: "${val}"\n`;
+                });
+                debug += '\n';
+            }
+            
+            // Sprawdź mapowanie
+            debug += '🗺️  MAPOWANIE:\n';
+            Object.entries(fieldMapping).forEach(([field, colName]) => {
+                const found = columnHeaders.includes(colName);
+                debug += `  ${field}: "${colName}" ${found ? '✅' : '❌'}\n`;
+            });
+            
+            console.log(debug);
+            alert(debug);
+        }
+        
+        function downloadFile(content, filename, type) {
+            const blob = new Blob([content], { type: type + ';charset=utf-8' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = filename;
+            a.click();
+            URL.revokeObjectURL(url);
+        }
+        
+        function clearInput() {
+            document.getElementById('sourceData').value = '';
+            parsedData = [];
+            columnHeaders = [];
+            document.getElementById('mappingSection').style.display = 'none';
+            document.getElementById('previewSection').style.display = 'none';
+            document.getElementById('exportSection').style.display = 'none';
+            document.getElementById('message').textContent = '';
+        }
+    </script>
+</body>
+</html>

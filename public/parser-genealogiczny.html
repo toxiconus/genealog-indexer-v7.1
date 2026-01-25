@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Parser Genealogiczny - Standaryzacja Danych</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            color: #333;
+            padding: 20px;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        textarea {
+            width: 100%;
+            height: 200px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-family: monospace;
+            resize: vertical;
+        }
+        button {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            margin: 10px 0;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        table {
+            margin-top: 10px;
+            border-collapse: collapse;
+        }
+        th, td {
+            padding: 8px;
+            text-align: left;
+            border: 1px solid #ddd;
+        }
+        label {
+            display: inline-block;
+            margin-right: 15px;
+        }
+        .copy-btn {
+            background-color: #28a745;
+        }
+        .copy-btn:hover {
+            background-color: #218838;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Parser Genealogiczny</h1>
+        <p>Wklej dane w jednym z formatów: "Miejscowość / ImięOjca l.wiek i ImięMatki NazwiskoMatki l.wiek", "Miejscowość - ImięOjca i ImięMatki NazwiskoMatki", "Miejscowość, ImięOjca i ImięMatki NazwiskoMatki" lub "Miejscowość c./s. ImięOjcaDopełniacz [l.wiek] i ImięMatkiDopełniacz z NazwiskoMatkiDopełniacz [l.wiek]" (jedna linia na wpis). Parser konwertuje formy dopełniacza na mianownik i standaryzuje do tabeli z kolumnami: Miejscowość | Imię Ojca | Wiek Ojca | Imię Matki | Nazwisko Matki | Wiek Matki.</p>
+        
+        <label for="inputData">Dane wejściowe (jedna linia na wpis):</label>
+        <textarea id="inputData" placeholder="Np. Brzozówka / Józef l.37 i Marianna Król l.23&#10;Blinów - Józef i Maryanna Pasternak&#10;Moczydła, Stanisław? i Anna Wcisło&#10;Blinów c. Wawrzyńca i Katarzyny z Kamińskich&#10;Blinów s. Wawrzyńca l.25 i Katarzyny z Grelów l.22"></textarea>
+        
+        <button onclick="parseData()">Przetwórz dane</button>
+        
+        <label>Wybierz kolumny do kopiowania:</label>
+        <div>
+            <label><input type="checkbox" id="col1" checked> Miejscowość</label>
+            <label><input type="checkbox" id="col2" checked> Imię Ojca</label>
+            <label><input type="checkbox" id="col3" checked> Wiek Ojca</label>
+            <label><input type="checkbox" id="col4" checked> Imię Matki</label>
+            <label><input type="checkbox" id="col5" checked> Nazwisko Matki</label>
+            <label><input type="checkbox" id="col6" checked> Wiek Matki</label>
+            <button class="copy-btn" onclick="copyTableToTSV()" style="margin-left: 20px;">Kopiuj wybrane kolumny</button>
+        </div>
+        <table id="outputTable" border="1" style="width: 100%; border-collapse: collapse;">
+            <thead>
+                <tr>
+                    <th>Miejscowość</th>
+                    <th>Imię Ojca</th>
+                    <th>Wiek Ojca</th>
+                    <th>Imię Matki</th>
+                    <th>Nazwisko Matki</th>
+                    <th>Wiek Matki</th>
+                </tr>
+            </thead>
+            <tbody id="tableBody">
+                <!-- Wyniki będą wstawiane tutaj -->
+            </tbody>
+        </table>
+
+    </div>
+
+    <script>
+        function convertToNominative(name) {
+            // Konwersja z dopełniacza na mianownik
+            
+            // Specjalne przypadki - imiona męskie
+            const maleNameExceptions = {
+                'Jakuba': 'Jakub', 'Jana': 'Jan', 'Mateusza': 'Mateusz', 'Tomasza': 'Tomasz',
+                'Franciszka': 'Franciszek', 'Józefa': 'Józef', 'Gwatberta': 'Gwatbert',
+                'Marcina': 'Marcin', 'Szczepana': 'Szczepan', 'Grzegorza': 'Grzegorz',
+                'Macieja': 'Maciej', 'Pawła': 'Paweł', 'Andrzeja': 'Andrzej', 'Wojciecha': 'Wojciech',
+                'Sebastiana': 'Sebastian', 'Wawrzyńca': 'Wawrzyniec', 'Piotra': 'Piotr',
+                'Szymona': 'Szymon', 'Kazimierza': 'Kazimierz', 'Dominika': 'Dominik',
+                'Adama': 'Adam', 'Antoniego': 'Antoni', 'Walentego': 'Walenty',
+                'Bartłomieja': 'Bartłomiej', 'Stanisława': 'Stanisław', 'Tadeusza': 'Tadeusz',
+                'Kacpra': 'Kacper', 'Wincentego': 'Wincenty', 'Łukasza': 'Łukasz',
+                'Michała': 'Michał', 'Filipa': 'Filip', 'Błażeja': 'Błażej',
+                'Ignacego': 'Ignacy', 'Mikołaja': 'Mikołaj', 'Feliksa': 'Feliks'
+            };
+            
+            if (maleNameExceptions[name]) return maleNameExceptions[name];
+            
+            // Imiona żeńskie
+            if (name.endsWith('ii')) {
+                return name.slice(0, -2) + 'a'; // Zofii->Zofia, Rozalii->Rozalia, Marii->Maria
+            }
+            if (name.endsWith('ki')) {
+                return name.slice(0, -2) + 'ka'; // Agnieszki->Agnieszka, Tekli->Tekla, Jadwigi->Jadwiga
+            }
+            if (name.endsWith('ny')) {
+                return name.slice(0, -2) + 'na'; // Marianny->Marianna, Antoniny->Antonina
+            }
+            if (name.endsWith('y') && !name.endsWith('ny')) {
+                return name.slice(0, -1) + 'a'; // Katarzyny->Katarzyna, Heleny->Helena, Barbary->Barbara
+            }
+            
+            // Nazwiska żeńskie - formy specjalne
+            if (name.endsWith('skich')) {
+                return name.slice(0, -5) + 'ska'; // Szydłoskich->Szydłowska, Dąbroskich->Dąbrowska
+            }
+            if (name.endsWith('ckich')) {
+                return name.slice(0, -5) + 'cka'; // Rębeckich->Rębecka
+            }
+            
+            // Nazwiska żeńskie z "ów" - różne przypadki
+            const specialSurnames = {
+                'Cisaków': 'Cisak', 'Kosidłów': 'Kosidło', 'Machulków': 'Machulka',
+                'Pcionków': 'Pcionek', 'Obydziów': 'Obydź', 'Jachurów': 'Jachura',
+                'Michałków': 'Michałka', 'Czubów': 'Czub', 'Sobonieskich': 'Soboniewska',
+                'Szubów': 'Szuba', 'Chmielów': 'Chmiel', 'Baranów': 'Baran',
+                'Tylusów': 'Tylus', 'Gnatów': 'Gnat', 'Spryszaków': 'Spryszak',
+                'Kosidlaków': 'Kosidlak', 'Wcisłów': 'Wcisło', 'Buconiów': 'Bucoń',
+                'Olechów': 'Olech', 'Dobrzyńskich': 'Dobrzyńska', 'Kurczaków': 'Kurczak',
+                'Pytlaków': 'Pytlak', 'Pudłów': 'Pudło', 'Pcionów': 'Pcio',
+                'Jagiełów': 'Jagieła', 'Wielebów': 'Wieleba', 'Mazurów': 'Mazur',
+                'Krawczyków': 'Krawczyk', 'Sobutków': 'Sobótek', 'Łapińskich': 'Łapińska',
+                'Mazurków': 'Mazurek', 'Kotułów': 'Kotuła', 'Dąbroskich': 'Dąbrowska',
+                'Suloskich': 'Suloska', 'Drozdów': 'Drozd', 'Kowalczyków': 'Kowalczyk',
+                'Grelów': 'Grela', 'Łachów': 'Łach', 'Koguców': 'Kogut',
+                'Pawłasków': 'Pawłaska', 'Kaczyńskich': 'Kaczyńska', 'Brzeskich': 'Brzeska',
+                'Saganów': 'Sagan', 'Babiarzów': 'Babiarz', 'Zuniów': 'Zuń',
+                'Dziewów': 'Dziew', 'Pastulaków': 'Pastulak', 'Kaniów': 'Kania',
+                'Misiów': 'Miś', 'Solarzów': 'Solarz', 'Pazdraków': 'Pazdrak',
+                'Czarneckich': 'Czarnecka', 'Pawłoskich': 'Pawłowska', 'Pasternaków': 'Pasternak',
+                'Kozaczków': 'Kozaczek', 'Gorczyców': 'Gorczyk', 'Pastuchów': 'Pastuch',
+                'Krolów': 'Krol', 'Zielińskich': 'Zielińska', 'Miszkoskich': 'Miszkowska',
+                'Surmów': 'Surma', 'Ofierskich': 'Ofierska', 'Jędrzejczaków': 'Jędrzejczak',
+                'Wnukowny': 'Wnukowna', 'Zarzecznych': 'Zarzeczna', 'Kudrelków': 'Kudrelek',
+                'Pre': 'Pre', 'Stępniów': 'Stępień', 'Baranowskich': 'Baranowska',
+                'Nieściurów': 'Nieściur', 'Malinowskich': 'Malinowska', 'Janików': 'Janik',
+                'Rębaczów': 'Rębacz', 'Felków': 'Felek', 'Wielebóew': 'Wieleba',
+                'Gochów': 'Goch', 'Dzia..kowskich': 'Dzia..kowska', 'Rębeckich': 'Rębecka',
+                'Zarębów': 'Ząb', 'Paciorków': 'Paciorek', 'Kopiwodów': 'Kopiwoda',
+                'Wscisłow': 'Wcisło', 'Żabów': 'Żaba', 'Szabatów': 'Szabat',
+                'Machulków': 'Machulka', 'Kozaków': 'Kozak', 'Lewków': 'Lewek',
+                'Dziubów': 'Dziuba', 'Samuelów': 'Samuel', 'Machulaków': 'Machulak',
+                'Zyskowj': 'Zyskowa', 'Małków': 'Małek', 'Malinoskich': 'Malinowska',
+                'Kosidłow': 'Kosidło', 'Gnatów': 'Gnat', 'Klapców': 'Klapiec',
+                'Pazdraków': 'Pazdrak', 'Zychów': 'Zych', 'Dzi?koskich': 'Dzi?kowska',
+                'Mrozów': 'Mroz', 'Kudrelków': 'Kudrelek', 'Pytlakoskiej': 'Pytlakoska',
+                'Szumlanskiej': 'Szumlanska', 'Łatkowej': 'Łatkowa', 'Dąbroskich': 'Dąbrowska',
+                'Gniotkiewiczów': 'Gniotkiewicz', 'Szałęga': 'Szałęga'
+            };
+            
+            if (specialSurnames[name]) return specialSurnames[name];
+            
+            // Nazwiska z "ów" - domyślnie usuwamy "ów"
+            if (name.endsWith('ów')) {
+                return name.slice(0, -2);
+            }
+            
+            // Nazwiska żeńskie na "owny"/"ówny" (panna)
+            if (name.endsWith('owny') || name.endsWith('ówny')) {
+                return name.slice(0, -2) + 'a'; // Kosidłowny->Kosidłowna, Pawłaskowny->Pawłaskowna
+            }
+            
+            // Nazwiska żeńskie na "owej" (zamężna)
+            if (name.endsWith('owej')) {
+                return name.slice(0, -2) + 'a'; // Gaiorowej->Gaiorowa, Paciorkowej->Paciorkowa
+            }
+            
+            // Inne męskie imiona kończące się na "a"
+            if (name.endsWith('a')) {
+                return name.slice(0, -1);
+            }
+            
+            return name; // Bez zmian dla innych przypadków
+        }
+
+        function parseGenealogicalData(inputText) {
+            const lines = inputText.trim().split('\n');
+            const results = [];
+            
+            lines.forEach(line => {
+                const trimmedLine = line.trim();
+                let miejscowosc = '';
+                let imieOjca = '';
+                let wiekOjca = '';
+                let imieMatki = '';
+                let nazwiskoMatki = '';
+                let wiekMatki = '';
+                
+                if (trimmedLine.includes(' / ')) {
+                    // Stary format: Miejscowość / ImięOjca l.wiek i ImięMatki NazwiskoMatki l.wiek
+                    const parts = trimmedLine.split(' / ');
+                    if (parts.length >= 2) {
+                        miejscowosc = parts[0].trim();
+                        const rest = parts[1].trim().split(' i ');
+                        if (rest.length >= 2) {
+                            // Ojciec
+                            const ojciecParts = rest[0].trim().split(' l.');
+                            imieOjca = ojciecParts[0].trim();
+                            wiekOjca = ojciecParts[1] ? ojciecParts[1].trim() : '';
+                            
+                            // Matka
+                            const matkaParts = rest[1].trim().split(' l.');
+                            const matkaInfo = matkaParts[0].trim().split(' ');
+                            if (matkaInfo.length >= 2) {
+                                imieMatki = matkaInfo[0];
+                                nazwiskoMatki = matkaInfo.slice(1).join(' ');
+                            } else {
+                                imieMatki = matkaParts[0].trim();
+                            }
+                            wiekMatki = matkaParts[1] ? matkaParts[1].trim() : '';
+                        }
+                    }
+                } else if (trimmedLine.includes(' - ')) {
+                    // Format: Miejscowość - ImięOjca i ImięMatki NazwiskoMatki
+                    const parts = trimmedLine.split(' - ');
+                    if (parts.length >= 2) {
+                        miejscowosc = parts[0].trim();
+                        const rest = parts[1].trim().split(' i ');
+                        if (rest.length >= 2) {
+                            // Ojciec
+                            imieOjca = rest[0].trim();
+                            wiekOjca = ''; // Brak wieku w tym formacie
+                            
+                            // Matka
+                            const matkaInfo = rest[1].trim().split(' ');
+                            if (matkaInfo.length >= 2) {
+                                imieMatki = matkaInfo[0];
+                                nazwiskoMatki = matkaInfo.slice(1).join(' ');
+                            } else {
+                                imieMatki = rest[1].trim();
+                                nazwiskoMatki = '';
+                            }
+                            wiekMatki = ''; // Brak wieku w tym formacie
+                        }
+                    }
+                } else if (trimmedLine.includes(', ')) {
+                    // Format: Miejscowość, ImięOjca i ImięMatki NazwiskoMatki
+                    const parts = trimmedLine.split(', ');
+                    if (parts.length >= 2) {
+                        miejscowosc = parts[0].trim();
+                        const rest = parts[1].trim().split(' i ');
+                        if (rest.length >= 2) {
+                            // Ojciec
+                            imieOjca = rest[0].trim();
+                            wiekOjca = ''; // Brak wieku w tym formacie
+                            
+                            // Matka
+                            const matkaInfo = rest[1].trim().split(' ');
+                            if (matkaInfo.length >= 2) {
+                                imieMatki = matkaInfo[0];
+                                nazwiskoMatki = matkaInfo.slice(1).join(' ');
+                            } else {
+                                imieMatki = rest[1].trim();
+                                nazwiskoMatki = '';
+                            }
+                            wiekMatki = ''; // Brak wieku w tym formacie
+                        }
+                    }
+                } else if (trimmedLine.includes(' c. ') || trimmedLine.includes(' s. ')) {
+                    // Format: Miejscowość c./s. ImięOjcaDopełniacz [l.wiek] i ImięMatkiDopełniacz z NazwiskoMatkiDopełniacz [l.wiek]
+                    let separator = '';
+                    if (trimmedLine.includes(' c. ')) separator = ' c. ';
+                    else if (trimmedLine.includes(' s. ')) separator = ' s. ';
+                    
+                    if (separator) {
+                        const parts = trimmedLine.split(separator);
+                        if (parts.length >= 2) {
+                            miejscowosc = parts[0].trim();
+                            const rest = parts[1].trim();
+                            const parentParts = rest.split(' i ');
+                            if (parentParts.length >= 2) {
+                                // Ojciec
+                                const ojciecFull = parentParts[0].trim();
+                                const ojciecParts = ojciecFull.split(' l.');
+                                const ojciecDopelniacz = ojciecParts[0].trim();
+                                wiekOjca = ojciecParts[1] ? ojciecParts[1].trim() : '';
+                                
+                                // Matka
+                                const matkaRest = parentParts[1].trim();
+                                const matkaParts = matkaRest.split(' z ');
+                                if (matkaParts.length >= 2) {
+                                    const matkaDopelniacz = matkaParts[0].trim();
+                                    const nazwiskoFull = matkaParts[1].trim();
+                                    const nazwiskoParts = nazwiskoFull.split(' l.');
+                                    const nazwiskoDopelniacz = nazwiskoParts[0].trim();
+                                    wiekMatki = nazwiskoParts[1] ? nazwiskoParts[1].trim() : '';
+                                    
+                                    // Konwersja na mianownik
+                                    imieOjca = convertToNominative(ojciecDopelniacz);
+                                    imieMatki = convertToNominative(matkaDopelniacz);
+                                    nazwiskoMatki = convertToNominative(nazwiskoDopelniacz);
+                                }
+                            }
+                        }
+                    }
+                }
+                
+                results.push({ miejscowosc, imieOjca, wiekOjca, imieMatki, nazwiskoMatki, wiekMatki });
+            });
+            
+            return results;
+        }
+
+        function parseData() {
+            const input = document.getElementById('inputData').value;
+            const parsedData = parseGenealogicalData(input);
+            const tableBody = document.getElementById('tableBody');
+            tableBody.innerHTML = ''; // Wyczyść poprzednie wyniki
+            
+            parsedData.forEach(row => {
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td>${row.miejscowosc}</td>
+                    <td>${row.imieOjca}</td>
+                    <td>${row.wiekOjca}</td>
+                    <td>${row.imieMatki}</td>
+                    <td>${row.nazwiskoMatki}</td>
+                    <td>${row.wiekMatki}</td>
+                `;
+                tableBody.appendChild(tr);
+            });
+        }
+
+        function copyTableToTSV() {
+            const col1 = document.getElementById('col1').checked;
+            const col2 = document.getElementById('col2').checked;
+            const col3 = document.getElementById('col3').checked;
+            const col4 = document.getElementById('col4').checked;
+            const col5 = document.getElementById('col5').checked;
+            const col6 = document.getElementById('col6').checked;
+            
+            if (!col1 && !col2 && !col3 && !col4 && !col5 && !col6) {
+                alert('Wybierz przynajmniej jedną kolumnę!');
+                return;
+            }
+            
+            const rows = document.querySelectorAll('#tableBody tr');
+            let tsv = ''; // Bez nagłówka
+            
+            rows.forEach(row => {
+                const cells = row.querySelectorAll('td');
+                let rowData = [];
+                if (col1) rowData.push(cells[0].textContent);
+                if (col2) rowData.push(cells[1].textContent);
+                if (col3) rowData.push(cells[2].textContent);
+                if (col4) rowData.push(cells[3].textContent);
+                if (col5) rowData.push(cells[4].textContent);
+                if (col6) rowData.push(cells[5].textContent);
+                tsv += rowData.join('\t') + '\n';
+            });
+            
+            navigator.clipboard.writeText(tsv).then(() => {
+                alert('Wybrane kolumny skopiowane bez nagłówka jako TSV do schowka!');
+            }).catch(err => {
+                alert('Błąd kopiowania: ' + err);
+            });
+        }
+    </script>
+</body>
+</html>

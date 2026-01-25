@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <title>Licznik + Czyszczenie Supabase</title>
+    <style>
+        body { 
+            font-family: monospace; 
+            padding: 30px; 
+            background: #1a1a1a; 
+            color: #0f0;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        h1 { color: #0f0; margin-bottom: 20px; }
+        .status { 
+            margin: 10px 0; 
+            padding: 10px; 
+            border-left: 4px solid #0f0; 
+            background: #0a0a0a;
+            font-size: 14px;
+        }
+        .error { border-left-color: #f00; color: #f00; }
+        .warning { border-left-color: #ff0; color: #ff0; }
+        .success { border-left-color: #0f0; color: #0f0; }
+        .info { border-left-color: #0ff; color: #0ff; }
+        button { 
+            padding: 12px 24px; 
+            background: #0f0; 
+            color: #000;
+            border: none; 
+            cursor: pointer; 
+            margin: 10px 5px 10px 0;
+            font-size: 14px;
+            border-radius: 5px;
+            font-weight: bold;
+        }
+        button:hover { background: #0c0; }
+        button:disabled { background: #666; cursor: not-allowed; color: #999; }
+        #progressBar {
+            height: 30px;
+            background: #333;
+            border-radius: 5px;
+            overflow: hidden;
+            margin: 15px 0;
+            display: none;
+        }
+        #progress {
+            height: 100%;
+            background: linear-gradient(90deg, #0f0, #00ff00);
+            width: 0%;
+            transition: width 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #000;
+            font-weight: bold;
+            font-size: 12px;
+        }
+        #output { 
+            margin-top: 20px; 
+            max-height: 500px;
+            overflow-y: auto;
+            border: 1px solid #333;
+            padding: 10px;
+            background: #0a0a0a;
+        }
+        .card {
+            background: #1a1a1a;
+            border: 1px solid #333;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 10px 0;
+        }
+        .big-number {
+            font-size: 32px;
+            font-weight: bold;
+            color: #0f0;
+            text-align: center;
+            margin: 10px 0;
+        }
+    </style>
+</head>
+<body>
+    <h1>📊 LICZNIK + CZYSZCZENIE SUPABASE</h1>
+    
+    <div class="card">
+        <h2>1️⃣ Sprawdź ilość rekordów</h2>
+        <button onclick="countAndCheckStatus()">🔍 LICZĘ REKORDY</button>
+        <div id="countInfo"></div>
+    </div>
+
+    <div class="card" id="cleanupCard" style="display: none;">
+        <h2>2️⃣ Wyczyść tabelę</h2>
+        <p id="cleanupMessage"></p>
+        <button id="cleanBtn" onclick="batchDelete()">🧹 WYCZYŚĆ TERAZ</button>
+        <button id="stopBtn" onclick="stopDelete()" style="background: #ff6600; display: none;">⏹️ ZATRZYMAJ</button>
+        
+        <div id="progressBar">
+            <div id="progress"></div>
+        </div>
+        <div id="progressText" style="color: #0f0; text-align: center; margin-bottom: 10px;"></div>
+    </div>
+
+    <div id="output"></div>
+
+    <script>
+        let isDeleting = false;
+        let currentCount = 0;
+
+        function log(msg, type = 'status') {
+            const div = document.createElement('div');
+            div.className = `status ${type}`;
+            div.textContent = `[${new Date().toLocaleTimeString()}] ${msg}`;
+            document.getElementById('output').appendChild(div);
+            console.log(msg);
+            div.scrollIntoView({ behavior: 'auto' });
+        }
+
+        function setProgress(current, total) {
+            const percent = Math.round((current / total) * 100);
+            document.getElementById('progress').style.width = percent + '%';
+            document.getElementById('progress').textContent = percent + '%';
+            document.getElementById('progressText').textContent = `Usunięto ${current} / ${total} rekordów`;
+        }
+
+        const SUPABASE_URL = 'https://jbwkrconzozhgzikabmv.supabase.co';
+        const SUPABASE_KEY = 'sb_publishable_X0Qm9TSqq0nOOtCo8RycMQ_PeirqbMt';
+
+        async function countRecords() {
+            log('⏳ Liczę rekordy...', 'warning');
+            
+            try {
+                const response = await fetch(`${SUPABASE_URL}/rest/v1/public_imports?select=id`, {
+                    method: 'GET',
+                    headers: {
+                        'apikey': SUPABASE_KEY,
+                        'Authorization': `Bearer ${SUPABASE_KEY}`,
+                        'Prefer': 'count=exact'
+                    }
+                });
+
+                if (!response.ok) {
+                    const error = await response.text();
+                    log(`❌ Błąd: ${error}`, 'error');
+                    return 0;
+                }
+
+                const contentRange = response.headers.get('content-range');
+                if (!contentRange) {
+                    log('⚠️ Brak content-range header', 'warning');
+                    return 0;
+                }
+
+                const match = contentRange.match(/\/(\d+)$/);
+                if (match) {
+                    const count = parseInt(match[1]);
+                    log(`✅ LICZBA REKORDÓW: ${count}`, 'success');
+                    return count;
+                }
+                return 0;
+
+            } catch (error) {
+                log(`❌ Wyjątek: ${error.message}`, 'error');
+                return 0;
+            }
+        }
+
+        async function countAndCheckStatus() {
+            document.getElementById('countInfo').innerHTML = '';
+            document.getElementById('cleanupCard').style.display = 'none';
+            
+            currentCount = await countRecords();
+            
+            const div = document.createElement('div');
+            if (currentCount === 0) {
+                div.className = 'status success';
+                div.innerHTML = '<strong>✅ TABELA PUSTA!</strong><br>Możesz teraz zrobić import nowych danych.';
+            } else if (currentCount === 6040) {
+                div.className = 'status success';
+                div.innerHTML = `<strong>✅ DOKŁADNIE 6040 REKORDÓW!</strong><div class="big-number">${currentCount}</div>Wszystko jest OK! Możesz teraz odświeżyć viewer.`;
+            } else {
+                div.className = 'status error';
+                div.innerHTML = `<strong>⚠️ BRAKUJE LUB ZA DUŻO!</strong><div class="big-number">${currentCount}</div>Powinno być 6040, jest ${currentCount - 6040 > 0 ? '+' + (currentCount - 6040) : (currentCount - 6040)} ${currentCount > 6040 ? 'za dużo' : 'brakuje'}`;
+                
+                if (currentCount > 0) {
+                    document.getElementById('cleanupCard').style.display = 'block';
+                    document.getElementById('cleanupMessage').textContent = `Znaleziono ${currentCount} rekordów. Wyczyścić tabelę?`;
+                }
+            }
+            document.getElementById('countInfo').appendChild(div);
+        }
+
+        async function batchDelete() {
+            if (!confirm(`⚠️ Na pewno wyczyścić ${currentCount} rekordów?`)) {
+                return;
+            }
+
+            isDeleting = true;
+            document.getElementById('cleanBtn').disabled = true;
+            document.getElementById('stopBtn').style.display = 'inline-block';
+            document.getElementById('progressBar').style.display = 'block';
+
+            log('⏳ Zaczynam czyszczenie...', 'warning');
+            
+            try {
+                const batchSize = 1000;
+                let deleted = 0;
+
+                while (isDeleting && deleted < currentCount) {
+                    const remaining = currentCount - deleted;
+                    const size = Math.min(batchSize, remaining);
+
+                    log(`⏳ Batch: DELETE ${size} records (${deleted}/${currentCount})...`, 'warning');
+
+                    const response = await fetch(
+                        `${SUPABASE_URL}/rest/v1/public_imports?id=gte.0&limit=${size}`,
+                        {
+                            method: 'DELETE',
+                            headers: {
+                                'apikey': SUPABASE_KEY,
+                                'Authorization': `Bearer ${SUPABASE_KEY}`,
+                                'Prefer': 'return=representation'
+                            }
+                        }
+                    );
+
+                    log(`Response status: ${response.status}`, 'info');
+
+                    if (!response.ok) {
+                        const error = await response.text();
+                        log(`❌ Błąd: ${response.status}`, 'error');
+                        log(error, 'error');
+                        break;
+                    }
+
+                    // Sprawdź co DELETE zwrócił
+                    const responseText = await response.text();
+                    log(`Response body length: ${responseText.length}`, 'info');
+                    
+                    if (responseText) {
+                        try {
+                            const deleted_records = JSON.parse(responseText);
+                            log(`Deleted: ${deleted_records.length || 0} records`, 'info');
+                        } catch (e) {}
+                    }
+
+                    deleted += size;
+                    setProgress(deleted, currentCount);
+                    log(`✅ Batch OK: ${deleted}/${currentCount}`, 'success');
+
+                    await new Promise(r => setTimeout(r, 300));
+                }
+
+                if (deleted >= currentCount) {
+                    log('✅ CZYSZCZENIE ZAKOŃCZONE!', 'success');
+                    
+                    // Czekaj 2s i ponownie liczę
+                    log('⏳ Sprawdzam wynik...', 'warning');
+                    await new Promise(r => setTimeout(r, 2000));
+                    
+                    const finalCount = await countRecords();
+                    if (finalCount === 0) {
+                        log('✅✅ TABELA PUSTA - CZYSZCZENIE UDANE!', 'success');
+                        log('', 'status');
+                        log('🔄 NASTĘPNIE:', 'warning');
+                        log('1. Otwórz import-ch-blin.html', 'info');
+                        log('2. Załaduj plik CH BLIN.txt', 'info');
+                        log('3. Mapuj kolumny prawidłowo', 'info');
+                        log('4. Kliknij EKSPORTUJ DO SUPABASE', 'info');
+                        log('5. Czekaj aż pasek postępu dojdzie do 100%', 'info');
+                    } else {
+                        log(`⚠️ Wciąż są ${finalCount} rekordów! Spróbuj ponownie.`, 'error');
+                    }
+                }
+
+            } catch (error) {
+                log(`❌ Wyjątek: ${error.message}`, 'error');
+            } finally {
+                isDeleting = false;
+                document.getElementById('cleanBtn').disabled = false;
+                document.getElementById('stopBtn').style.display = 'none';
+            }
+        }
+
+        function stopDelete() {
+            isDeleting = false;
+            log('⏹️ Zatrzymano', 'warning');
+        }
+
+        window.countAndCheckStatus = countAndCheckStatus;
+        window.batchDelete = batchDelete;
+        window.stopDelete = stopDelete;
+
+        log('✅ Skrypt załadowany', 'success');
+    </script>
+</body>
+</html>

@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <title>Licznik Rekordów (REST API)</title>
+    <style>
+        body { 
+            font-family: monospace; 
+            padding: 30px; 
+            background: #1a1a1a; 
+            color: #0f0;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        h1 { color: #0f0; margin-bottom: 20px; }
+        .status { 
+            margin: 15px 0; 
+            padding: 10px; 
+            border-left: 4px solid #0f0; 
+            background: #0a0a0a;
+        }
+        .error { border-left-color: #f00; color: #f00; }
+        .warning { border-left-color: #ff0; color: #ff0; }
+        .success { border-left-color: #0f0; color: #0f0; }
+        #output { margin-top: 30px; }
+    </style>
+</head>
+<body>
+    <h1>📊 Licznik Rekordów (REST API)</h1>
+    <p>Liczy rekordy bezpośrednio z REST API (bez bibliotek)</p>
+    <div id="output"></div>
+
+    <script>
+        function log(msg, type = 'status') {
+            const div = document.createElement('div');
+            div.className = `status ${type}`;
+            div.textContent = `[${new Date().toLocaleTimeString()}] ${msg}`;
+            document.getElementById('output').appendChild(div);
+            console.log(msg);
+            div.scrollIntoView({ behavior: 'smooth' });
+        }
+
+        const SUPABASE_URL = 'https://jbwkrconzozhgzikabmv.supabase.co';
+        const SUPABASE_KEY = 'sb_publishable_X0Qm9TSqq0nOOtCo8RycMQ_PeirqbMt';
+
+        async function countRecords() {
+            log('⏳ Liczę rekordy...', 'warning');
+            
+            try {
+                // REST API - count all records (bez limit)
+                const url = `${SUPABASE_URL}/rest/v1/public_imports?select=id`;
+                log(`URL: ${url}`, 'status');
+                
+                const response = await fetch(url, {
+                    method: 'GET',
+                    headers: {
+                        'apikey': SUPABASE_KEY,
+                        'Authorization': `Bearer ${SUPABASE_KEY}`,
+                        'Content-Type': 'application/json',
+                        'Prefer': 'count=exact' // Count header zamiast query param
+                    }
+                });
+
+                log(`Status: ${response.status}`, 'status');
+
+                if (!response.ok) {
+                    const error = await response.text();
+                    log(`❌ Błąd: ${error}`, 'error');
+                    return;
+                }
+
+                // Liczba rekordów jest w content-range header
+                const contentRange = response.headers.get('content-range');
+                log(`Content-Range: ${contentRange}`, 'status');
+
+                if (!contentRange) {
+                    log('⚠️ Brak content-range header', 'warning');
+                    
+                    // Fallback - pobierz dane i policz
+                    const data = await response.json();
+                    log(`✅ Liczba rekordów (z JSON): ${data.length}`, 'success');
+                    return;
+                }
+
+                // Parsuj: "0-999/22260" -> 22260
+                const match = contentRange.match(/\/(\d+)$/);
+                if (match) {
+                    const count = parseInt(match[1]);
+                    log(`✅ CAŁKOWITA LICZBA REKORDÓW: ${count}`, 'success');
+                    
+                    if (count === 6040) {
+                        log('✅✅ DOKŁADNIE 6040! Wszystko OK!', 'success');
+                    } else if (count < 6040) {
+                        log(`⚠️ BRAKUJE! Powinno być 6040, brakuje ${6040 - count}`, 'error');
+                    } else {
+                        log(`⚠️ ZA DUŻO! Powinno być 6040, jest ${count - 6040} więcej`, 'error');
+                    }
+                } else {
+                    log('❌ Nie mogę sparsować content-range', 'error');
+                }
+
+            } catch (error) {
+                log(`❌ Wyjątek: ${error.message}`, 'error');
+                log(`Stack: ${error.stack}`, 'error');
+            }
+        }
+
+        // Start on load
+        window.addEventListener('DOMContentLoaded', () => {
+            setTimeout(countRecords, 500);
+        });
+    </script>
+</body>
+</html>

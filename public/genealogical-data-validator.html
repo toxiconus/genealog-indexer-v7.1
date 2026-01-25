@@ -1,0 +1,798 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Genealogical Data Validator - Validator danych genealogicznych</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1600px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            overflow: hidden;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+        
+        .header h1 {
+            font-size: 2em;
+            margin-bottom: 10px;
+        }
+        
+        .header p {
+            opacity: 0.9;
+            font-size: 0.9em;
+        }
+        
+        .toolbar {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            padding: 20px;
+            background: #f8f9fa;
+            border-bottom: 1px solid #dee2e6;
+            flex-wrap: wrap;
+        }
+        
+        .toolbar-section {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+        
+        .toolbar-section h3 {
+            font-size: 0.85em;
+            color: #666;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        .toolbar-buttons {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+        
+        button {
+            padding: 10px 16px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.9em;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            white-space: nowrap;
+        }
+        
+        .btn-primary {
+            background: #667eea;
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            background: #5568d3;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+        
+        .btn-secondary {
+            background: #6c757d;
+            color: white;
+        }
+        
+        .btn-secondary:hover {
+            background: #5a6268;
+        }
+        
+        .btn-success {
+            background: #28a745;
+            color: white;
+        }
+        
+        .btn-success:hover {
+            background: #218838;
+        }
+        
+        .btn-danger {
+            background: #dc3545;
+            color: white;
+        }
+        
+        .btn-danger:hover {
+            background: #c82333;
+        }
+        
+        .btn-small {
+            padding: 6px 12px;
+            font-size: 0.85em;
+        }
+        
+        textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #dee2e6;
+            border-radius: 6px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9em;
+            resize: vertical;
+            min-height: 120px;
+        }
+        
+        input[type="text"],
+        input[type="number"],
+        select {
+            padding: 10px;
+            border: 1px solid #dee2e6;
+            border-radius: 6px;
+            font-size: 0.9em;
+        }
+        
+        .import-section {
+            padding: 20px;
+            background: #f8f9fa;
+            border-bottom: 1px solid #dee2e6;
+        }
+        
+        .import-section h2 {
+            margin-bottom: 15px;
+            color: #333;
+        }
+        
+        .stats-bar {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+            padding: 20px;
+            background: #f8f9fa;
+        }
+        
+        .stat-card {
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            border-left: 4px solid #667eea;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        
+        .stat-value {
+            font-size: 1.8em;
+            font-weight: bold;
+            color: #667eea;
+        }
+        
+        .stat-label {
+            font-size: 0.85em;
+            color: #666;
+            margin-top: 5px;
+        }
+        
+        .table-wrapper {
+            overflow-x: auto;
+            padding: 20px;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+        }
+        
+        th {
+            background: #667eea;
+            color: white;
+            padding: 12px;
+            text-align: left;
+            font-weight: 600;
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+        
+        td {
+            padding: 12px;
+            border-bottom: 1px solid #dee2e6;
+            max-width: 200px;
+            word-break: break-word;
+        }
+        
+        tr:hover {
+            background: #f8f9fa;
+        }
+        
+        tr.error {
+            background: #ffe5e5 !important;
+        }
+        
+        tr.checked {
+            background: #e5ffe5 !important;
+        }
+        
+        td[contenteditable="true"] {
+            background: #fff3cd;
+            cursor: text;
+        }
+        
+        td[contenteditable="true"]:focus {
+            background: #ffeaa7;
+            outline: 2px solid #ffc107;
+        }
+        
+        .row-number {
+            background: #f1f3f5;
+            font-weight: bold;
+            color: #667eea;
+            text-align: center;
+        }
+        
+        .btn-edit {
+            padding: 4px 8px;
+            font-size: 0.8em;
+            background: #ffc107;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        
+        .btn-check {
+            padding: 4px 8px;
+            font-size: 0.8em;
+            background: #28a745;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        
+        .btn-delete {
+            padding: 4px 8px;
+            font-size: 0.8em;
+            background: #dc3545;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        
+        .issues-panel {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+            padding: 20px;
+            background: #f8f9fa;
+            border-top: 1px solid #dee2e6;
+        }
+        
+        .issue-card {
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            border-left: 4px solid #dc3545;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        
+        .issue-card h3 {
+            color: #dc3545;
+            margin-bottom: 10px;
+            font-size: 0.95em;
+        }
+        
+        .issue-list {
+            list-style: none;
+            font-size: 0.85em;
+            color: #666;
+        }
+        
+        .issue-list li {
+            padding: 4px 0;
+            cursor: pointer;
+            padding-left: 20px;
+            position: relative;
+        }
+        
+        .issue-list li:before {
+            content: "⚠";
+            position: absolute;
+            left: 0;
+        }
+        
+        .search-bar {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+        
+        .search-bar input {
+            flex: 1;
+        }
+        
+        .filter-badge {
+            display: inline-block;
+            background: #667eea;
+            color: white;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.85em;
+            margin-right: 8px;
+        }
+        
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .modal.active {
+            display: flex;
+        }
+        
+        .modal-content {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            max-width: 500px;
+            width: 90%;
+            max-height: 80vh;
+            overflow-y: auto;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+        }
+        
+        .modal-header {
+            margin-bottom: 20px;
+        }
+        
+        .modal-header h2 {
+            color: #333;
+        }
+        
+        .modal-close {
+            float: right;
+            font-size: 1.5em;
+            cursor: pointer;
+            color: #666;
+        }
+        
+        .modal-close:hover {
+            color: #333;
+        }
+        
+        .loading {
+            display: inline-block;
+            width: 12px;
+            height: 12px;
+            border: 2px solid #f3f3f3;
+            border-top: 2px solid #667eea;
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+            margin-right: 8px;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        .hint {
+            background: #e7f3ff;
+            border-left: 4px solid #2196F3;
+            padding: 12px;
+            border-radius: 4px;
+            font-size: 0.9em;
+            color: #1976d2;
+            margin-top: 10px;
+        }
+        
+        .success-message {
+            background: #d4edda;
+            border-left: 4px solid #28a745;
+            padding: 12px;
+            border-radius: 4px;
+            color: #155724;
+            margin-bottom: 15px;
+        }
+        
+        .error-message {
+            background: #f8d7da;
+            border-left: 4px solid #dc3545;
+            padding: 12px;
+            border-radius: 4px;
+            color: #721c24;
+            margin-bottom: 15px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>📊 Genealogical Data Validator</h1>
+            <p>Narzędzie do walidacji, edycji i weryfikacji danych genealogicznych</p>
+        </div>
+        
+        <div class="import-section">
+            <h2>1️⃣ Importowanie Danych</h2>
+            <p style="margin-bottom: 15px; color: #666;">Wklej dane z OpenOffice/Excel (Tab-separated):</p>
+            <textarea id="importData" placeholder="Wklej dane z tabelki (z nagłówkami)&#10;ID&#9;ROK&#9;Nr.&#9;Nazwisko&#9;Imię..."></textarea>
+            <div class="toolbar" style="display: flex; gap: 10px; margin-top: 15px;">
+                <button class="btn-primary" onclick="importData()">📥 Importuj dane</button>
+                <button class="btn-secondary" onclick="clearImport()">🗑️ Wyczyść</button>
+                <button class="btn-secondary" onclick="pasteFromClipboard()">📋 Wklej ze schowka</button>
+            </div>
+            <div id="importMessage"></div>
+            <div class="hint">
+                💡 <strong>Jak wkleić dane:</strong> Zaznacz wszystkie dane w OpenOffice/Excel (Ctrl+A), skopiuj (Ctrl+C), a następnie wklej tutaj. System automatycznie rozpozna kolumny rozdzielone tabulatorami.
+            </div>
+        </div>
+        
+        <div class="stats-bar" id="statsBar" style="display: none;">
+            <div class="stat-card">
+                <div class="stat-value" id="totalRows">0</div>
+                <div class="stat-label">Razem rekordów</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value" id="checkedRows">0</div>
+                <div class="stat-label">Sprawdzonych</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value" id="errorRows">0</div>
+                <div class="stat-label">Z błędami</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value" id="completeness">0%</div>
+                <div class="stat-label">Kompletność</div>
+            </div>
+        </div>
+        
+        <div class="toolbar" id="mainToolbar" style="display: none; padding: 20px;">
+            <div class="toolbar-section">
+                <h3>🔍 Szukaj</h3>
+                <div class="search-bar">
+                    <input type="text" id="searchInput" placeholder="Szukaj w danych...">
+                    <button class="btn-secondary" onclick="search()">Szukaj</button>
+                </div>
+            </div>
+            <div class="toolbar-section">
+                <h3>🔧 Operacje</h3>
+                <div class="toolbar-buttons">
+                    <button class="btn-success" onclick="validateAll()">✓ Waliduj wszystko</button>
+                    <button class="btn-primary" onclick="exportToCSV()">📊 Eksportuj CSV</button>
+                    <button class="btn-secondary" onclick="exportToClipboard()">📋 Kopiuj do schowka</button>
+                </div>
+            </div>
+            <div class="toolbar-section">
+                <h3>📋 Filtry</h3>
+                <div class="toolbar-buttons">
+                    <button class="btn-secondary" onclick="filterByStatus('all')">Wszystkie</button>
+                    <button class="btn-secondary" onclick="filterByStatus('error')">❌ Z błędami</button>
+                    <button class="btn-secondary" onclick="filterByStatus('checked')">✓ Sprawdzane</button>
+                </div>
+            </div>
+        </div>
+        
+        <div class="table-wrapper" id="tableContainer" style="display: none;">
+            <table id="dataTable">
+                <thead id="tableHead"></thead>
+                <tbody id="tableBody"></tbody>
+            </table>
+        </div>
+        
+        <div class="issues-panel" id="issuesPanel" style="display: none;">
+            <div class="issue-card">
+                <h3>⚠️ Problemy z spacjami</h3>
+                <ul class="issue-list" id="spaceIssues"></ul>
+            </div>
+            <div class="issue-card">
+                <h3>📝 Problemy z nazwami</h3>
+                <ul class="issue-list" id="nameIssues"></ul>
+            </div>
+            <div class="issue-card">
+                <h3>🔤 Problemy z kodowaniem</h3>
+                <ul class="issue-list" id="encodingIssues"></ul>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Modal do edycji -->
+    <div class="modal" id="editModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <span class="modal-close" onclick="closeModal()">&times;</span>
+                <h2>✏️ Edytuj rekord</h2>
+            </div>
+            <div id="modalBody"></div>
+        </div>
+    </div>
+
+    <script>
+        let data = [];
+        let headers = [];
+        let currentFilter = 'all';
+        
+        // Wklejanie ze schowka
+        async function pasteFromClipboard() {
+            try {
+                const text = await navigator.clipboard.readText();
+                document.getElementById('importData').value = text;
+                showMessage('importMessage', 'Dane wklejone ze schowka!', 'success');
+            } catch (err) {
+                showMessage('importMessage', 'Nie udało się wkleić danych. Sprawdź uprawnienia.', 'error');
+            }
+        }
+        
+        // Importowanie danych
+        function importData() {
+            const text = document.getElementById('importData').value.trim();
+            if (!text) {
+                showMessage('importMessage', 'Najpierw wklej dane!', 'error');
+                return;
+            }
+            
+            const lines = text.split('\n');
+            if (lines.length < 2) {
+                showMessage('importMessage', 'Dane muszą zawierać nagłówki i przynajmniej jeden wiersz!', 'error');
+                return;
+            }
+            
+            // Parsowanie nagłówków
+            headers = lines[0].split('\t').map(h => h.trim());
+            
+            // Parsowanie danych
+            data = [];
+            for (let i = 1; i < lines.length; i++) {
+                if (lines[i].trim() === '') continue;
+                
+                const values = lines[i].split('\t');
+                const row = {};
+                headers.forEach((header, idx) => {
+                    row[header] = values[idx] ? values[idx].trim() : '';
+                });
+                row._status = 'unchecked';
+                row._issues = [];
+                data.push(row);
+            }
+            
+            showMessage('importMessage', `✓ Zaimportowano ${data.length} rekordów!`, 'success');
+            renderTable();
+            updateStats();
+            document.getElementById('importData').style.display = 'none';
+        }
+        
+        // Renderowanie tabeli
+        function renderTable() {
+            document.getElementById('mainToolbar').style.display = 'grid';
+            document.getElementById('statsBar').style.display = 'grid';
+            document.getElementById('tableContainer').style.display = 'block';
+            
+            // Nagłówki
+            const thead = document.getElementById('tableHead');
+            thead.innerHTML = '<tr><th style="width: 50px;">Lp.</th>';
+            headers.forEach(h => {
+                thead.innerHTML += `<th>${h}</th>`;
+            });
+            thead.innerHTML += '<th style="width: 120px;">Akcje</th></tr>';
+            
+            // Dane
+            const tbody = document.getElementById('tableBody');
+            tbody.innerHTML = '';
+            
+            let visibleCount = 0;
+            data.forEach((row, idx) => {
+                // Filtrowanie
+                if (currentFilter === 'error' && row._issues.length === 0) return;
+                if (currentFilter === 'checked' && row._status !== 'checked') return;
+                
+                visibleCount++;
+                
+                const tr = document.createElement('tr');
+                tr.className = row._status === 'checked' ? 'checked' : (row._issues.length > 0 ? 'error' : '');
+                
+                let html = `<td class="row-number">${idx + 1}</td>`;
+                headers.forEach(h => {
+                    const value = row[h] || '';
+                    html += `<td contenteditable="true" data-row="${idx}" data-col="${h}" ondblclick="enableEdit(this)">${escapeHtml(value)}</td>`;
+                });
+                html += `<td>
+                    <button class="btn-check" onclick="markChecked(${idx})">✓</button>
+                    <button class="btn-delete" onclick="deleteRow(${idx})">🗑️</button>
+                </td>`;
+                
+                tr.innerHTML = html;
+                tbody.appendChild(tr);
+            });
+            
+            // Event listenery do edycji
+            const cells = document.querySelectorAll('td[contenteditable="true"]');
+            cells.forEach(cell => {
+                cell.addEventListener('blur', function() {
+                    const rowIdx = parseInt(this.dataset.row);
+                    const colName = this.dataset.col;
+                    const newValue = this.innerText.trim();
+                    data[rowIdx][colName] = newValue;
+                    validateRow(rowIdx);
+                });
+            });
+        }
+        
+        // Walidacja pojedynczego wiersza
+        function validateRow(idx) {
+            const row = data[idx];
+            row._issues = [];
+            
+            // Sprawdzanie spacji
+            headers.forEach(col => {
+                const value = row[col] || '';
+                if (value.match(/^\s+|\s+$/) || value.match(/\s{2,}/)) {
+                    row._issues.push(`${col}: problemy ze spacjami`);
+                }
+            });
+            
+            // Sprawdzanie znaków specjalnych w nazwiskach/imionach
+            ['Nazwisko', 'Imię', 'NazwiskoO', 'ImięO'].forEach(col => {
+                const value = row[col] || '';
+                if (value && !value.match(/^[A-Za-ząćęłńóśźżA-Z\s\-']+$/)) {
+                    row._issues.push(`${col}: zawiera niedozwolone znaki`);
+                }
+            });
+            
+            renderTable();
+            updateStats();
+        }
+        
+        // Walidacja wszystkich wierszy
+        function validateAll() {
+            data.forEach((row, idx) => validateRow(idx));
+            showMessage('importMessage', `✓ Walidacja ukończona. ${data.filter(r => r._issues.length > 0).length} rekordów z problemami.`, 'success');
+            updateStats();
+        }
+        
+        // Zaznaczenie jako sprawdzane
+        function markChecked(idx) {
+            data[idx]._status = data[idx]._status === 'checked' ? 'unchecked' : 'checked';
+            renderTable();
+            updateStats();
+        }
+        
+        // Usunięcie wiersza
+        function deleteRow(idx) {
+            if (confirm('Czy na pewno chcesz usunąć ten wiersz?')) {
+                data.splice(idx, 1);
+                renderTable();
+                updateStats();
+            }
+        }
+        
+        // Aktualizacja statystyk
+        function updateStats() {
+            const total = data.length;
+            const checked = data.filter(r => r._status === 'checked').length;
+            const errors = data.filter(r => r._issues.length > 0).length;
+            const completeness = total > 0 ? Math.round((checked / total) * 100) : 0;
+            
+            document.getElementById('totalRows').innerText = total;
+            document.getElementById('checkedRows').innerText = checked;
+            document.getElementById('errorRows').innerText = errors;
+            document.getElementById('completeness').innerText = completeness + '%';
+        }
+        
+        // Export do CSV
+        function exportToCSV() {
+            let csv = headers.join('\t') + '\n';
+            data.forEach(row => {
+                csv += headers.map(h => row[h] || '').join('\t') + '\n';
+            });
+            
+            const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+            const link = document.createElement('a');
+            link.setAttribute('href', URL.createObjectURL(blob));
+            link.setAttribute('download', `genealogical-data-${new Date().toISOString().split('T')[0]}.csv`);
+            link.click();
+        }
+        
+        // Export do schowka
+        function exportToClipboard() {
+            let text = headers.join('\t') + '\n';
+            data.forEach(row => {
+                text += headers.map(h => row[h] || '').join('\t') + '\n';
+            });
+            
+            navigator.clipboard.writeText(text).then(() => {
+                showMessage('importMessage', '✓ Dane skopiowane do schowka!', 'success');
+            });
+        }
+        
+        // Wyszukiwanie
+        function search() {
+            const query = document.getElementById('searchInput').value.toLowerCase();
+            if (!query) {
+                currentFilter = 'all';
+                renderTable();
+                return;
+            }
+            
+            // Filtrowanie
+            const filtered = data.filter(row => {
+                return headers.some(h => (row[h] || '').toLowerCase().includes(query));
+            });
+            
+            // Highlight wyników
+            const tbody = document.getElementById('tableBody');
+            tbody.innerHTML = '';
+            filtered.forEach((row, idx) => {
+                const originalIdx = data.indexOf(row);
+                const tr = document.createElement('tr');
+                let html = `<td class="row-number">${originalIdx + 1}</td>`;
+                headers.forEach(h => {
+                    let value = row[h] || '';
+                    if (value.toLowerCase().includes(query)) {
+                        value = value.replace(new RegExp(query, 'gi'), m => `<mark style="background: yellow;">${m}</mark>`);
+                    }
+                    html += `<td contenteditable="true">${value}</td>`;
+                });
+                html += `<td><button class="btn-check" onclick="markChecked(${originalIdx})">✓</button></td>`;
+                tr.innerHTML = html;
+                tbody.appendChild(tr);
+            });
+        }
+        
+        // Filtrowanie
+        function filterByStatus(status) {
+            currentFilter = status;
+            renderTable();
+        }
+        
+        // Funkcje pomocnicze
+        function showMessage(elementId, message, type) {
+            const elem = document.getElementById(elementId);
+            elem.className = type === 'error' ? 'error-message' : 'success-message';
+            elem.innerText = message;
+            elem.style.display = 'block';
+        }
+        
+        function escapeHtml(text) {
+            const map = {
+                '&': '&amp;',
+                '<': '&lt;',
+                '>': '&gt;',
+                '"': '&quot;',
+                "'": '&#039;'
+            };
+            return text.replace(/[&<>"']/g, m => map[m]);
+        }
+        
+        function clearImport() {
+            document.getElementById('importData').value = '';
+        }
+        
+        // Załadowanie na start
+        window.addEventListener('load', function() {
+            console.log('📊 Genealogical Data Validator loaded');
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <title>Wyczyść Supabase (Fetch API)</title>
+    <style>
+        body { 
+            font-family: monospace; 
+            padding: 30px; 
+            background: #1a1a1a; 
+            color: #0f0;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        h1 { color: #f00; margin-bottom: 20px; }
+        .status { 
+            margin: 15px 0; 
+            padding: 10px; 
+            border-left: 4px solid #0f0; 
+            background: #0a0a0a;
+        }
+        .error { border-left-color: #f00; color: #f00; }
+        .warning { border-left-color: #ff0; color: #ff0; }
+        button { 
+            padding: 15px 30px; 
+            background: #f00; 
+            color: white; 
+            border: none; 
+            cursor: pointer; 
+            margin: 20px 0;
+            font-size: 16px;
+            border-radius: 5px;
+        }
+        button:hover { background: #c00; }
+        #output { margin-top: 30px; }
+    </style>
+</head>
+<body>
+    <h1>🧹 WYCZYŚĆ SUPABASE (FETCH API)</h1>
+    <p>⚠️ OSTRZEŻENIE: To usunie WSZYSTKIE rekordy z public_imports!</p>
+    <button onclick="truncateTableFetch()">🗑️ WYCZYŚĆ TABELĘ</button>
+    <div id="output"></div>
+
+    <script>
+        function log(msg, type = 'info') {
+            const div = document.createElement('div');
+            div.className = `status ${type}`;
+            div.textContent = `[${new Date().toLocaleTimeString()}] ${msg}`;
+            document.getElementById('output').appendChild(div);
+            console.log(msg);
+            
+            // Scroll to bottom
+            div.scrollIntoView({ behavior: 'smooth' });
+        }
+
+        const SUPABASE_URL = 'https://jbwkrconzozhgzikabmv.supabase.co';
+        const SUPABASE_KEY = 'sb_publishable_X0Qm9TSqq0nOOtCo8RycMQ_PeirqbMt';
+
+        async function truncateTableFetch() {
+            if (!confirm('⚠️ NA PEWNO? To usunie WSZYSTKIE 22260 rekordów! Tego nie można cofnąć!')) {
+                log('❌ Anulowano', 'error');
+                return;
+            }
+
+            log('⏳ Usuwam wszystkie rekordy z tabeli public_imports...', 'warning');
+            
+            try {
+                // Używaj REST API Supabase bezpośrednio
+                // Filtr: id.gte.0 matchuje wszystkie rekordy z ID >= 0
+                log('⏳ Wysyłam DELETE request...', 'warning');
+                const url = `${SUPABASE_URL}/rest/v1/public_imports?id=gte.0`;
+                log(`URL: ${url}`, 'info');
+                
+                const response = await fetch(url, {
+                    method: 'DELETE',
+                    headers: {
+                        'apikey': SUPABASE_KEY,
+                        'Authorization': `Bearer ${SUPABASE_KEY}`,
+                        'Content-Type': 'application/json'
+                    }
+                });
+
+                log(`Status: ${response.status} ${response.statusText}`, 'info');
+
+                if (!response.ok) {
+                    const error = await response.text();
+                    log(`❌ Błąd HTTP ${response.status}:`, 'error');
+                    log(error, 'error');
+                    return;
+                }
+
+                log('✅ WSZYSTKIE REKORDY USUNIĘTE!', 'warning');
+                log('📊 Tabela jest teraz pusta', 'warning');
+                log('', 'info');
+                log('🔄 NASTĘPNE KROKI:', 'warning');
+                log('1. Otwórz import-ch-blin.html', 'info');
+                log('2. Załaduj plik CH BLIN.txt', 'info');
+                log('3. Mapuj kolumny prawidłowo', 'info');
+                log('4. Kliknij EKSPORTUJ DO SUPABASE', 'info');
+                log('5. Czekaj aż pasek postępu dojdzie do 100%', 'info');
+                log('6. Odśwież viewer-osd-v8.11.html', 'info');
+
+            } catch (error) {
+                log(`❌ Wyjątek: ${error.message}`, 'error');
+                log(`Stack: ${error.stack}`, 'error');
+            }
+        }
+
+        // Expose to window for button
+        window.truncateTableFetch = truncateTableFetch;
+        
+        log('✅ Skrypt załadowany - kliknij przycisk aby wyczyścić tabelę', 'warning');
+    </script>
+</body>
+</html>

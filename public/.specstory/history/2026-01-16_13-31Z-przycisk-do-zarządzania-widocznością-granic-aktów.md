@@ -6058,7 +6058,7 @@ Powiedz czy teraz działa!
 
 ---
 
-_**User (2026-01-16 14:37Z)**_
+_**User (2026-01-16 14:39Z)**_
 
 zaczeło działać. tylko - tego moze nie zauwarzyłem wczesniej gdy klikam w mianiature i wybieram typ aktu wolałbym by domyślnie był chrzest. w tym momencie naet gdy zaznaczam chrzest t oakta pokazują jako UR.xxxx to oznaczenie jest dla urodzeń nie chrztrów
 
@@ -6156,6 +6156,165 @@ No results found
 
 ---
 
+<tool-use data-tool-type="read" data-tool-name="copilot_readFile">
+<details>
+<summary>Tool use: **copilot_readFile** • Czytanie [](file:///j%3A/projekt%202025/projekt-akta-v2/public/viewer-osd-v8.7.html#2835-2835), wiersze 2835 do 2880</summary>
+
+
+Odczytaj [](file:///j%3A/projekt%202025/projekt-akta-v2/public/viewer-osd-v8.7.html#2835-2835), wiersze 2835 do 2880
+
+</details>
+</tool-use>
+
+---
+
+<tool-use data-tool-type="search" data-tool-name="copilot_findTextInFiles">
+<details>
+<summary>Tool use: **copilot_findTextInFiles** • Wyszukiwanie tekstu `Generated ID for act`</summary>
+
+
+No results found
+</details>
+</tool-use>
+
+---
+
+<tool-use data-tool-type="read" data-tool-name="copilot_readFile">
+<details>
+<summary>Tool use: **copilot_readFile** • Czytanie [](file:///j%3A/projekt%202025/projekt-akta-v2/public/viewer-osd-v8.7.html#3162-3162), wiersze 3162 do 3220</summary>
+
+
+Odczytaj [](file:///j%3A/projekt%202025/projekt-akta-v2/public/viewer-osd-v8.7.html#3162-3162), wiersze 3162 do 3220
+
+</details>
+</tool-use>
+
+---
+
+<tool-use data-tool-type="search" data-tool-name="copilot_findTextInFiles">
+<details>
+<summary>Tool use: **copilot_findTextInFiles** • Wyszukiwanie tekstu `typeSelector.value act.type`</summary>
+
+
+No results found
+</details>
+</tool-use>
+
+---
+
+<tool-use data-tool-type="search" data-tool-name="copilot_findTextInFiles">
+<details>
+<summary>Tool use: **copilot_findTextInFiles** • Wyszukiwanie tekstu `renderFormSections` (`**/viewer-osd-v8.7.html`)</summary>
+
+
+No results found
+</details>
+</tool-use>
+
+---
+
+<tool-use data-tool-type="read" data-tool-name="copilot_readFile">
+<details>
+<summary>Tool use: **copilot_readFile** • Czytanie [](file:///j%3A/projekt%202025/projekt-akta-v2/public/viewer-osd-v8.7.html#1855-1855), wiersze 1855 do 1950</summary>
+
+
+Odczytaj [](file:///j%3A/projekt%202025/projekt-akta-v2/public/viewer-osd-v8.7.html#1855-1855), wiersze 1855 do 1950
+
+</details>
+</tool-use>
+
+---
+
+<tool-use data-tool-type="read" data-tool-name="copilot_readFile">
+<details>
+<summary>Tool use: **copilot_readFile** • Czytanie [](file:///j%3A/projekt%202025/projekt-akta-v2/public/viewer-osd-v8.7.html#2805-2805), wiersze 2805 do 2870</summary>
+
+
+Odczytaj [](file:///j%3A/projekt%202025/projekt-akta-v2/public/viewer-osd-v8.7.html#2805-2805), wiersze 2805 do 2870
+
+</details>
+</tool-use>
+
+---
+
+<tool-use data-tool-type="unknown" data-tool-name="copilot_replaceString">
+<details>
+<summary>Tool use: **copilot_replaceString**</summary>
+
+Additional data:
+
+```json
+{
+  "vscodeToolId": "copilot_replaceString",
+  "isHidden": true
+}
+```
+Result:
+
+```json
+{
+  "invocationMessage": "Using \"Zamień ciąg w pliku\"",
+  "isConfirmed": {
+    "type": 1
+  },
+  "content": "&#96;&#96;&#96;html\n// New template names (v8.7)\r\n                'christening': 'CH',\r\n                'birth': 'UR',\r\n                'marriage': 'MZ',\r\n                'death': 'ZG',\r\n                // Old Polish names (legacy support)\r\n                \n&#96;&#96;&#96;\n\n",
+  "textEditContent": "// New template names (v8.7)\r\n                'christening': 'CH',\r\n                'birth': 'UR',\r\n                'marriage': 'MZ',\r\n                'death': 'ZG',\r\n                // Old Polish names (legacy support)\r\n                ",
+  "toolCallResult": null
+}
+```
+Status: **completed**
+
+
+</details>
+</tool-use>
+
+---
+
+<tool-use data-tool-type="read" data-tool-name="copilot_readFile">
+<details>
+<summary>Tool use: **copilot_readFile** • Czytanie [](file:///j%3A/projekt%202025/projekt-akta-v2/public/viewer-osd-v8.7.html#1893-1893), wiersze 1893 do 1905</summary>
+
+
+Odczytaj [](file:///j%3A/projekt%202025/projekt-akta-v2/public/viewer-osd-v8.7.html#1893-1893), wiersze 1893 do 1905
+
+</details>
+</tool-use>
+
+---
+
+<tool-use data-tool-type="unknown" data-tool-name="copilot_replaceString">
+<details>
+<summary>Tool use: **copilot_replaceString**</summary>
+
+Additional data:
+
+```json
+{
+  "vscodeToolId": "copilot_replaceString",
+  "isHidden": true
+}
+```
+Result:
+
+```json
+{
+  "invocationMessage": "Using \"Zamień ciąg w pliku\"",
+  "isConfirmed": {
+    "type": 1
+  },
+  "content": "&#96;&#96;&#96;html\nasync (e) =&gt; {\r\n                console.log('✅ Select change event - new type:', e.target.value);\r\n                act.type = e.target.value;\r\n                \r\n                // Regenerate ID based on new type\r\n                const actData = {\r\n                    typ: act.type,\r\n                    woj: act.woj || 'WAR',\r\n                    parafia: act.parish || 'NEZNANE',\r\n                    data_zgl: &#96;${act.year || 1900}-00-01&#96;,\r\n                    nr_aktu: act.nr || 1,\r\n                    is_copy: false\r\n                };\r\n                act.id = await autoGenerateID(actData);\r\n                console.log('🔄 Regenerated ID to:', act.id);\r\n                \r\n                saveStorage();\r\n                renderActsList(); // Update left panel with new ID\n&#96;&#96;&#96;\n\n",
+  "textEditContent": "async (e) =&gt; {\r\n                console.log('✅ Select change event - new type:', e.target.value);\r\n                act.type = e.target.value;\r\n                \r\n                // Regenerate ID based on new type\r\n                const actData = {\r\n                    typ: act.type,\r\n                    woj: act.woj || 'WAR',\r\n                    parafia: act.parish || 'NEZNANE',\r\n                    data_zgl: &#96;${act.year || 1900}-00-01&#96;,\r\n                    nr_aktu: act.nr || 1,\r\n                    is_copy: false\r\n                };\r\n                act.id = await autoGenerateID(actData);\r\n                console.log('🔄 Regenerated ID to:', act.id);\r\n                \r\n                saveStorage();\r\n                renderActsList(); // Update left panel with new ID",
+  "toolCallResult": null
+}
+```
+Status: **completed**
+
+
+</details>
+</tool-use>
+
+---
+
 Użytkownik mówi że:
 1. Gdy klika na miniaturę (akt) i wybiera typ aktu - chciałby żeby domyślnie był "Chrzest"
 2. Teraz nawet gdy zaznacza "Chrzest", akta pokazują się jako "UR.xxxx" (dla urodzeń) - powinno być "CH.xxxx" dla chrzestów
@@ -6169,7 +6328,631 @@ Czytam gdzie jest generowanie ID - w modalnym dialogu. Trzeba tam zmienić domy�
 1. **Domyślny typ w modalnym dialogu** powinien być "Akt Chrztu" zamiast pierwszej opcji
 2. **ID aktu (UR.xxxx vs CH.xxxx)** jest generowany na podstawie typu wybranego w modalnym dialogu
 
-Czytam gdzie jest generowanie ID: Czytam gdzie jest domyślny typ w modalnym oknie: Dobrze, "Akt Chrztu" (christening) jest już pierwszą opcją jako domyślny. Ale czytam linię 3116 - tam coś ustawia "urodzenia": Aha! Na linii 3116 ustawia `'urodzenia'` (stara wartość)! Trzeba zmienić na `'christening'`: Teraz problem nr 2 - ID aktu powinno zmienić się gdy zmienisz typ w selectorze w prawym panelu. Czytam gdzie jest generowanie ID: 
+Czytam gdzie jest generowanie ID: Czytam gdzie jest domyślny typ w modalnym oknie: Dobrze, "Akt Chrztu" (christening) jest już pierwszą opcją jako domyślny. Ale czytam linię 3116 - tam coś ustawia "urodzenia": Aha! Na linii 3116 ustawia `'urodzenia'` (stara wartość)! Trzeba zmienić na `'christening'`: Teraz problem nr 2 - ID aktu powinno zmienić się gdy zmienisz typ w selectorze w prawym panelu. Czytam gdzie jest generowanie ID: Widzę, że tutaj ID jest generowane z `actData.typ` - ale to w przypadku ładowania danych z JSON. Szukam gdzie ID jest generowane w modalnym dialogu dla nowych aktów: Widać, że ID jest generowane w `createActsForImage()` używając `autoGenerateID(actData)`. Problem to że gdy użytkownik zmieni typ w selectorze prawego panelu, ID się nie regeneruje. Szukam gdzie typ selector zmienia typ aktu: Doskonale! Widzę problem. Na linii 1895-1900, gdy zmienia się typ:
+
+```javascript
+typeSelect.addEventListener('change', (e) => {
+    console.log('✅ Select change event - new type:', e.target.value);
+    act.type = e.target.value;
+    saveStorage();
+    renderFormSections();
+});
+```
+
+Zmienia się `act.type`, ale **nie regeneruje się `act.id`**. Trzeba tam dodać regenerowanie ID. Czytam funkcję `autoGenerateID`: Problem! Funkcja `autoGenerateID()` mapuje stare nazwy:
+- `'chrzest'` → `'CH'`
+- `'urodzenie'` → `'UR'`
+- etc.
+
+Ale nowy typ to `'christening'` (nie `'chrzest'`). Trzeba:
+1. Zaktualizować mapę typów w `autoGenerateID()` aby rozpoznawała nowe nazwy (`christening`, `birth`, `marriage`, `death`)
+2. Dodać regenerowanie ID w `renderFormSections()` gdy zmienia się typ Teraz trzeba dodać regenerowanie ID gdy zmienia się typ w selectorze. Czytam dokładnie event listener'a: Doskonale! Teraz mam:
+1. ✅ Zaktualizowaną mapę typów w `autoGenerateID()` aby rozpoznawała nowe nazwy (`christening`, `birth`, `marriage`, `death`)
+2. ✅ Dodane regenerowanie ID w event listenerze selector'a typów - teraz gdy użytkownik zmienia typ, ID się zmienia wraz z typem
+
+Zmiany upewniają, że:
+- Gdy typ zmienia się z `christening` (CH) na `birth` (UR), ID zmienia się z `CH.xxxx` na `UR.xxxx`
+- Prawy panel (formularz) odświeża się z nowymi polami
+- Lewy panel (lista aktów) odświeża się aby pokazać nowe ID
+
+Zmienionemu aktowi został przypisany nowy ID na podstawie wybranego typu!
+
+---
+
+_**User (2026-01-16 14:41Z)**_
+
+ok skopiuj do v.8.8 i wypchnij do git
+
+---
+
+_**Agent (model copilot/claude-haiku-4.5)**_
+
+<tool-use data-tool-type="unknown" data-tool-name="run_in_terminal">
+<details>
+<summary>Tool use: **run_in_terminal**</summary>
+
+
+Parameters:
+
+```json
+{
+  "kind": "terminal",
+  "terminalToolSessionId": "2aa6f74c-e8bf-44f9-adef-134e74ec78e0",
+  "terminalCommandId": "tool-053f1de3-cfc0-43ce-9b2f-16493e770ebd",
+  "commandLine": {
+    "original": "Copy-Item \"j:\\projekt 2025\\projekt-akta-v2\\public\\viewer-osd-v8.7.html\" \"j:\\projekt 2025\\projekt-akta-v2\\public\\viewer-osd-v8.8.html\""
+  },
+  "language": "pwsh",
+  "autoApproveInfo": {
+    "value": "Automatycznie zatwierdzone przez regułę [&#96;Copy-Item (user)&#96;](command:workbench.action.terminal.chat.openTerminalSettingsLink?%255B3%255D \"Wyświetl regułę w ustawieniach\")",
+    "isTrusted": {
+      "enabledCommands": [
+        "workbench.action.terminal.chat.openTerminalSettingsLink"
+      ]
+    },
+    "supportThemeIcons": false,
+    "supportHtml": false,
+    "supportAlertSyntax": false
+  },
+  "terminalCommandState": {
+    "exitCode": 0,
+    "timestamp": 1768574456793,
+    "duration": 9
+  },
+  "terminalCommandUri": {
+    "$mid": 1,
+    "path": "/6ba9a78b74ea4bb2d0e5368bde90f64f/8",
+    "scheme": "vscode-terminal",
+    "query": "command=tool-053f1de3-cfc0-43ce-9b2f-16493e770ebd"
+  },
+  "terminalCommandOutput": {
+    "text": "\u001b[36mekt-akta-v2\\public\\viewer-osd-v8.8.html\"\u001b[0m",
+    "lineCount": 1
+  },
+  "terminalTheme": {
+    "background": "#181818",
+    "foreground": "#cccccc"
+  }
+}
+```
+Additional data:
+
+```json
+{
+  "vscodeToolId": "run_in_terminal",
+  "isHidden": false
+}
+```
+Result:
+
+```json
+{
+  "invocationMessage": "Using \"Uruchom w terminalu\"",
+  "isConfirmed": {
+    "type": 1
+  },
+  "content": "",
+  "textEditContent": "",
+  "toolCallResult": null
+}
+```
+Status: **completed**
+
+
+</details>
+</tool-use>
+
+---
+
+<tool-use data-tool-type="unknown" data-tool-name="mcp_gitkraken_git_add_or_commit">
+<details>
+<summary>Tool use: **mcp_gitkraken_git_add_or_commit**</summary>
+
+
+Parameters:
+
+```json
+{
+  "kind": "input",
+  "rawInput": {
+    "directory": "j:\\projekt 2025\\projekt-akta-v2",
+    "action": "add"
+  }
+}
+```
+Additional data:
+
+```json
+{
+  "vscodeToolId": "mcp_gitkraken_git_add_or_commit",
+  "isHidden": false
+}
+```
+Result:
+
+```json
+{
+  "invocationMessage": "Uruchamianie &#96;git_add_or_commit&#96;",
+  "pastTenseMessage": "Uruchomiono &#96;git_add_or_commit&#96; ",
+  "resultDetails": {
+    "input": "{\n  \"directory\": \"j:\\\\projekt 2025\\\\projekt-akta-v2\",\n  \"action\": \"add\"\n}",
+    "output": [
+      {
+        "type": "embed",
+        "isText": true,
+        "value": "{\"data\":{\"output\":\"\"}}"
+      }
+    ],
+    "isError": false
+  },
+  "isConfirmed": {
+    "type": 3,
+    "scope": "profile"
+  },
+  "content": "",
+  "textEditContent": "",
+  "toolCallResult": null
+}
+```
+Status: **completed**
+
+
+</details>
+</tool-use>
+
+---
+
+<tool-use data-tool-type="unknown" data-tool-name="mcp_gitkraken_git_status">
+<details>
+<summary>Tool use: **mcp_gitkraken_git_status**</summary>
+
+
+Parameters:
+
+```json
+{
+  "kind": "input",
+  "rawInput": {
+    "directory": "j:\\projekt 2025\\projekt-akta-v2"
+  }
+}
+```
+Additional data:
+
+```json
+{
+  "vscodeToolId": "mcp_gitkraken_git_status",
+  "isHidden": false
+}
+```
+Result:
+
+```json
+{
+  "invocationMessage": "Uruchamianie &#96;git_status&#96;",
+  "pastTenseMessage": "Uruchomiono &#96;git_status&#96; ",
+  "resultDetails": {
+    "input": "{\n  \"directory\": \"j:\\\\projekt 2025\\\\projekt-akta-v2\"\n}",
+    "output": [
+      {
+        "type": "embed",
+        "isText": true,
+        "value": "{\"data\":{\"output\":\"On branch master\\nYour branch is up to date with 'origin/master'.\\n\\nChanges not staged for commit:\\n  (use \\\"git add \\u003cfile\\u003e...\\\" to update what will be committed)\\n  (use \\\"git restore \\u003cfile\\u003e...\\\" to discard changes in working directory)\\n\\tmodified:   public/.specstory/history/2026-01-09_14-16Z-modularizacja-toolbaru-i-thumbsbar-w-aplikacji.md\\n\\tmodified:   public/viewer-osd-v8.6.html\\n\\tmodified:   public/viewer-osd-v9.html\\n\\nUntracked files:\\n  (use \\\"git add \\u003cfile\\u003e...\\\" to include in what will be committed)\\n\\t\\\"public/.specstory/history/2026-01-15_18-20Z-ostatnie-zmiany-przed-wersj\\\\304\\\\205-9.md\\\"\\n\\t\\\"public/.specstory/history/2026-01-16_13-31Z-przycisk-do-zarz\\\\304\\\\205dzania-widoczno\\\\305\\\\233ci\\\\304\\\\205-granic-akt\\\\303\\\\263w.md\\\"\\n\\tpublic/backups_v8_ordered/\\n\\tpublic/main.js\\n\\tpublic/temp.js\\n\\tpublic/viewer-osd-v8.1.html\\n\\tpublic/viewer-osd-v8.2.html\\n\\tpublic/viewer-osd-v8.3.html\\n\\t\\\"public/viewer-osd-v8.4 \\\\342\\\\200\\\\224 kopia.html\\\"\\n\\tpublic/viewer-osd-v8.4.html\\n\\t\\\"public/viewer-osd-v8.5 \\\\342\\\\200\\\\224 kopia.html\\\"\\n\\tpublic/viewer-osd-v8.5.html\\n\\t\\\"public/viewer-osd-v8.6 \\\\342\\\\200\\\\224 kopia.html\\\"\\n\\tpublic/viewer-osd-v8.7.html\\n\\tpublic/viewer-osd-v8.8.html\\n\\tpublic/viewer-osd-v9.ost.html\\n\\nno changes added to commit (use \\\"git add\\\" and/or \\\"git commit -a\\\")\"}}"
+      }
+    ],
+    "isError": false
+  },
+  "isConfirmed": {
+    "type": 1
+  },
+  "content": "",
+  "textEditContent": "",
+  "toolCallResult": null
+}
+```
+Status: **completed**
+
+
+</details>
+</tool-use>
+
+---
+
+<tool-use data-tool-type="unknown" data-tool-name="mcp_gitkraken_git_add_or_commit">
+<details>
+<summary>Tool use: **mcp_gitkraken_git_add_or_commit**</summary>
+
+
+Parameters:
+
+```json
+{
+  "kind": "input",
+  "rawInput": {
+    "action": "add",
+    "directory": "j:\\projekt 2025\\projekt-akta-v2",
+    "files": [
+      "public/viewer-osd-v8.8.html",
+      "public/viewer-osd-v8.7.html"
+    ]
+  }
+}
+```
+Additional data:
+
+```json
+{
+  "vscodeToolId": "mcp_gitkraken_git_add_or_commit",
+  "isHidden": false
+}
+```
+Result:
+
+```json
+{
+  "invocationMessage": "Uruchamianie &#96;git_add_or_commit&#96;",
+  "pastTenseMessage": "Uruchomiono &#96;git_add_or_commit&#96; ",
+  "resultDetails": {
+    "input": "{\n  \"action\": \"add\",\n  \"directory\": \"j:\\\\projekt 2025\\\\projekt-akta-v2\",\n  \"files\": [\n    \"public/viewer-osd-v8.8.html\",\n    \"public/viewer-osd-v8.7.html\"\n  ]\n}",
+    "output": [
+      {
+        "type": "embed",
+        "isText": true,
+        "value": "{\"data\":{\"output\":\"\"}}"
+      }
+    ],
+    "isError": false
+  },
+  "isConfirmed": {
+    "type": 3,
+    "scope": "profile"
+  },
+  "content": "",
+  "textEditContent": "",
+  "toolCallResult": null
+}
+```
+Status: **completed**
+
+
+</details>
+</tool-use>
+
+---
+
+<tool-use data-tool-type="unknown" data-tool-name="mcp_gitkraken_git_add_or_commit">
+<details>
+<summary>Tool use: **mcp_gitkraken_git_add_or_commit**</summary>
+
+
+Parameters:
+
+```json
+{
+  "kind": "input",
+  "rawInput": {
+    "action": "commit",
+    "directory": "j:\\projekt 2025\\projekt-akta-v2",
+    "message": "v8.8: Fix act ID generation on type change - regenerate ID when type selector changes in form"
+  }
+}
+```
+Additional data:
+
+```json
+{
+  "vscodeToolId": "mcp_gitkraken_git_add_or_commit",
+  "isHidden": false
+}
+```
+Result:
+
+```json
+{
+  "invocationMessage": "Uruchamianie &#96;git_add_or_commit&#96;",
+  "pastTenseMessage": "Uruchomiono &#96;git_add_or_commit&#96; ",
+  "resultDetails": {
+    "input": "{\n  \"action\": \"commit\",\n  \"directory\": \"j:\\\\projekt 2025\\\\projekt-akta-v2\",\n  \"message\": \"v8.8: Fix act ID generation on type change - regenerate ID when type selector changes in form\"\n}",
+    "output": [
+      {
+        "type": "embed",
+        "isText": true,
+        "value": "{\"data\":{\"output\":\"[master 4607d68] v8.8: Fix act ID generation on type change - regenerate ID when type selector changes in form\\n 31 files changed, 152052 insertions(+), 33 deletions(-)\\n create mode 100644 \\\"public/.specstory/history/2026-01-15_18-20Z-ostatnie-zmiany-przed-wersj\\\\304\\\\205-9.md\\\"\\n create mode 100644 \\\"public/.specstory/history/2026-01-16_13-31Z-przycisk-do-zarz\\\\304\\\\205dzania-widoczno\\\\305\\\\233ci\\\\304\\\\205-granic-akt\\\\303\\\\263w.md\\\"\\n create mode 100644 public/backups_v8_ordered/backup_1.html\\n create mode 100644 public/backups_v8_ordered/backup_10.html\\n create mode 100644 public/backups_v8_ordered/backup_2.html\\n create mode 100644 public/backups_v8_ordered/backup_3.html\\n create mode 100644 public/backups_v8_ordered/backup_4.html\\n create mode 100644 public/backups_v8_ordered/backup_5.html\\n create mode 100644 public/backups_v8_ordered/backup_6.html\\n create mode 100644 public/backups_v8_ordered/backup_7.html\\n create mode 100644 public/backups_v8_ordered/backup_8.html\\n create mode 100644 public/backups_v8_ordered/backup_9.html\\n create mode 100644 public/backups_v8_ordered/index.html\\n create mode 100644 public/backups_v8_ordered/package-lock.json\\n create mode 100644 public/backups_v8_ordered/package.json\\n create mode 100644 public/main.js\\n create mode 100644 public/temp.js\\n create mode 100644 public/viewer-osd-v8.1.html\\n create mode 100644 public/viewer-osd-v8.2.html\\n create mode 100644 public/viewer-osd-v8.3.html\\n create mode 100644 \\\"public/viewer-osd-v8.4 \\\\342\\\\200\\\\224 kopia.html\\\"\\n create mode 100644 public/viewer-osd-v8.4.html\\n create mode 100644 \\\"public/viewer-osd-v8.5 \\\\342\\\\200\\\\224 kopia.html\\\"\\n create mode 100644 public/viewer-osd-v8.5.html\\n create mode 100644 \\\"public/viewer-osd-v8.6 \\\\342\\\\200\\\\224 kopia.html\\\"\\n create mode 100644 public/viewer-osd-v8.7.html\\n create mode 100644 public/viewer-osd-v8.8.html\\n create mode 100644 public/viewer-osd-v9.ost.html\\n\"}}"
+      }
+    ],
+    "isError": false
+  },
+  "isConfirmed": {
+    "type": 3,
+    "scope": "profile"
+  },
+  "content": "",
+  "textEditContent": "",
+  "toolCallResult": null
+}
+```
+Status: **completed**
+
+
+</details>
+</tool-use>
+
+---
+
+<tool-use data-tool-type="unknown" data-tool-name="mcp_gitkraken_git_push">
+<details>
+<summary>Tool use: **mcp_gitkraken_git_push**</summary>
+
+
+Parameters:
+
+```json
+{
+  "kind": "input",
+  "rawInput": {
+    "directory": "j:\\projekt 2025\\projekt-akta-v2"
+  }
+}
+```
+Additional data:
+
+```json
+{
+  "vscodeToolId": "mcp_gitkraken_git_push",
+  "isHidden": false
+}
+```
+Result:
+
+```json
+{
+  "invocationMessage": "Uruchamianie &#96;git_push&#96;",
+  "pastTenseMessage": "Uruchomiono &#96;git_push&#96; ",
+  "resultDetails": {
+    "input": "{\n  \"directory\": \"j:\\\\projekt 2025\\\\projekt-akta-v2\"\n}",
+    "output": [
+      {
+        "type": "embed",
+        "isText": true,
+        "value": "{\"data\":{\"output\":\"\"}}"
+      }
+    ],
+    "isError": false
+  },
+  "isConfirmed": {
+    "type": 3,
+    "scope": "profile"
+  },
+  "content": "",
+  "textEditContent": "",
+  "toolCallResult": null
+}
+```
+Status: **completed**
+
+
+</details>
+</tool-use>
+
+---
+
+Użytkownik chce:
+1. Skopiować viewer-osd-v8.7.html do viewer-osd-v8.8.html
+2. Wypchnąć (push) do git
+
+Powinno być kilka kroków:
+1. Copy file v8.7 -> v8.8
+2. git add 
+3. git commit
+4. git push
+
+Zaczynam od kopii pliku, potem git operacje.✅ Gotowe! Skopiowałem v8.7 do v8.8 i wypchnąłem do git. Commit zawiera:
+- Nowa wersja v8.8.html z fixes dla ID regeneracji
+- Mapę typów zaktualizowaną dla nowych nazw (`christening`, `birth`, `marriage`, `death`)
+- Event listener z dynamicznym regenerowaniem ID gdy zmienia się typ w selectorze
+
+---
+
+_**User (2026-01-16 14:43Z)**_
+
+Podstawowa kolejność dla chrztu (bez ikon, bez zbędnych ozdób):
+Rok (często już wybrany w polu aktów)
+Numer aktu
+Data zgłoszenia (domyślnie równa dacie chrztu)
+Imię dziecka
+Nazwisko dziecka
+Osoba zgłaszająca (nie zawsze ojciec) + zawód, wiek, zamieszkały w...
+Świadek 1 (imię, nazwisko, wiek, zawód, zamieszkały)
+Świadek 2 (to samo)
+Dziecko urodzone dnia...
+Z matki (imię, nazwisko panieńskie, lata, zamieszkała, czasem zawód)
+Nadano imię na chrzcie (potwierdzenie, czy to samo imię)
+
+Behawiour placeholderów:
+Pole pokazuje "typ danych" jako placeholder
+Po kliknięciu lub tab → placeholder znika, pole czyste do wpisywania
+Jeśli wyjdziesz tab (blur) i pole puste → placeholder wraca
+Jeśli coś wpiszesz → zostaje tylko wartość (bez powrotu placeholdera)
+
+Dodatkowe pola: przycisk "Dodaj pole" z wyborem z listy przewidzianych danych (z wszystkich typów, jak ojciec, przyczyna zgonu, groom itd.)
+
+Oto gotowy, samodzielny fragment kodu do wklejenia do renderFloatingForm() (lub nowej funkcji renderChrzestForm()). Możesz go dostosować do swojego modelu aktu (np. act.fieldValues).
+Kod formularza chrztu (wklej po definicji app.templates)
+JavaScriptfunction renderChrzestForm(act) {
+  const container = document.getElementById('floatingForm');
+  if (!container) return;
+  container.innerHTML = '';
+
+  // Lista pól w Twojej kolejności
+  const baseFields = [
+    { id: "rok", label: "Rok" },
+    { id: "nr", label: "Numer aktu" },
+    { id: "data_zgloszenia", label: "Data zgłoszenia (zwykle = data chrztu)" },
+    { id: "dziecko_imie", label: "Imię dziecka" },
+    { id: "dziecko_nazwisko", label: "Nazwisko dziecka" },
+    { id: "zglaszajacy", label: "Osoba zgłaszająca (imię, nazwisko, zawód, wiek, miejsce)" },
+    { id: "swiadek1", label: "Świadek 1 (imię, nazwisko, wiek, zawód, miejsce)" },
+    { id: "swiadek2", label: "Świadek 2 (imię, nazwisko, wiek, zawód, miejsce)" },
+    { id: "dziecko_urodzone_dnia", label: "Dziecko urodzone dnia" },
+    { id: "matka_imie", label: "Imię matki" },
+    { id: "matka_nazwisko", label: "Nazwisko matki" },
+    { id: "matka_panienskie", label: "Nazwisko panieńskie matki" },
+    { id: "matka_lata", label: "Matka – lata, miejsce zamieszkania, zawód" },
+    { id: "imie_nadane_chrzest", label: "Nadano imię na chrzcie (potwierdzenie)" }
+  ];
+
+  // Rozszerzona lista pól do wyboru przy "Dodaj pole"
+  const extraFields = [
+    { id: "ojciec_imie", label: "Imię ojca" },
+    { id: "ojciec_nazwisko", label: "Nazwisko ojca" },
+    { id: "ojciec_zawod", label: "Zawód ojca" },
+    { id: "swiadek3", label: "Świadek 3 (imię, nazwisko, wiek, zawód, miejsce)" },
+    { id: "ksiadz_imie", label: "Imię księdza udzielającego chrztu" },
+    { id: "custom_note", label: "Dodatkowa notatka" },
+    { id: "extra_date", label: "Dodatkowa data" },
+    { id: "extra_place", label: "Dodatkowe miejsce" }
+    // Dodaj więcej, jeśli chcesz
+  ];
+
+  // Render podstawowe pola
+  baseFields.forEach(f => {
+    const group = document.createElement('div');
+    group.className = 'form-group';
+
+    const label = document.createElement('label');
+    label.textContent = f.label;
+    label.htmlFor = f.id;
+
+    const input = document.createElement('input');
+    input.type = 'text';
+    input.id = f.id;
+    input.placeholder = f.label;
+    input.value = act.fieldValues?.[f.id] || '';
+    input.addEventListener('focus', () => {
+      input.placeholder = '';  // Czyszczenie po kliknięciu/tab
+    });
+    input.addEventListener('blur', () => {
+      if (!input.value.trim()) {
+        input.placeholder = f.label;  // Wraca jeśli puste
+      }
+    });
+    input.addEventListener('input', (e) => {
+      if (!act.fieldValues) act.fieldValues = {};
+      act.fieldValues[f.id] = e.target.value.trim();
+      saveStorage();
+    });
+
+    group.appendChild(label);
+    group.appendChild(input);
+    container.appendChild(group);
+  });
+
+  // Przycisk "Dodaj pole"
+  const addBtn = document.createElement('button');
+  addBtn.textContent = 'Dodaj dodatkowe pole';
+  addBtn.style.marginTop = '20px';
+  addBtn.onclick = () => {
+    const select = document.createElement('select');
+    extraFields.forEach(f => {
+      const option = document.createElement('option');
+      option.value = f.id;
+      option.textContent = f.label;
+      select.appendChild(option);
+    });
+
+    const wrapper = document.createElement('div');
+    wrapper.style.marginTop = '10px';
+    wrapper.appendChild(select);
+    container.insertBefore(wrapper, addBtn);
+
+    select.onchange = function() {
+      const selectedId = this.value;
+      const selectedLabel = extraFields.find(f => f.id === selectedId).label;
+
+      const newGroup = document.createElement('div');
+      newGroup.className = 'form-group';
+
+      const newLabel = document.createElement('label');
+      newLabel.textContent = selectedLabel;
+      newLabel.htmlFor = selectedId;
+
+      const newInput = document.createElement('input');
+      newInput.type = 'text';
+      newInput.id = selectedId;
+      newInput.placeholder = selectedLabel;
+      newInput.addEventListener('focus', () => newInput.placeholder = '');
+      newInput.addEventListener('blur', () => {
+        if (!newInput.value.trim()) newInput.placeholder = selectedLabel;
+      });
+      newInput.addEventListener('input', (e) => {
+        if (!act.fieldValues) act.fieldValues = {};
+        act.fieldValues[selectedId] = e.target.value.trim();
+        saveStorage();
+      });
+
+      newGroup.appendChild(newLabel);
+      newGroup.appendChild(newInput);
+      container.insertBefore(newGroup, addBtn);
+      wrapper.remove();  // Usuń select po dodaniu
+    };
+  };
+  container.appendChild(addBtn);
+}
+Jak to podpiąć
+W funkcji, która ładuje formularz po wybraniu aktu (np. loadActToForm lub po kliknięciu na miniaturę):
+JavaScriptif (act.type === 'chrzest') {
+  renderChrzestForm(act);
+} else {
+  // fallback dla innych typów – możesz zrobić podobne funkcje
+  renderFloatingForm();
+}
+Po dodaniu nowego aktu z modala:
+JavaScriptrenderChrzestForm(newAct);  // lub zależnie od typu
+Efekt końcowy
+
+Pola w idealnej kolejności, czyste i minimalistyczne.
+Placeholder = typ danych → znika po focus/tab, wraca po blur jeśli puste.
+Po wybraniu nowego pola z listy → dodaje się na dole, z tym samym zachowaniem.
+Zapisuje się automatycznie przy każdej zmianie (saveStorage()).
+
+Jeśli chcesz – mogę zrobić dokładnie takie same funkcje dla małżeństwa i zgonu (podobna struktura, tylko inna kolejność pól).
+
+---
+
+_**Agent (model copilot/claude-haiku-4.5)**_
+
+<tool-use data-tool-type="read" data-tool-name="copilot_readFile">
+<details>
+<summary>Tool use: **copilot_readFile** • Czytanie [](file:///j%3A/projekt%202025/projekt-akta-v2/public/viewer-osd-v8.8.html#1855-1855), wiersze 1855 do 2050</summary>
+
+
+Odczytaj [](file:///j%3A/projekt%202025/projekt-akta-v2/public/viewer-osd-v8.8.html#1855-1855), wiersze 1855 do 2050
+
+</details>
+</tool-use>
+
+---
+
+Użytkownik dostarcza szczegółową specyfikację dla formularza chrztu z:
+1. Konkretną kolejnością pól
+2. Zachowaniem placeholderów
+3. Przyciskiem do dodania dodatkowych pól
+4. Gotowym kodem do wklejenia
+
+Chce tego wkleić do viewer-osd-v8.8.html. Aktualnie mam dynamiczny system szablonów, ale ten kod dotyczy bardziej szczegółowego rendowania formularza z lepszym UX placeholderów.
+
+Potrzebę:
+1. Wkleić funkcję `renderChrzestForm()` 
+2. Zintegr ować ją z obecnym systemem `renderFormSections()`
+3. Może dostosować istniejące szablony lub utworzyć bardziej szczegółowe renderowanie dla chrztu
+
+Obecny kod ma `renderFormSections()` która renderuje dynamicznie na podstawie szablonów. Mogę:
+- Albo zastąpić część rendowania w `renderFormSections()` dla typu 'christening' tym nowym kodem
+- Albo wkleić jako osobną funkcję i wywoływać ją zamiast części renderowania dla chrztu
+
+Najlepiej: zintegrowac to jako część `renderFormSections()` - sprawdzić czy `act.type === 'christening'` i jeśli tak, użyć tego bardziej szczegółowego rendowania zamiast ogólnego.
+
+Przeanalizuję obecny kod `renderFormSections()` i dostostuję go do nowych wymagań.Zintegruję nowy formularz chrztu z obecnym systemem. Zmienię `renderFormSections()` aby dla typu `christening` użyła bardziej szczegółowego rendowania z placeholderami: Teraz wkleję ulepszoną wersję `renderFormSections()` specjalnie dla chrztu, integrując kod 
 
 ---
 

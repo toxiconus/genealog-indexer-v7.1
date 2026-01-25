@@ -11,14 +11,15 @@
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
     <script>
-        // Firebase configuration - ZASTĄP SWOIMI KLUCZAMI Z KONSOLI FIREBASE
+        // Firebase configuration - ACTA Project
         const firebaseConfig = {
-            apiKey: "YOUR_API_KEY",
-            authDomain: "YOUR_PROJECT_ID.firebaseapp.com",
-            projectId: "YOUR_PROJECT_ID",
-            storageBucket: "YOUR_PROJECT_ID.appspot.com",
-            messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
-            appId: "YOUR_APP_ID"
+            apiKey: "AIzaSyAZ-d9kxHrijCW9P8ZXbZORvUPai0uzOXY",
+            authDomain: "acta-9ea64.firebaseapp.com",
+            projectId: "acta-9ea64",
+            storageBucket: "acta-9ea64.firebasestorage.app",
+            messagingSenderId: "1031481893980",
+            appId: "1:1031481893980:web:1598979629a824fdf0b299",
+            measurementId: "G-E6J3J4P41P"
         };
 
         // Initialize Firebase
@@ -285,6 +286,7 @@
             overflow: hidden;
             grid-column: 4;
             min-width: 300px;
+            max-height: 100%;
         }
         .right-panel.collapsed {
             min-width: 0;
@@ -367,6 +369,29 @@
             flex: 1;
             display: flex;
             flex-direction: column;
+            overflow-y: auto;
+            overflow-x: hidden;
+            padding-right: 4px;
+        }
+        .panel-content::-webkit-scrollbar {
+            width: 8px;
+        }
+        .panel-content::-webkit-scrollbar-track {
+            background: #1a1a1a;
+        }
+        .panel-content::-webkit-scrollbar-thumb {
+            background: #3a3a3a;
+            border-radius: 4px;
+        }
+        .panel-content::-webkit-scrollbar-thumb:hover {
+            background: #4a4a4a;
+        }
+        #formsContainer {
+            display: flex;
+            flex-direction: column;
+            flex: 1;
+            gap: 8px;
+            padding: 0;
         }
         .records-sidebar {
             width: 50px;
@@ -1749,22 +1774,66 @@
                     name: "Akt Chrztu",
                     sections: [
                         {
-                            id: "basic",
-                            title: "<i class='fas fa-water'></i> Podstawowe",
+                            id: "meta",
+                            title: "<i class='fas fa-book'></i> Metadane",
+                            expanded: true,
+                            fields: [
+                                {id: "christening_year", label: "Rok", type: "text"},
+                                {id: "christening_act_number", label: "Numer aktu", type: "text"}
+                            ]
+                        },
+                        {
+                            id: "registration",
+                            title: "<i class='fas fa-calendar'></i> Zgłoszenie",
+                            expanded: true,
+                            fields: [
+                                {id: "christening_registration_date", label: "Data zgłoszenia (zwykle = data chrztu)", type: "text"}
+                            ]
+                        },
+                        {
+                            id: "child",
+                            title: "<i class='fas fa-baby'></i> Dziecko",
                             expanded: true,
                             fields: [
                                 {id: "child_first_name", label: "Imię dziecka", type: "text"},
                                 {id: "child_last_name", label: "Nazwisko dziecka", type: "text"},
-                                {id: "christening_date", label: "Data chrztu", type: "text"}
+                                {id: "child_birth_date", label: "Dziecko urodzone dnia", type: "text"}
                             ]
                         },
                         {
-                            id: "parents",
-                            title: "<i class='fas fa-users'></i> Rodzice",
+                            id: "reporter",
+                            title: "<i class='fas fa-user'></i> Osoba zgłaszająca",
                             expanded: false,
                             fields: [
-                                {id: "father_name", label: "Ojciec", type: "text"},
-                                {id: "mother_name", label: "Matka", type: "text"}
+                                {id: "reporter_info", label: "Imię, nazwisko, zawód, wiek, miejsce", type: "text"}
+                            ]
+                        },
+                        {
+                            id: "witnesses",
+                            title: "<i class='fas fa-users'></i> Świadkowie",
+                            expanded: false,
+                            fields: [
+                                {id: "witness1_info", label: "Świadek 1 (imię, nazwisko, wiek, zawód, miejsce)", type: "text"},
+                                {id: "witness2_info", label: "Świadek 2 (imię, nazwisko, wiek, zawód, miejsce)", type: "text"}
+                            ]
+                        },
+                        {
+                            id: "mother",
+                            title: "<i class='fas fa-woman'></i> Matka",
+                            expanded: false,
+                            fields: [
+                                {id: "mother_first_name", label: "Imię matki", type: "text"},
+                                {id: "mother_last_name", label: "Nazwisko matki", type: "text"},
+                                {id: "mother_maiden_name", label: "Nazwisko panieńskie matki", type: "text"},
+                                {id: "mother_info", label: "Matka – lata, miejsce zamieszkania, zawód", type: "text"}
+                            ]
+                        },
+                        {
+                            id: "confirmation",
+                            title: "<i class='fas fa-check'></i> Potwierdzenie",
+                            expanded: false,
+                            fields: [
+                                {id: "christening_name", label: "Nadano imię na chrzcie (potwierdzenie)", type: "text"}
                             ]
                         }
                     ]
@@ -4027,8 +4096,10 @@
         }
 
         function loadStorage() {
-            if (!window.db) {
-                console.warn('⚠️ Firebase nie dostępny, ładowanie z localStorage');
+            // Check if user is authenticated before trying Firestore
+            const user = firebase.auth().currentUser;
+            if (!window.db || !user) {
+                console.log('⚠️ Firebase not available or user not authenticated, loading from localStorage');
                 const stored = localStorage.getItem('genealog_data');
                 if (stored) {
                     const data = JSON.parse(stored);
@@ -4048,7 +4119,8 @@
                 return;
             }
             
-            // Load from Firestore
+            // Load from Firestore if authenticated
+            console.log('🔥 Loading from Firestore for user:', user.email);
             db.collection('records').get().then((querySnapshot) => {
                 app.imageActs = [];
                 querySnapshot.forEach((docSnap) => {
@@ -4071,7 +4143,8 @@
                 if (app.images.length > 0) selectImage(0, true);
             }).catch((error) => {
                 console.error('❌ Error loading from Firestore:', error);
-                // Fallback
+                // Fallback to localStorage
+                console.log('🔄 Falling back to localStorage');
                 const stored = localStorage.getItem('genealog_data');
                 if (stored) {
                     const data = JSON.parse(stored);
@@ -4089,6 +4162,25 @@
                     if (app.images.length > 0) selectImage(0, true);
                 }
             });
+        }
+        
+        function checkLocalStorage() {
+            try {
+                const data = localStorage.getItem('genealog_data');
+                if (data) {
+                    const parsed = JSON.parse(data);
+                    const actsCount = parsed.imageActs?.length || 0;
+                    const imagesCount = parsed.images?.length || 0;
+                    console.log('📊 localStorage data:', { acts: actsCount, images: imagesCount, size: data.length });
+                    alert(`Dane w localStorage:\nAkty: ${actsCount}\nObrazy: ${imagesCount}\nRozmiar: ${(data.length/1024).toFixed(1)} KB`);
+                } else {
+                    console.log('❌ No data in localStorage');
+                    alert('Brak danych w localStorage');
+                }
+            } catch (error) {
+                console.error('❌ Error checking localStorage:', error);
+                alert('Błąd sprawdzania localStorage: ' + error.message);
+            }
         }
         
         function toggleFloatingForm(show = null) {
