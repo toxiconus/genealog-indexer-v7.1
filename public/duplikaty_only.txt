@@ -1,0 +1,1492 @@
+ID	ROK	Nr.	Nazwisko 	Imię	Miejscowość	ImięO	NazwiskoO	wO	IM	NM	wM	uwagi	UWAGI ORG	.	.	.	.	.	.	ImięOorg	ImDZorg	NazwiskoDZorg	ImięDZorg	Miejscowość	ImięOorg	NazwiskoOorg
+CH.LUB.BLIN.1787.012	1787	12	Kozak	Franciszka	Blinów	Błażej	Kozak		Zuzanna			II	Str 25 Fot 13							Blasius	Susanna	Kozak	Franciszka	Blinów		Kozak
+CH.LUB.BLIN.1787.012	1787	12	Sobotka	Franciszka	Blinów	Paweł	Sobotka		Marianna			III	Str 25 Fot 13							Paulus	Marianna	Sobotka	Franciszka	Blinów		Sobotka
+	1787		Bucon	Katarzyna			Bucon						nr karty 29									Bucon	Katarzyna			Bucon
+	1787		Mcionek	Marcin			Mcionek						nr karty 29									Mcionek	Marcin			Mcionek
+	1787		Obydź	Szymon			Obydź						nr karty 29									Obydź	Szymon			Obydź
+	1787		Pawlak	Jadwiga			Pawlak						nr karty 29									Pawlak	Jadwiga			Pawlak
+	1787		Solarz	Jadwiga			Solarz						nr karty 29									Solarz	Jadwiga			Solarz
+	1787		Wojtusiak	Szymon			Wojtusiak						nr karty 29									Wojtusiak	Szymon			Wojtusiak
+	1787		Woś	Marcin			Woś						nr karty 29									Woś	Marcin			Woś
+	1787		Babiarz	Agnieszka			Babiarz						nr karty 30									Babiarz	Agnieszka			Babiarz
+	1787		Jędrzejczak	Tomasz			Jędrzejczak						nr karty 30									Jędrzejczak	Tomasz			Jędrzejczak
+	1787		Kozaczek	Sebastian			Kozaczek						nr karty 30									Kozaczek	Sebastian			Kozaczek
+	1787		Kozak	Andrzej			Kozak						nr karty 30									Kozak	Andrzej			Kozak
+	1787		Krupa	Tomasz			Krupa						nr karty 30									Krupa	Tomasz			Krupa
+	1787		Kurczak	Paweł			Kurczak						nr karty 30									Kurczak	Paweł			Kurczak
+	1787		Mazurek	Katarzyna			Mazurek						nr karty 30									Mazurek	Katarzyna			Mazurek
+	1787		Tryska	Andrzej			Tryska						nr karty 30									Tryska	Andrzej			Tryska
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+						`																				
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+CH.LUB.BLIN.1788.031	1788	31	Gąsior	Agata			Gąsior						nr karty 31									Gąsior	Agata			Gąsior
+CH.LUB.BLIN.1788.031	1788	31	Kozaczek	Nikodem			Kozaczek						nr karty 31									Kozaczek	Nikodem			Kozaczek
+CH.LUB.BLIN.1788.031	1788	31	Kurczak	Paweł			Kurczak						nr karty 31									Kurczak	Paweł			Kurczak
+CH.LUB.BLIN.1788.031	1788	31	Pasternak	Kacper			Pasternak						nr karty 31									Pasternak	Kacper			Pasternak
+CH.LUB.BLIN.1788.031	1788	31	Woś	Zofia			Woś						nr karty 31									Woś	Zofia			Woś
+CH.LUB.BLIN.1788.032	1788	32	Czuba	Franciszka			Czuba						nr karty 32									Czuba	Franciszka			Czuba
+CH.LUB.BLIN.1788.032	1788	32	Łata	Wojciech			Łata						nr karty 32									Łata	Wojciech			Łata
+CH.LUB.BLIN.1788.032	1788	32	Piech	Józef			Piech						nr karty 32									Piech	Józef			Piech
+CH.LUB.BLIN.1788.033	1788	33	Bosak	Franciszka			Bosak						nr karty 33									Bosak	Franciszka			Bosak
+CH.LUB.BLIN.1788.033	1788	33	Czuba	Wojciech			Czuba						nr karty 33									Czuba	Wojciech			Czuba
+CH.LUB.BLIN.1788.033	1788	33	Pęk	Krzysztof			Pęk						nr karty 33									Pęk	Krzysztof			Pęk
+CH.LUB.BLIN.1788.033	1788	33	Pęk	Franciszka			Pęk						nr karty 33									Pęk	Franciszka			Pęk
+CH.LUB.BLIN.1788.033	1788	33	Skrzypek	Marianna			Skrzypek						nr karty 33									Skrzypek	Marianna			Skrzypek
+CH.LUB.BLIN.1788.033	1788	33	Szabat	Wojciech			Szabat						nr karty 33									Szabat	Wojciech			Szabat
+CH.LUB.BLIN.1788.033	1788	33	Tutka	Magdalena			Tutka						nr karty 33									Tutka	Magdalena			Tutka
+CH.LUB.BLIN.1788.033	1788	33	Wścisło	Antoni			Wścisło						nr karty 33									Wścisło	Antoni			Wścisło
+CH.LUB.BLIN.1788.034	1788	34	Bigos	Marianna			Bigos						nr karty 34									Bigos	Marianna			Bigos
+CH.LUB.BLIN.1788.034	1788	34	Kasperek	Jakub			Kasperek						nr karty 34									Kasperek	Jakub			Kasperek
+CH.LUB.BLIN.1788.034	1788	34	Koguc	Zofia			Koguc						nr karty 34									Koguc	Zofia			Koguc
+CH.LUB.BLIN.1788.034	1788	34	Machulek	Bartłomiej			Machulek						nr karty 34									Machulek	Bartłomiej			Machulek
+CH.LUB.BLIN.1788.034	1788	34	Michalska	Marianna			Michalska						nr karty 34									Michalska	Marianna			Michalska
+CH.LUB.BLIN.1788.034	1788	34	Mucha	Rozalia			Mucha						nr karty 34									Mucha	Rozalia			Mucha
+CH.LUB.BLIN.1788.034	1788	34	Paciorek	Jacenty			Paciorek						nr karty 34									Paciorek	Jacenty			Paciorek
+CH.LUB.BLIN.1788.034	1788	34	Siekierski	Bartłomiej			Siekierski						nr karty 34									Siekierski	Bartłomiej			Siekierski
+CH.LUB.BLIN.1788.035	1788	35	Białkowska	Jadwiga			Białkowska						nr karty 35									Białkowska	Jadwiga			Białkowska
+CH.LUB.BLIN.1788.035	1788	35	Gnat	Michał			Gnat						nr karty 35									Gnat	Michał			Gnat
+CH.LUB.BLIN.1788.035	1788	35	Kosidło	Michał			Kosidło						nr karty 35									Kosidło	Michał			Kosidło
+CH.LUB.BLIN.1788.035	1788	35	Kosidło	Franciszka			Kosidło						nr karty 35									Kosidło	Franciszka			Kosidło
+CH.LUB.BLIN.1788.035	1788	35	Paroch	Michał			Paroch						nr karty 35									Paroch	Michał			Paroch
+CH.LUB.BLIN.1788.035	1788	35	Pazdrak	Michał			Pazdrak						nr karty 35									Pazdrak	Michał			Pazdrak
+CH.LUB.BLIN.1788.035	1788	35	Szost	Łukasz			Szost						nr karty 35									Szost	Łukasz			Szost
+CH.LUB.BLIN.1788.036	1788	36	Baran	Jadwiga			Baran						nr karty 36									Baran	Jadwiga			Baran
+CH.LUB.BLIN.1788.036	1788	36	Jędrzejczak	Marianna			Jędrzejczak						nr karty 36									Jędrzejczak	Marianna			Jędrzejczak
+CH.LUB.BLIN.1788.036	1788	36	Kosidło	Paweł			Kosidło						nr karty 36									Kosidło	Paweł			Kosidło
+CH.LUB.BLIN.1788.036	1788	36	Pawlak	Katarzyna			Pawlak						nr karty 36									Pawlak	Katarzyna			Pawlak
+CH.LUB.BLIN.1788.036	1788	36	Stępień	Andrzej			Stępień						nr karty 36									Stępień	Andrzej			Stępień
+CH.LUB.BLIN.1789.037	1789	37	Babiarz	Agnieszka			Babiarz						nr karty 37									Babiarz	Agnieszka			Babiarz
+CH.LUB.BLIN.1789.037	1789	37	Kudrelek	Agnieszka			Kudrelek						nr karty 37									Kudrelek	Agnieszka			Kudrelek
+CH.LUB.BLIN.1789.037	1789	37	Machulek	Paweł			Machulek						nr karty 37									Machulek	Paweł			Machulek
+CH.LUB.BLIN.1789.037	1789	37	Pawłasek	Paweł			Pawłasek						nr karty 37									Pawłasek	Paweł			Pawłasek
+CH.LUB.BLIN.1789.037	1789	37	Samuel	Walenty			Samuel						nr karty 37									Samuel	Walenty			Samuel
+CH.LUB.BLIN.1789.037	1789	37	Stefański	Sebastian			Stefański						nr karty 37									Stefański	Sebastian			Stefański
+CH.LUB.BLIN.1789.037	1789	37	Wawro	Błażej			Wawro						nr karty 37									Wawro	Błażej			Wawro
+CH.LUB.BLIN.1789.038	1789	38	Brzeska	Franciszka			Brzeska						nr karty 38									Brzeska	Franciszka			Brzeska
+CH.LUB.BLIN.1789.038	1789	38	Brzeski	Kazimierz			Brzeski						nr karty 38									Brzeski	Kazimierz			Brzeski
+CH.LUB.BLIN.1789.038	1789	38	Kaczyński	Walenty			Kaczyński						nr karty 38									Kaczyński	Walenty			Kaczyński
+CH.LUB.BLIN.1789.038	1789	38	Kurczak	Maciej			Kurczak						nr karty 38									Kurczak	Maciej			Kurczak
+CH.LUB.BLIN.1789.038	1789	38	Kurczak	Józef			Kurczak						nr karty 38									Kurczak	Józef			Kurczak
+CH.LUB.BLIN.1789.038	1789	38	Pasternak	Franciszka			Pasternak						nr karty 38									Pasternak	Franciszka			Pasternak
+CH.LUB.BLIN.1789.038	1789	38	Widomski	Kazimierz			Widomski						nr karty 38									Widomski	Kazimierz			Widomski
+CH.LUB.BLIN.1789.038	1789	38	Woś	Kazimierz			Woś						nr karty 38									Woś	Kazimierz			Woś
+CH.LUB.BLIN.1789.039	1789	39	Kosidło	Zofia			Kosidło						nr karty 39									Kosidło	Zofia			Kosidło
+CH.LUB.BLIN.1789.039	1789	39	Kuś	Marianna			Kuś						nr karty 39									Kuś	Marianna			Kuś
+CH.LUB.BLIN.1789.039	1789	39	Machulek	Józef			Machulek						nr karty 39									Machulek	Józef			Machulek
+CH.LUB.BLIN.1789.039	1789	39	Obydź	Wojciech			Obydź						nr karty 39									Obydź	Wojciech			Obydź
+CH.LUB.BLIN.1789.040	1789	40	Czerein	Anna			Czerein						nr karty 40									Czerein	Anna			Czerein
+CH.LUB.BLIN.1789.040	1789	40	Pasternak	Anna			Pasternak						nr karty 40									Pasternak	Anna			Pasternak
+CH.LUB.BLIN.1789.040	1789	40	Pazdrak	Marianna			Pazdrak						nr karty 40									Pazdrak	Marianna			Pazdrak
+CH.LUB.BLIN.1789.040	1789	40	Widomski	Jakub			Widomski						nr karty 40									Widomski	Jakub			Widomski
+CH.LUB.BLIN.1789.041	1789	41	Bzdyrak	Franciszek			Bzdyrak						nr karty 41									Bzdyrak	Franciszek			Bzdyrak
+CH.LUB.BLIN.1789.041	1789	41	Goch	Franciszek			Goch						nr karty 41									Goch	Franciszek			Goch
+CH.LUB.BLIN.1789.041	1789	41	Haber	Jadwiga			Haber						nr karty 41									Haber	Jadwiga			Haber
+CH.LUB.BLIN.1789.041	1789	41	Kozaczek	Michał			Kozaczek						nr karty 41									Kozaczek	Michał			Kozaczek
+CH.LUB.BLIN.1789.041	1789	41	Mcionek	Jacenty			Mcionek						nr karty 41									Mcionek	Jacenty			Mcionek
+CH.LUB.BLIN.1789.041	1789	41	Siemian	Marianna			Siemian						nr karty 41									Siemian	Marianna			Siemian
+CH.LUB.BLIN.1789.041	1789	41	Skrzypek	Bartłomiej			Skrzypek						nr karty 41									Skrzypek	Bartłomiej			Skrzypek
+CH.LUB.BLIN.1789.041	1789	41	Zieleński	Augustyn			Zieleński						nr karty 41									Zieleński	Augustyn			Zieleński
+CH.LUB.BLIN.1789.042	1789	42	Barbarzak	Szymon			Barbarzak						nr karty 42									Barbarzak	Szymon			Barbarzak
+CH.LUB.BLIN.1789.042	1789	42	Cielma	Franciszek			Cielma						nr karty 42									Cielma	Franciszek			Cielma
+CH.LUB.BLIN.1789.042	1789	42	Mcionek	Andrzej			Mcionek						nr karty 42									Mcionek	Andrzej			Mcionek
+CH.LUB.BLIN.1789.042	1789	42	Stępień	Urszula			Stępień						nr karty 42									Stępień	Urszula			Stępień
+CH.LUB.BLIN.1789.042	1789	42	Wieleba	Tomasz			Wieleba						nr karty 42									Wieleba	Tomasz			Wieleba
+CH.LUB.BLIN.1789.042	1789	42	Wścisło	Marcin			Wścisło						nr karty 42									Wścisło	Marcin			Wścisło
+CH.LUB.BLIN.1789.043	1789	43	Kozak	Tomasz			Kozak						nr karty 43									Kozak	Tomasz			Kozak
+CH.LUB.BLIN.1789.043	1789	43	Krawiecki	Andrzej			Krawiecki						nr karty 43									Krawiecki	Andrzej			Krawiecki
+CH.LUB.BLIN.1789.043	1789	43	Krupa	Katarzyna			Krupa						nr karty 43									Krupa	Katarzyna			Krupa
+CH.LUB.BLIN.1789.043	1789	43	Kurczak	Konstancja			Kurczak						nr karty 43									Kurczak	Konstancja			Kurczak
+CH.LUB.BLIN.1789.043	1789	43	Kurczak	Andrzej			Kurczak						nr karty 43									Kurczak	Andrzej			Kurczak
+CH.LUB.BLIN.1789.043	1789	43	Matjaszek	Ewa			Matjaszek						nr karty 43									Matjaszek	Ewa			Matjaszek
+CH.LUB.BLIN.1790.044	1790	44	Czarny	Błażej			Czarny						nr karty 44									Czarny	Błażej			Czarny
+CH.LUB.BLIN.1790.044	1790	44	Dobrzyńska	Agata			Dobrzyńska						nr karty 44									Dobrzyńska	Agata			Dobrzyńska
+CH.LUB.BLIN.1790.044	1790	44	Głowacki	Walenty			Głowacki						nr karty 44									Głowacki	Walenty			Głowacki
+CH.LUB.BLIN.1790.044	1790	44	Igras	Marianna			Igras						nr karty 44									Igras	Marianna			Igras
+CH.LUB.BLIN.1790.044	1790	44	Sprysak	Sebastian			Sprysak						nr karty 44									Sprysak	Sebastian			Sprysak
+CH.LUB.BLIN.1790.044	1790	44	Żydek	Walenty			Żydek						nr karty 44									Żydek	Walenty			Żydek
+CH.LUB.BLIN.1790.045	1790	45	Bucon	Wojciech			Bucon						nr karty 45									Bucon	Wojciech			Bucon
+CH.LUB.BLIN.1790.045	1790	45	Kozak	Wojciech			Kozak						nr karty 45									Kozak	Wojciech			Kozak
+CH.LUB.BLIN.1790.045	1790	45	Kurczak	Wojciech			Kurczak						nr karty 45									Kurczak	Wojciech			Kurczak
+CH.LUB.BLIN.1790.045	1790	45	Wojtusiak	Agnieszka			Wojtusiak						nr karty 45									Wojtusiak	Agnieszka			Wojtusiak
+CH.LUB.BLIN.1790.046	1790	46	Bucon	Marianna			Bucon						nr karty 46									Bucon	Marianna			Bucon
+CH.LUB.BLIN.1790.046	1790	46	Bucon	Jan			Bucon						nr karty 46									Bucon	Jan			Bucon
+CH.LUB.BLIN.1790.046	1790	46	Chmiel	Marianna			Chmiel						nr karty 46									Chmiel	Marianna			Chmiel
+CH.LUB.BLIN.1790.046	1790	46	Grudzień	Krystyna			Grudzień						nr karty 46									Grudzień	Krystyna			Grudzień
+CH.LUB.BLIN.1790.046	1790	46	Kurczak	Marianna			Kurczak						nr karty 46									Kurczak	Marianna			Kurczak
+CH.LUB.BLIN.1790.046	1790	46	Wścisło	Jakub			Wścisło						nr karty 46									Wścisło	Jakub			Wścisło
+CH.LUB.BLIN.1790.047	1790	47	Czuba	Jakub			Czuba						nr karty 47									Czuba	Jakub			Czuba
+CH.LUB.BLIN.1790.047	1790	47	Łysak	Jakub			Łysak						nr karty 47									Łysak	Jakub			Łysak
+CH.LUB.BLIN.1790.047	1790	47	Machulek	Anna			Machulek						nr karty 47									Machulek	Anna			Machulek
+CH.LUB.BLIN.1790.047	1790	47	Mcionek	Jakub			Mcionek						nr karty 47									Mcionek	Jakub			Mcionek
+CH.LUB.BLIN.1790.047	1790	47	Pyć	Agnieszka			Pyć						nr karty 47									Pyć	Agnieszka			Pyć
+CH.LUB.BLIN.1790.047	1790	47	Sobutka	Małgorzata			Sobutka						nr karty 47									Sobutka	Małgorzata			Sobutka
+CH.LUB.BLIN.1790.047	1790	47	Szelaczok	Jan			Szelaczok						nr karty 47									Szelaczok	Jan			Szelaczok
+CH.LUB.BLIN.1790.048	1790	48	Baran	Jadwiga			Baran						nr karty 48									Baran	Jadwiga			Baran
+CH.LUB.BLIN.1790.048	1790	48	Kania	Marianna			Kania						nr karty 48									Kania	Marianna			Kania
+CH.LUB.BLIN.1790.048	1790	48	Kozaczek	Michał			Kozaczek						nr karty 48									Kozaczek	Michał			Kozaczek
+CH.LUB.BLIN.1790.048	1790	48	Machulek	Bartłomiej			Machulek						nr karty 48									Machulek	Bartłomiej			Machulek
+CH.LUB.BLIN.1790.048	1790	48	Mcionek	Michał			Mcionek						nr karty 48									Mcionek	Michał			Mcionek
+CH.LUB.BLIN.1790.048	1790	48	Pazdrak	Michał			Pazdrak						nr karty 48									Pazdrak	Michał			Pazdrak
+CH.LUB.BLIN.1790.048	1790	48	Szyszka	Wawrzyniec			Szyszka						nr karty 48									Szyszka	Wawrzyniec			Szyszka
+CH.LUB.BLIN.1790.049	1790	49	Bigos	Andrzej			Bigos						nr karty 49									Bigos	Andrzej			Bigos
+CH.LUB.BLIN.1790.049	1790	49	Ćwiek	Franciszek			Ćwiek						? nr karty 49									Ćwiek	Franciszek			Ćwiek
+CH.LUB.BLIN.1790.049	1790	49	Dziura	Agnieszka			Dziura						nr karty 49									Dziura	Agnieszka			Dziura
+CH.LUB.BLIN.1790.049	1790	49	Gargol	Teresa			Gargol						nr karty 49									Gargol	Teresa			Gargol
+CH.LUB.BLIN.1790.049	1790	49	Pawłasek	Katarzyna			Pawłasek						nr karty 49									Pawłasek	Katarzyna			Pawłasek
+CH.LUB.BLIN.1790.049	1790	49	Samuel	Jadwiga			Samuel						nr karty 49									Samuel	Jadwiga			Samuel
+CH.LUB.BLIN.1790.050	1790	50	Baran	Katarzyna			Baran						nr karty 50									Baran	Katarzyna			Baran
+CH.LUB.BLIN.1790.050	1790	50	Bryton	Marianna			Bryton						nr karty 50									Bryton	Marianna			Bryton
+CH.LUB.BLIN.1790.050	1790	50	Kot	Katarzyna			Kot						nr karty 50									Kot	Katarzyna			Kot
+CH.LUB.BLIN.1790.050	1790	50	Kurczak	Marcin			Kurczak						nr karty 50									Kurczak	Marcin			Kurczak
+CH.LUB.BLIN.1790.050	1790	50	Pasternak	Marcin			Pasternak						nr karty 50									Pasternak	Marcin			Pasternak
+CH.LUB.BLIN.1790.050	1790	50	Sobutka	Katarzyna			Sobutka						nr karty 50									Sobutka	Katarzyna			Sobutka
+CH.LUB.BLIN.1790.050	1790	50	Szabat	Tomasz			Szabat						nr karty 50									Szabat	Tomasz			Szabat
+CH.LUB.BLIN.1790.051	1790	51	Boczek	Tomasz			Boczek						nr karty 51									Boczek	Tomasz			Boczek
+CH.LUB.BLIN.1790.051	1790	51	Machulek	Agnieszka			Machulek						nr karty 51									Machulek	Agnieszka			Machulek
+CH.LUB.BLIN.1790.051	1790	51	Michalska	Agnieszka			Michalska						nr karty 51									Michalska	Agnieszka			Michalska
+CH.LUB.BLIN.1790.051	1790	51	Paciorek	Ewa			Paciorek						nr karty 51									Paciorek	Ewa			Paciorek
+CH.LUB.BLIN.1790.051	1790	51	Pasternak	Ewa			Pasternak						nr karty 51									Pasternak	Ewa			Pasternak
+CH.LUB.BLIN.1790.051	1790	51	Pęk	Ewa			Pęk						nr karty 51									Pęk	Ewa			Pęk
+CH.LUB.BLIN.1791.052	1791	52	Baran	Walenty			Baran						nr karty 52									Baran	Walenty			Baran
+CH.LUB.BLIN.1791.052	1791	52	Jagosiak	Marianna			Jagosiak						? nr karty 52									Jagosiak	Marianna			Jagosiak
+CH.LUB.BLIN.1791.052	1791	52	Kuś	Marianna			Kuś						? nr karty 52									Kuś	Marianna			Kuś
+CH.LUB.BLIN.1791.052	1791	52	Obydź	Walenty			Obydź						nr karty 52									Obydź	Walenty			Obydź
+CH.LUB.BLIN.1791.052	1791	52	Paluchowski	Józef			Paluchowski						nr karty 52									Paluchowski	Józef			Paluchowski
+CH.LUB.BLIN.1791.052	1791	52	Siembida	Walenty			Siembida						nr karty 52									Siembida	Walenty			Siembida
+CH.LUB.BLIN.1791.053	1791	53	Bosak	Marianna			Bosak						nr karty 53									Bosak	Marianna			Bosak
+CH.LUB.BLIN.1791.053	1791	53	Gnat	Marianna			Gnat						nr karty 53									Gnat	Marianna			Gnat
+CH.LUB.BLIN.1791.053	1791	53	Kasperek	Marianna			Kasperek						nr karty 53									Kasperek	Marianna			Kasperek
+CH.LUB.BLIN.1791.053	1791	53	Kolasza	Józef			Kolasza						nr karty 53									Kolasza	Józef			Kolasza
+CH.LUB.BLIN.1791.053	1791	53	Krawiecki	Maciej			Krawiecki						nr karty 53									Krawiecki	Maciej			Krawiecki
+CH.LUB.BLIN.1791.053	1791	53	Mórawska	Franciszka			Mórawska						nr karty 53									Mórawska	Franciszka			Mórawska
+CH.LUB.BLIN.1791.053	1791	53	Skrzypek	Marianna			Skrzypek						nr karty 53									Skrzypek	Marianna			Skrzypek
+CH.LUB.BLIN.1791.053	1791	53	Tutka	Zofia			Tutka						nr karty 53									Tutka	Zofia			Tutka
+CH.LUB.BLIN.1791.054	1791	54	Haber	Anastazja			Haber						nr karty 54									Haber	Anastazja			Haber
+CH.LUB.BLIN.1791.054	1791	54	Kopyt	Wojciech			Kopyt						nr karty 54									Kopyt	Wojciech			Kopyt
+CH.LUB.BLIN.1791.054	1791	54	Kot	Józef			Kot						nr karty 54									Kot	Józef			Kot
+CH.LUB.BLIN.1791.055	1791	55	Kurczak	Antoni			Kurczak						nr karty 55									Kurczak	Antoni			Kurczak
+CH.LUB.BLIN.1791.055	1791	55	Pawłasek	Stanisław			Pawłasek						nr karty 55									Pawłasek	Stanisław			Pawłasek
+CH.LUB.BLIN.1791.056	1791	56	Czarny	Michał			Czarny						nr karty 56									Czarny	Michał			Czarny
+CH.LUB.BLIN.1791.056	1791	56	Łach	Franciszek			Łach						nr karty 56									Łach	Franciszek			Łach
+CH.LUB.BLIN.1791.056	1791	56	Sagan	Stanisław			Sagan						nr karty 56									Sagan	Stanisław			Sagan
+CH.LUB.BLIN.1791.057	1791	57	Brzeski	Andrzej			Brzeski						nr karty 57									Brzeski	Andrzej			Brzeski
+CH.LUB.BLIN.1791.057	1791	57	Bzdyrak	Marcin			Bzdyrak						nr karty 57									Bzdyrak	Marcin			Bzdyrak
+CH.LUB.BLIN.1791.057	1791	57	Ćwiek	Jadwiga			Ćwiek						? nr karty 57									Ćwiek	Jadwiga			Ćwiek
+CH.LUB.BLIN.1791.057	1791	57	Gnat	Szymon			Gnat						nr karty 57									Gnat	Szymon			Gnat
+CH.LUB.BLIN.1791.057	1791	57	Łata	Michał			Łata						nr karty 57									Łata	Michał			Łata
+CH.LUB.BLIN.1791.057	1791	57	Pazdrak	Jadwiga			Pazdrak						nr karty 57									Pazdrak	Jadwiga			Pazdrak
+CH.LUB.BLIN.1791.057	1791	57	Samuel	Tomasz			Samuel						nr karty 57									Samuel	Tomasz			Samuel
+CH.LUB.BLIN.1791.057	1791	57	Solarz	Katarzyna			Solarz						nr karty 57									Solarz	Katarzyna			Solarz
+CH.LUB.BLIN.1791.058	1791	58	Cielma	Tomasz			Cielma						nr karty 58									Cielma	Tomasz			Cielma
+CH.LUB.BLIN.1791.058	1791	58	Gil	Tomasz			Gil						nr karty 58									Gil	Tomasz			Gil
+CH.LUB.BLIN.1791.058	1791	58	Kurczak	Marianna			Kurczak						nr karty 58									Kurczak	Marianna			Kurczak
+CH.LUB.BLIN.1791.058	1791	58	Machulek	Marianna			Machulek						nr karty 58									Machulek	Marianna			Machulek
+CH.LUB.BLIN.1791.058	1791	58	Pawłasek	Tomasz			Pawłasek						nr karty 58									Pawłasek	Tomasz			Pawłasek
+CH.LUB.BLIN.1791.059	1791	59	Kurczak	Kacper			Kurczak						nr karty 59									Kurczak	Kacper			Kurczak
+CH.LUB.BLIN.1791.059	1791	59	Michałek	Agnieszka			Michałkówna						nr karty 59									Michałkówna	Agnieszka			Michałkówna
+CH.LUB.BLIN.1791.059	1791	59	Zaręba	Agnieszka			Zaręba						nr karty 59									Zaręba	Agnieszka			Zaręba
+CH.LUB.BLIN.1792.059	1792	59	Kurczak	Błażej			Kurczak						nr karty 59									Kurczak	Błażej			Kurczak
+CH.LUB.BLIN.1792.059	1792	59	Stefańska	Agnieszka			Stefańska						nr karty 59									Stefańska	Agnieszka			Stefańska
+CH.LUB.BLIN.1792.060	1792	60	Chmiel	Agata			Chmiel						nr karty 60									Chmiel	Agata			Chmiel
+CH.LUB.BLIN.1792.060	1792	60	Kurczak	Walenty			Kurczak						nr karty 60									Kurczak	Walenty			Kurczak
+CH.LUB.BLIN.1792.060	1792	60	Machulek	Józef			Machulek						nr karty 60									Machulek	Józef			Machulek
+CH.LUB.BLIN.1792.060	1792	60	Niemiro?	Marianna			Niemiro?						? nr karty 60									Niemirówna	Marianna			Niemirówna
+CH.LUB.BLIN.1792.060	1792	60	Sagan	Maciej			Sagan						nr karty 60									Sagan	Maciej			Sagan
+CH.LUB.BLIN.1792.060	1792	60	Zarzeczna	Marianna			Zarzeczna						nr karty 60									Zarzeczna	Marianna			Zarzeczna
+CH.LUB.BLIN.1792.060	1792	60	Zieleński	Maciej			Zieleński						nr karty 60									Zieleński	Maciej			Zieleński
+CH.LUB.BLIN.1792.061	1792	61	Biała	Franciszka			Biała						nr karty 61									Biała	Franciszka			Biała
+CH.LUB.BLIN.1792.061	1792	61	Kowalik	Zofia			Kowalik						nr karty 61									Kowalik	Zofia			Kowalik
+CH.LUB.BLIN.1792.061	1792	61	Kurczak	Zofia			Kurczak						nr karty 61									Kurczak	Zofia			Kurczak
+CH.LUB.BLIN.1792.061	1792	61	Siemian	Kazimierz			Siemian						nr karty 61									Siemian	Kazimierz			Siemian
+CH.LUB.BLIN.1792.061	1792	61	Sobutka	Marianna			Sobutka						nr karty 61									Sobutka	Marianna			Sobutka
+CH.LUB.BLIN.1792.061	1792	61	Sprysak	Maciej			Sprysak						nr karty 61									Sprysak	Maciej			Sprysak
+CH.LUB.BLIN.1792.061	1792	61	Szynka	Józef			Szynka						nr karty 61									Szynka	Józef			Szynka
+CH.LUB.BLIN.1792.062	1792	62	Baran	Anna			Baran						nr karty 62									Baran	Anna			Baran
+CH.LUB.BLIN.1792.062	1792	62	Goch	Wojciech			Goch						nr karty 62									Goch	Wojciech			Goch
+CH.LUB.BLIN.1792.062	1792	62	Kozaczek	Zofia			Kozaczek						nr karty 62									Kozaczek	Zofia			Kozaczek
+CH.LUB.BLIN.1792.062	1792	62	Machulek	Marianna			Machulek						nr karty 62									Machulek	Marianna			Machulek
+CH.LUB.BLIN.1792.062	1792	62	Pazdrak	Józef			Pazdrak						nr karty 62									Pazdrak	Józef			Pazdrak
+CH.LUB.BLIN.1792.062	1792	62	Pęk	Marianna			Pęk						nr karty 62									Pęk	Marianna			Pęk
+CH.LUB.BLIN.1792.062	1792	62	Sobutka	Zofia			Sobutka						nr karty 62									Sobutka	Zofia			Sobutka
+CH.LUB.BLIN.1792.062	1792	62	Zaręba	Franciszka			Zaręba						nr karty 62									Zaręba	Franciszka			Zaręba
+CH.LUB.BLIN.1792.063	1792	63	Dobrzyński	Antoni			Dobrzyński						nr karty 63									Dobrzyński	Antoni			Dobrzyński
+CH.LUB.BLIN.1792.063	1792	63	Gnat	Anna			Gnat						nr karty 63									Gnat	Anna			Gnat
+CH.LUB.BLIN.1792.063	1792	63	Kosidło	Katarzyna			Kosidło						nr karty 63									Kosidło	Katarzyna			Kosidło
+CH.LUB.BLIN.1792.063	1792	63	Mcionek	Marianna			Mcionek						nr karty 63									Mcionek	Marianna			Mcionek
+CH.LUB.BLIN.1792.063	1792	63	Mcionek	Jan			Mcionek						nr karty 63									Mcionek	Jan			Mcionek
+CH.LUB.BLIN.1792.063	1792	63	Mcionek	Anna			Mcionek						nr karty 63									Mcionek	Anna			Mcionek
+CH.LUB.BLIN.1792.063	1792	63	Nowakowski	Wincenty			Nowakowski						nr karty 63									Nowakowski	Wincenty			Nowakowski
+CH.LUB.BLIN.1792.064	1792	64	Bucon	Jakub			Bucon						nr karty 64									Bucon	Jakub			Bucon
+CH.LUB.BLIN.1792.064	1792	64	Kozaczek	Wawrzyniec			Kozaczek						nr karty 64									Kozaczek	Wawrzyniec			Kozaczek
+CH.LUB.BLIN.1792.064	1792	64	Rzeszutko	Małgorzata			Rzeszutko						nr karty 64									Rzeszutko	Małgorzata			Rzeszutko
+CH.LUB.BLIN.1792.064	1792	64	Sadowska	Anna			Sadowska						nr karty 64									Sadowska	Anna			Sadowska
+CH.LUB.BLIN.1792.064	1792	64	Stępień	Jadwiga			Stępień						nr karty 64									Stępień	Jadwiga			Stępień
+CH.LUB.BLIN.1792.064	1792	64	Wścisło	Jakub			Wścisło						nr karty 64									Wścisło	Jakub			Wścisło
+CH.LUB.BLIN.1792.064	1792	64	Wścisło	Anna			Wścisło						nr karty 64									Wścisło	Anna			Wścisło
+CH.LUB.BLIN.1792.065	1792	65	Bucon	Michał			Bucon						nr karty 65									Bucon	Michał			Bucon
+CH.LUB.BLIN.1792.065	1792	65	Chać	Jadwiga			Chaciówna						nr karty 65									Chaciówna	Jadwiga			Chaciówna
+CH.LUB.BLIN.1792.065	1792	65	Kania	Katarzyna			Kania						nr karty 65									Kania	Katarzyna			Kania
+CH.LUB.BLIN.1792.065	1792	65	Kosidło	Michał			Kosidło						nr karty 65									Kosidło	Michał			Kosidło
+CH.LUB.BLIN.1792.065	1792	65	Krzyszton	Andrzej			Krzyszton						nr karty 65									Krzyszton	Andrzej			Krzyszton
+CH.LUB.BLIN.1792.065	1792	65	Niewiadoma	Brygida			Niewiadoma						nr karty 65									Niewiadoma	Brygida			Niewiadoma
+CH.LUB.BLIN.1792.065	1792	65	Pasternak	Szymon			Pasternak						nr karty 65									Pasternak	Szymon			Pasternak
+CH.LUB.BLIN.1792.066	1792	66	Gręda	Marianna			Grędówna						nr karty 66									Grędówna	Marianna			Grędówna
+CH.LUB.BLIN.1792.066	1792	66	Kozaczek	Andrzej			Kozaczek						nr karty 66									Kozaczek	Andrzej			Kozaczek
+CH.LUB.BLIN.1792.066	1792	66	Kozak	Tomasz			Kozak						nr karty 66									Kozak	Tomasz			Kozak
+CH.LUB.BLIN.1792.066	1792	66	Kozak	Katarzyna			Kozak						nr karty 66									Kozak	Katarzyna			Kozak
+CH.LUB.BLIN.1792.066	1792	66	Mcionek	Szymon			Mcionek						nr karty 66									Mcionek	Szymon			Mcionek
+CH.LUB.BLIN.1792.066	1792	66	Wojtusiak	Andrzej			Wojtusiak						nr karty 66									Wojtusiak	Andrzej			Wojtusiak
+CH.LUB.BLIN.1792.066	1792	66	Zagaj	Marcin			Zagaj						nr karty 66									Zagaj	Marcin			Zagaj
+CH.LUB.BLIN.1792.067	1792	67	Bigos	Jan			Bigos						nr karty 67									Bigos	Jan			Bigos
+CH.LUB.BLIN.1792.067	1792	67	Kolasza	Jan			Kolasza						nr karty 67									Kolasza	Jan			Kolasza
+CH.LUB.BLIN.1792.067	1792	67	Kosidło	Jan			Kosidło						nr karty 67									Kosidło	Jan			Kosidło
+CH.LUB.BLIN.1792.067	1792	67	Kozak	Paweł			Kozak						nr karty 67									Kozak	Paweł			Kozak
+CH.LUB.BLIN.1793.067	1793	67	Barbarzak	Agnieszka			Barbarzak						nr karty 67									Barbarzak	Agnieszka			Barbarzak
+CH.LUB.BLIN.1793.067	1793	67	Dziura	Kacper			Dziura						nr karty 67									Dziura	Kacper			Dziura
+CH.LUB.BLIN.1793.067	1793	67	Wojtalas	Paweł			Wojtalas						nr karty 67									Wojtalas	Paweł			Wojtalas
+CH.LUB.BLIN.1793.068	1793	68	Babiarz	Sebastian			Babiarz						nr karty 68									Babiarz	Sebastian			Babiarz
+CH.LUB.BLIN.1793.068	1793	68	Baran	Agnieszka			Baran						nr karty 68									Baran	Agnieszka			Baran
+CH.LUB.BLIN.1793.068	1793	68	Boczek	Agnieszka			Boczek						nr karty 68									Boczek	Agnieszka			Boczek
+CH.LUB.BLIN.1793.068	1793	68	Haber	Marianna			Haber						nr karty 68									Haber	Marianna			Haber
+CH.LUB.BLIN.1793.068	1793	68	Jędrzejczak	Paweł			Jędrzejczak						nr karty 68									Jędrzejczak	Paweł			Jędrzejczak
+CH.LUB.BLIN.1793.068	1793	68	Kozaczek	Kazimierz			Kozaczek						nr karty 68									Kozaczek	Kazimierz			Kozaczek
+CH.LUB.BLIN.1793.068	1793	68	Samuel	Józef			Samuel						nr karty 68									Samuel	Józef			Samuel
+CH.LUB.BLIN.1793.068	1793	68	Staroch	Agnieszka			Staroch						nr karty 68									Staroch	Agnieszka			Staroch
+CH.LUB.BLIN.1793.069	1793	69	Bielak	Zofia			Bielak						nr karty 69									Bielak	Zofia			Bielak
+CH.LUB.BLIN.1793.069	1793	69	Czerein	Józef			Czerein						nr karty 69									Czerein	Józef			Czerein
+CH.LUB.BLIN.1793.069	1793	69	Machulek	Zofia			Machulek						nr karty 69									Machulek	Zofia			Machulek
+CH.LUB.BLIN.1793.069	1793	69	Mazurek	Józef			Mazurek						nr karty 69									Mazurek	Józef			Mazurek
+CH.LUB.BLIN.1793.069	1793	69	Paluchowska	Cecylia			Paluchowska						nr karty 69									Paluchowska	Cecylia			Paluchowska
+CH.LUB.BLIN.1793.069	1793	69	Pozdzic	Zofia			Pozdzic						? nr karty 69									Pozdzic	Zofia			Pozdzic
+CH.LUB.BLIN.1793.069	1793	69	Pozdzic	Marianna			Pozdzic						? nr karty 69									Pozdzic	Marianna			Pozdzic
+CH.LUB.BLIN.1793.069	1793	69	Świędra	Franciszka			Świędra						? nr karty 69									Świędra	Franciszka			Świędra
+CH.LUB.BLIN.1793.070	1793	70	Kopiwoda	Antoni			Kopiwoda						nr karty 70									Kopiwoda	Antoni			Kopiwoda
+CH.LUB.BLIN.1793.070	1793	70	Kurczak	Anna			Kurczak						nr karty 70									Kurczak	Anna			Kurczak
+CH.LUB.BLIN.1793.070	1793	70	Kuś	Anna			Kuś						nr karty 70									Kuś	Anna			Kuś
+CH.LUB.BLIN.1793.070	1793	70	Pasternak	Anna			Pasternak						nr karty 70									Pasternak	Anna			Pasternak
+CH.LUB.BLIN.1793.070	1793	70	Pawłasek	Jakub			Pawłasek						nr karty 70									Pawłasek	Jakub			Pawłasek
+CH.LUB.BLIN.1793.070	1793	70	Zaręba	Małgorzata			Zaręba						nr karty 70									Zaręba	Małgorzata			Zaręba
+CH.LUB.BLIN.1793.071	1793	71	Mórawska	Magdalena			Mórawska						nr karty 71									Mórawska	Magdalena			Mórawska
+CH.LUB.BLIN.1793.071	1793	71	Pawłasek	Antoni			Pawłasek						nr karty 71									Pawłasek	Antoni			Pawłasek
+CH.LUB.BLIN.1793.071	1793	71	Piech	Antoni			Piech						nr karty 71									Piech	Antoni			Piech
+CH.LUB.BLIN.1793.071	1793	71	Pyrtos	Magdalena			Pyrtos						nr karty 71									Pyrtos	Magdalena			Pyrtos
+CH.LUB.BLIN.1793.071	1793	71	Pyrtos	Antonina			Pyrtos						nr karty 71									Pyrtos	Antonina			Pyrtos
+CH.LUB.BLIN.1793.071	1793	71	Samuel	Anna			Samuel						nr karty 71									Samuel	Anna			Samuel
+CH.LUB.BLIN.1793.071	1793	71	Wścisło	Anna			Wścisło						nr karty 71									Wścisło	Anna			Wścisło
+CH.LUB.BLIN.1793.072	1793	72	Dziewa	Jakub			Dziewa						nr karty 72									Dziewa	Jakub			Dziewa
+CH.LUB.BLIN.1793.072	1793	72	Kopyt	Jakub			Kopyt						nr karty 72									Kopyt	Jakub			Kopyt
+CH.LUB.BLIN.1793.073	1793	73	Kudrelek	Katarzyna			Kudrelek						nr karty 73									Kudrelek	Katarzyna			Kudrelek
+CH.LUB.BLIN.1793.073	1793	73	Łach	Andrzej			Łach						nr karty 73									Łach	Andrzej			Łach
+CH.LUB.BLIN.1793.073	1793	73	Łata	Teresa			Łata						nr karty 73									Łata	Teresa			Łata
+CH.LUB.BLIN.1793.073	1793	73	Solarz	Agnieszka			Solarz						nr karty 73									Solarz	Agnieszka			Solarz
+CH.LUB.BLIN.1793.073	1793	73	Szopa	Marianna			Szopówna						nr karty 73									Szopówna	Marianna			Szopówna
+CH.LUB.BLIN.1793.073	1793	73	Wścisło	Szymon			Wścisło						nr karty 73									Wścisło	Szymon			Wścisło
+CH.LUB.BLIN.1793.074	1793	74	Bzdyrak	Marianna			Bzdyrak						nr karty 74									Bzdyrak	Marianna			Bzdyrak
+CH.LUB.BLIN.1793.074	1793	74	Kędziora	Marianna			Kędziora						nr karty 74									Kędziora	Marianna			Kędziora
+CH.LUB.BLIN.1793.074	1793	74	Kosidło	Tomasz			Kosidło						nr karty 74									Kosidło	Tomasz			Kosidło
+CH.LUB.BLIN.1793.074	1793	74	Mórawska	Barbara			Mórawska						nr karty 74									Mórawska	Barbara			Mórawska
+CH.LUB.BLIN.1793.074	1793	74	S?	Tomasz			S?						nieczytelne nr karty 74									S?	Tomasz			S?
+CH.LUB.BLIN.1793.074	1793	74	Serafin	Ewa			Serafin						nr karty 74									Serafin	Ewa			Serafin
+CH.LUB.BLIN.1793.074	1793	74	Sobutka	Agnieszka			Sobutka						nr karty 74									Sobutka	Agnieszka			Sobutka
+CH.LUB.BLIN.1794.075	1794	75	Barbarzak	Agnieszka			Barbarzak						nr karty 75									Barbarzak	Agnieszka			Barbarzak
+CH.LUB.BLIN.1794.075	1794	75	Ćwiek	Agnieszka			Ćwiek						? nr karty 75									Ćwiek	Agnieszka			Ćwiek
+CH.LUB.BLIN.1794.075	1794	75	Kamieńska	Zofia			Kamieńska						nr karty 75									Kamieńska	Zofia			Kamieńska
+CH.LUB.BLIN.1794.075	1794	75	Kurczak	Agnieszka			Kurczak						nr karty 75									Kurczak	Agnieszka			Kurczak
+CH.LUB.BLIN.1794.075	1794	75	Pyć	Marianna			Pyć						nr karty 75									Pyć	Marianna			Pyć
+CH.LUB.BLIN.1794.075	1794	75	Stefańska	Agata			Stefańska						nr karty 75									Stefańska	Agata			Stefańska
+CH.LUB.BLIN.1794.075	1794	75	Stępnik	Paweł			Stępnik						nr karty 75									Stępnik	Paweł			Stępnik
+CH.LUB.BLIN.1794.076	1794	76	Czuba	Zofia			Czuba						nr karty 76									Czuba	Zofia			Czuba
+CH.LUB.BLIN.1794.076	1794	76	Jagosiak	Józef			Jagosiak						nr karty 76									Jagosiak	Józef			Jagosiak
+CH.LUB.BLIN.1794.076	1794	76	Król	Agata			Król						nr karty 76									Król	Agata			Król
+CH.LUB.BLIN.1794.076	1794	76	Kurczak	Maciej			Kurczak						nr karty 76									Kurczak	Maciej			Kurczak
+CH.LUB.BLIN.1794.076	1794	76	Solarz	Zofia			Solarz						nr karty 76									Solarz	Zofia			Solarz
+CH.LUB.BLIN.1794.076	1794	76	Staruch	Walenty			Staruch						nr karty 76									Staruch	Walenty			Staruch
+CH.LUB.BLIN.1794.076	1794	76	Zdybel	Maciej			Zdybel						nr karty 76									Zdybel	Maciej			Zdybel
+CH.LUB.BLIN.1794.077	1794	77	Babiarz	Marianna			Babiarz						nr karty 77									Babiarz	Marianna			Babiarz
+CH.LUB.BLIN.1794.077	1794	77	Kopyt	Józef			Kopyt						nr karty 77									Kopyt	Józef			Kopyt
+CH.LUB.BLIN.1794.077	1794	77	Spyra	Franciszka			Spyra						? nr karty 77									Spyra	Franciszka			Spyra
+CH.LUB.BLIN.1794.078	1794	78	Boczek	Anna			Boczek						nr karty 78									Boczek	Anna			Boczek
+CH.LUB.BLIN.1794.078	1794	78	Haber	Marianna			Haber						nr karty 78									Haber	Marianna			Haber
+CH.LUB.BLIN.1794.078	1794	78	Łach	Anna			Łach						nr karty 78									Łach	Anna			Łach
+CH.LUB.BLIN.1794.078	1794	78	Machulek	Marianna			Machulek						nr karty 78									Machulek	Marianna			Machulek
+CH.LUB.BLIN.1794.078	1794	78	Scholastyka	Marianna			Scholastyka						nr karty 78									Scholastyka	Marianna			Scholastyka
+CH.LUB.BLIN.1794.078	1794	78	Szyska	Zofia			Szyska						nr karty 78									Szyska	Zofia			Szyska
+CH.LUB.BLIN.1794.079	1794	79	Czarny	Małgorzata			Czarny						nr karty 79									Czarny	Małgorzata			Czarny
+CH.LUB.BLIN.1794.079	1794	79	Dobrzyński	Jan			Dobrzyński						nr karty 79									Dobrzyński	Jan			Dobrzyński
+CH.LUB.BLIN.1794.079	1794	79	Gil	Marianna			Gil						nr karty 79									Gil	Marianna			Gil
+CH.LUB.BLIN.1794.079	1794	79	Głaz	Jakub			Głaz						nr karty 79									Głaz	Jakub			Głaz
+CH.LUB.BLIN.1794.079	1794	79	Machulek	Wawrzyniec			Machulek						nr karty 79									Machulek	Wawrzyniec			Machulek
+CH.LUB.BLIN.1794.079	1794	79	Mcionek	Piotr			Mcionek						nr karty 79									Mcionek	Piotr			Mcionek
+CH.LUB.BLIN.1794.079	1794	79	Pasternak	Antoni			Pasternak						nr karty 79									Pasternak	Antoni			Pasternak
+CH.LUB.BLIN.1794.080	1794	80	Kania	Anastazja			Kania						nr karty 80									Kania	Anastazja			Kania
+CH.LUB.BLIN.1794.080	1794	80	Kępa	Agnieszka			Kępa						nr karty 80									Kępa	Agnieszka			Kępa
+CH.LUB.BLIN.1794.080	1794	80	Rataj	Tekla			Rataj						nr karty 80									Rataj	Tekla			Rataj
+CH.LUB.BLIN.1794.081	1794	81	Czasaj	Katarzyna			Czasaj						nr karty 81									Czasaj	Katarzyna			Czasaj
+CH.LUB.BLIN.1794.081	1794	81	Kendziora	Mikołaj			Kendziora						nr karty 81									Kendziora	Mikołaj			Kendziora
+CH.LUB.BLIN.1794.081	1794	81	Kudrelek	Katarzyna			Kudrelek						nr karty 81									Kudrelek	Katarzyna			Kudrelek
+CH.LUB.BLIN.1794.081	1794	81	Machulek	Marianna			Machulek						nr karty 81									Machulek	Marianna			Machulek
+CH.LUB.BLIN.1794.081	1794	81	Michałek	Marianna			Michałek						nr karty 81									Michałek	Marianna			Michałek
+CH.LUB.BLIN.1794.081	1794	81	Paciorek	Andrzej			Paciorek						nr karty 81									Paciorek	Andrzej			Paciorek
+CH.LUB.BLIN.1794.081	1794	81	Pazdrak	Andrzej			Pazdrak						nr karty 81									Pazdrak	Andrzej			Pazdrak
+CH.LUB.BLIN.1794.081	1794	81	Wójtowicz	Marianna			Wójtowicz						nr karty 81									Wójtowicz	Marianna			Wójtowicz
+CH.LUB.BLIN.1794.082	1794	82	Bucon	Ewa			Bucon						nr karty 82									Bucon	Ewa			Bucon
+CH.LUB.BLIN.1794.082	1794	82	Pasternak	Adam			Pasternak						nr karty 82									Pasternak	Adam			Pasternak
+CH.LUB.BLIN.1795.082	1795	82	Bosniak	Maciej			Bosniak						nr karty 82									Bosniak	Maciej			Bosniak
+CH.LUB.BLIN.1795.082	1795	82	Kozaczek	Marianna			Kozaczek						nr karty 82									Kozaczek	Marianna			Kozaczek
+CH.LUB.BLIN.1795.082	1795	82	Krupa	Sebastian			Krupa						nr karty 82									Krupa	Sebastian			Krupa
+CH.LUB.BLIN.1795.082	1795	82	Wojtalas	Marianna			Wojtalas						nr karty 82									Wojtalas	Marianna			Wojtalas
+CH.LUB.BLIN.1795.082	1795	82	Wojtusiak	Agnieszka			Wojtusiak						nr karty 82									Wojtusiak	Agnieszka			Wojtusiak
+CH.LUB.BLIN.1795.083	1795	83	Brzeska	Franciszka			Brzeska						nr karty 83									Brzeska	Franciszka			Brzeska
+CH.LUB.BLIN.1795.083	1795	83	Bucon	Wojciech			Bucon						nr karty 83									Bucon	Wojciech			Bucon
+CH.LUB.BLIN.1795.083	1795	83	Ćwikła	Agnieszka			Ćwikła						nr karty 83									Ćwikła	Agnieszka			Ćwikła
+CH.LUB.BLIN.1795.083	1795	83	Czapla	Marianna			Czapla						nr karty 83									Czapla	Marianna			Czapla
+CH.LUB.BLIN.1795.083	1795	83	Hacia	Grzegorz			Hacia						nr karty 83									Hacia	Grzegorz			Hacia
+CH.LUB.BLIN.1795.083	1795	83	Kurczak	Zofia			Kurczak						nr karty 83									Kurczak	Zofia			Kurczak
+CH.LUB.BLIN.1795.083	1795	83	Paciorek	Wojciech			Paciorek						nr karty 83									Paciorek	Wojciech			Paciorek
+CH.LUB.BLIN.1795.083	1795	83	Pawłasek	Marianna			Pawłasek						nr karty 83									Pawłasek	Marianna			Pawłasek
+CH.LUB.BLIN.1795.083	1795	83	Zieleński	Józef			Zieleński						nr karty 83									Zieleński	Józef			Zieleński
+CH.LUB.BLIN.1795.084	1795	84	Gnat	Wojciech			Gnat						nr karty 84									Gnat	Wojciech			Gnat
+CH.LUB.BLIN.1795.084	1795	84	Goch	Marianna			Goch						nr karty 84									Goch	Marianna			Goch
+CH.LUB.BLIN.1795.084	1795	84	Koguc	Wojciech			Koguc						nr karty 84									Koguc	Wojciech			Koguc
+CH.LUB.BLIN.1795.084	1795	84	Kozak	Stanisław			Kozak						nr karty 84									Kozak	Stanisław			Kozak
+CH.LUB.BLIN.1795.084	1795	84	Kurczak	Zofia			Kurczak						nr karty 84									Kurczak	Zofia			Kurczak
+CH.LUB.BLIN.1795.084	1795	84	Pazdrak	Jan			Pazdrak						nr karty 84									Pazdrak	Jan			Pazdrak
+CH.LUB.BLIN.1795.084	1795	84	Strzemieński	Jan			Strzemieński						nr karty 84									Strzemieński	Jan			Strzemieński
+CH.LUB.BLIN.1795.084	1795	84	Tutka	Wojciech			Tutka						nr karty 84									Tutka	Wojciech			Tutka
+CH.LUB.BLIN.1795.084	1795	84	Zdybel	Anna			Zdybel						nr karty 84									Zdybel	Anna			Zdybel
+CH.LUB.BLIN.1795.085	1795	85	Brzeska	Marianna			Brzeska						nr karty 85									Brzeska	Marianna			Brzeska
+CH.LUB.BLIN.1795.085	1795	85	Kurczak	Jakub			Kurczak						nr karty 85									Kurczak	Jakub			Kurczak
+CH.LUB.BLIN.1795.085	1795	85	Samuel	Wawrzyniec			Samuel						nr karty 85									Samuel	Wawrzyniec			Samuel
+CH.LUB.BLIN.1795.085	1795	85	Samuel	Marianna			Samuel						nr karty 85									Samuel	Marianna			Samuel
+CH.LUB.BLIN.1795.085	1795	85	Smyl	Anna			Smyl						nr karty 85									Smyl	Anna			Smyl
+CH.LUB.BLIN.1795.085	1795	85	Sprysak	Marianna			Sprysak						nr karty 85									Sprysak	Marianna			Sprysak
+CH.LUB.BLIN.1795.085	1795	85	Trepka	Marianna			Trepkówna						nr karty 85									Trepkówna	Marianna			Trepkówna
+CH.LUB.BLIN.1795.085	1795	85	Zaręba	Paweł			Zaręba						nr karty 85									Zaręba	Paweł			Zaręba
+CH.LUB.BLIN.1795.086	1795	86	Ćwiek	Katarzyna			Ćwiek						nr karty 86									Ćwiek	Katarzyna			Ćwiek
+CH.LUB.BLIN.1795.086	1795	86	Kędziera	Zofia			Kędziera						nr karty 86									Kędziera	Zofia			Kędziera
+CH.LUB.BLIN.1795.086	1795	86	Kosidło	Franciszek			Kosidło						nr karty 86									Kosidło	Franciszek			Kosidło
+CH.LUB.BLIN.1795.089	1795	89	Głas	Sebastian			Głas						nr karty 89									Głas	Sebastian			Głas
+CH.LUB.BLIN.1795.089	1795	89	Wojtysiak	Józef			Wojtysiak						nr karty 89									Wojtysiak	Józef			Wojtysiak
+CH.LUB.BLIN.1796.089	1796	89	Kosidło	Maciej			Kosidło						nr karty 89									Kosidło	Maciej			Kosidło
+CH.LUB.BLIN.1796.089	1796	89	Machulek	Paweł			Machulek						nr karty 89									Machulek	Paweł			Machulek
+CH.LUB.BLIN.1796.089	1796	89	Rembacz	Agnieszka			Rembacz						nr karty 89									Rembacz	Agnieszka			Rembacz
+CH.LUB.BLIN.1796.090	1796	90	Czarna	Franciszka			Czarna						nr karty 90									Czarna	Franciszka			Czarna
+CH.LUB.BLIN.1796.090	1796	90	Kędziera	Franciszka			Kędziera						nr karty 90									Kędziera	Franciszka			Kędziera
+CH.LUB.BLIN.1796.090	1796	90	Kolasa	Walenty			Kolasa						nr karty 90									Kolasa	Walenty			Kolasa
+CH.LUB.BLIN.1796.090	1796	90	Kopyt	Maciej			Kopyt						nr karty 90									Kopyt	Maciej			Kopyt
+CH.LUB.BLIN.1796.090	1796	90	Kozak	Józef			Kozak						nr karty 90									Kozak	Józef			Kozak
+CH.LUB.BLIN.1796.090	1796	90	Obydź	Anna			Obydź						nr karty 90									Obydź	Anna			Obydź
+CH.LUB.BLIN.1796.090	1796	90	Stefańska	Zofia			Stefańska						nr karty 90									Stefańska	Zofia			Stefańska
+CH.LUB.BLIN.1796.091	1796	91	Bucon	Wojciech			Bucon						nr karty 91									Bucon	Wojciech			Bucon
+CH.LUB.BLIN.1796.091	1796	91	Gil	Zofia			Gil						nr karty 91									Gil	Zofia			Gil
+CH.LUB.BLIN.1796.091	1796	91	Jędrzejczak	Maciej			Jędrzejczak						nr karty 91									Jędrzejczak	Maciej			Jędrzejczak
+CH.LUB.BLIN.1796.091	1796	91	Kaczyński	Józef			Kaczyński						nr karty 91									Kaczyński	Józef			Kaczyński
+CH.LUB.BLIN.1796.091	1796	91	Kozak	Anna			Kozak						nr karty 91									Kozak	Anna			Kozak
+CH.LUB.BLIN.1796.091	1796	91	Pasternak	Maciej			Pasternak						nr karty 91									Pasternak	Maciej			Pasternak
+CH.LUB.BLIN.1796.091	1796	91	Rzeszutko	Franciszka			Rzeszutko						nr karty 91									Rzeszutko	Franciszka			Rzeszutko
+CH.LUB.BLIN.1796.092	1796	92	Czeherein	Jan			Czeherein						nr karty 92									Czeherein	Jan			Czeherein
+CH.LUB.BLIN.1796.092	1796	92	Kaczyńska	Marianna			Kaczyńska						nr karty 92									Kaczyńska	Marianna			Kaczyńska
+CH.LUB.BLIN.1796.092	1796	92	Machulek	Filip			Machulek						nr karty 92									Machulek	Filip			Machulek
+CH.LUB.BLIN.1796.092	1796	92	Morawska	Marianna			Morawska						nr karty 92									Morawska	Marianna			Morawska
+CH.LUB.BLIN.1796.092	1796	92	Paciorek	Marianna			Paciorek						nr karty 92									Paciorek	Marianna			Paciorek
+CH.LUB.BLIN.1796.092	1796	92	Sprysak	Zofia			Sprysak						nr karty 92									Sprysak	Zofia			Sprysak
+CH.LUB.BLIN.1796.092	1796	92	Stępień	Stanisław			Stępień						nr karty 92									Stępień	Stanisław			Stępień
+CH.LUB.BLIN.1796.092	1796	92	Wojtalas	Stanisław			Wojtalas						nr karty 92									Wojtalas	Stanisław			Wojtalas
+CH.LUB.BLIN.1796.092	1796	92	Zieleński	Wojciech			Zieleński						nr karty 92									Zieleński	Wojciech			Zieleński
+CH.LUB.BLIN.1796.092	1796	92	Zielonka	Wojciech			Zielonka						nr karty 92									Zielonka	Wojciech			Zielonka
+CH.LUB.BLIN.1796.093	1796	93	Sobutka	Jakub			Sobutka						nr karty 93									Sobutka	Jakub			Sobutka
+CH.LUB.BLIN.1796.093	1796	93	Szyszka	Anna			Szyszka						nr karty 93									Szyszka	Anna			Szyszka
+CH.LUB.BLIN.1796.094	1796	94	Krzowski	Bartłomiej			Krzowski						nr karty 94									Krzowski	Bartłomiej			Krzowski
+CH.LUB.BLIN.1796.094	1796	94	Pazdrak	Anna			Pazdrak						nr karty 94									Pazdrak	Anna			Pazdrak
+CH.LUB.BLIN.1796.094	1796	94	Stępnik	Wawrzyniec			Stępnik						nr karty 94									Stępnik	Wawrzyniec			Stępnik
+CH.LUB.BLIN.1796.094	1796	94	Wścisło	Michał			Wścisło						nr karty 94									Wścisło	Michał			Wścisło
+CH.LUB.BLIN.1796.096	1796	96	Babiarz	Jan			Babiarz						nr karty 96									Babiarz	Jan			Babiarz
+CH.LUB.BLIN.1796.096	1796	96	Pasternak	Katarzyna			Pasternak						nr karty 96									Pasternak	Katarzyna			Pasternak
+CH.LUB.BLIN.1796.097	1796	97	Babiarz	Adam			Babiarz						nr karty 97									Babiarz	Adam			Babiarz
+CH.LUB.BLIN.1796.097	1796	97	Dobrzyńska	Agnieszka			Dobrzyńska						nr karty 97									Dobrzyńska	Agnieszka			Dobrzyńska
+CH.LUB.BLIN.1796.097	1796	97	Kosidło	Stefan			Kosidło						nr karty 97									Kosidło	Stefan			Kosidło
+CH.LUB.BLIN.1796.097	1796	97	Kozak	Agnieszka			Kozak						nr karty 97									Kozak	Agnieszka			Kozak
+CH.LUB.BLIN.1796.097	1796	97	T?	Agnieszka			T?						nieczytelne nr karty 97									T?	Agnieszka			T?
+CH.LUB.BLIN.1832.040	1832	40	Bosak	Mikołaj																		Bosak	Mikołaj			
+CH.LUB.BLIN.1832.040	1832	40	Janik 	Katarzyna																		Janik 	Katarzyna			
+CH.LUB.BLIN.1832.025	1832	25	Bosak	Konstancja																		Bosak	Konstancja			
+CH.LUB.BLIN.1832.025	1832	25	Dombrowska	Magdalena																		Dombrowska	Magdalena			
+CH.LUB.BLIN.1832.057	1832	57	Kołpionka	Agnieszka																		Kołpionka	Agnieszka			
+CH.LUB.BLIN.1832.057	1832	57	Pawłasek 	Barbara																		Pawłasek 	Barbara			
+CH.LUB.BLIN.1832.010	1832	10	Obydź	Anna																		Obydź	Anna			
+CH.LUB.BLIN.1832.010	1832	10	Spryszakowna	Agata																		Spryszakowna	Agata			
+CH.LUB.BLIN.1833.010	1833	10	Czuba	Zofia																		Czuba	Zofia			
+CH.LUB.BLIN.1833.010	1833	10	Szydłoski	Benedykt																		Szydłoski	Benedykt			
+CH.LUB.BLIN.1834.015	1834	15	Brzostowski	Benedykt																		Brzostowski	Benedykt			
+CH.LUB.BLIN.1834.015	1834	15	Kurczak	Franciszek																		Kurczak	Franciszek			
+CH.LUB.BLIN.1834.049	1834	49	Olechnowna	Katarzyna																		Olechnowna	Katarzyna			
+CH.LUB.BLIN.1834.049	1834	49	Olechowna	Katarzyna																		Olechowna	Katarzyna			
+CH.LUB.BLIN.1843.025	1843	25	Banaszek	Anna																		Banaszek	Anna			
+CH.LUB.BLIN.1843.025	1843	25	Machulak	Jadwiga																		Machulak	Jadwiga			
+CH.LUB.BLIN.1843.043	1843	43	Barbarzak	Jadwiga																		Barbarzak	Jadwiga			
+CH.LUB.BLIN.1843.043	1843	43	Kolasa	Łukasz																		Kolasa	Łukasz			
+CH.LUB.BLIN.1844.003	1844	3	Kudrelkowna	Zofia																		Kudrelkowna	Zofia			
+CH.LUB.BLIN.1844.003	1844	3	Ogon	Agnieszka																		Ogon	Agnieszka			
+CH.LUB.BLIN.1847.003	1847	3	Kurczak 	Anna																		Kurczak 	Anna			
+CH.LUB.BLIN.1847.003	1847	3	Sobulka	Walenty																		Sobulka	Walenty			
+CH.LUB.BLIN.1847.044	1847	44	Ogon	Roman																		Ogon	Roman			
+CH.LUB.BLIN.1847.044	1847	44	Pawłasek 	Katarzyna																		Pawłasek 	Katarzyna			
+CH.LUB.BLIN.1847.036	1847	36	Pścionek	Wawrzyniec Michał																		Pścionek	Wawrzyniec Michał			
+CH.LUB.BLIN.1847.036	1847	36	Szyszka	Wincenty																		Szyszka	Wincenty			
+CH.LUB.BLIN.1847.049	1847	49	Rębacz	Tomasz																		Rębacz	Tomasz			
+CH.LUB.BLIN.1847.049	1847	49	Suloska	Ewa																		Suloska	Ewa			
+CH.LUB.BLIN.1847.049	1847	49	Zyśko	Walenty																		Zyśko	Walenty			
+CH.LUB.BLIN.1848.004	1848	4	Kamieniak	Franciszka																		Kamieniak	Franciszka			
+CH.LUB.BLIN.1848.004	1848	4	Pawłasek	Franciszka																		Pawłasek	Franciszka			
+CH.LUB.BLIN.1850.046	1850	46	Dobrzyńska	Tekla																		Dobrzyńska	Tekla			
+CH.LUB.BLIN.1850.046	1850	46	Pasternak	Marianna																		Pasternak	Marianna			
+CH.LUB.BLIN.1850.013	1850	13	Igras	Józefa																		Igras	Józefa			
+CH.LUB.BLIN.1850.013	1850	13	Kozik	Józef																		Kozik	Józef			
+CH.LUB.BLIN.1851.023	1851	23	Bucoń	Stanisław																		Bucoń	Stanisław			
+CH.LUB.BLIN.1851.023	1851	23	Gnaczarz	Stanisław																		Gnaczarz	Stanisław			
+CH.LUB.BLIN.1855.002	1855	2	Bucoń	Józefa																		Bucoń	Józefa			
+CH.LUB.BLIN.1855.002	1855	2	Pudło	Paweł				Pudło				brak akt										Pudło	Paweł			
+CH.LUB.BLIN.1863.057	1863	57	Brodoski	Marcin	Blinów	Andrzej		49	Marianna	Paszkoska		pastuch w folwarku								Andrzej	Marianna	Brodoski	Marcin	Blinów		
+CH.LUB.BLIN.1863.057	1863	57	Jaskoski	Michał	Brzozówka	Maciej		39	Wiktoria	Dudek	36	szynkarz w Brzozówce								Maciej	Wiktoria	Jaskoski	Michał	Brzozówka		
+CH.LUB.BLIN.1867.004	1867	4	Kędziora	Franciszka	Blinów	Józef		28	Antonina	Gnat	26									Józef	Antonina	Kędziora	Franciszka	Blinów		
+CH.LUB.BLIN.1867.004	1867	4	Miszewska 	Wanda Maria	Brzozówka	Jan		28	Delfina	(?)Koszobudzka	22	dzierż. folwarku w Brzozówce								Jan	Delfina	Miszewska 	Wanda Maria	Brzozówka		
+CH.LUB.BLIN.1869.051	1869	51	Dobrzyńska	Jadwiga	Brzozówka	Wojciech			Franciszka	Wcisło										Wojciech	Franciszka	Dobrzyńska	Jadwiga	Brzozówka		
+CH.LUB.BLIN.1869.051	1869	51	Paciorek	Tomasz	Blinów	Filip			Katarzyna	Cieciek										Filip	Katarzyna	Paciorek	Tomasz	Blinów		
+CH.LUB.BLIN.1869.042	1869	42	Kaczyńska	Tekla	Blinów	Jakub			Marianna	Szuba										Jakub	Marianna	Kaczyńska	Tekla	Blinów		
+CH.LUB.BLIN.1869.042	1869	42	Kurczak	Michał	Blinów	Walenty			Józefa	Kozaczek										Walenty	Józefa	Kurczak	Michał	Blinów		
+CH.LUB.BLIN.1902.059	1902	59	Czuba	Franciszek	karta 178, Blinów	Józef		35	Anastazja	Grela	33									Józef	Anastazja	Czuba	Franciszek	karta 178, Blinów		
+CH.LUB.BLIN.1902.059	1902	59	Felek	Szymon	Blinów	Józef		31	Franciszka	Machulak	24	Karta 179								Józef	Franciszka	Felek	Szymon	Blinów		

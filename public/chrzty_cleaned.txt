@@ -208,8 +208,8 @@ CH.LUB.BLIN.1787.008	1787	8	Kuś	Agnieszka	Majdan	Józef	Kuś		Katarzyna			I	Str
 CH.LUB.BLIN.1787.009	1787	9	Kozaczek	Walenty	Blinów	Michał	Kozaczek		Anna			I	Str 25 Fot 13							Michael	Anna	Kozaczek	Walenty	Blinów		Kozaczek
 CH.LUB.BLIN.1787.010	1787	10	Wojtusiak	Marianna	Blinów	Jan	Wojtusiak		Ewa			I	Str 25 Fot 13							Joannes	Eva	Wojtusiak	Marianna	Blinów		Wojtusiak
 CH.LUB.BLIN.1787.011	1787	11	Kurczak	Franciszka	Moczydła Majdan	Marcin	Kurczak		Katarzyna			II	Str 25 Fot 13							Martinus	Catharina	Kurczak	Franciszka	Moczydła Majdan		Kurczak
-CH.LUB.BLIN.1787.012	1787	12	Kozak	Franciszka	Blinów	Błażej	Kozak		Zuzanna			II	Str 25 Fot 13							Blasius	Susanna	Kozak	Franciszka	Blinów		Kozak
-CH.LUB.BLIN.1787.012	1787	12	Sobotka	Franciszka	Blinów	Paweł	Sobotka		Marianna			III	Str 25 Fot 13							Paulus	Marianna	Sobotka	Franciszka	Blinów		Sobotka
+CH.LUB.BLIN.1787.012a	1787	12	Kozak	Franciszka	Blinów	Błażej	Kozak		Zuzanna			II	Str 25 Fot 13							Blasius	Susanna	Kozak	Franciszka	Blinów		Kozak
+CH.LUB.BLIN.1787.012b	1787	12	Sobotka	Franciszka	Blinów	Paweł	Sobotka		Marianna			III	Str 25 Fot 13							Paulus	Marianna	Sobotka	Franciszka	Blinów		Sobotka
 CH.LUB.BLIN.1787.014	1787	14	Haber	Zofia	Moczydła Majdan	Andrzej	Haber		Marianna			III	Str 25 Fot 13							Andreas	Marianna	Haber	Zofia	Moczydła Majdan		Haber
 CH.LUB.BLIN.1787.015	1787	15	Machulek	Józef	Majdan	Kacper	Machulek		Katarzyna			III	Str 25 Fot 13							Gaspar	Catharina	Machulek	Józef	Majdan		Machulek
 CH.LUB.BLIN.1787.016	1787	16	Sadowski	Benedykt	Blinów	Marcin	Sadowski		Agnieszka			III	Str 25 Fot 13							Martinus	Agnes	Sadowski	Benedykt	Blinów		Sadowski
@@ -239,58 +239,1095 @@ CH.LUB.BLIN.1787.041	1787	41	Mcionek	Mateusz	Blinów	Marcin	Mcionek		Małgorzata
 CH.LUB.BLIN.1787.039	1787	39	Rataj	Tekla	Blinów	Jan	Rataj		Katarzyna			IX	Str 28 Fot 14							Joannes	Catharina	Rataj	Tekla	Blinów		Rataj
 CH.LUB.BLIN.1787.040	1787	40	Siembida	Jadwiga	Moczydła Majdan	Bartłomiej	Siembida		Marianna			IX	Str 28 Fot 14							Bartholomaeus	Marianna	Siembida	Jadwiga	Moczydła Majdan		Siembida
 CH.LUB.BLIN.1787.042	1787	42	Szpyt	Tekla	Majdan	Łukasz	Szpyt		Jadwiga			IX	Str 28 Fot 14							Lucas	Hedvigis	Szpyt	Tekla	Majdan		Szpyt
-	1787		Bucon	Katarzyna			Bucon						nr karty 29									Bucon	Katarzyna			Bucon
+a	1787		Bucon	Katarzyna			Bucon						nr karty 29									Bucon	Katarzyna			Bucon
+b	1787		Mcionek	Marcin			Mcionek						nr karty 29									Mcionek	Marcin			Mcionek
+c	1787		Obydź	Szymon			Obydź						nr karty 29									Obydź	Szymon			Obydź
+d	1787		Pawlak	Jadwiga			Pawlak						nr karty 29									Pawlak	Jadwiga			Pawlak
+e	1787		Solarz	Jadwiga			Solarz						nr karty 29									Solarz	Jadwiga			Solarz
+f	1787		Wojtusiak	Szymon			Wojtusiak						nr karty 29									Wojtusiak	Szymon			Wojtusiak
+g	1787		Woś	Marcin			Woś						nr karty 29									Woś	Marcin			Woś
+h	1787		Babiarz	Agnieszka			Babiarz						nr karty 30									Babiarz	Agnieszka			Babiarz
+i	1787		Jędrzejczak	Tomasz			Jędrzejczak						nr karty 30									Jędrzejczak	Tomasz			Jędrzejczak
+j	1787		Kozaczek	Sebastian			Kozaczek						nr karty 30									Kozaczek	Sebastian			Kozaczek
+k	1787		Kozak	Andrzej			Kozak						nr karty 30									Kozak	Andrzej			Kozak
+l	1787		Krupa	Tomasz			Krupa						nr karty 30									Krupa	Tomasz			Krupa
+m	1787		Kurczak	Paweł			Kurczak						nr karty 30									Kurczak	Paweł			Kurczak
+n	1787		Mazurek	Katarzyna			Mazurek						nr karty 30									Mazurek	Katarzyna			Mazurek
+o	1787		Tryska	Andrzej			Tryska						nr karty 30									Tryska	Andrzej			Tryska
+p																										
+q																										
+r																										
+s																										
+t																										
+u																										
+v																										
+w																										
+x																										
+y																										
+z																										
+{																										
+|																										
+}																										
+~																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+																										
+ 																										
+¡																										
+¢																										
+£																										
+¤																										
+¥																										
+¦																										
+§																										
+¨																										
+©																										
+ª																										
+«																										
+¬																										
+­																										
+®																										
+¯																										
+°																										
+±																										
+²																										
+³																										
+´																										
+µ																										
+¶																										
+·																										
+¸																										
+¹																										
+º																										
+»																										
+¼																										
+½																										
+¾																										
+¿																										
+À																										
+Á																										
+Â																										
+Ã																										
+Ä																										
+Å																										
+Æ																										
+Ç																										
+È																										
+É																										
+Ê																										
+Ë																										
+Ì																										
+Í																										
+Î																										
+Ï																										
+Ð																										
+Ñ																										
+Ò																										
+Ó																										
+Ô																										
+Õ																										
+Ö																										
+×																										
+Ø																										
+Ù																										
+Ú																										
+Û																										
+Ü																										
+Ý																										
+Þ																										
+ß																										
+à																										
+á																										
+â																										
+ã																										
+ä																										
+å																										
+æ																										
+ç																										
+è																										
+é																										
+ê																										
+ë																										
+ì																										
+í																										
+î																										
+ï																										
+ð																										
+ñ																										
+ò																										
+ó																										
+ô																										
+õ																										
+ö																										
+÷																										
+ø																										
+ù																										
+ú																										
+û																										
+ü																										
+ý																										
+þ																										
+ÿ																										
+Ā																										
+ā																										
+Ă																										
+ă																										
+Ą																										
+ą																										
+Ć																										
+ć																										
+Ĉ																										
+ĉ																										
+Ċ																										
+ċ																										
+Č																										
+č																										
+Ď																										
+ď																										
+Đ																										
+đ																										
+Ē																										
+ē																										
+Ĕ																										
+ĕ																										
+Ė																										
+ė																										
+Ę																										
+ę																										
+Ě																										
+ě																										
+Ĝ																										
+ĝ																										
+Ğ																										
+ğ																										
+Ġ																										
+ġ																										
+Ģ																										
+ģ																										
+Ĥ																										
+ĥ																										
+Ħ																										
+ħ																										
+Ĩ																										
+ĩ																										
+Ī																										
+ī																										
+Ĭ																										
+ĭ																										
+Į																										
+į																										
+İ																										
+ı																										
+Ĳ																										
+ĳ																										
+Ĵ																										
+ĵ																										
+Ķ																										
+ķ																										
+ĸ																										
+Ĺ																										
+ĺ																										
+Ļ																										
+ļ																										
+Ľ																										
+ľ																										
+Ŀ																										
+ŀ																										
+Ł																										
+ł																										
+Ń																										
+ń																										
+Ņ																										
+ņ																										
+Ň																										
+ň																										
+ŉ																										
+Ŋ																										
+ŋ																										
+Ō																										
+ō																										
+Ŏ																										
+ŏ																										
+Ő																										
+ő																										
+Œ																										
+œ																										
+Ŕ																										
+ŕ																										
+Ŗ																										
+ŗ																										
+Ř																										
+ř																										
+Ś																										
+ś																										
+Ŝ																										
+ŝ																										
+Ş																										
+ş																										
+Š																										
+š																										
+Ţ																										
+ţ																										
+Ť																										
+ť																										
+Ŧ																										
+ŧ																										
+Ũ																										
+ũ																										
+Ū																										
+ū																										
+Ŭ																										
+ŭ																										
+Ů																										
+ů																										
+Ű																										
+ű																										
+Ų																										
+ų																										
+Ŵ																										
+ŵ																										
+Ŷ																										
+ŷ																										
+Ÿ																										
+Ź																										
+ź																										
+Ż																										
+ż																										
+Ž																										
+ž																										
+ſ																										
+ƀ																										
+Ɓ																										
+Ƃ																										
+ƃ																										
+Ƅ																										
+ƅ																										
+Ɔ																										
+Ƈ																										
+ƈ																										
+Ɖ																										
+Ɗ																										
+Ƌ																										
+ƌ																										
+ƍ																										
+Ǝ																										
+Ə																										
+Ɛ																										
+Ƒ																										
+ƒ																										
+Ɠ																										
+Ɣ																										
+ƕ																										
+Ɩ																										
+Ɨ																										
+Ƙ																										
+ƙ																										
+ƚ																										
+ƛ																										
+Ɯ																										
+Ɲ																										
+ƞ																										
+Ɵ																										
+Ơ																										
+ơ																										
+Ƣ																										
+ƣ																										
+Ƥ																										
+ƥ																										
+Ʀ																										
+Ƨ																										
+ƨ																										
+Ʃ																										
+ƪ																										
+ƫ																										
+Ƭ																										
+ƭ																										
+Ʈ																										
+Ư																										
+ư																										
+Ʊ																										
+Ʋ																										
+Ƴ																										
+ƴ																										
+Ƶ																										
+ƶ																										
+Ʒ																										
+Ƹ																										
+ƹ																										
+ƺ																										
+ƻ																										
+Ƽ																										
+ƽ																										
+ƾ																										
+ƿ																										
+ǀ																										
+ǁ																										
+ǂ																										
+ǃ																										
+Ǆ																										
+ǅ																										
+ǆ																										
+Ǉ																										
+ǈ																										
+ǉ																										
+Ǌ																										
+ǋ																										
+ǌ																										
+Ǎ																										
+ǎ																										
+Ǐ																										
+ǐ																										
+Ǒ																										
+ǒ																										
+Ǔ																										
+ǔ																										
+Ǖ																										
+ǖ																										
+Ǘ																										
+ǘ																										
+Ǚ																										
+ǚ																										
+Ǜ																										
+ǜ																										
+ǝ																										
+Ǟ																										
+ǟ																										
+Ǡ																										
+ǡ																										
+Ǣ																										
+ǣ																										
+Ǥ																										
+ǥ																										
+Ǧ																										
+ǧ																										
+Ǩ																										
+ǩ																										
+Ǫ																										
+ǫ																										
+Ǭ																										
+ǭ																										
+Ǯ																										
+ǯ																										
+ǰ																										
+Ǳ																										
+ǲ																										
+ǳ																										
+Ǵ																										
+ǵ																										
+Ƕ																										
+Ƿ																										
+Ǹ																										
+ǹ																										
+Ǻ																										
+ǻ																										
+Ǽ																										
+ǽ																										
+Ǿ																										
+ǿ																										
+Ȁ																										
+ȁ																										
+Ȃ																										
+ȃ																										
+Ȅ																										
+ȅ																										
+Ȇ																										
+ȇ																										
+Ȉ																										
+ȉ																										
+Ȋ																										
+ȋ																										
+Ȍ																										
+ȍ																										
+Ȏ																										
+ȏ																										
+Ȑ																										
+ȑ																										
+Ȓ																										
+ȓ																										
+Ȕ																										
+ȕ																										
+Ȗ																										
+ȗ																										
+Ș																										
+ș																										
+Ț																										
+ț																										
+Ȝ																										
+ȝ																										
+Ȟ																										
+ȟ																										
+Ƞ																										
+ȡ																										
+Ȣ																										
+ȣ																										
+Ȥ																										
+ȥ																										
+Ȧ																										
+ȧ																										
+Ȩ																										
+ȩ																										
+Ȫ																										
+ȫ																										
+Ȭ																										
+ȭ																										
+Ȯ																										
+ȯ																										
+Ȱ																										
+ȱ																										
+Ȳ																										
+ȳ																										
+ȴ																										
+ȵ																										
+ȶ																										
+ȷ																										
+ȸ																										
+ȹ																										
+Ⱥ																										
+Ȼ																										
+ȼ																										
+Ƚ																										
+Ⱦ																										
+ȿ																										
+ɀ																										
+Ɂ																										
+ɂ																										
+Ƀ																										
+Ʉ																										
+Ʌ																										
+Ɇ																										
+ɇ																										
+Ɉ																										
+ɉ																										
+Ɋ																										
+ɋ																										
+Ɍ																										
+ɍ																										
+Ɏ																										
+ɏ																										
+ɐ																										
+ɑ																										
+ɒ																										
+ɓ																										
+ɔ																										
+ɕ																										
+ɖ																										
+ɗ																										
+ɘ																										
+ə																										
+ɚ																										
+ɛ																										
+ɜ																										
+ɝ																										
+ɞ																										
+ɟ																										
+ɠ																										
+ɡ																										
+ɢ																										
+ɣ																										
+ɤ																										
+ɥ																										
+ɦ																										
+ɧ																										
+ɨ																										
+ɩ																										
+ɪ																										
+ɫ																										
+ɬ																										
+ɭ																										
+ɮ																										
+ɯ																										
+ɰ																										
+ɱ																										
+ɲ																										
+ɳ																										
+ɴ																										
+ɵ																										
+ɶ																										
+ɷ																										
+ɸ																										
+ɹ																										
+ɺ																										
+ɻ																										
+ɼ																										
+ɽ																										
+ɾ																										
+ɿ																										
+ʀ																										
+ʁ																										
+ʂ																										
+ʃ																										
+ʄ																										
+ʅ																										
+ʆ																										
+ʇ																										
+ʈ																										
+ʉ																										
+ʊ																										
+ʋ																										
+ʌ																										
+ʍ																										
+ʎ																										
+ʏ																										
+ʐ																										
+ʑ																										
+ʒ																										
+ʓ																										
+ʔ																										
+ʕ																										
+ʖ																										
+ʗ																										
+ʘ																										
+ʙ																										
+ʚ																										
+ʛ																										
+ʜ																										
+ʝ																										
+ʞ																										
+ʟ																										
+ʠ																										
+ʡ						`																				
+ʢ																										
+ʣ																										
+ʤ																										
+ʥ																										
+ʦ																										
+ʧ																										
+ʨ																										
+ʩ																										
+ʪ																										
+ʫ																										
+ʬ																										
+ʭ																										
+ʮ																										
+ʯ																										
+ʰ																										
+ʱ																										
+ʲ																										
+ʳ																										
+ʴ																										
+ʵ																										
+ʶ																										
+ʷ																										
+ʸ																										
+ʹ																										
+ʺ																										
+ʻ																										
+ʼ																										
+ʽ																										
+ʾ																										
+ʿ																										
+ˀ																										
+ˁ																										
+˂																										
+˃																										
+˄																										
+˅																										
+ˆ																										
+ˇ																										
+ˈ																										
+ˉ																										
+ˊ																										
+ˋ																										
+ˌ																										
+ˍ																										
+ˎ																										
+ˏ																										
+ː																										
+ˑ																										
+˒																										
+˓																										
+˔																										
+˕																										
+˖																										
+˗																										
+˘																										
+˙																										
+˚																										
+˛																										
+˜																										
+˝																										
+˞																										
+˟																										
+ˠ																										
+ˡ																										
+ˢ																										
+ˣ																										
+ˤ																										
+˥																										
+˦																										
+˧																										
+˨																										
+˩																										
+˪																										
+˫																										
+ˬ																										
+˭																										
+ˮ																										
+˯																										
+˰																										
+˱																										
+˲																										
+˳																										
+˴																										
+˵																										
+˶																										
+˷																										
+˸																										
+˹																										
+˺																										
+˻																										
+˼																										
+˽																										
+˾																										
+˿																										
+̀																										
+́																										
+̂																										
+̃																										
+̄																										
+̅																										
+̆																										
+̇																										
+̈																										
+̉																										
+̊																										
+̋																										
+̌																										
+̍																										
+̎																										
+̏																										
+̐																										
+̑																										
+̒																										
+̓																										
+̔																										
+̕																										
+̖																										
+̗																										
+̘																										
+̙																										
+̚																										
+̛																										
+̜																										
+̝																										
+̞																										
+̟																										
+̠																										
+̡																										
+̢																										
+̣																										
+̤																										
+̥																										
+̦																										
+̧																										
+̨																										
+̩																										
+̪																										
+̫																										
+̬																										
+̭																										
+̮																										
+̯																										
+̰																										
+̱																										
+̲																										
+̳																										
+̴																										
+̵																										
+̶																										
+̷																										
+̸																										
+̹																										
+̺																										
+̻																										
+̼																										
+̽																										
+̾																										
+̿																										
+̀																										
+́																										
+͂																										
+̓																										
+̈́																										
+ͅ																										
+͆																										
+͇																										
+͈																										
+͉																										
+͊																										
+͋																										
+͌																										
+͍																										
+͎																										
+͏																										
+͐																										
+͑																										
+͒																										
+͓																										
+͔																										
+͕																										
+͖																										
+͗																										
+͘																										
+͙																										
+͚																										
+͛																										
+͜																										
+͝																										
+͞																										
+͟																										
+͠																										
+͡																										
+͢																										
+ͣ																										
+ͤ																										
+ͥ																										
+ͦ																										
+ͧ																										
+ͨ																										
+ͩ																										
+ͪ																										
+ͫ																										
+ͬ																										
+ͭ																										
+ͮ																										
+ͯ																										
+Ͱ																										
+ͱ																										
+Ͳ																										
+ͳ																										
+ʹ																										
+͵																										
+Ͷ																										
+ͷ																										
+͸																										
+͹																										
+ͺ																										
+ͻ																										
+ͼ																										
+ͽ																										
+;																										
+Ϳ																										
+΀																										
+΁																										
+΂																										
+΃																										
+΄																										
+΅																										
+Ά																										
+·																										
+Έ																										
+Ή																										
+Ί																										
+΋																										
+Ό																										
+΍																										
+Ύ																										
+Ώ																										
+ΐ																										
+Α																										
+Β																										
+Γ																										
+Δ																										
+Ε																										
+Ζ																										
+Η																										
+Θ																										
+Ι																										
+Κ																										
+Λ																										
+Μ																										
+Ν																										
+Ξ																										
+Ο																										
+Π																										
+Ρ																										
+΢																										
+Σ																										
+Τ																										
+Υ																										
+Φ																										
+Χ																										
+Ψ																										
+Ω																										
+Ϊ																										
+Ϋ																										
+ά																										
+έ																										
+ή																										
+ί																										
+ΰ																										
+α																										
+β																										
+γ																										
+δ																										
+ε																										
+ζ																										
+η																										
+θ																										
+ι																										
+κ																										
+λ																										
+μ																										
+ν																										
+ξ																										
+ο																										
+π																										
+ρ																										
+ς																										
+σ																										
+τ																										
+υ																										
+φ																										
+χ																										
+ψ																										
+ω																										
+ϊ																										
+ϋ																										
+ό																										
+ύ																										
+ώ																										
+Ϗ																										
+ϐ																										
+ϑ																										
+ϒ																										
+ϓ																										
+ϔ																										
+ϕ																										
+ϖ																										
+ϗ																										
+Ϙ																										
+ϙ																										
+Ϛ																										
+ϛ																										
+Ϝ																										
+ϝ																										
+Ϟ																										
+ϟ																										
+Ϡ																										
+ϡ																										
+Ϣ																										
+ϣ																										
+Ϥ																										
+ϥ																										
+Ϧ																										
+ϧ																										
+Ϩ																										
+ϩ																										
+Ϫ																										
+ϫ																										
+Ϭ																										
+ϭ																										
+Ϯ																										
+ϯ																										
+ϰ																										
+ϱ																										
+ϲ																										
+ϳ																										
+ϴ																										
+ϵ																										
+϶																										
+Ϸ																										
+ϸ																										
+Ϲ																										
+Ϻ																										
+ϻ																										
+ϼ																										
+Ͻ																										
+Ͼ																										
+Ͽ																										
+Ѐ																										
+Ё																										
+Ђ																										
+Ѓ																										
+Є																										
+Ѕ																										
+І																										
+Ї																										
+Ј																										
+Љ																										
+Њ																										
+Ћ																										
+Ќ																										
+Ѝ																										
+Ў																										
+Џ																										
+А																										
+Б																										
+В																										
+Г																										
+Д																										
+Е																										
+Ж																										
+З																										
+И																										
+Й																										
+К																										
+Л																										
+М																										
+Н																										
+О																										
+П																										
+Р																										
+С																										
+Т																										
+У																										
+Ф																										
+Х																										
+Ц																										
+Ч																										
+Ш																										
+Щ																										
+Ъ																										
+Ы																										
+Ь																										
+Э																										
+Ю																										
+Я																										
+а																										
+б																										
+в																										
+г																										
+д																										
+е																										
+ж																										
+з																										
+и																										
+й																										
+к																										
+л																										
+м																										
+н																										
+о																										
+п																										
+р																										
+с																										
+т																										
+у																										
+ф																										
+х																										
+ц																										
+ч																										
+ш																										
+щ																										
+ъ																										
+ы																										
+ь																										
+э																										
+ю																										
+я																										
+ѐ																										
+ё																										
+ђ																										
+ѓ																										
+є																										
+ѕ																										
+і																										
+ї																										
+ј																										
+љ																										
+њ																										
+ћ																										
+ќ																										
+ѝ																										
+ў																										
+џ																										
+Ѡ																										
+ѡ																										
+Ѣ																										
+ѣ																										
+Ѥ																										
+ѥ																										
+Ѧ																										
+ѧ																										
+Ѩ																										
+ѩ																										
+Ѫ																										
+ѫ																										
+Ѭ																										
+ѭ																										
+Ѯ																										
+ѯ																										
+Ѱ																										
+ѱ																										
+Ѳ																										
+ѳ																										
+Ѵ																										
+ѵ																										
+Ѷ																										
+ѷ																										
+Ѹ																										
+ѹ																										
+Ѻ																										
+ѻ																										
+Ѽ																										
 CH.LUB.BLIN.1787.043	1787	43	Chmiel	Marcin			Chmiel						nr karty 29									Chmiel	Marcin			Chmiel
-	1787		Mcionek	Marcin			Mcionek						nr karty 29									Mcionek	Marcin			Mcionek
-	1787		Obydź	Szymon			Obydź						nr karty 29									Obydź	Szymon			Obydź
-	1787		Pawlak	Jadwiga			Pawlak						nr karty 29									Pawlak	Jadwiga			Pawlak
-	1787		Solarz	Jadwiga			Solarz						nr karty 29									Solarz	Jadwiga			Solarz
-	1787		Wojtusiak	Szymon			Wojtusiak						nr karty 29									Wojtusiak	Szymon			Wojtusiak
-	1787		Woś	Marcin			Woś						nr karty 29									Woś	Marcin			Woś
-	1787		Babiarz	Agnieszka			Babiarz						nr karty 30									Babiarz	Agnieszka			Babiarz
-	1787		Jędrzejczak	Tomasz			Jędrzejczak						nr karty 30									Jędrzejczak	Tomasz			Jędrzejczak
-	1787		Kozaczek	Sebastian			Kozaczek						nr karty 30									Kozaczek	Sebastian			Kozaczek
-	1787		Kozak	Andrzej			Kozak						nr karty 30									Kozak	Andrzej			Kozak
-	1787		Krupa	Tomasz			Krupa						nr karty 30									Krupa	Tomasz			Krupa
-	1787		Kurczak	Paweł			Kurczak						nr karty 30									Kurczak	Paweł			Kurczak
-	1787		Mazurek	Katarzyna			Mazurek						nr karty 30									Mazurek	Katarzyna			Mazurek
-	1787		Tryska	Andrzej			Tryska						nr karty 30									Tryska	Andrzej			Tryska
-CH.LUB.BLIN.1788.031	1788	31	Gąsior	Agata			Gąsior						nr karty 31									Gąsior	Agata			Gąsior
-CH.LUB.BLIN.1788.031	1788	31	Kozaczek	Nikodem			Kozaczek						nr karty 31									Kozaczek	Nikodem			Kozaczek
-CH.LUB.BLIN.1788.031	1788	31	Kurczak	Paweł			Kurczak						nr karty 31									Kurczak	Paweł			Kurczak
-CH.LUB.BLIN.1788.031	1788	31	Pasternak	Kacper			Pasternak						nr karty 31									Pasternak	Kacper			Pasternak
-CH.LUB.BLIN.1788.031	1788	31	Woś	Zofia			Woś						nr karty 31									Woś	Zofia			Woś
-CH.LUB.BLIN.1788.032	1788	32	Czuba	Franciszka			Czuba						nr karty 32									Czuba	Franciszka			Czuba
-CH.LUB.BLIN.1788.032	1788	32	Łata	Wojciech			Łata						nr karty 32									Łata	Wojciech			Łata
-CH.LUB.BLIN.1788.032	1788	32	Piech	Józef			Piech						nr karty 32									Piech	Józef			Piech
-CH.LUB.BLIN.1788.033	1788	33	Bosak	Franciszka			Bosak						nr karty 33									Bosak	Franciszka			Bosak
-CH.LUB.BLIN.1788.033	1788	33	Czuba	Wojciech			Czuba						nr karty 33									Czuba	Wojciech			Czuba
-CH.LUB.BLIN.1788.033	1788	33	Pęk	Krzysztof			Pęk						nr karty 33									Pęk	Krzysztof			Pęk
-CH.LUB.BLIN.1788.033	1788	33	Pęk	Franciszka			Pęk						nr karty 33									Pęk	Franciszka			Pęk
-CH.LUB.BLIN.1788.033	1788	33	Skrzypek	Marianna			Skrzypek						nr karty 33									Skrzypek	Marianna			Skrzypek
-CH.LUB.BLIN.1788.033	1788	33	Szabat	Wojciech			Szabat						nr karty 33									Szabat	Wojciech			Szabat
-CH.LUB.BLIN.1788.033	1788	33	Tutka	Magdalena			Tutka						nr karty 33									Tutka	Magdalena			Tutka
-CH.LUB.BLIN.1788.033	1788	33	Wścisło	Antoni			Wścisło						nr karty 33									Wścisło	Antoni			Wścisło
-CH.LUB.BLIN.1788.034	1788	34	Bigos	Marianna			Bigos						nr karty 34									Bigos	Marianna			Bigos
-CH.LUB.BLIN.1788.034	1788	34	Kasperek	Jakub			Kasperek						nr karty 34									Kasperek	Jakub			Kasperek
-CH.LUB.BLIN.1788.034	1788	34	Koguc	Zofia			Koguc						nr karty 34									Koguc	Zofia			Koguc
-CH.LUB.BLIN.1788.034	1788	34	Machulek	Bartłomiej			Machulek						nr karty 34									Machulek	Bartłomiej			Machulek
-CH.LUB.BLIN.1788.034	1788	34	Michalska	Marianna			Michalska						nr karty 34									Michalska	Marianna			Michalska
-CH.LUB.BLIN.1788.034	1788	34	Mucha	Rozalia			Mucha						nr karty 34									Mucha	Rozalia			Mucha
-CH.LUB.BLIN.1788.034	1788	34	Paciorek	Jacenty			Paciorek						nr karty 34									Paciorek	Jacenty			Paciorek
-CH.LUB.BLIN.1788.034	1788	34	Siekierski	Bartłomiej			Siekierski						nr karty 34									Siekierski	Bartłomiej			Siekierski
-CH.LUB.BLIN.1788.035	1788	35	Białkowska	Jadwiga			Białkowska						nr karty 35									Białkowska	Jadwiga			Białkowska
-CH.LUB.BLIN.1788.035	1788	35	Gnat	Michał			Gnat						nr karty 35									Gnat	Michał			Gnat
-CH.LUB.BLIN.1788.035	1788	35	Kosidło	Michał			Kosidło						nr karty 35									Kosidło	Michał			Kosidło
-CH.LUB.BLIN.1788.035	1788	35	Kosidło	Franciszka			Kosidło						nr karty 35									Kosidło	Franciszka			Kosidło
-CH.LUB.BLIN.1788.035	1788	35	Paroch	Michał			Paroch						nr karty 35									Paroch	Michał			Paroch
-CH.LUB.BLIN.1788.035	1788	35	Pazdrak	Michał			Pazdrak						nr karty 35									Pazdrak	Michał			Pazdrak
-CH.LUB.BLIN.1788.035	1788	35	Szost	Łukasz			Szost						nr karty 35									Szost	Łukasz			Szost
-CH.LUB.BLIN.1788.036	1788	36	Baran	Jadwiga			Baran						nr karty 36									Baran	Jadwiga			Baran
-CH.LUB.BLIN.1788.036	1788	36	Jędrzejczak	Marianna			Jędrzejczak						nr karty 36									Jędrzejczak	Marianna			Jędrzejczak
-CH.LUB.BLIN.1788.036	1788	36	Kosidło	Paweł			Kosidło						nr karty 36									Kosidło	Paweł			Kosidło
-CH.LUB.BLIN.1788.036	1788	36	Pawlak	Katarzyna			Pawlak						nr karty 36									Pawlak	Katarzyna			Pawlak
-CH.LUB.BLIN.1788.036	1788	36	Stępień	Andrzej			Stępień						nr karty 36									Stępień	Andrzej			Stępień
+CH.LUB.BLIN.1788.031a	1788	31	Gąsior	Agata			Gąsior						nr karty 31									Gąsior	Agata			Gąsior
+CH.LUB.BLIN.1788.031b	1788	31	Kozaczek	Nikodem			Kozaczek						nr karty 31									Kozaczek	Nikodem			Kozaczek
+CH.LUB.BLIN.1788.031c	1788	31	Kurczak	Paweł			Kurczak						nr karty 31									Kurczak	Paweł			Kurczak
+CH.LUB.BLIN.1788.031d	1788	31	Pasternak	Kacper			Pasternak						nr karty 31									Pasternak	Kacper			Pasternak
+CH.LUB.BLIN.1788.031e	1788	31	Woś	Zofia			Woś						nr karty 31									Woś	Zofia			Woś
+CH.LUB.BLIN.1788.032a	1788	32	Czuba	Franciszka			Czuba						nr karty 32									Czuba	Franciszka			Czuba
+CH.LUB.BLIN.1788.032b	1788	32	Łata	Wojciech			Łata						nr karty 32									Łata	Wojciech			Łata
+CH.LUB.BLIN.1788.032c	1788	32	Piech	Józef			Piech						nr karty 32									Piech	Józef			Piech
+CH.LUB.BLIN.1788.033a	1788	33	Bosak	Franciszka			Bosak						nr karty 33									Bosak	Franciszka			Bosak
+CH.LUB.BLIN.1788.033b	1788	33	Czuba	Wojciech			Czuba						nr karty 33									Czuba	Wojciech			Czuba
+CH.LUB.BLIN.1788.033c	1788	33	Pęk	Krzysztof			Pęk						nr karty 33									Pęk	Krzysztof			Pęk
+CH.LUB.BLIN.1788.033d	1788	33	Pęk	Franciszka			Pęk						nr karty 33									Pęk	Franciszka			Pęk
+CH.LUB.BLIN.1788.033e	1788	33	Skrzypek	Marianna			Skrzypek						nr karty 33									Skrzypek	Marianna			Skrzypek
+CH.LUB.BLIN.1788.033f	1788	33	Szabat	Wojciech			Szabat						nr karty 33									Szabat	Wojciech			Szabat
+CH.LUB.BLIN.1788.033g	1788	33	Tutka	Magdalena			Tutka						nr karty 33									Tutka	Magdalena			Tutka
+CH.LUB.BLIN.1788.033h	1788	33	Wścisło	Antoni			Wścisło						nr karty 33									Wścisło	Antoni			Wścisło
+CH.LUB.BLIN.1788.034a	1788	34	Bigos	Marianna			Bigos						nr karty 34									Bigos	Marianna			Bigos
+CH.LUB.BLIN.1788.034b	1788	34	Kasperek	Jakub			Kasperek						nr karty 34									Kasperek	Jakub			Kasperek
+CH.LUB.BLIN.1788.034c	1788	34	Koguc	Zofia			Koguc						nr karty 34									Koguc	Zofia			Koguc
+CH.LUB.BLIN.1788.034d	1788	34	Machulek	Bartłomiej			Machulek						nr karty 34									Machulek	Bartłomiej			Machulek
+CH.LUB.BLIN.1788.034e	1788	34	Michalska	Marianna			Michalska						nr karty 34									Michalska	Marianna			Michalska
+CH.LUB.BLIN.1788.034f	1788	34	Mucha	Rozalia			Mucha						nr karty 34									Mucha	Rozalia			Mucha
+CH.LUB.BLIN.1788.034g	1788	34	Paciorek	Jacenty			Paciorek						nr karty 34									Paciorek	Jacenty			Paciorek
+CH.LUB.BLIN.1788.034h	1788	34	Siekierski	Bartłomiej			Siekierski						nr karty 34									Siekierski	Bartłomiej			Siekierski
+CH.LUB.BLIN.1788.035a	1788	35	Białkowska	Jadwiga			Białkowska						nr karty 35									Białkowska	Jadwiga			Białkowska
+CH.LUB.BLIN.1788.035b	1788	35	Gnat	Michał			Gnat						nr karty 35									Gnat	Michał			Gnat
+CH.LUB.BLIN.1788.035c	1788	35	Kosidło	Michał			Kosidło						nr karty 35									Kosidło	Michał			Kosidło
+CH.LUB.BLIN.1788.035d	1788	35	Kosidło	Franciszka			Kosidło						nr karty 35									Kosidło	Franciszka			Kosidło
+CH.LUB.BLIN.1788.035e	1788	35	Paroch	Michał			Paroch						nr karty 35									Paroch	Michał			Paroch
+CH.LUB.BLIN.1788.035f	1788	35	Pazdrak	Michał			Pazdrak						nr karty 35									Pazdrak	Michał			Pazdrak
+CH.LUB.BLIN.1788.035g	1788	35	Szost	Łukasz			Szost						nr karty 35									Szost	Łukasz			Szost
+CH.LUB.BLIN.1788.036a	1788	36	Baran	Jadwiga			Baran						nr karty 36									Baran	Jadwiga			Baran
+CH.LUB.BLIN.1788.036b	1788	36	Jędrzejczak	Marianna			Jędrzejczak						nr karty 36									Jędrzejczak	Marianna			Jędrzejczak
+CH.LUB.BLIN.1788.036c	1788	36	Kosidło	Paweł			Kosidło						nr karty 36									Kosidło	Paweł			Kosidło
+CH.LUB.BLIN.1788.036d	1788	36	Pawlak	Katarzyna			Pawlak						nr karty 36									Pawlak	Katarzyna			Pawlak
+CH.LUB.BLIN.1788.036e	1788	36	Stępień	Andrzej			Stępień						nr karty 36									Stępień	Andrzej			Stępień
 CH.LUB.BLIN.1788.a1	1788	a1	Brzeska	Marianna			Brzeska						30.12.1899									Brzeska	Marianna			Brzeska
 CH.LUB.BLIN.1788.a2	1788	a2	Kania	Józef Nikodem			Kania						30.12.1899									Kania	Józef Nikodem			Kania
 CH.LUB.BLIN.1788.a3	1788	a3	Kozaczek	Marianna			Kozaczek						30.12.1899									Kozaczek	Marianna			Kozaczek
@@ -300,49 +1337,49 @@ CH.LUB.BLIN.1788.a6	1788	a6	Pazdrak	Marianna			Pazdrak						30.12.1899									P
 CH.LUB.BLIN.1788.a7	1788	a7	Pazdrak	Franciszka			Pazdrak						30.12.1899									Pazdrak	Franciszka			Pazdrak
 CH.LUB.BLIN.1788.a8	1788	a8	Samuel	Maciej			Samuel						30.12.1899									Samuel	Maciej			Samuel
 CH.LUB.BLIN.1788.a9	1788	a9	Wawro	Maciej			Wawro						30.12.1899									Wawro	Maciej			Wawro
-CH.LUB.BLIN.1789.037	1789	37	Babiarz	Agnieszka			Babiarz						nr karty 37									Babiarz	Agnieszka			Babiarz
-CH.LUB.BLIN.1789.037	1789	37	Kudrelek	Agnieszka			Kudrelek						nr karty 37									Kudrelek	Agnieszka			Kudrelek
-CH.LUB.BLIN.1789.037	1789	37	Machulek	Paweł			Machulek						nr karty 37									Machulek	Paweł			Machulek
-CH.LUB.BLIN.1789.037	1789	37	Pawłasek	Paweł			Pawłasek						nr karty 37									Pawłasek	Paweł			Pawłasek
-CH.LUB.BLIN.1789.037	1789	37	Samuel	Walenty			Samuel						nr karty 37									Samuel	Walenty			Samuel
-CH.LUB.BLIN.1789.037	1789	37	Stefański	Sebastian			Stefański						nr karty 37									Stefański	Sebastian			Stefański
-CH.LUB.BLIN.1789.037	1789	37	Wawro	Błażej			Wawro						nr karty 37									Wawro	Błażej			Wawro
-CH.LUB.BLIN.1789.038	1789	38	Brzeska	Franciszka			Brzeska						nr karty 38									Brzeska	Franciszka			Brzeska
-CH.LUB.BLIN.1789.038	1789	38	Brzeski	Kazimierz			Brzeski						nr karty 38									Brzeski	Kazimierz			Brzeski
-CH.LUB.BLIN.1789.038	1789	38	Kaczyński	Walenty			Kaczyński						nr karty 38									Kaczyński	Walenty			Kaczyński
-CH.LUB.BLIN.1789.038	1789	38	Kurczak	Maciej			Kurczak						nr karty 38									Kurczak	Maciej			Kurczak
-CH.LUB.BLIN.1789.038	1789	38	Kurczak	Józef			Kurczak						nr karty 38									Kurczak	Józef			Kurczak
-CH.LUB.BLIN.1789.038	1789	38	Pasternak	Franciszka			Pasternak						nr karty 38									Pasternak	Franciszka			Pasternak
-CH.LUB.BLIN.1789.038	1789	38	Widomski	Kazimierz			Widomski						nr karty 38									Widomski	Kazimierz			Widomski
-CH.LUB.BLIN.1789.038	1789	38	Woś	Kazimierz			Woś						nr karty 38									Woś	Kazimierz			Woś
-CH.LUB.BLIN.1789.039	1789	39	Kosidło	Zofia			Kosidło						nr karty 39									Kosidło	Zofia			Kosidło
-CH.LUB.BLIN.1789.039	1789	39	Kuś	Marianna			Kuś						nr karty 39									Kuś	Marianna			Kuś
-CH.LUB.BLIN.1789.039	1789	39	Machulek	Józef			Machulek						nr karty 39									Machulek	Józef			Machulek
-CH.LUB.BLIN.1789.039	1789	39	Obydź	Wojciech			Obydź						nr karty 39									Obydź	Wojciech			Obydź
-CH.LUB.BLIN.1789.040	1789	40	Czerein	Anna			Czerein						nr karty 40									Czerein	Anna			Czerein
-CH.LUB.BLIN.1789.040	1789	40	Pasternak	Anna			Pasternak						nr karty 40									Pasternak	Anna			Pasternak
-CH.LUB.BLIN.1789.040	1789	40	Pazdrak	Marianna			Pazdrak						nr karty 40									Pazdrak	Marianna			Pazdrak
-CH.LUB.BLIN.1789.040	1789	40	Widomski	Jakub			Widomski						nr karty 40									Widomski	Jakub			Widomski
-CH.LUB.BLIN.1789.041	1789	41	Bzdyrak	Franciszek			Bzdyrak						nr karty 41									Bzdyrak	Franciszek			Bzdyrak
-CH.LUB.BLIN.1789.041	1789	41	Goch	Franciszek			Goch						nr karty 41									Goch	Franciszek			Goch
-CH.LUB.BLIN.1789.041	1789	41	Haber	Jadwiga			Haber						nr karty 41									Haber	Jadwiga			Haber
-CH.LUB.BLIN.1789.041	1789	41	Kozaczek	Michał			Kozaczek						nr karty 41									Kozaczek	Michał			Kozaczek
-CH.LUB.BLIN.1789.041	1789	41	Mcionek	Jacenty			Mcionek						nr karty 41									Mcionek	Jacenty			Mcionek
-CH.LUB.BLIN.1789.041	1789	41	Siemian	Marianna			Siemian						nr karty 41									Siemian	Marianna			Siemian
-CH.LUB.BLIN.1789.041	1789	41	Skrzypek	Bartłomiej			Skrzypek						nr karty 41									Skrzypek	Bartłomiej			Skrzypek
-CH.LUB.BLIN.1789.041	1789	41	Zieleński	Augustyn			Zieleński						nr karty 41									Zieleński	Augustyn			Zieleński
-CH.LUB.BLIN.1789.042	1789	42	Barbarzak	Szymon			Barbarzak						nr karty 42									Barbarzak	Szymon			Barbarzak
-CH.LUB.BLIN.1789.042	1789	42	Cielma	Franciszek			Cielma						nr karty 42									Cielma	Franciszek			Cielma
-CH.LUB.BLIN.1789.042	1789	42	Mcionek	Andrzej			Mcionek						nr karty 42									Mcionek	Andrzej			Mcionek
-CH.LUB.BLIN.1789.042	1789	42	Stępień	Urszula			Stępień						nr karty 42									Stępień	Urszula			Stępień
-CH.LUB.BLIN.1789.042	1789	42	Wieleba	Tomasz			Wieleba						nr karty 42									Wieleba	Tomasz			Wieleba
-CH.LUB.BLIN.1789.042	1789	42	Wścisło	Marcin			Wścisło						nr karty 42									Wścisło	Marcin			Wścisło
-CH.LUB.BLIN.1789.043	1789	43	Kozak	Tomasz			Kozak						nr karty 43									Kozak	Tomasz			Kozak
-CH.LUB.BLIN.1789.043	1789	43	Krawiecki	Andrzej			Krawiecki						nr karty 43									Krawiecki	Andrzej			Krawiecki
-CH.LUB.BLIN.1789.043	1789	43	Krupa	Katarzyna			Krupa						nr karty 43									Krupa	Katarzyna			Krupa
-CH.LUB.BLIN.1789.043	1789	43	Kurczak	Konstancja			Kurczak						nr karty 43									Kurczak	Konstancja			Kurczak
-CH.LUB.BLIN.1789.043	1789	43	Kurczak	Andrzej			Kurczak						nr karty 43									Kurczak	Andrzej			Kurczak
-CH.LUB.BLIN.1789.043	1789	43	Matjaszek	Ewa			Matjaszek						nr karty 43									Matjaszek	Ewa			Matjaszek
+CH.LUB.BLIN.1789.037a	1789	37	Babiarz	Agnieszka			Babiarz						nr karty 37									Babiarz	Agnieszka			Babiarz
+CH.LUB.BLIN.1789.037b	1789	37	Kudrelek	Agnieszka			Kudrelek						nr karty 37									Kudrelek	Agnieszka			Kudrelek
+CH.LUB.BLIN.1789.037c	1789	37	Machulek	Paweł			Machulek						nr karty 37									Machulek	Paweł			Machulek
+CH.LUB.BLIN.1789.037d	1789	37	Pawłasek	Paweł			Pawłasek						nr karty 37									Pawłasek	Paweł			Pawłasek
+CH.LUB.BLIN.1789.037e	1789	37	Samuel	Walenty			Samuel						nr karty 37									Samuel	Walenty			Samuel
+CH.LUB.BLIN.1789.037f	1789	37	Stefański	Sebastian			Stefański						nr karty 37									Stefański	Sebastian			Stefański
+CH.LUB.BLIN.1789.037g	1789	37	Wawro	Błażej			Wawro						nr karty 37									Wawro	Błażej			Wawro
+CH.LUB.BLIN.1789.038a	1789	38	Brzeska	Franciszka			Brzeska						nr karty 38									Brzeska	Franciszka			Brzeska
+CH.LUB.BLIN.1789.038b	1789	38	Brzeski	Kazimierz			Brzeski						nr karty 38									Brzeski	Kazimierz			Brzeski
+CH.LUB.BLIN.1789.038c	1789	38	Kaczyński	Walenty			Kaczyński						nr karty 38									Kaczyński	Walenty			Kaczyński
+CH.LUB.BLIN.1789.038d	1789	38	Kurczak	Maciej			Kurczak						nr karty 38									Kurczak	Maciej			Kurczak
+CH.LUB.BLIN.1789.038e	1789	38	Kurczak	Józef			Kurczak						nr karty 38									Kurczak	Józef			Kurczak
+CH.LUB.BLIN.1789.038f	1789	38	Pasternak	Franciszka			Pasternak						nr karty 38									Pasternak	Franciszka			Pasternak
+CH.LUB.BLIN.1789.038g	1789	38	Widomski	Kazimierz			Widomski						nr karty 38									Widomski	Kazimierz			Widomski
+CH.LUB.BLIN.1789.038h	1789	38	Woś	Kazimierz			Woś						nr karty 38									Woś	Kazimierz			Woś
+CH.LUB.BLIN.1789.039a	1789	39	Kosidło	Zofia			Kosidło						nr karty 39									Kosidło	Zofia			Kosidło
+CH.LUB.BLIN.1789.039b	1789	39	Kuś	Marianna			Kuś						nr karty 39									Kuś	Marianna			Kuś
+CH.LUB.BLIN.1789.039c	1789	39	Machulek	Józef			Machulek						nr karty 39									Machulek	Józef			Machulek
+CH.LUB.BLIN.1789.039d	1789	39	Obydź	Wojciech			Obydź						nr karty 39									Obydź	Wojciech			Obydź
+CH.LUB.BLIN.1789.040a	1789	40	Czerein	Anna			Czerein						nr karty 40									Czerein	Anna			Czerein
+CH.LUB.BLIN.1789.040b	1789	40	Pasternak	Anna			Pasternak						nr karty 40									Pasternak	Anna			Pasternak
+CH.LUB.BLIN.1789.040c	1789	40	Pazdrak	Marianna			Pazdrak						nr karty 40									Pazdrak	Marianna			Pazdrak
+CH.LUB.BLIN.1789.040d	1789	40	Widomski	Jakub			Widomski						nr karty 40									Widomski	Jakub			Widomski
+CH.LUB.BLIN.1789.041a	1789	41	Bzdyrak	Franciszek			Bzdyrak						nr karty 41									Bzdyrak	Franciszek			Bzdyrak
+CH.LUB.BLIN.1789.041b	1789	41	Goch	Franciszek			Goch						nr karty 41									Goch	Franciszek			Goch
+CH.LUB.BLIN.1789.041c	1789	41	Haber	Jadwiga			Haber						nr karty 41									Haber	Jadwiga			Haber
+CH.LUB.BLIN.1789.041d	1789	41	Kozaczek	Michał			Kozaczek						nr karty 41									Kozaczek	Michał			Kozaczek
+CH.LUB.BLIN.1789.041e	1789	41	Mcionek	Jacenty			Mcionek						nr karty 41									Mcionek	Jacenty			Mcionek
+CH.LUB.BLIN.1789.041f	1789	41	Siemian	Marianna			Siemian						nr karty 41									Siemian	Marianna			Siemian
+CH.LUB.BLIN.1789.041g	1789	41	Skrzypek	Bartłomiej			Skrzypek						nr karty 41									Skrzypek	Bartłomiej			Skrzypek
+CH.LUB.BLIN.1789.041h	1789	41	Zieleński	Augustyn			Zieleński						nr karty 41									Zieleński	Augustyn			Zieleński
+CH.LUB.BLIN.1789.042a	1789	42	Barbarzak	Szymon			Barbarzak						nr karty 42									Barbarzak	Szymon			Barbarzak
+CH.LUB.BLIN.1789.042b	1789	42	Cielma	Franciszek			Cielma						nr karty 42									Cielma	Franciszek			Cielma
+CH.LUB.BLIN.1789.042c	1789	42	Mcionek	Andrzej			Mcionek						nr karty 42									Mcionek	Andrzej			Mcionek
+CH.LUB.BLIN.1789.042d	1789	42	Stępień	Urszula			Stępień						nr karty 42									Stępień	Urszula			Stępień
+CH.LUB.BLIN.1789.042e	1789	42	Wieleba	Tomasz			Wieleba						nr karty 42									Wieleba	Tomasz			Wieleba
+CH.LUB.BLIN.1789.042f	1789	42	Wścisło	Marcin			Wścisło						nr karty 42									Wścisło	Marcin			Wścisło
+CH.LUB.BLIN.1789.043a	1789	43	Kozak	Tomasz			Kozak						nr karty 43									Kozak	Tomasz			Kozak
+CH.LUB.BLIN.1789.043b	1789	43	Krawiecki	Andrzej			Krawiecki						nr karty 43									Krawiecki	Andrzej			Krawiecki
+CH.LUB.BLIN.1789.043c	1789	43	Krupa	Katarzyna			Krupa						nr karty 43									Krupa	Katarzyna			Krupa
+CH.LUB.BLIN.1789.043d	1789	43	Kurczak	Konstancja			Kurczak						nr karty 43									Kurczak	Konstancja			Kurczak
+CH.LUB.BLIN.1789.043e	1789	43	Kurczak	Andrzej			Kurczak						nr karty 43									Kurczak	Andrzej			Kurczak
+CH.LUB.BLIN.1789.043f	1789	43	Matjaszek	Ewa			Matjaszek						nr karty 43									Matjaszek	Ewa			Matjaszek
 CH.LUB.BLIN.1789.a1	1789	a1	Biała	Małgorzata			Biała						30.12.1899									Biała	Małgorzata			Biała
 CH.LUB.BLIN.1789.a2	1789	a2	Kopiwoda	Marianna			Kopiwoda						30.12.1899									Kopiwoda	Marianna			Kopiwoda
 CH.LUB.BLIN.1789.a3	1789	a3	Kurczak	Antonina			Kurczak						30.12.1899									Kurczak	Antonina			Kurczak
@@ -350,99 +1387,99 @@ CH.LUB.BLIN.1789.a4	1789	a4	Łach	Stanisław			Łach						30.12.1899									Ła
 CH.LUB.BLIN.1789.a5	1789	a5	Łach	Jan			Łach						30.12.1899									Łach	Jan			Łach
 CH.LUB.BLIN.1789.a6	1789	a6	Rzeszutko	Antoni			Rzeszutko						30.12.1899									Rzeszutko	Antoni			Rzeszutko
 CH.LUB.BLIN.1789.a7	1789	a7	Solarz	Anna			Solarz						30.12.1899									Solarz	Anna			Solarz
-CH.LUB.BLIN.1790.044	1790	44	Czarny	Błażej			Czarny						nr karty 44									Czarny	Błażej			Czarny
-CH.LUB.BLIN.1790.044	1790	44	Dobrzyńska	Agata			Dobrzyńska						nr karty 44									Dobrzyńska	Agata			Dobrzyńska
-CH.LUB.BLIN.1790.044	1790	44	Głowacki	Walenty			Głowacki						nr karty 44									Głowacki	Walenty			Głowacki
-CH.LUB.BLIN.1790.044	1790	44	Igras	Marianna			Igras						nr karty 44									Igras	Marianna			Igras
-CH.LUB.BLIN.1790.044	1790	44	Sprysak	Sebastian			Sprysak						nr karty 44									Sprysak	Sebastian			Sprysak
-CH.LUB.BLIN.1790.044	1790	44	Żydek	Walenty			Żydek						nr karty 44									Żydek	Walenty			Żydek
-CH.LUB.BLIN.1790.045	1790	45	Bucon	Wojciech			Bucon						nr karty 45									Bucon	Wojciech			Bucon
-CH.LUB.BLIN.1790.045	1790	45	Kozak	Wojciech			Kozak						nr karty 45									Kozak	Wojciech			Kozak
-CH.LUB.BLIN.1790.045	1790	45	Kurczak	Wojciech			Kurczak						nr karty 45									Kurczak	Wojciech			Kurczak
-CH.LUB.BLIN.1790.045	1790	45	Wojtusiak	Agnieszka			Wojtusiak						nr karty 45									Wojtusiak	Agnieszka			Wojtusiak
-CH.LUB.BLIN.1790.046	1790	46	Bucon	Marianna			Bucon						nr karty 46									Bucon	Marianna			Bucon
-CH.LUB.BLIN.1790.046	1790	46	Bucon	Jan			Bucon						nr karty 46									Bucon	Jan			Bucon
-CH.LUB.BLIN.1790.046	1790	46	Chmiel	Marianna			Chmiel						nr karty 46									Chmiel	Marianna			Chmiel
-CH.LUB.BLIN.1790.046	1790	46	Grudzień	Krystyna			Grudzień						nr karty 46									Grudzień	Krystyna			Grudzień
-CH.LUB.BLIN.1790.046	1790	46	Kurczak	Marianna			Kurczak						nr karty 46									Kurczak	Marianna			Kurczak
-CH.LUB.BLIN.1790.046	1790	46	Wścisło	Jakub			Wścisło						nr karty 46									Wścisło	Jakub			Wścisło
-CH.LUB.BLIN.1790.047	1790	47	Czuba	Jakub			Czuba						nr karty 47									Czuba	Jakub			Czuba
-CH.LUB.BLIN.1790.047	1790	47	Łysak	Jakub			Łysak						nr karty 47									Łysak	Jakub			Łysak
-CH.LUB.BLIN.1790.047	1790	47	Machulek	Anna			Machulek						nr karty 47									Machulek	Anna			Machulek
-CH.LUB.BLIN.1790.047	1790	47	Mcionek	Jakub			Mcionek						nr karty 47									Mcionek	Jakub			Mcionek
-CH.LUB.BLIN.1790.047	1790	47	Pyć	Agnieszka			Pyć						nr karty 47									Pyć	Agnieszka			Pyć
-CH.LUB.BLIN.1790.047	1790	47	Sobutka	Małgorzata			Sobutka						nr karty 47									Sobutka	Małgorzata			Sobutka
-CH.LUB.BLIN.1790.047	1790	47	Szelaczok	Jan			Szelaczok						nr karty 47									Szelaczok	Jan			Szelaczok
-CH.LUB.BLIN.1790.048	1790	48	Baran	Jadwiga			Baran						nr karty 48									Baran	Jadwiga			Baran
-CH.LUB.BLIN.1790.048	1790	48	Kania	Marianna			Kania						nr karty 48									Kania	Marianna			Kania
-CH.LUB.BLIN.1790.048	1790	48	Kozaczek	Michał			Kozaczek						nr karty 48									Kozaczek	Michał			Kozaczek
-CH.LUB.BLIN.1790.048	1790	48	Machulek	Bartłomiej			Machulek						nr karty 48									Machulek	Bartłomiej			Machulek
-CH.LUB.BLIN.1790.048	1790	48	Mcionek	Michał			Mcionek						nr karty 48									Mcionek	Michał			Mcionek
-CH.LUB.BLIN.1790.048	1790	48	Pazdrak	Michał			Pazdrak						nr karty 48									Pazdrak	Michał			Pazdrak
-CH.LUB.BLIN.1790.048	1790	48	Szyszka	Wawrzyniec			Szyszka						nr karty 48									Szyszka	Wawrzyniec			Szyszka
-CH.LUB.BLIN.1790.049	1790	49	Bigos	Andrzej			Bigos						nr karty 49									Bigos	Andrzej			Bigos
-CH.LUB.BLIN.1790.049	1790	49	Ćwiek	Franciszek			Ćwiek						? nr karty 49									Ćwiek	Franciszek			Ćwiek
-CH.LUB.BLIN.1790.049	1790	49	Dziura	Agnieszka			Dziura						nr karty 49									Dziura	Agnieszka			Dziura
-CH.LUB.BLIN.1790.049	1790	49	Gargol	Teresa			Gargol						nr karty 49									Gargol	Teresa			Gargol
-CH.LUB.BLIN.1790.049	1790	49	Pawłasek	Katarzyna			Pawłasek						nr karty 49									Pawłasek	Katarzyna			Pawłasek
-CH.LUB.BLIN.1790.049	1790	49	Samuel	Jadwiga			Samuel						nr karty 49									Samuel	Jadwiga			Samuel
-CH.LUB.BLIN.1790.050	1790	50	Baran	Katarzyna			Baran						nr karty 50									Baran	Katarzyna			Baran
-CH.LUB.BLIN.1790.050	1790	50	Bryton	Marianna			Bryton						nr karty 50									Bryton	Marianna			Bryton
-CH.LUB.BLIN.1790.050	1790	50	Kot	Katarzyna			Kot						nr karty 50									Kot	Katarzyna			Kot
-CH.LUB.BLIN.1790.050	1790	50	Kurczak	Marcin			Kurczak						nr karty 50									Kurczak	Marcin			Kurczak
-CH.LUB.BLIN.1790.050	1790	50	Pasternak	Marcin			Pasternak						nr karty 50									Pasternak	Marcin			Pasternak
-CH.LUB.BLIN.1790.050	1790	50	Sobutka	Katarzyna			Sobutka						nr karty 50									Sobutka	Katarzyna			Sobutka
-CH.LUB.BLIN.1790.050	1790	50	Szabat	Tomasz			Szabat						nr karty 50									Szabat	Tomasz			Szabat
-CH.LUB.BLIN.1790.051	1790	51	Boczek	Tomasz			Boczek						nr karty 51									Boczek	Tomasz			Boczek
-CH.LUB.BLIN.1790.051	1790	51	Machulek	Agnieszka			Machulek						nr karty 51									Machulek	Agnieszka			Machulek
-CH.LUB.BLIN.1790.051	1790	51	Michalska	Agnieszka			Michalska						nr karty 51									Michalska	Agnieszka			Michalska
-CH.LUB.BLIN.1790.051	1790	51	Paciorek	Ewa			Paciorek						nr karty 51									Paciorek	Ewa			Paciorek
-CH.LUB.BLIN.1790.051	1790	51	Pasternak	Ewa			Pasternak						nr karty 51									Pasternak	Ewa			Pasternak
-CH.LUB.BLIN.1790.051	1790	51	Pęk	Ewa			Pęk						nr karty 51									Pęk	Ewa			Pęk
+CH.LUB.BLIN.1790.044a	1790	44	Czarny	Błażej			Czarny						nr karty 44									Czarny	Błażej			Czarny
+CH.LUB.BLIN.1790.044b	1790	44	Dobrzyńska	Agata			Dobrzyńska						nr karty 44									Dobrzyńska	Agata			Dobrzyńska
+CH.LUB.BLIN.1790.044c	1790	44	Głowacki	Walenty			Głowacki						nr karty 44									Głowacki	Walenty			Głowacki
+CH.LUB.BLIN.1790.044d	1790	44	Igras	Marianna			Igras						nr karty 44									Igras	Marianna			Igras
+CH.LUB.BLIN.1790.044e	1790	44	Sprysak	Sebastian			Sprysak						nr karty 44									Sprysak	Sebastian			Sprysak
+CH.LUB.BLIN.1790.044f	1790	44	Żydek	Walenty			Żydek						nr karty 44									Żydek	Walenty			Żydek
+CH.LUB.BLIN.1790.045a	1790	45	Bucon	Wojciech			Bucon						nr karty 45									Bucon	Wojciech			Bucon
+CH.LUB.BLIN.1790.045b	1790	45	Kozak	Wojciech			Kozak						nr karty 45									Kozak	Wojciech			Kozak
+CH.LUB.BLIN.1790.045c	1790	45	Kurczak	Wojciech			Kurczak						nr karty 45									Kurczak	Wojciech			Kurczak
+CH.LUB.BLIN.1790.045d	1790	45	Wojtusiak	Agnieszka			Wojtusiak						nr karty 45									Wojtusiak	Agnieszka			Wojtusiak
+CH.LUB.BLIN.1790.046a	1790	46	Bucon	Marianna			Bucon						nr karty 46									Bucon	Marianna			Bucon
+CH.LUB.BLIN.1790.046b	1790	46	Bucon	Jan			Bucon						nr karty 46									Bucon	Jan			Bucon
+CH.LUB.BLIN.1790.046c	1790	46	Chmiel	Marianna			Chmiel						nr karty 46									Chmiel	Marianna			Chmiel
+CH.LUB.BLIN.1790.046d	1790	46	Grudzień	Krystyna			Grudzień						nr karty 46									Grudzień	Krystyna			Grudzień
+CH.LUB.BLIN.1790.046e	1790	46	Kurczak	Marianna			Kurczak						nr karty 46									Kurczak	Marianna			Kurczak
+CH.LUB.BLIN.1790.046f	1790	46	Wścisło	Jakub			Wścisło						nr karty 46									Wścisło	Jakub			Wścisło
+CH.LUB.BLIN.1790.047a	1790	47	Czuba	Jakub			Czuba						nr karty 47									Czuba	Jakub			Czuba
+CH.LUB.BLIN.1790.047b	1790	47	Łysak	Jakub			Łysak						nr karty 47									Łysak	Jakub			Łysak
+CH.LUB.BLIN.1790.047c	1790	47	Machulek	Anna			Machulek						nr karty 47									Machulek	Anna			Machulek
+CH.LUB.BLIN.1790.047d	1790	47	Mcionek	Jakub			Mcionek						nr karty 47									Mcionek	Jakub			Mcionek
+CH.LUB.BLIN.1790.047e	1790	47	Pyć	Agnieszka			Pyć						nr karty 47									Pyć	Agnieszka			Pyć
+CH.LUB.BLIN.1790.047f	1790	47	Sobutka	Małgorzata			Sobutka						nr karty 47									Sobutka	Małgorzata			Sobutka
+CH.LUB.BLIN.1790.047g	1790	47	Szelaczok	Jan			Szelaczok						nr karty 47									Szelaczok	Jan			Szelaczok
+CH.LUB.BLIN.1790.048a	1790	48	Baran	Jadwiga			Baran						nr karty 48									Baran	Jadwiga			Baran
+CH.LUB.BLIN.1790.048b	1790	48	Kania	Marianna			Kania						nr karty 48									Kania	Marianna			Kania
+CH.LUB.BLIN.1790.048c	1790	48	Kozaczek	Michał			Kozaczek						nr karty 48									Kozaczek	Michał			Kozaczek
+CH.LUB.BLIN.1790.048d	1790	48	Machulek	Bartłomiej			Machulek						nr karty 48									Machulek	Bartłomiej			Machulek
+CH.LUB.BLIN.1790.048e	1790	48	Mcionek	Michał			Mcionek						nr karty 48									Mcionek	Michał			Mcionek
+CH.LUB.BLIN.1790.048f	1790	48	Pazdrak	Michał			Pazdrak						nr karty 48									Pazdrak	Michał			Pazdrak
+CH.LUB.BLIN.1790.048g	1790	48	Szyszka	Wawrzyniec			Szyszka						nr karty 48									Szyszka	Wawrzyniec			Szyszka
+CH.LUB.BLIN.1790.049a	1790	49	Bigos	Andrzej			Bigos						nr karty 49									Bigos	Andrzej			Bigos
+CH.LUB.BLIN.1790.049b	1790	49	Ćwiek	Franciszek			Ćwiek						? nr karty 49									Ćwiek	Franciszek			Ćwiek
+CH.LUB.BLIN.1790.049c	1790	49	Dziura	Agnieszka			Dziura						nr karty 49									Dziura	Agnieszka			Dziura
+CH.LUB.BLIN.1790.049d	1790	49	Gargol	Teresa			Gargol						nr karty 49									Gargol	Teresa			Gargol
+CH.LUB.BLIN.1790.049e	1790	49	Pawłasek	Katarzyna			Pawłasek						nr karty 49									Pawłasek	Katarzyna			Pawłasek
+CH.LUB.BLIN.1790.049f	1790	49	Samuel	Jadwiga			Samuel						nr karty 49									Samuel	Jadwiga			Samuel
+CH.LUB.BLIN.1790.050a	1790	50	Baran	Katarzyna			Baran						nr karty 50									Baran	Katarzyna			Baran
+CH.LUB.BLIN.1790.050b	1790	50	Bryton	Marianna			Bryton						nr karty 50									Bryton	Marianna			Bryton
+CH.LUB.BLIN.1790.050c	1790	50	Kot	Katarzyna			Kot						nr karty 50									Kot	Katarzyna			Kot
+CH.LUB.BLIN.1790.050d	1790	50	Kurczak	Marcin			Kurczak						nr karty 50									Kurczak	Marcin			Kurczak
+CH.LUB.BLIN.1790.050e	1790	50	Pasternak	Marcin			Pasternak						nr karty 50									Pasternak	Marcin			Pasternak
+CH.LUB.BLIN.1790.050f	1790	50	Sobutka	Katarzyna			Sobutka						nr karty 50									Sobutka	Katarzyna			Sobutka
+CH.LUB.BLIN.1790.050g	1790	50	Szabat	Tomasz			Szabat						nr karty 50									Szabat	Tomasz			Szabat
+CH.LUB.BLIN.1790.051a	1790	51	Boczek	Tomasz			Boczek						nr karty 51									Boczek	Tomasz			Boczek
+CH.LUB.BLIN.1790.051b	1790	51	Machulek	Agnieszka			Machulek						nr karty 51									Machulek	Agnieszka			Machulek
+CH.LUB.BLIN.1790.051c	1790	51	Michalska	Agnieszka			Michalska						nr karty 51									Michalska	Agnieszka			Michalska
+CH.LUB.BLIN.1790.051d	1790	51	Paciorek	Ewa			Paciorek						nr karty 51									Paciorek	Ewa			Paciorek
+CH.LUB.BLIN.1790.051e	1790	51	Pasternak	Ewa			Pasternak						nr karty 51									Pasternak	Ewa			Pasternak
+CH.LUB.BLIN.1790.051f	1790	51	Pęk	Ewa			Pęk						nr karty 51									Pęk	Ewa			Pęk
 CH.LUB.BLIN.1790.a1	1790	a1	Baran	Magdalena			Baran						30.12.1899									Baran	Magdalena			Baran
 CH.LUB.BLIN.1790.a2	1790	a2	Koguc	Kazimierz			Koguc						30.12.1899									Koguc	Kazimierz			Koguc
 CH.LUB.BLIN.1790.a3	1790	a3	Kurczak	Kazimierz			Kurczak						30.12.1899									Kurczak	Kazimierz			Kurczak
 CH.LUB.BLIN.1790.a4	1790	a4	Kurczak	Józef			Kurczak						30.12.1899									Kurczak	Józef			Kurczak
 CH.LUB.BLIN.1790.a5	1790	a5	Sobótka	Walenty			Sobótka						30.12.1899									Sobótka	Walenty			Sobótka
 CH.LUB.BLIN.1791.051	1791	51	Rataj	Agnieszka			Rataj						nr karty 51									Rataj	Agnieszka			Rataj
-CH.LUB.BLIN.1791.052	1791	52	Baran	Walenty			Baran						nr karty 52									Baran	Walenty			Baran
-CH.LUB.BLIN.1791.052	1791	52	Jagosiak	Marianna			Jagosiak						? nr karty 52									Jagosiak	Marianna			Jagosiak
-CH.LUB.BLIN.1791.052	1791	52	Kuś	Marianna			Kuś						? nr karty 52									Kuś	Marianna			Kuś
-CH.LUB.BLIN.1791.052	1791	52	Obydź	Walenty			Obydź						nr karty 52									Obydź	Walenty			Obydź
-CH.LUB.BLIN.1791.052	1791	52	Paluchowski	Józef			Paluchowski						nr karty 52									Paluchowski	Józef			Paluchowski
-CH.LUB.BLIN.1791.052	1791	52	Siembida	Walenty			Siembida						nr karty 52									Siembida	Walenty			Siembida
-CH.LUB.BLIN.1791.053	1791	53	Bosak	Marianna			Bosak						nr karty 53									Bosak	Marianna			Bosak
-CH.LUB.BLIN.1791.053	1791	53	Gnat	Marianna			Gnat						nr karty 53									Gnat	Marianna			Gnat
-CH.LUB.BLIN.1791.053	1791	53	Kasperek	Marianna			Kasperek						nr karty 53									Kasperek	Marianna			Kasperek
-CH.LUB.BLIN.1791.053	1791	53	Kolasza	Józef			Kolasza						nr karty 53									Kolasza	Józef			Kolasza
-CH.LUB.BLIN.1791.053	1791	53	Krawiecki	Maciej			Krawiecki						nr karty 53									Krawiecki	Maciej			Krawiecki
-CH.LUB.BLIN.1791.053	1791	53	Mórawska	Franciszka			Mórawska						nr karty 53									Mórawska	Franciszka			Mórawska
-CH.LUB.BLIN.1791.053	1791	53	Skrzypek	Marianna			Skrzypek						nr karty 53									Skrzypek	Marianna			Skrzypek
-CH.LUB.BLIN.1791.053	1791	53	Tutka	Zofia			Tutka						nr karty 53									Tutka	Zofia			Tutka
-CH.LUB.BLIN.1791.054	1791	54	Haber	Anastazja			Haber						nr karty 54									Haber	Anastazja			Haber
-CH.LUB.BLIN.1791.054	1791	54	Kopyt	Wojciech			Kopyt						nr karty 54									Kopyt	Wojciech			Kopyt
-CH.LUB.BLIN.1791.054	1791	54	Kot	Józef			Kot						nr karty 54									Kot	Józef			Kot
-CH.LUB.BLIN.1791.055	1791	55	Kurczak	Antoni			Kurczak						nr karty 55									Kurczak	Antoni			Kurczak
-CH.LUB.BLIN.1791.055	1791	55	Pawłasek	Stanisław			Pawłasek						nr karty 55									Pawłasek	Stanisław			Pawłasek
-CH.LUB.BLIN.1791.056	1791	56	Czarny	Michał			Czarny						nr karty 56									Czarny	Michał			Czarny
-CH.LUB.BLIN.1791.056	1791	56	Łach	Franciszek			Łach						nr karty 56									Łach	Franciszek			Łach
-CH.LUB.BLIN.1791.056	1791	56	Sagan	Stanisław			Sagan						nr karty 56									Sagan	Stanisław			Sagan
-CH.LUB.BLIN.1791.057	1791	57	Brzeski	Andrzej			Brzeski						nr karty 57									Brzeski	Andrzej			Brzeski
-CH.LUB.BLIN.1791.057	1791	57	Bzdyrak	Marcin			Bzdyrak						nr karty 57									Bzdyrak	Marcin			Bzdyrak
-CH.LUB.BLIN.1791.057	1791	57	Ćwiek	Jadwiga			Ćwiek						? nr karty 57									Ćwiek	Jadwiga			Ćwiek
-CH.LUB.BLIN.1791.057	1791	57	Gnat	Szymon			Gnat						nr karty 57									Gnat	Szymon			Gnat
-CH.LUB.BLIN.1791.057	1791	57	Łata	Michał			Łata						nr karty 57									Łata	Michał			Łata
-CH.LUB.BLIN.1791.057	1791	57	Pazdrak	Jadwiga			Pazdrak						nr karty 57									Pazdrak	Jadwiga			Pazdrak
-CH.LUB.BLIN.1791.057	1791	57	Samuel	Tomasz			Samuel						nr karty 57									Samuel	Tomasz			Samuel
-CH.LUB.BLIN.1791.057	1791	57	Solarz	Katarzyna			Solarz						nr karty 57									Solarz	Katarzyna			Solarz
-CH.LUB.BLIN.1791.058	1791	58	Cielma	Tomasz			Cielma						nr karty 58									Cielma	Tomasz			Cielma
-CH.LUB.BLIN.1791.058	1791	58	Gil	Tomasz			Gil						nr karty 58									Gil	Tomasz			Gil
-CH.LUB.BLIN.1791.058	1791	58	Kurczak	Marianna			Kurczak						nr karty 58									Kurczak	Marianna			Kurczak
-CH.LUB.BLIN.1791.058	1791	58	Machulek	Marianna			Machulek						nr karty 58									Machulek	Marianna			Machulek
-CH.LUB.BLIN.1791.058	1791	58	Pawłasek	Tomasz			Pawłasek						nr karty 58									Pawłasek	Tomasz			Pawłasek
-CH.LUB.BLIN.1791.059	1791	59	Kurczak	Kacper			Kurczak						nr karty 59									Kurczak	Kacper			Kurczak
-CH.LUB.BLIN.1791.059	1791	59	Michałek	Agnieszka			Michałkówna						nr karty 59									Michałkówna	Agnieszka			Michałkówna
-CH.LUB.BLIN.1791.059	1791	59	Zaręba	Agnieszka			Zaręba						nr karty 59									Zaręba	Agnieszka			Zaręba
+CH.LUB.BLIN.1791.052a	1791	52	Baran	Walenty			Baran						nr karty 52									Baran	Walenty			Baran
+CH.LUB.BLIN.1791.052b	1791	52	Jagosiak	Marianna			Jagosiak						? nr karty 52									Jagosiak	Marianna			Jagosiak
+CH.LUB.BLIN.1791.052c	1791	52	Kuś	Marianna			Kuś						? nr karty 52									Kuś	Marianna			Kuś
+CH.LUB.BLIN.1791.052d	1791	52	Obydź	Walenty			Obydź						nr karty 52									Obydź	Walenty			Obydź
+CH.LUB.BLIN.1791.052e	1791	52	Paluchowski	Józef			Paluchowski						nr karty 52									Paluchowski	Józef			Paluchowski
+CH.LUB.BLIN.1791.052f	1791	52	Siembida	Walenty			Siembida						nr karty 52									Siembida	Walenty			Siembida
+CH.LUB.BLIN.1791.053a	1791	53	Bosak	Marianna			Bosak						nr karty 53									Bosak	Marianna			Bosak
+CH.LUB.BLIN.1791.053b	1791	53	Gnat	Marianna			Gnat						nr karty 53									Gnat	Marianna			Gnat
+CH.LUB.BLIN.1791.053c	1791	53	Kasperek	Marianna			Kasperek						nr karty 53									Kasperek	Marianna			Kasperek
+CH.LUB.BLIN.1791.053d	1791	53	Kolasza	Józef			Kolasza						nr karty 53									Kolasza	Józef			Kolasza
+CH.LUB.BLIN.1791.053e	1791	53	Krawiecki	Maciej			Krawiecki						nr karty 53									Krawiecki	Maciej			Krawiecki
+CH.LUB.BLIN.1791.053f	1791	53	Mórawska	Franciszka			Mórawska						nr karty 53									Mórawska	Franciszka			Mórawska
+CH.LUB.BLIN.1791.053g	1791	53	Skrzypek	Marianna			Skrzypek						nr karty 53									Skrzypek	Marianna			Skrzypek
+CH.LUB.BLIN.1791.053h	1791	53	Tutka	Zofia			Tutka						nr karty 53									Tutka	Zofia			Tutka
+CH.LUB.BLIN.1791.054a	1791	54	Haber	Anastazja			Haber						nr karty 54									Haber	Anastazja			Haber
+CH.LUB.BLIN.1791.054b	1791	54	Kopyt	Wojciech			Kopyt						nr karty 54									Kopyt	Wojciech			Kopyt
+CH.LUB.BLIN.1791.054c	1791	54	Kot	Józef			Kot						nr karty 54									Kot	Józef			Kot
+CH.LUB.BLIN.1791.055a	1791	55	Kurczak	Antoni			Kurczak						nr karty 55									Kurczak	Antoni			Kurczak
+CH.LUB.BLIN.1791.055b	1791	55	Pawłasek	Stanisław			Pawłasek						nr karty 55									Pawłasek	Stanisław			Pawłasek
+CH.LUB.BLIN.1791.056a	1791	56	Czarny	Michał			Czarny						nr karty 56									Czarny	Michał			Czarny
+CH.LUB.BLIN.1791.056b	1791	56	Łach	Franciszek			Łach						nr karty 56									Łach	Franciszek			Łach
+CH.LUB.BLIN.1791.056c	1791	56	Sagan	Stanisław			Sagan						nr karty 56									Sagan	Stanisław			Sagan
+CH.LUB.BLIN.1791.057a	1791	57	Brzeski	Andrzej			Brzeski						nr karty 57									Brzeski	Andrzej			Brzeski
+CH.LUB.BLIN.1791.057b	1791	57	Bzdyrak	Marcin			Bzdyrak						nr karty 57									Bzdyrak	Marcin			Bzdyrak
+CH.LUB.BLIN.1791.057c	1791	57	Ćwiek	Jadwiga			Ćwiek						? nr karty 57									Ćwiek	Jadwiga			Ćwiek
+CH.LUB.BLIN.1791.057d	1791	57	Gnat	Szymon			Gnat						nr karty 57									Gnat	Szymon			Gnat
+CH.LUB.BLIN.1791.057e	1791	57	Łata	Michał			Łata						nr karty 57									Łata	Michał			Łata
+CH.LUB.BLIN.1791.057f	1791	57	Pazdrak	Jadwiga			Pazdrak						nr karty 57									Pazdrak	Jadwiga			Pazdrak
+CH.LUB.BLIN.1791.057g	1791	57	Samuel	Tomasz			Samuel						nr karty 57									Samuel	Tomasz			Samuel
+CH.LUB.BLIN.1791.057h	1791	57	Solarz	Katarzyna			Solarz						nr karty 57									Solarz	Katarzyna			Solarz
+CH.LUB.BLIN.1791.058a	1791	58	Cielma	Tomasz			Cielma						nr karty 58									Cielma	Tomasz			Cielma
+CH.LUB.BLIN.1791.058b	1791	58	Gil	Tomasz			Gil						nr karty 58									Gil	Tomasz			Gil
+CH.LUB.BLIN.1791.058c	1791	58	Kurczak	Marianna			Kurczak						nr karty 58									Kurczak	Marianna			Kurczak
+CH.LUB.BLIN.1791.058d	1791	58	Machulek	Marianna			Machulek						nr karty 58									Machulek	Marianna			Machulek
+CH.LUB.BLIN.1791.058e	1791	58	Pawłasek	Tomasz			Pawłasek						nr karty 58									Pawłasek	Tomasz			Pawłasek
+CH.LUB.BLIN.1791.059a	1791	59	Kurczak	Kacper			Kurczak						nr karty 59									Kurczak	Kacper			Kurczak
+CH.LUB.BLIN.1791.059b	1791	59	Michałek	Agnieszka			Michałkówna						nr karty 59									Michałkówna	Agnieszka			Michałkówna
+CH.LUB.BLIN.1791.059c	1791	59	Zaręba	Agnieszka			Zaręba						nr karty 59									Zaręba	Agnieszka			Zaręba
 CH.LUB.BLIN.1791.a1	1791	a1	Babiarz	Franciszka			Babiarz						30.12.1899									Babiarz	Franciszka			Babiarz
 CH.LUB.BLIN.1791.a2	1791	a2	Czuba	Marianna			Czuba						30.12.1899									Czuba	Marianna			Czuba
 CH.LUB.BLIN.1791.a3	1791	a3	Jagosiak	Józef			Jagosiak						30.12.1899									Jagosiak	Józef			Jagosiak
@@ -459,109 +1496,109 @@ CH.LUB.BLIN.1791.a13	1791	a13	Wścisło	Marianna			Wścisło						30.12.1899				
 CH.LUB.BLIN.1791.a14	1791	a14	Wścisło	Magdalena			Wścisło						30.12.1899									Wścisło	Magdalena			Wścisło
 CH.LUB.BLIN.1791.a15	1791	a15	Wścisło	Katarzyna			Wścisło						30.12.1899									Wścisło	Katarzyna			Wścisło
 CH.LUB.BLIN.1791.a16	1791	a16	Żerchin	Zofia			Żerchin						30.12.1899									Żerchin	Zofia			Żerchin
-CH.LUB.BLIN.1792.059	1792	59	Kurczak	Błażej			Kurczak						nr karty 59									Kurczak	Błażej			Kurczak
-CH.LUB.BLIN.1792.059	1792	59	Stefańska	Agnieszka			Stefańska						nr karty 59									Stefańska	Agnieszka			Stefańska
-CH.LUB.BLIN.1792.060	1792	60	Chmiel	Agata			Chmiel						nr karty 60									Chmiel	Agata			Chmiel
-CH.LUB.BLIN.1792.060	1792	60	Kurczak	Walenty			Kurczak						nr karty 60									Kurczak	Walenty			Kurczak
-CH.LUB.BLIN.1792.060	1792	60	Machulek	Józef			Machulek						nr karty 60									Machulek	Józef			Machulek
-CH.LUB.BLIN.1792.060	1792	60	Niemiro?	Marianna			Niemiro?						? nr karty 60									Niemirówna	Marianna			Niemirówna
-CH.LUB.BLIN.1792.060	1792	60	Sagan	Maciej			Sagan						nr karty 60									Sagan	Maciej			Sagan
-CH.LUB.BLIN.1792.060	1792	60	Zarzeczna	Marianna			Zarzeczna						nr karty 60									Zarzeczna	Marianna			Zarzeczna
-CH.LUB.BLIN.1792.060	1792	60	Zieleński	Maciej			Zieleński						nr karty 60									Zieleński	Maciej			Zieleński
-CH.LUB.BLIN.1792.061	1792	61	Biała	Franciszka			Biała						nr karty 61									Biała	Franciszka			Biała
-CH.LUB.BLIN.1792.061	1792	61	Kowalik	Zofia			Kowalik						nr karty 61									Kowalik	Zofia			Kowalik
-CH.LUB.BLIN.1792.061	1792	61	Kurczak	Zofia			Kurczak						nr karty 61									Kurczak	Zofia			Kurczak
-CH.LUB.BLIN.1792.061	1792	61	Siemian	Kazimierz			Siemian						nr karty 61									Siemian	Kazimierz			Siemian
-CH.LUB.BLIN.1792.061	1792	61	Sobutka	Marianna			Sobutka						nr karty 61									Sobutka	Marianna			Sobutka
-CH.LUB.BLIN.1792.061	1792	61	Sprysak	Maciej			Sprysak						nr karty 61									Sprysak	Maciej			Sprysak
-CH.LUB.BLIN.1792.061	1792	61	Szynka	Józef			Szynka						nr karty 61									Szynka	Józef			Szynka
-CH.LUB.BLIN.1792.062	1792	62	Baran	Anna			Baran						nr karty 62									Baran	Anna			Baran
-CH.LUB.BLIN.1792.062	1792	62	Goch	Wojciech			Goch						nr karty 62									Goch	Wojciech			Goch
-CH.LUB.BLIN.1792.062	1792	62	Kozaczek	Zofia			Kozaczek						nr karty 62									Kozaczek	Zofia			Kozaczek
-CH.LUB.BLIN.1792.062	1792	62	Machulek	Marianna			Machulek						nr karty 62									Machulek	Marianna			Machulek
-CH.LUB.BLIN.1792.062	1792	62	Pazdrak	Józef			Pazdrak						nr karty 62									Pazdrak	Józef			Pazdrak
-CH.LUB.BLIN.1792.062	1792	62	Pęk	Marianna			Pęk						nr karty 62									Pęk	Marianna			Pęk
-CH.LUB.BLIN.1792.062	1792	62	Sobutka	Zofia			Sobutka						nr karty 62									Sobutka	Zofia			Sobutka
-CH.LUB.BLIN.1792.062	1792	62	Zaręba	Franciszka			Zaręba						nr karty 62									Zaręba	Franciszka			Zaręba
-CH.LUB.BLIN.1792.063	1792	63	Dobrzyński	Antoni			Dobrzyński						nr karty 63									Dobrzyński	Antoni			Dobrzyński
-CH.LUB.BLIN.1792.063	1792	63	Gnat	Anna			Gnat						nr karty 63									Gnat	Anna			Gnat
-CH.LUB.BLIN.1792.063	1792	63	Kosidło	Katarzyna			Kosidło						nr karty 63									Kosidło	Katarzyna			Kosidło
-CH.LUB.BLIN.1792.063	1792	63	Mcionek	Marianna			Mcionek						nr karty 63									Mcionek	Marianna			Mcionek
-CH.LUB.BLIN.1792.063	1792	63	Mcionek	Jan			Mcionek						nr karty 63									Mcionek	Jan			Mcionek
-CH.LUB.BLIN.1792.063	1792	63	Mcionek	Anna			Mcionek						nr karty 63									Mcionek	Anna			Mcionek
-CH.LUB.BLIN.1792.063	1792	63	Nowakowski	Wincenty			Nowakowski						nr karty 63									Nowakowski	Wincenty			Nowakowski
-CH.LUB.BLIN.1792.064	1792	64	Bucon	Jakub			Bucon						nr karty 64									Bucon	Jakub			Bucon
-CH.LUB.BLIN.1792.064	1792	64	Kozaczek	Wawrzyniec			Kozaczek						nr karty 64									Kozaczek	Wawrzyniec			Kozaczek
-CH.LUB.BLIN.1792.064	1792	64	Rzeszutko	Małgorzata			Rzeszutko						nr karty 64									Rzeszutko	Małgorzata			Rzeszutko
-CH.LUB.BLIN.1792.064	1792	64	Sadowska	Anna			Sadowska						nr karty 64									Sadowska	Anna			Sadowska
-CH.LUB.BLIN.1792.064	1792	64	Stępień	Jadwiga			Stępień						nr karty 64									Stępień	Jadwiga			Stępień
-CH.LUB.BLIN.1792.064	1792	64	Wścisło	Jakub			Wścisło						nr karty 64									Wścisło	Jakub			Wścisło
-CH.LUB.BLIN.1792.064	1792	64	Wścisło	Anna			Wścisło						nr karty 64									Wścisło	Anna			Wścisło
-CH.LUB.BLIN.1792.065	1792	65	Bucon	Michał			Bucon						nr karty 65									Bucon	Michał			Bucon
-CH.LUB.BLIN.1792.065	1792	65	Chać	Jadwiga			Chaciówna						nr karty 65									Chaciówna	Jadwiga			Chaciówna
-CH.LUB.BLIN.1792.065	1792	65	Kania	Katarzyna			Kania						nr karty 65									Kania	Katarzyna			Kania
-CH.LUB.BLIN.1792.065	1792	65	Kosidło	Michał			Kosidło						nr karty 65									Kosidło	Michał			Kosidło
-CH.LUB.BLIN.1792.065	1792	65	Krzyszton	Andrzej			Krzyszton						nr karty 65									Krzyszton	Andrzej			Krzyszton
-CH.LUB.BLIN.1792.065	1792	65	Niewiadoma	Brygida			Niewiadoma						nr karty 65									Niewiadoma	Brygida			Niewiadoma
-CH.LUB.BLIN.1792.065	1792	65	Pasternak	Szymon			Pasternak						nr karty 65									Pasternak	Szymon			Pasternak
-CH.LUB.BLIN.1792.066	1792	66	Gręda	Marianna			Grędówna						nr karty 66									Grędówna	Marianna			Grędówna
-CH.LUB.BLIN.1792.066	1792	66	Kozaczek	Andrzej			Kozaczek						nr karty 66									Kozaczek	Andrzej			Kozaczek
-CH.LUB.BLIN.1792.066	1792	66	Kozak	Tomasz			Kozak						nr karty 66									Kozak	Tomasz			Kozak
-CH.LUB.BLIN.1792.066	1792	66	Kozak	Katarzyna			Kozak						nr karty 66									Kozak	Katarzyna			Kozak
-CH.LUB.BLIN.1792.066	1792	66	Mcionek	Szymon			Mcionek						nr karty 66									Mcionek	Szymon			Mcionek
-CH.LUB.BLIN.1792.066	1792	66	Wojtusiak	Andrzej			Wojtusiak						nr karty 66									Wojtusiak	Andrzej			Wojtusiak
-CH.LUB.BLIN.1792.066	1792	66	Zagaj	Marcin			Zagaj						nr karty 66									Zagaj	Marcin			Zagaj
-CH.LUB.BLIN.1792.067	1792	67	Bigos	Jan			Bigos						nr karty 67									Bigos	Jan			Bigos
-CH.LUB.BLIN.1792.067	1792	67	Kolasza	Jan			Kolasza						nr karty 67									Kolasza	Jan			Kolasza
-CH.LUB.BLIN.1792.067	1792	67	Kosidło	Jan			Kosidło						nr karty 67									Kosidło	Jan			Kosidło
-CH.LUB.BLIN.1792.067	1792	67	Kozak	Paweł			Kozak						nr karty 67									Kozak	Paweł			Kozak
-CH.LUB.BLIN.1793.067	1793	67	Barbarzak	Agnieszka			Barbarzak						nr karty 67									Barbarzak	Agnieszka			Barbarzak
-CH.LUB.BLIN.1793.067	1793	67	Dziura	Kacper			Dziura						nr karty 67									Dziura	Kacper			Dziura
-CH.LUB.BLIN.1793.067	1793	67	Wojtalas	Paweł			Wojtalas						nr karty 67									Wojtalas	Paweł			Wojtalas
-CH.LUB.BLIN.1793.068	1793	68	Babiarz	Sebastian			Babiarz						nr karty 68									Babiarz	Sebastian			Babiarz
-CH.LUB.BLIN.1793.068	1793	68	Baran	Agnieszka			Baran						nr karty 68									Baran	Agnieszka			Baran
-CH.LUB.BLIN.1793.068	1793	68	Boczek	Agnieszka			Boczek						nr karty 68									Boczek	Agnieszka			Boczek
-CH.LUB.BLIN.1793.068	1793	68	Haber	Marianna			Haber						nr karty 68									Haber	Marianna			Haber
-CH.LUB.BLIN.1793.068	1793	68	Jędrzejczak	Paweł			Jędrzejczak						nr karty 68									Jędrzejczak	Paweł			Jędrzejczak
-CH.LUB.BLIN.1793.068	1793	68	Kozaczek	Kazimierz			Kozaczek						nr karty 68									Kozaczek	Kazimierz			Kozaczek
-CH.LUB.BLIN.1793.068	1793	68	Samuel	Józef			Samuel						nr karty 68									Samuel	Józef			Samuel
-CH.LUB.BLIN.1793.068	1793	68	Staroch	Agnieszka			Staroch						nr karty 68									Staroch	Agnieszka			Staroch
-CH.LUB.BLIN.1793.069	1793	69	Bielak	Zofia			Bielak						nr karty 69									Bielak	Zofia			Bielak
-CH.LUB.BLIN.1793.069	1793	69	Czerein	Józef			Czerein						nr karty 69									Czerein	Józef			Czerein
-CH.LUB.BLIN.1793.069	1793	69	Machulek	Zofia			Machulek						nr karty 69									Machulek	Zofia			Machulek
-CH.LUB.BLIN.1793.069	1793	69	Mazurek	Józef			Mazurek						nr karty 69									Mazurek	Józef			Mazurek
-CH.LUB.BLIN.1793.069	1793	69	Paluchowska	Cecylia			Paluchowska						nr karty 69									Paluchowska	Cecylia			Paluchowska
-CH.LUB.BLIN.1793.069	1793	69	Pozdzic	Zofia			Pozdzic						? nr karty 69									Pozdzic	Zofia			Pozdzic
-CH.LUB.BLIN.1793.069	1793	69	Pozdzic	Marianna			Pozdzic						? nr karty 69									Pozdzic	Marianna			Pozdzic
-CH.LUB.BLIN.1793.069	1793	69	Świędra	Franciszka			Świędra						? nr karty 69									Świędra	Franciszka			Świędra
-CH.LUB.BLIN.1793.070	1793	70	Kopiwoda	Antoni			Kopiwoda						nr karty 70									Kopiwoda	Antoni			Kopiwoda
-CH.LUB.BLIN.1793.070	1793	70	Kurczak	Anna			Kurczak						nr karty 70									Kurczak	Anna			Kurczak
-CH.LUB.BLIN.1793.070	1793	70	Kuś	Anna			Kuś						nr karty 70									Kuś	Anna			Kuś
-CH.LUB.BLIN.1793.070	1793	70	Pasternak	Anna			Pasternak						nr karty 70									Pasternak	Anna			Pasternak
-CH.LUB.BLIN.1793.070	1793	70	Pawłasek	Jakub			Pawłasek						nr karty 70									Pawłasek	Jakub			Pawłasek
-CH.LUB.BLIN.1793.070	1793	70	Zaręba	Małgorzata			Zaręba						nr karty 70									Zaręba	Małgorzata			Zaręba
-CH.LUB.BLIN.1793.071	1793	71	Mórawska	Magdalena			Mórawska						nr karty 71									Mórawska	Magdalena			Mórawska
-CH.LUB.BLIN.1793.071	1793	71	Pawłasek	Antoni			Pawłasek						nr karty 71									Pawłasek	Antoni			Pawłasek
-CH.LUB.BLIN.1793.071	1793	71	Piech	Antoni			Piech						nr karty 71									Piech	Antoni			Piech
-CH.LUB.BLIN.1793.071	1793	71	Pyrtos	Magdalena			Pyrtos						nr karty 71									Pyrtos	Magdalena			Pyrtos
-CH.LUB.BLIN.1793.071	1793	71	Pyrtos	Antonina			Pyrtos						nr karty 71									Pyrtos	Antonina			Pyrtos
-CH.LUB.BLIN.1793.071	1793	71	Samuel	Anna			Samuel						nr karty 71									Samuel	Anna			Samuel
-CH.LUB.BLIN.1793.071	1793	71	Wścisło	Anna			Wścisło						nr karty 71									Wścisło	Anna			Wścisło
-CH.LUB.BLIN.1793.072	1793	72	Dziewa	Jakub			Dziewa						nr karty 72									Dziewa	Jakub			Dziewa
-CH.LUB.BLIN.1793.072	1793	72	Kopyt	Jakub			Kopyt						nr karty 72									Kopyt	Jakub			Kopyt
-CH.LUB.BLIN.1793.073	1793	73	Kudrelek	Katarzyna			Kudrelek						nr karty 73									Kudrelek	Katarzyna			Kudrelek
-CH.LUB.BLIN.1793.073	1793	73	Łach	Andrzej			Łach						nr karty 73									Łach	Andrzej			Łach
-CH.LUB.BLIN.1793.073	1793	73	Łata	Teresa			Łata						nr karty 73									Łata	Teresa			Łata
-CH.LUB.BLIN.1793.073	1793	73	Solarz	Agnieszka			Solarz						nr karty 73									Solarz	Agnieszka			Solarz
-CH.LUB.BLIN.1793.073	1793	73	Szopa	Marianna			Szopówna						nr karty 73									Szopówna	Marianna			Szopówna
-CH.LUB.BLIN.1793.073	1793	73	Wścisło	Szymon			Wścisło						nr karty 73									Wścisło	Szymon			Wścisło
-CH.LUB.BLIN.1793.074	1793	74	Bzdyrak	Marianna			Bzdyrak						nr karty 74									Bzdyrak	Marianna			Bzdyrak
-CH.LUB.BLIN.1793.074	1793	74	Kędziora	Marianna			Kędziora						nr karty 74									Kędziora	Marianna			Kędziora
-CH.LUB.BLIN.1793.074	1793	74	Kosidło	Tomasz			Kosidło						nr karty 74									Kosidło	Tomasz			Kosidło
-CH.LUB.BLIN.1793.074	1793	74	Mórawska	Barbara			Mórawska						nr karty 74									Mórawska	Barbara			Mórawska
-CH.LUB.BLIN.1793.074	1793	74	S?	Tomasz			S?						nieczytelne nr karty 74									S?	Tomasz			S?
-CH.LUB.BLIN.1793.074	1793	74	Serafin	Ewa			Serafin						nr karty 74									Serafin	Ewa			Serafin
-CH.LUB.BLIN.1793.074	1793	74	Sobutka	Agnieszka			Sobutka						nr karty 74									Sobutka	Agnieszka			Sobutka
+CH.LUB.BLIN.1792.059a	1792	59	Kurczak	Błażej			Kurczak						nr karty 59									Kurczak	Błażej			Kurczak
+CH.LUB.BLIN.1792.059b	1792	59	Stefańska	Agnieszka			Stefańska						nr karty 59									Stefańska	Agnieszka			Stefańska
+CH.LUB.BLIN.1792.060a	1792	60	Chmiel	Agata			Chmiel						nr karty 60									Chmiel	Agata			Chmiel
+CH.LUB.BLIN.1792.060b	1792	60	Kurczak	Walenty			Kurczak						nr karty 60									Kurczak	Walenty			Kurczak
+CH.LUB.BLIN.1792.060c	1792	60	Machulek	Józef			Machulek						nr karty 60									Machulek	Józef			Machulek
+CH.LUB.BLIN.1792.060d	1792	60	Niemiro?	Marianna			Niemiro?						? nr karty 60									Niemirówna	Marianna			Niemirówna
+CH.LUB.BLIN.1792.060e	1792	60	Sagan	Maciej			Sagan						nr karty 60									Sagan	Maciej			Sagan
+CH.LUB.BLIN.1792.060f	1792	60	Zarzeczna	Marianna			Zarzeczna						nr karty 60									Zarzeczna	Marianna			Zarzeczna
+CH.LUB.BLIN.1792.060g	1792	60	Zieleński	Maciej			Zieleński						nr karty 60									Zieleński	Maciej			Zieleński
+CH.LUB.BLIN.1792.061a	1792	61	Biała	Franciszka			Biała						nr karty 61									Biała	Franciszka			Biała
+CH.LUB.BLIN.1792.061b	1792	61	Kowalik	Zofia			Kowalik						nr karty 61									Kowalik	Zofia			Kowalik
+CH.LUB.BLIN.1792.061c	1792	61	Kurczak	Zofia			Kurczak						nr karty 61									Kurczak	Zofia			Kurczak
+CH.LUB.BLIN.1792.061d	1792	61	Siemian	Kazimierz			Siemian						nr karty 61									Siemian	Kazimierz			Siemian
+CH.LUB.BLIN.1792.061e	1792	61	Sobutka	Marianna			Sobutka						nr karty 61									Sobutka	Marianna			Sobutka
+CH.LUB.BLIN.1792.061f	1792	61	Sprysak	Maciej			Sprysak						nr karty 61									Sprysak	Maciej			Sprysak
+CH.LUB.BLIN.1792.061g	1792	61	Szynka	Józef			Szynka						nr karty 61									Szynka	Józef			Szynka
+CH.LUB.BLIN.1792.062a	1792	62	Baran	Anna			Baran						nr karty 62									Baran	Anna			Baran
+CH.LUB.BLIN.1792.062b	1792	62	Goch	Wojciech			Goch						nr karty 62									Goch	Wojciech			Goch
+CH.LUB.BLIN.1792.062c	1792	62	Kozaczek	Zofia			Kozaczek						nr karty 62									Kozaczek	Zofia			Kozaczek
+CH.LUB.BLIN.1792.062d	1792	62	Machulek	Marianna			Machulek						nr karty 62									Machulek	Marianna			Machulek
+CH.LUB.BLIN.1792.062e	1792	62	Pazdrak	Józef			Pazdrak						nr karty 62									Pazdrak	Józef			Pazdrak
+CH.LUB.BLIN.1792.062f	1792	62	Pęk	Marianna			Pęk						nr karty 62									Pęk	Marianna			Pęk
+CH.LUB.BLIN.1792.062g	1792	62	Sobutka	Zofia			Sobutka						nr karty 62									Sobutka	Zofia			Sobutka
+CH.LUB.BLIN.1792.062h	1792	62	Zaręba	Franciszka			Zaręba						nr karty 62									Zaręba	Franciszka			Zaręba
+CH.LUB.BLIN.1792.063a	1792	63	Dobrzyński	Antoni			Dobrzyński						nr karty 63									Dobrzyński	Antoni			Dobrzyński
+CH.LUB.BLIN.1792.063b	1792	63	Gnat	Anna			Gnat						nr karty 63									Gnat	Anna			Gnat
+CH.LUB.BLIN.1792.063c	1792	63	Kosidło	Katarzyna			Kosidło						nr karty 63									Kosidło	Katarzyna			Kosidło
+CH.LUB.BLIN.1792.063d	1792	63	Mcionek	Marianna			Mcionek						nr karty 63									Mcionek	Marianna			Mcionek
+CH.LUB.BLIN.1792.063e	1792	63	Mcionek	Jan			Mcionek						nr karty 63									Mcionek	Jan			Mcionek
+CH.LUB.BLIN.1792.063f	1792	63	Mcionek	Anna			Mcionek						nr karty 63									Mcionek	Anna			Mcionek
+CH.LUB.BLIN.1792.063g	1792	63	Nowakowski	Wincenty			Nowakowski						nr karty 63									Nowakowski	Wincenty			Nowakowski
+CH.LUB.BLIN.1792.064a	1792	64	Bucon	Jakub			Bucon						nr karty 64									Bucon	Jakub			Bucon
+CH.LUB.BLIN.1792.064b	1792	64	Kozaczek	Wawrzyniec			Kozaczek						nr karty 64									Kozaczek	Wawrzyniec			Kozaczek
+CH.LUB.BLIN.1792.064c	1792	64	Rzeszutko	Małgorzata			Rzeszutko						nr karty 64									Rzeszutko	Małgorzata			Rzeszutko
+CH.LUB.BLIN.1792.064d	1792	64	Sadowska	Anna			Sadowska						nr karty 64									Sadowska	Anna			Sadowska
+CH.LUB.BLIN.1792.064e	1792	64	Stępień	Jadwiga			Stępień						nr karty 64									Stępień	Jadwiga			Stępień
+CH.LUB.BLIN.1792.064f	1792	64	Wścisło	Jakub			Wścisło						nr karty 64									Wścisło	Jakub			Wścisło
+CH.LUB.BLIN.1792.064g	1792	64	Wścisło	Anna			Wścisło						nr karty 64									Wścisło	Anna			Wścisło
+CH.LUB.BLIN.1792.065a	1792	65	Bucon	Michał			Bucon						nr karty 65									Bucon	Michał			Bucon
+CH.LUB.BLIN.1792.065b	1792	65	Chać	Jadwiga			Chaciówna						nr karty 65									Chaciówna	Jadwiga			Chaciówna
+CH.LUB.BLIN.1792.065c	1792	65	Kania	Katarzyna			Kania						nr karty 65									Kania	Katarzyna			Kania
+CH.LUB.BLIN.1792.065d	1792	65	Kosidło	Michał			Kosidło						nr karty 65									Kosidło	Michał			Kosidło
+CH.LUB.BLIN.1792.065e	1792	65	Krzyszton	Andrzej			Krzyszton						nr karty 65									Krzyszton	Andrzej			Krzyszton
+CH.LUB.BLIN.1792.065f	1792	65	Niewiadoma	Brygida			Niewiadoma						nr karty 65									Niewiadoma	Brygida			Niewiadoma
+CH.LUB.BLIN.1792.065g	1792	65	Pasternak	Szymon			Pasternak						nr karty 65									Pasternak	Szymon			Pasternak
+CH.LUB.BLIN.1792.066a	1792	66	Gręda	Marianna			Grędówna						nr karty 66									Grędówna	Marianna			Grędówna
+CH.LUB.BLIN.1792.066b	1792	66	Kozaczek	Andrzej			Kozaczek						nr karty 66									Kozaczek	Andrzej			Kozaczek
+CH.LUB.BLIN.1792.066c	1792	66	Kozak	Tomasz			Kozak						nr karty 66									Kozak	Tomasz			Kozak
+CH.LUB.BLIN.1792.066d	1792	66	Kozak	Katarzyna			Kozak						nr karty 66									Kozak	Katarzyna			Kozak
+CH.LUB.BLIN.1792.066e	1792	66	Mcionek	Szymon			Mcionek						nr karty 66									Mcionek	Szymon			Mcionek
+CH.LUB.BLIN.1792.066f	1792	66	Wojtusiak	Andrzej			Wojtusiak						nr karty 66									Wojtusiak	Andrzej			Wojtusiak
+CH.LUB.BLIN.1792.066g	1792	66	Zagaj	Marcin			Zagaj						nr karty 66									Zagaj	Marcin			Zagaj
+CH.LUB.BLIN.1792.067a	1792	67	Bigos	Jan			Bigos						nr karty 67									Bigos	Jan			Bigos
+CH.LUB.BLIN.1792.067b	1792	67	Kolasza	Jan			Kolasza						nr karty 67									Kolasza	Jan			Kolasza
+CH.LUB.BLIN.1792.067c	1792	67	Kosidło	Jan			Kosidło						nr karty 67									Kosidło	Jan			Kosidło
+CH.LUB.BLIN.1792.067d	1792	67	Kozak	Paweł			Kozak						nr karty 67									Kozak	Paweł			Kozak
+CH.LUB.BLIN.1793.067a	1793	67	Barbarzak	Agnieszka			Barbarzak						nr karty 67									Barbarzak	Agnieszka			Barbarzak
+CH.LUB.BLIN.1793.067b	1793	67	Dziura	Kacper			Dziura						nr karty 67									Dziura	Kacper			Dziura
+CH.LUB.BLIN.1793.067c	1793	67	Wojtalas	Paweł			Wojtalas						nr karty 67									Wojtalas	Paweł			Wojtalas
+CH.LUB.BLIN.1793.068a	1793	68	Babiarz	Sebastian			Babiarz						nr karty 68									Babiarz	Sebastian			Babiarz
+CH.LUB.BLIN.1793.068b	1793	68	Baran	Agnieszka			Baran						nr karty 68									Baran	Agnieszka			Baran
+CH.LUB.BLIN.1793.068c	1793	68	Boczek	Agnieszka			Boczek						nr karty 68									Boczek	Agnieszka			Boczek
+CH.LUB.BLIN.1793.068d	1793	68	Haber	Marianna			Haber						nr karty 68									Haber	Marianna			Haber
+CH.LUB.BLIN.1793.068e	1793	68	Jędrzejczak	Paweł			Jędrzejczak						nr karty 68									Jędrzejczak	Paweł			Jędrzejczak
+CH.LUB.BLIN.1793.068f	1793	68	Kozaczek	Kazimierz			Kozaczek						nr karty 68									Kozaczek	Kazimierz			Kozaczek
+CH.LUB.BLIN.1793.068g	1793	68	Samuel	Józef			Samuel						nr karty 68									Samuel	Józef			Samuel
+CH.LUB.BLIN.1793.068h	1793	68	Staroch	Agnieszka			Staroch						nr karty 68									Staroch	Agnieszka			Staroch
+CH.LUB.BLIN.1793.069a	1793	69	Bielak	Zofia			Bielak						nr karty 69									Bielak	Zofia			Bielak
+CH.LUB.BLIN.1793.069b	1793	69	Czerein	Józef			Czerein						nr karty 69									Czerein	Józef			Czerein
+CH.LUB.BLIN.1793.069c	1793	69	Machulek	Zofia			Machulek						nr karty 69									Machulek	Zofia			Machulek
+CH.LUB.BLIN.1793.069d	1793	69	Mazurek	Józef			Mazurek						nr karty 69									Mazurek	Józef			Mazurek
+CH.LUB.BLIN.1793.069e	1793	69	Paluchowska	Cecylia			Paluchowska						nr karty 69									Paluchowska	Cecylia			Paluchowska
+CH.LUB.BLIN.1793.069f	1793	69	Pozdzic	Zofia			Pozdzic						? nr karty 69									Pozdzic	Zofia			Pozdzic
+CH.LUB.BLIN.1793.069g	1793	69	Pozdzic	Marianna			Pozdzic						? nr karty 69									Pozdzic	Marianna			Pozdzic
+CH.LUB.BLIN.1793.069h	1793	69	Świędra	Franciszka			Świędra						? nr karty 69									Świędra	Franciszka			Świędra
+CH.LUB.BLIN.1793.070a	1793	70	Kopiwoda	Antoni			Kopiwoda						nr karty 70									Kopiwoda	Antoni			Kopiwoda
+CH.LUB.BLIN.1793.070b	1793	70	Kurczak	Anna			Kurczak						nr karty 70									Kurczak	Anna			Kurczak
+CH.LUB.BLIN.1793.070c	1793	70	Kuś	Anna			Kuś						nr karty 70									Kuś	Anna			Kuś
+CH.LUB.BLIN.1793.070d	1793	70	Pasternak	Anna			Pasternak						nr karty 70									Pasternak	Anna			Pasternak
+CH.LUB.BLIN.1793.070e	1793	70	Pawłasek	Jakub			Pawłasek						nr karty 70									Pawłasek	Jakub			Pawłasek
+CH.LUB.BLIN.1793.070f	1793	70	Zaręba	Małgorzata			Zaręba						nr karty 70									Zaręba	Małgorzata			Zaręba
+CH.LUB.BLIN.1793.071a	1793	71	Mórawska	Magdalena			Mórawska						nr karty 71									Mórawska	Magdalena			Mórawska
+CH.LUB.BLIN.1793.071b	1793	71	Pawłasek	Antoni			Pawłasek						nr karty 71									Pawłasek	Antoni			Pawłasek
+CH.LUB.BLIN.1793.071c	1793	71	Piech	Antoni			Piech						nr karty 71									Piech	Antoni			Piech
+CH.LUB.BLIN.1793.071d	1793	71	Pyrtos	Magdalena			Pyrtos						nr karty 71									Pyrtos	Magdalena			Pyrtos
+CH.LUB.BLIN.1793.071e	1793	71	Pyrtos	Antonina			Pyrtos						nr karty 71									Pyrtos	Antonina			Pyrtos
+CH.LUB.BLIN.1793.071f	1793	71	Samuel	Anna			Samuel						nr karty 71									Samuel	Anna			Samuel
+CH.LUB.BLIN.1793.071g	1793	71	Wścisło	Anna			Wścisło						nr karty 71									Wścisło	Anna			Wścisło
+CH.LUB.BLIN.1793.072a	1793	72	Dziewa	Jakub			Dziewa						nr karty 72									Dziewa	Jakub			Dziewa
+CH.LUB.BLIN.1793.072b	1793	72	Kopyt	Jakub			Kopyt						nr karty 72									Kopyt	Jakub			Kopyt
+CH.LUB.BLIN.1793.073a	1793	73	Kudrelek	Katarzyna			Kudrelek						nr karty 73									Kudrelek	Katarzyna			Kudrelek
+CH.LUB.BLIN.1793.073b	1793	73	Łach	Andrzej			Łach						nr karty 73									Łach	Andrzej			Łach
+CH.LUB.BLIN.1793.073c	1793	73	Łata	Teresa			Łata						nr karty 73									Łata	Teresa			Łata
+CH.LUB.BLIN.1793.073d	1793	73	Solarz	Agnieszka			Solarz						nr karty 73									Solarz	Agnieszka			Solarz
+CH.LUB.BLIN.1793.073e	1793	73	Szopa	Marianna			Szopówna						nr karty 73									Szopówna	Marianna			Szopówna
+CH.LUB.BLIN.1793.073f	1793	73	Wścisło	Szymon			Wścisło						nr karty 73									Wścisło	Szymon			Wścisło
+CH.LUB.BLIN.1793.074a	1793	74	Bzdyrak	Marianna			Bzdyrak						nr karty 74									Bzdyrak	Marianna			Bzdyrak
+CH.LUB.BLIN.1793.074b	1793	74	Kędziora	Marianna			Kędziora						nr karty 74									Kędziora	Marianna			Kędziora
+CH.LUB.BLIN.1793.074c	1793	74	Kosidło	Tomasz			Kosidło						nr karty 74									Kosidło	Tomasz			Kosidło
+CH.LUB.BLIN.1793.074d	1793	74	Mórawska	Barbara			Mórawska						nr karty 74									Mórawska	Barbara			Mórawska
+CH.LUB.BLIN.1793.074e	1793	74	S?	Tomasz			S?						nieczytelne nr karty 74									S?	Tomasz			S?
+CH.LUB.BLIN.1793.074f	1793	74	Serafin	Ewa			Serafin						nr karty 74									Serafin	Ewa			Serafin
+CH.LUB.BLIN.1793.074g	1793	74	Sobutka	Agnieszka			Sobutka						nr karty 74									Sobutka	Agnieszka			Sobutka
 CH.LUB.BLIN.1793.a1	1793	a1	Garwer	Wawrzyniec			Garwer						30.12.1899									Garwer	Wawrzyniec			Garwer
 CH.LUB.BLIN.1793.a2	1793	a2	Kasperek	Franciszek			Kasperek						30.12.1899									Kasperek	Franciszek			Kasperek
 CH.LUB.BLIN.1793.a3	1793	a3	Kędziora	Franciszek			Kędziora						30.12.1899									Kędziora	Franciszek			Kędziora
@@ -569,49 +1606,49 @@ CH.LUB.BLIN.1793.a4	1793	a4	Kot	Michał			Kot						30.12.1899									Kot	Micha�
 CH.LUB.BLIN.1793.a5	1793	a5	Kot	Mateusz			Kot						30.12.1899									Kot	Mateusz			Kot
 CH.LUB.BLIN.1793.a6	1793	a6	Kozak	Jakub			Kozak						30.12.1899									Kozak	Jakub			Kozak
 CH.LUB.BLIN.1794.074	1794	74	Machulek	Agnieszka			Machulek						nr karty 74									Machulek	Agnieszka			Machulek
-CH.LUB.BLIN.1794.075	1794	75	Barbarzak	Agnieszka			Barbarzak						nr karty 75									Barbarzak	Agnieszka			Barbarzak
-CH.LUB.BLIN.1794.075	1794	75	Ćwiek	Agnieszka			Ćwiek						? nr karty 75									Ćwiek	Agnieszka			Ćwiek
-CH.LUB.BLIN.1794.075	1794	75	Kamieńska	Zofia			Kamieńska						nr karty 75									Kamieńska	Zofia			Kamieńska
-CH.LUB.BLIN.1794.075	1794	75	Kurczak	Agnieszka			Kurczak						nr karty 75									Kurczak	Agnieszka			Kurczak
-CH.LUB.BLIN.1794.075	1794	75	Pyć	Marianna			Pyć						nr karty 75									Pyć	Marianna			Pyć
-CH.LUB.BLIN.1794.075	1794	75	Stefańska	Agata			Stefańska						nr karty 75									Stefańska	Agata			Stefańska
-CH.LUB.BLIN.1794.075	1794	75	Stępnik	Paweł			Stępnik						nr karty 75									Stępnik	Paweł			Stępnik
-CH.LUB.BLIN.1794.076	1794	76	Czuba	Zofia			Czuba						nr karty 76									Czuba	Zofia			Czuba
-CH.LUB.BLIN.1794.076	1794	76	Jagosiak	Józef			Jagosiak						nr karty 76									Jagosiak	Józef			Jagosiak
-CH.LUB.BLIN.1794.076	1794	76	Król	Agata			Król						nr karty 76									Król	Agata			Król
-CH.LUB.BLIN.1794.076	1794	76	Kurczak	Maciej			Kurczak						nr karty 76									Kurczak	Maciej			Kurczak
-CH.LUB.BLIN.1794.076	1794	76	Solarz	Zofia			Solarz						nr karty 76									Solarz	Zofia			Solarz
-CH.LUB.BLIN.1794.076	1794	76	Staruch	Walenty			Staruch						nr karty 76									Staruch	Walenty			Staruch
-CH.LUB.BLIN.1794.076	1794	76	Zdybel	Maciej			Zdybel						nr karty 76									Zdybel	Maciej			Zdybel
-CH.LUB.BLIN.1794.077	1794	77	Babiarz	Marianna			Babiarz						nr karty 77									Babiarz	Marianna			Babiarz
-CH.LUB.BLIN.1794.077	1794	77	Kopyt	Józef			Kopyt						nr karty 77									Kopyt	Józef			Kopyt
-CH.LUB.BLIN.1794.077	1794	77	Spyra	Franciszka			Spyra						? nr karty 77									Spyra	Franciszka			Spyra
-CH.LUB.BLIN.1794.078	1794	78	Boczek	Anna			Boczek						nr karty 78									Boczek	Anna			Boczek
-CH.LUB.BLIN.1794.078	1794	78	Haber	Marianna			Haber						nr karty 78									Haber	Marianna			Haber
-CH.LUB.BLIN.1794.078	1794	78	Łach	Anna			Łach						nr karty 78									Łach	Anna			Łach
-CH.LUB.BLIN.1794.078	1794	78	Machulek	Marianna			Machulek						nr karty 78									Machulek	Marianna			Machulek
-CH.LUB.BLIN.1794.078	1794	78	Scholastyka	Marianna			Scholastyka						nr karty 78									Scholastyka	Marianna			Scholastyka
-CH.LUB.BLIN.1794.078	1794	78	Szyska	Zofia			Szyska						nr karty 78									Szyska	Zofia			Szyska
-CH.LUB.BLIN.1794.079	1794	79	Czarny	Małgorzata			Czarny						nr karty 79									Czarny	Małgorzata			Czarny
-CH.LUB.BLIN.1794.079	1794	79	Dobrzyński	Jan			Dobrzyński						nr karty 79									Dobrzyński	Jan			Dobrzyński
-CH.LUB.BLIN.1794.079	1794	79	Gil	Marianna			Gil						nr karty 79									Gil	Marianna			Gil
-CH.LUB.BLIN.1794.079	1794	79	Głaz	Jakub			Głaz						nr karty 79									Głaz	Jakub			Głaz
-CH.LUB.BLIN.1794.079	1794	79	Machulek	Wawrzyniec			Machulek						nr karty 79									Machulek	Wawrzyniec			Machulek
-CH.LUB.BLIN.1794.079	1794	79	Mcionek	Piotr			Mcionek						nr karty 79									Mcionek	Piotr			Mcionek
-CH.LUB.BLIN.1794.079	1794	79	Pasternak	Antoni			Pasternak						nr karty 79									Pasternak	Antoni			Pasternak
-CH.LUB.BLIN.1794.080	1794	80	Kania	Anastazja			Kania						nr karty 80									Kania	Anastazja			Kania
-CH.LUB.BLIN.1794.080	1794	80	Kępa	Agnieszka			Kępa						nr karty 80									Kępa	Agnieszka			Kępa
-CH.LUB.BLIN.1794.080	1794	80	Rataj	Tekla			Rataj						nr karty 80									Rataj	Tekla			Rataj
-CH.LUB.BLIN.1794.081	1794	81	Czasaj	Katarzyna			Czasaj						nr karty 81									Czasaj	Katarzyna			Czasaj
-CH.LUB.BLIN.1794.081	1794	81	Kendziora	Mikołaj			Kendziora						nr karty 81									Kendziora	Mikołaj			Kendziora
-CH.LUB.BLIN.1794.081	1794	81	Kudrelek	Katarzyna			Kudrelek						nr karty 81									Kudrelek	Katarzyna			Kudrelek
-CH.LUB.BLIN.1794.081	1794	81	Machulek	Marianna			Machulek						nr karty 81									Machulek	Marianna			Machulek
-CH.LUB.BLIN.1794.081	1794	81	Michałek	Marianna			Michałek						nr karty 81									Michałek	Marianna			Michałek
-CH.LUB.BLIN.1794.081	1794	81	Paciorek	Andrzej			Paciorek						nr karty 81									Paciorek	Andrzej			Paciorek
-CH.LUB.BLIN.1794.081	1794	81	Pazdrak	Andrzej			Pazdrak						nr karty 81									Pazdrak	Andrzej			Pazdrak
-CH.LUB.BLIN.1794.081	1794	81	Wójtowicz	Marianna			Wójtowicz						nr karty 81									Wójtowicz	Marianna			Wójtowicz
-CH.LUB.BLIN.1794.082	1794	82	Bucon	Ewa			Bucon						nr karty 82									Bucon	Ewa			Bucon
-CH.LUB.BLIN.1794.082	1794	82	Pasternak	Adam			Pasternak						nr karty 82									Pasternak	Adam			Pasternak
+CH.LUB.BLIN.1794.075a	1794	75	Barbarzak	Agnieszka			Barbarzak						nr karty 75									Barbarzak	Agnieszka			Barbarzak
+CH.LUB.BLIN.1794.075b	1794	75	Ćwiek	Agnieszka			Ćwiek						? nr karty 75									Ćwiek	Agnieszka			Ćwiek
+CH.LUB.BLIN.1794.075c	1794	75	Kamieńska	Zofia			Kamieńska						nr karty 75									Kamieńska	Zofia			Kamieńska
+CH.LUB.BLIN.1794.075d	1794	75	Kurczak	Agnieszka			Kurczak						nr karty 75									Kurczak	Agnieszka			Kurczak
+CH.LUB.BLIN.1794.075e	1794	75	Pyć	Marianna			Pyć						nr karty 75									Pyć	Marianna			Pyć
+CH.LUB.BLIN.1794.075f	1794	75	Stefańska	Agata			Stefańska						nr karty 75									Stefańska	Agata			Stefańska
+CH.LUB.BLIN.1794.075g	1794	75	Stępnik	Paweł			Stępnik						nr karty 75									Stępnik	Paweł			Stępnik
+CH.LUB.BLIN.1794.076a	1794	76	Czuba	Zofia			Czuba						nr karty 76									Czuba	Zofia			Czuba
+CH.LUB.BLIN.1794.076b	1794	76	Jagosiak	Józef			Jagosiak						nr karty 76									Jagosiak	Józef			Jagosiak
+CH.LUB.BLIN.1794.076c	1794	76	Król	Agata			Król						nr karty 76									Król	Agata			Król
+CH.LUB.BLIN.1794.076d	1794	76	Kurczak	Maciej			Kurczak						nr karty 76									Kurczak	Maciej			Kurczak
+CH.LUB.BLIN.1794.076e	1794	76	Solarz	Zofia			Solarz						nr karty 76									Solarz	Zofia			Solarz
+CH.LUB.BLIN.1794.076f	1794	76	Staruch	Walenty			Staruch						nr karty 76									Staruch	Walenty			Staruch
+CH.LUB.BLIN.1794.076g	1794	76	Zdybel	Maciej			Zdybel						nr karty 76									Zdybel	Maciej			Zdybel
+CH.LUB.BLIN.1794.077a	1794	77	Babiarz	Marianna			Babiarz						nr karty 77									Babiarz	Marianna			Babiarz
+CH.LUB.BLIN.1794.077b	1794	77	Kopyt	Józef			Kopyt						nr karty 77									Kopyt	Józef			Kopyt
+CH.LUB.BLIN.1794.077c	1794	77	Spyra	Franciszka			Spyra						? nr karty 77									Spyra	Franciszka			Spyra
+CH.LUB.BLIN.1794.078a	1794	78	Boczek	Anna			Boczek						nr karty 78									Boczek	Anna			Boczek
+CH.LUB.BLIN.1794.078b	1794	78	Haber	Marianna			Haber						nr karty 78									Haber	Marianna			Haber
+CH.LUB.BLIN.1794.078c	1794	78	Łach	Anna			Łach						nr karty 78									Łach	Anna			Łach
+CH.LUB.BLIN.1794.078d	1794	78	Machulek	Marianna			Machulek						nr karty 78									Machulek	Marianna			Machulek
+CH.LUB.BLIN.1794.078e	1794	78	Scholastyka	Marianna			Scholastyka						nr karty 78									Scholastyka	Marianna			Scholastyka
+CH.LUB.BLIN.1794.078f	1794	78	Szyska	Zofia			Szyska						nr karty 78									Szyska	Zofia			Szyska
+CH.LUB.BLIN.1794.079a	1794	79	Czarny	Małgorzata			Czarny						nr karty 79									Czarny	Małgorzata			Czarny
+CH.LUB.BLIN.1794.079b	1794	79	Dobrzyński	Jan			Dobrzyński						nr karty 79									Dobrzyński	Jan			Dobrzyński
+CH.LUB.BLIN.1794.079c	1794	79	Gil	Marianna			Gil						nr karty 79									Gil	Marianna			Gil
+CH.LUB.BLIN.1794.079d	1794	79	Głaz	Jakub			Głaz						nr karty 79									Głaz	Jakub			Głaz
+CH.LUB.BLIN.1794.079e	1794	79	Machulek	Wawrzyniec			Machulek						nr karty 79									Machulek	Wawrzyniec			Machulek
+CH.LUB.BLIN.1794.079f	1794	79	Mcionek	Piotr			Mcionek						nr karty 79									Mcionek	Piotr			Mcionek
+CH.LUB.BLIN.1794.079g	1794	79	Pasternak	Antoni			Pasternak						nr karty 79									Pasternak	Antoni			Pasternak
+CH.LUB.BLIN.1794.080a	1794	80	Kania	Anastazja			Kania						nr karty 80									Kania	Anastazja			Kania
+CH.LUB.BLIN.1794.080b	1794	80	Kępa	Agnieszka			Kępa						nr karty 80									Kępa	Agnieszka			Kępa
+CH.LUB.BLIN.1794.080c	1794	80	Rataj	Tekla			Rataj						nr karty 80									Rataj	Tekla			Rataj
+CH.LUB.BLIN.1794.081a	1794	81	Czasaj	Katarzyna			Czasaj						nr karty 81									Czasaj	Katarzyna			Czasaj
+CH.LUB.BLIN.1794.081b	1794	81	Kendziora	Mikołaj			Kendziora						nr karty 81									Kendziora	Mikołaj			Kendziora
+CH.LUB.BLIN.1794.081c	1794	81	Kudrelek	Katarzyna			Kudrelek						nr karty 81									Kudrelek	Katarzyna			Kudrelek
+CH.LUB.BLIN.1794.081d	1794	81	Machulek	Marianna			Machulek						nr karty 81									Machulek	Marianna			Machulek
+CH.LUB.BLIN.1794.081e	1794	81	Michałek	Marianna			Michałek						nr karty 81									Michałek	Marianna			Michałek
+CH.LUB.BLIN.1794.081f	1794	81	Paciorek	Andrzej			Paciorek						nr karty 81									Paciorek	Andrzej			Paciorek
+CH.LUB.BLIN.1794.081g	1794	81	Pazdrak	Andrzej			Pazdrak						nr karty 81									Pazdrak	Andrzej			Pazdrak
+CH.LUB.BLIN.1794.081h	1794	81	Wójtowicz	Marianna			Wójtowicz						nr karty 81									Wójtowicz	Marianna			Wójtowicz
+CH.LUB.BLIN.1794.082a	1794	82	Bucon	Ewa			Bucon						nr karty 82									Bucon	Ewa			Bucon
+CH.LUB.BLIN.1794.082b	1794	82	Pasternak	Adam			Pasternak						nr karty 82									Pasternak	Adam			Pasternak
 CH.LUB.BLIN.1794.a1	1794	a1	Babiarz	Jadwiga			Babiarz						30.12.1899									Babiarz	Jadwiga			Babiarz
 CH.LUB.BLIN.1794.a2	1794	a2	Brzeska	Zofia			Brzeska						30.12.1899									Brzeska	Zofia			Brzeska
 CH.LUB.BLIN.1794.a3	1794	a3	Brzeska	Marianna			Brzeska						30.12.1899									Brzeska	Marianna			Brzeska
@@ -627,42 +1664,42 @@ CH.LUB.BLIN.1794.a12	1794	a12	Pasternak	Filip			Pasternak						30.12.1899							
 CH.LUB.BLIN.1794.a13	1794	a13	Pęk	Andrzej			Pęk						30.12.1899									Pęk	Andrzej			Pęk
 CH.LUB.BLIN.1794.a14	1794	a14	Siembida	Wojciech			Siembida						30.12.1899									Siembida	Wojciech			Siembida
 CH.LUB.BLIN.1794.a15	1794	a15	Wojtalas	Szymon			Wojtalas						30.12.1899									Wojtalas	Szymon			Wojtalas
-CH.LUB.BLIN.1795.082	1795	82	Bosniak	Maciej			Bosniak						nr karty 82									Bosniak	Maciej			Bosniak
-CH.LUB.BLIN.1795.082	1795	82	Kozaczek	Marianna			Kozaczek						nr karty 82									Kozaczek	Marianna			Kozaczek
-CH.LUB.BLIN.1795.082	1795	82	Krupa	Sebastian			Krupa						nr karty 82									Krupa	Sebastian			Krupa
-CH.LUB.BLIN.1795.082	1795	82	Wojtalas	Marianna			Wojtalas						nr karty 82									Wojtalas	Marianna			Wojtalas
-CH.LUB.BLIN.1795.082	1795	82	Wojtusiak	Agnieszka			Wojtusiak						nr karty 82									Wojtusiak	Agnieszka			Wojtusiak
-CH.LUB.BLIN.1795.083	1795	83	Brzeska	Franciszka			Brzeska						nr karty 83									Brzeska	Franciszka			Brzeska
-CH.LUB.BLIN.1795.083	1795	83	Bucon	Wojciech			Bucon						nr karty 83									Bucon	Wojciech			Bucon
-CH.LUB.BLIN.1795.083	1795	83	Ćwikła	Agnieszka			Ćwikła						nr karty 83									Ćwikła	Agnieszka			Ćwikła
-CH.LUB.BLIN.1795.083	1795	83	Czapla	Marianna			Czapla						nr karty 83									Czapla	Marianna			Czapla
-CH.LUB.BLIN.1795.083	1795	83	Hacia	Grzegorz			Hacia						nr karty 83									Hacia	Grzegorz			Hacia
-CH.LUB.BLIN.1795.083	1795	83	Kurczak	Zofia			Kurczak						nr karty 83									Kurczak	Zofia			Kurczak
-CH.LUB.BLIN.1795.083	1795	83	Paciorek	Wojciech			Paciorek						nr karty 83									Paciorek	Wojciech			Paciorek
-CH.LUB.BLIN.1795.083	1795	83	Pawłasek	Marianna			Pawłasek						nr karty 83									Pawłasek	Marianna			Pawłasek
-CH.LUB.BLIN.1795.083	1795	83	Zieleński	Józef			Zieleński						nr karty 83									Zieleński	Józef			Zieleński
-CH.LUB.BLIN.1795.084	1795	84	Gnat	Wojciech			Gnat						nr karty 84									Gnat	Wojciech			Gnat
-CH.LUB.BLIN.1795.084	1795	84	Goch	Marianna			Goch						nr karty 84									Goch	Marianna			Goch
-CH.LUB.BLIN.1795.084	1795	84	Koguc	Wojciech			Koguc						nr karty 84									Koguc	Wojciech			Koguc
-CH.LUB.BLIN.1795.084	1795	84	Kozak	Stanisław			Kozak						nr karty 84									Kozak	Stanisław			Kozak
-CH.LUB.BLIN.1795.084	1795	84	Kurczak	Zofia			Kurczak						nr karty 84									Kurczak	Zofia			Kurczak
-CH.LUB.BLIN.1795.084	1795	84	Pazdrak	Jan			Pazdrak						nr karty 84									Pazdrak	Jan			Pazdrak
-CH.LUB.BLIN.1795.084	1795	84	Strzemieński	Jan			Strzemieński						nr karty 84									Strzemieński	Jan			Strzemieński
-CH.LUB.BLIN.1795.084	1795	84	Tutka	Wojciech			Tutka						nr karty 84									Tutka	Wojciech			Tutka
-CH.LUB.BLIN.1795.084	1795	84	Zdybel	Anna			Zdybel						nr karty 84									Zdybel	Anna			Zdybel
-CH.LUB.BLIN.1795.085	1795	85	Brzeska	Marianna			Brzeska						nr karty 85									Brzeska	Marianna			Brzeska
-CH.LUB.BLIN.1795.085	1795	85	Kurczak	Jakub			Kurczak						nr karty 85									Kurczak	Jakub			Kurczak
-CH.LUB.BLIN.1795.085	1795	85	Samuel	Wawrzyniec			Samuel						nr karty 85									Samuel	Wawrzyniec			Samuel
-CH.LUB.BLIN.1795.085	1795	85	Samuel	Marianna			Samuel						nr karty 85									Samuel	Marianna			Samuel
-CH.LUB.BLIN.1795.085	1795	85	Smyl	Anna			Smyl						nr karty 85									Smyl	Anna			Smyl
-CH.LUB.BLIN.1795.085	1795	85	Sprysak	Marianna			Sprysak						nr karty 85									Sprysak	Marianna			Sprysak
-CH.LUB.BLIN.1795.085	1795	85	Trepka	Marianna			Trepkówna						nr karty 85									Trepkówna	Marianna			Trepkówna
-CH.LUB.BLIN.1795.085	1795	85	Zaręba	Paweł			Zaręba						nr karty 85									Zaręba	Paweł			Zaręba
-CH.LUB.BLIN.1795.086	1795	86	Ćwiek	Katarzyna			Ćwiek						nr karty 86									Ćwiek	Katarzyna			Ćwiek
-CH.LUB.BLIN.1795.086	1795	86	Kędziera	Zofia			Kędziera						nr karty 86									Kędziera	Zofia			Kędziera
-CH.LUB.BLIN.1795.086	1795	86	Kosidło	Franciszek			Kosidło						nr karty 86									Kosidło	Franciszek			Kosidło
-CH.LUB.BLIN.1795.089	1795	89	Głas	Sebastian			Głas						nr karty 89									Głas	Sebastian			Głas
-CH.LUB.BLIN.1795.089	1795	89	Wojtysiak	Józef			Wojtysiak						nr karty 89									Wojtysiak	Józef			Wojtysiak
+CH.LUB.BLIN.1795.082a	1795	82	Bosniak	Maciej			Bosniak						nr karty 82									Bosniak	Maciej			Bosniak
+CH.LUB.BLIN.1795.082b	1795	82	Kozaczek	Marianna			Kozaczek						nr karty 82									Kozaczek	Marianna			Kozaczek
+CH.LUB.BLIN.1795.082c	1795	82	Krupa	Sebastian			Krupa						nr karty 82									Krupa	Sebastian			Krupa
+CH.LUB.BLIN.1795.082d	1795	82	Wojtalas	Marianna			Wojtalas						nr karty 82									Wojtalas	Marianna			Wojtalas
+CH.LUB.BLIN.1795.082e	1795	82	Wojtusiak	Agnieszka			Wojtusiak						nr karty 82									Wojtusiak	Agnieszka			Wojtusiak
+CH.LUB.BLIN.1795.083a	1795	83	Brzeska	Franciszka			Brzeska						nr karty 83									Brzeska	Franciszka			Brzeska
+CH.LUB.BLIN.1795.083b	1795	83	Bucon	Wojciech			Bucon						nr karty 83									Bucon	Wojciech			Bucon
+CH.LUB.BLIN.1795.083c	1795	83	Ćwikła	Agnieszka			Ćwikła						nr karty 83									Ćwikła	Agnieszka			Ćwikła
+CH.LUB.BLIN.1795.083d	1795	83	Czapla	Marianna			Czapla						nr karty 83									Czapla	Marianna			Czapla
+CH.LUB.BLIN.1795.083e	1795	83	Hacia	Grzegorz			Hacia						nr karty 83									Hacia	Grzegorz			Hacia
+CH.LUB.BLIN.1795.083f	1795	83	Kurczak	Zofia			Kurczak						nr karty 83									Kurczak	Zofia			Kurczak
+CH.LUB.BLIN.1795.083g	1795	83	Paciorek	Wojciech			Paciorek						nr karty 83									Paciorek	Wojciech			Paciorek
+CH.LUB.BLIN.1795.083h	1795	83	Pawłasek	Marianna			Pawłasek						nr karty 83									Pawłasek	Marianna			Pawłasek
+CH.LUB.BLIN.1795.083i	1795	83	Zieleński	Józef			Zieleński						nr karty 83									Zieleński	Józef			Zieleński
+CH.LUB.BLIN.1795.084a	1795	84	Gnat	Wojciech			Gnat						nr karty 84									Gnat	Wojciech			Gnat
+CH.LUB.BLIN.1795.084b	1795	84	Goch	Marianna			Goch						nr karty 84									Goch	Marianna			Goch
+CH.LUB.BLIN.1795.084c	1795	84	Koguc	Wojciech			Koguc						nr karty 84									Koguc	Wojciech			Koguc
+CH.LUB.BLIN.1795.084d	1795	84	Kozak	Stanisław			Kozak						nr karty 84									Kozak	Stanisław			Kozak
+CH.LUB.BLIN.1795.084e	1795	84	Kurczak	Zofia			Kurczak						nr karty 84									Kurczak	Zofia			Kurczak
+CH.LUB.BLIN.1795.084f	1795	84	Pazdrak	Jan			Pazdrak						nr karty 84									Pazdrak	Jan			Pazdrak
+CH.LUB.BLIN.1795.084g	1795	84	Strzemieński	Jan			Strzemieński						nr karty 84									Strzemieński	Jan			Strzemieński
+CH.LUB.BLIN.1795.084h	1795	84	Tutka	Wojciech			Tutka						nr karty 84									Tutka	Wojciech			Tutka
+CH.LUB.BLIN.1795.084i	1795	84	Zdybel	Anna			Zdybel						nr karty 84									Zdybel	Anna			Zdybel
+CH.LUB.BLIN.1795.085a	1795	85	Brzeska	Marianna			Brzeska						nr karty 85									Brzeska	Marianna			Brzeska
+CH.LUB.BLIN.1795.085b	1795	85	Kurczak	Jakub			Kurczak						nr karty 85									Kurczak	Jakub			Kurczak
+CH.LUB.BLIN.1795.085c	1795	85	Samuel	Wawrzyniec			Samuel						nr karty 85									Samuel	Wawrzyniec			Samuel
+CH.LUB.BLIN.1795.085d	1795	85	Samuel	Marianna			Samuel						nr karty 85									Samuel	Marianna			Samuel
+CH.LUB.BLIN.1795.085e	1795	85	Smyl	Anna			Smyl						nr karty 85									Smyl	Anna			Smyl
+CH.LUB.BLIN.1795.085f	1795	85	Sprysak	Marianna			Sprysak						nr karty 85									Sprysak	Marianna			Sprysak
+CH.LUB.BLIN.1795.085g	1795	85	Trepka	Marianna			Trepkówna						nr karty 85									Trepkówna	Marianna			Trepkówna
+CH.LUB.BLIN.1795.085h	1795	85	Zaręba	Paweł			Zaręba						nr karty 85									Zaręba	Paweł			Zaręba
+CH.LUB.BLIN.1795.086a	1795	86	Ćwiek	Katarzyna			Ćwiek						nr karty 86									Ćwiek	Katarzyna			Ćwiek
+CH.LUB.BLIN.1795.086b	1795	86	Kędziera	Zofia			Kędziera						nr karty 86									Kędziera	Zofia			Kędziera
+CH.LUB.BLIN.1795.086c	1795	86	Kosidło	Franciszek			Kosidło						nr karty 86									Kosidło	Franciszek			Kosidło
+CH.LUB.BLIN.1795.089a	1795	89	Głas	Sebastian			Głas						nr karty 89									Głas	Sebastian			Głas
+CH.LUB.BLIN.1795.089b	1795	89	Wojtysiak	Józef			Wojtysiak						nr karty 89									Wojtysiak	Józef			Wojtysiak
 CH.LUB.BLIN.1795.a1	1795	a1	Barbarzak	Tomasz			Barbarzak						30.12.1899									Barbarzak	Tomasz			Barbarzak
 CH.LUB.BLIN.1795.a2	1795	a2	Baron	Andrzej			Baron						30.12.1899									Baron	Andrzej			Baron
 CH.LUB.BLIN.1795.a3	1795	a3	Bogon	Andrzej			Bogon						30.12.1899									Bogon	Andrzej			Bogon
@@ -679,46 +1716,46 @@ CH.LUB.BLIN.1795.a13	1795	a13	Solarz	Dorota			Solarz						30.12.1899									Sol
 CH.LUB.BLIN.1795.a14	1795	a14	Wołoszynek	Marcin			Wołoszynek						30.12.1899									Wołoszynek	Marcin			Wołoszynek
 CH.LUB.BLIN.1795.a15	1795	a15	Woś	Marcin			Woś						30.12.1899									Woś	Marcin			Woś
 CH.LUB.BLIN.1795.a16	1795	a16	Zarzeczna	Katarzyna			Zarzeczna						30.12.1899									Zarzeczna	Katarzyna			Zarzeczna
-CH.LUB.BLIN.1796.089	1796	89	Kosidło	Maciej			Kosidło						nr karty 89									Kosidło	Maciej			Kosidło
-CH.LUB.BLIN.1796.089	1796	89	Machulek	Paweł			Machulek						nr karty 89									Machulek	Paweł			Machulek
-CH.LUB.BLIN.1796.089	1796	89	Rembacz	Agnieszka			Rembacz						nr karty 89									Rembacz	Agnieszka			Rembacz
-CH.LUB.BLIN.1796.090	1796	90	Czarna	Franciszka			Czarna						nr karty 90									Czarna	Franciszka			Czarna
-CH.LUB.BLIN.1796.090	1796	90	Kędziera	Franciszka			Kędziera						nr karty 90									Kędziera	Franciszka			Kędziera
-CH.LUB.BLIN.1796.090	1796	90	Kolasa	Walenty			Kolasa						nr karty 90									Kolasa	Walenty			Kolasa
-CH.LUB.BLIN.1796.090	1796	90	Kopyt	Maciej			Kopyt						nr karty 90									Kopyt	Maciej			Kopyt
-CH.LUB.BLIN.1796.090	1796	90	Kozak	Józef			Kozak						nr karty 90									Kozak	Józef			Kozak
-CH.LUB.BLIN.1796.090	1796	90	Obydź	Anna			Obydź						nr karty 90									Obydź	Anna			Obydź
-CH.LUB.BLIN.1796.090	1796	90	Stefańska	Zofia			Stefańska						nr karty 90									Stefańska	Zofia			Stefańska
-CH.LUB.BLIN.1796.091	1796	91	Bucon	Wojciech			Bucon						nr karty 91									Bucon	Wojciech			Bucon
-CH.LUB.BLIN.1796.091	1796	91	Gil	Zofia			Gil						nr karty 91									Gil	Zofia			Gil
-CH.LUB.BLIN.1796.091	1796	91	Jędrzejczak	Maciej			Jędrzejczak						nr karty 91									Jędrzejczak	Maciej			Jędrzejczak
-CH.LUB.BLIN.1796.091	1796	91	Kaczyński	Józef			Kaczyński						nr karty 91									Kaczyński	Józef			Kaczyński
-CH.LUB.BLIN.1796.091	1796	91	Kozak	Anna			Kozak						nr karty 91									Kozak	Anna			Kozak
-CH.LUB.BLIN.1796.091	1796	91	Pasternak	Maciej			Pasternak						nr karty 91									Pasternak	Maciej			Pasternak
-CH.LUB.BLIN.1796.091	1796	91	Rzeszutko	Franciszka			Rzeszutko						nr karty 91									Rzeszutko	Franciszka			Rzeszutko
-CH.LUB.BLIN.1796.092	1796	92	Czeherein	Jan			Czeherein						nr karty 92									Czeherein	Jan			Czeherein
-CH.LUB.BLIN.1796.092	1796	92	Kaczyńska	Marianna			Kaczyńska						nr karty 92									Kaczyńska	Marianna			Kaczyńska
-CH.LUB.BLIN.1796.092	1796	92	Machulek	Filip			Machulek						nr karty 92									Machulek	Filip			Machulek
-CH.LUB.BLIN.1796.092	1796	92	Morawska	Marianna			Morawska						nr karty 92									Morawska	Marianna			Morawska
-CH.LUB.BLIN.1796.092	1796	92	Paciorek	Marianna			Paciorek						nr karty 92									Paciorek	Marianna			Paciorek
-CH.LUB.BLIN.1796.092	1796	92	Sprysak	Zofia			Sprysak						nr karty 92									Sprysak	Zofia			Sprysak
-CH.LUB.BLIN.1796.092	1796	92	Stępień	Stanisław			Stępień						nr karty 92									Stępień	Stanisław			Stępień
-CH.LUB.BLIN.1796.092	1796	92	Wojtalas	Stanisław			Wojtalas						nr karty 92									Wojtalas	Stanisław			Wojtalas
-CH.LUB.BLIN.1796.092	1796	92	Zieleński	Wojciech			Zieleński						nr karty 92									Zieleński	Wojciech			Zieleński
-CH.LUB.BLIN.1796.092	1796	92	Zielonka	Wojciech			Zielonka						nr karty 92									Zielonka	Wojciech			Zielonka
-CH.LUB.BLIN.1796.093	1796	93	Sobutka	Jakub			Sobutka						nr karty 93									Sobutka	Jakub			Sobutka
-CH.LUB.BLIN.1796.093	1796	93	Szyszka	Anna			Szyszka						nr karty 93									Szyszka	Anna			Szyszka
-CH.LUB.BLIN.1796.094	1796	94	Krzowski	Bartłomiej			Krzowski						nr karty 94									Krzowski	Bartłomiej			Krzowski
-CH.LUB.BLIN.1796.094	1796	94	Pazdrak	Anna			Pazdrak						nr karty 94									Pazdrak	Anna			Pazdrak
-CH.LUB.BLIN.1796.094	1796	94	Stępnik	Wawrzyniec			Stępnik						nr karty 94									Stępnik	Wawrzyniec			Stępnik
-CH.LUB.BLIN.1796.094	1796	94	Wścisło	Michał			Wścisło						nr karty 94									Wścisło	Michał			Wścisło
-CH.LUB.BLIN.1796.096	1796	96	Babiarz	Jan			Babiarz						nr karty 96									Babiarz	Jan			Babiarz
-CH.LUB.BLIN.1796.096	1796	96	Pasternak	Katarzyna			Pasternak						nr karty 96									Pasternak	Katarzyna			Pasternak
-CH.LUB.BLIN.1796.097	1796	97	Babiarz	Adam			Babiarz						nr karty 97									Babiarz	Adam			Babiarz
-CH.LUB.BLIN.1796.097	1796	97	Dobrzyńska	Agnieszka			Dobrzyńska						nr karty 97									Dobrzyńska	Agnieszka			Dobrzyńska
-CH.LUB.BLIN.1796.097	1796	97	Kosidło	Stefan			Kosidło						nr karty 97									Kosidło	Stefan			Kosidło
-CH.LUB.BLIN.1796.097	1796	97	Kozak	Agnieszka			Kozak						nr karty 97									Kozak	Agnieszka			Kozak
-CH.LUB.BLIN.1796.097	1796	97	T?	Agnieszka			T?						nieczytelne nr karty 97									T?	Agnieszka			T?
+CH.LUB.BLIN.1796.089a	1796	89	Kosidło	Maciej			Kosidło						nr karty 89									Kosidło	Maciej			Kosidło
+CH.LUB.BLIN.1796.089b	1796	89	Machulek	Paweł			Machulek						nr karty 89									Machulek	Paweł			Machulek
+CH.LUB.BLIN.1796.089c	1796	89	Rembacz	Agnieszka			Rembacz						nr karty 89									Rembacz	Agnieszka			Rembacz
+CH.LUB.BLIN.1796.090a	1796	90	Czarna	Franciszka			Czarna						nr karty 90									Czarna	Franciszka			Czarna
+CH.LUB.BLIN.1796.090b	1796	90	Kędziera	Franciszka			Kędziera						nr karty 90									Kędziera	Franciszka			Kędziera
+CH.LUB.BLIN.1796.090c	1796	90	Kolasa	Walenty			Kolasa						nr karty 90									Kolasa	Walenty			Kolasa
+CH.LUB.BLIN.1796.090d	1796	90	Kopyt	Maciej			Kopyt						nr karty 90									Kopyt	Maciej			Kopyt
+CH.LUB.BLIN.1796.090e	1796	90	Kozak	Józef			Kozak						nr karty 90									Kozak	Józef			Kozak
+CH.LUB.BLIN.1796.090f	1796	90	Obydź	Anna			Obydź						nr karty 90									Obydź	Anna			Obydź
+CH.LUB.BLIN.1796.090g	1796	90	Stefańska	Zofia			Stefańska						nr karty 90									Stefańska	Zofia			Stefańska
+CH.LUB.BLIN.1796.091a	1796	91	Bucon	Wojciech			Bucon						nr karty 91									Bucon	Wojciech			Bucon
+CH.LUB.BLIN.1796.091b	1796	91	Gil	Zofia			Gil						nr karty 91									Gil	Zofia			Gil
+CH.LUB.BLIN.1796.091c	1796	91	Jędrzejczak	Maciej			Jędrzejczak						nr karty 91									Jędrzejczak	Maciej			Jędrzejczak
+CH.LUB.BLIN.1796.091d	1796	91	Kaczyński	Józef			Kaczyński						nr karty 91									Kaczyński	Józef			Kaczyński
+CH.LUB.BLIN.1796.091e	1796	91	Kozak	Anna			Kozak						nr karty 91									Kozak	Anna			Kozak
+CH.LUB.BLIN.1796.091f	1796	91	Pasternak	Maciej			Pasternak						nr karty 91									Pasternak	Maciej			Pasternak
+CH.LUB.BLIN.1796.091g	1796	91	Rzeszutko	Franciszka			Rzeszutko						nr karty 91									Rzeszutko	Franciszka			Rzeszutko
+CH.LUB.BLIN.1796.092a	1796	92	Czeherein	Jan			Czeherein						nr karty 92									Czeherein	Jan			Czeherein
+CH.LUB.BLIN.1796.092b	1796	92	Kaczyńska	Marianna			Kaczyńska						nr karty 92									Kaczyńska	Marianna			Kaczyńska
+CH.LUB.BLIN.1796.092c	1796	92	Machulek	Filip			Machulek						nr karty 92									Machulek	Filip			Machulek
+CH.LUB.BLIN.1796.092d	1796	92	Morawska	Marianna			Morawska						nr karty 92									Morawska	Marianna			Morawska
+CH.LUB.BLIN.1796.092e	1796	92	Paciorek	Marianna			Paciorek						nr karty 92									Paciorek	Marianna			Paciorek
+CH.LUB.BLIN.1796.092f	1796	92	Sprysak	Zofia			Sprysak						nr karty 92									Sprysak	Zofia			Sprysak
+CH.LUB.BLIN.1796.092g	1796	92	Stępień	Stanisław			Stępień						nr karty 92									Stępień	Stanisław			Stępień
+CH.LUB.BLIN.1796.092h	1796	92	Wojtalas	Stanisław			Wojtalas						nr karty 92									Wojtalas	Stanisław			Wojtalas
+CH.LUB.BLIN.1796.092i	1796	92	Zieleński	Wojciech			Zieleński						nr karty 92									Zieleński	Wojciech			Zieleński
+CH.LUB.BLIN.1796.092j	1796	92	Zielonka	Wojciech			Zielonka						nr karty 92									Zielonka	Wojciech			Zielonka
+CH.LUB.BLIN.1796.093a	1796	93	Sobutka	Jakub			Sobutka						nr karty 93									Sobutka	Jakub			Sobutka
+CH.LUB.BLIN.1796.093b	1796	93	Szyszka	Anna			Szyszka						nr karty 93									Szyszka	Anna			Szyszka
+CH.LUB.BLIN.1796.094a	1796	94	Krzowski	Bartłomiej			Krzowski						nr karty 94									Krzowski	Bartłomiej			Krzowski
+CH.LUB.BLIN.1796.094b	1796	94	Pazdrak	Anna			Pazdrak						nr karty 94									Pazdrak	Anna			Pazdrak
+CH.LUB.BLIN.1796.094c	1796	94	Stępnik	Wawrzyniec			Stępnik						nr karty 94									Stępnik	Wawrzyniec			Stępnik
+CH.LUB.BLIN.1796.094d	1796	94	Wścisło	Michał			Wścisło						nr karty 94									Wścisło	Michał			Wścisło
+CH.LUB.BLIN.1796.096a	1796	96	Babiarz	Jan			Babiarz						nr karty 96									Babiarz	Jan			Babiarz
+CH.LUB.BLIN.1796.096b	1796	96	Pasternak	Katarzyna			Pasternak						nr karty 96									Pasternak	Katarzyna			Pasternak
+CH.LUB.BLIN.1796.097a	1796	97	Babiarz	Adam			Babiarz						nr karty 97									Babiarz	Adam			Babiarz
+CH.LUB.BLIN.1796.097b	1796	97	Dobrzyńska	Agnieszka			Dobrzyńska						nr karty 97									Dobrzyńska	Agnieszka			Dobrzyńska
+CH.LUB.BLIN.1796.097c	1796	97	Kosidło	Stefan			Kosidło						nr karty 97									Kosidło	Stefan			Kosidło
+CH.LUB.BLIN.1796.097d	1796	97	Kozak	Agnieszka			Kozak						nr karty 97									Kozak	Agnieszka			Kozak
+CH.LUB.BLIN.1796.097e	1796	97	T?	Agnieszka			T?						nieczytelne nr karty 97									T?	Agnieszka			T?
 CH.LUB.BLIN.1796.a1	1796	a1	Baron	Antoni			Baron						30.12.1899									Baron	Antoni			Baron
 CH.LUB.BLIN.1796.a2	1796	a2	Brzeska	Katarzyna			Brzeska						30.12.1899									Brzeska	Katarzyna			Brzeska
 CH.LUB.BLIN.1796.a3	1796	a3	Brzyskiewicz	Aniela Wiktoria Ewa			Brzyskiewicz						30.12.1899									Brzyskiewicz	Aniela Wiktoria Ewa			Brzyskiewicz
@@ -1039,15 +2076,16 @@ CH.LUB.BLIN.1831.040	1831	40	Zarębianka	Katarzyna																		Zarębianka	
 CH.LUB.BLIN.1832.022	1832	22	Baran	Antoni																		Baran	Antoni			
 CH.LUB.BLIN.1832.006	1832	6	Barbarzak	Paweł																		Barbarzak	Paweł			
 CH.LUB.BLIN.1832.031	1832	31	Bosak	Mateusz																		Bosak	Mateusz			
-CH.LUB.BLIN.1832.040	1832	40	Bosak	Mikołaj																		Bosak	Mikołaj			
-CH.LUB.BLIN.1832.025	1832	25	Bosak	Konstancja																		Bosak	Konstancja			
+CH.LUB.BLIN.1832.040a	1832	40	Bosak	Mikołaj																		Bosak	Mikołaj			
+CH.LUB.BLIN.1832.040b	1832	40	Janik 	Katarzyna																		Janik 	Katarzyna			
+CH.LUB.BLIN.1832.025a	1832	25	Bosak	Konstancja																		Bosak	Konstancja			
+CH.LUB.BLIN.1832.025b	1832	25	Dombrowska	Magdalena																		Dombrowska	Magdalena			
 CH.LUB.BLIN.1832.004	1832	4	Brzuszkiewicz	Szczepan																		Brzuszkiewicz	Szczepan			
 CH.LUB.BLIN.1832.030	1832	30	Brzyszczonka	Jadwiga																		Brzyszczonka	Jadwiga			
 CH.LUB.BLIN.1832.018	1832	18	Bucoń	Anna																		Bucoń	Anna			
 CH.LUB.BLIN.1832.055	1832	55	Czuba	Stanisław																		Czuba	Stanisław			
 CH.LUB.BLIN.1832.007	1832	7	Dobrzańska	Agnieszka																		Dobrzańska	Agnieszka			
 CH.LUB.BLIN.1832.014	1832	14	Dobrzański	Kazimierz																		Dobrzański	Kazimierz			
-CH.LUB.BLIN.1832.025	1832	25	Dombrowska	Magdalena																		Dombrowska	Magdalena			
 CH.LUB.BLIN.1832.017	1832	17	Domieńska	Balbina																		Domieńska	Balbina			
 CH.LUB.BLIN.1832.020	1832	20	Głowaczanka	Magdalena																		Głowaczanka	Magdalena			
 CH.LUB.BLIN.1832.016	1832	16	Gnat	Małgorzata																		Gnat	Małgorzata			
@@ -1055,11 +2093,11 @@ CH.LUB.BLIN.1832.062	1832	62	Guzowna	Ewa																		Guzowna	Ewa
 CH.LUB.BLIN.1832.041	1832	41	Jachura	Piotr																		Jachura	Piotr			
 CH.LUB.BLIN.1832.061	1832	61	Jachura	Tomasz																		Jachura	Tomasz			
 CH.LUB.BLIN.1832.059	1832	59	Jakubaszek	Agnieszka																		Jakubaszek	Agnieszka			
-CH.LUB.BLIN.1832.040	1832	40	Janik 	Katarzyna																		Janik 	Katarzyna			
 CH.LUB.BLIN.1832.056	1832	56	Kawecki	Tomasz																		Kawecki	Tomasz			
 CH.LUB.BLIN.1832.011	1832	11	Kędziora	Agnieszka																		Kędziora	Agnieszka			
 CH.LUB.BLIN.1832.042	1832	42	Kędziora 	Katarzyna																		Kędziora 	Katarzyna			
-CH.LUB.BLIN.1832.057	1832	57	Kołpionka	Agnieszka																		Kołpionka	Agnieszka			
+CH.LUB.BLIN.1832.057a	1832	57	Kołpionka	Agnieszka																		Kołpionka	Agnieszka			
+CH.LUB.BLIN.1832.057b	1832	57	Pawłasek 	Barbara																		Pawłasek 	Barbara			
 CH.LUB.BLIN.1832.005	1832	5	Kosidło	Sebastian																		Kosidło	Sebastian			
 CH.LUB.BLIN.1832.008	1832	8	Kosidło 	Marianna																		Kosidło 	Marianna			
 CH.LUB.BLIN.1832.012	1832	12	Kosidło 	Marianna																		Kosidło 	Marianna			
@@ -1078,16 +2116,15 @@ CH.LUB.BLIN.1832.001	1832	1	Kurczak 	Agnieszka		Maciej	Kurczak 		Marianna	 Rekro
 CH.LUB.BLIN.1832.036	1832	36	Lewandoszczanka	Aniela																		Lewandoszczanka	Aniela			
 CH.LUB.BLIN.1832.064	1832	64	Michalak	Karol		Walenty	Michalak		Katarzyna	Kurczak										Walenty	Katarzyna	Michalak	Karol			Michalak
 CH.LUB.BLIN.1832.002	1832	2	Mochulczonka	Agnieszka		Józef			Franciszka	Mazurek										Józef	Franciszka	Mochulczonka	Agnieszka			
-CH.LUB.BLIN.1832.010	1832	10	Obydź	Anna																		Obydź	Anna			
+CH.LUB.BLIN.1832.010a	1832	10	Obydź	Anna																		Obydź	Anna			
+CH.LUB.BLIN.1832.010b	1832	10	Spryszakowna	Agata																		Spryszakowna	Agata			
 CH.LUB.BLIN.1832.013	1832	13	P??	Maciej																		P??	Maciej			
-CH.LUB.BLIN.1832.057	1832	57	Pawłasek 	Barbara																		Pawłasek 	Barbara			
 CH.LUB.BLIN.1832.058	1832	58	Pawłasek 	Ewa																		Pawłasek 	Ewa			
 CH.LUB.BLIN.1832.037	1832	37	Pcionek?	Franciszek																		Pcionek?	Franciszek			
 CH.LUB.BLIN.1832.060	1832	60	Pcionkowna	Łucja																		Pcionkowna	Łucja			
 CH.LUB.BLIN.1832.050	1832	50	Sobutka	Mikołaj																		Sobutka	Mikołaj			
 CH.LUB.BLIN.1832.047	1832	47	Solarz	Grzegorz																		Solarz	Grzegorz			
 CH.LUB.BLIN.1832.033	1832	33	Solutkowna	Dorota																		Solutkowna	Dorota			
-CH.LUB.BLIN.1832.010	1832	10	Spryszakowna	Agata																		Spryszakowna	Agata			
 CH.LUB.BLIN.1832.053	1832	53	Sulowski	Tomasz																		Sulowski	Tomasz			
 CH.LUB.BLIN.1832.045	1832	45	Szubowna	Marianna																		Szubowna	Marianna			
 CH.LUB.BLIN.1832.027	1832	27	Szusz	Benedykt																		Szusz	Benedykt			
@@ -1102,7 +2139,8 @@ CH.LUB.BLIN.1832.063	1832	63	Woytowiczowna	Zofia																		Woytowiczowna	
 CH.LUB.BLIN.1832.000	1832		Zielenszanka	Marianna																		Zielenszanka	Marianna			
 CH.LUB.BLIN.1833.027	1833	27	Barbarzak	Anna																		Barbarzak	Anna			
 CH.LUB.BLIN.1833.018	1833	18	Ćwiek	Grzegorz																		Ćwiek	Grzegorz			
-CH.LUB.BLIN.1833.010	1833	10	Czuba	Zofia																		Czuba	Zofia			
+CH.LUB.BLIN.1833.010a	1833	10	Czuba	Zofia																		Czuba	Zofia			
+CH.LUB.BLIN.1833.010b	1833	10	Szydłoski	Benedykt																		Szydłoski	Benedykt			
 CH.LUB.BLIN.1833.022	1833	22	Głowacka	Agnieszka																		Głowacka	Agnieszka			
 CH.LUB.BLIN.1833.042	1833	42	Gnat	Piotr																		Gnat	Piotr			
 CH.LUB.BLIN.1833.023	1833	23	Gnat	Agnieszka																		Gnat	Agnieszka			
@@ -1158,7 +2196,6 @@ CH.LUB.BLIN.1833.037	1833	37	Sprysakowna	Anna																		Sprysakowna	Anna
 CH.LUB.BLIN.1833.045	1833	45	Stępien	Bartłomiej																		Stępien	Bartłomiej			
 CH.LUB.BLIN.1833.015	1833	15	Szabat	Józef																		Szabat	Józef			
 CH.LUB.BLIN.1833.029	1833	29	Szabatowna	Julianna																		Szabatowna	Julianna			
-CH.LUB.BLIN.1833.010	1833	10	Szydłoski	Benedykt																		Szydłoski	Benedykt			
 CH.LUB.BLIN.1833.017	1833	17	Szyszkowna	Zofia																		Szyszkowna	Zofia			
 CH.LUB.BLIN.1833.062	1833	62	Wielbionka	Ewa																		Wielbionka	Ewa			
 CH.LUB.BLIN.1833.028	1833	28	Wnukowna	Magdalena																		Wnukowna	Magdalena			
@@ -1174,7 +2211,8 @@ CH.LUB.BLIN.1834.010	1834	10	Baran	Franciszka																		Baran	Franciszka
 CH.LUB.BLIN.1834.029	1834	29	Baran	Anna																		Baran	Anna			
 CH.LUB.BLIN.1834.022	1834	22	Barbarzak	Wojciech																		Barbarzak	Woyciech			
 CH.LUB.BLIN.1834.013	1834	13	Białkowska	Zofia																		Białkowska	Zofia			
-CH.LUB.BLIN.1834.015	1834	15	Brzostowski	Benedykt																		Brzostowski	Benedykt			
+CH.LUB.BLIN.1834.015a	1834	15	Brzostowski	Benedykt																		Brzostowski	Benedykt			
+CH.LUB.BLIN.1834.015b	1834	15	Kurczak	Franciszek																		Kurczak	Franciszek			
 CH.LUB.BLIN.1834.033	1834	33	Chwatkowna	Marianna																		Chwatkowna	Marianna			
 CH.LUB.BLIN.1834.018	1834	18	Dobrzański	Wojciech																		Dobrzański	Woyciech			
 CH.LUB.BLIN.1834.028	1834	28	Dobrzański	Jan																		Dobrzański	Jan			
@@ -1195,12 +2233,11 @@ CH.LUB.BLIN.1834.002	1834	2	Kruczay	Nepomucyn Marceli Henryk																		Kr
 CH.LUB.BLIN.1834.058	1834	58	Kudrelkowna	Ewa																		Kudrelkowna	Ewa			
 CH.LUB.BLIN.1834.055	1834	55	Kopiwoda	Barbara																		Kopiwoda	Barbara			
 CH.LUB.BLIN.1834.007	1834	7	Kurczak	Józef																		Kurczak	Józef			
-CH.LUB.BLIN.1834.015	1834	15	Kurczak	Franciszek																		Kurczak	Franciszek			
 CH.LUB.BLIN.1834.004	1834	4	Kurczak 	Tekla																		Kurczak 	Tekla			
 CH.LUB.BLIN.1834.019	1834	19	Kurczak 	Jadwiga																		Kurczak 	Jadwiga			
 CH.LUB.BLIN.1834.021	1834	21	Obydź	Franciszek																		Obydź	Franciszek			
-CH.LUB.BLIN.1834.049	1834	49	Olechnowna	Katarzyna																		Olechnowna	Katarzyna			
-CH.LUB.BLIN.1834.049	1834	49	Olechowna	Katarzyna																		Olechowna	Katarzyna			
+CH.LUB.BLIN.1834.049a	1834	49	Olechnowna	Katarzyna																		Olechnowna	Katarzyna			
+CH.LUB.BLIN.1834.049b	1834	49	Olechowna	Katarzyna																		Olechowna	Katarzyna			
 CH.LUB.BLIN.1834.026	1834	26	Paciorek	Stanisław																		Paciorek	Stanisław			
 CH.LUB.BLIN.1834.059	1834	59	Pawłasek	Adam																		Pawłasek	Adam			
 CH.LUB.BLIN.1834.046	1834	46	Pawłasek	Jadwiga																		Pawłasek	Jadwiga			
@@ -1703,9 +2740,11 @@ CH.LUB.BLIN.1842.007	1842	7	Woytowiczowna	Marianna																		Woytowiczown
 CH.LUB.BLIN.1842.031	1842	31	Wscislowna	Marianna																		Wscislowna	Marianna			
 CH.LUB.BLIN.1842.032	1842	32	Wscislowna	Anna																		Wscislowna	Anna			
 CH.LUB.BLIN.1842.061	1842	61	Wscisło	Katarzyna																		Wscisło	Katarzyna			
-CH.LUB.BLIN.1843.025	1843	25	Banaszek	Anna																		Banaszek	Anna			
+CH.LUB.BLIN.1843.025a	1843	25	Banaszek	Anna																		Banaszek	Anna			
+CH.LUB.BLIN.1843.025b	1843	25	Machulak	Jadwiga																		Machulak	Jadwiga			
 CH.LUB.BLIN.1843.064	1843	64	Baran	Agnieszka																		Baran	Agnieszka			
-CH.LUB.BLIN.1843.043	1843	43	Barbarzak	Jadwiga																		Barbarzak	Jadwiga			
+CH.LUB.BLIN.1843.043a	1843	43	Barbarzak	Jadwiga																		Barbarzak	Jadwiga			
+CH.LUB.BLIN.1843.043b	1843	43	Kolasa	Łukasz																		Kolasa	Łukasz			
 CH.LUB.BLIN.1843.033	1843	33	Białowna	Jadwiga																		Białowna	Jadwiga			
 CH.LUB.BLIN.1843.056	1843	56	Biały	Andrzej																		Biały	Andrzej			
 CH.LUB.BLIN.1843.042	1843	42	Bucoń	Michał																		Bucoń	Michał			
@@ -1729,7 +2768,6 @@ CH.LUB.BLIN.1843.014	1843	14	Kaczynska	Marianna																		Kaczynska	Maria
 CH.LUB.BLIN.1843.057	1843	57	Kaczynska	Marianna																		Kaczynska	Marianna			
 CH.LUB.BLIN.1843.028	1843	28	Kaczynski	Wincenty																		Kaczynski	Wincenty			
 CH.LUB.BLIN.1843.039	1843	39	Koguc	Katarzyna																		Koguc	Katarzyna			
-CH.LUB.BLIN.1843.043	1843	43	Kolasa	Łukasz																		Kolasa	Łukasz			
 CH.LUB.BLIN.1843.059	1843	59	Kopyt	Mikołaj																		Kopyt	Mikołaj			
 CH.LUB.BLIN.1843.012	1843	12	Kosidło	Stanisław																		Kosidło	Stanisław			
 CH.LUB.BLIN.1843.015	1843	15	Kosidło	Wojciech																		Kosidło	Wojciech			
@@ -1741,7 +2779,6 @@ CH.LUB.BLIN.1843.016	1843	16	Kozik	Marianna																		Kozik	Marianna
 CH.LUB.BLIN.1843.036	1843	36	Król	Franciszka																		Król	Franciszka			
 CH.LUB.BLIN.1843.044	1843	44	Ładziak	Jadwiga																		Ładziak	Jadwiga			
 CH.LUB.BLIN.1843.018	1843	18	Machulak	Wojciech																		Machulak	Wojciech			
-CH.LUB.BLIN.1843.025	1843	25	Machulak	Jadwiga																		Machulak	Jadwiga			
 CH.LUB.BLIN.1843.006	1843	6	Michałko	Kazimierz																		Michałko	Kazimierz			
 CH.LUB.BLIN.1843.017	1843	17	Michałkowna	Marianna																		Michałkowna	Marianna			
 CH.LUB.BLIN.1843.003	1843	3	Nieściór	Józefa																		Nieściór	Józefa			
@@ -1797,7 +2834,8 @@ CH.LUB.BLIN.1844.044	1844	44	Kosidło	Antonina																		Kosidło	Antonin
 CH.LUB.BLIN.1844.029	1844	29	Kozyra	Antonina																		Kozyra	Antonina			
 CH.LUB.BLIN.1844.032	1844	32	Krawczyk	Stanisław																		Krawczyk	Stanisław			
 CH.LUB.BLIN.1844.035	1844	35	Kudrelik	Jan Nepomucy																		Kudrelik	Jan Nepomucy			
-CH.LUB.BLIN.1844.003	1844	3	Kudrelkowna	Zofia																		Kudrelkowna	Zofia			
+CH.LUB.BLIN.1844.003a	1844	3	Kudrelkowna	Zofia																		Kudrelkowna	Zofia			
+CH.LUB.BLIN.1844.003b	1844	3	Ogon	Agnieszka																		Ogon	Agnieszka			
 CH.LUB.BLIN.1844.010	1844	10	Kurczak	Józef																		Kurczak	Józef			
 CH.LUB.BLIN.1844.017	1844	17	Kurczak	Józef																		Kurczak	Józef			
 CH.LUB.BLIN.1844.030	1844	30	Kurczak	Stanisław																		Kurczak	Stanisław			
@@ -1813,7 +2851,6 @@ CH.LUB.BLIN.1844.046	1844	46	Nieściór	Anna																		Nieściór	Anna
 CH.LUB.BLIN.1844.072	1844	72	Nikolas	Katarzyna																		Nikolas	Katarzyna			
 CH.LUB.BLIN.1844.055	1844	55	Obydź	Szymon																		Obydź	Szymon			
 CH.LUB.BLIN.1844.040	1844	40	Ogon	Antoni																		Ogon	Antoni			
-CH.LUB.BLIN.1844.003	1844	3	Ogon	Agnieszka																		Ogon	Agnieszka			
 CH.LUB.BLIN.1844.026	1844	26	Paciorek	Filip																		Paciorek	Filip			
 CH.LUB.BLIN.1844.076	1844	76	Paciorek	Ewa																		Paciorek	Ewa			
 CH.LUB.BLIN.1844.024	1844	24	Pawłasek	Wojciech																		Pawłasek	Wojciech			
@@ -1997,35 +3034,35 @@ CH.LUB.BLIN.1847.046	1847	46	Kosidło	Roman																		Kosidło	Roman
 CH.LUB.BLIN.1847.034	1847	34	Kosidło 	Magdalena																		Kosidło 	Magdalena			
 CH.LUB.BLIN.1847.042	1847	42	Kosidło 	Katarzyna																		Kosidło 	Katarzyna			
 CH.LUB.BLIN.1847.017	1847	17	Kudrelkówna	Józefa																		Kudrelkówna	Józefa			
-CH.LUB.BLIN.1847.003	1847	3	Kurczak 	Anna																		Kurczak 	Anna			
+CH.LUB.BLIN.1847.003a	1847	3	Kurczak 	Anna																		Kurczak 	Anna			
+CH.LUB.BLIN.1847.003b	1847	3	Sobulka	Walenty																		Sobulka	Walenty			
 CH.LUB.BLIN.1847.043	1847	43	Kwietłówna	Katarzyna																		Kwietłówna	Katarzyna			
 CH.LUB.BLIN.1847.025	1847	25	Machulak	Stanisław																		Machulak	Stanisław			
 CH.LUB.BLIN.1847.014	1847	14	Nieściór	Jan																		Nieściór	Jan			
 CH.LUB.BLIN.1847.013	1847	13	Ogon	Maciej																		Ogon	Maciej			
-CH.LUB.BLIN.1847.044	1847	44	Ogon	Roman																		Ogon	Roman			
+CH.LUB.BLIN.1847.044a	1847	44	Ogon	Roman																		Ogon	Roman			
+CH.LUB.BLIN.1847.044b	1847	44	Pawłasek 	Katarzyna																		Pawłasek 	Katarzyna			
 CH.LUB.BLIN.1847.024	1847	24	Pawłasek 	Józefa																		Pawłasek 	Józefa			
-CH.LUB.BLIN.1847.044	1847	44	Pawłasek 	Katarzyna																		Pawłasek 	Katarzyna			
 CH.LUB.BLIN.1847.028	1847	28	Pścionek	Michał																		Pścionek	Michał			
-CH.LUB.BLIN.1847.036	1847	36	Pścionek	Wawrzyniec Michał																		Pścionek	Wawrzyniec Michał			
+CH.LUB.BLIN.1847.036a	1847	36	Pścionek	Wawrzyniec Michał																		Pścionek	Wawrzyniec Michał			
+CH.LUB.BLIN.1847.036b	1847	36	Szyszka	Wincenty																		Szyszka	Wincenty			
 CH.LUB.BLIN.1847.002	1847	2	Pudło	Agnieszka	Brzozówka	Michał	Pudło	53	Jadwiga	Ogon	38	1847.01.20 Śr								Michał	Jadwiga	Pudło	Agnieszka	Brzozówka		Pudło
-CH.LUB.BLIN.1847.049	1847	49	Rębacz	Tomasz																		Rębacz	Tomasz			
+CH.LUB.BLIN.1847.049a	1847	49	Rębacz	Tomasz																		Rębacz	Tomasz			
+CH.LUB.BLIN.1847.049b	1847	49	Suloska	Ewa																		Suloska	Ewa			
+CH.LUB.BLIN.1847.049c	1847	49	Zyśko	Walenty																		Zyśko	Walenty			
 CH.LUB.BLIN.1847.048	1847	48	Simbiedówna	Marianna																		Simbiedówna	Marianna			
 CH.LUB.BLIN.1847.035	1847	35	Skorywilk	Franciszek																		Skorywilk	Franciszek			
 CH.LUB.BLIN.1847.018	1847	18	Sobonieska	Józefa																		Sobonieska	Józefa			
 CH.LUB.BLIN.1847.031	1847	31	Sobonieska	Anna																		Sobonieska	Anna			
-CH.LUB.BLIN.1847.003	1847	3	Sobulka	Walenty																		Sobulka	Walenty			
 CH.LUB.BLIN.1847.004	1847	4	Sobulka	Ignacy																		Sobulka	Ignacy			
 CH.LUB.BLIN.1847.033	1847	33	Sobutka	Wawrzyniec																		Sobutka	Wawrzyniec 			
 CH.LUB.BLIN.1847.008	1847	8	Sokołówna	Zofia																		Sokołówna	Zofia			
-CH.LUB.BLIN.1847.049	1847	49	Suloska	Ewa																		Suloska	Ewa			
 CH.LUB.BLIN.1847.022	1847	22	Szumlański	Onufry																		Szumlański	Onufry			
-CH.LUB.BLIN.1847.036	1847	36	Szyszka	Wincenty																		Szyszka	Wincenty			
 CH.LUB.BLIN.1847.029	1847	29	Wieleba	Piotr																		Wieleba	Piotr			
 CH.LUB.BLIN.1847.021	1847	21	Wielebionka	Anastazja																		Wielebionka	Anastazja			
 CH.LUB.BLIN.1847.037	1847	37	Wścieło	Michał																		Wścieło	Michał			
 CH.LUB.BLIN.1847.016	1847	16	Zielińska	Franciszka																		Zielińska	Franciszka			
 CH.LUB.BLIN.1847.047	1847	47	Zielińska	Katarzyna																		Zielińska	Katarzyna			
-CH.LUB.BLIN.1847.049	1847	49	Zyśko	Walenty																		Zyśko	Walenty			
 CH.LUB.BLIN.1848.001	1848	1	Baran	Józef																		Baran	Józef			
 CH.LUB.BLIN.1848.019	1848	19	Baran	Wojciech																		Baran	Wojciech			
 CH.LUB.BLIN.1848.047	1848	47	Baran	Jan																		Baran	Jan			
@@ -2047,7 +3084,8 @@ CH.LUB.BLIN.1848.043	1848	43	Jachura	Katarzyna																		Jachura	Katarzyn
 CH.LUB.BLIN.1848.032	1848	32	Jopek	Józef																		Jopek	Józef			
 CH.LUB.BLIN.1848.008	1848	8	Kaczyński	Walenty																		Kaczyński	Walenty			
 CH.LUB.BLIN.1848.058	1848	58	Kadziorówna	Franciszka																		Kadziorówna	Franciszka			
-CH.LUB.BLIN.1848.004	1848	4	Kamieniak	Franciszka																		Kamieniak	Franciszka			
+CH.LUB.BLIN.1848.004a	1848	4	Kamieniak	Franciszka																		Kamieniak	Franciszka			
+CH.LUB.BLIN.1848.004b	1848	4	Pawłasek	Franciszka																		Pawłasek	Franciszka			
 CH.LUB.BLIN.1848.057	1848	57	Kędziora	Ewa																		Kędziora	Ewa			
 CH.LUB.BLIN.1848.056	1848	56	Karpiński	Roman																		Karpiński	Roman			
 CH.LUB.BLIN.1848.033	1848	33	Kędziora	Franciszek																		Kędziora	Franciszek			
@@ -2067,7 +3105,6 @@ CH.LUB.BLIN.1848.015	1848	15	Obydź	Wojciech																		Obydź	Wojciech
 CH.LUB.BLIN.1848.025	1848	25	Paszkowska	Franciszka																		Paszkowska	Fraciszka			
 CH.LUB.BLIN.1848.006	1848	6	Pawłasek	Walenty																		Pawłasek	Walenty			
 CH.LUB.BLIN.1848.042	1848	42	Pawłasek	Szymon																		Pawłasek	Szymon			
-CH.LUB.BLIN.1848.004	1848	4	Pawłasek	Franciszka																		Pawłasek	Franciszka			
 CH.LUB.BLIN.1848.034	1848	34	Pawłasek	Tekla																		Pawłasek	Tekla			
 CH.LUB.BLIN.1848.051	1848	51	Pawłasek	Barbara																		Pawłasek	Barbara			
 CH.LUB.BLIN.1848.011	1848	11	Pscionek	Kazimierz																		Pscionek	Kazimierz			
@@ -2158,11 +3195,13 @@ CH.LUB.BLIN.1849.070	1849	70	Zyśko	Sebastian																		Zyśko	Sebastian
 CH.LUB.BLIN.1850.056	1850	56	Bigos 	Katarzyna								brak akt										Bigos 	Katarzyna			
 CH.LUB.BLIN.1850.041	1850	41	Chmiel	Jan																		Chmiel	Jan			
 CH.LUB.BLIN.1850.008	1850	8	Ciećko	Walenty								nazw. ?										Ciećko	Walenty			
-CH.LUB.BLIN.1850.046	1850	46	Dobrzyńska	Tekla																		Dobrzyńska	Tekla			
+CH.LUB.BLIN.1850.046a	1850	46	Dobrzyńska	Tekla																		Dobrzyńska	Tekla			
+CH.LUB.BLIN.1850.046b	1850	46	Pasternak	Marianna																		Pasternak	Marianna			
 CH.LUB.BLIN.1850.047	1850	47	Dobrzyński	Michał																		Dobrzyński	Michał			
 CH.LUB.BLIN.1850.063	1850	63	Dziewa	Katarzyna								nazw. ?										Dziewa	Katarzyna			
 CH.LUB.BLIN.1850.002	1850	2	Głaz	Paweł																		Głaz	Paweł			
-CH.LUB.BLIN.1850.013	1850	13	Igras	Józefa																		Igras	Józefa			
+CH.LUB.BLIN.1850.013a	1850	13	Igras	Józefa																		Igras	Józefa			
+CH.LUB.BLIN.1850.013b	1850	13	Kozik	Józef																		Kozik	Józef			
 CH.LUB.BLIN.1850.064	1850	64	Jachura	Salomea																		Jachura	Salomea			
 CH.LUB.BLIN.1850.052	1850	52	Janik 	Franciszka																		Janik 	Franciszka			
 CH.LUB.BLIN.1850.039	1850	39	Jędrzejczak	Antoni																		Jędrzejczak	Antoni			
@@ -2181,7 +3220,6 @@ CH.LUB.BLIN.1850.044	1850	44	Kosidło	Wawrzyniec																		Kosidło	Wawrz
 CH.LUB.BLIN.1850.006	1850	6	Kosidło 	Katarzyna																		Kosidło 	Katarzyna			
 CH.LUB.BLIN.1850.007	1850	7	Kosidło 	Józefa																		Kosidło 	Józefa			
 CH.LUB.BLIN.1850.017	1850	17	Kosidło 	Marianna																		Kosidło 	Marianna			
-CH.LUB.BLIN.1850.013	1850	13	Kozik	Józef																		Kozik	Józef			
 CH.LUB.BLIN.1850.071	1850	71	Krawczyk	Paweł																		Krawczyk	Paweł			
 CH.LUB.BLIN.1850.037	1850	37	Kudrelik	Antoni																		Kudrelik	Antoni			
 CH.LUB.BLIN.1850.045	1850	45	Kudrelik	Dominik																		Kudrelik	Dominik			
@@ -2197,7 +3235,6 @@ CH.LUB.BLIN.1850.028	1850	28	Obydź	Katarzyna																		Obydź	Katarzyna
 CH.LUB.BLIN.1850.049	1850	49	Obydź	Marianna																		Obydź	Marianna			
 CH.LUB.BLIN.1850.025	1850	25	Ogon	Stanisław																		Ogon	Stanisław			
 CH.LUB.BLIN.1850.051	1850	51	Parzkoska	Marianna																		Parzkoska	Marianna			
-CH.LUB.BLIN.1850.046	1850	46	Pasternak	Marianna																		Pasternak	Marianna			
 CH.LUB.BLIN.1850.054	1850	54	Pawlak	Franciszek																		Pawlak	Franciszek			
 CH.LUB.BLIN.1850.029	1850	29	Pawłasek	Stanisław																		Pawłasek	Stanisław			
 CH.LUB.BLIN.1850.050	1850	50	Pawłasek	Jadwiga																		Pawłasek	Jadwiga			
@@ -2234,13 +3271,13 @@ CH.LUB.BLIN.1851.052	1851	52	Biały	Franciszek																		Biały	Francisze
 CH.LUB.BLIN.1851.017	1851	17	Brzeska	Anna																		Brzeska	Anna			
 CH.LUB.BLIN.1851.058	1851	58	Brzeski	Jan																		Brzeski	Jan			
 CH.LUB.BLIN.1851.035	1851	35	Brzuszkiewicz	Anna																		Brzuszkiewicz	Anna			
-CH.LUB.BLIN.1851.023	1851	23	Bucoń	Stanisław																		Bucoń	Stanisław			
+CH.LUB.BLIN.1851.023a	1851	23	Bucoń	Stanisław																		Bucoń	Stanisław			
+CH.LUB.BLIN.1851.023b	1851	23	Gnaczarz	Stanisław																		Gnaczarz	Stanisław			
 CH.LUB.BLIN.1851.024	1851	24	Ćwiek	Marianna																		Ćwiek	Marianna			
 CH.LUB.BLIN.1851.039	1851	39	Dobrzyńska	Magdalena																		Dobrzyńska	Magdalena			
 CH.LUB.BLIN.1851.007	1851	7	Dobrzyński	Walenty																		Dobrzyński	Walenty			
 CH.LUB.BLIN.1851.044	1851	44	Dziewa	Katarzyna																		Dziewa	Katarzyna			
 CH.LUB.BLIN.1851.028	1851	28	Gancarz	Zofia																		Gancarz	Zofia			
-CH.LUB.BLIN.1851.023	1851	23	Gnaczarz	Stanisław																		Gnaczarz	Stanisław			
 CH.LUB.BLIN.1851.012	1851	12	Gnat	Józef																		Gnat	Józef			
 CH.LUB.BLIN.1851.057	1851	57	Jachura	Marcin																		Jachura	Marcin			
 CH.LUB.BLIN.1851.060	1851	60	Jachura	Marcin																		Jachura	Marcin			
@@ -2476,7 +3513,8 @@ CH.LUB.BLIN.1854.020	1854	20	Zielinski	Stanisław	Brzozówka	Jan			Zofia	Czuba		
 CH.LUB.BLIN.1854.006	1854	6	Zysko/Zyśko?	Paweł	Moczydła	Józef			Marianna	Kasperek										Józef	Maryanna	Zysko/Zyśko?	Paweł	Moczydła		
 CH.LUB.BLIN.1855.026	1855	26	Brzęcki	Marianna																		Brzęcki	Marianna			
 CH.LUB.BLIN.1855.013	1855	13	Brzęczkiewicz	Marianna																		Brzęczkiewicz	Marianna			
-CH.LUB.BLIN.1855.002	1855	2	Bucoń	Józefa																		Bucoń	Józefa			
+CH.LUB.BLIN.1855.002a	1855	2	Bucoń	Józefa																		Bucoń	Józefa			
+CH.LUB.BLIN.1855.002b	1855	2	Pudło	Paweł				Pudło				brak akt										Pudło	Paweł			
 CH.LUB.BLIN.1855.012	1855	12	Dobrzyńska	Antonina																		Dobrzyńska	Antonina			
 CH.LUB.BLIN.1855.020	1855	20	Dziuba	Marcin																		Dziuba	Marcin			
 CH.LUB.BLIN.1855.010	1855	10	Ignacówna	Aniela																		Ignacówna	Aniela			
@@ -2494,7 +3532,6 @@ CH.LUB.BLIN.1855.023	1855	23	Mędrek	Tomasz																		Mędrek	Tomasz
 CH.LUB.BLIN.1855.019	1855	19	Obydź	Walenty																		Obydź	Walenty			
 CH.LUB.BLIN.1855.027	1855	27	Ogon	Ewa																		Ogon	Ewa			
 CH.LUB.BLIN.1855.022	1855	22	Paczkowski	Andrzej																		Paczkowski	Andrzej			
-CH.LUB.BLIN.1855.002	1855	2	Pudło	Paweł				Pudło				brak akt										Pudło	Paweł			
 CH.LUB.BLIN.1855.011	1855	11	Siembida	Anna																		Siembida	Anna			
 CH.LUB.BLIN.1855.021	1855	21	Sikora	Andrzej																		Sikora	Andrzej			
 CH.LUB.BLIN.1855.024	1855	24	Stępień	Marianna																		Stępień	Marianna			
@@ -2880,7 +3917,8 @@ CH.LUB.BLIN.1862.024	1862	24	Zarembowna	Marianna	Blinów	Wojciech		23	Katarzyna	
 CH.LUB.BLIN.1862.046	1862	46	Zielinski	Szymon	Blinów	Jan		28	Zofia	Czuba	28									Jan	Zofia	Zielinski	Szymon	Blinów		
 CH.LUB.BLIN.1863.048	1863	48	Barbarzak	Franciszek	Blinów	Józef		30	Antonina	Jachura	26									Józef	Antonina	Barbarzak	Franciszek	Blinów		
 CH.LUB.BLIN.1863.011	1863	11	Boczek	Józefa	Blinów	Wawrzyniec		27	Katarzyna	Grel	23									Wawrzyniec	Katarzyna	Boczek	Józefa	Blinów		
-CH.LUB.BLIN.1863.057	1863	57	Brodoski	Marcin	Blinów	Andrzej		49	Marianna	Paszkoska		pastuch w folwarku								Andrzej	Marianna	Brodoski	Marcin	Blinów		
+CH.LUB.BLIN.1863.057a	1863	57	Brodoski	Marcin	Blinów	Andrzej		49	Marianna	Paszkoska		pastuch w folwarku								Andrzej	Marianna	Brodoski	Marcin	Blinów		
+CH.LUB.BLIN.1863.057b	1863	57	Jaskoski	Michał	Brzozówka	Maciej		39	Wiktoria	Dudek	36	szynkarz w Brzozówce								Maciej	Wiktoria	Jaskoski	Michał	Brzozówka		
 CH.LUB.BLIN.1863.022	1863	22	Brzeska	Marianna	Brzozówka	Franciszek		35	Jadwiga	Czuba	34									Franciszek	Jadwiga	Brzeska	Marianna	Brzozówka		
 CH.LUB.BLIN.1863.060	1863	60	Brzuszkiewicz	Wiktoria	Brzozówka				Marianna	Brzoszkiewiczowa	24										Marianna	Brzuszkiewicz	Wiktorya	Brzozówka		
 CH.LUB.BLIN.1863.032	1863	32	Dąbrowski	Antoni	Brzozówka	Stanisław		36	Leonia	Sieragowska		oficjalista Ordynacji								Stanisław	Leonia	Dąbrowski	Antoni	Brzozówka		
@@ -2892,7 +3930,6 @@ CH.LUB.BLIN.1863.028	1863	28	Gnat	Jan Nepu?.	Blinów				Marianna	Gnatowa	40					
 CH.LUB.BLIN.1863.038	1863	38	Goch	Marianna	Brzozówka	Jan		22	Katarzyna	Białkoska	25									Jan	Katarzyna	Goch	Marianna	Brzozówka		
 CH.LUB.BLIN.1863.009	1863	9	Hudy	Józef	Moczydła	Grzegorz		35	Katarzyna	Tylus	25									Grzegorz	Katarzyna	Hudy	Józef	Moczydła		
 CH.LUB.BLIN.1863.001	1863	1	Jantonik	Paweł	Brzozówka	Jan		45	Marianna	Pawłasek	35	pastuch w folwarku								Jan	Marianna	Jantonik	Paweł	Brzozówka		
-CH.LUB.BLIN.1863.057	1863	57	Jaskoski	Michał	Brzozówka	Maciej		39	Wiktoria	Dudek	36	szynkarz w Brzozówce								Maciej	Wiktoria	Jaskoski	Michał	Brzozówka		
 CH.LUB.BLIN.1863.024	1863	24	Jaskuła 	Zofia	Blinów	Wojciech		47	Zofia	Niesciur	29									Wojciech	Zofia	Jaskuła 	Zofia	Blinów		
 CH.LUB.BLIN.1863.005	1863	5	Kaczyńska	Józefa	Blinów	Jakub		41	Marianna	Szuba	36									Jakub	Marianna	Kaczyńska	Józefa	Blinów		
 CH.LUB.BLIN.1863.025	1863	25	Kaczyńska	Antonina	Blinów	Józef		25	Marianna	Wójtowicz	22									Józef	Marianna	Kaczyńska	Antonina	Blinów		
@@ -3157,7 +4194,8 @@ CH.LUB.BLIN.1867.059	1867	59	Jaskuła 	Walenty	Blinów	Wojciech		50	Zofia	Nieśc
 CH.LUB.BLIN.1867.033	1867	33	Jędrzejczak	Marianna	Blinów	Antoni		24	Agnieszka	Gnat	27									Antoni	Agnieszki	Jędrzejczak	Marianna	Blinów		
 CH.LUB.BLIN.1867.046	1867	46	Jędrzejczak 	Michał	Blinów	Wojciech		42	Marianna	Kosidło	40									Wojciech	Marianna	Jędrzejczak 	Michał	Blinów		
 CH.LUB.BLIN.1867.038	1867	38	Kaczyński	Michał	Blinów	Jakub		43	Marianna	Szuba	39									Jakub	Marianna	Kaczyński	Michał	Blinów		
-CH.LUB.BLIN.1867.004	1867	4	Kędziora	Franciszka	Blinów	Józef		28	Antonina	Gnat	26									Józef	Antonina	Kędziora	Franciszka	Blinów		
+CH.LUB.BLIN.1867.004a	1867	4	Kędziora	Franciszka	Blinów	Józef		28	Antonina	Gnat	26									Józef	Antonina	Kędziora	Franciszka	Blinów		
+CH.LUB.BLIN.1867.004b	1867	4	Miszewska 	Wanda Maria	Brzozówka	Jan		28	Delfina	(?)Koszobudzka	22	dzierż. folwarku w Brzozówce								Jan	Delfina	Miszewska 	Wanda Maria	Brzozówka		
 CH.LUB.BLIN.1867.032	1867	32	Komsa	Marianna	Brzozówka	Stanisław		34	Katarzyna	Brzeska	28									Stanisław	Katarzyna	Komsa	Marianna	Brzozówka		
 CH.LUB.BLIN.1867.007	1867	7	Kopiwoda	Józefa	Brzozówka	Andrzej	Kopiwoda	25	Marianna	Brzeska	24	brak akt								Andrzej	Marianna	Kopiwoda	Józefa	Brzozówka		Kopiwoda
 CH.LUB.BLIN.1867.016	1867	16	Kosidło	Aniela	Blinów	Franciszek		42	Agnieszka	Pazdrak	48									Franciszek	Agnieszka	Kosidło	Aniela	Blinów		
@@ -3171,7 +4209,6 @@ CH.LUB.BLIN.1867.056	1867	56	Łatka	Barbara	Blinów	Walenty		26	Antonina	Pawłas
 CH.LUB.BLIN.1867.040	1867	40	Machul 	Michał	Blinów	Andrzej		26	Marianna	Kosidło	26									Andrzej	Marianna	Machul 	Michał	Blinów		
 CH.LUB.BLIN.1867.012	1867	12	Machulak	Wincenty	Brzozówka	Jan		27	Julianna	Goch	29									Jan	Julianna	Machulak	Wincenty	Brzozówka		
 CH.LUB.BLIN.1867.020	1867	20	Matraszek	Piotr Celestyn	Blinów	Stanisław		34	Emilia	Dziarzkoska	33	organista								Stanisław	Emilia	Matraszek	Piotr Celestyn	Blinów		
-CH.LUB.BLIN.1867.004	1867	4	Miszewska 	Wanda Maria	Brzozówka	Jan		28	Delfina	(?)Koszobudzka	22	dzierż. folwarku w Brzozówce								Jan	Delfina	Miszewska 	Wanda Maria	Brzozówka		
 CH.LUB.BLIN.1867.051	1867	51	Nieściur	Katarzyna	Moczydła	Józef		26	Zofia	Zyska	26									Józef	Zofia	Nieściur	Katarzyna	Moczydła		
 CH.LUB.BLIN.1867.042	1867	42	Nieściur	Jadwiga	Moczydła	Tomasz		31	Katarzyna	Babiarz	32									Tomasz	Katarzyna	Nieściur	Jadwiga	Moczydła		
 CH.LUB.BLIN.1867.048	1867	48	Ogon	Katarzyna	Blinów	Antoni		24	Anna	Wcisło	20									Antoni	Anna	Ogon	Katarzyna	Blinów		
@@ -3258,7 +4295,8 @@ CH.LUB.BLIN.1869.033	1869	33	Brzuszkiewicz	Wincenty	Brzozówka				Marianna	Brzos
 CH.LUB.BLIN.1869.017	1869	17	Bucoń	Antoni	Blinów	Błażej			Antonina	Kosidło										Błażej	Antonina	Bucoń	Antoni	Blinów		
 CH.LUB.BLIN.1869.019	1869	19	Chudy	Antoni	Blinów	Grzegorz			Katarzyna	Tylus										Grzegorz	Katarzyna	Chudy	Antoni	Blinów		
 CH.LUB.BLIN.1869.071	1869	71	Dąbrowski	Jan	Brzozówka	Józef			Barbara	Kolasa										Józef	Barbara	Dąbrowski	Jan	Brzozówka		
-CH.LUB.BLIN.1869.051	1869	51	Dobrzyńska	Jadwiga	Brzozówka	Wojciech			Franciszka	Wcisło										Wojciech	Franciszka	Dobrzyńska	Jadwiga	Brzozówka		
+CH.LUB.BLIN.1869.051a	1869	51	Dobrzyńska	Jadwiga	Brzozówka	Wojciech			Franciszka	Wcisło										Wojciech	Franciszka	Dobrzyńska	Jadwiga	Brzozówka		
+CH.LUB.BLIN.1869.051b	1869	51	Paciorek	Tomasz	Blinów	Filip			Katarzyna	Cieciek										Filip	Katarzyna	Paciorek	Tomasz	Blinów		
 CH.LUB.BLIN.1869.039	1869	39	Dobrzyńska	Marianna	Moczydła	Andrzej			Anna	Janik										Andrzej	Anna	Dobrzyńska	Marianna	Moczydła		
 CH.LUB.BLIN.1869.025	1869	25	Dziewa	Antonina	Blinów	Paweł			Jadwiga	Kosidło										Paweł	Jadwiga	Dziewa	Antonina	Blinów		
 CH.LUB.BLIN.1869.002	1869	2	Goch	Walenty	Brzozówka	Jan		28	Katarzyna	Białkoska	31									Jan	Katarzyna	Goch	Walenty	Brzozówka		
@@ -3269,7 +4307,8 @@ CH.LUB.BLIN.1869.005	1869	5	Jaskuła	Agata	Blinów	Wojciech		45	Zofia	Nieściur	
 CH.LUB.BLIN.1869.060	1869	60	Jędrzejczak	Mikołaj	Blinów	Andrzej			Ewa	Dobrzyńska										Andrzej	Ewa	Jędrzejczak	Mikołaj	Blinów		
 CH.LUB.BLIN.1869.041	1869	41	Jędrzejczak	Rozalia	Blinów	Antoni			Agnieszka	Gnat										Antoni	Agnieszka	Jędrzejczak	Rozalia	Blinów		
 CH.LUB.BLIN.1869.027	1869	27	Jędrzejczak	Anna	Moczydła	Marcin			Katarzyna	Nieściur										Marcin	Katarzyna	Jędrzejczak	Anna	Moczydła		
-CH.LUB.BLIN.1869.042	1869	42	Kaczyńska	Tekla	Blinów	Jakub			Marianna	Szuba										Jakub	Marianna	Kaczyńska	Tekla	Blinów		
+CH.LUB.BLIN.1869.042a	1869	42	Kaczyńska	Tekla	Blinów	Jakub			Marianna	Szuba										Jakub	Marianna	Kaczyńska	Tekla	Blinów		
+CH.LUB.BLIN.1869.042b	1869	42	Kurczak	Michał	Blinów	Walenty			Józefa	Kozaczek										Walenty	Józefa	Kurczak	Michał	Blinów		
 CH.LUB.BLIN.1869.016	1869	16	Kaczyńska	Zofia	Blinów	Jan			Katarzyna	Janik										Jan	Katarzyna	Kaczyńska	Zofia	Blinów		
 CH.LUB.BLIN.1869.001	1869	1	Kędziora	Walenty	Blinów	Józef		29	Antonina	Gnat	27									Józef	Antonina	Kędziora	Walenty	Blinów		
 CH.LUB.BLIN.1869.055	1869	55	Kędziora	Marcin	Blinów	Michał			Zofia	Jachura										Michał	Zofia	Kędziora	Marcin	Blinów		
@@ -3284,13 +4323,11 @@ CH.LUB.BLIN.1869.024	1869	24	Kozyra	Antoni	Blinów	Piotr		36	Anna	Zych	38							
 CH.LUB.BLIN.1869.065	1869	65	Krawczyk	Tomasz	Moczydła	Szymon			Anna	Król										Szymon	Anna	Krawczyk	Tomasz	Moczydła		
 CH.LUB.BLIN.1869.049	1869	49	Kudrelek	Jadwiga	Blinów	Michał			Anastazja	Gnat										Michał	Anastazja	Kudrelek	Jadwiga	Blinów		
 CH.LUB.BLIN.1869.054	1869	54	Kurczak	Szymon	Blinów	Paweł			Dorota	Sobótka										Paweł	Dorota	Kurczak	Szymon	Blinów		
-CH.LUB.BLIN.1869.042	1869	42	Kurczak	Michał	Blinów	Walenty			Józefa	Kozaczek										Walenty	Józefa	Kurczak	Michał	Blinów		
 CH.LUB.BLIN.1869.018	1869	18	Łatka	Antoni	Moczydła	Wojciech			Franciszka	Jagieło										Wojciech	Franciszka	Łatka	Antoni	Moczydła		
 CH.LUB.BLIN.1869.028	1869	28	Mróz	Piotr	Blinów	Franciszek			Marianna	Jędrzejczak										Franciszek	Marianna	Mróz	Piotr	Blinów		
 CH.LUB.BLIN.1869.038	1869	38	Nieściór	Wawrzyniec	Blinów	Jacek			Katarzyna	Pasternak										Jacek	Katarzyna	Nieściór	Wawrzyniec	Blinów		
 CH.LUB.BLIN.1869.011	1869	11	Nieściór	Marianna	Moczydła	Andrzej		24	Marianna	Koguc	23									Andrzej	Marianna	Nieściór	Marianna	Moczydła		
 CH.LUB.BLIN.1869.004	1869	4	Nieściór	Józefa	Moczydła	Tomasz			Katarzyna	Babiarz										Tomasz	Katarzyna	Nieściór	Józefa	Moczydła		
-CH.LUB.BLIN.1869.051	1869	51	Paciorek	Tomasz	Blinów	Filip			Katarzyna	Cieciek										Filip	Katarzyna	Paciorek	Tomasz	Blinów		
 CH.LUB.BLIN.1869.052	1869	52	Pawłasek	Jadwiga	Blinów	Adam			Magdalena	Dąbrowska										Adam	Magdalena	Pawłasek	Jadwiga	Blinów		
 CH.LUB.BLIN.1869.059	1869	59	Pawłasek	Andrzej	Blinów				Katarzyna	Pawłaskówna	22										Katarzyna	Pawłasek	Andrzej	Blinów		
 CH.LUB.BLIN.1869.045	1869	45	Pawłasek	Tekla	Blinów	Marcin			Marianna	Obydź										Marcin	Marianna	Pawłasek	Tekla	Blinów		
@@ -5360,7 +6397,8 @@ CH.LUB.BLIN.1902.013	1902	13	Breś	Józefa	Blinów	Stanisław		36	Zofia	Kaczyńs
 CH.LUB.BLIN.1902.075	1902	75	Breś	Szymon	Moczydła	Józef		20	Magdalena	Zuń	24									Józef	Magdalena	Breś	Szymon	Moczydła		
 CH.LUB.BLIN.1902.051	1902	51	Chudy	Jan	Moczydła	Paweł		40	Franciszka	Wieleba	30									Paweł	Franciszka	Chudy	Jan	Moczydła		
 CH.LUB.BLIN.1902.023	1902	23	Ciećko	Stefan	Blinów	Marcin		22	Józefa	Sobótka	22									Marcin	Józefa	Ciećko	Stefan	Blinów		
-CH.LUB.BLIN.1902.059	1902	59	Czuba	Franciszek	karta 178, Blinów	Józef		35	Anastazja	Grela	33									Józef	Anastazja	Czuba	Franciszek	karta 178, Blinów		
+CH.LUB.BLIN.1902.059a	1902	59	Czuba	Franciszek	karta 178, Blinów	Józef		35	Anastazja	Grela	33									Józef	Anastazja	Czuba	Franciszek	karta 178, Blinów		
+CH.LUB.BLIN.1902.059b	1902	59	Felek	Szymon	Blinów	Józef		31	Franciszka	Machulak	24	Karta 179								Józef	Franciszka	Felek	Szymon	Blinów		
 CH.LUB.BLIN.1902.084	1902	84	Dąbrowska	Katarzyna	Moczydła	Marcin		36	Marianna	Jachura	30									Marcin	Marianna	Dąbrowska	Katarzyna	Moczydła		
 CH.LUB.BLIN.1902.049	1902	49	Dobrzyński	Ludwik	Brzozówka	Jan		30	Józefa	Kopiwoda	26									Jan	Józefa	Dobrzyński	Ludwik	Brzozówka		
 CH.LUB.BLIN.1902.078	1902	78	Dobrzyński	Marcin	Moczydła	Ludwik		35	Magdalena	Butkowska	32									Ludwik	Magdalena	Dobrzyński	Marcin	Moczydła		
@@ -5368,7 +6406,6 @@ CH.LUB.BLIN.1902.040	1902	40	Drozd	Zofia	Blinów	Tomasz		31	Tekla	Smyl	30							
 CH.LUB.BLIN.1902.046	1902	46	Dziewa	Jan	Moczydła	Antoni		31	Anna	Pcionek	30									Antoni	Anna	Dziewa	Jan	Moczydła		
 CH.LUB.BLIN.1902.062	1902	62	Dziura	Stefan	Blinów	Maciej		40	Jadwiga	ładziak	28									Maciej	Jadwiga	Dziura	Stefan	Blinów		
 CH.LUB.BLIN.1902.005	1902	5	Felek	Marianna	Brzozówka	Michał	Felek	39												Michał		Felek	Marianna	Brzozówka		Felek
-CH.LUB.BLIN.1902.059	1902	59	Felek	Szymon	Blinów	Józef		31	Franciszka	Machulak	24	Karta 179								Józef	Franciszka	Felek	Szymon	Blinów		
 CH.LUB.BLIN.1902.060	1902	60	Gancarz	Marianna	Blinów	Michał		39	Magdalena	Gruszka	35									Michał	Magdalena	Gancarz	Marianna	Blinów		
 CH.LUB.BLIN.1902.086	1902	86	Grabuś	Józef	Blinów	Antoni		39	Agnieszka	Pudło	29									Antoni	Agnieszka	Grabuś	Józef	Blinów		
 CH.LUB.BLIN.1902.010	1902	10	Jachura	Józefa	Moczydła	Andrzej		45	Agnieszka	Nieściur	30									Andrzej	Agnieszka	Jachura	Józefa	Moczydła		
@@ -5892,12 +6929,12 @@ CH.LUB.BLIN.1907.084	1907	84	Janik	Andrzej	Moczydła	Antoni	Janik	31	Anna	Kaczy�
 CH.LUB.BLIN.1908.001a	1908	1a	Sobótka	Józefa	Blinów	Walenty	Sobótka	35	Katarzyna	 Bartysiak	23		 Blinów, O: Walenty l.35, M: Katarzyna Bartysiak l.23							Walenty	Katarzyna	Sobótka	Józefa	Blinów		Sobótka
 CH.LUB.BLIN.1908.002	1908	2	Dziura	Bronisława	Blinów	Maciej	Dziura	46	Jadwiga	 Ładziak	35		 Blinów, O: Maciej l.46, M: Jadwiga Ładziak l.35							Maciej	Jadwiga	Dziura	Bronisława	Blinów		Dziura
 CH.LUB.BLIN.1908.003	1908	3	Sikora	Antoni	Moczydła	Wawrzyniec	Sikora	30	Ewa	[uszk.]	26		 Moczydła, O: Wawrzyniec l.30, M: Ewa l.26							Wawrzyniec	Ewa	Sikora	Antoni	Moczydła		Sikora
-CH.LUB.BLIN.1908.004	1908	4	Dobrzyńska	Stefania	"b.d." 	b.d. 	"b.d." 	"b.d." 	b.d. 	"b.d." 	"b.d." 	tylko index	 nieczytelne							"b.d." 	"b.d." 	Dobrzyńska	Stefania	"b.d." 		"b.d." 
-CH.LUB.BLIN.1908.005	1908	5	Kuśmierski	Jan	"b.d." 	b.d. 	"b.d." 	"b.d." 	b.d. 	"b.d." 	"b.d." 	tylko index								"b.d." 	"b.d." 	Kuśmierski	Jan	"b.d." 		"b.d." 
-CH.LUB.BLIN.1908.006	1908	6	Kaczyńska	Stefania	"b.d." 	b.d. 	"b.d." 	"b.d." 	b.d. 	"b.d." 	"b.d." 	tylko index								"b.d." 	"b.d." 	Kaczyńska	Stefania	"b.d." 		"b.d." 
-CH.LUB.BLIN.1908.007	1908	7	Samol	Agnieszka	"b.d." 	b.d. 	"b.d." 	"b.d." 	b.d. 	"b.d." 	"b.d." 	tylko index								"b.d." 	"b.d." 	Samol	Agnieszka	"b.d." 		"b.d." 
-CH.LUB.BLIN.1908.008	1908	8	Baran	Agnieszka	"b.d." 	b.d. 	"b.d." 	"b.d." 	b.d. 	"b.d." 	"b.d." 	tylko index								"b.d." 	"b.d." 	Baran	Agnieszka	"b.d." 		"b.d." 
-CH.LUB.BLIN.1908.009	1908	9	Wronka	Ignacy	"b.d." 	b.d. 	"b.d." 	"b.d." 	b.d. 	"b.d." 	"b.d." 	tylko index								"b.d." 	"b.d." 	Wronka	Ignacy	"b.d." 		"b.d." 
+CH.LUB.BLIN.1908.004	1908	4	Dobrzyńska	Stefania	b.d. 	b.d. 	b.d. 	b.d. 	b.d. 	b.d. 	b.d. 	tylko index	 nieczytelne							b.d. 	b.d. 	Dobrzyńska	Stefania	b.d. 		b.d. 
+CH.LUB.BLIN.1908.005	1908	5	Kuśmierski	Jan	b.d. 	b.d. 	b.d. 	b.d. 	b.d. 	b.d. 	b.d. 	tylko index								b.d. 	b.d. 	Kuśmierski	Jan	b.d. 		b.d. 
+CH.LUB.BLIN.1908.006	1908	6	Kaczyńska	Stefania	b.d. 	b.d. 	b.d. 	b.d. 	b.d. 	b.d. 	b.d. 	tylko index								b.d. 	b.d. 	Kaczyńska	Stefania	b.d. 		b.d. 
+CH.LUB.BLIN.1908.007	1908	7	Samol	Agnieszka	b.d. 	b.d. 	b.d. 	b.d. 	b.d. 	b.d. 	b.d. 	tylko index								b.d. 	b.d. 	Samol	Agnieszka	b.d. 		b.d. 
+CH.LUB.BLIN.1908.008	1908	8	Baran	Agnieszka	b.d. 	b.d. 	b.d. 	b.d. 	b.d. 	b.d. 	b.d. 	tylko index								b.d. 	b.d. 	Baran	Agnieszka	b.d. 		b.d. 
+CH.LUB.BLIN.1908.009	1908	9	Wronka	Ignacy	b.d. 	b.d. 	b.d. 	b.d. 	b.d. 	b.d. 	b.d. 	tylko index								b.d. 	b.d. 	Wronka	Ignacy	b.d. 		b.d. 
 CH.LUB.BLIN.1908.010	1908	10	Sulowski	Walenty	Blinów	Walenty	Sulowski	48	Marianna	 Komsa	42	[ †29 VIII 1952 Janów L. ]	 Blinów, O: Walenty l.48, M: Marianna Komsa l.42							Walenty	Marianna	Sulowski	Walenty	Blinów		Sulowski
 CH.LUB.BLIN.1908.011	1908	11	Sokół	Zofia	Moczydła	Wojciech	Sokół	52	Marianna	 Dobrzyńska	38		 Moczydła, O: Wojciech l.52, M: Marianna Dobrzyńska l.38							Wojciech	Marianna	Sokół	Zofia	Moczydła		Sokół
 CH.LUB.BLIN.1908.012	1908	12	Orzóg	Józef	Moczydła	Jan	Orzóg	45	Jadwiga	 Krawczyk	38		 Moczydła, O: Jan l.45, M: Jadwiga Krawczyk l.38							Jan	Jadwiga	Orzóg	Józef	Moczydła		Orzóg
@@ -5961,1040 +6998,3 @@ CH.LUB.BLIN.1908.069	1908	69	Krawczyk	Michał	Blinów	Andrzej	Krawczyk	27	Józef
 CH.LUB.BLIN.1908.070	1908	70	Jachura	Jan	Blinów	Michał	Jachura	33	Marianna	Żaba	25	[ †1980 Kraśnik ]								Michał	Marianna	Jachura	Jan	Blinów		Jachura
 CH.LUB.BLIN.1908.071	1908	71	Pawłasek	Aleksandra	Blinów	Tomasz	Pawłasek	35	Katarzyna	Flis	25	[ Andrzej Kosidło ∞ 1930? Blinów , †1973 Blinów ]								Tomasz	Katarzyna	Pawłasek	Aleksandra	Blinów		Pawłasek
 CH.LUB.BLIN.1908.072	1908	72	Szubstarska	Franciszka	Blinów	Michał	Szubstarski	19	Anna	Suloska	23									Michał	Anna	Szubstarska	Franciszka	Blinów		Szubstarski
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-						`																				
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										
-																										

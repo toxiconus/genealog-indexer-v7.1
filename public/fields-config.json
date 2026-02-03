@@ -1,0 +1,643 @@
+{
+  "documentTypes": [
+    {
+      "id": "chrzest_1700",
+      "name": "Chrzest (1700-1750)",
+      "description": "Formularz dla chrztów z epoki wczesnobarokowej",
+      "fields": [
+        {
+          "name": "rok",
+          "label": "Rok",
+          "type": "text",
+          "enabled": 1,
+          "line": 1,
+          "column": 1,
+          "required": true
+        },
+        {
+          "name": "miesiac",
+          "label": "Miesiąc",
+          "type": "text",
+          "enabled": 1,
+          "line": 1,
+          "column": 2,
+          "required": false
+        },
+        {
+          "name": "dzien",
+          "label": "Dzień",
+          "type": "text",
+          "enabled": 1,
+          "line": 1,
+          "column": 3,
+          "required": false
+        },
+        {
+          "name": "dziecko_imie",
+          "label": "Imię dziecka",
+          "type": "text",
+          "enabled": 1,
+          "line": 2,
+          "column": 1,
+          "required": true
+        },
+        {
+          "name": "dziecko_nazwisko",
+          "label": "Nazwisko dziecka",
+          "type": "text",
+          "enabled": 1,
+          "line": 2,
+          "column": 2,
+          "required": true
+        },
+        {
+          "name": "dziecko_plec",
+          "label": "Płeć",
+          "type": "select",
+          "options": ["M", "K"],
+          "enabled": 1,
+          "line": 2,
+          "column": 3,
+          "required": false
+        },
+        {
+          "name": "ojciec_imie",
+          "label": "Imię ojca",
+          "type": "text",
+          "enabled": 1,
+          "line": 3,
+          "column": 1,
+          "required": true
+        },
+        {
+          "name": "ojciec_nazwisko",
+          "label": "Nazwisko ojca",
+          "type": "text",
+          "enabled": 1,
+          "line": 3,
+          "column": 2,
+          "required": false
+        },
+        {
+          "name": "matka_imie",
+          "label": "Imię matki",
+          "type": "text",
+          "enabled": 1,
+          "line": 4,
+          "column": 1,
+          "required": true
+        },
+        {
+          "name": "matka_nazwisko",
+          "label": "Nazwisko matki",
+          "type": "text",
+          "enabled": 1,
+          "line": 4,
+          "column": 2,
+          "required": false
+        },
+        {
+          "name": "chrzestny_imie",
+          "label": "Imię chrzestnego",
+          "type": "text",
+          "enabled": 1,
+          "line": 5,
+          "column": 1,
+          "required": false
+        },
+        {
+          "name": "chrzestny_nazwisko",
+          "label": "Nazwisko chrzestnego",
+          "type": "text",
+          "enabled": 1,
+          "line": 5,
+          "column": 2,
+          "required": false
+        },
+        {
+          "name": "chrzestna_imie",
+          "label": "Imię chrzestnej",
+          "type": "text",
+          "enabled": 1,
+          "line": 6,
+          "column": 1,
+          "required": false
+        },
+        {
+          "name": "chrzestna_nazwisko",
+          "label": "Nazwisko chrzestnej",
+          "type": "text",
+          "enabled": 1,
+          "line": 6,
+          "column": 2,
+          "required": false
+        },
+        {
+          "name": "miejsce",
+          "label": "Miejsce chrztu",
+          "type": "text",
+          "enabled": 1,
+          "line": 7,
+          "column": 1,
+          "required": false
+        },
+        {
+          "name": "ksiadz",
+          "label": "Imię księdza",
+          "type": "text",
+          "enabled": 0,
+          "line": 0,
+          "column": 0,
+          "required": false
+        },
+        {
+          "name": "uwagi",
+          "label": "Uwagi",
+          "type": "textarea",
+          "enabled": 0,
+          "line": 0,
+          "column": 0,
+          "required": false
+        }
+      ]
+    },
+    {
+      "id": "chrzest_1800",
+      "name": "Chrzest (1800-1850)",
+      "description": "Formularz dla chrztów z epoki klasycyzmu",
+      "fields": [
+        {
+          "name": "rok",
+          "label": "Rok",
+          "type": "text",
+          "enabled": 1,
+          "line": 1,
+          "column": 1,
+          "required": true
+        },
+        {
+          "name": "miesiac",
+          "label": "Miesiąc",
+          "type": "text",
+          "enabled": 1,
+          "line": 1,
+          "column": 2,
+          "required": false
+        },
+        {
+          "name": "dzien",
+          "label": "Dzień",
+          "type": "text",
+          "enabled": 1,
+          "line": 1,
+          "column": 3,
+          "required": false
+        },
+        {
+          "name": "dziecko_imie",
+          "label": "Imię dziecka",
+          "type": "text",
+          "enabled": 1,
+          "line": 2,
+          "column": 1,
+          "required": true
+        },
+        {
+          "name": "dziecko_nazwisko",
+          "label": "Nazwisko dziecka",
+          "type": "text",
+          "enabled": 1,
+          "line": 2,
+          "column": 2,
+          "required": true
+        },
+        {
+          "name": "ojciec_imie",
+          "label": "Imię ojca",
+          "type": "text",
+          "enabled": 1,
+          "line": 3,
+          "column": 1,
+          "required": true
+        },
+        {
+          "name": "ojciec_nazwisko",
+          "label": "Nazwisko ojca",
+          "type": "text",
+          "enabled": 1,
+          "line": 3,
+          "column": 2,
+          "required": false
+        },
+        {
+          "name": "matka_imie",
+          "label": "Imię matki",
+          "type": "text",
+          "enabled": 1,
+          "line": 4,
+          "column": 1,
+          "required": true
+        },
+        {
+          "name": "matka_nazwisko",
+          "label": "Nazwisko matki",
+          "type": "text",
+          "enabled": 1,
+          "line": 4,
+          "column": 2,
+          "required": false
+        },
+        {
+          "name": "swiadek1_imie",
+          "label": "Imię świadka 1",
+          "type": "text",
+          "enabled": 1,
+          "line": 5,
+          "column": 1,
+          "required": false
+        },
+        {
+          "name": "swiadek1_nazwisko",
+          "label": "Nazwisko świadka 1",
+          "type": "text",
+          "enabled": 1,
+          "line": 5,
+          "column": 2,
+          "required": false
+        },
+        {
+          "name": "swiadek2_imie",
+          "label": "Imię świadka 2",
+          "type": "text",
+          "enabled": 1,
+          "line": 6,
+          "column": 1,
+          "required": false
+        },
+        {
+          "name": "swiadek2_nazwisko",
+          "label": "Nazwisko świadka 2",
+          "type": "text",
+          "enabled": 1,
+          "line": 6,
+          "column": 2,
+          "required": false
+        },
+        {
+          "name": "miejsce",
+          "label": "Miejsce chrztu",
+          "type": "text",
+          "enabled": 1,
+          "line": 7,
+          "column": 1,
+          "required": false
+        },
+        {
+          "name": "zawod_ojca",
+          "label": "Zawód ojca",
+          "type": "text",
+          "enabled": 0,
+          "line": 0,
+          "column": 0,
+          "required": false
+        },
+        {
+          "name": "uwagi",
+          "label": "Uwagi",
+          "type": "textarea",
+          "enabled": 0,
+          "line": 0,
+          "column": 0,
+          "required": false
+        }
+      ]
+    },
+    {
+      "id": "malzenstwo",
+      "name": "Małżeństwo",
+      "description": "Formularz dla rejestracji małżeństw",
+      "fields": [
+        {
+          "name": "rok",
+          "label": "Rok ślubu",
+          "type": "text",
+          "enabled": 1,
+          "line": 1,
+          "column": 1,
+          "required": true
+        },
+        {
+          "name": "miesiac",
+          "label": "Miesiąc",
+          "type": "text",
+          "enabled": 1,
+          "line": 1,
+          "column": 2,
+          "required": false
+        },
+        {
+          "name": "dzien",
+          "label": "Dzień",
+          "type": "text",
+          "enabled": 1,
+          "line": 1,
+          "column": 3,
+          "required": false
+        },
+        {
+          "name": "pan_mlody_imie",
+          "label": "Imię pana młodego",
+          "type": "text",
+          "enabled": 1,
+          "line": 2,
+          "column": 1,
+          "required": true
+        },
+        {
+          "name": "pan_mlody_nazwisko",
+          "label": "Nazwisko pana młodego",
+          "type": "text",
+          "enabled": 1,
+          "line": 2,
+          "column": 2,
+          "required": true
+        },
+        {
+          "name": "pan_mlody_wiek",
+          "label": "Wiek pana młodego",
+          "type": "text",
+          "enabled": 1,
+          "line": 2,
+          "column": 3,
+          "required": false
+        },
+        {
+          "name": "panna_mloda_imie",
+          "label": "Imię panny młodej",
+          "type": "text",
+          "enabled": 1,
+          "line": 3,
+          "column": 1,
+          "required": true
+        },
+        {
+          "name": "panna_mloda_nazwisko",
+          "label": "Nazwisko panny młodej",
+          "type": "text",
+          "enabled": 1,
+          "line": 3,
+          "column": 2,
+          "required": true
+        },
+        {
+          "name": "panna_mloda_wiek",
+          "label": "Wiek panny młodej",
+          "type": "text",
+          "enabled": 1,
+          "line": 3,
+          "column": 3,
+          "required": false
+        },
+        {
+          "name": "ojciec_pan_mlody",
+          "label": "Ojciec pana młodego",
+          "type": "text",
+          "enabled": 1,
+          "line": 4,
+          "column": 1,
+          "required": false
+        },
+        {
+          "name": "matka_pan_mlody",
+          "label": "Matka pana młodego",
+          "type": "text",
+          "enabled": 1,
+          "line": 4,
+          "column": 2,
+          "required": false
+        },
+        {
+          "name": "ojciec_panna_mloda",
+          "label": "Ojciec panny młodej",
+          "type": "text",
+          "enabled": 1,
+          "line": 5,
+          "column": 1,
+          "required": false
+        },
+        {
+          "name": "matka_panna_mloda",
+          "label": "Matka panny młodej",
+          "type": "text",
+          "enabled": 1,
+          "line": 5,
+          "column": 2,
+          "required": false
+        },
+        {
+          "name": "swiadek1_imie",
+          "label": "Imię świadka 1",
+          "type": "text",
+          "enabled": 1,
+          "line": 6,
+          "column": 1,
+          "required": false
+        },
+        {
+          "name": "swiadek1_nazwisko",
+          "label": "Nazwisko świadka 1",
+          "type": "text",
+          "enabled": 1,
+          "line": 6,
+          "column": 2,
+          "required": false
+        },
+        {
+          "name": "swiadek2_imie",
+          "label": "Imię świadka 2",
+          "type": "text",
+          "enabled": 1,
+          "line": 7,
+          "column": 1,
+          "required": false
+        },
+        {
+          "name": "swiadek2_nazwisko",
+          "label": "Nazwisko świadka 2",
+          "type": "text",
+          "enabled": 1,
+          "line": 7,
+          "column": 2,
+          "required": false
+        },
+        {
+          "name": "miejsce_slubu",
+          "label": "Miejsce ślubu",
+          "type": "text",
+          "enabled": 1,
+          "line": 8,
+          "column": 1,
+          "required": false
+        },
+        {
+          "name": "ksiadz",
+          "label": "Ksiądz celebrujący",
+          "type": "text",
+          "enabled": 0,
+          "line": 0,
+          "column": 0,
+          "required": false
+        },
+        {
+          "name": "uwagi",
+          "label": "Uwagi",
+          "type": "textarea",
+          "enabled": 0,
+          "line": 0,
+          "column": 0,
+          "required": false
+        }
+      ]
+    },
+    {
+      "id": "zgon",
+      "name": "Zgon",
+      "description": "Formularz dla rejestracji zgonów",
+      "fields": [
+        {
+          "name": "rok",
+          "label": "Rok",
+          "type": "text",
+          "enabled": 1,
+          "line": 1,
+          "column": 1,
+          "required": true
+        },
+        {
+          "name": "miesiac",
+          "label": "Miesiąc",
+          "type": "text",
+          "enabled": 1,
+          "line": 1,
+          "column": 2,
+          "required": false
+        },
+        {
+          "name": "dzien",
+          "label": "Dzień",
+          "type": "text",
+          "enabled": 1,
+          "line": 1,
+          "column": 3,
+          "required": false
+        },
+        {
+          "name": "imie_zmarly",
+          "label": "Imię zmarłego",
+          "type": "text",
+          "enabled": 1,
+          "line": 2,
+          "column": 1,
+          "required": true
+        },
+        {
+          "name": "nazwisko_zmarly",
+          "label": "Nazwisko zmarłego",
+          "type": "text",
+          "enabled": 1,
+          "line": 2,
+          "column": 2,
+          "required": true
+        },
+        {
+          "name": "wiek",
+          "label": "Wiek",
+          "type": "text",
+          "enabled": 1,
+          "line": 2,
+          "column": 3,
+          "required": false
+        },
+        {
+          "name": "status",
+          "label": "Stan cywilny",
+          "type": "select",
+          "options": ["kawaler/panna", "żonaty/zamężna", "wdowiec/wdowa", "rozwiedziony/rozwiedziona"],
+          "enabled": 1,
+          "line": 3,
+          "column": 1,
+          "required": false
+        },
+        {
+          "name": "ojciec_imie",
+          "label": "Imię ojca",
+          "type": "text",
+          "enabled": 1,
+          "line": 4,
+          "column": 1,
+          "required": false
+        },
+        {
+          "name": "ojciec_nazwisko",
+          "label": "Nazwisko ojca",
+          "type": "text",
+          "enabled": 1,
+          "line": 4,
+          "column": 2,
+          "required": false
+        },
+        {
+          "name": "matka_imie",
+          "label": "Imię matki",
+          "type": "text",
+          "enabled": 1,
+          "line": 5,
+          "column": 1,
+          "required": false
+        },
+        {
+          "name": "matka_nazwisko",
+          "label": "Nazwisko matki",
+          "type": "text",
+          "enabled": 1,
+          "line": 5,
+          "column": 2,
+          "required": false
+        },
+        {
+          "name": "miejsce_smierci",
+          "label": "Miejsce śmierci",
+          "type": "text",
+          "enabled": 1,
+          "line": 6,
+          "column": 1,
+          "required": false
+        },
+        {
+          "name": "przyczyna_smierci",
+          "label": "Przyczyna śmierci",
+          "type": "text",
+          "enabled": 0,
+          "line": 0,
+          "column": 0,
+          "required": false
+        },
+        {
+          "name": "uwagi",
+          "label": "Uwagi",
+          "type": "textarea",
+          "enabled": 0,
+          "line": 0,
+          "column": 0,
+          "required": false
+        }
+      ]
+    }
+  ],
+  "metadata": {
+    "version": "1.0",
+    "lastUpdated": "2026-01-30",
+    "language": "pl-PL",
+    "description": "Konfiguracja pól formularza genealogicznego - edytowalny plik JSON"
+  }
+}

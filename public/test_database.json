@@ -1,0 +1,34 @@
+[
+  {
+    "id": "CH.LUB.BLIN.1783.006",
+    "rok": "1783",
+    "nr": "6",
+    "nazwisko": "Testowy",
+    "imie": "Rekord",
+    "miejscowosc": "Blinów",
+    "imieO": "Andrzej",
+    "nazwiskoO": "Testowy",
+    "wO": "50",
+    "im": "Joanna",
+    "nm": "Testowa",
+    "wM": "45",
+    "uwagi": "Test JSON import",
+    "uwagiOrg": "OK"
+  },
+  {
+    "id": "CH.LUB.BLIN.1783.007",
+    "rok": "1783",
+    "nr": "7",
+    "nazwisko": "Drugi",
+    "imie": "Testowy",
+    "miejscowosc": "Lublin",
+    "imieO": "Dominik",
+    "nazwiskoO": "Drugi",
+    "wO": "55",
+    "im": "Marta",
+    "nm": "Druga",
+    "wM": "48",
+    "uwagi": "Drugi test",
+    "uwagiOrg": "OK"
+  }
+]

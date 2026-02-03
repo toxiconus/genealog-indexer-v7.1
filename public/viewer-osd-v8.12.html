@@ -2126,12 +2126,11 @@
                 return;
             }
             
-            const act = app.imageActs.find(a => 
-                a.imageIdx === app.currentImageIdx && a.actNum === app.currentActNum
-            );
+            // Szukaj aktu po actNum (ten zawsze istnieje)
+            const act = app.imageActs.find(a => a.actNum === app.currentActNum);
             
             if (!act) {
-                container.innerHTML = '<div style="padding: 12px; color: #888;">Akt nie znaleziony</div>';
+                container.innerHTML = '<div style="padding: 12px; color: #888;">Akt nie znaleziony - szukaj po: ' + app.currentActNum + '</div>';
                 return;
             }
             
@@ -2278,7 +2277,40 @@
             // Dodaj padding-left żeby formularz był dalej od lewej krawędzi
             container.style.paddingLeft = '8px';
             
+            console.log('📋 renderChrzestForm - act.fieldValues:', act.fieldValues);
+            console.log('📋 renderChrzestForm - act.original_id:', act.original_id);
+            console.log('📋 renderChrzestForm - act.id:', act.id);
+            console.log('📋 fieldValues keys:', Object.keys(act.fieldValues || {}));
+            console.log('📋 child_first_name:', act.fieldValues?.child_first_name);
+            console.log('📋 father_first_name:', act.fieldValues?.father_first_name);
+            console.log('📋 mother_first_name:', act.fieldValues?.mother_first_name);
+            
             if (!act.fieldValues) act.fieldValues = {};
+            
+            // ===== MAPUJ NAZWY PÓL Z SUPABASE NA FORMULARZA =====
+            // Supabase -> Formularz
+            const fieldMapping = {
+                'child_first_name': 'dziecko_imie',
+                'child_last_name': 'dziecko_nazwisko',
+                'father_first_name': 'ojciec_imie',
+                'father_last_name': 'ojciec_nazwisko',
+                'father_age': 'ojciec_wiek',
+                'mother_first_name': 'matka_imie',
+                'mother_last_name': 'matka_nazwisko',
+                'mother_age': 'matka_lata',
+                'location': 'matka_miejsce',
+                'notes': 'custom_note',
+                'notes_org': 'custom_note'
+            };
+            
+            // Zrób kopię fieldValues z mapowaniem
+            Object.keys(fieldMapping).forEach(supabaseField => {
+                const formField = fieldMapping[supabaseField];
+                if (act.fieldValues[supabaseField] && !act.fieldValues[formField]) {
+                    act.fieldValues[formField] = act.fieldValues[supabaseField];
+                    console.log(`📋 Mapuję ${supabaseField} -> ${formField} = ${act.fieldValues[formField]}`);
+                }
+            });
 
             // ===== PARSE DANYCH Z ID AKTU =====
             // Format ID: CH.WAR.PARAFIA.1890.00.00001.00
@@ -5812,22 +5844,36 @@
                         imageIdx: 0,
                         actNum: actNum, // Przerobiony numer aktu
                         
-                        // fieldValues object - dla kompatybilności z szablonami
+                        // fieldValues object - MAPUJ pola z Supabase na nazwy które formularz oczekuje
                         fieldValues: {
-                            christening_year: row.christening_year || '',
-                            christening_act_number: row.christening_act_number || '',
+                            // Podstawowe pola (rok, nr_aktu, data_zgłoszenia są parsowane z ID)
+                            rok: row.christening_year || '',
+                            nr_aktu: row.christening_act_number || '',
+                            data_zgloszenia: row.christening_year + '.**.--.',  // Placeholder format
+                            
+                            // Dziecko
                             child_first_name: row.child_first_name || '',
                             child_last_name: row.child_last_name || '',
                             child_birth_date: row.child_birth_date || '',
+                            
+                            // Ojciec
                             father_first_name: row.father_first_name || '',
                             father_last_name: row.father_last_name || '',
                             father_age: row.father_age || '',
+                            
+                            // Matka
                             mother_first_name: row.mother_first_name || '',
                             mother_last_name: row.mother_last_name || '',
                             mother_age: row.mother_age || '',
+                            
+                            // Notatki
                             notes: row.notes || '',
                             notes_org: row.notes_org || '',
-                            location: row.location || ''
+                            location: row.location || '',
+                            
+                            // Oryginalne pola Supabase (zachowaj też dla kompatybilności)
+                            christening_year: row.christening_year || '',
+                            christening_act_number: row.christening_act_number || ''
                         },
                         
                         // Flat fields too (dla wyświetlania)
@@ -6839,11 +6885,17 @@
                     // Nie reaguj na klik na checkbox
                     if (e.target.type === 'checkbox') return;
                     
+                    console.log('🖱️ Row clicked - act:', act);
+                    console.log('🖱️ act.actNum:', act.actNum);
+                    console.log('🖱️ app.imageActs length:', app.imageActs.length);
+                    console.log('🖱️ szukam aktu po actNum:', act.actNum);
+                    
                     // Ustaw bieżący akt
                     app.currentActNum = act.actNum;
                     app.currentImageIdx = act.imageIdx || 0;
                     
                     console.log(`✅ Row clicked: ${act.original_id || act.actNum}`);
+                    console.log(`✅ app.currentActNum=${app.currentActNum}, imageIdx=${app.currentImageIdx}`);
                     
                     // Odśwież panel po prawej z danymi aktu
                     renderFormSections();
