@@ -251,6 +251,76 @@
         // 🆕 OPÓŹNIJ Supabase - inicjalizuj dopiero gdy będzie potrzeba (użytkownik kliknie "Ładuj Supabase")
         // Jeśli SQL istnieje, Supabase jest zbędny
         window.initSupabaseClient = initSupabaseClient;
+
+        // ===== IndexedDB - OFFLINE STORAGE (dla 5512+ rekordów) =====
+        const DB_NAME = 'genealogy_db';
+        const STORE_NAME = 'imageActs';
+
+        async function saveToIndexedDB(imageActs) {
+            return new Promise((resolve, reject) => {
+                const request = indexedDB.open(DB_NAME, 1);
+                
+                request.onerror = () => reject(request.error);
+                
+                request.onupgradeneeded = (e) => {
+                    const db = e.target.result;
+                    if (!db.objectStoreNames.contains(STORE_NAME)) {
+                        db.createObjectStore(STORE_NAME, { keyPath: 'id' });
+                    }
+                };
+                
+                request.onsuccess = () => {
+                    const db = request.result;
+                    const transaction = db.transaction([STORE_NAME], 'readwrite');
+                    const store = transaction.objectStore(STORE_NAME);
+                    
+                    // Wyczyść starą zbiórkę
+                    store.clear();
+                    
+                    // Zapisz każdy rekord
+                    imageActs.forEach(act => {
+                        store.put(act);
+                    });
+                    
+                    transaction.oncomplete = () => {
+                        console.log(`✅ Zapisano ${imageActs.length} rekordów do IndexedDB`);
+                        resolve(true);
+                    };
+                    transaction.onerror = () => reject(transaction.error);
+                };
+            });
+        }
+
+        async function loadFromIndexedDB() {
+            return new Promise((resolve, reject) => {
+                const request = indexedDB.open(DB_NAME, 1);
+                
+                request.onerror = () => reject(request.error);
+                request.onsuccess = () => {
+                    const db = request.result;
+                    if (!db.objectStoreNames.contains(STORE_NAME)) {
+                        console.log('⚠️ IndexedDB pusty');
+                        resolve([]);
+                        return;
+                    }
+                    
+                    const transaction = db.transaction([STORE_NAME], 'readonly');
+                    const store = transaction.objectStore(STORE_NAME);
+                    const getAllRequest = store.getAll();
+                    
+                    getAllRequest.onsuccess = () => {
+                        const data = getAllRequest.result;
+                        console.log(`✅ Załadowano ${data.length} rekordów z IndexedDB`);
+                        resolve(data);
+                    };
+                    getAllRequest.onerror = () => reject(getAllRequest.error);
+                };
+            });
+        }
+
+        // Udostępnij dla F12
+        window.saveToIndexedDB = saveToIndexedDB;
+        window.loadFromIndexedDB = loadFromIndexedDB;
     </script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <style>
@@ -2714,6 +2784,18 @@
             console.log('📍 Local SQL.js database initialized');
             await loadStorage();
             console.log('📍 Storage loaded, images:', app.images.length);
+            
+            // 🆕 Auto-load offline data z IndexedDB (jeśli istnieje)
+            try {
+                const offlineData = await loadFromIndexedDB();
+                if (offlineData && offlineData.length > 0) {
+                    app.imageActs = offlineData;
+                    console.log(`✅ Auto-loaded ${offlineData.length} rekordów z offline IndexedDB`);
+                }
+            } catch (e) {
+                console.log('⚠️ IndexedDB offline load failed:', e.message);
+            }
+            
             renderUI();
             console.log('📍 UI rendered');
             setupPostprocessSliders();
@@ -7972,8 +8054,11 @@
                 const newDb = new SQL.Database();
 
                 // Stwórz tabelę z pełnymi kolumnami dla genealogi (synchronized z Supabase schema)
+                // 🔧 FIX: DROP stare tabele aby zawsze mieć świeży schemat z nowymi kolumnami
+                newDb.run(`DROP TABLE IF EXISTS imported_records`);
+                
                 newDb.run(`
-                    CREATE TABLE IF NOT EXISTS imported_records (
+                    CREATE TABLE imported_records (
                         row_id INTEGER PRIMARY KEY AUTOINCREMENT,
                         id TEXT UNIQUE,
                         rok INTEGER,
@@ -9309,6 +9394,9 @@
         async function loadFromFirestore() {
             return loadFromSupabase();
         }
+        
+        // 🆕 Udostępnij loadFromSupabase dla kodu z F12
+        window.loadFromSupabase = loadFromSupabase;
 
         // Funkcja migracji danych - nieużywana (baza na dysku)
         async function exportFromLocalStorageToSupabase() {

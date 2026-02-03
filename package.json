@@ -13,6 +13,7 @@
     "vite": "^5.0.0"
   },
   "dependencies": {
+    "@supabase/supabase-js": "^2.91.1",
     "firebase": "^12.7.0"
   }
 }
