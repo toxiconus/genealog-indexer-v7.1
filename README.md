@@ -56,6 +56,11 @@
 
 ## 🚀 Szybki Start
 
+### FAQ: Czy asystent może sam utworzyć nowe repozytorium?
+
+Nie. Asystent może przygotować zmiany w tym repozytorium, ale nie może samodzielnie zakładać nowych repozytoriów GitHub.
+Jeśli chcesz, podaj wymagania, a przygotujemy strukturę i pliki do łatwego skopiowania do nowego repo.
+
 ### Wymagania
 - Node.js 16+
 - npm 8+
