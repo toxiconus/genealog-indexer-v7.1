@@ -27,11 +27,19 @@ Typ: **D** = dane wpisane ręcznie, **F** = wartości liczone formułami (cache)
 |---|---|---|---|
 | 1–689, 691–740 | A: karty indeksowe 1783–1796 | nazwisko, imię, nr, rok, `nr karty N` | 716 z 739 w `Ur`. 20 bez dopasowania (A). |
 | 690, 741–6100 | B: chrzty 1796–1906 | nazwisko, imię, nr, rok, notka o rodzicach | 4141 w `Ur`, 80 w `Zg`. **1200 bez dopasowania.** |
-| 6101–7999 | C: 1906–1908 | jak B | 156 w `Ur`, 1725 w `Zg`. 26 bez dopasowania. |
+| 6101–7999 | C: mieszana (patrz niżej) | jak B; w bloku `liber` notka `Miejscowość, nr. wpisu N` | 974 wiersze `liber` (6245–6353, 6357–7221): 0 w `Ur`. Pozostałe wiersze C (bez `liber`): 1820–1859 (778), 1900–1908 (140), 4 bez roku. |
 | 8000–8999 | D: 1856–1857 | jak B | 616 w `Zg`, 21 w `Ur`. 5 bez dopasowania. |
 | 9000–9616 | E: małżeństwa | nazw. pana, imię pana, nazw. panny, imię panny, nr, rok, notka (wiek, rodzice) | 237 z 607 w `Mał`. **370 bez dopasowania.** |
 
 Uwaga: "bez dopasowania" nie znaczy "nowy akt". Może to być inna pisownia, rok lub nr. Trzeba porównać ręcznie, zanim cokolwiek uznam za duplikat.
+
+### 2a. Blok `liber` w `Obl` (wiersze 6245–7221)
+
+- 974 wiersze, lata 1797–1824 (1797–1809: 432; 1810–1819: 424; 1820–1824: 118; daty w tym bloku są w kolumnie D).
+- Kolumna `nr` = `liber`. Numer wpisu jest w notce: `Miejscowość, nr. wpisu N`. Wszystkie 974 mają taką notkę.
+- Numery `N` tworzą jeden zbiór bez duplikatów, zakres 1–~980. Histogram po 50 numerach: przedziały 0–250 to lata 1790–1804, 250–550 to lata 1810–1815, 550–850 to lata 1815–1823, ale 850–980 zawiera lata 1797–1812 i 1820–1824 naraz. To może być druga seria numeracji albo błąd roku. Do rozstrzygnięcia przed przypisaniem do księgi.
+- Brak dopasowania do `Ur` po nazwisku i roku (0 z 974). Nie są to duplikaty.
+- Decyzja zgodna z `ZALOZENIA_ARKUSZE.md` §4a: `liber` zostaje w kolumnie `nr`, `typ_ksiegi = do ustalenia`. Numer z notki warto zapisać w osobnej kolumnie, nie w `nr`.
 
 ## 3. Wnioski i propozycja
 
