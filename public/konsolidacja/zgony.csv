@@ -1047,7 +1047,7 @@ Z01045;1045;Liber mortuorum;Pawłaskowa;Katarzyna;;1;1827;;;;;;;;;;;;;;;;;brak m
 Z01046;1046;Liber mortuorum;Pazdrak;Katarzyna;;22;1827;;;;;;;;;;;;;;;;;brak miejsca i numeru wpisu (kol. G)
 Z01047;1047;Liber mortuorum;Pcionka;Agnieszka;;3;1827;;;;;;;;;;;;;;;;;brak miejsca i numeru wpisu (kol. G)
 Z01048;1048;Liber mortuorum;Potyrzańska;Maryanna;;24;1827;;;;;;;;;;;;;;;;;brak miejsca i numeru wpisu (kol. G)
-Z01049;1049;Liber mortuorum;Pudło;Tomasz;;20;1827;Brzozówka;;;0;;;;;;;;;;13.06.1827;Brzozówka;F=13.06.1827|H=0|I=około 1827|K=Pudło|L=Katarzyna|O=Pcionek;"kol. K-O (Pudło, Katarzyna, Pcionek) nieopisane, zostają w surowych; wiek bez jednostki; wiek bez jednostki"
+Z01049;1049;Liber mortuorum;Pudło;Tomasz;;20;1827;Brzozówka;;;0;lat;;;;;;;;~1827;13.06.1827;Brzozówka;F=13.06.1827|H=0|I=około 1827|K=Pudło|L=Katarzyna|O=Pcionek;"kol. K-O (Pudło, Katarzyna, Pcionek) nieopisane, zostają w surowych; wiek bez jednostki"
 Z01050;1050;Liber mortuorum;Sprysak;Jędrzej;;10;1827;;;;;;;;;;;;;;;;;brak miejsca i numeru wpisu (kol. G)
 Z01051;1051;Liber mortuorum;Sprysak;Jędrzej;;16;1827;;;;;;;;;;;;;;;;;brak miejsca i numeru wpisu (kol. G)
 Z01052;1052;Liber mortuorum;Szabatka;Maryanna;;21;1827;;;;;;;;;;;;;;;;;brak miejsca i numeru wpisu (kol. G)
@@ -1182,7 +1182,7 @@ Z01180;1180;Liber mortuorum;Pawłasek;Woyciech;m;41;1832;;;85;50;lat;;Woyciecha;
 Z01181;1181;Liber mortuorum;Pcionek;Tomasz;;21;1832;;;80;;;;;;;;;;;;Karta 80;;
 Z01182;1182;Liber mortuorum;Pcionek;Jozef;;26;1832;;;81;;;;;;;;;;;;Karta 81;;
 Z01183;1183;Liber mortuorum;Pcionkowa;Tekla;;11;1832;;;77;;;;;;;;;;;;Karta 77;;
-Z01184;1184;Liber mortuorum;Pudło;Antoni;;15;1832;Brzozówka;;;2;;;;;;;;;;14.04.1832;Brzozówka;F=14.04.1832|H=2|I=około 1830|K=Pudło|L=Jadwiga;"kol. K-L (Pudło, Jadwiga) nieopisane; wiek bez jednostki; wiek bez jednostki"
+Z01184;1184;Liber mortuorum;Pudło;Antoni;;15;1832;Brzozówka;;;2;lat;;;;;;;;~1830;14.04.1832;Brzozówka;F=14.04.1832|H=2|I=około 1830|K=Pudło|L=Jadwiga;"kol. K-L (Pudło, Jadwiga) nieopisane; wiek bez jednostki"
 Z01185;1185;Liber mortuorum;Pyc;Walenty;;31;1832;;;83;;;;;;;;;;;;Karta 83;;
 Z01186;1186;Liber mortuorum;Rębecki;Woyciech;;30;1832;;;82;;;;;;;;;;;;Karta 82;;
 Z01187;1187;Liber mortuorum;Sobolewska;Konekunda;;10;1832;;;77;;;;;;;;;;;;Karta 77;;
@@ -1286,8 +1286,8 @@ Z01284;1284;Liber mortuorum;Jakubczakowa;Zofia;;10;1848;;;;;;;;;;;;;;;;;brak mie
 Z01285;1285;Liber mortuorum;Jędrzeyczak;Walenty;;32;1848;;;;;;;;;;;;;;;;;brak miejsca i numeru wpisu (kol. G)
 Z01286;1286;Liber mortuorum;Jędrzeyczak;Jozef;;35;1848;;;;;;;;;;;;;;;;;brak miejsca i numeru wpisu (kol. G)
 Z01287;1287;Liber mortuorum;Koguś;Stanisław;;26;1848;;;;;;;;;;;;;;;;;brak miejsca i numeru wpisu (kol. G)
-Z01288;1288;Liber mortuorum;Kopiwoda;Sebastian;;7;1848;Brzozówka;;;78;;;;;;;;;;11.03.1848;11.03.1848;F=Brzozówka|I=78;"kol. I (78) bez jednostki; wiek bez jednostki"
-Z01289;1289;Liber mortuorum;Kopiwoda;Jadwiga;;38;1848;Blinów;;;7;;;;;;;;;;28.10.1848;28.10.1848;F=Blinów|H=p|I=7|K=Antoni|L=Kopiwoda|M=.|N=.|O=Marianna|P=Woś|Q=.|R=.|S=.;"kol. H='p' nieopisana, kol. I (7) bez jednostki, K-S w surowych; wiek bez jednostki"
+Z01288;1288;Liber mortuorum;Kopiwoda;Sebastian;;7;1848;Brzozówka;;;78;lat;;;;;;;;~1770;11.03.1848;11.03.1848;F=Brzozówka|I=78;kol. I (78) bez jednostki
+Z01289;1289;Liber mortuorum;Kopiwoda;Jadwiga;;38;1848;Blinów;;;7;lat;;;;;;;;~1841;28.10.1848;28.10.1848;F=Blinów|H=p|I=7|K=Antoni|L=Kopiwoda|M=.|N=.|O=Marianna|P=Woś|Q=.|R=.|S=.;kol. H='p' nieopisana, kol. I (7) bez jednostki, K-S w surowych
 Z01290;1290;Liber mortuorum;Kopytowa;Zofia;;3;1848;;;;;;;;;;;;;;;;;brak miejsca i numeru wpisu (kol. G)
 Z01291;1291;Liber mortuorum;Kosidłowna;Anna;;42;1848;;;;;;;;;;;;;;;;;brak miejsca i numeru wpisu (kol. G)
 Z01292;1292;Liber mortuorum;Kozaczkowa;Jadwiga;;2;1848;;;;;;;;;;;;;;;;;brak miejsca i numeru wpisu (kol. G)
@@ -1584,7 +1584,7 @@ Z01582;1582;Liber mortuorum;Pawłasek;Marianna;;55;1854;;;;;;;;;;;;;;;;;brak mie
 Z01583;1583;Liber mortuorum;Pazdrak;Marianna;;18;1854;;;;;;;;;;;;;;;;;brak miejsca i numeru wpisu (kol. G)
 Z01584;1584;Liber mortuorum;Pcion;Marcin;;43;1854;;;;;;;;;;;;;;;;;brak miejsca i numeru wpisu (kol. G)
 Z01585;1585;Liber mortuorum;Pścionek;Jacek;;13;1854;;;;;;;;;;;;;;;;;brak miejsca i numeru wpisu (kol. G)
-Z01586;1586;Liber mortuorum;Pudło;Agnieszka;;61;1854;Brzozówka;;;7;;;;;;;;;;01.10.1854;Brzozówka;F=01.10.1854|H=7|I=sty 20 1847|K=Pudło|L=Jadwiga|O=Ogon;"kol. I 'sty 20 1847' w surowych; wiek bez jednostki; wiek bez jednostki"
+Z01586;1586;Liber mortuorum;Pudło;Agnieszka;;61;1854;Brzozówka;;;7;lat;;;;;;;;~1847;01.10.1854;Brzozówka;F=01.10.1854|H=7|I=sty 20 1847|K=Pudło|L=Jadwiga|O=Ogon;"kol. I 'sty 20 1847' w surowych; wiek bez jednostki"
 Z01587;1587;Liber mortuorum;Samol;Marianna;;56;1854;;;;;;;;;;;;;;;;;brak miejsca i numeru wpisu (kol. G)
 Z01588;1588;Liber mortuorum;Siembida;Marcin;;17;1854;;;;;;;;;;;;;;;;;brak miejsca i numeru wpisu (kol. G)
 Z01589;1589;Liber mortuorum;Sikora;Agnieszka;;10;1854;;;;;;;;;;;;;;;;;brak miejsca i numeru wpisu (kol. G)
@@ -1645,8 +1645,8 @@ Z01643;1643;Liber mortuorum;Kania;Jan;;60;1855;;;;;;;;;;;;;;;;;brak miejsca i nu
 Z01644;1644;Liber mortuorum;Kasperski;Józef;;26;1855;;;;;;;;;;;;;;;;;brak miejsca i numeru wpisu (kol. G)
 Z01645;1645;Liber mortuorum;Kędziora;Agnieszka;;14;1855;;;;;;;;;;;;;;;;;brak miejsca i numeru wpisu (kol. G)
 Z01646;1646;Liber mortuorum;Kędziora;Agnieszka;;126;1855;;;;;;;;;;;;;;;;;brak miejsca i numeru wpisu (kol. G)
-Z01647;1647;Liber mortuorum;Kopiwoda;Katarzyna;;74;1855;Blinów;;;2;;;;;;;;;;14.07.1855;14.07.1855;F=Blinów|H=p|I=2|K=Antoni|L=Kopiwoda|O=Anna|P=Wcisło;"kol. H='p' nieopisana; wiek bez jednostki; wiek bez jednostki"
-Z01648;1648;Liber mortuorum;Kopiwoda;Antoni;;84;1855;Blinów;;;28;;;;;;;;;;05.08.1855;05.08.1855;F=Blinów|H=m|I=28|K=Antoni|L=Kopiwoda|M=.|N=.|O=Marianna|P=Woś;"kol. H='m' niejasna; wiek bez jednostki; wiek bez jednostki"
+Z01647;1647;Liber mortuorum;Kopiwoda;Katarzyna;;74;1855;Blinów;;;2;lat;;;;;;;;~1853;14.07.1855;14.07.1855;F=Blinów|H=p|I=2|K=Antoni|L=Kopiwoda|O=Anna|P=Wcisło;"kol. H='p' nieopisana; wiek bez jednostki"
+Z01648;1648;Liber mortuorum;Kopiwoda;Antoni;;84;1855;Blinów;;;28;lat;;;;;;;;~1827;05.08.1855;05.08.1855;F=Blinów|H=m|I=28|K=Antoni|L=Kopiwoda|M=.|N=.|O=Marianna|P=Woś;"kol. H='m' niejasna; wiek bez jednostki"
 Z01649;1649;Liber mortuorum;Kopyto;Marianna;;102;1855;;;;;;;;;;;;;;;;;brak miejsca i numeru wpisu (kol. G)
 Z01650;1650;Liber mortuorum;Kosidło;Paweł;;8;1855;;;;;;;;;;;;;;;;;brak miejsca i numeru wpisu (kol. G)
 Z01651;1651;Liber mortuorum;Kosidło;Katarzyna;;41;1855;;;;;;;;;;;;;;;;;brak miejsca i numeru wpisu (kol. G)
@@ -1892,7 +1892,7 @@ Z01890;1890;Liber mortuorum;Wosiowa;Maryanna;;3;1859;;;;;;;;;;;;;;;;;brak miejsc
 Z01891;1891;Liber mortuorum;Wścisło;Tomasz;;27;1859;;;;;;;;;;;;;;;;;brak miejsca i numeru wpisu (kol. G)
 Z01892;1892;Liber mortuorum;Wścisłowna;Tekla;;8;1859;;;;;;;;;;;;;;;;;brak miejsca i numeru wpisu (kol. G)
 Z01893;1893;Liber mortuorum;Zieliński;Wojciech;;7;1859;;;;;;;;;;;;;;;;;brak miejsca i numeru wpisu (kol. G)
-Z01894;1894;Liber mortuorum;Bigos;Jan;;10;1860;;;;39;;;;;;;;;;21.03.1860;21.03.1860;F=.|I=39|K=Andrzej|L=Bigos|O=Katarzyna|P=Sprysak|Q=Katarzyna|R=Obydź;"kol. F kropka; K-R w surowych; wiek bez jednostki"
+Z01894;1894;Liber mortuorum;Bigos;Jan;;10;1860;;;;39;lat;;;;;;;;~1821;21.03.1860;21.03.1860;F=.|I=39|K=Andrzej|L=Bigos|O=Katarzyna|P=Sprysak|Q=Katarzyna|R=Obydź;"kol. F kropka; K-R w surowych"
 Z01895;1895;Liber mortuorum;Brzoszkiewicz;Wojciech;;35;1860;;;;;;;;;;;;;;;;;brak miejsca i numeru wpisu (kol. G)
 Z01896;1896;Liber mortuorum;Chmielowa;Jadwiga;;8;1860;;;;;;;;;;;;;;;;L=Chmielowa;"brak danych poza imieniem i nazwiskiem; w kol. L powtórzone nazwisko"
 Z01897;1897;Liber mortuorum;Dąbroska;Katarzyna;;22;1860;;;;;;;;;;;;;;;;;brak miejsca i numeru wpisu (kol. G)
@@ -1920,12 +1920,12 @@ Z01918;1918;Liber mortuorum;Pytlakowski;Szymon;;17;1860;;;;;;;;;;;;;;;;;brak mie
 Z01919;1919;Liber mortuorum;Samuelowna;Anna;;13;1860;;;;;;;;;;;;;;;;;brak miejsca i numeru wpisu (kol. G)
 Z01920;1920;Liber mortuorum;Sobulka;Wojciech;;16;1860;;;;;;;;;;;;;;;;;brak miejsca i numeru wpisu (kol. G)
 Z01922;1921;Liber mortuorum;Suleski;Wojciech;;15;1860;;;;;;;;;;;;;;;;;brak miejsca i numeru wpisu (kol. G)
-Z01921;1922;Liber mortuorum;Szot;Adam;;1;1860;Blinów;;;57;;;;;;;;;;05.01.1860;05.01.1860;H=Blinów|I=57|K=Szymon|L=Szot|O=Rozalia|P=X|Q=Tekla|R=Czecińska;"kol. K-R nieopisane wprost (powtórzone nazwisko, brak pewnej struktury rodziców); wiek bez jednostki"
-Z01923;1923;Liber mortuorum;Szydłoski;Bartłomiej;;4;1860;Brzozówka;;;49;;;;;;;;;;08.02.1860;08.02.1860;H=Brzozówka|I=49|K=Antoni|L=Szydłoski|O=Marianna|P=X|Q=Anastazja|R=Łach;"kol. K-R nieopisane wprost (powtórzone nazwisko, brak pewnej struktury rodziców); wiek bez jednostki"
+Z01921;1922;Liber mortuorum;Szot;Adam;;1;1860;Blinów;;;57;lat;;;;;;;;~1803;05.01.1860;05.01.1860;H=Blinów|I=57|K=Szymon|L=Szot|O=Rozalia|P=X|Q=Tekla|R=Czecińska;kol. K-R nieopisane wprost (powtórzone nazwisko, brak pewnej struktury rodziców)
+Z01923;1923;Liber mortuorum;Szydłoski;Bartłomiej;;4;1860;Brzozówka;;;49;lat;;;;;;;;~1811;08.02.1860;08.02.1860;H=Brzozówka|I=49|K=Antoni|L=Szydłoski|O=Marianna|P=X|Q=Anastazja|R=Łach;kol. K-R nieopisane wprost (powtórzone nazwisko, brak pewnej struktury rodziców)
 Z01924;1924;Liber mortuorum;Tuleśewski;Antoni;;30;1860;;;;;;;;;;;;;;;;;brak miejsca i numeru wpisu (kol. G)
-Z01925;1925;Liber mortuorum;Wscisło;Katarzyna;;3;1860;Blinów;;;17;;;;;;;;;;04.02.1860;04.02.1860;H=Blinów|I=17|K=Marcin|L=Wscisło|O=Zofia|P=Kosidło;"kol. K-P nieopisane wprost; wiek bez jednostki"
+Z01925;1925;Liber mortuorum;Wscisło;Katarzyna;;3;1860;Blinów;;;17;lat;;;;;;;;~1843;04.02.1860;04.02.1860;H=Blinów|I=17|K=Marcin|L=Wscisło|O=Zofia|P=Kosidło;kol. K-P nieopisane wprost
 Z01926;1926;Liber mortuorum;Zielińska;Maryanna;;34;1860;;;;;;;;;;;;;;;;;brak miejsca i numeru wpisu (kol. G)
-Z01927;1927;Liber mortuorum;Zieliński;Franciszek;;2;1860;Blinów;;;3;;;;;;;;;;29.01.1860;29.01.1860;H=Blinów|I=3|K=Jan|L=Zieliński|O=Zofia|P=Czuba;"kol. K-P nieopisane wprost; wiek bez jednostki"
+Z01927;1927;Liber mortuorum;Zieliński;Franciszek;;2;1860;Blinów;;;3;lat;;;;;;;;~1857;29.01.1860;29.01.1860;H=Blinów|I=3|K=Jan|L=Zieliński|O=Zofia|P=Czuba;kol. K-P nieopisane wprost
 Z01928;1928;Liber mortuorum;Zysko;Paweł;;23;1860;;;;;;;;;;;;;;;;;brak miejsca i numeru wpisu (kol. G)
 Z01929;1929;Liber mortuorum;Zysko;Walenty;;24;1860;;;;;;;;;;;;;;;;;brak miejsca i numeru wpisu (kol. G)
 Z01930;1930;Liber mortuorum;Boczek;Walenty;;22;1861;;;;;;;;;;;;;;;;;brak miejsca i numeru wpisu (kol. G)
@@ -2306,7 +2306,7 @@ Z02304;2304;Liber mortuorum;Gruszka;Agata;;1;1871;;;;;;;;;;;;;;;;;brak miejsca i
 Z02305;2305;Liber mortuorum;Janik;Marianna;k;23;1871;Moczydła;;;41;lat;;Wojciecha;Marianny;Kaniów;;;;~1830;;Moczydła , lat 41 c. Wojciecha i Marianny Kaniów;;
 Z02306;2306;Liber mortuorum;Kaczyński;Marcin;m;13;1871;Blinów;;;56;lat;wdowiec;Andrzeja;Tekli;;;;;~1815;;Blinów, lat 56 s. Andrzeja i Tekli wdowiec;;
 Z02307;2307;Liber mortuorum;Koguc;Wojciech;;8;1871;;;;;;;;;;;;;;;;;brak miejsca i numeru wpisu (kol. G)
-Z02308;2308;Liber mortuorum;Kopiwoda;Zofia;;28;1871;Brzozówka;;;53;;;;;;;;;;11.12.1871;11.12.1871;F=Brzozówka|H=m|I=53|K=Wawrzyniec|L=Kopiwoda|O=Franciszka|P=Tupaj;"kol. H='m' niejasna; K-P w surowych; wiek bez jednostki; wiek bez jednostki"
+Z02308;2308;Liber mortuorum;Kopiwoda;Zofia;;28;1871;Brzozówka;;;53;lat;;;;;;;;~1818;11.12.1871;11.12.1871;F=Brzozówka|H=m|I=53|K=Wawrzyniec|L=Kopiwoda|O=Franciszka|P=Tupaj;"kol. H='m' niejasna; K-P w surowych; wiek bez jednostki"
 Z02309;2309;Liber mortuorum;Kosidło;Andrzej;m;9;1871;Blinów;;;44;lat;;Jakuba;Zofii;;;owd. Katarzynę Olech;;~1827;;"Blinów, lat 44 s.Jakuba i Zofii; owd. Katarzynę Olech";;
 Z02310;2310;Liber mortuorum;Kosidło;Marcin;m;27;1871;Blinów;;;63;lat;;Pawła;Marianny;;;;;~1808;;Blinów, lat 63 s. Pawła i Marianny;;
 Z02311;2311;Liber mortuorum;Kosidło;Józef;;2;1871;;;;;;;;;;;;;;;;;brak miejsca i numeru wpisu (kol. G)

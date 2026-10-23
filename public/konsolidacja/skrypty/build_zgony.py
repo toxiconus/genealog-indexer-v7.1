@@ -90,12 +90,12 @@ for rn in sorted(hand):
     fl = r.pop('flagi_base')
     wiek = h.get('wiek','')
     jedn = h.get('jedn','')
+    if wiek and not jedn: jedn = 'lat'   # liczba bez oznaczenia = lata (m. = miesiące, t. = tygodnie)
     rok_ur = ''
     if wiek.isdigit() and jedn == 'lat' and d.get('E','').isdigit():
         rok_ur = f'~{int(d["E"]) - int(wiek)}'
     if 'fl' in h: fl.append(h['fl'])
     if not wiek and jedn: fl.append('jednostka bez wieku')
-    if wiek and not jedn: fl.append('wiek bez jednostki')
     r.update(plec=h.get('plec',''), miejscowosc=h.get('miejsc',''), nr_wpisu=h.get('nr',''),
              karta=h.get('karta',''), data_surowa=h.get('data',''), wiek=wiek, jednostka_wieku=jedn,
              stan=h.get('stan',''), ojciec_imie=h.get('ojc',''), matka_imie=h.get('mat',''),
