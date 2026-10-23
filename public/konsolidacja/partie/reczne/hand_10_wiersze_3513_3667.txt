@@ -1,0 +1,150 @@
+3513 | miejsc=Blinów | ojc=Michał | mat=Zofia | nazw=Jachura | matw=33 | fl=w G wiek ojca brak
+3514 | miejsc=Blinów | ojc=Józef | ojcw=38 | mat=Antonina | nazw=Gnat | matw=32
+3515 | miejsc=Brzozówka | ojc=Tomasz | mat=Jadwiga | nazw=Rębacz
+3516 | miejsc=Blinów | ojc=Jan | mat=Marianna | nazw=Pcionek
+3517 | miejsc=Blinów | ojc=Antoni | mat=Teresa | nazw=Jędrzejczak
+3518 | miejsc=Blinów | ojc=Paweł | mat=Agnieszka | nazw=Sobótka
+3519 | miejsc=Moczydła | ojc=Michał | mat=Anna | nazw=Szwed
+3520 | miejsc=Blinów | ojc=Maciej | ojcw=21 | mat=Katarzyna | nazw=Stępień | matw=25
+3521 | miejsc=Moczydła | ojc=Jan | mat=Józefa | nazw=Babiarz
+3522 | miejsc=Moczydła | ojc=Wojciech | mat=Franciszka | nazw=Chmiel
+3523 | miejsc=Brzozówka | ojc=Stanisław | mat=Anna | nazw=Spryszak
+3524 | miejsc=Blinów | ojc=Jan | ojcw=31 | mat=Marianna | nazw=Goch | matw=22
+3525 | miejsc=Brzozówka | ojc=Jan | ojcw=45 | mat=Józefa | nazw=Bucoń | matw=40
+3526 | miejsc=Brzozówka | ojc=Stanisław | ojcw=22 | mat=Anna | nazw=Ogon | matw=30
+3527 | miejsc=Moczydła | ojc=Andrzej | ojcw=28 | mat=Marianna | nazw=Chmiel | matw=26
+3528 | miejsc=Blinów | ojc=Franciszek | mat=Katarzyna | nazw=Obydź
+3529 | miejsc=Moczydła | ojc=Jan | ojcw=40 | mat=Anastazja | nazw=Abramek | matw=22
+3530 | miejsc=Moczydła | ojc=Jan | ojcw=40 | mat=Anastazja | nazw=Abramek | matw=22 | fl=ten sam wpis rodziców co 3529 (inne dziecko)
+3531 | miejsc=Moczydła | ojc=Józef | mat=Zofia | nazw=Zyśko
+3532 | miejsc=Brzozówka | ojc=Jan | mat=Katarzyna | nazw=Dobrzyńska
+3533 | miejsc=Brzozówka | ojc=Józef | ojcw=53 | mat=Zofia | nazw=Kosidło | matw=40
+3534 | miejsc=Blinów | ojc=Marcin | mat=Marianna | nazw=Obydź
+3535 | miejsc=Blinów | fl=w G rodzice nieczytelni ('akt nieczytelny')
+3536 | miejsc=Blinów | fl=w G rodzice nieczytelni ('akt nieczytelny')
+3537 | miejsc=Blinów | ojc=Paweł | mat=Agnieszka | fl=brak nazwiska matki w G
+3538 | miejsc=Blinów | ojc=Wojciech | mat=Katarzyna | nazw=Pawłasek | fl=w nawiasie: ojciec powołany do wojska
+3539 | miejsc=Brzozówka | ojc=Wojciech | mat=Marianna | nazw=Wieleba
+3540 | miejsc=Blinów | ojc=Wojciech | mat=Małgorzata | nazw=Soboniewska
+3542 | miejsc=Moczydła | ojc=Walenty | mat=Katarzyna | fl=brak nazwiska matki w G
+3543 | miejsc=Blinów | mat=Tekla | nazw=Sikora | matw=30 | fl=w G 'służąca' (zawód matki); ojciec nie podany
+3544 | miejsc=Brzozówka | mat=Marianna | nazw=Sikora | fl=jedna osoba w G (matka), ojciec nie podany
+3545 | miejsc=Blinów | ojc=Ignacy | ojcw=30 | mat=Franciszka | nazw=Jachura | matw=27
+3546 | miejsc=Moczydła | ojc=Marcin | ojcw=38 | mat=Józefa | nazw=Kania | matw=37
+3547 | miejsc=Brzozówka | ojc=Michał | ojcw=42 | mat=Katarzyna | nazw=Koguc
+3548 | miejsc=Blinów | ojc=Stanisław | ojcw=49 | mat=Zofia | nazw=Rękas | matw=40 | fl=w G podwójne 'i i' przy słowie spójnika
+3549 | miejsc=Blinów | ojc=Wawrzyniec | ojcw=52 | mat=Regina | nazw=Murzyn | matw=43
+3550 | miejsc=Blinów | mat=Marianna | nazw=Sulowska | fl=jedna osoba w G (matka), ojciec nie podany; w G 'z Szydłoskich'
+3551 | miejsc=Brzozówka | ojc=Józef | ojcw=38 | mat=Marianna | nazw=Chmiel | matw=30
+3552 | miejsc=Blinów | ojc=Marcin | ojcw=28 | mat=Antonina | nazw=Jachura | matw=27
+3553 | miejsc=Blinów | ojc=Marcin | mat=Aniela | nazw=Solarz
+3554 | miejsc=Brzozówka | ojc=Jan | mat=Józefa | nazw=Nieściur
+3555 | miejsc=Blinów | ojc=Mikołaj | mat=Zofia | nazw=Kosidło
+3556 | miejsc=Blinów | ojc=Jan | ojcw=24 | mat=Aniela | nazw=Pawełczak | matw=19
+3557 | miejsc=Blinów | ojc=Tomasz | mat=Marianna | nazw=Kosidło
+3558 | miejsc=Moczydła | ojc=Jan | mat=Zofia | nazw=Wieleba
+3559 | miejsc=Blinów | ojc=Józef | mat=Marianna | nazw=Pasternak
+3560 | miejsc=Blinów | ojc=Łukasz | mat=Katarzyna | nazw=Dziewa
+3561 | miejsc=Blinów | ojc=Antoni | mat=Zofia | nazw=Szłapa | fl=w G: 'poślubiła Mateusza Jędrzejczaka' (zapis po nazwisku dziecka)
+3563 | miejsc=Blinów | ojc=Wawrzyniec | mat=Katarzyna | nazw=Gorela (?) | fl=nazwisko matki z '?' w G
+3564 | miejsc=Blinów | ojc=Antoni | mat=Katarzyna | nazw=Sikora
+3565 | miejsc=Blinów | ojc=Błażej | mat=Antonina | nazw=Kosidło
+3566 | miejsc=Blinów | ojc=Józef | mat=Anna | nazw=Machulak
+3567 | miejsc=Moczydła | ojc=Maciej | mat=Marianna | nazw=Bucoń
+3568 | miejsc=Brzozówka | ojc=Józef | mat=Barbara | nazw=Kolasa
+3569 | miejsc=Blinów | ojc=Dominik | mat=Katarzyna | nazw=Sobutka
+3570 | miejsc=Blinów | ojc=Jakób | mat=Jadwiga | nazw=Wcisło
+3571 | miejsc=Blinów | ojc=Tomasz | mat=Marianna | nazw=Pcionek
+3572 | miejsc=Moczydła | ojc=Wojciech | mat=Anna | nazw=Machulak
+3573 | miejsc=Blinów | ojc=Antoni | mat=Katarzyna | nazw=Szuba
+3574 | miejsc=Moczydła | ojc=Wojciech | mat=Katarzyna | nazw=Bucoń
+3575 | miejsc=Blinów | ojc=Kazimierz | mat=Wiktoria | nazw=Baran
+3576 | miejsc=Blinów | ojc=Kacper | mat=Feliksa | nazw=Ślepowron (?) | fl=nazwisko matki z '?' w G
+3577 | miejsc=Blinów | ojc=Stanisław | mat=Antonina | nazw=Pawłasek
+3578 | miejsc=Blinów | ojc=Wojciech | mat=Agnieszka | nazw=Piech
+3579 | miejsc=Blinów | ojc=Ignacy | mat=Katarzyna | nazw=Pawłasek
+3580 | miejsc=Brzozówka | ojc=Stanisław | mat=Katarzyna | nazw=Brzeska | fl=w G wstęp 'c. Stanisława i Katarzyny z Brzeskich' (córka)
+3581 | miejsc=Brzozówka | ojc=Jan | mat=Zofia | nazw=Panek | fl=J/O: około 1878; wiek rodziców brak w G
+3582 | miejsc=Blinów | ojc=Wojciech | mat=Marianna | nazw=Michałek
+3583 | miejsc=Brzozówka | ojc=Wojciech | mat=Agnieszka | nazw=Szydłowska
+3584 | miejsc=Blinów | ojc=Filip | mat=Jadwiga | nazw=Kosidlak
+3585 | miejsc=Blinów | ojc=Józef | mat=Marianna | nazw=Dobrzyńska
+3586 | miejsc=Blinów | ojc=Wojciech | mat=Zofia | nazw=Pasternak
+3587 | miejsc=Moczydła | ojc=Wojciech | mat=Rozalia | nazw=Marchewka
+3588 | miejsc=Blinów | ojc=Józef | mat=Agnieszka | nazw=Wojtowicz / Wójtowicz (?) | fl=w G dwie pisownie nazwiska matki
+3589 | miejsc=Brzozówka | ojc=Wojciech | mat=Jadwiga | nazw=Machulak
+3590 | miejsc=Blinów | ojc=Stanisław | mat=Katarzyna | nazw=Kurczak
+3591 | miejsc=Blinów | ojc=Andrzej | mat=Marianna | nazw=Kosidło
+3592 | miejsc=Blinów | ojc=Jan | mat=Zofia | nazw=Ogon
+3593 | miejsc=Moczydła | ojc=Piotr | mat=Agnieszka | nazw=Kania / Kana (?) | fl=w G 'Kana/Kania?' - dwie pisownie
+3594 | miejsc=Moczydła | ojc=Antoni | mat=Zofia | nazw=Łukasik
+3595 | miejsc=Moczydła | ojc=Andrzej | mat=Marianna | nazw=Koguc
+3596 | miejsc=Blinów | ojc=Jacek | mat=Katarzyna | nazw=Pasternak
+3597 | miejsc=Blinów | ojc=Woyciech | mat=Anna | nazw=Ogon | fl=imię ojca zapisane 'Woyciech' w G (możliwa literówka Wojciech)
+3598 | miejsc=Blinów | ojc=Antoni | mat=Anna | nazw=Wcisło
+3599 | miejsc=Blinów | ojc=Jan | mat=Marianna | nazw=Brzoskiewicz / Brzuszkiewicz (?) | fl=w G dwie pisownie nazwiska matki
+3600 | miejsc=Blinów | ojc=Piotr | mat=Marianna | nazw=Pawłasek
+3601 | miejsc=Moczydła | ojc=Andrzej | mat=Marianna | nazw=Marchewka
+3602 | miejsc=Blinów | ojc=Maciej | mat=Marianna | nazw=Kaczyńska
+3603 | miejsc=Blinów | ojc=Tomasz | mat=Katarzyna | nazw=Dobrzyńska
+3604 | miejsc=Blinów | ojc=Antoni | mat=Zofia | nazw=Pcionek
+3605 | miejsc=Blinów | ojc=Franciszek | mat=Katarzyna | nazw=Ziarno
+3606 | miejsc=Blinów | ojc=Szymon | mat=Ewa | nazw=Kędziora
+3607 | miejsc=Blinów | ojc=Wincenty | mat=Marianna | nazw=Pawłasek
+3608 | miejsc=Blinów | ojc=Antoni | mat=Anna | nazw=Kozik
+3609 | miejsc=Blinów | ojc=Wojciech | mat=Józefa | nazw=Kopiwoda
+3610 | miejsc=Blinów | ojc=Jakob | mat=Franciszka | nazw=Jaworska | fl=imię ojca zapisane 'Jakob' w G
+3611 | miejsc=Blinów | ojc=Bartłomiej | mat=Agnieszka | nazw=Baran
+3612 | miejsc=Blinów | ojc=Dominik | mat=Agnieszka | nazw=Kosidło
+3613 | miejsc=Brzozówka | ojc=Jan | mat=Marianna | nazw=Gancarz
+3614 | miejsc=Blinów | ojc=Paweł | mat=Katarzyna | nazw=Pudło
+3615 | miejsc=Brzozówka | ojc=Paweł | mat=Marianna | nazw=Machulak
+3616 | miejsc=Moczydła | ojc=Feliks | mat=Marianna | nazw=Pcionek
+3617 | miejsc=Blinów | mat=Katarzyna | nazw=Wierzchowiak | fl=jedna osoba w G (matka), ojciec nie podany
+3618 | miejsc=Blinów | ojc=Michał | ojcw=32 | mat=Zofia | nazw=Kudrelek | matw=30
+3620 | miejsc=Blinów | ojc=Jan | ojcw=37 | mat=Agnieszka | nazw=Pcionek | matw=43
+3621 | miejsc=Blinów | ojc=Antoni | mat=Marianna | nazw=Mróz
+3622 | miejsc=Brzozówka | ojc=Jan | mat=Franciszka | fl=brak nazwiska matki w G; J/O: około 1879
+3623 | miejsc=Brzozówka | ojc=Maciej | mat=Ewa | nazw=Dobrzyńska | matw=24
+3624 | miejsc=Blinów | ojc=Antoni | mat=Agnieszka | nazw=Sobótka
+3625 | miejsc=Moczydła | mat=Zofia | nazw=Chmielówna | fl=jedna osoba w G (matka), ojciec nie podany
+3626 | miejsc=Blinów | ojc=Józef | ojcw=20 | mat=Anna | nazw=Machulak | matw=25
+3627 | miejsc=Blinów | ojc=Andrzej | ojcw=36 | mat=Franciszka | nazw=Chmiel | matw=27 | fl=J/O: około 1879
+3628 | miejsc=Moczydła | ojc=Andrzej | mat=Anna | nazw=Jank | fl=J/O: około 1879; 'Jank' jako w G
+3629 | miejsc=Blinów | mat=Marianna | nazw=Drozdowa | matw=39 | fl=jedna osoba w G (matka); w G 'z Kudrelków' (panieńskie)
+3630 | miejsc=Brzozówka | ojc=Jan | mat=Agnieszka | fl=brak nazwiska matki w G
+3631 | miejsc=Moczydła | ojc=Jan | mat=Marianna | nazw=Sokół
+3632 | miejsc=Moczydła | ojc=Andrzej | mat=Dorota | nazw=Wieleba
+3633 | miejsc=Blinów | ojc=Dominik | mat=Józefa | nazw=Pawłasek
+3634 | miejsc=Brzozówka | ojc=Tomasz | ojcw=27 | mat=Józefa | nazw=Bucoń | matw=24
+3635 | miejsc=Blinów | ojc=Józef | mat=Antonina | nazw=Gancarz
+3636 | miejsc=Brzozówka | mat=Jadwiga | nazw=Kolasówna | fl=jedna osoba w G (matka), ojciec nie podany
+3638 | miejsc=Blinów | ojc=Marcin | mat=Jadwiga | nazw=Bucoń
+3639 | miejsc=Blinów | ojc=Paweł | ojcw=29 | mat=Agnieszka | nazw=Sobótka | matw=29
+3640 | miejsc=Blinów | ojc=Antoni | mat=Zofia | nazw=Pawłasek | fl=w nawiasie zawód ojca: szynkarz (Kosidło)
+3641 | miejsc=Brzozówka | ojc=Józef | mat=Franciszka | nazw=Machulak
+3642 | miejsc=Blinów | ojc=Tomasz | mat=Katarzyna | nazw=Jędrzejczak
+3643 | miejsc=Blinów | mat=Petronela | nazw=Kosidło | fl=jedna osoba w G (matka); w G 'z Jędrzejczaków (z Cieślanek)'
+3644 | miejsc=Blinów | ojc=Wojciech | mat=Marianna | nazw=Dziewa
+3645 | miejsc=Blinów | ojc=Wojciech | mat=Marianna | nazw=Machulak
+3646 | miejsc=Blinów | ojc=Michał | mat=Anastazja | nazw=Gnat
+3647 | miejsc=Brzozówka | mat=Katarzyna | nazw=Kulczykówna | matw=34 | fl=jedna osoba w G (matka), ojciec nie podany
+3648 | miejsc=Blinów | ojc=Marcin | ojcw=25 | mat=Marianna | nazw=Stępień | matw=25
+3649 | miejsc=Blinów | ojc=Karol | mat=Marianna | nazw=Kurczak
+3650 | miejsc=Moczydła | ojc=Jan | mat=Józefa | nazw=Babiarz
+3651 | miejsc=Moczydła | ojc=Wojciech | mat=Franciszka | nazw=Chmiel
+3652 | miejsc=Brzozówka | ojc=Stanisław | mat=Anna | nazw=Spryszak
+3653 | miejsc=Blinów | ojc=Antoni | mat=Katzryna | nazw=Jaskuła | fl=pisownia 'Katzryna' zachowana
+3654 | miejsc=Blinów | ojc=Jan | mat=Marianna | nazw=Goch
+3655 | miejsc=Blinów | ojc=Tomasz | mat=Anna | nazw=Ciećko
+3656 | miejsc=Blinów | ojc=Filip | ojcw=42 | mat=Zofia | nazw=Sokół | matw=31
+3657 | miejsc=Moczydła | ojc=Antoni | ojcw=24 | mat=Zofia | nazw=Łukasik | matw=24
+3658 | miejsc=Brzozówka | ojc=Maciej | mat=Barbara | nazw=Obydź
+3659 | miejsc=Blinów | ojc=Jan | ojcw=32 | mat=Marianna | nazw=Brzoszkiewicz | matw=24
+3660 | miejsc=Blinów | mat=Magdalena | nazw=Pcionek | matw=30 | fl=jedna osoba w G (matka), ojciec nie podany
+3661 | miejsc=Blinów | ojc=Michał | mat=Jadwiga | nazw=Wcisło
+3662 | miejsc=Blinów | ojc=Paweł | ojcw=38 | mat=Katarzyna | matw=30 | fl=brak nazwiska matki w G
+3663 | miejsc=Blinów | ojc=Paweł | mat=Jadwiga | nazw=Ciećko
+3665 | miejsc=Brzozówka | ojc=Tomasz | mat=Marianna | nazw=Goch
+3666 | miejsc=Blinów | mat=Anna | nazw=Sarna | fl=jedna osoba w G (matka), ojciec nie podany
+3667 | miejsc=Blinów | ojc=Andrzej | mat=Aniela | nazw=Gancarz
