@@ -94,6 +94,13 @@ Stare polskie nazwy kolumn (`imie`, `nazwisko_o`, `w_m`…) i nowe nazwy (`child
 
 ## 4. Niezawodność (dlaczego baza się sypała)
 
+### 4a. Ograniczenia i rozjazdy Supabase (ustalenia z kodu i dokumentów)
+
+- **Limit wierszy na zapytanie.** Serwer Supabase/PostgREST zwraca domyślnie najwyżej 1000 wierszy na żądanie. Kod paginuje po 1000 (`.range(offset, offset+999)`, `viewer-osd-v8.21.html` ok. linii 9200), więc działa. **Ale nie ma `.order()`**: bez stałego sortowania między stronami mogą się powtórzyć albo zgubić wiersze. Naprawa: sortować po `original_id` i sprawdzać liczbę wczytanych rekordów z `count`.
+- **Klucz unikalny.** `SUPABASE_SCHEMA.md` mówi: unikalność na `original_id`, a aktualizacje zawsze `WHERE original_id = ...`. Kod robi jednak `upsert(..., { onConflict: 'id' })` (linie ok. 9538, 9598) i `.eq('id', ...)` (ok. 4779, 9460), czyli po wewnętrznym UUID. Stąd błąd `duplicate key value violates unique constraint "unique_original_id"`: nowy wiersz bez zgodnego `id` dubluje `original_id`. Naprawa: jeden klucz (`original_id`) w każdym zapisie.
+- **Limity planu i pamięci przeglądarki.** Nie sprawdziłem limitów planu Supabase (storage, liczba zapytań) – do potwierdzenia w panelu. Wiadomo z historii pracy: `localStorage` ma ok. 5 MB, a dane były ok. 7,7 MB, co wymusiło przejście na bazę. Firestore przyjmuje paczki zapisów do 500 dokumentów.
+- **Stan danych nieznany.** Nie wiadomo, ile wierszy faktycznie jest w `public_imports` (dokumentacja: 5512+). Do sprawdzenia: `select count(*)` w panelu Supabase (SQL Editor).
+
 Ustalenia z kodu (`public/acta-v1-models.js`, `viewer-osd-v8.21.html`):
 1. `fromJSON` czyta zagnieżdżone pola bez sprawdzania (np. `HistoricalDate.fromJSON(data.birthDate)`). Brak pola = wyjątek = nieudane wczytanie całości.
 2. Brak `schemaVersion` i migracji. Zmiana pola kasuje kompatybilność.
