@@ -46,10 +46,12 @@ for wr in sorted(hand):
     if Lc.strip() or M.strip(): uw.append(f"kol.L: {Lc}; kol.M: {M}".strip('; '))
     if N.strip() and not N.strip().isdigit(): uw.append(f"kol.N: {N}")
     if not oi and not mi and not mn and not d.get('fl',''): flags.append('brak rodziców w G')
-    if oi and not H.strip(): flags.append('brak nazwiska ojca (kol. H pusta)')
+    ojcn=H.strip() or d.get('ojcnazw','')
+    if oi and not ojcn: flags.append('brak nazwiska ojca (kol. H pusta)')
     if not oi and H.strip() and 'brak imienia ojca' not in flags and not any('w G tylko' in f for f in flags): flags.append('brak imienia ojca')
     if any('?' in x for x in [oi,mi,mn]): flags.append("znak '?' w imieniu/nazwisku rodzica")
-    rows.append([A,wr,'akt',E,'' if nr=='0' else nr,B,C,'','',oi,H.strip(),ow_s if ow is not None else '',ojc_rok,
+    ojcn=H.strip() or d.get('ojcnazw','')
+    rows.append([A,wr,'akt',E,'' if nr=='0' else nr,B,C,'','',oi,ojcn,ow_s if ow is not None else '',ojc_rok,
                  miejsc,mi,mn,mw_s if mw is not None else '',mat_rok,'','; '.join(uw),'; '.join(flags)])
 hdr="id_archiwalne;wiersz_zrodlo;typ_wpisu;rok;nr;nazwisko_dziecka;imie_dziecka;data_tekst;data_iso;ojciec_imie;ojciec_nazwisko;ojciec_wiek;ojciec_rok_ur_przyb;miejscowosc;matka_imie;matka_nazwisko;matka_wiek;matka_rok_ur_przyb;karta_nr;uwagi_surowe;flagi".split(';')
 assert all(len(r)==len(hdr) for r in rows)
