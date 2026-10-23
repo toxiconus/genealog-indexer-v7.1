@@ -64,7 +64,7 @@
 2551 | plec=k | wiek=1 | jedn=lat | ojc=Józefa | mat=Franciszki | matn=Machulaków
 2552 | plec=m | wiek=2 | jedn=lat | ojc=Wojciecha | mat=Rozalii | matn=Marchewków
 2553 | plec=m | wiek=4 | jedn=mies | ojc=Wojciecha | mat=Marianny | matn=Machulaków
-2554 | plec=m | wiek=2 | ojc=Wojciecha | mat=Rozalii | matn=Marchewków | fl=w G 't.2' (prawdopodobnie 'l.2'), jednostka nieustalona
+2554 | plec=m | wiek=2 | jedn=tyg | ojc=Wojciecha | mat=Rozalii | matn=Marchewków
 2555 | plec=m | stan=wd. | wiek=62 | jedn=lat | ojc=Andrzeja | mat=Zofii | matn=Kozaczków
 2556 | plec=m | wiek=1 | jedn=lat | ojc=Wojciecha | mat=Franciszki | matn=Chmielów
 2557 | plec=k | stan=wd. | wiek=60 | jedn=lat | ojc=Andrzeja | mat=Agnieszki | matn=Sulowskich
