@@ -1,0 +1,628 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Indekser aktów – nowy viewer (szkic)</title>
+<!--
+  Szkic nowego viewera. Jeden plik, bez CDN, działa offline.
+  Zasady (SPEC.md, sekcja 12a):
+  - oryginał z importu (raw) nigdy się nie zmienia; edytowane wartości są w f;
+  - każda zmiana pola zapisuje się od razu (IndexedDB) i trafia do dziennika (log);
+  - pusty nie znaczy błąd; brak walidacji blokującej;
+  - ROI znormalizowane 0..1 (działa przy zoomie i przy innym rozmiarze obrazu).
+  Nieprzetestowane w przeglądarce – patrz SPEC.md, sekcja 13.
+-->
+<style>
+  :root { --bg:#16181d; --panel:#1e2128; --txt:#e6e6e6; --mut:#8a8f9a; --acc:#f59e0b; --ok:#10b981; --roi:#38bdf8; }
+  * { box-sizing: border-box; }
+  body { margin:0; font:14px/1.4 system-ui, sans-serif; background:var(--bg); color:var(--txt); height:100vh; overflow:hidden; }
+  #top { display:flex; gap:8px; align-items:center; padding:6px 10px; background:var(--panel); border-bottom:1px solid #333; flex-wrap:wrap; }
+  #top button, #top input, #top select { background:#2a2e38; color:var(--txt); border:1px solid #444; border-radius:4px; padding:4px 8px; }
+  #top button:hover { border-color:var(--acc); cursor:pointer; }
+  #top .sep { flex:1; }
+  #status { color:var(--mut); font-size:12px; }
+  #main { display:grid; grid-template-columns: 340px 1fr 380px; height: calc(100vh - 44px); }
+  #left, #right { background:var(--panel); overflow:auto; }
+  #left { border-right:1px solid #333; }
+  #right { border-left:1px solid #333; padding:10px; }
+  #filter { width:100%; margin:6px 0; padding:6px; background:#2a2e38; color:var(--txt); border:1px solid #444; border-radius:4px; }
+  table { width:100%; border-collapse:collapse; font-size:12px; }
+  th, td { padding:4px 5px; border-bottom:1px solid #2c2f38; text-align:left; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; max-width:120px; }
+  tr.sel { background:#3a3320; }
+  tr:hover { background:#262a33; cursor:pointer; }
+  tr.edited td:first-child { border-left:3px solid var(--ok); }
+  #viewerWrap { position:relative; overflow:hidden; background:#0d0f12; }
+  #canvas { width:100%; height:100%; display:block; cursor:grab; }
+  #canvas.roi { cursor:crosshair; }
+  #noImg { position:absolute; inset:0; display:flex; align-items:center; justify-content:center; color:var(--mut); pointer-events:none; }
+  #vtools { position:absolute; left:8px; top:8px; display:flex; gap:6px; }
+  #vtools button { background:rgba(30,33,40,.9); color:var(--txt); border:1px solid #555; border-radius:4px; padding:4px 8px; }
+  #vtools button.on { border-color:var(--roi); color:var(--roi); }
+  .field { display:flex; flex-direction:column; margin-bottom:7px; }
+  .field label { font-size:11px; color:var(--mut); margin-bottom:2px; }
+  .field input, .field textarea { background:#2a2e38; color:var(--txt); border:1px solid #444; border-radius:4px; padding:5px 7px; font:inherit; }
+  .field input:focus, .field textarea:focus { outline:none; border-color:var(--acc); box-shadow:0 0 0 2px rgba(245,158,11,.25); }
+  .field .orig { font-size:11px; color:#6b7180; margin-top:2px; }
+  .field .roi-tag { font-size:11px; color:var(--roi); }
+  h3 { margin:6px 0 8px; font-size:13px; color:var(--mut); font-weight:600; text-transform:uppercase; letter-spacing:.04em; }
+  .hint { font-size:11px; color:var(--mut); margin-top:10px; line-height:1.5; }
+</style>
+</head>
+<body>
+
+<div id="top">
+  <button id="btnImport" title="Wczytaj plik TSV/CSV z danymi">Importuj dane</button>
+  <input type="file" id="fileData" accept=".txt,.tsv,.csv" hidden>
+  <button id="btnScan" title="Przypnij skan do wybranego aktu">Skan do aktu</button>
+  <input type="file" id="fileScan" accept="image/*" hidden>
+  <button id="btnExportJson">Eksport JSON</button>
+  <button id="btnExportCsv">Eksport CSV</button>
+  <span class="sep"></span>
+  <span id="status">Gotowe. Zaimportuj dane, aby zacząć.</span>
+</div>
+
+<div id="main">
+  <div id="left">
+    <input id="filter" placeholder="szukaj: id, nazwisko, imię, miejscowość…">
+    <table>
+      <thead><tr><th>ID</th><th>Rok</th><th>Nr</th><th>Nazwisko</th><th>Imię</th><th>Miejsc.</th></tr></thead>
+      <tbody id="rows"></tbody>
+    </table>
+  </div>
+
+  <div id="viewerWrap">
+    <canvas id="canvas"></canvas>
+    <div id="noImg">Brak skanu. Wybierz akt i kliknij „Skan do aktu”.</div>
+    <div id="vtools">
+      <button id="btnFit" title="Dopasuj obraz">Dopasuj</button>
+      <button id="btnRoi" title="Zaznacz obszar dla aktywnego pola (klawisz R)">Zaznacz pole (R)</button>
+      <button id="btnClearRoi" title="Usuń obszar aktywnego pola">Usuń obszar pola</button>
+    </div>
+  </div>
+
+  <div id="right">
+    <h3 id="recTitle">Brak wybranego aktu</h3>
+    <div id="form"></div>
+    <div class="hint">
+      Tab / Enter – następne pole · Ctrl+S – zapis · PageDown / PageUp – następny / poprzedni akt<br>
+      Kolumna „oryginał” pokazuje wartość z importu i nigdy nie jest zmieniana.<br>
+      Zmiany zapisują się od razu w przeglądarce (IndexedDB).
+    </div>
+  </div>
+</div>
+
+<script>
+/* ===================== KONFIGURACJA ===================== */
+
+// Pola formularza (kolejność jak na akcie: dziecko → ojciec → matka → reszta).
+const POLA = [
+  { k:'rok',              l:'Rok' },
+  { k:'nr',               l:'Nr aktu' },
+  { k:'miejscowosc',      l:'Miejscowość' },
+  { k:'dziecko_imiona',   l:'Dziecko: imiona' },
+  { k:'dziecko_nazwisko', l:'Dziecko: nazwisko' },
+  { k:'ojciec_imiona',    l:'Ojciec: imiona' },
+  { k:'ojciec_nazwisko',  l:'Ojciec: nazwisko' },
+  { k:'ojciec_wiek',      l:'Ojciec: wiek' },
+  { k:'matka_imiona',     l:'Matka: imiona' },
+  { k:'matka_nazwisko',   l:'Matka: nazwisko' },
+  { k:'matka_wiek',       l:'Matka: wiek' },
+  { k:'uwagi',            l:'Uwagi' },
+];
+
+// Mapowanie nagłówków z pliku (porównanie po wielkich literach, bez spacji na brzegach).
+// Kolumny spoza mapy zostają w raw i nie są tracone.
+const MAPA_NAGLOWKOW = {
+  'ROK':'rok', 'NR.':'nr', 'NAZWISKO':'dziecko_nazwisko', 'IMIĘ':'dziecko_imiona',
+  'MIEJSCOWOŚĆ':'miejscowosc', 'IMIĘO':'ojciec_imiona', 'NAZWISKOO':'ojciec_nazwisko',
+  'WO':'ojciec_wiek', 'IM':'matka_imiona', 'NM':'matka_nazwisko', 'WM':'matka_wiek',
+  'UWAGI':'uwagi',
+};
+
+const DB_NAME = 'genealog-nowy';
+const SCHEMA_VERSION = 1;
+
+/* ===================== STAN ===================== */
+
+const st = {
+  db: null,
+  records: new Map(),   // id -> rekord
+  order: [],            // kolejność wyświetlania (ids)
+  current: null,        // id wybranego aktu
+  activeField: null,    // klucz aktywnego pola
+  roiMode: false,
+  img: null,            // ImageBitmap / HTMLImageElement
+  imgW: 0, imgH: 0,
+  scale: 1, ox: 0, oy: 0,   // transformacja: ekran = obraz*scale + o
+  drag: null,           // {type:'pan'|'roi', x, y, ...}
+};
+
+const $ = id => document.getElementById(id);
+const setStatus = t => { $('status').textContent = t; };
+
+/* ===================== IndexedDB ===================== */
+
+function openDb() {
+  return new Promise((resolve, reject) => {
+    const req = indexedDB.open(DB_NAME, 1);
+    req.onupgradeneeded = e => {
+      const db = e.target.result;
+      db.createObjectStore('rekordy', { keyPath:'id' });
+      db.createObjectStore('skany');           // klucz = id aktu, wartość = Blob
+    };
+    req.onsuccess = () => resolve(req.result);
+    req.onerror = () => reject(req.error);
+  });
+}
+
+function tx(store, mode, fn) {
+  return new Promise((resolve, reject) => {
+    const t = st.db.transaction(store, mode);
+    const s = t.objectStore(store);
+    const r = fn(s);
+    t.oncomplete = () => resolve(r && r.result);
+    t.onerror = () => reject(t.error);
+  });
+}
+
+const dbPut = rec => tx('rekordy', 'readwrite', s => s.put(rec));
+const dbGetAll = () => tx('rekordy', 'readonly', s => s.getAll());
+const dbPutScan = (id, blob) => tx('skany', 'readwrite', s => s.put(blob, id));
+const dbGetScan = id => tx('skany', 'readonly', s => s.get(id));
+
+/* ===================== IMPORT ===================== */
+
+function wykryjSeparator(linia) {
+  if (linia.includes('\t')) return '\t';
+  if (linia.includes(';')) return ';';
+  return ',';
+}
+
+function parsujPlik(tekst) {
+  // Proste parsowanie: separator z pierwszej linii, bez cudzysłowów w polach (dane z CH BLIN nie ich używają).
+  const linie = tekst.replace(/\r/g, '').split('\n').filter(l => l.trim() !== '');
+  if (!linie.length) return { naglowki:[], wiersze:[] };
+  const sep = wykryjSeparator(linie[0]);
+  const naglowki = linie[0].split(sep).map(h => h.trim());
+  const wiersze = linie.slice(1).map(l => l.split(sep));
+  return { naglowki, wiersze };
+}
+
+function zbudujRekord(naglowki, wiersz, nrWiersza, idGdyBrak) {
+  // klucz raw = „indeks|nagłówek”, bo nagłówki bywają zduplikowane (np. dwa „Miejscowość”)
+  const raw = {};
+  naglowki.forEach((h, i) => { raw[`${i}|${h || 'kol' + i}`] = (wiersz[i] ?? '').trim(); });
+  const f = {};
+  POLA.forEach(p => f[p.k] = '');
+  naglowki.forEach((h, i) => {
+    const pole = MAPA_NAGLOWKOW[h.toUpperCase()];
+    const wartosc = (wiersz[i] ?? '').trim();
+    // pierwsza niepusta kolumna wygrywa; kolejne zostają w raw
+    if (pole && !f[pole] && wartosc) f[pole] = wartosc;
+  });
+  // ID z pierwszej kolumny, jeśli wygląda na identyfikator aktu; inaczej wygenerowane.
+  let id = (wiersz[0] ?? '').trim();
+  if (!id || !/^CH\./.test(id)) id = idGdyBrak(nrWiersza);
+  return {
+    id,
+    schemaVersion: SCHEMA_VERSION,
+    importedAt: new Date().toISOString(),
+    raw,                   // oryginał z pliku – nie zmieniamy
+    f,                     // wartości robocze – edytujemy tutaj
+    obraz: { roi: {} },    // ROI znormalizowane 0..1, klucz = pole
+    log: [],               // dziennik zmian
+  };
+}
+
+async function importuj(plik) {
+  const tekst = await plik.text();
+  const { naglowki, wiersze } = parsujPlik(tekst);
+  if (!naglowki.length) { setStatus('Plik pusty.'); return; }
+  const znane = naglowki.filter(h => MAPA_NAGLOWKOW[h.toUpperCase()]);
+  if (!znane.length) { alert('Nie rozpoznano żadnego nagłówka. Sprawdź pierwszą linię pliku.'); return; }
+
+  let dodano = 0, pominietoIstniejace = 0, puste = 0, zdublowaneWPliku = 0;
+  const widziane = new Set();
+  for (let i = 0; i < wiersze.length; i++) {
+    const w = wiersze[i];
+    if (w.every(c => !c || !c.trim())) { puste++; continue; }
+    const rec = zbudujRekord(naglowki, w, i, n => `IMP.${Date.now()}.${n}`);
+    // ten sam ID w pliku (np. bliźnięta, kilka osób w jednym akcie): zachowujemy jako ID#2, ID#3…
+    if (widziane.has(rec.id)) {
+      let k = 2;
+      while (widziane.has(`${rec.id}#${k}`)) k++;
+      rec.id = `${rec.id}#${k}`;
+      zdublowaneWPliku++;
+    }
+    widziane.add(rec.id);
+    // rekord już w bazie: nie nadpisujemy (mogą być w nim Twoje poprawki)
+    if (st.records.has(rec.id)) { pominietoIstniejace++; continue; }
+    st.records.set(rec.id, rec);
+    await dbPut(rec);
+    dodano++;
+  }
+  odswiez();
+  setStatus(`Import: dodano ${dodano}; ID powtórzone w pliku (zachowano jako #2, #3…): ${zdublowaneWPliku}; już były w bazie (pominięto): ${pominietoIstniejace}; puste wiersze: ${puste}. Rozpoznane kolumny: ${znane.length}/${naglowki.length}.`);
+}
+
+/* ===================== LISTA ===================== */
+
+function filtrowane() {
+  const q = $('filter').value.trim().toLowerCase();
+  return st.order.filter(id => {
+    if (!q) return true;
+    const r = st.records.get(id);
+    return [r.id, r.f.rok, r.f.nr, r.f.dziecko_nazwisko, r.f.dziecko_imiona, r.f.miejscowosc]
+      .join(' ').toLowerCase().includes(q);
+  });
+}
+
+function odswiez() {
+  st.order = [...st.records.keys()].sort();
+  const body = $('rows');
+  body.textContent = '';
+  filtrowane().forEach(id => {
+    const r = st.records.get(id);
+    const tr = document.createElement('tr');
+    if (r.log.length) tr.classList.add('edited');
+    if (id === st.current) tr.classList.add('sel');
+    [r.id, r.f.rok, r.f.nr, r.f.dziecko_nazwisko, r.f.dziecko_imiona, r.f.miejscowosc].forEach(v => {
+      const td = document.createElement('td');
+      td.textContent = v || '';
+      td.title = v || '';
+      tr.appendChild(td);
+    });
+    tr.addEventListener('click', () => wybierz(id));
+    body.appendChild(tr);
+  });
+  if (st.current) renderFormularz();
+}
+
+/* ===================== FORMULARZ ===================== */
+
+function wybierz(id) {
+  st.current = id;
+  st.activeField = null;
+  odswiez();
+  renderFormularz();
+  zaladujSkan(id);
+}
+
+function renderFormularz() {
+  const form = $('form');
+  form.textContent = '';
+  const r = st.records.get(st.current);
+  if (!r) { $('recTitle').textContent = 'Brak wybranego aktu'; return; }
+  $('recTitle').textContent = `${r.id}`;
+
+  const wypelnione = POLA.filter(p => r.f[p.k]).length;
+  const info = document.createElement('div');
+  info.className = 'hint';
+  info.textContent = `Wypełnione: ${wypelnione}/${POLA.length} · zmian: ${r.log.length}`;
+  form.appendChild(info);
+
+  POLA.forEach((p, idx) => {
+    const wrap = document.createElement('div');
+    wrap.className = 'field';
+
+    const lab = document.createElement('label');
+    lab.textContent = p.l;
+    lab.htmlFor = `in_${p.k}`;
+    wrap.appendChild(lab);
+
+    const inp = p.k === 'uwagi' ? document.createElement('textarea') : document.createElement('input');
+    inp.id = `in_${p.k}`;
+    inp.value = r.f[p.k] || '';
+    inp.rows = p.k === 'uwagi' ? 2 : undefined;
+    inp.addEventListener('focus', () => { st.activeField = p.k; drawOverlay(); });
+    inp.addEventListener('change', () => zapiszPole(p.k, inp.value));
+    inp.addEventListener('keydown', e => {
+      if (e.key === 'Enter' && p.k !== 'uwagi') {
+        e.preventDefault();
+        const nast = document.getElementById(`in_${POLA[(idx + 1) % POLA.length].k}`);
+        if (nast) nast.focus();
+      }
+    });
+    wrap.appendChild(inp);
+
+    const orig = document.createElement('div');
+    orig.className = 'orig';
+    const oryginal = mapowanyOryginal(r, p.k);
+    orig.textContent = oryginal ? `oryginał: ${oryginal}` : 'oryginał: —';
+    wrap.appendChild(orig);
+
+    if (r.obraz.roi[p.k]) {
+      const t = document.createElement('div');
+      t.className = 'roi-tag';
+      t.textContent = '● obszar na skanie zaznaczony';
+      wrap.appendChild(t);
+    }
+    form.appendChild(wrap);
+  });
+}
+
+// Wartość z pliku (raw) odpowiadająca polu – do podglądu „oryginału”.
+function mapowanyOryginal(r, pole) {
+  const naglowki = Object.entries(MAPA_NAGLOWKOW).filter(([, p]) => p === pole).map(([h]) => h);
+  for (const k of Object.keys(r.raw)) {               // klucze w kolejności kolumn
+    const h = k.slice(k.indexOf('|') + 1).toUpperCase();
+    if (naglowki.includes(h) && r.raw[k]) return r.raw[k];
+  }
+  return '';
+}
+
+async function zapiszPole(pole, nowa) {
+  const r = st.records.get(st.current);
+  if (!r) return;
+  const stara = r.f[pole] || '';
+  if (stara === nowa) return;
+  r.f[pole] = nowa;
+  r.log.push({ t: new Date().toISOString(), pole, z: stara, na: nowa });
+  await dbPut(r);
+  odswiez();
+  setStatus(`Zapisano: ${POLA.find(p => p.k === pole).l}`);
+}
+
+/* ===================== SKAN I WIDOK ===================== */
+
+async function zaladujSkan(id) {
+  st.img = null;
+  const blob = await dbGetScan(id);
+  if (!blob) {
+    $('noImg').style.display = 'flex';
+    drawOverlay();
+    return;
+  }
+  const url = URL.createObjectURL(blob);
+  const img = new Image();
+  img.onload = () => {
+    st.img = img; st.imgW = img.naturalWidth; st.imgH = img.naturalHeight;
+    $('noImg').style.display = 'none';
+    dopasuj();
+    URL.revokeObjectURL(url);
+  };
+  img.src = url;
+}
+
+function rozmiarPlotna() {
+  const c = $('canvas');
+  const w = $('viewerWrap');
+  const dpr = window.devicePixelRatio || 1;
+  c.width = Math.floor(w.clientWidth * dpr);
+  c.height = Math.floor(w.clientHeight * dpr);
+  c.style.width = w.clientWidth + 'px';
+  c.style.height = w.clientHeight + 'px';
+  return dpr;
+}
+
+function dopasuj() {
+  if (!st.img) { drawOverlay(); return; }
+  const c = $('canvas');
+  const dpr = rozmiarPlotna();
+  const sx = c.width / st.imgW, sy = c.height / st.imgH;
+  st.scale = Math.min(sx, sy) * 0.98;
+  st.ox = (c.width - st.imgW * st.scale) / 2;
+  st.oy = (c.height - st.imgH * st.scale) / 2;
+  drawOverlay();
+}
+
+function drawOverlay() {
+  const c = $('canvas');
+  const ctx = c.getContext('2d');
+  const dpr = window.devicePixelRatio || 1;
+  rozmiarPlotna();
+  ctx.setTransform(1, 0, 0, 1, 0, 0);
+  ctx.clearRect(0, 0, c.width, c.height);
+  if (st.img) {
+    ctx.setTransform(st.scale, 0, 0, st.scale, st.ox, st.oy);
+    ctx.drawImage(st.img, 0, 0, st.imgW, st.imgH);
+    ctx.setTransform(1, 0, 0, 1, 0, 0);
+  }
+  // ROI zapisane dla aktualnego aktu
+  const r = st.records.get(st.current);
+  if (r && st.img) {
+    for (const [pole, b] of Object.entries(r.obraz.roi)) {
+      const aktywne = pole === st.activeField;
+      ctx.strokeStyle = aktywne ? '#f59e0b' : '#38bdf8';
+      ctx.lineWidth = (aktywne ? 3 : 2) * dpr;
+      const x = st.ox + b.x * st.imgW * st.scale, y = st.oy + b.y * st.imgH * st.scale;
+      const w = b.w * st.imgW * st.scale, h = b.h * st.imgH * st.scale;
+      ctx.strokeRect(x, y, w, h);
+      ctx.fillStyle = ctx.strokeStyle;
+      ctx.font = `${12 * dpr}px system-ui`;
+      const etykieta = POLA.find(p => p.k === pole)?.l || pole;
+      ctx.fillText(etykieta, x + 3 * dpr, y - 4 * dpr);
+    }
+  }
+  // Ramka w trakcie zaznaczania
+  if (st.drag && st.drag.type === 'roi' && st.drag.cur) {
+    const d = st.drag;   // x0,y0 i cur są w pikselach canvasu
+    ctx.setLineDash([6 * dpr, 4 * dpr]);
+    ctx.strokeStyle = '#fff';
+    ctx.lineWidth = 2 * dpr;
+    ctx.strokeRect(d.x0, d.y0, d.cur.x - d.x0, d.cur.y - d.y0);
+    ctx.setLineDash([]);
+  }
+  $('canvas').classList.toggle('roi', st.roiMode);
+  $('btnRoi').classList.toggle('on', st.roiMode);
+}
+
+function naObraz(ex, ey) {
+  // współrzędne ekranu (CSS px) → współrzędne obrazu 0..1
+  const c = $('canvas');
+  const rect = c.getBoundingClientRect();
+  const x = (ex - rect.left) * (c.width / rect.width);
+  const y = (ey - rect.top) * (c.height / rect.height);
+  return { x: (x - st.ox) / st.scale / st.imgW, y: (y - st.oy) / st.scale / st.imgH, sx: x, sy: y };
+}
+
+function zoomDo(ex, ey, faktor) {
+  if (!st.img) return;
+  const c = $('canvas');
+  const rect = c.getBoundingClientRect();
+  const x = (ex - rect.left) * (c.width / rect.width);
+  const y = (ey - rect.top) * (c.height / rect.height);
+  const nowa = Math.min(Math.max(st.scale * faktor, 0.05), 30);
+  st.ox = x - (x - st.ox) * (nowa / st.scale);
+  st.oy = y - (y - st.oy) * (nowa / st.scale);
+  st.scale = nowa;
+  drawOverlay();
+}
+
+// zoom kółkiem wokół kursora
+$('canvas').addEventListener('wheel', e => {
+  e.preventDefault();
+  zoomDo(e.clientX, e.clientY, e.deltaY < 0 ? 1.15 : 1 / 1.15);
+}, { passive:false });
+
+$('canvas').addEventListener('mousedown', e => {
+  if (!st.img) return;
+  const p = naObraz(e.clientX, e.clientY);
+  if (st.roiMode) {
+    if (!st.activeField) { alert('Najpierw kliknij pole w formularzu, a potem zaznacz obszar.'); return; }
+    st.drag = { type:'roi', x0: p.sx, y0: p.sy, cur:{ x:p.sx, y:p.sy } };
+  } else {
+    st.drag = { type:'pan', x: e.clientX, y: e.clientY, ox: st.ox, oy: st.oy };
+  }
+});
+
+window.addEventListener('mousemove', e => {
+  const d = st.drag;
+  if (!d) return;
+  if (d.type === 'pan') {
+    const c = $('canvas');
+    const rect = c.getBoundingClientRect();
+    const k = c.width / rect.width;
+    st.ox = d.ox + (e.clientX - d.x) * k;
+    st.oy = d.oy + (e.clientY - d.y) * k;
+    drawOverlay();
+  } else if (d.type === 'roi') {
+    const p = naObraz(e.clientX, e.clientY);
+    d.cur = { x: p.sx, y: p.sy };
+    drawOverlay();
+  }
+});
+
+window.addEventListener('mouseup', async e => {
+  const d = st.drag;
+  st.drag = null;
+  if (!d || d.type !== 'roi') { drawOverlay(); return; }
+  // start i koniec zaznaczenia → współrzędne obrazu 0..1
+  const p1 = {
+    x: (d.x0 - st.ox) / st.scale / st.imgW,
+    y: (d.y0 - st.oy) / st.scale / st.imgH,
+  };
+  const p2 = naObraz(e.clientX, e.clientY);
+  const x = Math.max(0, Math.min(p1.x, p2.x));
+  const y = Math.max(0, Math.min(p1.y, p2.y));
+  const w = Math.min(1, Math.max(p1.x, p2.x)) - x;
+  const h = Math.min(1, Math.max(p1.y, p2.y)) - y;
+  if (w < 0.002 || h < 0.002) { drawOverlay(); return; }   // za mały przypadkowy klik
+  const r = st.records.get(st.current);
+  r.obraz.roi[st.activeField] = { x, y, w, h };
+  r.log.push({ t: new Date().toISOString(), pole: st.activeField, z: '', na: '[obszar na skanie]' });
+  await dbPut(r);
+  setStatus(`Zapisano obszar dla: ${POLA.find(p => p.k === st.activeField).l}`);
+  renderFormularz();
+  drawOverlay();
+});
+
+/* ===================== PRZYCISKI I KLAWIATURA ===================== */
+
+$('btnImport').onclick = () => $('fileData').click();
+$('fileData').onchange = e => e.target.files[0] && importuj(e.target.files[0]);
+
+$('btnScan').onclick = () => {
+  if (!st.current) { alert('Najpierw wybierz akt z listy.'); return; }
+  $('fileScan').click();
+};
+$('fileScan').onchange = async e => {
+  const plik = e.target.files[0];
+  if (!plik || !st.current) return;
+  await dbPutScan(st.current, plik);
+  setStatus(`Skan przypięty do ${st.current}`);
+  zaladujSkan(st.current);
+  e.target.value = '';
+};
+
+$('btnFit').onclick = () => dopasuj();
+$('btnRoi').onclick = () => { st.roiMode = !st.roiMode; drawOverlay(); };
+$('btnClearRoi').onclick = async () => {
+  const r = st.records.get(st.current);
+  if (!r || !st.activeField || !r.obraz.roi[st.activeField]) return;
+  delete r.obraz.roi[st.activeField];
+  r.log.push({ t: new Date().toISOString(), pole: st.activeField, z: '[obszar]', na: '' });
+  await dbPut(r);
+  renderFormularz();
+  drawOverlay();
+};
+
+$('filter').addEventListener('input', () => odswiez());
+
+window.addEventListener('resize', () => drawOverlay());
+
+document.addEventListener('keydown', e => {
+  if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 's') {
+    e.preventDefault();
+    setStatus('Zapisane (zapis jest automatyczny po każdej zmianie).');
+    return;
+  }
+  if (e.key === 'Escape') { st.roiMode = false; drawOverlay(); return; }
+  if (['INPUT','TEXTAREA'].includes(document.activeElement.tagName)) return;
+  if (e.key.toLowerCase() === 'r') { st.roiMode = !st.roiMode; drawOverlay(); }
+  if (e.key === 'PageDown' || e.key === 'PageUp') {
+    e.preventDefault();
+    const lista = filtrowane();
+    const i = lista.indexOf(st.current);
+    const nowy = lista[Math.min(lista.length - 1, Math.max(0, i + (e.key === 'PageDown' ? 1 : -1)))];
+    if (nowy) wybierz(nowy);
+  }
+});
+
+/* ===================== EKSPORT ===================== */
+
+function pobierz(nazwa, tresc, typ) {
+  const blob = new Blob([tresc], { type: typ });
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = nazwa;
+  a.click();
+  setTimeout(() => URL.revokeObjectURL(a.href), 1000);
+}
+
+$('btnExportJson').onclick = () => {
+  const dane = {
+    schemaVersion: SCHEMA_VERSION,
+    eksportowano: new Date().toISOString(),
+    rekordy: [...st.records.values()],
+  };
+  pobierz('akty.json', JSON.stringify(dane, null, 2), 'application/json');
+  setStatus(`Wyeksportowano ${st.records.size} aktów (JSON).`);
+};
+
+$('btnExportCsv').onclick = () => {
+  const naglowki = ['id', ...POLA.map(p => p.k)];
+  const esc = v => `"${String(v ?? '').replace(/"/g, '""')}"`;
+  const linie = [naglowki.join(';')];
+  [...st.records.values()].forEach(r => {
+    linie.push([r.id, ...POLA.map(p => r.f[p.k] || '')].map(esc).join(';'));
+  });
+  pobierz('akty.csv', '﻿' + linie.join('\r\n'), 'text/csv;charset=utf-8');
+  setStatus(`Wyeksportowano ${st.records.size} aktów (CSV).`);
+};
+
+/* ===================== START ===================== */
+
+(async function start() {
+  st.db = await openDb();
+  const zapisane = await dbGetAll();
+  zapisane.forEach(r => st.records.set(r.id, r));
+  odswiez();
+  setStatus(st.records.size
+    ? `Wczytano ${st.records.size} aktów z przeglądarki.`
+    : 'Gotowe. Zaimportuj dane, aby zacząć.');
+})().catch(err => setStatus('Błąd bazy: ' + err));
+</script>
+</body>
+</html>

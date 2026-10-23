@@ -259,6 +259,9 @@ Autor poprosił, żebym sam wymyślił założenia, jakby to projektował geneal
 ## 13. Stan w tej gałęzi
 
 - Zrobione: SPEC.md jako jedyny plan; dokumenty dublujące przeniesione do archiwum (git mv, nic nie skasowano).
-- Nie zrobione: zmiany kodu, uruchomienie aplikacji, testy OCR, porównanie plików danych.
+- Zrobione (szkic): `nowy_viewer/index.html` – jeden plik, bez CDN, IndexedDB, import TSV z mapowaniem nagłówków, lista aktów z filtrem, formularz z kolumną „oryginał”, zoom/pan, zaznaczanie obszaru pola (ROI znormalizowane), skan przypinany do aktu, dziennik zmian, eksport JSON i CSV.
+- Test składni (Node) i test parsera na `CH BLIN.txt`: 6089 wierszy, wszystkie zachowane; 537 powtórzonych ID zapisanych jako `ID#2`, `ID#3`… Wynik: 13 z 27 kolumn rozpoznanych.
+- Nie zrobione w szkicu: test w przeglądarce (brak w sesji), klik w słowo (OCR), wachlarz, dopiski F5, konfiguracja pól z `fields-config.json`, testy round-trip.
+- Nie zrobione: uruchomienie starych wersji, testy OCR, porównanie plików danych.
 - Przeczytane w całości: README, KOMPENDIUM (schematy), WORKFLOW_SUMMARY, BRAINSTORM (sp. 4), PROJEKTY_FORMULARZY, PROJECT-STATUS, ROADMAP, copilot-instructions (sekcje projektowe i migracje), EXPORT_IMPORT_MAPPING, SUPABASE_SCHEMA, FIRESTORE_MIGRATION_ROADMAP (struktura), SYNCHRONIZACJA (fragmenty), ACTA-v3 (struktura i pola).
 - Przejrzane nagłówkami i początkami: pozostałe dokumenty z listy (HEAVY-DUTY x5, sprinty, testy, checklisty, v10, start/przewodniki, ZADANIA-6-7, EKSPERYMENT x2, indeksy).
