@@ -1,0 +1,151 @@
+﻿id_archiwalne;wiersz_zrodlo;typ_wpisu;rok;nr;nazwisko_dziecka;imie_dziecka;data_tekst;data_iso;ojciec_imie;ojciec_nazwisko;ojciec_wiek;ojciec_rok_ur_przyb;miejscowosc;matka_imie;matka_nazwisko;matka_wiek;matka_rok_ur_przyb;karta_nr;uwagi_surowe;flagi
+U000830;827;akt;1828;15;Dąbrowska;Józefa;;;Woyciech;Dąbrowska;;;;Anastazya;Bogoń,Boguń;;;;"kol.G: Woyciech i Anastazya Bogoń,Boguń; kol.J: około 1828; kol.O: około 1828";
+U000833;830;akt;1828;26;Głowacki;Jan;;;Antoni;Głowacki;;;;Maryanna;Chwałek;;;;"kol.G: Antoni i Maryanna Chwałek; kol.J: około 1828; kol.O: około 1828";
+U000834;831;akt;1828;23;Kaczenska;Antonina;;;Józef;Kaczenska;;;;Maryanna;Horczak,Kurczak;;;;"kol.G: Józef i Maryanna Horczak,Kurczak; kol.J: około 1828; kol.O: około 1828";
+U000836;833;akt;1828;11;Kawecka;Marianna;;;Walenty;Kawecka;;;;Rozalia;Koguc;;;;"kol.G: Walenty i Rozalia Koguc; kol.J: około 1828; kol.O: około 1828";
+U000838;835;akt;1828;27;Kopyt;Anna;;;Jakób;Kopyt;;;;Jadwiga;Pasternak;;;;"kol.G: Jakób i Jadwiga Pasternak; kol.J: około 1828; kol.O: około 1828";
+U000841;836;akt;1828;14;Kosidło;Franciszka;;;Michał;Kosidło;;;;Anna;Samel;;;;"kol.G: Michał i Anna Samel; kol.J: około 1828; kol.O: około 1828";
+U000842;837;akt;1828;16;Kosidło;Woyciech;;;Paweł;Kosidło;;;;Maryanna;Kozaczek;;;;"kol.G: Paweł i Maryanna Kozaczek; kol.J: około 1828; kol.O: około 1828";
+U000840;838;akt;1828;19;Kosidło;Stanisław;;;Maciey;Kosidło;;;;Maryanna;Gnat;;;;"kol.G: Maciey i Maryanna Gnat; kol.J: około 1828; kol.O: około 1828";
+U000839;839;akt;1828;22;Kosidło;Stanisław;;;Bartłomiey;Kosidło;;;;Katarzyna;Bosak;;;;"kol.G: Bartłomiey i Katarzyna Bosak; kol.J: około 1828; kol.O: około 1828";
+U000845;842;akt;1828;10;Kurczak;Helena;;;Maciey;Kurczak;;;;Maryanna;Męczenska;;;;"kol.G: Maciey i Maryanna Męczenska; kol.J: około 1828; kol.O: około 1828";
+U000850;848;akt;1828;25;Michałek;Antonina;;;Michał;Michałek;;;;Jadwiga;Pasternak;;;;"kol.G: Michał i Jadwiga Pasternak; kol.J: około 1828; kol.O: około 1828";
+U000851;849;akt;1828;20;Mocholak;Tekla;;;Józef;Mocholak;;;;Franciszka;Mazor,Mazur;;;;"kol.G: Józef i Franciszka Mazor,Mazur; kol.J: około 1828; kol.O: około 1828";
+U000859;855;akt;1828;24;Pawłasek;Antoni;;;Michał;Pawłasek;;;;Zofia;Pazdrak;;;;"kol.G: Michał i Zofia Pazdrak; kol.J: około 1828; kol.O: około 1828";
+U000863;860;akt;1828;17;Sobolewska;Katarzyna;;;Woyciech;Sobolewska;;;;Kunegunda;?;;;;"kol.G: Woyciech i Kunegunda ?; kol.J: około 1828; kol.O: około 1828";znak '?' w imieniu/nazwisku rodzica
+U000864;861;akt;1828;21;Solarz;Stanisław Filip;;;Woyciech;Solarz;;;;Katarzyna;Wnuk?;;;;"kol.G: Woyciech i Katarzyna Wnuk?; kol.J: około 1828; kol.O: około 1828";znak '?' w imieniu/nazwisku rodzica
+U000866;863;akt;1828;28;Szydłowski;Jan;;;Antoni;Szydłowski;;;Blinów;Maryanna;Cudziło?;;;;"kol.G: Antoni i Maryanna Cudziło?; kol.J: około 1828; kol.O: około 1828";znak '?' w imieniu/nazwisku rodzica
+U000872;868;akt;1829;38;Andrzejczak;Jadwiga;;;?;;;;;Franciszka;Sieyko;;;;kol.G: ? i Franciszka Sieyko;"brak nazwiska ojca (kol. H pusta); znak '?' w imieniu/nazwisku rodzica"
+U000873;869;akt;1829;8;Andrzejczak;Józef;;;Wawrzeniec;;;;;Katarzyna;Woytowicz;;;;kol.G: Wawrzeniec i Katarzyna Woytowicz;brak nazwiska ojca (kol. H pusta)
+U000874;870;akt;1829;9;Andrzejczak;Józefa;;;Wawrzeniec;;;;;Katarzyna;Woytowicz;;;;kol.G: Wawrzeniec i Katarzyna Woytowicz;brak nazwiska ojca (kol. H pusta)
+U000875;871;akt;1829;35;Baran;Dominik;;;Tomasz;;;;;Maryanna;Kurczak;;;;kol.G: Tomasz i Maryanna Kurczak;brak nazwiska ojca (kol. H pusta)
+U000876;872;akt;1829;12;Białkowska;Marianna;;;Marcin;;;;;Tekla;Kubisz;;;;kol.G: Marcin i Tekla Kubisz;brak nazwiska ojca (kol. H pusta)
+U000877;873;akt;1829;19;Bosak;Salomea;;;Walenty;;;;;Jadwiga;Michalak;;;;kol.G: Walenty i Jadwiga Michalak;brak nazwiska ojca (kol. H pusta)
+U000878;874;akt;1829;42;Bucoń;Franciszka;;;;;;;;Teresa;Bucoń?;;;;kol.G: Teresa Bucoń?;"jedna osoba w G, rola niejasna (matka?); znak '?' w imieniu/nazwisku rodzica"
+U000879;875;akt;1829;47;Bucoń;Michał;;;Woyciech;;;;;Maryanna;Kotuła;;;;kol.G: Woyciech i Maryanna Kotuła;brak nazwiska ojca (kol. H pusta)
+U000880;876;akt;1829;32;Bzdyrak;Marianna;;;Franciszek;;;;;Magdelena;Czarna;;;;kol.G: Franciszek i Magdelena Czarna;brak nazwiska ojca (kol. H pusta)
+U000881;877;akt;1829;20;Chwałek;Julianna;;;Andrzey;;;;;Katarzyna;Bąk;;;;kol.G: Andrzey i Katarzyna Bąk;brak nazwiska ojca (kol. H pusta)
+U000882;878;akt;1829;53;Czarna;Katarzyna;;;Józef;;;;;Anastazya;Garbacz;;;;kol.G: Józef i Anastazya Garbacz;brak nazwiska ojca (kol. H pusta)
+U000883;879;akt;1829;48;Czuba;Jadwiga;;;Woyciech;;;;;Marianna;Spryszak;;;;kol.G: Woyciech i Marianna Spryszak;brak nazwiska ojca (kol. H pusta)
+U000885;880;akt;1829;31;Dobrzański;Anna;;;Piotr;;;;;Maryanna;Król;;;;kol.G: Piotr i Maryanna Król;brak nazwiska ojca (kol. H pusta)
+U000884;881;akt;1829;6;Dobrzański;Walenty;;;Antoni;;;;;Zofia;Winiarz;;;;kol.G: Antoni i Zofia Winiarz;brak nazwiska ojca (kol. H pusta)
+U000886;882;akt;1829;4;Dziewa;Paweł;;;Kazimierz;;;;;Agata;Gnat;;;;kol.G: Kazimierz i Agata Gnat;brak nazwiska ojca (kol. H pusta)
+U000887;883;akt;1829;16;Gnat;Filip;;;Marcin;;;;;Dorota;Krupa;;;;kol.G: Marcin i Dorota Krupa;brak nazwiska ojca (kol. H pusta)
+U000888;884;akt;1829;14;Goch;Stanisław;;;Franciszek;;;;;Maryanna;Jagieło;;;;kol.G: Franciszek i Maryanna Jagieło;brak nazwiska ojca (kol. H pusta)
+U000889;885;akt;1829;29;Jachura;Piotr;;;Walenty;;;;;Maryanna;Bieńko?;;;;kol.G: Walenty i Maryanna Bieńko?;"brak nazwiska ojca (kol. H pusta); znak '?' w imieniu/nazwisku rodzica"
+U000890;886;akt;1829;54;Jakubaszek;Katarzyna;;;Andrzey;;;;;Maryanna;Kurdela;;;;kol.G: Andrzey i Maryanna Kurdela;brak nazwiska ojca (kol. H pusta)
+U000891;887;akt;1829;25;Kamieniak;Małgorzata;;;Ignacy;;;;;Agata;Chmiel;;;;kol.G: Ignacy i Agata Chmiel;brak nazwiska ojca (kol. H pusta)
+U000892;888;akt;1829;17;Kania;Marianna;;;Franciszek;;;;;Maryanna;Tupai;;;;kol.G: Franciszek i Maryanna Tupai;brak nazwiska ojca (kol. H pusta)
+U000893;889;akt;1829;49;Kawecka;Katarzyna;;;Walenty;;;;;Rozalia;Koguc;;;;kol.G: Walenty i Rozalia Koguc;brak nazwiska ojca (kol. H pusta)
+U000894;890;akt;1829;41;Koguc;Bartłomiey;;;Kazimierz;;;;;Zofia;Czuba;;;;kol.G: Kazimierz i Zofia Czuba;brak nazwiska ojca (kol. H pusta)
+U000896;892;akt;1829;27;Kosidlak;Małgorzata;;;Paweł;;;;;Maryanna;Kurczak;;;;kol.G: Paweł i Maryanna Kurczak;brak nazwiska ojca (kol. H pusta)
+U000898;893;akt;1829;23;Kosidło;Antoni;;;Michał;;;;;Agata;Kurczak;;;;kol.G: Michał i Agata Kurczak;brak nazwiska ojca (kol. H pusta)
+U000900;894;akt;1829;50;Kosidło;Jadwiga;;;Woyciech;;;;;Maryanna;Pcion?;;;;kol.G: Woyciech i Maryanna Pcion?;"brak nazwiska ojca (kol. H pusta); znak '?' w imieniu/nazwisku rodzica"
+U000897;895;akt;1829;18;Kosidło;Małgorzata;;;Kasper;;;;;Agata;Kedziora;;;;kol.G: Kasper i Agata Kedziora;brak nazwiska ojca (kol. H pusta)
+U000899;896;akt;1829;60;Kosidło;Tomasz;;;Stanisław;;;;;Katarzyna;Kozak;;;;kol.G: Stanisław i Katarzyna Kozak;brak nazwiska ojca (kol. H pusta)
+U000901;897;akt;1829;11;Kozaczek;Sebastyan;;;Michał;;;;;Maryanna;Solarz;;;;kol.G: Michał i Maryanna Solarz;brak nazwiska ojca (kol. H pusta)
+U000902;898;akt;1829;7;Kozak;Helena;;;Woyciech;;;;;Anna;Szorma;;;;kol.G: Woyciech i Anna Szorma;brak nazwiska ojca (kol. H pusta)
+U000903;899;akt;1829;45;Kudrel;Łukasz;;;Józef;;;;;Jadwiga;Głaz;;;;kol.G: Józef i Jadwiga Głaz;brak nazwiska ojca (kol. H pusta)
+U000906;900;akt;1829;64;Kurczak;Agnieszka;;;Woyciech;;;;;Franciszka;Pasternak;;;;kol.G: Woyciech i Franciszka Pasternak;brak nazwiska ojca (kol. H pusta)
+U000905;901;akt;1829;2;Kurczak;Agniszka;;;Paweł;;;;;Tekla;Pudło;;;;kol.G: Paweł i Tekla Pudło;brak nazwiska ojca (kol. H pusta)
+U000904;902;akt;1829;36;Kurczak;Rozalia;;;Antoni;;;;;Maryanna;Mazur?;;;;kol.G: Antoni i Maryanna Mazur?;"brak nazwiska ojca (kol. H pusta); znak '?' w imieniu/nazwisku rodzica"
+U000907;903;akt;1829;51;Kurczak;Szymon;;;Woyciech;;;;;Zofia;Woytalas;;;;kol.G: Woyciech i Zofia Woytalas;brak nazwiska ojca (kol. H pusta)
+U000908;904;akt;1829;46;Kurczak;Szymon;;;Woyciech;;;;;Zofia;Woytowicz;;;;kol.G: Woyciech i Zofia Woytowicz;brak nazwiska ojca (kol. H pusta)
+U000909;905;akt;1829;28;Mochulak;Antonina;;;Wawrzeniec;;;;;Katarzyna;Mazurek;;;;kol.G: Wawrzeniec i Katarzyna Mazurek;brak nazwiska ojca (kol. H pusta)
+U000910;906;akt;1829;59;Obydź;Ewa;;;Jakub;;;;;Anna;Głaz;;;;kol.G: Jakub i Anna Głaz;brak nazwiska ojca (kol. H pusta)
+U000911;907;akt;1829;34;Olexak;Franciszek;;;Paweł;;;;;Maryanna;Pyc;;;;kol.G: Paweł i Maryanna Pyc;brak nazwiska ojca (kol. H pusta)
+U000912;908;akt;1829;15;Paciorek;Filip;;;Józef;;;;;Jadwiga;Cisło;;;;kol.G: Józef i Jadwiga Cisło;brak nazwiska ojca (kol. H pusta)
+U000913;909;akt;1829;5;Pasternak;Maciey;;;Maciey;;;;;Maryanna;Kosidło;;;;kol.G: Maciey i Maryanna Kosidło;brak nazwiska ojca (kol. H pusta)
+U000914;910;akt;1829;13;Pasternak;Marek Benedykt;;;Marcin;;;;;Jadwiga;Michałek;;;;kol.G: Marcin i Jadwiga Michałek;brak nazwiska ojca (kol. H pusta)
+U000915;911;akt;1829;10;Pawłasek;Antonina;;;Jakub;;;;;Tekla;Dybel;;;;kol.G: Jakub i Tekla Dybel;brak nazwiska ojca (kol. H pusta)
+U000916;912;akt;1829;26;Pawłasek;Piotr;;;Paweł;;;;;Agnieszka;Zaręba;;;;kol.G: Paweł i Agnieszka Zaręba;brak nazwiska ojca (kol. H pusta)
+U000919;913;akt;1829;63;Pazdrak;Szczepan;;;Tomasz;;;;;Maryanna;Samel,Samal;;;;kol.G: Tomasz i Maryanna Samel,Samal;brak nazwiska ojca (kol. H pusta)
+U000918;914;akt;1829;33;Pazdrak;Wawrzeniec;;;Maciey;;;;;?;?;;;;kol.G: Maciey i ?;"brak nazwiska ojca (kol. H pusta); znak '?' w imieniu/nazwisku rodzica"
+U000917;915;akt;1829;37;Pazdrak;Zofia;;;Jan;;;;;Maryanna;Niescior;;;;kol.G: Jan i Maryanna Niescior;brak nazwiska ojca (kol. H pusta)
+U000920;916;akt;1829;44;Pcionek;Michał;;;Józef;;;;;Tekla;Kiszka?;;;;kol.G: Józef i Tekla Kiszka?;"brak nazwiska ojca (kol. H pusta); znak '?' w imieniu/nazwisku rodzica"
+U000921;917;akt;1829;24;Pieczykolano;Marianna;;;Józef;;;;;Anna;Rębiak;;;;kol.G: Józef i Anna Rębiak;brak nazwiska ojca (kol. H pusta)
+U000922;918;akt;1829;58;Sagan;Marianna;;;Stanisław;;;;;Katarzyna?;Gil;;;;kol.G: Stanisław i Katarzyna? Gil;"brak nazwiska ojca (kol. H pusta); znak '?' w imieniu/nazwisku rodzica"
+U000923;919;akt;1829;61;Samel , Samal;Adam Tomasz;;;Woyciech;;;;;Maryanna;Kozak;;;;kol.G: Woyciech i Maryanna Kozak;brak nazwiska ojca (kol. H pusta)
+U000924;920;akt;1829;62;Samel,Samal;Ewa;;;Woyciech;;;;;Maryanna;Kozak;;;;kol.G: Woyciech i Maryanna Kozak;brak nazwiska ojca (kol. H pusta)
+U000925;921;akt;1829;30;Samul;Marianna;;;Sebastyan;;;;;Ewa;...;;;;kol.G: Sebastyan i Ewa ...;brak nazwiska ojca (kol. H pusta)
+U000926;922;akt;1829;55;Solarz;Zofia;;;Tomasz;;;;;Maryanna;Kosidło;;;;kol.G: Tomasz i Maryanna Kosidło;brak nazwiska ojca (kol. H pusta)
+U000927;923;akt;1829;39;Spryszak;Franciszka;;;Sebastyan;;;;;Franciszka;Jakubaszek;;;;kol.G: Sebastyan i Franciszka Jakubaszek;brak nazwiska ojca (kol. H pusta)
+U000928;924;akt;1829;40;Spryszak;Marianna;;;Sebastyan;;;;;Franciszka;Jakubaszek;;;;kol.G: Sebastyan i Franciszka Jakubaszek;brak nazwiska ojca (kol. H pusta)
+U000929;925;akt;1829;56;Szyszka;Marianna;;;Józef?;;;;;Katarzyna;Cwik;;;;kol.G: Józef? I Katarzyna Cwik;"brak nazwiska ojca (kol. H pusta); znak '?' w imieniu/nazwisku rodzica"
+U000931;926;akt;1829;57;Wcisło;Marianna;;;Filip;;;;;Maryanna;Machulek;;;;kol.G: Filip i Maryanna Machulek;brak nazwiska ojca (kol. H pusta)
+U000930;927;akt;1829;3;Wcisło;Paweł;;;Bartłomiey;;;;;Maryanna;Kurczak;;;;kol.G: Bartłomiey i Maryanna Kurczak;brak nazwiska ojca (kol. H pusta)
+U000932;928;akt;1829;52;Wiąckowski;Andrzey;;;Karol;;;;;Anna;Abusiewicz?;;;;kol.G: Karol i Anna Abusiewicz?;"brak nazwiska ojca (kol. H pusta); znak '?' w imieniu/nazwisku rodzica"
+U000933;929;akt;1829;43;Wieleba;Michał;;;Tomasz;;;;;Franciszka;Kędziora;;;;kol.G: Tomasz i Franciszka Kędziora;brak nazwiska ojca (kol. H pusta)
+U000934;930;akt;1829;22;Zaręba;Jan;;;Paweł;;;;;Katarzyna;Wcisło;;;;kol.G: Paweł i Katarzyna Wcisło;brak nazwiska ojca (kol. H pusta)
+U000935;931;akt;1829;1;Zych;Marianna;;;Jakub;;;;;Jadwiga;Wnuk;;;;kol.G: Jakub i Jadwiga Wnuk;brak nazwiska ojca (kol. H pusta)
+U000937;932;akt;1830;61;Andrzejczak;Andrzey;;;Woyciech;;;;;Maryanna;Baran;;;;kol.G: Woyciech i Maryanna Baran;brak nazwiska ojca (kol. H pusta)
+U000938;933;akt;1830;2;Baran;Agnieszka;;;Paweł;;;;;Krystyna;Mazurek;;;;kol.G: Paweł i Krystyna Mazurek;brak nazwiska ojca (kol. H pusta)
+U000939;934;akt;1830;25;Baran;Katarzyna;;;Woyciech;;;;;Zofia;Kędziora;;;;kol.G: Woyciech i Zofia Kędziora;brak nazwiska ojca (kol. H pusta)
+U000940;935;akt;1830;11;Barbarzak;Scholastyka;;;Woyciech;;;;;Marianna;Jakubaszek;;;;kol.G: Woyciech i Marianna Jakubaszek;brak nazwiska ojca (kol. H pusta)
+U000941;936;akt;1830;16;Bosak;Józef;;;Jan;;;;;Tekla;Samol;;;;kol.G: Jan i Tekla Samol;brak nazwiska ojca (kol. H pusta)
+U000942;937;akt;1830;53;Chyz (Pastucha?);Wawrzeniec;;;Krzysztof;;;;;Agniszka;Osuch?;;;;kol.G: Krzysztof i Agniszka Osuch?;"brak nazwiska ojca (kol. H pusta); znak '?' w imieniu/nazwisku rodzica"
+U000943;938;akt;1830;21;Dąbrowska;Maryianna;;;Woyciech;;;;;Anastazya;Boguń;;;;kol.G: Woyciech i Anastazya Boguń;brak nazwiska ojca (kol. H pusta)
+U000944;939;akt;1830;62;Dobrzańska;Barbara;;;Antoni;;;;;Zofia;Winiarz;;;;kol.G: Antoni i Zofia Winiarz;brak nazwiska ojca (kol. H pusta)
+U000945;940;akt;1830;46;Gałka;Jakub;;;Tomasz;;;;;Krystyna;Łucionska?;;;;kol.G: Tomasz i Krystyna Łucionska?;"brak nazwiska ojca (kol. H pusta); znak '?' w imieniu/nazwisku rodzica"
+U000946;941;akt;1830;40;Głowacki;Jan;;;Antoni;;;;;Maryanna;Chwałek;;;;kol.G: Antoni i Maryanna Chwałek;brak nazwiska ojca (kol. H pusta)
+U000947;942;akt;1830;48;Gnat;Ignacy;;;Jakub;;;;;Zofia;Krupa;;;;kol.G: Jakub i Zofia Krupa;brak nazwiska ojca (kol. H pusta)
+U000948;943;akt;1830;58;Gnat;Tekla;;;Kasper;;;;;Antonina;Paiąk;;;;kol.G: Kasper i Antonina Paiąk;brak nazwiska ojca (kol. H pusta)
+U000949;944;akt;1830;32;Guz;Jan;;;Maciey;;;;;Maryanna;Liberowska;;;;kol.G: Maciey i Maryanna Liberowska;brak nazwiska ojca (kol. H pusta)
+U000951;945;akt;1830;47;Jachura;Jakub;;;Tomasz;;;;;Maryanna;Mochulek;;;;kol.G: Tomasz i Maryanna Mochulek;brak nazwiska ojca (kol. H pusta)
+U000950;946;akt;1830;54;Jachura;Rozalia;;;Mateusz;;;;;Maryanna;Andrzeyczyk;;;;kol.G: Mateusz i Maryanna Andrzeyczyk;brak nazwiska ojca (kol. H pusta)
+U000952;947;akt;1830;7;Janik;Paweł;;;Sebastyian;;;;;Agniszka;Babiarz?;;;;kol.G: Sebastyian i Agniszka Babiarz?;"brak nazwiska ojca (kol. H pusta); znak '?' w imieniu/nazwisku rodzica"
+U000953;948;akt;1830;45;Kamieński?;Małgorzata;;;Andrzey;;;;;Katarzyna;Michałek;;;;kol.G: Andrzey i Katarzyna Michałek;brak nazwiska ojca (kol. H pusta)
+U000954;949;akt;1830;27;Kędziora;Stanisław;;;Bartłomiey;;;;;Agniszka;Pawłasek;;;;kol.G: Bartłomiey i Agniszka Pawłasek;brak nazwiska ojca (kol. H pusta)
+U000955;950;akt;1830;42;Kolasa;Anna;;;Woyciech;;;;;Maryanna;Pudło;;;;kol.G: Woyciech i Maryanna Pudło;brak nazwiska ojca (kol. H pusta)
+U000958;952;akt;1830;17;Kosidło;Helena;;;Jan;;;;;Maryanna;Kaczenska;;;;kol.G: Jan i Maryanna Kaczenska;brak nazwiska ojca (kol. H pusta)
+U000959;953;akt;1830;55;Kosidło;Michał;;;Maciey;;;;;Maryanna;Wcisło;;;;kol.G: Maciey i Maryanna Wcisło;brak nazwiska ojca (kol. H pusta)
+U000960;954;akt;1830;60;Kosidło;Salomea;;;Michał;;;;;Anna;Samel;;;;kol.G: Michał i Anna Samel;brak nazwiska ojca (kol. H pusta)
+U000957;955;akt;1830;65;Kosidło;Tomasz;;;Bartłomiey;;;;;?;?;;;;kol.G: Bartłomiey i ?;"brak nazwiska ojca (kol. H pusta); znak '?' w imieniu/nazwisku rodzica"
+U000961;956;akt;1830;23;Kosidło;Woyciech;;;Szymon;;;;;Agniszka;Kozak;;;;kol.G: Szymon i Agniszka Kozak;brak nazwiska ojca (kol. H pusta)
+U000962;957;akt;1830;29;Kowalczyk;Stanisław;;;Sobestyan;;;;;Jadwiga;Pizon;;;;"kol.G: Sobestyan i Jadwiga Pizon; kol.J: około 1830; kol.O: około 1830";brak nazwiska ojca (kol. H pusta)
+U000963;958;akt;1830;44;Kozyra;Wawrzeniec;;;Szczepan;;;;;;Bosak?;;;;kol.G: Szczepan i Bosak?;"brak imienia matki, 'Bosak?' w polu nazwiska; brak nazwiska ojca (kol. H pusta); znak '?' w imieniu/nazwisku rodzica"
+U000964;959;akt;1830;13;Krawczyk;Walenty;;;Woyciech;;;;;Zofia;Kaczeńska;;;;kol.G: Woyciech i Zofia Kaczeńska;brak nazwiska ojca (kol. H pusta)
+U000965;960;akt;1830;59;Król;Franciszek;;;;;;;;Rozalia;Król;;;;kol.G: Rozalia Król;jedna osoba w G, rola niejasna (matka?)
+U000966;961;akt;1830;15;Kurczak;Benedykt;;;Maciey;;;;;?;?;;;;kol.G: Maciey i ?;"brak nazwiska ojca (kol. H pusta); znak '?' w imieniu/nazwisku rodzica"
+U000967;962;akt;1830;26;Kurczak;Stanisław;;;Woyciech;;;;;Bregida;Kozak?;;;;kol.G: Woyciech i Bregida Kozak?;"brak nazwiska ojca (kol. H pusta); znak '?' w imieniu/nazwisku rodzica"
+U000968;963;akt;1830;20;Liberowska;Maryianna;;;Marcin;;;;;Zofia;Dobrzańska;;;;kol.G: Marcin i Zofia Dobrzańska;brak nazwiska ojca (kol. H pusta)
+U000969;964;akt;1830;67;Machulek;Tomasz;;;Józef;;;;;Franciszka;Mazur;;;;kol.G: Józef i Franciszka Mazur;brak nazwiska ojca (kol. H pusta)
+U000970;965;akt;1830;14;Mazurek;Zofiia;;;Józef;;;;;Barbara;Kartacz?;;;;kol.G: Józef i Barbara Kartacz?;"brak nazwiska ojca (kol. H pusta); znak '?' w imieniu/nazwisku rodzica"
+U000971;966;akt;1830;64;Mcisło;Tomasz;;;Józef;;;;;Tekla;Bosak;;;;kol.G: Józef i Tekla Bosak;brak nazwiska ojca (kol. H pusta)
+U000972;967;akt;1830;52;Nieściór;Katarzyna;;;Stanisław;;;;;Agnieszka;Cwik;;;;kol.G: Stanisław i Agnieszka Cwik;brak nazwiska ojca (kol. H pusta)
+U000973;968;akt;1830;43;Obydź;Dominik;;;Woyciech;;;;;Agniszka;Baran;;;;kol.G: Woyciech i Agniszka Baran;brak nazwiska ojca (kol. H pusta)
+U000974;969;akt;1830;9;Ogon;Marianna;;;Antoni;;;;;Franciszka;Pikuła;;;;kol.G: Antoni i Franciszka Pikuła;brak nazwiska ojca (kol. H pusta)
+U000975;970;akt;1830;8;Pasternak;Walenty;;;Maciey;;;;;Maryanna;Kosidło;;;;kol.G: Maciey i Maryanna Kosidło;brak nazwiska ojca (kol. H pusta)
+U000977;971;akt;1830;50;Pawłasek;Konstancyia;;;Józef;;;;;Agniszka;Woytowicz;;;;kol.G: Józef i Agniszka Woytowicz;brak nazwiska ojca (kol. H pusta)
+U000978;972;akt;1830;12;Pawłasek;Scholastyka;;;Mateusz;;;;;Elżbieta;Ciesuk?;;;;kol.G: Mateusz Elżbieta Ciesuk?;"brak nazwiska ojca (kol. H pusta); znak '?' w imieniu/nazwisku rodzica"
+U000976;973;akt;1830;30;Pawłasek;Stanisław;;;?;;;;;Zofia;Pazdrak;;;;kol.G: ? i Zofia Pazdrak;"brak nazwiska ojca (kol. H pusta); znak '?' w imieniu/nazwisku rodzica"
+U000979;974;akt;1830;1;Pazdrak;Marianna;;;Andrzey;;;;;Anastazya;Pawłasek;;;;kol.G: Andrzey i Anastazya Pawłasek;brak nazwiska ojca (kol. H pusta)
+U000980;975;akt;1830;49;Pazdrak;Wawrzeniec;;;Kazimierz;;;;;Maryanna;Zeręba;;;;kol.G: Kazimierz i Maryanna Zeręba;brak nazwiska ojca (kol. H pusta)
+U000981;976;akt;1830;35;Pcion;Jan;;;Marcin;;;;;Teresa;Kawecka;;;;kol.G: Marcin i Teresa Kawecka;brak nazwiska ojca (kol. H pusta)
+U000982;977;akt;1830;41;Pcionek;Anna;;;Marcin;;;;;Anastazya;Jachura;;;;kol.G: Marcin i Anastazya Jachura;brak nazwiska ojca (kol. H pusta)
+U000983;978;akt;1830;18;Pcionek;Marianna;;;Wincenty;;;;;Anna;Kędzora?;;;;kol.G: Wincenty i Anna Kędzora?;"brak nazwiska ojca (kol. H pusta); znak '?' w imieniu/nazwisku rodzica"
+U000984;979;akt;1830;38;Pcionek;Piotr;;;Woyciech;;;;;Katarzyna;Paciorek;;;;kol.G: Woyciech i Katarzyna Paciorek;brak nazwiska ojca (kol. H pusta)
+U000986;981;akt;1830;63;Rębecka;Agniszka;;;Stanisław;;;;;Anaztazya;Rybak;;;;kol.G: Stanisław i Anaztazya Rybak;brak nazwiska ojca (kol. H pusta)
+U000987;982;akt;1830;33;Sikorska , Sikora;Marianna;;;Jan;;;;;Franciszka;Stefańska?;;;;kol.G: Jan i Franciszka Stefańska?;"brak nazwiska ojca (kol. H pusta); znak '?' w imieniu/nazwisku rodzica"
+U000988;983;akt;1830;4;Sobolewska;Agniszka;;;Woyciech;;;;;Katarzyna;Kowalska;;;;kol.G: Woyciech i Katarzyna Kowalska;brak nazwiska ojca (kol. H pusta)
+U000989;984;akt;1830;31;Sobutka;Zuzanna;;;Woyciech;;;;;Franciszka;Boczek;;;;kol.G: Woyciech i Franciszka Boczek;brak nazwiska ojca (kol. H pusta)
+U000990;985;akt;1830;24;Sobutka,Sobudka;Anna;;;Marcin;;;;;Maryanna;Pazdrak;;;;kol.G: Marcin i Maryanna Pazdrak;brak nazwiska ojca (kol. H pusta)
+U000991;986;akt;1830;28;Solarz;Konstancyia;;;;;;;;Agata;Solarz;;;;kol.G: Agata Solarz;jedna osoba w G, rola niejasna (matka?)
+U000992;987;akt;1830;19;Spryszak;Maciey;;;Wincenty;;;;;Agniszka;Tryk;;;;kol.G: Wincenty i Agniszka Tryk;brak nazwiska ojca (kol. H pusta)
+U000993;988;akt;1830;56;Stępien;Szymon;;;Maciey;;;;;Dorota;Solarz;;;;kol.G: Maciey i Dorota Solarz;brak nazwiska ojca (kol. H pusta)
+U000994;989;akt;1830;10;Stępnik;Jadwiga;;;Józef;;;;;Katarzyna;Kędziora;;;;kol.G: Józef i Katarzyna Kędziora;brak nazwiska ojca (kol. H pusta)
+U000995;990;akt;1830;6;Sulowska;Dorota;;;Franciszek;;;;;Maryanna;Kopyt;;;;kol.G: Franciszek i Maryanna Kopyt;brak nazwiska ojca (kol. H pusta)
+U000996;991;akt;1830;51;Szabat;Wawrzeniec;;;Woyciech;;;;;Teresa;Bucoń;;;;kol.G: Woyciech i Teresa Bucoń;brak nazwiska ojca (kol. H pusta)
+U000997;992;akt;1830;36;Szuba;Antoni;;;Wincenty;;;;;Franciszka;Kurczak;;;;kol.G: Wincenty i Franciszka Kurczak;brak nazwiska ojca (kol. H pusta)
+U000998;993;akt;1830;5;Wieleba;Marianna;;;Józef;;;;;Maryanna;Boczek;;;;kol.G: Józef i Maryanna Boczek;brak nazwiska ojca (kol. H pusta)
+U000999;994;akt;1830;3;Wieleba;Marianna;;;Woyciech;;;;;Katarzyna;Kot;;;;kol.G: Woyciech i Katarzyna Kot;brak nazwiska ojca (kol. H pusta)
+U001000;995;akt;1830;22;Wolski;Woyciech;;;Michał;;;;;Anna;Goch;;;;kol.G: Michał i Anna Goch;brak nazwiska ojca (kol. H pusta)
+U001001;996;akt;1830;34;Woś;Antoni;;;Jakub;;;;;Maryanna;Gaier?;;;;kol.G: Jakub i Maryanna Gaier?;"brak nazwiska ojca (kol. H pusta); znak '?' w imieniu/nazwisku rodzica"
+U001002;997;akt;1830;39;Zielenska;Magdalena;;;Woyciech;;;;;Katarzyna;Król;;;;kol.G: Woyciech i Katarzyna Król;brak nazwiska ojca (kol. H pusta)
+U001003;998;akt;1830;37;Zych;Anna;;;Jakub;;;;;Jadwiga;Wnuk;;;;kol.G: Jakub i Jadwiga Wnuk;brak nazwiska ojca (kol. H pusta)
+;1058;akt;1832;23;Kopiwoda;Piotr;;;Antoni;Kopiwoda;;;Blinów;Marianna;Woś;;;;"kol.G: Antoni; kol.J: około 1832; kol.L: Marianna; kol.M: Woś";
+U001078;1073;akt;1832;1;Kurczak;Agnieszka;;;Maciej;;;;;Marianna;Rekrotow;;;;kol.G: c.Macieja i Marianny z Rekrotow;"c. (córka) Macieja i Marianny z Rekrotów: nazwisko panieńskie matki; brak nazwiska ojca (kol. H pusta)"
+U001080;1075;akt;1832;64;Michalak;Karol;;;Walenty;;;;;Katarzyna;Kurczakow;;;;kol.G: s.Walentego i Katarzyny z Kurczakow;"s. (syn) Walentego i Katarzyny z Kurczaków: nazwisko panieńskie matki; brak nazwiska ojca (kol. H pusta)"
+U001081;1076;akt;1832;2;Mochulczonka;Agnieszka;;;Józef;;;;;Franciszka;Mazurkow;;;;kol.G: c. Józefa i Franciszki z Mazurkow;"c. (córka) Józefa i Franciszki z Mazurków: nazwisko panieńskie matki; brak nazwiska ojca (kol. H pusta)"
+U001363;1358;akt;1837;54;Jachura;Walenty;;;;;;;;;;;;;kol.G: z boku dopisane nazwisko Kwasik;w G tylko dopisek 'z boku dopisane nazwisko Kwasik', brak rodziców
+U001528;1522;akt;1840;3;Jachura;Marianna;;;Jan;;;;;Franciszka;Stępień;;;;kol.G: c. Jana i Franciszki Stępień;"c. (córka) Jana i Franciszki Stępień; brak nazwiska ojca (kol. H pusta)"

@@ -1,0 +1,150 @@
+1545 | ojc=Józefa | mat=Jadwigi | nazw=Wscisło | fl=dopełniacz w G (c. Józefa i Jadwigi)
+1556 | ojc=Józefa | mat=Katarzyny | nazw=Czerneckiej | fl=dopełniacz w G
+1564 | ojc=Jana | mat=Anny | nazw=Garbacz | fl=dopełniacz w G
+1568 | ojc=Jan | mat=Jadwiga | nazw=Tupaj
+1569 | ojc=Jakub | mat=Konstancja | nazw=Ciećko
+1570 | ojc=Wawrzyniec | mat=Marianna | nazw=Dobrzyńska
+1572 | ojc=Walenty | mat=Zofia | nazw=Czarnecka
+1573 | ojc=Błażej | mat=Józefa | nazw=Ofiarska
+1577 | ojc=Antoni | mat=Zofia | nazw=Goch
+1578 | ojc=Antoni | mat=Marianna | nazw=Sagan
+1579 | ojc=Jan | mat=Marianna | nazw=Pietraszek
+1581 | ojc=Tadeusz | mat=Agnieszka | nazw=Bucoń
+1582 | ojc=Andrzej | mat=Anna | nazw=Szyszka
+1583 | ojc=Maciej | mat=Jadwiga | nazw=Jakubaszek
+1584 | ojc=Wojciech | mat=Zofia | nazw=Baran
+1586 | ojc=Andrzej | mat=Katarzyna | nazw=Michałek
+1587 | ojc=Wojciech | mat=Katarzyna | nazw=Dobrzyńska
+1588 | ojc=Grzegorz | mat=Marianna | nazw=Jenalacka
+1590 | ojc=Maciej | mat=Rozalia | nazw=Nastajecka
+1591 | ojc=Kazimierz | mat=Katarzyna | nazw=Adamek
+1593 | ojc=Tomasz | mat=Magdalena | nazw=Paluch
+1596 | ojc=Paweł | mat=Zofia | nazw=Kozaczek
+1597 | ojc=Józef | mat=Jadwiga | nazw=Głaz
+1598 | ojc=Marcin | mat=Marianna | nazw=Baran
+1601 | ojc=Maciej | mat=Tekla | nazw=Sagan
+1603 | ojc=Kazimierz | mat=Marianna | nazw=Kondra
+1604 | ojc=Michał | mat=Jadwiga | nazw=Pasternak
+1605 | ojc=Jakub | mat=Anna | nazw=Głaz
+1606 | ojc=Józef | mat=Rozalia | nazw=Kaczyńska
+1608 | ojc=Walenty | mat=Katarzyna | nazw=Kurczak
+1609 | ojc=Mateusz | mat=Elżbieta | nazw=Cisak
+1610 | ojc=Jakub | mat=Marianna | nazw=Pazdrak
+1611 | ojc=Andrzej | mat=Marianna | nazw=Wieleba
+1612 | ojc=Marcin | mat=Anastazja | nazw=Jachura
+1613 | ojc=Michał | mat=Rozalia | nazw=Koguc
+1614 | ojc=Franciszek | mat=Katarzyna | nazw=Pazdrak
+1615 | ojc=Sebastian | mat=Ewa | nazw=Samuel
+1617 | ojc=Wincenty | mat=Agnieszka | nazw=Tryk
+1618 | ojc=Jan | mat=Zofia | nazw=Ofiarska
+1620 | ojc=Wojciech | mat=Franciszka | nazw=Gąska
+1621 | ojc=Wincenty | mat=Franciszka | nazw=Kurczak
+1624 | ojc=Józef | mat=Marianna | nazw=Boczek
+1625 | ojc=Józef | mat=Marianna | nazw=Pcion
+1627 | ojc=Maciej | mat=Zofia | nazw=Siemion
+1628 | ojc=Józef | mat=Marianna | nazw=Chwałko
+1844 | ojc=Józefa | mat=Marianny | fl=dopełniacz w G (s. Józefa i Marianny); nazwisko dziecka nieczytelne
+1846 | ojc=Tomasza | fl=dopełniacz w G (c. Tomasza); brak matki w G
+1848 | fl=w G tylko 'nazwisko nieczytelne'
+1849 | ojc=Walentego | fl=dopełniacz w G (s. Walentego); brak matki w G
+1853 | ojc=Piotra | fl=dopełniacz w G (s Piotra); brak matki w G
+1854 | ojc=Antoniego | fl=dopełniacz w G (s Antoniego); brak matki w G
+1856 | ojc=Jana | mat=Marianny | nazw=Obydź | fl=dopełniacz w G (c Jana i Marianny Obydź)
+1860 | fl=w G tylko 'nazwisko nieczytelne'
+1861 | fl=w G tylko 'Kydzień ?' (niejasne, czy nazwisko rodzica)
+1862 | ojc=Jana | mat=Zofii | nazw=Nieściur | fl=dopełniacz w G (c Jana i Zofii Nieściur)
+1868 | ojc=Macieja | fl=dopełniacz w G (s Macieja); brak matki w G
+1870 | mat=Marianna | nazw=Kosidłowa | fl=wdowa (z Marianny Kosidłowej wdowy); ojciec nie podany
+1873 | fl=w G tylko 'Łatka' (bez rodziców)
+1877 | mat=Antonina | nazw=Michałkówna | fl=niezamężna (z Antoniny Michałkówny niezamężnej); ojciec nie podany
+1878 | fl=w G dopisek: ślub w 1910 roku w Barorzu (nie rodzice)
+1879 | ojc=Andrzeja | fl=dopełniacz w G (c Andrzeja); brak matki w G
+1884 | ojc=Andrzeja | fl=dopełniacz w G (s Andrzeja); brak matki w G
+1885 | mat=Katarzyna | nazw=Pawłaskowa | fl=wdowa (s. Katatzyny Pawłaskowej); pisownia 'Katatzyny' zachowana; ojciec nie podany
+1887 | ojc=Michała | mat=Rozalii | nazw=Koguc | fl=dopełniacz w G (c Michała i Rozalii Koguc)
+1890 | ojc=Andrzeja | mat=Agnieszki | nazw=Sagan | fl=dopełniacz w G (c Andrzeja i Agnieszki Sagan)
+1891 | mat=Katarzyna | matw=37 | fl=niezamężna lat 37 (w G); ojciec nie podany
+1893 | fl=w G tylko 'Szydłowska'
+1896 | mat=Marii | fl=niezamężna (z Marii niezamężnej); ojciec nie podany
+1897 | fl=w G tylko 'Wójtowicz ?'
+1898 | fl=w G tylko 'nazwisko nieczytelne'
+1899 | ojc=Gabryela | mat=Marianny | nazw=Dulkoskich | fl=dopełniacz w G; ojciec tkacz (c Gabryela (tkacza) i Marianny z Dulkoskich)
+1907 | fl=w G tylko 'Chornikowski'
+1938 | fl=w G tylko 'nazwisko nieczytelne'
+1939 | fl=w G tylko 'Łach'
+1943 | fl=w G tylko 'Machulak'
+1944 | fl=w G tylko 'Machulak'
+1949 | fl=w G tylko 'Paczkowski'
+1968 | fl=w G tylko 'Szydłowska'
+1974 | fl=w G tylko 'Wójtowicz ?'
+2046 | fl=w G 'brak karty'
+2156 | fl=w G 'nazw. ?'
+2159 | fl=w G 'nazw. ?'
+2348 | miejsc=Blinów | ojc=Paweł | mat=Maryanna | nazw=Kosidło
+2349 | miejsc=Blinów | ojc=Dominik | mat=Ewa | nazw=Dobrzynska
+2350 | miejsc=Brzozówka | ojc=Franciszek | mat=Jadwiga | nazw=Czuba
+2351 | miejsc=Brzozówka | ojc=Szczepan | mat=Tekla | nazw=Chmiel
+2352 | miejsc=Blinów | ojc=Błażey | mat=Agnieszka | nazw=Pawłasek
+2353 | miejsc=Brzozówka | ojc=Walenty | mat=Jadwiga | nazw=Łapinska
+2354 | miejsc=Blinów | ojc=Jan | mat=Katarzyna | nazw=Baran
+2355 | miejsc=Brzozówka | ojc=Adam | mat=Anna | nazw=Czyżoska?
+2356 | miejsc=Blinów | ojc=Andrzey | mat=Jadwiga | nazw=Kosidlak
+2357 | miejsc=Brzozówka | ojc=Antoni | mat=Zofia | nazw=G... ? | fl=nazwisko matki niepełne
+2358 | miejsc=Blinów | ojc=Paweł | mat=Jadwiga | nazw=Kosidło
+2359 | miejsc=Moczydła | ojc=Tomasz | mat=Zofia | nazw=Zuń?
+2360 | miejsc=Blinów | ojc=Franciszek | mat=Marianna | nazw=Solarz
+2361 | miejsc=Blinów | ojc=Woyciech | mat=Katarzyna | nazw=Krol
+2362 | miejsc=Blinów | ojc=Michał | mat=Katarzyna | nazw=Gieło?
+2363 | miejsc=Moczydła | ojc=Grzegorz | mat=Agnieszka | nazw=Machulak
+2364 | miejsc=Blinów | ojc=Piotr | mat=Maryanna | nazw=Jędrzeyczak
+2365 | miejsc=Blinów | ojc=Tomasz | mat=Franciszka | nazw=Jagieło
+2366 | miejsc=Moczydła | ojc=Jan | mat=Franciszka | nazw=Stępień
+2367 | miejsc=Blinów | ojc=Jakob | mat=Katarzyna | nazw=Olech | fl=brak 'i' między rodzicami w G
+2368 | miejsc=Moczydła | ojc=Andrzey | mat=Anna | nazw=Szyszka
+2369 | miejsc=Moczydła | ojc=Andrzey | mat=Maryanna | nazw=... | fl=nazwisko matki niepełne (...)
+2370 | miejsc=Brzozówka | ojc=Michał | mat=Magdalena | nazw=Saia?
+2371 | miejsc=Blinów | ojc=Maciey | mat=Jadwiga | nazw=Jakubaszek
+2372 | miejsc=Blinów | mat=Teresa | nazw=Jędrzeyczak | fl=jedna osoba w G, rola niejasna (matka?)
+2373 | miejsc=Blinów | ojc=Jakob | mat=Maryanna | nazw=Szuba
+2374 | miejsc=Blinów | ojc=Marcin | mat=Zofia | nazw=Jachura
+2375 | miejsc=Moczydła | ojc=Krzysztof | mat=J.. | nazw=Dalroska?
+2376 | miejsc=Moczydła | ojc=Jan | mat=Zofia | nazw=Nieściur?
+2377 | miejsc=Brzozówka | ojc=Jan | mat=Katarzyna | nazw=Głowacka
+2378 | miejsc=Blinów | ojc=Woyciech | mat=.. | nazw=Jachura | fl=imię matki nieczytelne (..)
+2379 | miejsc=Blinów | ojc=Marcin | mat=Katarzyna | nazw=Kurczak
+2380 | miejsc=Moczydła | ojc=Tomasz | mat=Maryanna | nazw=Pawłasek
+2381 | miejsc=Blinów | ojc=Andrzey | mat=Agata | nazw=Jędrzeyczak
+2382 | miejsc=Blinów | ojc=Tomasz | mat=Małgorzata | nazw=Praczyk
+2383 | miejsc=Moczydła | ojc=Szymon | mat=Maryanna | nazw=Wieleba
+2384 | miejsc=Blinów | ojc=Tomasz | mat=Tekla | nazw=Gnat
+2385 | miejsc=Moczydła | ojc=Wawrzyniec | mat=Magdalena | nazw=Pscionek
+2386 | miejsc=Blinów | ojc=Jan | mat=Maryanna | nazw=Dzibro?
+2387 | miejsc=Blinów | ojc=Franciszek | mat=Anna | nazw=Kurczak
+2388 | miejsc=Blinów | ojc=Łukasz | mat=Katarzyna | nazw=Kurczak
+2389 | miejsc=Blinów | ojc=Paweł | mat=Katarzyna | nazw=Pakuła,Pikuła?
+2390 | miejsc=Blinów | ojc=Kazimierz | mat=Maryanna | nazw=Pawłasek
+2391 | miejsc=Brzozówka | ojc=Jan | mat=Katarzyna | nazw=Pudło
+2392 | miejsc=Moczydła | ojc=Jan | mat=Anna | nazw=Dąbroska
+2393 | miejsc=Brzozówka | ojc=Maciey | mat=Tekla | nazw=Sagan
+2394 | miejsc=Moczydła | ojc=Paweł | mat=Katarzyna | nazw=Krol
+2395 | miejsc=Brzozówka | ojc=Kazimierz | mat=Anna | nazw=Pudło
+2396 | miejsc=Moczydła | ojc=Kazimierz | mat=Anna | nazw=Jagieło
+2397 | miejsc=Blinów | ojc=Bartłomiey | mat=Anna | nazw=Rębecka
+2398 | miejsc=Blinów | ojc=Dominik | mat=Katarzyna | nazw=Krawczyk
+2399 | miejsc=Blinów | ojc=Ludwik | mat=Zofia | nazw=Kurczak
+2400 | miejsc=Blinów | ojc=Krzysztof | mat=Zofia | nazw=Widomska
+2401 | miejsc=Blinów | ojc=Tomasz | mat=Zofia | nazw=Wnuk
+2402 | miejsc=Blinów | ojc=Antoni | mat=Agnieszka | nazw=Kurczak
+2403 | miejsc=Brzozówka | mat=Maryanna | nazw=Pietras | fl=jedna osoba w G, rola niejasna (matka?)
+2404 | miejsc=Blinów | ojc=Wawrzyniec | mat=Zofa | nazw=Pasternak | fl=pisownia imienia matki 'Zofa' zachowana
+2405 | miejsc=Brzozówka | ojc=Paweł | mat=Katarzyna | nazw=Sagan
+2406 | miejsc=Blinów | ojc=Jakob | mat=Zofia | nazw=Obydz
+2407 | miejsc=Moczydła | ojc=Michał | mat=Tekla | nazw=Surma
+2408 | miejsc=Moczydła | ojc=Józef | mat=Maryanna | nazw=Suloska
+2409 | miejsc=Blinów | ojc=Jakob | mat=Zofia | nazw=Cisak?
+2410 | miejsc=Moczydła | ojc=Walenty | mat=Agnieszka | nazw=Drozd?
+2411 | miejsc=Blinów | ojc=Jan | mat=Zofia | nazw=Offierska?
+2412 | miejsc=Blinów | ojc=Bartłomiey | mat=Maryanna | nazw=Dąbroska
+2413 | miejsc=Brzozówka | ojc=Andrzey | mat=Agnieszka | nazw=Sagan
+2414 | miejsc=Blinów | ojc=Mateusz | mat=Maryanna | nazw=Machulek
+2415 | miejsc=Blinów | ojc=Antoni | mat=Zofia | nazw=Kosidło

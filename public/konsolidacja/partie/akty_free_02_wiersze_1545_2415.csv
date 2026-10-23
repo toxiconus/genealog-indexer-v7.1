@@ -1,0 +1,151 @@
+﻿id_archiwalne;wiersz_zrodlo;typ_wpisu;rok;nr;nazwisko_dziecka;imie_dziecka;data_tekst;data_iso;ojciec_imie;ojciec_nazwisko;ojciec_wiek;ojciec_rok_ur_przyb;miejscowosc;matka_imie;matka_nazwisko;matka_wiek;matka_rok_ur_przyb;karta_nr;uwagi_surowe;flagi
+U001550;1545;akt;1840;2;Paciorek;Walenty;;;Józefa;;;;;Jadwigi;Wscisło;;;;kol.G: c.Józefa i Jadwigi Wscisło;"dopełniacz w G (c. Józefa i Jadwigi); brak nazwiska ojca (kol. H pusta)"
+U001561;1556;akt;1840;1;Pscionkowna;Marianna;;;Józefa;;;;;Katarzyny;Czerneckiej;;;;kol.G: c.Józefa i Katarzyny Czerneckiej;"dopełniacz w G; brak nazwiska ojca (kol. H pusta)"
+U001569;1564;akt;1840;5;Szyska;Marianna;;;Jana;;;;;Anny;Garbacz;;;;kol.G: c Jana i Anny Garbacz;"dopełniacz w G; brak nazwiska ojca (kol. H pusta)"
+U001630;1568;akt;1841;57;Babiarz;Józefa;;;Jan;Babiarz;;;;Jadwiga;Tupaj;;;;"kol.G: Jan; kol.L: Jadwiga; kol.M: Tupaj";
+U001608;1569;akt;1841;35;Baran;Anna;;;Jakub;Baran;;;;Konstancja;Ciećko;;;;"kol.G: Jakub; kol.L: Konstancja; kol.M: Ciećko";
+U001636;1570;akt;1841;63;Baran;Ewa;;;Wawrzyniec;Baran;;;;Marianna;Dobrzyńska;;;;"kol.G: Wawrzyniec; kol.L: Marianna; kol.M: Dobrzyńska";
+U001611;1572;akt;1841;38;Biała;Marianna;;;Walenty;Biały;;;;Zofia;Czarnecka;;;;"kol.G: Walenty; kol.L: Zofia; kol.M: Czarnecka";
+U001617;1573;akt;1841;44;Brzuszkiewicz;Franciszka Lud.;;;Błażej;Brzoszkiewicz;;;;Józefa;Ofiarska;;;;"kol.G: Błażej; kol.O: około 1841; kol.L: Józefa; kol.M: Ofiarska";
+U001624;1577;akt;1841;51;Dobrzyński;Andrzej;;;Antoni;Dobrzyński;;;;Zofia;Goch;;;;"kol.G: Antoni; kol.J: około 1841; kol.O: około 1841; kol.L: Zofia; kol.M: Goch";
+U001628;1578;akt;1841;55;Dobrzyński;Andrzej;;;Antoni;Dobrzyński;;;;Marianna;Sagan;;;;"kol.G: Antoni; kol.J: około 1841; kol.O: około 1841; kol.L: Marianna; kol.M: Sagan";
+U001629;1579;akt;1841;56;Głaz;Agnieszka;;;Jan;Głaz;;;;Marianna;Pietraszek;;;;"kol.G: Jan; kol.L: Marianna; kol.M: Pietraszek";
+U001623;1581;akt;1841;50;Igras;Katarzyna;;;Tadeusz;Igras;;;;Agnieszka;Bucoń;;;;"kol.G: Tadeusz; kol.L: Agnieszka; kol.M: Bucoń";
+U001627;1582;akt;1841;54;Jachura;Jan;;;Andrzej;Jachura;;;;Anna;Szyszka;;;;"kol.G: Andrzej; kol.L: Anna; kol.M: Szyszka";
+U001606;1583;akt;1841;33;Jędrzejczak;Anna;;;Maciej;Jędrzejczak;;;;Jadwiga;Jakubaszek;;;;"kol.G: Maciej; kol.L: Jadwiga; kol.M: Jakubaszek";
+U001618;1584;akt;1841;45;Jędrzejczak;Jadwiga;;;Wojciech;Jędrzejczak;;;;Zofia;Baran;;;;"kol.G: Wojciech; kol.L: Zofia; kol.M: Baran";
+U001604;1586;akt;1841;31;Kaczyńska;Antonina;;;Andrzej;Kaczyński;;;;Katarzyna;Michałek;;;;"kol.G: Andrzej; kol.L: Katarzyna; kol.M: Michałek";
+U001597;1587;akt;1841;24;Kaczyński;Antoni;;;Wojciech;Kaczyński;;;;Katarzyna;Dobrzyńska;;;;"kol.G: Wojciech; kol.L: Katarzyna; kol.M: Dobrzyńska";
+U001598;1588;akt;1841;25;Kamiński;Antoni;;;Grzegorz;Kamiński;;;;Marianna;Jenalacka;;;;"kol.G: Grzegorz; kol.L: Marianna; kol.M: Jenalacka";
+U001595;1590;akt;1841;22;Kobierski;Stanisław;;;Maciej;Kobierski;;;;Rozalia;Nastajecka;;;;"kol.G: Maciej; kol.L: Rozalia; kol.M: Nastajecka";
+U001599;1591;akt;1841;26;Koguc;Anna;;;Kazimierz;Koguc;;;;Katarzyna;Adamek;;;;"kol.G: Kazimierz; kol.L: Katarzyna; kol.M: Adamek";
+U001607;1593;akt;1841;34;Kosidło;Marianna;;;Tomasz;Kosidło;;;;Magdalena;Paluch;;;;"kol.G: Tomasz; kol.L: Magdalena; kol.M: Paluch";
+U001621;1596;akt;1841;48;Kuczak;Katarzyna;;;Paweł;Kurczak;;;;Zofia;Kozaczek;;;;"kol.G: Paweł; kol.L: Zofia; kol.M: Kozaczek";
+U001616;1597;akt;1841;43;Kudrelek;Michał;;;Józef;Kudrelek;;;;Jadwiga;Głaz;;;;"kol.G: Józef; kol.L: Jadwiga; kol.M: Głaz";
+U001609;1598;akt;1841;36;Kurczak;Jakub;;;Marcin;Kurczak;;;;Marianna;Baran;;;;"kol.G: Marcin; kol.L: Marianna; kol.M: Baran";
+U001638;1601;akt;1841;65;Machulak;Walenty;;;Maciej;Machulak;;;;Tekla;Sagan;;;;"kol.G: Maciej; kol.L: Tekla; kol.M: Sagan";
+U001614;1603;akt;1841;41;Mazurek;Jan Stanisław;;;Kazimierz;Mazurek;;;;Marianna;Kondra;;;;"kol.G: Kazimierz; kol.L: Marianna; kol.M: Kondra";
+U001603;1604;akt;1841;30;Michałko;Antoni;;;Michał;Michałko;;;;Jadwiga;Pasternak;;;;"kol.G: Michał; kol.L: Jadwiga; kol.M: Pasternak";
+U001622;1605;akt;1841;49;Obydź;Andrzej;;;Jakub;Obydź;;;;Anna;Głaz;;;;"kol.G: Jakub; kol.L: Anna; kol.M: Głaz";
+U001613;1606;akt;1841;40;Paciorek;Marianna;;;Józef;Paciorek;;;;Rozalia;Kaczyńska;;;;"kol.G: Józef; kol.L: Rozalia; kol.M: Kaczyńska";
+U001626;1608;akt;1841;53;Pawłasek;Ewa;;;Walenty;Pawłasek;;;;Katarzyna;Kurczak;;;;"kol.G: Walenty; kol.L: Katarzyna; kol.M: Kurczak";
+U001600;1609;akt;1841;27;Pawłasek;Marianna;;;Mateusz;Pawłasek;;;;Elżbieta;Cisak;;;;"kol.G: Mateusz; kol.L: Elżbieta; kol.M: Cisak";
+U001635;1610;akt;1841;62;Pawłasek;Paweł;;;Jakub;Pawłasek;;;;Marianna;Pazdrak;;;;"kol.G: Jakub; kol.L: Marianna; kol.M: Pazdrak";
+U001602;1611;akt;1841;29;Pawłasek;Piotr;;;Andrzej;Pawłasek;;;;Marianna;Wieleba;;;;"kol.G: Andrzej; kol.L: Marianna; kol.M: Wieleba";
+U001610;1612;akt;1841;37;Pcionek;Wawrzyniec;;;Marcin;Pcionek;;;;Anastazja;Jachura;;;;"kol.G: Marcin; kol.L: Anastazja; kol.M: Jachura";
+U001601;1613;akt;1841;28;Piech;Antonina;;;Michał;Piech;;;;Rozalia;Koguc;;;;"kol.G: Michał; kol.L: Rozalia; kol.M: Koguc";
+U001620;1614;akt;1841;47;Pyć;Tomasz;;;Franciszek;Pyć;;;;Katarzyna;Pazdrak;;;;"kol.G: Franciszek; kol.L: Katarzyna; kol.M: Pazdrak";
+U001596;1615;akt;1841;23;Samuel;Zofia;;;Sebastian;Samuel;;;;Ewa;Samuel;;;;"kol.G: Sebastian; kol.L: Ewa; kol.M: Samuel";
+U001612;1617;akt;1841;39;Spryszak;Franciszka;;;Wincenty;Spryszak;;;;Agnieszka;Tryk;;;;"kol.G: Wincenty; kol.L: Agnieszka; kol.M: Tryk";
+U001637;1618;akt;1841;64;Spryszak;Marianna;;;Jan;Spryszak;;;;Zofia;Ofiarska;;;;"kol.G: Jan; kol.L: Zofia; kol.M: Ofiarska";
+U001619;1620;akt;1841;46;Szabat;Andrzej;;;Wojciech;Szabat;;;;Franciszka;Gąska;;;;"kol.G: Wojciech; kol.L: Franciszka; kol.M: Gąska";
+U001633;1621;akt;1841;60;Szuba;Agata;;;Wincenty;Szuba;;;;Franciszka;Kurczak;;;;"kol.G: Wincenty; kol.L: Franciszka; kol.M: Kurczak";
+U001605;1624;akt;1841;32;Wieleba;Józefa;;;Józef;Wieleba;;;;Marianna;Boczek;;;;"kol.G: Józef; kol.L: Marianna; kol.M: Boczek";
+U001634;1625;akt;1841;61;Wieleba;Mikołaj;;;Józef;Wieleba;;;;Marianna;Pcion;;;;"kol.G: Józef; kol.L: Marianna; kol.M: Pcion";
+U001631;1627;akt;1841;58;Woś;Andrzej;;;Maciej;Woś;;;;Zofia;Siemion;;;;"kol.G: Maciej; kol.L: Zofia; kol.M: Siemion";
+U001615;1628;akt;1841;42;Woś;Franciszek;;;Józef;Woś;;;;Marianna;Chwałko;;;;"kol.G: Józef; kol.L: Marianna; kol.M: Chwałko";
+U001854;1844;akt;1845;19;?;Grzegorz;;;Józefa;;;;;Marianny;;;;;kol.G: nazwisko nieczytelne, s. Józefa i Marianny;"dopełniacz w G (s. Józefa i Marianny); nazwisko dziecka nieczytelne; brak nazwiska ojca (kol. H pusta)"
+U001856;1846;akt;1845;37;Baran;Anna;;;Tomasza;;;;;;;;;;"kol.G: c. Tomasza; kol.J: około 1845; kol.O: około 1845";"dopełniacz w G (c. Tomasza); brak matki w G; brak nazwiska ojca (kol. H pusta)"
+U001858;1848;akt;1845;13;Bencał ?;Józef;;;;;;;;;;;;;kol.G: nazwisko nieczytelne;w G tylko 'nazwisko nieczytelne'
+U001859;1849;akt;1845;25;Biały;Wojciech;;;Walentego;;;;;;;;;;kol.G: s. Walentego;"dopełniacz w G (s. Walentego); brak matki w G; brak nazwiska ojca (kol. H pusta)"
+U001864;1853;akt;1845;16;Dobrzyński;Józef;;;Piotra;;;;;;;;;;"kol.G: s Piotra; kol.J: około 1845; kol.O: około 1845";"dopełniacz w G (s Piotra); brak matki w G; brak nazwiska ojca (kol. H pusta)"
+U001863;1854;akt;1845;24;Dobrzyński;Wincenty;;;Antoniego;;;;;;;;;;"kol.G: s Antoniego; kol.J: około 1845; kol.O: około 1845";"dopełniacz w G (s Antoniego); brak matki w G; brak nazwiska ojca (kol. H pusta)"
+U001866;1856;akt;1845;26;Gnat;Marianna;;;Jana;;;;;Marianny;Obydź;;;;kol.G: c Jana i Marianny Obydź;"dopełniacz w G (c Jana i Marianny Obydź); brak nazwiska ojca (kol. H pusta)"
+U001871;1860;akt;1845;36;K ?;Dominik;;;;;;;;;;;;;kol.G: nazwisko nieczytelne;w G tylko 'nazwisko nieczytelne'
+U001870;1861;akt;1845;23;K ?;Ewa;;;;;;;;;;;;;kol.G: Kydzień ?;w G tylko 'Kydzień ?' (niejasne, czy nazwisko rodzica)
+U001872;1862;akt;1845;2;Kania;Agnieszka;;;Jana;;;;;Zofii;Nieściur;;;;"kol.G: c Jana i Zofii Nieściur; kol.J: około 1845; kol.O: około 1845";"dopełniacz w G (c Jana i Zofii Nieściur); brak nazwiska ojca (kol. H pusta)"
+U001876;1868;akt;1845;48;Kosidło;Ignacy;;;Macieja;;;;;;;;;;kol.G: s Macieja;"dopełniacz w G (s Macieja); brak matki w G; brak nazwiska ojca (kol. H pusta)"
+U001877;1870;akt;1845;11;Kosidło;Wojciech;;;;;;;;Marianna;Kosidłowa;;;;kol.G: z Marianny Kosidłowej wdowy;"wdowa (z Marianny Kosidłowej wdowy); ojciec nie podany"
+U001883;1873;akt;1845;41;Łatka;Michał;;;;;;;;;;;;;kol.G: Łatka;w G tylko 'Łatka' (bez rodziców)
+U001887;1877;akt;1845;50;Michałek ?;Marcin;;;;;;;;Antonina;Michałkówna;;;;kol.G: z Antoniny Michałkówny niezamężnej;"niezamężna (z Antoniny Michałkówny niezamężnej); ojciec nie podany"
+U001888;1878;akt;1845;44;Nieściur;Andrzej;;;;;;;;;;;;;"kol.G: dopisek: ślub w 1910 roku w Barorzu; kol.J: około 1845; kol.O: około 1845";w G dopisek: ślub w 1910 roku w Barorzu (nie rodzice)
+U001889;1879;akt;1845;4;Ogon;Magdalena;;;Andrzeja;;;;;;;;;;kol.G: c Andrzeja;"dopełniacz w G (c Andrzeja); brak matki w G; brak nazwiska ojca (kol. H pusta)"
+U001892;1884;akt;1845;46;Pawłasek;Tomasz;;;Andrzeja;;;;;;;;;;kol.G: s Andrzeja;"dopełniacz w G (s Andrzeja); brak matki w G; brak nazwiska ojca (kol. H pusta)"
+U001893;1885;akt;1845;27;Pawłasek;Wojciech;;;;;;;;Katarzyna;Pawłaskowa;;;;kol.G: s. Katatzyny Pawłaskowej (wdowy);"wdowa (s. Katatzyny Pawłaskowej); pisownia 'Katatzyny' zachowana; ojciec nie podany"
+U001897;1887;akt;1845;1;Piech;Agnieszka;;;Michała;;;;;Rozalii;Koguc;;;;"kol.G: c Michała i Rozalii Koguc; kol.J: około 1845; kol.O: około 1845";"dopełniacz w G (c Michała i Rozalii Koguc); brak nazwiska ojca (kol. H pusta)"
+U001900;1890;akt;1845;49;Stręciwilk;Katarzyna;;;Andrzeja;;;;;Agnieszki;Sagan;;;;kol.G: c Andrzeja i Agnieszki Sagan;"dopełniacz w G (c Andrzeja i Agnieszki Sagan); brak nazwiska ojca (kol. H pusta)"
+U001901;1891;akt;1845;20;Studziński;Józef;;;;;;;;Katarzyna;;37;~1808;;kol.G: s. Katarzyny (nie zamężnej lat 37);"niezamężna lat 37 (w G); ojciec nie podany"
+U001903;1893;akt;1845;17;Szydłoska;Józefa;;;;;;;;;;;;;kol.G: Szydłowska;w G tylko 'Szydłowska'
+U001906;1896;akt;1845;38;Wnuk;Dominik;;;;;;;;Marii;;;;;kol.G: z Marii niezamężnej;"niezamężna (z Marii niezamężnej); ojciec nie podany"
+U001907;1897;akt;1845;9;Woytowicz;Walenty;;;;;;;;;;;;;kol.G: Wójtowicz ?;w G tylko 'Wójtowicz ?'
+U001910;1898;akt;1846;66;?;Marcin;;;;;;;;;;;;;kol.G: nazwisko nieczytelne;w G tylko 'nazwisko nieczytelne'
+U001909;1899;akt;1846;68;?;Waleria Katarzyna;;;Gabryela;;;;;Marianny;Dulkoskich;;;;kol.G: c Gabryela (tkacza) i Marianny z Dulkoskich;"dopełniacz w G; ojciec tkacz (c Gabryela (tkacza) i Marianny z Dulkoskich); brak nazwiska ojca (kol. H pusta)"
+U001918;1907;akt;1846;74;Chornikoski;Andrzej;;;;;;;;;;;;;kol.G: Chornikowski;w G tylko 'Chornikowski'
+U001950;1938;akt;1846;29;Ł ?;Katarzyna;;;;;;;;;;;;;kol.G: nazwisko nieczytelne;w G tylko 'nazwisko nieczytelne'
+U001949;1939;akt;1846;50;Łach;Franciszka;;;;;;;;;;;;;kol.G: Łach;w G tylko 'Łach'
+U001955;1943;akt;1846;55;Machulek;Franciszek;;;;;;;;;;;;;kol.G: Machulak;w G tylko 'Machulak'
+U001954;1944;akt;1846;47;Machulek;Rozalia;;;;;;;;;;;;;kol.G: Machulak;w G tylko 'Machulak'
+U001960;1949;akt;1846;77;Parzkoski;Marianna;;;;;;;;;;;;;kol.G: Paczkowski;w G tylko 'Paczkowski'
+U001979;1968;akt;1846;34;Szydłoska;Anna;;;;;;;;;;;;;kol.G: Szydłowska;w G tylko 'Szydłowska'
+U001985;1974;akt;1846;69;Woytowicz;Katarzyna;;;;;;;;;;;;;kol.G: Wójtowicz ?;w G tylko 'Wójtowicz ?'
+U002059;2046;akt;1848;4;Kamieniak;Franciszka;;;;;;;;;;;;;kol.G: brak karty;w G 'brak karty'
+U002171;2156;akt;1850;8;Ciećko;Walenty;;;;;;;;;;;;;kol.G: nazw. ?;w G 'nazw. ?'
+U002174;2159;akt;1850;63;Dziewa;Katarzyna;;;;;;;;;;;;;kol.G: nazw. ?;w G 'nazw. ?'
+U002367;2348;akt;1853;53;Baran;Michał;;;Paweł;;;;Blinów;Maryanna;Kosidło;;;;kol.G: Blinów , Paweł i Maryanna Kosidło;brak nazwiska ojca (kol. H pusta)
+U002366;2349;akt;1853;73;Baran;Wiktorya;;;Dominik;;;;Blinów;Ewa;Dobrzynska;;;;kol.G: Blinów , Dominik i Ewa Dobrzynska;brak nazwiska ojca (kol. H pusta)
+U002368;2350;akt;1853;72;Brzeska;Katarzyna;;;Franciszek;;;;Brzozówka;Jadwiga;Czuba;;;;"kol.G: Brzozówka , Franciszek i Jadwiga Czuba; kol.O: około 1853";brak nazwiska ojca (kol. H pusta)
+U002369;2351;akt;1853;29;Brzuszkiewicz;Aniela;;;Szczepan;;;;Brzozówka;Tekla;Chmiel;;;;"kol.G: Brzozówka , Szczepan i Tekla Chmiel; kol.O: około 1853";brak nazwiska ojca (kol. H pusta)
+U002370;2352;akt;1853;69;Bucoń;Katarzyna;;;Błażey;;;;Blinów;Agnieszka;Pawłasek;;;;"kol.G: Blinów , Błażey i Agnieszka Pawłasek; kol.J: około 1853; kol.O: około 1853";brak nazwiska ojca (kol. H pusta)
+U002371;2353;akt;1853;27;Bucoń;Walenty;;;Walenty;;;;Brzozówka;Jadwiga;Łapinska;;;;"kol.G: Brzozówka , Walenty i Jadwiga Łapinska; kol.J: około 1853; kol.O: około 1853";brak nazwiska ojca (kol. H pusta)
+U002372;2354;akt;1853;8;Chmiel;Paweł;;;Jan;;;;Blinów;Katarzyna;Baran;;;;kol.G: Blinów , Jan i Katarzyna Baran;brak nazwiska ojca (kol. H pusta)
+U002373;2355;akt;1853;51;Dębicki;Emilian Franciszek;;;Adam;;;;Brzozówka;Anna;Czyżoska?;;;;kol.G: Brzozówka , Adam i Anna Czyżoska?;"brak nazwiska ojca (kol. H pusta); znak '?' w imieniu/nazwisku rodzica"
+U002374;2356;akt;1853;42;Dobrzyńska;Magdalena;;;Andrzey;;;;Blinów;Jadwiga;Kosidlak;;;;"kol.G: Blinów , Andrzey i Jadwiga Kosidlak; kol.J: około 1853; kol.O: około 1853";brak nazwiska ojca (kol. H pusta)
+U002375;2357;akt;1853;49;Dobrzyńska;Marianna;;;Antoni;;;;Brzozówka;Zofia;G... ?;;;;"kol.G: Brzozówka , Antoni i Zofia G... ?; kol.J: około 1853; kol.O: około 1853";"nazwisko matki niepełne; brak nazwiska ojca (kol. H pusta); znak '?' w imieniu/nazwisku rodzica"
+U002376;2358;akt;1853;44;Dziewa;Dominik;;;Paweł;;;;Blinów;Jadwiga;Kosidło;;;;kol.G: Blinów , Paweł i Jadwiga Kosidło;brak nazwiska ojca (kol. H pusta)
+U002377;2359;akt;1853;56;Dziewa;Marianna;;;Tomasz;;;;Moczydła;Zofia;Zuń?;;;;kol.G: Moczydła , Tomasz i Zofia Zuń?;"brak nazwiska ojca (kol. H pusta); znak '?' w imieniu/nazwisku rodzica"
+U002378;2360;akt;1853;57;Gancarz;Jadwiga;;;Franciszek;;;;Blinów;Marianna;Solarz;;;;kol.G: Blinów , Franciszek i Marianna Solarz;brak nazwiska ojca (kol. H pusta)
+U002379;2361;akt;1853;64;Głaz;Tomasz;;;Woyciech;;;;Blinów;Katarzyna;Krol;;;;kol.G: Blinów , Woyciech i Katarzyna Krol;brak nazwiska ojca (kol. H pusta)
+U002380;2362;akt;1853;65;Gnat;Szymon;;;Michał;;;;Blinów;Katarzyna;Gieło?;;;;kol.G: Blinów , Michał i Katarzyna Gieło?;"brak nazwiska ojca (kol. H pusta); znak '?' w imieniu/nazwisku rodzica"
+U002381;2363;akt;1853;5;Huda;Marianna;;;Grzegorz;;;;Moczydła;Agnieszka;Machulak;;;;kol.G: Moczydła , Grzegorz i Agnieszka Machulak;brak nazwiska ojca (kol. H pusta)
+U002383;2364;akt;1853;28;Jachura;Antonina;;;Piotr;;;;Blinów;Maryanna;Jędrzeyczak;;;;kol.G: Blinów , Piotr i Maryanna Jędrzeyczak;brak nazwiska ojca (kol. H pusta)
+U002384;2365;akt;1853;36;Jachura;Marianna;;;Tomasz;;;;Blinów;Franciszka;Jagieło;;;;kol.G: Blinów , Tomasz i Franciszka Jagieło;brak nazwiska ojca (kol. H pusta)
+U002386;2366;akt;1853;54;Jachura;Michał;;;Jan;;;;Moczydła;Franciszka;Stępień;;;;kol.G: Moczydła , Jan i Franciszka Stępień;brak nazwiska ojca (kol. H pusta)
+U002382;2367;akt;1853;74;Jachura;Szczepan;;;Jakob;;;;Blinów;Katarzyna;Olech;;;;kol.G: Blinów , Jakob Katarzyna Olech;"brak 'i' między rodzicami w G; brak nazwiska ojca (kol. H pusta)"
+U002385;2368;akt;1853;17;Jachura;Woyciech;;;Andrzey;;;;Moczydła;Anna;Szyszka;;;;kol.G: Moczydła , Andrzey i Anna Szyszka;brak nazwiska ojca (kol. H pusta)
+U002387;2369;akt;1853;12;Janik;Jan;;;Andrzey;;;;Moczydła;Maryanna;...;;;;kol.G: Moczydła , Andrzey i Maryanna ...;"nazwisko matki niepełne (...); brak nazwiska ojca (kol. H pusta)"
+U002388;2370;akt;1853;38;Jedliński;Alexander Wincenty;;;Michał;;;;Brzozówka;Magdalena;Saia?;;;;kol.G: Brzozówka , Michał i Magdalena Saia?;"brak nazwiska ojca (kol. H pusta); znak '?' w imieniu/nazwisku rodzica"
+U002389;2371;akt;1853;24;Jędrzejczak;Benedykt;;;Maciey;;;;Blinów;Jadwiga;Jakubaszek;;;;kol.G: Blinów , Maciey i Jadwiga Jakubaszek;brak nazwiska ojca (kol. H pusta)
+U002390;2372;akt;1853;61;Jędrzejczak;Szymon;;;;;;;Blinów;Teresa;Jędrzeyczak;;;;kol.G: Blinów , Teresa Jędrzeyczak;jedna osoba w G, rola niejasna (matka?)
+U002391;2373;akt;1853;13;Kaczyński;Maciey;;;Jakob;;;;Blinów;Maryanna;Szuba;;;;kol.G: Blinów , Jakob i Maryanna Szuba;brak nazwiska ojca (kol. H pusta)
+U002392;2374;akt;1853;16;Kaczyński;Maciey;;;Marcin;;;;Blinów;Zofia;Jachura;;;;kol.G: Blinów , Marcin i Zofia Jachura;brak nazwiska ojca (kol. H pusta)
+U002393;2375;akt;1853;25;Kamieniak;Zofia;;;Krzysztof;;;;Moczydła;J..;Dalroska?;;;;kol.G: Moczydła , Krzysztof i J.. Dalroska?;"brak nazwiska ojca (kol. H pusta); znak '?' w imieniu/nazwisku rodzica"
+U002394;2376;akt;1853;21;Kania;Antonina;;;Jan;;;;Moczydła;Zofia;Nieściur?;;;;kol.G: Moczydła , Jan i Zofia Nieściur?;"brak nazwiska ojca (kol. H pusta); znak '?' w imieniu/nazwisku rodzica"
+U002395;2377;akt;1853;48;Kolasa;Jadwiga;;;Jan;;;;Brzozówka;Katarzyna;Głowacka;;;;kol.G: Brzozówka , Jan i Katarzyna Głowacka;brak nazwiska ojca (kol. H pusta)
+U002399;2378;akt;1853;60;Kosidło;Jadwiga;;;Woyciech;;;;Blinów;..;Jachura;;;;kol.G: Blinów , Woyciech i .. Jachura;"imię matki nieczytelne (..); brak nazwiska ojca (kol. H pusta)"
+U002397;2379;akt;1853;22;Kosidło;Jozef;;;Marcin;;;;Blinów;Katarzyna;Kurczak;;;;kol.G: Blinów , Marcin i Katarzyna Kurczak;brak nazwiska ojca (kol. H pusta)
+U002401;2380;akt;1853;9;Kosidło;Paweł;;;Tomasz;;;;Moczydła;Maryanna;Pawłasek;;;;kol.G: Moczydła , Tomasz i Maryanna Pawłasek;brak nazwiska ojca (kol. H pusta)
+U002396;2381;akt;1853;45;Kosidło;Tekla;;;Andrzey;;;;Blinów;Agata;Jędrzeyczak;;;;kol.G: Blinów , Andrzey i Agata Jędrzeyczak;brak nazwiska ojca (kol. H pusta)
+U002398;2382;akt;1853;3;Kosidło;Walenty;;;Tomasz;;;;Blinów;Małgorzata;Praczyk;;;;kol.G: Blinów , Tomasz i Małgorzata Praczyk;brak nazwiska ojca (kol. H pusta)
+U002400;2383;akt;1853;6;Kosidło;Walenty;;;Szymon;;;;Moczydła;Maryanna;Wieleba;;;;kol.G: Moczydła , Szymon i Maryanna Wieleba;brak nazwiska ojca (kol. H pusta)
+U002402;2384;akt;1853;55;Kozaczek;Szymon;;;Tomasz;;;;Blinów;Tekla;Gnat;;;;kol.G: Blinów , Tomasz i Tekla Gnat;brak nazwiska ojca (kol. H pusta)
+U002403;2385;akt;1853;39;Kozik;Wincenty;;;Wawrzyniec;;;;Moczydła;Magdalena;Pscionek;;;;kol.G: Moczydła , Wawrzyniec i Magdalena Pscionek;brak nazwiska ojca (kol. H pusta)
+U002404;2386;akt;1853;35;Kozyra;Antonina;;;Jan;;;;Blinów;Maryanna;Dzibro?;;;;kol.G: Blinów , Jan i Maryanna Dzibro?;"brak nazwiska ojca (kol. H pusta); znak '?' w imieniu/nazwisku rodzica"
+U002405;2387;akt;1853;19;Kudrelek;Woyciech;;;Franciszek;;;;Blinów;Anna;Kurczak;;;;kol.G: Blinów , Franciszek i Anna Kurczak;brak nazwiska ojca (kol. H pusta)
+U002406;2388;akt;1853;31;Kudrelek;Woyciech;;;Łukasz;;;;Blinów;Katarzyna;Kurczak;;;;kol.G: Blinów , Łukasz i Katarzyna Kurczak;brak nazwiska ojca (kol. H pusta)
+U002407;2389;akt;1853;26;Kudrelek;Woyciech;;;Paweł;;;;Blinów;Katarzyna;Pakuła,Pikuła?;;;;kol.G: Blinów , Paweł i Katarzyna Pakuła,Pikuła?;"brak nazwiska ojca (kol. H pusta); znak '?' w imieniu/nazwisku rodzica"
+U002408;2390;akt;1853;30;Kurczak;Zofia;;;Kazimierz;;;;Blinów;Maryanna;Pawłasek;;;;kol.G: Blinów , Kazimierz i Maryanna Pawłasek;brak nazwiska ojca (kol. H pusta)
+U002409;2391;akt;1853;71;Machulak;Anna;;;Jan;;;;Brzozówka;Katarzyna;Pudło;;;;kol.G: Brzozówka , Jan i Katarzyna Pudło;brak nazwiska ojca (kol. H pusta)
+U002411;2392;akt;1853;32;Machulak;Marianna;;;Jan;;;;Moczydła;Anna;Dąbroska;;;;kol.G: Moczydła , Jan i Anna Dąbroska;brak nazwiska ojca (kol. H pusta)
+U002410;2393;akt;1853;47;Machulak;Wawrzyniec;;;Maciey;;;;Brzozówka;Tekla;Sagan;;;;kol.G: Brzozówka , Maciey i Tekla Sagan;brak nazwiska ojca (kol. H pusta)
+U002412;2394;akt;1853;41;Machulak;Wincenty;;;Paweł;;;;Moczydła;Katarzyna;Krol;;;;kol.G: Moczydła , Paweł i Katarzyna Krol;brak nazwiska ojca (kol. H pusta)
+U002413;2395;akt;1853;70;Mazurkowna;Katarzyna;;;Kazimierz;;;;Brzozówka;Anna;Pudło;;;;kol.G: Brzozówka , Kazimierz i Anna Pudło;brak nazwiska ojca (kol. H pusta)
+U002414;2396;akt;1853;66;Mędrek;Marcin;;;Kazimierz;;;;Moczydła;Anna;Jagieło;;;;kol.G: Moczydła , Kazimierz i Anna Jagieło;brak nazwiska ojca (kol. H pusta)
+U002415;2397;akt;1853;34;Mróz;Stanisław;;;Bartłomiey;;;;Blinów;Anna;Rębecka;;;;kol.G: Blinów , Bartłomiey i Anna Rębecka;brak nazwiska ojca (kol. H pusta)
+U002416;2398;akt;1853;20;Obydź;Franciszka;;;Dominik;;;;Blinów;Katarzyna;Krawczyk;;;;kol.G: Blinów , Dominik i Katarzyna Krawczyk;brak nazwiska ojca (kol. H pusta)
+U002419;2399;akt;1853;43;Pawłasek;Ignacy;;;Ludwik;;;;Blinów;Zofia;Kurczak;;;;kol.G: Blinów , Ludwik i Zofia Kurczak;brak nazwiska ojca (kol. H pusta)
+U002418;2400;akt;1853;46;Pawłasek;Katarzyna;;;Krzysztof;;;;Blinów;Zofia;Widomska;;;;kol.G: Blinów , Krzysztof i Zofia Widomska;brak nazwiska ojca (kol. H pusta)
+U002420;2401;akt;1853;4;Pawłasek;Tomasz;;;Tomasz;;;;Blinów;Zofia;Wnuk;;;;kol.G: Blinów , Tomasz i Zofia Wnuk;brak nazwiska ojca (kol. H pusta)
+U002417;2402;akt;1853;11;Pawłasek;Walenty;;;Antoni;;;;Blinów;Agnieszka;Kurczak;;;;kol.G: Blinów , Antoni i Agnieszka Kurczak;brak nazwiska ojca (kol. H pusta)
+U002421;2403;akt;1853;33;Pietras;Jakob;;;;;;;Brzozówka;Maryanna;Pietras;;;;kol.G: Brzozówka , Maryanna Pietras;jedna osoba w G, rola niejasna (matka?)
+U002422;2404;akt;1853;7;Pscionek,Pścionek;Paweł;;;Wawrzyniec;;;;Blinów;Zofa;Pasternak;;;;kol.G: Blinów , Wawrzyniec i Zofa Pasternak;"pisownia imienia matki 'Zofa' zachowana; brak nazwiska ojca (kol. H pusta)"
+U002423;2405;akt;1853;40;Rębacz;Wincenty;;;Paweł;;;;Brzozówka;Katarzyna;Sagan;;;;kol.G: Brzozówka , Paweł i Katarzyna Sagan;brak nazwiska ojca (kol. H pusta)
+U002424;2406;akt;1853;15;Samuelowa;Anna;;;Jakob;;;;Blinów;Zofia;Obydz;;;;kol.G: Blinów , Jakob i Zofia Obydz;brak nazwiska ojca (kol. H pusta)
+U002425;2407;akt;1853;62;Siembieda;Marcin;;;Michał;;;;Moczydła;Tekla;Surma;;;;kol.G: Moczydła , Michał i Tekla Surma;brak nazwiska ojca (kol. H pusta)
+U002426;2408;akt;1853;1;Sikora;Paweł;;;Józef;;;;Moczydła;Maryanna;Suloska;;;;kol.G: Moczydła , Józef i Maryanna Suloska;brak nazwiska ojca (kol. H pusta)
+U002427;2409;akt;1853;67;Sobutka;Marcin;;;Jakob;;;;Blinów;Zofia;Cisak?;;;;kol.G: Blinów , Jakob i Zofia Cisak?;"brak nazwiska ojca (kol. H pusta); znak '?' w imieniu/nazwisku rodzica"
+U002428;2410;akt;1853;18;Sokot,Sokoł;Woyciech;;;Walenty;;;;Moczydła;Agnieszka;Drozd?;;;;kol.G: Moczydła , Walenty i Agnieszka Drozd?;"brak nazwiska ojca (kol. H pusta); znak '?' w imieniu/nazwisku rodzica"
+U002429;2411;akt;1853;68;Sprysak;Katarzyna;;;Jan;;;;Blinów;Zofia;Offierska?;;;;kol.G: Blinów , Jan i Zofia Offierska?;"brak nazwiska ojca (kol. H pusta); znak '?' w imieniu/nazwisku rodzica"
+U002430;2412;akt;1853;52;Stępniowna;Katarzyna;;;Bartłomiey;;;;Blinów;Maryanna;Dąbroska;;;;kol.G: Blinów , Bartłomiey i Maryanna Dąbroska;brak nazwiska ojca (kol. H pusta)
+U002431;2413;akt;1853;59;Stręciwilk?;Jadwiga;;;Andrzey;;;;Brzozówka;Agnieszka;Sagan;;;;kol.G: Brzozówka , Andrzey i Agnieszka Sagan;brak nazwiska ojca (kol. H pusta)
+U002432;2414;akt;1853;2;Suloski;Walenty;;;Mateusz;;;;Blinów;Maryanna;Machulek;;;;kol.G: Blinów , Mateusz i Maryanna Machulek;brak nazwiska ojca (kol. H pusta)
+U002433;2415;akt;1853;58;Szuba;Katarzyna;;;Antoni;;;;Blinów;Zofia;Kosidło;;;;kol.G: Blinów , Antoni i Zofia Kosidło;brak nazwiska ojca (kol. H pusta)
