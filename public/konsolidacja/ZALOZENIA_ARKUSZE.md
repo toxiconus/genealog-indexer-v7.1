@@ -69,6 +69,7 @@ Odmiana: „córka”, „syn”, „wd.”, „kaw.”, „panna” itp. zapisu
 - Pod jednym `liber` mogą być **kilka aktów**: bliźnięta, dodatkowe wpisy, albo mało czytelny inny akt. Każdy wiersz zostaje osobnym rekordem.
 - Nie nadaję numeru, którego nie ma w źródle. Dla grupy takich wpisów zachowuję kolejność wierszy w arkuszu (`kolejnosc_w_grupie`) i flagę `bez numeru w księdze`.
 - Jeśli w oryginale jest powiązanie (np. „bliźniaki” w uwagach albo sąsiedni akt), zapisuję je w `uwagi_surowe`.
+- **Rodzaj księgi:** `liber` może być z różnych ksiąg: *Liber mortuorum* (zgony), *Liber copulatorium* (małżeństwa), chrzty i inne. Pole `typ_ksiegi` wypełniam tylko wtedy, gdy wiadomo z arkusza, którą księgę to jest (np. Zg = mortuorum z nazwy arkusza). Gdy nie wiadomo, wpisuję `do ustalenia`, nie zgaduję.
 
 ## 5. Wiek i przybliżony rok urodzenia
 
