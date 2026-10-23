@@ -29,9 +29,29 @@ Każda partia to 150 wierszy wolnego tekstu (kolejność z listy `free_rows`). P
 | `hand_04_wiersze_2597_2748.txt` | 2597–2748 | `akty_free_04_…` | zrobione, commit `f20355d` |
 | `hand_05_wiersze_2749_2899.txt` | 2749–2899 | `akty_free_05_…` | zrobione, commit `f20355d` |
 | `hand_06_wiersze_2900_3051.txt` | 2900–3051 | `akty_free_06_…` | zrobione |
-| `hand_07_wiersze_3052_3205.txt` | 3052–3205 | `akty_free_07_…` | zrobione |
+| `hand_07_wiersze_3052_3205.txt` | 3052–3205 | `akty_free_07_…` | zrobione, commit `fa87da9` |
+| `hand_08_wiersze_3206_3359.txt` | 3206–3359 | `akty_free_08_…` | zrobione, commit `daf90e2` |
+| `hand_09_wiersze_3360_3512.txt` | 3360–3512 | `akty_free_09_…` | zrobione, commit `daf90e2` |
+| `hand_10_wiersze_3513_3667.txt` | 3513–3667 | `akty_free_10_…` | zrobione, commit `e2adf74` |
+| `hand_11_wiersze_3668_3824.txt` | 3668–3824 | `akty_free_11_…` | zrobione, commit `e2adf74` |
+| `hand_12_wiersze_3825_3975.txt` | 3825–3975 | `akty_free_12_…` | zrobione, commit `e2adf74` |
+| `hand_13_wiersze_3976_4135.txt` | 3976–4135 | `akty_free_13_…` | zrobione, commit `e2adf74` |
+| `hand_14_wiersze_4136_4291.txt` | 4136–4291 | `akty_free_14_…` | zrobione, commit `e2adf74` |
+| `hand_15_wiersze_4292_4450.txt` | 4292–4450 | `akty_free_15_…` | zrobione, commit `2b72e0f` |
+| `hand_16_wiersze_4451_4604.txt` | 4451–4604 | `akty_free_16_…` | zrobione, commit `2b72e0f` |
+| `hand_17_wiersze_4605_4761.txt` | 4605–4761 | `akty_free_17_…` | zrobione, commit `2b72e0f` |
+| `hand_18_wiersze_4762_4914.txt` | 4762–4914 | `akty_free_18_…` | zrobione, commit `2b72e0f` |
+| `hand_19_wiersze_4915_5068.txt` | 4915–5068 | `akty_free_19_…` | zrobione, commit `f972411` |
+| `hand_20_wiersze_5069_5221.txt` | 5069–5221 | `akty_free_20_…` | zrobione (ta sama gałąź, commit z partią 20–25) |
+| `hand_21_wiersze_5222_5388.txt` | 5222–5388 | `akty_free_21_…` | zrobione (ta sama gałąź) |
+| `hand_22_wiersze_5389_5540.txt` | 5389–5540 | `akty_free_22_…` | zrobione (ta sama gałąź) |
+| `hand_23_wiersze_5541_5694.txt` | 5541–5694 | `akty_free_23_…` | zrobione (ta sama gałąź) |
+| `hand_24_wiersze_5695_5853.txt` | 5695–5853 | `akty_free_24_…` | zrobione (ta sama gałąź) |
+| `hand_25_wiersze_5854_5947.txt` | 5854–5947 | `akty_free_25_…` | zrobione (ostatnia partia, 89 wierszy) |
 
-Pozostało: wiersze wolnego tekstu od 3206 do 6017 (2639 wierszy, około 18 partii po 150).
+Stan: cały wolny tekst arkusza `Ur` (wiersze 827–5947, 3689 wierszy) przepisany ręcznie i scalony; każdy wiersz z zakresu pokrywa się dokładnie raz. Wiersze powyżej 5947 w `Ur` nie należą do wolnego tekstu; opisane są w sekcji o typach wierszy niżej.
+
+Pozostałe do zrobienia (nie ruszane): arkusze `Mał` (774 wiersze) i `Zg` (2624 wiersze); decyzja, do której księgi należą zakresy `liber` w `Obl`.
 
 ## Układy w zakładce `Ur` (wiersze 741–6017)
 

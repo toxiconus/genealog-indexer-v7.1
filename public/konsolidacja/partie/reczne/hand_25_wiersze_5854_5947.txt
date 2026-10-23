@@ -1,0 +1,89 @@
+5854 | miejsc=Moczydła | ojc=Andrzej | ojcw=51 | mat=Katarzyna | nazw=Sulowska | matw=40 | fl=J/O: około 1907
+5855 | miejsc=Blinów | ojc=Jan | ojcw=29 | mat=Antonina | nazw=Pizoń | matw=28 | fl=J/O: około 1907
+5856 | miejsc=Blinów | ojc=Bartłomiej | ojcw=44 | mat=Józefa | nazw=Dobrzyńska | matw=32 | fl=J/O: około 1907
+5857 | miejsc=Blinów | ojc=Ignacy | ojcw=25 | mat=Agnieszka | nazw=Januszczak | matw=20 | fl=J/O: około 1907
+5858 | miejsc=Blinów | ojc=Wojciech | ojcw=34 | mat=Agnieszka | nazw=Kaczyńska | matw=21 | fl=J/O: około 1907
+5859 | miejsc=Blinów | ojc=Bartłomiej | ojcw=39 | mat=Katarzyna | nazw=Pcionek | matw=39 | fl=J/O: około 1907
+5860 | miejsc=Blinów | ojc=Ignacy | ojcw=49 | mat=Marianna | nazw=Kaczyńska | matw=37 | fl=J/O: około 1907
+5861 | miejsc=Blinów | ojc=Andrzej | ojcw=30 | mat=Ewa | nazw=Kolasa | matw=24 | fl=J/O: około 1907
+5862 | miejsc=Blinów | ojc=Wojciech | ojcw=36 | mat=Jadwiga | nazw=Hałabis | matw=36 | fl=J/O: około 1907
+5863 | miejsc=Moczydła | ojc=Franciszek | ojcw=21 | mat=Tekla | nazw=Sobótka | matw=25 | fl=J/O: około 1907
+5864 | miejsc=Brzozówka | ojc=Paweł | ojcw=40 | mat=Petronela | nazw=Białkowska | matw=30 | fl=J/O: około 1907
+5865 | miejsc=Brzozówka | ojc=Stanisław | ojcw=26 | mat=Agnieszka | nazw=Kozdra | matw=22 | fl=J/O: około 1907
+5866 | miejsc=Blinów | ojc=Tomasz | ojcw=40 | mat=Katarzyna | nazw=Mikolas | matw=38 | fl=J/O: około 1907
+5867 | miejsc=Blinów | ojc=Paweł | ojcw=21 | mat=Agnieszka | nazw=Dziewa | matw=19 | fl=J/O: około 1907
+5868 | miejsc=Blinów | ojc=Antoni | ojcw=40 | mat=Katarzyna | nazw=Powązka | matw=35 | fl=J/O: około 1907
+5869 | miejsc=Blinów | ojc=Wawrzyniec | ojcw=30 | mat=Rozalia | nazw=Kosidło | matw=27 | fl=J/O: około 1907
+5870 | miejsc=Blinów | ojc=Franciszek | ojcw=37 | mat=Anastazja | nazw=Tomiło | matw=27 | fl=J/O: około 1907
+5871 | miejsc=Moczydła | ojc=Jan | ojcw=40 | mat=Agnieszka | nazw=Łatka | matw=40 | fl=J/O: około 1907
+5872 | miejsc=Blinów | ojc=Wojciech | ojcw=45 | mat=Anna | nazw=Kosidło | matw=45 | fl=J/O: około 1907
+5873 | miejsc=Brzozówka | ojc=Franciszek | ojcw=46 | mat=Tekla | nazw=Wcisło | matw=35 | fl=J/O: około 1907
+5874 | miejsc=Blinów | ojc=Walenty | ojcw=40 | mat=Tekla | nazw=Borowska | matw=30 | fl=J/O: około 1907
+5875 | miejsc=Blinów | ojc=Franciszek | ojcw=40 | mat=Zofia | nazw=Wójcik | fl=J/O: około 1907; brak wieku matki w G
+5876 | miejsc=Brzozówka | ojc=Andrzej | ojcw=36 | mat=Antonina | nazw=Gorczyca | matw=30 | fl=J/O: około 1907
+5877 | miejsc=Brzozówka | ojc=Wojciech | ojcw=26 | mat=Józefa | nazw=Dołęga | matw=19 | fl=J/O: około 1907; ojciec w G 'w Ameryce'
+5878 | miejsc=Blinów | ojc=Antoni | ojcw=28 | mat=Antonina | nazw=Stępień | matw=23 | fl=J/O: około 1907
+5879 | miejsc=Moczydła | ojc=Walenty | ojcw=24 | mat=Franciszka | nazw=Chudy | matw=20 | fl=J/O: około 1907
+5880 | miejsc=Brzozówka | ojc=Paweł | ojcw=31 | mat=Katarzyna | nazw=Sulowska | matw=30 | fl=J/O: około 1907
+5881 | miejsc=Blinów | ojc=Franciszek | ojcw=27 | mat=Paulina | nazw=Dudek | matw=26 | fl=J/O: około 1907; ojciec w G 'będący w Ameryce'
+5882 | miejsc=Blinów | ojc=Franciszek | ojcw=32 | mat=Katarzyna | nazw=Kosidło | matw=32 | fl=J/O: około 1907
+5883 | miejsc=Moczydła | ojc=Wojciech | ojcw=30 | mat=Tekla | nazw=Nieściur | matw=25 | fl=J/O: około 1907
+5884 | miejsc=Moczydła | ojc=Wojciech | ojcw=49 | mat=Marianna | nazw=Chmiel | matw=40 | fl=J/O: około 1907
+5885 | miejsc=Blinów | mat=Józefa | nazw=Winiarczyk | matw=34 | fl=J/O: około 1907; jedna osoba w G (matka), ojciec nie podany
+5886 | miejsc=Moczydła | ojc=Walenty | ojcw=32 | mat=Agnieszka | nazw=Sulowska | matw=32 | fl=J/O: około 1907
+5887 | miejsc=Brzozówka | ojc=Tomasz | ojcw=33 | mat=Anna | nazw=Brzyska | matw=23 | fl=J/O: około 1907
+5888 | miejsc=Blinów | ojc=Maciej | ojcnazw=Andrzejczak | ojcw=45 | mat=Jadwiga | nazw=Boczek | matw=30 | fl=J: około 1863 (kol. J) i około 1878 (kol. O)
+5889 | miejsc=Blinów | ojc=Antoni | ojcnazw=Andrzejczak | ojcw=40 | mat=Zofia | nazw=Kosidlak | matw=38 | fl=J: około 1868 (kol. J) i około 1870 (kol. O)
+5890 | miejsc=Blinów | ojc=Mateusz | ojcnazw=Boguń | ojcw=35 | mat=Marianna | nazw=Kosidło | matw=32 | fl=J: około 1873 (kol. J) i około 1876 (kol. O)
+5891 | miejsc=Blinów | ojc=Jan | ojcnazw=Borowski | ojcw=29 | mat=Marianna | nazw=Stępień | matw=32 | fl=J: około 1879 (kol. J) i około 1876 (kol. O)
+5892 | miejsc=Blinów | ojc=Stanisław | ojcnazw=Breś | ojcw=46 | mat=Zofia | nazw=Kaczyńska | fl=J: około 1862 (kol. J), O: około 1908 (brak wieku matki); w G nazwisko matki zapisane 'Kaczynska' (poprawiono na Kaczyńska)
+5893 | miejsc=Blinów | ojc=Wojciech | ojcnazw=Chodorek | ojcw=40 | mat=Marianna | nazw=Szubstarska | fl=J: około 1868 (kol. J), O: około 1908 (brak wieku matki)
+5894 | miejsc=Moczydła | ojc=Walenty | ojcnazw=Dziewa | ojcw=31 | mat=Zofia | nazw=Pcionek | fl=J: około 1877 (kol. J), O: około 1908 (brak wieku matki)
+5895 | miejsc=Blinów | ojc=Maciej | ojcnazw=Dziura | ojcw=46 | mat=Jadwiga | nazw=Ładziak | matw=35 | fl=J: około 1862 (kol. J) i około 1873 (kol. O)
+5897 | miejsc=Moczydła | ojc=Tomasz | ojcnazw=Jakubaszek | ojcw=40 | mat=Anastazja | nazw=Nieściur | fl=J: około 1868 (kol. J), O: około 1908 (brak wieku matki)
+5898 | miejsc=Blinów | ojc=Franciszek | ojcnazw=Janik | ojcw=53 | mat=Marcela | nazw=Szczuka | fl=J: około 1855 (kol. J), O: około 1908 (brak wieku matki)
+5900 | miejsc=Brzozówka | ojc=Franciszek | ojcnazw=Kamiński | ojcw=29 | mat=Magdalena | nazw=Machulak | matw=28 | fl=J: około 1879 (kol. J) i około 1880 (kol. O)
+5901 | miejsc=Blinów | ojc=Marcin | ojcnazw=Kamiński | ojcw=40 | mat=Katarzyna | nazw=Michałek | fl=J: około 1868 (kol. J), O: około 1908 (brak wieku matki)
+5902 | miejsc=Brzozówka | ojc=Łukasz | ojcnazw=Kania | mat=Antonina | nazw=Kosidlak | fl=J: około 1908 (kol. J), O: około 1908; brak wieku ojca i matki w G
+5903 | miejsc=Brzozówka | ojc=Stanisław | ojcnazw=Karwat | ojcw=44 | mat=Katarzyna | nazw=Goch | fl=J: około 1864 (kol. J), O: około 1908 (brak wieku matki)
+5904 | miejsc=Blinów | ojc=Andrzej | ojcnazw=Kędziora | ojcw=29 | mat=Józefa | nazw=Baldas | fl=J: około 1879 (kol. J), O: około 1908 (brak wieku matki)
+5905 | miejsc=Brzozówka | ojc=Michał | ojcnazw=Kosidlak | ojcw=30 | mat=Marianna | nazw=Woś | fl=J: około 1878 (kol. J), O: około 1908 (brak wieku matki)
+5906 | miejsc=Brzozówka | ojc=Franciszek | ojcnazw=Kosidlak | ojcw=35 | mat=Agata | nazw=Pudło | fl=J: około 1873 (kol. J), O: około 1908 (brak wieku matki)
+5907 | miejsc=Blinów | ojc=Marcin | ojcnazw=Kosidło | ojcw=30 | mat=Zofia | nazw=Szabat | fl=J: około 1878 (kol. J), O: około 1908 (brak wieku matki)
+5908 | miejsc=Blinów | ojc=Michał | ojcnazw=Kozdra | ojcw=40 | mat=Zofia | nazw=Ziarkoska | fl=J: około 1868 (kol. J), O: około 1908 (brak wieku matki)
+5909 | miejsc=Blinów | ojc=Paweł | ojcnazw=Krzysztoń | ojcw=22 | mat=Marianna | nazw=Pcionek | matw=22 | fl=J: około 1886 (kol. J) i około 1886 (kol. O)
+5910 | miejsc=Blinów | ojc=Walenty | mat=Józefa | nazw=Pasternak | matw=26 | fl=J/O: około 1908
+5911 | miejsc=Blinów | ojc=Józef | ojcw=45 | mat=Marianna | nazw=Obydź | matw=25 | fl=J/O: około 1908
+5912 | miejsc=Blinów | ojc=Paweł | ojcw=39 | mat=Zofia | nazw=Pcionek | matw=26 | fl=J/O: około 1908
+5914 | miejsc=Brzozówka | ojc=Walenty | ojcw=20 | mat=Anna | nazw=Kopiwoda | matw=26 | fl=J/O: około 1908
+5915 | miejsc=Blinów | ojc=Antoni | ojcw=38 | mat=Anna | nazw=Sobótka | matw=31 | fl=J/O: około 1908
+5916 | miejsc=Moczydła | ojc=Jan | ojcw=45 | mat=Jadwiga | nazw=Krawczyk | matw=38 | fl=J/O: około 1908
+5917 | miejsc=Blinów | ojc=Piotr | ojcw=28 | mat=Antonina | nazw=Sobótka | matw=21 | fl=J/O: około 1908
+5918 | miejsc=Moczydła | ojc=Antoni | ojcw=44 | mat=Marianna | nazw=Michałek | matw=35 | fl=J/O: około 1908
+5919 | miejsc=Blinów | ojc=Jan | ojcw=37 | mat=Agnieszka | nazw=Michalczyk | matw=24 | fl=J/O: około 1908
+5920 | miejsc=Blinów | ojc=Piotr | ojcw=36 | mat=Wiktoria | nazw=Wcisło | matw=28 | fl=J/O: około 1908
+5921 | miejsc=Brzozówka | ojc=Tomasz | ojcw=35 | mat=Ludwika | nazw=Komsa | matw=30 | fl=J/O: około 1908
+5922 | miejsc=Blinów | ojc=Andrzej | ojcw=32 | mat=Franciszka | nazw=Gąska | matw=42 | fl=J/O: około 1908
+5923 | miejsc=Moczydła | ojc=Wawrzyniec | ojcnazw=Sikora | ojcw=30 | mat=Ewa | matw=26 | fl=J: około 1878 (kol. J) i około 1882 (kol. O); brak nazwiska matki w G
+5924 | miejsc=Blinów | ojc=Walenty | ojcnazw=Sobótka | ojcw=35 | mat=Katarzyna | nazw=Bartysiak | matw=23 | fl=J: około 1873 (kol. J) i około 1885 (kol. O)
+5925 | miejsc=Blinów | ojc=Michał | ojcw=40 | mat=Józefa | nazw=Serafińska | matw=40 | fl=J/O: około 1908
+5926 | miejsc=Moczydła | ojc=Wojciech | ojcw=52 | mat=Marianna | nazw=Dobrzyńska | matw=38 | fl=J/O: około 1908
+5927 | miejsc=Blinów | ojc=Paweł | ojcw=38 | mat=Ewa | nazw=Gancarz | matw=39 | fl=J/O: około 1908
+5928 | miejsc=Blinów | ojc=Tomasz | ojcw=41 | mat=Katarzyna | nazw=Rębecka | matw=41 | fl=J/O: około 1908
+5929 | miejsc=Brzozówka | ojc=Franciszek | ojcw=40 | mat=Antonina | nazw=Żaba | matw=40 | fl=J/O: około 1908
+5930 | miejsc=Blinów | ojc=Józef | ojcw=40 | mat=Anna | nazw=Boczek | matw=40 | fl=J/O: około 1908; nazwisko dziecka w arkuszu 'Staszoska' (być może Staszowska); w G brak spójnika 'i'
+5931 | miejsc=Brzozówka | ojc=Błażej | ojcw=26 | mat=Marianna | nazw=Kudej | matw=26 | fl=J/O: około 1908; nazwisko dziecka w arkuszu 'Strzlecki' (być może Strzelecki)
+5932 | miejsc=Blinów | ojc=Walenty | ojcw=48 | mat=Marianna | nazw=Komsa | matw=42 | fl=J/O: około 1908
+5933 | miejsc=Blinów | ojc=Andrzej | ojcw=36 | mat=Katarzyna | nazw=Stańczyk | matw=30 | fl=J/O: około 1908
+5934 | miejsc=Brzozówka | ojc=Tomasz | ojcw=27 | mat=Katarzyna | nazw=Kosidło | matw=20 | fl=J/O: około 1908
+5935 | miejsc=Blinów - folwark | mat=Katarzyna | nazw=Szarpińska | matw=20 | fl=J/O: około 1908; jedna osoba w G (matka), ojciec nie podany
+5937 | miejsc=Brzozówka | ojc=Wincenty | ojcw=53 | mat=Ewa | nazw=Ogon | matw=28 | fl=J/O: około 1908
+5938 | miejsc=Brzozówka | ojc=Stanisław | ojcw=37 | mat=Marianna | nazw=Kędziora | matw=34 | fl=J/O: około 1908
+5939 | miejsc=Brzozówka | ojc=Piotr | ojcw=45 | mat=Marianna | nazw=Ogon | matw=34 | fl=J/O: około 1908
+5940 | miejsc=Blinów | ojc=Tomasz | ojcw=46 | mat=Antonina | nazw=Pazdrak | matw=46 | fl=J/O: około 1908
+5942 | fl=brak zdjęcia (w arkuszu tylko nr i rok; brak nazwisk i rodziców)
+5943 | fl=brak zdjęcia (w arkuszu tylko nr i rok; brak nazwisk i rodziców)
+5944 | fl=brak zdjęcia (w arkuszu tylko nr i rok; brak nazwisk i rodziców)
+5945 | fl=brak zdjęcia (w arkuszu tylko nr i rok; brak nazwisk i rodziców)
+5946 | fl=brak zdjęcia (w arkuszu tylko nr i rok; brak nazwisk i rodziców)
+5947 | fl=brak zdjęcia (w arkuszu tylko nr i rok; brak nazwisk i rodziców)
