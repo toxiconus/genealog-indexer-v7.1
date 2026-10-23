@@ -84,3 +84,12 @@ Jeśli wartość w oryginale nie zgadza się z wynikiem funkcji, nie poprawiam j
 **Ustalone:**
 - Dwie pisownie (`Bajdas / Baldas`) zostają w jednym polu, w oryginalnej postaci.
 - Przepisywanie zaczyna się od najstarszych wpisów: karty indeksowe Ur, 1783, wiersz 1.
+
+## 7. Łacińskie formy imion (z pliku TXT / oryginału)
+
+Oryginalny indeks ma kolumny 20–26 z formami łacińskimi (nagłówki: `ImięOorg`, `ImDZorg`, `NazwiskoDZorg`, `ImięDZorg`, `Miejscowość`, `ImięOorg`, `NazwiskoOorg`). Zachowane jako surowe w `kol_14_26_surowe`.
+
+- kol. 20 = łacińskie imię ojca, kol. 21 = łacińskie imię matki (np. `Adalbertus` = Wojciech, `Sophia` = Zofia),
+- kol. 22–23 = nazwisko i imię dziecka po łacinie, kol. 24 = miejscowość, kol. 26 = nazwisko ojca po łacinie.
+
+W arkuszu Zg i w `rody` pojawia się zapis `Wojciech (Adalbert)`, zachowany tak, jak jest.
