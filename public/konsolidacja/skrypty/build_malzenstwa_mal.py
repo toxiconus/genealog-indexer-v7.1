@@ -18,7 +18,7 @@ cols_out = ['rok','nr','wiersz_zrodlo','data_tekst','data_iso',
  'swiadek1_imie','swiadek1_nazwisko','swiadek1_wiek',
  'swiadek2_imie','swiadek2_nazwisko','swiadek2_wiek',
  'pan_poprzednia_zona_imie','pan_poprzednia_zona_nazwisko','pan_poprzednia_zona_data_surowe','pan_poprzednia_zona_data_iso',
- 'panna_poprzedni_maz_imie','panna_poprzedni_maz_nazwisko','panna_poprzedni_maz_data_surowe','panna_poprzedni_maz_data_iso',
+ 'wdowa_poprzedni_maz_imie','wdowa_poprzedni_maz_nazwisko','wdowa_poprzedni_maz_data_surowe','wdowa_poprzedni_maz_data_iso',
  'surowe_kol_6_8','surowe_kol_21_23','flagi']
 
 def clean(v):
@@ -144,8 +144,8 @@ for rn, cells in rows:
     qim, qna, qda, qiso = prev((d.get('V',''), d.get('W',''), d.get('X','')))
     prevcols = dict(pan_poprzednia_zona_imie=pim, pan_poprzednia_zona_nazwisko=pna,
                     pan_poprzednia_zona_data_surowe=pda, pan_poprzednia_zona_data_iso=piso,
-                    panna_poprzedni_maz_imie=qim, panna_poprzedni_maz_nazwisko=qna,
-                    panna_poprzedni_maz_data_surowe=qda, panna_poprzedni_maz_data_iso=qiso)
+                    wdowa_poprzedni_maz_imie=qim, wdowa_poprzedni_maz_nazwisko=qna,
+                    wdowa_poprzedni_maz_data_surowe=qda, wdowa_poprzedni_maz_data_iso=qiso)
 
     rec = dict(rok=str(year) if year else d.get('A',''), nr=d.get('B',''), wiersz_zrodlo=str(rn),
                data_tekst=dt, data_iso=iso, surowe_kol_6_8=surowe68, surowe_kol_21_23=surowe2123,
