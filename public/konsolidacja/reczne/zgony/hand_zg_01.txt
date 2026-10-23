@@ -12,7 +12,7 @@
 1034 | plec=m | ojc=Józefa | mat=Ewy
 1035 | plec=k | ojc=Wojciecha | matn=Kolasa | fl=w G brak imienia matki ('i Kolasa')
 1038 | plec=k | ojc=Jędrzeja | mat=Zofii
-1049 | data=13.06.1827 | miejsc=Brzozówka | wiek=0 | fl=kol. K-O (Pudło, Katarzyna, Pcionek) nieopisane, zostają w surowych; wiek bez jednostki
+1049 | data=13.06.1827 | miejsc=Brzozówka | wiek=0 | fl=kol. K-O (Pudło, Katarzyna, Pcionek) nieopisane, zostają w surowych
 1077 | karta=45 | plec=k | ojc=Woyciecha | mat=Maryanny | wiek=5 | jedn=mies
 1082 | karta=51 | plec=m | ojc=Piotra | mat=Maryanny
 1084 | karta=52 | plec=m | ojc=Kaspra | mat=Antoniny | wiek=8 | jedn=tyg
@@ -35,7 +35,7 @@
 1167 | karta=86 | plec=m | ojc=Szczepana (?) | mat=Maryanny | wiek=70 | jedn=lat | fl=imię ojca z pytajnikiem
 1177 | karta=75 | plec=k | ojc=Jakuba | mat=Agnieszki | matn=Igrasów | wiek=30 | jedn=lat
 1180 | karta=85 | plec=m | ojc=Woyciecha | mat=Agnieszki | wiek=50 | jedn=lat
-1184 | data=14.04.1832 | miejsc=Brzozówka | wiek=2 | fl=kol. K-L (Pudło, Jadwiga) nieopisane; wiek bez jednostki
+1184 | data=14.04.1832 | miejsc=Brzozówka | wiek=2 | fl=kol. K-L (Pudło, Jadwiga) nieopisane
 1190 | karta=75 | plec=m | ojc=Wawrzenca | mat=Maryanny | wiek=19 | jedn=lat
 1196 | wiek=90 | jedn=lat
 1209 | wiek=40 | jedn=lat | rodowe=Chmiel
@@ -46,9 +46,9 @@
 1288 | miejsc=Brzozówka | data=11.03.1848 | wiek=78 | fl=kol. I (78) bez jednostki
 1289 | miejsc=Blinów | data=28.10.1848 | wiek=7 | fl=kol. H='p' nieopisana, kol. I (7) bez jednostki, K-S w surowych
 1482 | miejsc=Brzozówka | data=21.03.1852 | wiek=54 | jedn=lat
-1586 | miejsc=Brzozówka | data=01.10.1854 | wiek=7 | fl=kol. I 'sty 20 1847' w surowych; wiek bez jednostki
-1647 | miejsc=Blinów | data=14.07.1855 | wiek=2 | fl=kol. H='p' nieopisana; wiek bez jednostki
-1648 | miejsc=Blinów | data=05.08.1855 | wiek=28 | fl=kol. H='m' niejasna; wiek bez jednostki
+1586 | miejsc=Brzozówka | data=01.10.1854 | wiek=7 | fl=kol. I 'sty 20 1847' w surowych
+1647 | miejsc=Blinów | data=14.07.1855 | wiek=2 | fl=kol. H='p' nieopisana
+1648 | miejsc=Blinów | data=05.08.1855 | wiek=28 | fl=kol. H='m' niejasna
 1719 | miejsc=Brzozówka | data=05.09.1855 | wiek=60 | jedn=lat
 1837 | plec=m | wiek=26 | jedn=lat | ojc=Michała | mat=Agaty | matn=Kurczków | uw=żona Agnieszka z Chmielów (stan nieznany)
 1894 | data=21.03.1860 | wiek=39 | fl=kol. F kropka; K-R w surowych
@@ -82,7 +82,7 @@
 2303 | miejsc=Brzozówka | plec=k | wiek=6 | jedn=mies | ojc=Józefa | mat=Agaty
 2305 | miejsc=Moczydła | plec=k | wiek=41 | jedn=lat | ojc=Wojciecha | mat=Marianny | matn=Kaniów
 2306 | miejsc=Blinów | plec=m | stan=wdowiec | wiek=56 | jedn=lat | ojc=Andrzeja | mat=Tekli
-2308 | miejsc=Brzozówka | data=11.12.1871 | wiek=53 | fl=kol. H='m' niejasna; K-P w surowych; wiek bez jednostki
+2308 | miejsc=Brzozówka | data=11.12.1871 | wiek=53 | fl=kol. H='m' niejasna; K-P w surowych
 2309 | miejsc=Blinów | plec=m | wiek=44 | jedn=lat | ojc=Jakuba | mat=Zofii | zyjacy_malzonek=owd. Katarzynę Olech
 2310 | miejsc=Blinów | plec=m | wiek=63 | jedn=lat | ojc=Pawła | mat=Marianny
 2313 | miejsc=Moczydła | plec=m | wiek=2 | jedn=lat | ojc=Szymona | mat=Anny | fl=w G literówka miejscowości 'Moczdła'
