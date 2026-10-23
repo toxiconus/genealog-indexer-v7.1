@@ -43,8 +43,8 @@
 1216 | wiek=50 | jedn=lat
 1220 | rodowe=Spryszak
 1228 | rodowe=Babiczów
-1288 | miejsc=Brzozówka | data=11.03.1848 | wiek=78 | fl=kol. I (78) bez jednostki
-1289 | miejsc=Blinów | data=28.10.1848 | wiek=7 | fl=kol. H='p' nieopisana, kol. I (7) bez jednostki, K-S w surowych
+1288 | miejsc=Brzozówka | data=11.03.1848 | wiek=78
+1289 | miejsc=Blinów | data=28.10.1848 | wiek=7 | fl=kol. H='p' nieopisana, K-S w surowych
 1482 | miejsc=Brzozówka | data=21.03.1852 | wiek=54 | jedn=lat
 1586 | miejsc=Brzozówka | data=01.10.1854 | wiek=7 | fl=kol. I 'sty 20 1847' w surowych
 1647 | miejsc=Blinów | data=14.07.1855 | wiek=2 | fl=kol. H='p' nieopisana
