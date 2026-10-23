@@ -772,7 +772,7 @@ function renderForm(){
   const rec = currentRec();
   if (!t) { form.innerHTML = ''; return; }
   if (!rec) { form.innerHTML = '<div class="emptyForm">Wybierz rekord w tabeli albo kliknij „+ Nowy”. Możesz też zaznaczyć akt na skanie (klawisz A), a rekord powstanie sam.</div>'; renderHeader(null); return; }
-  const hasUnc = fieldsOf(t).some(f => f.id === 'uncertain_fields');
+  const hasUnc = true;
   const groups = {};
   fieldsOf(t).forEach(f => { (groups[groupOf(f.id)] = groups[groupOf(f.id)] || []).push(f); });
   const order = [...GROUP_ORDER, ...Object.keys(groups).filter(g => !GROUP_ORDER.includes(g))];
@@ -817,6 +817,7 @@ function datalists(fs){
     return vals.length ? `<datalist id="dl_${esc(f.id)}">${vals.map(v => `<option value="${esc(v)}">`).join('')}</datalist>` : '';
   }).join('');
 }
+function exportCols(t){ const c = fieldsOf(t); return c.some(f => f.id === 'uncertain_fields') ? c : [...c, {id:'uncertain_fields'}]; }
 function uncertainList(rec){ return String(rec.v.uncertain_fields || '').split(',').map(x => x.trim()).filter(Boolean); }
 function toggleUncertain(fid){
   const rec = currentRec(); if (!rec) return;
@@ -1487,7 +1488,7 @@ function applyImport(){
 /* ===================== EKSPORT ===================== */
 $('btnExport').onclick = async () => {
   syncFormToRec();
-  const t = tpl(); const cols = fieldsOf(t);
+  const t = tpl(); const cols = exportCols(t);
   const only = S.view === 'work' || S.view === 'check' ? r => r.status !== 'ok' : () => true;
   const list = S.records.filter(r => r.tpl === t.id).filter(only);
   const esc2 = s => { s = String(s ?? ''); return /[;"\n]/.test(s) ? '"' + s.replace(/"/g,'""') + '"' : s; };
@@ -2143,7 +2144,7 @@ function toolData(){
   </div>`;
   $('bkSave').onclick = () => {
     syncFormToRec();
-    const d = {app:'genealog-v6', at:new Date().toISOString(), records:S.records, pins:PINS, abbr:ABBR, fx:FX};
+    const d = {app:'genealog-v6', ver:2, at:new Date().toISOString(), records:S.records, pins:PINS, abbr:ABBR, fx:FX};
     const n = new Date(), pad = x => String(x).padStart(2, '0');
     dl(`genealog-kopia-${n.getFullYear()}${pad(n.getMonth() + 1)}${pad(n.getDate())}-${pad(n.getHours())}${pad(n.getMinutes())}.json`, JSON.stringify(d), 'application/json');
     lsSet('gv6.lastBackup', n.toISOString()); toast('Kopia pobrana'); toolData();
@@ -2161,12 +2162,12 @@ function toolData(){
   };
   $('exCsv').onclick = () => $('btnExport').click();
   $('exView').onclick = () => {
-    const t = tpl(), cols = fieldsOf(t), list = filteredRecords();
+    const t = tpl(), cols = exportCols(t), list = filteredRecords();
     const e2 = x => { x = String(x ?? ''); return /[;"\n]/.test(x) ? '"' + x.replace(/"/g, '""') + '"' : x; };
     const csv = ['status', ...cols.map(c => c.id)].join(';') + '\r\n' + list.map(r => [STATUS[r.status], ...cols.map(c => r.v[c.id] ?? '')].map(e2).join(';')).join('\r\n');
     dl(`${t.id}_widok_${new Date().toISOString().slice(0, 10)}.csv`, '\ufeff' + csv, 'text/csv;charset=utf-8'); toast(`${list.length} rekordów z bieżącego widoku`);
   };
-  $('exOk').onclick = () => { const ok = S.records.filter(r => r.status === 'ok'); dl(`genealog-gotowe-${new Date().toISOString().slice(0, 10)}.json`, JSON.stringify({app:'genealog-v6', at:new Date().toISOString(), records:ok}), 'application/json'); toast(`${ok.length} gotowych rekordów`); };
+  $('exOk').onclick = () => { const ok = S.records.filter(r => r.status === 'ok'); dl(`genealog-gotowe-${new Date().toISOString().slice(0, 10)}.json`, JSON.stringify({app:'genealog-v6', ver:2, at:new Date().toISOString(), records:ok}), 'application/json'); toast(`${ok.length} gotowych rekordów`); };
 }
 /* ---- Ustawienia ---- */
 function toolSet(){
