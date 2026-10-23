@@ -4,7 +4,7 @@ S='/home/claude/genealog-indexer-v7.1/public/konsolidacja/narzedzia'
 def rd(p): return list(csv.DictReader(open(p,encoding='utf-8-sig',newline=''),delimiter=';'))
 ch=[]
 for f in sorted(glob.glob(f'{K}/partie/chrzty_partia0*.csv')): ch+=rd(f)
-DATA={'ch':ch,'mal':rd(f'{K}/malzenstwa_mal.csv'),'zg':rd(f'{K}/zgony.csv')}
+DATA={'ch':ch,'mal':rd(f'{K}/malzenstwa_mal.csv'),'zg':rd(f'{K}/zgony.csv'),'ak':rd(f'{K}/akty_1783_scalone.csv')}
 # słownik: (PL, płeć m/k/ob, łacina, rosyjski) — propozycje do zatwierdzenia
 D=[
 ('Jan','m','Ioannes','Иоанн'),('Józef','m','Josephus','Иосиф'),('Wojciech','m','Adalbertus','Адальберт'),

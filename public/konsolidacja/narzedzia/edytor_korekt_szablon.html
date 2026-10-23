@@ -73,7 +73,7 @@ details summary{cursor:pointer;color:var(--acc);margin-top:8px}
     <div class="card">
       <h2>Rekordy</h2>
       <div class="toolbar">
-        <select id="f_book"><option value="">wszystkie księgi</option><option value="ch">Chrzty</option><option value="mal">Małżeństwa</option><option value="zg">Zgony</option></select>
+        <select id="f_book"><option value="">wszystkie księgi</option><option value="ch">Chrzty</option><option value="mal">Małżeństwa</option><option value="zg">Zgony</option><option value="ak">Akty 1783</option></select>
         <input id="f_q" placeholder="szukaj (nazwisko, imię)" style="flex:1;min-width:120px">
       </div>
       <div class="toolbar">
@@ -226,16 +226,18 @@ details summary{cursor:pointer;color:var(--acc);margin-top:8px}
 <script>
 const DATA = /*DATA*/null;
 const DICT0 = /*DICT*/[];
-const BOOKS = {ch:'Chrzty', mal:'Małżeństwa', zg:'Zgony'};
+const BOOKS = {ch:'Chrzty', mal:'Małżeństwa', zg:'Zgony', ak:'Akty 1783'};
 const NAMEF = {
   ch:['nazwisko_dziecka','imie_dziecka','ojciec_imie','ojciec_nazwisko','matka_imie','matka_nazwisko'],
   mal:['pan_imie','pan_nazwisko','pan_ojciec_imie','pan_ojciec_nazwisko','pan_matka_imie','pan_matka_nazwisko','panna_imie','panna_nazwisko','panna_ojciec_imie','panna_ojciec_nazwisko','panna_matka_imie','panna_matka_nazwisko','swiadek1_imie','swiadek1_nazwisko','swiadek2_imie','swiadek2_nazwisko'],
-  zg:['nazwisko','imie','ojciec_imie','matka_imie','matka_nazwisko','rodowe']
+  zg:['nazwisko','imie','ojciec_imie','matka_imie','matka_nazwisko','rodowe'],
+  ak:['nazwisko','imie','ojciec_imie','ojciec_nazwisko','matka_imie','matka_nazwisko']
 };
 const RAWF = {
   ch:[['uwagi_surowe','uwagi'],['flagi','flagi']],
   mal:[['surowe_kol_6_8','kol. 6–8'],['surowe_kol_21_23','kol. 21–23'],['flagi','flagi']],
-  zg:[['surowe_kol_6','kol. G'],['surowe_pozostale','kol. F, H–S'],['flagi','flagi']]
+  zg:[['surowe_kol_6','kol. G'],['surowe_pozostale','kol. F, H–S'],['flagi','flagi']],
+  ak:[['uwagi_org','uwagi (oryg.)'],['kol_14_26_surowe','kol. 14–26 (surowe)'],['flagi','flagi']]
 };
 const VARMAP = {maryanna:'marianna',maryanny:'marianny',woyciech:'wojciech',jakób:'jakub',maciey:'maciej',zofji:'zofia',marjanna:'marianna',anastazya:'anastazja',jozef:'józef',woyciecha:'wojciecha'};
 const TR = {a:'а',ą:'он',b:'б',c:'ц',ć:'ч',d:'д',e:'е',ę:'ен',f:'ф',g:'г',h:'х',i:'и',j:'й',k:'к',l:'л',ł:'л',m:'м',n:'н',ń:'нь',o:'о',ó:'у',p:'п',r:'р',s:'с',ś:'сь',t:'т',u:'у',w:'в',y:'ы',z:'з',ź:'зь',ż:'ж'};
@@ -253,6 +255,7 @@ const isGen = v => /(ów|owa|owna|ówna|ego|ową)$/i.test(v);
 
 function nameType(f){ return f.includes('imie') ? 'imie' : 'nazwisko'; }
 function genderOf(r, f){
+  if(r.book==='ak'){ if(f==='ojciec_imie'||f==='ojciec_nazwisko') return 'm'; if(f==='matka_imie'||f==='matka_nazwisko') return 'k'; return '?'; }
   if(r.book==='mal'){ if(f.startsWith('pan_')) return 'm'; if(f.startsWith('panna_')) return 'k'; return '?'; }
   if(r.book==='zg'){
     if(f==='ojciec_imie') return 'm';
@@ -298,7 +301,7 @@ function download(name, text){
 function save(){ try{ localStorage.setItem(KEY, JSON.stringify(ST)); }catch(e){} }
 
 function init(){
-  for(const b of ['ch','mal','zg']){
+  for(const b of ['ch','mal','zg','ak']){
     for(const row of DATA[b]){
       const key = b+':'+row.wiersz_zrodlo;
       const r = {key, book:b, w:row.wiersz_zrodlo, orig:{...row}, cur:{...row}, la:{}, ru:{}};
@@ -323,7 +326,7 @@ function logChange(r, pole, po, la, ru, zrodlo){
   if(ru!==undefined) r.ru[pole]=ru;
 }
 
-const SHORT = {ch:'ch', mal:'mal', zg:'zg'};
+const SHORT = {ch:'ch', mal:'mal', zg:'zg', ak:'ak'};
 function counts(){
   // RECS jest w kolejności aktów (księga, potem wiersz), więc pierwsze wystąpienie = pozycja w aktach
   const m = {imie:new Map(), nazwisko:new Map()};
@@ -417,7 +420,7 @@ function renderList(){
     && (!pyt || isQuestion(r)) && (!chg || changed(r)));
   $('#f_cnt').textContent = rows.length + ' rekordów' + (rows.length>300 ? ' (pokazano 300)' : '');
   $('#list').innerHTML = rows.slice(0,300).map(r => {
-    const name = r.book==='zg' ? (r.cur.imie||'')+' '+(r.cur.nazwisko||'') : r.book==='mal' ? (r.cur.pan_imie||'')+' '+(r.cur.pan_nazwisko||'')+' + '+(r.cur.panna_imie||'')+' '+(r.cur.panna_nazwisko||'') : (r.cur.imie_dziecka||'')+' '+(r.cur.nazwisko_dziecka||'');
+    const name = r.book==='zg' || r.book==='ak' ? (r.cur.imie||'')+' '+(r.cur.nazwisko||'') : r.book==='mal' ? (r.cur.pan_imie||'')+' '+(r.cur.pan_nazwisko||'')+' + '+(r.cur.panna_imie||'')+' '+(r.cur.panna_nazwisko||'') : (r.cur.imie_dziecka||'')+' '+(r.cur.nazwisko_dziecka||'');
     const tags = (changed(r)?'<span class="tag ok">zmieniony</span> ':'') + (isQuestion(r)?'<span class="tag warn">?</span>':'');
     return `<div class="item ${r.key===CUR?'sel':''}" data-k="${esc(r.key)}"><div>${esc(name.trim())} ${tags}</div><div class="mut">${BOOKS[r.book]} · rok ${esc(r.cur.rok)} · nr ${esc(r.cur.nr||r.cur.nr_wpisu||'')} · wiersz ${esc(r.w)}</div></div>`;
   }).join('');
@@ -428,7 +431,7 @@ function renderEditor(){
   if(!r){ $('#ed_title').textContent='Wybierz rekord'; $('#ed_fields').innerHTML=''; $('#ed_meta').textContent=''; $('#ed_chips').innerHTML=''; previewClear(); return; }
   $('#ed_title').textContent = BOOKS[r.book] + ' · wiersz ' + r.w;
   const c = r.cur;
-  const meta = r.book==='ch' ? `rok ${c.rok}, nr ${c.nr}, karta ${c.karta_nr||'—'}, ${c.data_tekst||''}` :
+  const meta = r.book==='ak' ? `rok ${c.rok}, ${c.miejscowosc||'brak miejscowości'}, nr ${c.nr||'—'}, ${c.wiersz_zrodlo||''}` : r.book==='ch' ? `rok ${c.rok}, nr ${c.nr}, karta ${c.karta_nr||'—'}, ${c.data_tekst||''}` :
                r.book==='mal' ? `rok ${c.rok}, nr ${c.nr}, ${c.data_tekst||''}` :
                `rok ${c.rok}, ${c.miejscowosc||'brak miejscowości'}, nr ${c.nr_wpisu||'—'}, karta ${c.karta||'—'}`;
   $('#ed_meta').textContent = meta;
@@ -463,6 +466,7 @@ function previewClear(){ $('#pv_pl').textContent=''; $('#pv_la').textContent='';
 function sentence(r, lang){
   const c = r.cur;
   const g = f => lang==='PL' ? (c[f]||'') : ((lang==='LA'? r.la[f] : r.ru[f]) || c[f] || '');
+  if(r.book==='ak') return `Chrzest (akt 1783): ${g('imie')} ${g('nazwisko')}. Miejscowość ${c.miejscowosc||'—'}, nr ${c.nr||'—'}. Ojciec: ${g('ojciec_imie')} ${g('ojciec_nazwisko')}. Matka: ${g('matka_imie')} ${g('matka_nazwisko')}.`;
   if(r.book==='ch') return `Chrzest: ${g('imie_dziecka')} ${g('nazwisko_dziecka')}. Rok ${c.rok}, ${c.data_tekst||'data nieznana'}, nr ${c.nr||'—'}, karta ${c.karta_nr||'—'}. Ojciec: ${g('ojciec_imie')} ${g('ojciec_nazwisko')}${c.ojciec_wiek?' ('+c.ojciec_wiek+' l.)':''}. Matka: ${g('matka_imie')} ${g('matka_nazwisko')}${c.matka_wiek?' ('+c.matka_wiek+' l.)':''}.`;
   if(r.book==='mal') return `Ślub, rok ${c.rok}, nr ${c.nr||'—'}, ${c.data_tekst||''}.\nPan: ${g('pan_imie')} ${g('pan_nazwisko')}${c.pan_wiek?' ('+c.pan_wiek+' l.)':''}, stan ${c.pan_stan||'—'}; ojciec ${g('pan_ojciec_imie')} ${g('pan_ojciec_nazwisko')}, matka ${g('pan_matka_imie')} ${g('pan_matka_nazwisko')}.\nPanna: ${g('panna_imie')} ${g('panna_nazwisko')}${c.panna_wiek?' ('+c.panna_wiek+' l.)':''}, stan ${c.panna_stan||'—'}; ojciec ${g('panna_ojciec_imie')} ${g('panna_ojciec_nazwisko')}, matka ${g('panna_matka_imie')} ${g('panna_matka_nazwisko')}.\nŚwiadkowie: ${g('swiadek1_imie')} ${g('swiadek1_nazwisko')}, ${g('swiadek2_imie')} ${g('swiadek2_nazwisko')}.`;
   return `Zgon: ${g('imie')} ${g('nazwisko')}${g('rodowe')?', zd. '+g('rodowe'):''}. Rok ${c.rok}, ${c.miejscowosc||'miejscowość —'}, nr ${c.nr_wpisu||'—'}, karta ${c.karta||'—'}. Wiek ${c.wiek||'—'} ${c.jednostka_wieku||''}, płeć ${c.plec||'—'}, stan ${c.stan||'—'}. Ojciec: ${g('ojciec_imie')}; matka: ${g('matka_imie')} ${g('matka_nazwisko')}. Małżonek żyjący: ${c.zyjacy_malzonek||'—'}.`;
