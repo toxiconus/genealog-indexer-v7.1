@@ -1,0 +1,663 @@
+﻿linia;id;problem
+101;CH.LUB.BLIN.1785.004;wiersz 'nr karty' (z nazwiskiem) -> tylko w pliku kart
+242;;wiersz 'nr karty' (z nazwiskiem) -> tylko w pliku kart
+243;CH.LUB.BLIN.1787.043;wiersz 'nr karty' (z nazwiskiem) -> tylko w pliku kart
+244;;wiersz 'nr karty' (z nazwiskiem) -> tylko w pliku kart
+245;;wiersz 'nr karty' (z nazwiskiem) -> tylko w pliku kart
+246;;wiersz 'nr karty' (z nazwiskiem) -> tylko w pliku kart
+247;;wiersz 'nr karty' (z nazwiskiem) -> tylko w pliku kart
+248;;wiersz 'nr karty' (z nazwiskiem) -> tylko w pliku kart
+249;;wiersz 'nr karty' (z nazwiskiem) -> tylko w pliku kart
+250;;wiersz 'nr karty' (z nazwiskiem) -> tylko w pliku kart
+251;;wiersz 'nr karty' (z nazwiskiem) -> tylko w pliku kart
+252;;wiersz 'nr karty' (z nazwiskiem) -> tylko w pliku kart
+253;;wiersz 'nr karty' (z nazwiskiem) -> tylko w pliku kart
+254;;wiersz 'nr karty' (z nazwiskiem) -> tylko w pliku kart
+255;;wiersz 'nr karty' (z nazwiskiem) -> tylko w pliku kart
+256;;wiersz 'nr karty' (z nazwiskiem) -> tylko w pliku kart
+257;;wiersz 'nr karty' (z nazwiskiem) -> tylko w pliku kart
+258;CH.LUB.BLIN.1788.031;wiersz 'nr karty' (z nazwiskiem) -> tylko w pliku kart
+259;CH.LUB.BLIN.1788.031;wiersz 'nr karty' (z nazwiskiem) -> tylko w pliku kart
+260;CH.LUB.BLIN.1788.031;wiersz 'nr karty' (z nazwiskiem) -> tylko w pliku kart
+261;CH.LUB.BLIN.1788.031;wiersz 'nr karty' (z nazwiskiem) -> tylko w pliku kart
+262;CH.LUB.BLIN.1788.031;wiersz 'nr karty' (z nazwiskiem) -> tylko w pliku kart
+263;CH.LUB.BLIN.1788.032;wiersz 'nr karty' (z nazwiskiem) -> tylko w pliku kart
+264;CH.LUB.BLIN.1788.032;wiersz 'nr karty' (z nazwiskiem) -> tylko w pliku kart
+265;CH.LUB.BLIN.1788.032;wiersz 'nr karty' (z nazwiskiem) -> tylko w pliku kart
+266;CH.LUB.BLIN.1788.033;wiersz 'nr karty' (z nazwiskiem) -> tylko w pliku kart
+267;CH.LUB.BLIN.1788.033;wiersz 'nr karty' (z nazwiskiem) -> tylko w pliku kart
+268;CH.LUB.BLIN.1788.033;wiersz 'nr karty' (z nazwiskiem) -> tylko w pliku kart
+269;CH.LUB.BLIN.1788.033;wiersz 'nr karty' (z nazwiskiem) -> tylko w pliku kart
+270;CH.LUB.BLIN.1788.033;wiersz 'nr karty' (z nazwiskiem) -> tylko w pliku kart
+271;CH.LUB.BLIN.1788.033;wiersz 'nr karty' (z nazwiskiem) -> tylko w pliku kart
+272;CH.LUB.BLIN.1788.033;wiersz 'nr karty' (z nazwiskiem) -> tylko w pliku kart
+273;CH.LUB.BLIN.1788.033;wiersz 'nr karty' (z nazwiskiem) -> tylko w pliku kart
+274;CH.LUB.BLIN.1788.034;wiersz 'nr karty' (z nazwiskiem) -> tylko w pliku kart
+275;CH.LUB.BLIN.1788.034;wiersz 'nr karty' (z nazwiskiem) -> tylko w pliku kart
+276;CH.LUB.BLIN.1788.034;wiersz 'nr karty' (z nazwiskiem) -> tylko w pliku kart
+277;CH.LUB.BLIN.1788.034;wiersz 'nr karty' (z nazwiskiem) -> tylko w pliku kart
+278;CH.LUB.BLIN.1788.034;wiersz 'nr karty' (z nazwiskiem) -> tylko w pliku kart
+279;CH.LUB.BLIN.1788.034;wiersz 'nr karty' (z nazwiskiem) -> tylko w pliku kart
+280;CH.LUB.BLIN.1788.034;wiersz 'nr karty' (z nazwiskiem) -> tylko w pliku kart
+281;CH.LUB.BLIN.1788.034;wiersz 'nr karty' (z nazwiskiem) -> tylko w pliku kart
+282;CH.LUB.BLIN.1788.035;wiersz 'nr karty' (z nazwiskiem) -> tylko w pliku kart
+283;CH.LUB.BLIN.1788.035;wiersz 'nr karty' (z nazwiskiem) -> tylko w pliku kart
+284;CH.LUB.BLIN.1788.035;wiersz 'nr karty' (z nazwiskiem) -> tylko w pliku kart
+285;CH.LUB.BLIN.1788.035;wiersz 'nr karty' (z nazwiskiem) -> tylko w pliku kart
+286;CH.LUB.BLIN.1788.035;wiersz 'nr karty' (z nazwiskiem) -> tylko w pliku kart
+287;CH.LUB.BLIN.1788.035;wiersz 'nr karty' (z nazwiskiem) -> tylko w pliku kart
+288;CH.LUB.BLIN.1788.035;wiersz 'nr karty' (z nazwiskiem) -> tylko w pliku kart
+289;CH.LUB.BLIN.1788.036;wiersz 'nr karty' (z nazwiskiem) -> tylko w pliku kart
+290;CH.LUB.BLIN.1788.036;wiersz 'nr karty' (z nazwiskiem) -> tylko w pliku kart
+291;CH.LUB.BLIN.1788.036;wiersz 'nr karty' (z nazwiskiem) -> tylko w pliku kart
+292;CH.LUB.BLIN.1788.036;wiersz 'nr karty' (z nazwiskiem) -> tylko w pliku kart
+293;CH.LUB.BLIN.1788.036;wiersz 'nr karty' (z nazwiskiem) -> tylko w pliku kart
+294;CH.LUB.BLIN.1788.liber;"wiersz 'liber' (nie akt; data 30.12.1899 to prawdopodobnie błąd arkusza) -> osobno"
+295;CH.LUB.BLIN.1788.liber;"wiersz 'liber' (nie akt; data 30.12.1899 to prawdopodobnie błąd arkusza) -> osobno"
+296;CH.LUB.BLIN.1788.liber;"wiersz 'liber' (nie akt; data 30.12.1899 to prawdopodobnie błąd arkusza) -> osobno"
+297;CH.LUB.BLIN.1788.liber;"wiersz 'liber' (nie akt; data 30.12.1899 to prawdopodobnie błąd arkusza) -> osobno"
+298;CH.LUB.BLIN.1788.liber;"wiersz 'liber' (nie akt; data 30.12.1899 to prawdopodobnie błąd arkusza) -> osobno"
+299;CH.LUB.BLIN.1788.liber;"wiersz 'liber' (nie akt; data 30.12.1899 to prawdopodobnie błąd arkusza) -> osobno"
+300;CH.LUB.BLIN.1788.liber;"wiersz 'liber' (nie akt; data 30.12.1899 to prawdopodobnie błąd arkusza) -> osobno"
+301;CH.LUB.BLIN.1788.liber;"wiersz 'liber' (nie akt; data 30.12.1899 to prawdopodobnie błąd arkusza) -> osobno"
+302;CH.LUB.BLIN.1788.liber;"wiersz 'liber' (nie akt; data 30.12.1899 to prawdopodobnie błąd arkusza) -> osobno"
+303;CH.LUB.BLIN.1789.037;wiersz 'nr karty' (z nazwiskiem) -> tylko w pliku kart
+304;CH.LUB.BLIN.1789.037;wiersz 'nr karty' (z nazwiskiem) -> tylko w pliku kart
+305;CH.LUB.BLIN.1789.037;wiersz 'nr karty' (z nazwiskiem) -> tylko w pliku kart
+306;CH.LUB.BLIN.1789.037;wiersz 'nr karty' (z nazwiskiem) -> tylko w pliku kart
+307;CH.LUB.BLIN.1789.037;wiersz 'nr karty' (z nazwiskiem) -> tylko w pliku kart
+308;CH.LUB.BLIN.1789.037;wiersz 'nr karty' (z nazwiskiem) -> tylko w pliku kart
+309;CH.LUB.BLIN.1789.037;wiersz 'nr karty' (z nazwiskiem) -> tylko w pliku kart
+310;CH.LUB.BLIN.1789.038;wiersz 'nr karty' (z nazwiskiem) -> tylko w pliku kart
+311;CH.LUB.BLIN.1789.038;wiersz 'nr karty' (z nazwiskiem) -> tylko w pliku kart
+312;CH.LUB.BLIN.1789.038;wiersz 'nr karty' (z nazwiskiem) -> tylko w pliku kart
+313;CH.LUB.BLIN.1789.038;wiersz 'nr karty' (z nazwiskiem) -> tylko w pliku kart
+314;CH.LUB.BLIN.1789.038;wiersz 'nr karty' (z nazwiskiem) -> tylko w pliku kart
+315;CH.LUB.BLIN.1789.038;wiersz 'nr karty' (z nazwiskiem) -> tylko w pliku kart
+316;CH.LUB.BLIN.1789.038;wiersz 'nr karty' (z nazwiskiem) -> tylko w pliku kart
+317;CH.LUB.BLIN.1789.038;wiersz 'nr karty' (z nazwiskiem) -> tylko w pliku kart
+318;CH.LUB.BLIN.1789.039;wiersz 'nr karty' (z nazwiskiem) -> tylko w pliku kart
+319;CH.LUB.BLIN.1789.039;wiersz 'nr karty' (z nazwiskiem) -> tylko w pliku kart
+320;CH.LUB.BLIN.1789.039;wiersz 'nr karty' (z nazwiskiem) -> tylko w pliku kart
+321;CH.LUB.BLIN.1789.039;wiersz 'nr karty' (z nazwiskiem) -> tylko w pliku kart
+322;CH.LUB.BLIN.1789.040;wiersz 'nr karty' (z nazwiskiem) -> tylko w pliku kart
+323;CH.LUB.BLIN.1789.040;wiersz 'nr karty' (z nazwiskiem) -> tylko w pliku kart
+324;CH.LUB.BLIN.1789.040;wiersz 'nr karty' (z nazwiskiem) -> tylko w pliku kart
+325;CH.LUB.BLIN.1789.040;wiersz 'nr karty' (z nazwiskiem) -> tylko w pliku kart
+326;CH.LUB.BLIN.1789.041;wiersz 'nr karty' (z nazwiskiem) -> tylko w pliku kart
+327;CH.LUB.BLIN.1789.041;wiersz 'nr karty' (z nazwiskiem) -> tylko w pliku kart
+328;CH.LUB.BLIN.1789.041;wiersz 'nr karty' (z nazwiskiem) -> tylko w pliku kart
+329;CH.LUB.BLIN.1789.041;wiersz 'nr karty' (z nazwiskiem) -> tylko w pliku kart
+330;CH.LUB.BLIN.1789.041;wiersz 'nr karty' (z nazwiskiem) -> tylko w pliku kart
+331;CH.LUB.BLIN.1789.041;wiersz 'nr karty' (z nazwiskiem) -> tylko w pliku kart
+332;CH.LUB.BLIN.1789.041;wiersz 'nr karty' (z nazwiskiem) -> tylko w pliku kart
+333;CH.LUB.BLIN.1789.041;wiersz 'nr karty' (z nazwiskiem) -> tylko w pliku kart
+334;CH.LUB.BLIN.1789.042;wiersz 'nr karty' (z nazwiskiem) -> tylko w pliku kart
+335;CH.LUB.BLIN.1789.042;wiersz 'nr karty' (z nazwiskiem) -> tylko w pliku kart
+336;CH.LUB.BLIN.1789.042;wiersz 'nr karty' (z nazwiskiem) -> tylko w pliku kart
+337;CH.LUB.BLIN.1789.042;wiersz 'nr karty' (z nazwiskiem) -> tylko w pliku kart
+338;CH.LUB.BLIN.1789.042;wiersz 'nr karty' (z nazwiskiem) -> tylko w pliku kart
+339;CH.LUB.BLIN.1789.042;wiersz 'nr karty' (z nazwiskiem) -> tylko w pliku kart
+340;CH.LUB.BLIN.1789.043;wiersz 'nr karty' (z nazwiskiem) -> tylko w pliku kart
+341;CH.LUB.BLIN.1789.043;wiersz 'nr karty' (z nazwiskiem) -> tylko w pliku kart
+342;CH.LUB.BLIN.1789.043;wiersz 'nr karty' (z nazwiskiem) -> tylko w pliku kart
+343;CH.LUB.BLIN.1789.043;wiersz 'nr karty' (z nazwiskiem) -> tylko w pliku kart
+344;CH.LUB.BLIN.1789.043;wiersz 'nr karty' (z nazwiskiem) -> tylko w pliku kart
+345;CH.LUB.BLIN.1789.043;wiersz 'nr karty' (z nazwiskiem) -> tylko w pliku kart
+346;CH.LUB.BLIN.1789.liber;"wiersz 'liber' (nie akt; data 30.12.1899 to prawdopodobnie błąd arkusza) -> osobno"
+347;CH.LUB.BLIN.1789.liber;"wiersz 'liber' (nie akt; data 30.12.1899 to prawdopodobnie błąd arkusza) -> osobno"
+348;CH.LUB.BLIN.1789.liber;"wiersz 'liber' (nie akt; data 30.12.1899 to prawdopodobnie błąd arkusza) -> osobno"
+349;CH.LUB.BLIN.1789.liber;"wiersz 'liber' (nie akt; data 30.12.1899 to prawdopodobnie błąd arkusza) -> osobno"
+350;CH.LUB.BLIN.1789.liber;"wiersz 'liber' (nie akt; data 30.12.1899 to prawdopodobnie błąd arkusza) -> osobno"
+351;CH.LUB.BLIN.1789.liber;"wiersz 'liber' (nie akt; data 30.12.1899 to prawdopodobnie błąd arkusza) -> osobno"
+352;CH.LUB.BLIN.1789.liber;"wiersz 'liber' (nie akt; data 30.12.1899 to prawdopodobnie błąd arkusza) -> osobno"
+353;CH.LUB.BLIN.1790.044;wiersz 'nr karty' (z nazwiskiem) -> tylko w pliku kart
+354;CH.LUB.BLIN.1790.044;wiersz 'nr karty' (z nazwiskiem) -> tylko w pliku kart
+355;CH.LUB.BLIN.1790.044;wiersz 'nr karty' (z nazwiskiem) -> tylko w pliku kart
+356;CH.LUB.BLIN.1790.044;wiersz 'nr karty' (z nazwiskiem) -> tylko w pliku kart
+357;CH.LUB.BLIN.1790.044;wiersz 'nr karty' (z nazwiskiem) -> tylko w pliku kart
+358;CH.LUB.BLIN.1790.044;wiersz 'nr karty' (z nazwiskiem) -> tylko w pliku kart
+359;CH.LUB.BLIN.1790.045;wiersz 'nr karty' (z nazwiskiem) -> tylko w pliku kart
+360;CH.LUB.BLIN.1790.045;wiersz 'nr karty' (z nazwiskiem) -> tylko w pliku kart
+361;CH.LUB.BLIN.1790.045;wiersz 'nr karty' (z nazwiskiem) -> tylko w pliku kart
+362;CH.LUB.BLIN.1790.045;wiersz 'nr karty' (z nazwiskiem) -> tylko w pliku kart
+363;CH.LUB.BLIN.1790.046;wiersz 'nr karty' (z nazwiskiem) -> tylko w pliku kart
+364;CH.LUB.BLIN.1790.046;wiersz 'nr karty' (z nazwiskiem) -> tylko w pliku kart
+365;CH.LUB.BLIN.1790.046;wiersz 'nr karty' (z nazwiskiem) -> tylko w pliku kart
+366;CH.LUB.BLIN.1790.046;wiersz 'nr karty' (z nazwiskiem) -> tylko w pliku kart
+367;CH.LUB.BLIN.1790.046;wiersz 'nr karty' (z nazwiskiem) -> tylko w pliku kart
+368;CH.LUB.BLIN.1790.046;wiersz 'nr karty' (z nazwiskiem) -> tylko w pliku kart
+369;CH.LUB.BLIN.1790.047;wiersz 'nr karty' (z nazwiskiem) -> tylko w pliku kart
+370;CH.LUB.BLIN.1790.047;wiersz 'nr karty' (z nazwiskiem) -> tylko w pliku kart
+371;CH.LUB.BLIN.1790.047;wiersz 'nr karty' (z nazwiskiem) -> tylko w pliku kart
+372;CH.LUB.BLIN.1790.047;wiersz 'nr karty' (z nazwiskiem) -> tylko w pliku kart
+373;CH.LUB.BLIN.1790.047;wiersz 'nr karty' (z nazwiskiem) -> tylko w pliku kart
+374;CH.LUB.BLIN.1790.047;wiersz 'nr karty' (z nazwiskiem) -> tylko w pliku kart
+375;CH.LUB.BLIN.1790.047;wiersz 'nr karty' (z nazwiskiem) -> tylko w pliku kart
+376;CH.LUB.BLIN.1790.048;wiersz 'nr karty' (z nazwiskiem) -> tylko w pliku kart
+377;CH.LUB.BLIN.1790.048;wiersz 'nr karty' (z nazwiskiem) -> tylko w pliku kart
+378;CH.LUB.BLIN.1790.048;wiersz 'nr karty' (z nazwiskiem) -> tylko w pliku kart
+379;CH.LUB.BLIN.1790.048;wiersz 'nr karty' (z nazwiskiem) -> tylko w pliku kart
+380;CH.LUB.BLIN.1790.048;wiersz 'nr karty' (z nazwiskiem) -> tylko w pliku kart
+381;CH.LUB.BLIN.1790.048;wiersz 'nr karty' (z nazwiskiem) -> tylko w pliku kart
+382;CH.LUB.BLIN.1790.048;wiersz 'nr karty' (z nazwiskiem) -> tylko w pliku kart
+383;CH.LUB.BLIN.1790.049;wiersz 'nr karty' (z nazwiskiem) -> tylko w pliku kart
+384;CH.LUB.BLIN.1790.049;wiersz 'nr karty' (z nazwiskiem) -> tylko w pliku kart
+385;CH.LUB.BLIN.1790.049;wiersz 'nr karty' (z nazwiskiem) -> tylko w pliku kart
+386;CH.LUB.BLIN.1790.049;wiersz 'nr karty' (z nazwiskiem) -> tylko w pliku kart
+387;CH.LUB.BLIN.1790.049;wiersz 'nr karty' (z nazwiskiem) -> tylko w pliku kart
+388;CH.LUB.BLIN.1790.049;wiersz 'nr karty' (z nazwiskiem) -> tylko w pliku kart
+389;CH.LUB.BLIN.1790.050;wiersz 'nr karty' (z nazwiskiem) -> tylko w pliku kart
+390;CH.LUB.BLIN.1790.050;wiersz 'nr karty' (z nazwiskiem) -> tylko w pliku kart
+391;CH.LUB.BLIN.1790.050;wiersz 'nr karty' (z nazwiskiem) -> tylko w pliku kart
+392;CH.LUB.BLIN.1790.050;wiersz 'nr karty' (z nazwiskiem) -> tylko w pliku kart
+393;CH.LUB.BLIN.1790.050;wiersz 'nr karty' (z nazwiskiem) -> tylko w pliku kart
+394;CH.LUB.BLIN.1790.050;wiersz 'nr karty' (z nazwiskiem) -> tylko w pliku kart
+395;CH.LUB.BLIN.1790.050;wiersz 'nr karty' (z nazwiskiem) -> tylko w pliku kart
+396;CH.LUB.BLIN.1790.051;wiersz 'nr karty' (z nazwiskiem) -> tylko w pliku kart
+397;CH.LUB.BLIN.1790.051;wiersz 'nr karty' (z nazwiskiem) -> tylko w pliku kart
+398;CH.LUB.BLIN.1790.051;wiersz 'nr karty' (z nazwiskiem) -> tylko w pliku kart
+399;CH.LUB.BLIN.1790.051;wiersz 'nr karty' (z nazwiskiem) -> tylko w pliku kart
+400;CH.LUB.BLIN.1790.051;wiersz 'nr karty' (z nazwiskiem) -> tylko w pliku kart
+401;CH.LUB.BLIN.1790.051;wiersz 'nr karty' (z nazwiskiem) -> tylko w pliku kart
+402;CH.LUB.BLIN.1790.liber;"wiersz 'liber' (nie akt; data 30.12.1899 to prawdopodobnie błąd arkusza) -> osobno"
+403;CH.LUB.BLIN.1790.liber;"wiersz 'liber' (nie akt; data 30.12.1899 to prawdopodobnie błąd arkusza) -> osobno"
+404;CH.LUB.BLIN.1790.liber;"wiersz 'liber' (nie akt; data 30.12.1899 to prawdopodobnie błąd arkusza) -> osobno"
+405;CH.LUB.BLIN.1790.liber;"wiersz 'liber' (nie akt; data 30.12.1899 to prawdopodobnie błąd arkusza) -> osobno"
+406;CH.LUB.BLIN.1790.liber;"wiersz 'liber' (nie akt; data 30.12.1899 to prawdopodobnie błąd arkusza) -> osobno"
+407;CH.LUB.BLIN.1791.051;wiersz 'nr karty' (z nazwiskiem) -> tylko w pliku kart
+408;CH.LUB.BLIN.1791.052;wiersz 'nr karty' (z nazwiskiem) -> tylko w pliku kart
+409;CH.LUB.BLIN.1791.052;wiersz 'nr karty' (z nazwiskiem) -> tylko w pliku kart
+410;CH.LUB.BLIN.1791.052;wiersz 'nr karty' (z nazwiskiem) -> tylko w pliku kart
+411;CH.LUB.BLIN.1791.052;wiersz 'nr karty' (z nazwiskiem) -> tylko w pliku kart
+412;CH.LUB.BLIN.1791.052;wiersz 'nr karty' (z nazwiskiem) -> tylko w pliku kart
+413;CH.LUB.BLIN.1791.052;wiersz 'nr karty' (z nazwiskiem) -> tylko w pliku kart
+414;CH.LUB.BLIN.1791.053;wiersz 'nr karty' (z nazwiskiem) -> tylko w pliku kart
+415;CH.LUB.BLIN.1791.053;wiersz 'nr karty' (z nazwiskiem) -> tylko w pliku kart
+416;CH.LUB.BLIN.1791.053;wiersz 'nr karty' (z nazwiskiem) -> tylko w pliku kart
+417;CH.LUB.BLIN.1791.053;wiersz 'nr karty' (z nazwiskiem) -> tylko w pliku kart
+418;CH.LUB.BLIN.1791.053;wiersz 'nr karty' (z nazwiskiem) -> tylko w pliku kart
+419;CH.LUB.BLIN.1791.053;wiersz 'nr karty' (z nazwiskiem) -> tylko w pliku kart
+420;CH.LUB.BLIN.1791.053;wiersz 'nr karty' (z nazwiskiem) -> tylko w pliku kart
+421;CH.LUB.BLIN.1791.053;wiersz 'nr karty' (z nazwiskiem) -> tylko w pliku kart
+422;CH.LUB.BLIN.1791.054;wiersz 'nr karty' (z nazwiskiem) -> tylko w pliku kart
+423;CH.LUB.BLIN.1791.054;wiersz 'nr karty' (z nazwiskiem) -> tylko w pliku kart
+424;CH.LUB.BLIN.1791.054;wiersz 'nr karty' (z nazwiskiem) -> tylko w pliku kart
+425;CH.LUB.BLIN.1791.055;wiersz 'nr karty' (z nazwiskiem) -> tylko w pliku kart
+426;CH.LUB.BLIN.1791.055;wiersz 'nr karty' (z nazwiskiem) -> tylko w pliku kart
+427;CH.LUB.BLIN.1791.056;wiersz 'nr karty' (z nazwiskiem) -> tylko w pliku kart
+428;CH.LUB.BLIN.1791.056;wiersz 'nr karty' (z nazwiskiem) -> tylko w pliku kart
+429;CH.LUB.BLIN.1791.056;wiersz 'nr karty' (z nazwiskiem) -> tylko w pliku kart
+430;CH.LUB.BLIN.1791.057;wiersz 'nr karty' (z nazwiskiem) -> tylko w pliku kart
+431;CH.LUB.BLIN.1791.057;wiersz 'nr karty' (z nazwiskiem) -> tylko w pliku kart
+432;CH.LUB.BLIN.1791.057;wiersz 'nr karty' (z nazwiskiem) -> tylko w pliku kart
+433;CH.LUB.BLIN.1791.057;wiersz 'nr karty' (z nazwiskiem) -> tylko w pliku kart
+434;CH.LUB.BLIN.1791.057;wiersz 'nr karty' (z nazwiskiem) -> tylko w pliku kart
+435;CH.LUB.BLIN.1791.057;wiersz 'nr karty' (z nazwiskiem) -> tylko w pliku kart
+436;CH.LUB.BLIN.1791.057;wiersz 'nr karty' (z nazwiskiem) -> tylko w pliku kart
+437;CH.LUB.BLIN.1791.057;wiersz 'nr karty' (z nazwiskiem) -> tylko w pliku kart
+438;CH.LUB.BLIN.1791.058;wiersz 'nr karty' (z nazwiskiem) -> tylko w pliku kart
+439;CH.LUB.BLIN.1791.058;wiersz 'nr karty' (z nazwiskiem) -> tylko w pliku kart
+440;CH.LUB.BLIN.1791.058;wiersz 'nr karty' (z nazwiskiem) -> tylko w pliku kart
+441;CH.LUB.BLIN.1791.058;wiersz 'nr karty' (z nazwiskiem) -> tylko w pliku kart
+442;CH.LUB.BLIN.1791.058;wiersz 'nr karty' (z nazwiskiem) -> tylko w pliku kart
+443;CH.LUB.BLIN.1791.059;wiersz 'nr karty' (z nazwiskiem) -> tylko w pliku kart
+444;CH.LUB.BLIN.1791.059;wiersz 'nr karty' (z nazwiskiem) -> tylko w pliku kart
+445;CH.LUB.BLIN.1791.059;wiersz 'nr karty' (z nazwiskiem) -> tylko w pliku kart
+446;CH.LUB.BLIN.1791.liber;"wiersz 'liber' (nie akt; data 30.12.1899 to prawdopodobnie błąd arkusza) -> osobno"
+447;CH.LUB.BLIN.1791.liber;"wiersz 'liber' (nie akt; data 30.12.1899 to prawdopodobnie błąd arkusza) -> osobno"
+448;CH.LUB.BLIN.1791.liber;"wiersz 'liber' (nie akt; data 30.12.1899 to prawdopodobnie błąd arkusza) -> osobno"
+449;CH.LUB.BLIN.1791.liber;"wiersz 'liber' (nie akt; data 30.12.1899 to prawdopodobnie błąd arkusza) -> osobno"
+450;CH.LUB.BLIN.1791.liber;"wiersz 'liber' (nie akt; data 30.12.1899 to prawdopodobnie błąd arkusza) -> osobno"
+451;CH.LUB.BLIN.1791.liber;"wiersz 'liber' (nie akt; data 30.12.1899 to prawdopodobnie błąd arkusza) -> osobno"
+452;CH.LUB.BLIN.1791.liber;"wiersz 'liber' (nie akt; data 30.12.1899 to prawdopodobnie błąd arkusza) -> osobno"
+453;CH.LUB.BLIN.1791.liber;"wiersz 'liber' (nie akt; data 30.12.1899 to prawdopodobnie błąd arkusza) -> osobno"
+454;CH.LUB.BLIN.1791.liber;"wiersz 'liber' (nie akt; data 30.12.1899 to prawdopodobnie błąd arkusza) -> osobno"
+455;CH.LUB.BLIN.1791.liber;"wiersz 'liber' (nie akt; data 30.12.1899 to prawdopodobnie błąd arkusza) -> osobno"
+456;CH.LUB.BLIN.1791.liber;"wiersz 'liber' (nie akt; data 30.12.1899 to prawdopodobnie błąd arkusza) -> osobno"
+457;CH.LUB.BLIN.1791.liber;"wiersz 'liber' (nie akt; data 30.12.1899 to prawdopodobnie błąd arkusza) -> osobno"
+458;CH.LUB.BLIN.1791.liber;"wiersz 'liber' (nie akt; data 30.12.1899 to prawdopodobnie błąd arkusza) -> osobno"
+459;CH.LUB.BLIN.1791.liber;"wiersz 'liber' (nie akt; data 30.12.1899 to prawdopodobnie błąd arkusza) -> osobno"
+460;CH.LUB.BLIN.1791.liber;"wiersz 'liber' (nie akt; data 30.12.1899 to prawdopodobnie błąd arkusza) -> osobno"
+461;CH.LUB.BLIN.1791.liber;"wiersz 'liber' (nie akt; data 30.12.1899 to prawdopodobnie błąd arkusza) -> osobno"
+462;CH.LUB.BLIN.1792.059;wiersz 'nr karty' (z nazwiskiem) -> tylko w pliku kart
+463;CH.LUB.BLIN.1792.059;wiersz 'nr karty' (z nazwiskiem) -> tylko w pliku kart
+464;CH.LUB.BLIN.1792.060;wiersz 'nr karty' (z nazwiskiem) -> tylko w pliku kart
+465;CH.LUB.BLIN.1792.060;wiersz 'nr karty' (z nazwiskiem) -> tylko w pliku kart
+466;CH.LUB.BLIN.1792.060;wiersz 'nr karty' (z nazwiskiem) -> tylko w pliku kart
+467;CH.LUB.BLIN.1792.060;wiersz 'nr karty' (z nazwiskiem) -> tylko w pliku kart
+468;CH.LUB.BLIN.1792.060;wiersz 'nr karty' (z nazwiskiem) -> tylko w pliku kart
+469;CH.LUB.BLIN.1792.060;wiersz 'nr karty' (z nazwiskiem) -> tylko w pliku kart
+470;CH.LUB.BLIN.1792.060;wiersz 'nr karty' (z nazwiskiem) -> tylko w pliku kart
+471;CH.LUB.BLIN.1792.061;wiersz 'nr karty' (z nazwiskiem) -> tylko w pliku kart
+472;CH.LUB.BLIN.1792.061;wiersz 'nr karty' (z nazwiskiem) -> tylko w pliku kart
+473;CH.LUB.BLIN.1792.061;wiersz 'nr karty' (z nazwiskiem) -> tylko w pliku kart
+474;CH.LUB.BLIN.1792.061;wiersz 'nr karty' (z nazwiskiem) -> tylko w pliku kart
+475;CH.LUB.BLIN.1792.061;wiersz 'nr karty' (z nazwiskiem) -> tylko w pliku kart
+476;CH.LUB.BLIN.1792.061;wiersz 'nr karty' (z nazwiskiem) -> tylko w pliku kart
+477;CH.LUB.BLIN.1792.061;wiersz 'nr karty' (z nazwiskiem) -> tylko w pliku kart
+478;CH.LUB.BLIN.1792.062;wiersz 'nr karty' (z nazwiskiem) -> tylko w pliku kart
+479;CH.LUB.BLIN.1792.062;wiersz 'nr karty' (z nazwiskiem) -> tylko w pliku kart
+480;CH.LUB.BLIN.1792.062;wiersz 'nr karty' (z nazwiskiem) -> tylko w pliku kart
+481;CH.LUB.BLIN.1792.062;wiersz 'nr karty' (z nazwiskiem) -> tylko w pliku kart
+482;CH.LUB.BLIN.1792.062;wiersz 'nr karty' (z nazwiskiem) -> tylko w pliku kart
+483;CH.LUB.BLIN.1792.062;wiersz 'nr karty' (z nazwiskiem) -> tylko w pliku kart
+484;CH.LUB.BLIN.1792.062;wiersz 'nr karty' (z nazwiskiem) -> tylko w pliku kart
+485;CH.LUB.BLIN.1792.062;wiersz 'nr karty' (z nazwiskiem) -> tylko w pliku kart
+486;CH.LUB.BLIN.1792.063;wiersz 'nr karty' (z nazwiskiem) -> tylko w pliku kart
+487;CH.LUB.BLIN.1792.063;wiersz 'nr karty' (z nazwiskiem) -> tylko w pliku kart
+488;CH.LUB.BLIN.1792.063;wiersz 'nr karty' (z nazwiskiem) -> tylko w pliku kart
+489;CH.LUB.BLIN.1792.063;wiersz 'nr karty' (z nazwiskiem) -> tylko w pliku kart
+490;CH.LUB.BLIN.1792.063;wiersz 'nr karty' (z nazwiskiem) -> tylko w pliku kart
+491;CH.LUB.BLIN.1792.063;wiersz 'nr karty' (z nazwiskiem) -> tylko w pliku kart
+492;CH.LUB.BLIN.1792.063;wiersz 'nr karty' (z nazwiskiem) -> tylko w pliku kart
+493;CH.LUB.BLIN.1792.064;wiersz 'nr karty' (z nazwiskiem) -> tylko w pliku kart
+494;CH.LUB.BLIN.1792.064;wiersz 'nr karty' (z nazwiskiem) -> tylko w pliku kart
+495;CH.LUB.BLIN.1792.064;wiersz 'nr karty' (z nazwiskiem) -> tylko w pliku kart
+496;CH.LUB.BLIN.1792.064;wiersz 'nr karty' (z nazwiskiem) -> tylko w pliku kart
+497;CH.LUB.BLIN.1792.064;wiersz 'nr karty' (z nazwiskiem) -> tylko w pliku kart
+498;CH.LUB.BLIN.1792.064;wiersz 'nr karty' (z nazwiskiem) -> tylko w pliku kart
+499;CH.LUB.BLIN.1792.064;wiersz 'nr karty' (z nazwiskiem) -> tylko w pliku kart
+500;CH.LUB.BLIN.1792.065;wiersz 'nr karty' (z nazwiskiem) -> tylko w pliku kart
+501;CH.LUB.BLIN.1792.065;wiersz 'nr karty' (z nazwiskiem) -> tylko w pliku kart
+502;CH.LUB.BLIN.1792.065;wiersz 'nr karty' (z nazwiskiem) -> tylko w pliku kart
+503;CH.LUB.BLIN.1792.065;wiersz 'nr karty' (z nazwiskiem) -> tylko w pliku kart
+504;CH.LUB.BLIN.1792.065;wiersz 'nr karty' (z nazwiskiem) -> tylko w pliku kart
+505;CH.LUB.BLIN.1792.065;wiersz 'nr karty' (z nazwiskiem) -> tylko w pliku kart
+506;CH.LUB.BLIN.1792.065;wiersz 'nr karty' (z nazwiskiem) -> tylko w pliku kart
+507;CH.LUB.BLIN.1792.066;wiersz 'nr karty' (z nazwiskiem) -> tylko w pliku kart
+508;CH.LUB.BLIN.1792.066;wiersz 'nr karty' (z nazwiskiem) -> tylko w pliku kart
+509;CH.LUB.BLIN.1792.066;wiersz 'nr karty' (z nazwiskiem) -> tylko w pliku kart
+510;CH.LUB.BLIN.1792.066;wiersz 'nr karty' (z nazwiskiem) -> tylko w pliku kart
+511;CH.LUB.BLIN.1792.066;wiersz 'nr karty' (z nazwiskiem) -> tylko w pliku kart
+512;CH.LUB.BLIN.1792.066;wiersz 'nr karty' (z nazwiskiem) -> tylko w pliku kart
+513;CH.LUB.BLIN.1792.066;wiersz 'nr karty' (z nazwiskiem) -> tylko w pliku kart
+514;CH.LUB.BLIN.1792.067;wiersz 'nr karty' (z nazwiskiem) -> tylko w pliku kart
+515;CH.LUB.BLIN.1792.067;wiersz 'nr karty' (z nazwiskiem) -> tylko w pliku kart
+516;CH.LUB.BLIN.1792.067;wiersz 'nr karty' (z nazwiskiem) -> tylko w pliku kart
+517;CH.LUB.BLIN.1792.067;wiersz 'nr karty' (z nazwiskiem) -> tylko w pliku kart
+518;CH.LUB.BLIN.1793.067;wiersz 'nr karty' (z nazwiskiem) -> tylko w pliku kart
+519;CH.LUB.BLIN.1793.067;wiersz 'nr karty' (z nazwiskiem) -> tylko w pliku kart
+520;CH.LUB.BLIN.1793.067;wiersz 'nr karty' (z nazwiskiem) -> tylko w pliku kart
+521;CH.LUB.BLIN.1793.068;wiersz 'nr karty' (z nazwiskiem) -> tylko w pliku kart
+522;CH.LUB.BLIN.1793.068;wiersz 'nr karty' (z nazwiskiem) -> tylko w pliku kart
+523;CH.LUB.BLIN.1793.068;wiersz 'nr karty' (z nazwiskiem) -> tylko w pliku kart
+524;CH.LUB.BLIN.1793.068;wiersz 'nr karty' (z nazwiskiem) -> tylko w pliku kart
+525;CH.LUB.BLIN.1793.068;wiersz 'nr karty' (z nazwiskiem) -> tylko w pliku kart
+526;CH.LUB.BLIN.1793.068;wiersz 'nr karty' (z nazwiskiem) -> tylko w pliku kart
+527;CH.LUB.BLIN.1793.068;wiersz 'nr karty' (z nazwiskiem) -> tylko w pliku kart
+528;CH.LUB.BLIN.1793.068;wiersz 'nr karty' (z nazwiskiem) -> tylko w pliku kart
+529;CH.LUB.BLIN.1793.069;wiersz 'nr karty' (z nazwiskiem) -> tylko w pliku kart
+530;CH.LUB.BLIN.1793.069;wiersz 'nr karty' (z nazwiskiem) -> tylko w pliku kart
+531;CH.LUB.BLIN.1793.069;wiersz 'nr karty' (z nazwiskiem) -> tylko w pliku kart
+532;CH.LUB.BLIN.1793.069;wiersz 'nr karty' (z nazwiskiem) -> tylko w pliku kart
+533;CH.LUB.BLIN.1793.069;wiersz 'nr karty' (z nazwiskiem) -> tylko w pliku kart
+534;CH.LUB.BLIN.1793.069;wiersz 'nr karty' (z nazwiskiem) -> tylko w pliku kart
+535;CH.LUB.BLIN.1793.069;wiersz 'nr karty' (z nazwiskiem) -> tylko w pliku kart
+536;CH.LUB.BLIN.1793.069;wiersz 'nr karty' (z nazwiskiem) -> tylko w pliku kart
+537;CH.LUB.BLIN.1793.070;wiersz 'nr karty' (z nazwiskiem) -> tylko w pliku kart
+538;CH.LUB.BLIN.1793.070;wiersz 'nr karty' (z nazwiskiem) -> tylko w pliku kart
+539;CH.LUB.BLIN.1793.070;wiersz 'nr karty' (z nazwiskiem) -> tylko w pliku kart
+540;CH.LUB.BLIN.1793.070;wiersz 'nr karty' (z nazwiskiem) -> tylko w pliku kart
+541;CH.LUB.BLIN.1793.070;wiersz 'nr karty' (z nazwiskiem) -> tylko w pliku kart
+542;CH.LUB.BLIN.1793.070;wiersz 'nr karty' (z nazwiskiem) -> tylko w pliku kart
+543;CH.LUB.BLIN.1793.071;wiersz 'nr karty' (z nazwiskiem) -> tylko w pliku kart
+544;CH.LUB.BLIN.1793.071;wiersz 'nr karty' (z nazwiskiem) -> tylko w pliku kart
+545;CH.LUB.BLIN.1793.071;wiersz 'nr karty' (z nazwiskiem) -> tylko w pliku kart
+546;CH.LUB.BLIN.1793.071;wiersz 'nr karty' (z nazwiskiem) -> tylko w pliku kart
+547;CH.LUB.BLIN.1793.071;wiersz 'nr karty' (z nazwiskiem) -> tylko w pliku kart
+548;CH.LUB.BLIN.1793.071;wiersz 'nr karty' (z nazwiskiem) -> tylko w pliku kart
+549;CH.LUB.BLIN.1793.071;wiersz 'nr karty' (z nazwiskiem) -> tylko w pliku kart
+550;CH.LUB.BLIN.1793.072;wiersz 'nr karty' (z nazwiskiem) -> tylko w pliku kart
+551;CH.LUB.BLIN.1793.072;wiersz 'nr karty' (z nazwiskiem) -> tylko w pliku kart
+552;CH.LUB.BLIN.1793.073;wiersz 'nr karty' (z nazwiskiem) -> tylko w pliku kart
+553;CH.LUB.BLIN.1793.073;wiersz 'nr karty' (z nazwiskiem) -> tylko w pliku kart
+554;CH.LUB.BLIN.1793.073;wiersz 'nr karty' (z nazwiskiem) -> tylko w pliku kart
+555;CH.LUB.BLIN.1793.073;wiersz 'nr karty' (z nazwiskiem) -> tylko w pliku kart
+556;CH.LUB.BLIN.1793.073;wiersz 'nr karty' (z nazwiskiem) -> tylko w pliku kart
+557;CH.LUB.BLIN.1793.073;wiersz 'nr karty' (z nazwiskiem) -> tylko w pliku kart
+558;CH.LUB.BLIN.1793.074;wiersz 'nr karty' (z nazwiskiem) -> tylko w pliku kart
+559;CH.LUB.BLIN.1793.074;wiersz 'nr karty' (z nazwiskiem) -> tylko w pliku kart
+560;CH.LUB.BLIN.1793.074;wiersz 'nr karty' (z nazwiskiem) -> tylko w pliku kart
+561;CH.LUB.BLIN.1793.074;wiersz 'nr karty' (z nazwiskiem) -> tylko w pliku kart
+562;CH.LUB.BLIN.1793.074;wiersz 'nr karty' (z nazwiskiem) -> tylko w pliku kart
+563;CH.LUB.BLIN.1793.074;wiersz 'nr karty' (z nazwiskiem) -> tylko w pliku kart
+564;CH.LUB.BLIN.1793.074;wiersz 'nr karty' (z nazwiskiem) -> tylko w pliku kart
+565;CH.LUB.BLIN.1793.liber;"wiersz 'liber' (nie akt; data 30.12.1899 to prawdopodobnie błąd arkusza) -> osobno"
+566;CH.LUB.BLIN.1793.liber;"wiersz 'liber' (nie akt; data 30.12.1899 to prawdopodobnie błąd arkusza) -> osobno"
+567;CH.LUB.BLIN.1793.liber;"wiersz 'liber' (nie akt; data 30.12.1899 to prawdopodobnie błąd arkusza) -> osobno"
+568;CH.LUB.BLIN.1793.liber;"wiersz 'liber' (nie akt; data 30.12.1899 to prawdopodobnie błąd arkusza) -> osobno"
+569;CH.LUB.BLIN.1793.liber;"wiersz 'liber' (nie akt; data 30.12.1899 to prawdopodobnie błąd arkusza) -> osobno"
+570;CH.LUB.BLIN.1793.liber;"wiersz 'liber' (nie akt; data 30.12.1899 to prawdopodobnie błąd arkusza) -> osobno"
+571;CH.LUB.BLIN.1794.074;wiersz 'nr karty' (z nazwiskiem) -> tylko w pliku kart
+572;CH.LUB.BLIN.1794.075;wiersz 'nr karty' (z nazwiskiem) -> tylko w pliku kart
+573;CH.LUB.BLIN.1794.075;wiersz 'nr karty' (z nazwiskiem) -> tylko w pliku kart
+574;CH.LUB.BLIN.1794.075;wiersz 'nr karty' (z nazwiskiem) -> tylko w pliku kart
+575;CH.LUB.BLIN.1794.075;wiersz 'nr karty' (z nazwiskiem) -> tylko w pliku kart
+576;CH.LUB.BLIN.1794.075;wiersz 'nr karty' (z nazwiskiem) -> tylko w pliku kart
+577;CH.LUB.BLIN.1794.075;wiersz 'nr karty' (z nazwiskiem) -> tylko w pliku kart
+578;CH.LUB.BLIN.1794.075;wiersz 'nr karty' (z nazwiskiem) -> tylko w pliku kart
+579;CH.LUB.BLIN.1794.076;wiersz 'nr karty' (z nazwiskiem) -> tylko w pliku kart
+580;CH.LUB.BLIN.1794.076;wiersz 'nr karty' (z nazwiskiem) -> tylko w pliku kart
+581;CH.LUB.BLIN.1794.076;wiersz 'nr karty' (z nazwiskiem) -> tylko w pliku kart
+582;CH.LUB.BLIN.1794.076;wiersz 'nr karty' (z nazwiskiem) -> tylko w pliku kart
+583;CH.LUB.BLIN.1794.076;wiersz 'nr karty' (z nazwiskiem) -> tylko w pliku kart
+584;CH.LUB.BLIN.1794.076;wiersz 'nr karty' (z nazwiskiem) -> tylko w pliku kart
+585;CH.LUB.BLIN.1794.076;wiersz 'nr karty' (z nazwiskiem) -> tylko w pliku kart
+586;CH.LUB.BLIN.1794.077;wiersz 'nr karty' (z nazwiskiem) -> tylko w pliku kart
+587;CH.LUB.BLIN.1794.077;wiersz 'nr karty' (z nazwiskiem) -> tylko w pliku kart
+588;CH.LUB.BLIN.1794.077;wiersz 'nr karty' (z nazwiskiem) -> tylko w pliku kart
+589;CH.LUB.BLIN.1794.078;wiersz 'nr karty' (z nazwiskiem) -> tylko w pliku kart
+590;CH.LUB.BLIN.1794.078;wiersz 'nr karty' (z nazwiskiem) -> tylko w pliku kart
+591;CH.LUB.BLIN.1794.078;wiersz 'nr karty' (z nazwiskiem) -> tylko w pliku kart
+592;CH.LUB.BLIN.1794.078;wiersz 'nr karty' (z nazwiskiem) -> tylko w pliku kart
+593;CH.LUB.BLIN.1794.078;wiersz 'nr karty' (z nazwiskiem) -> tylko w pliku kart
+594;CH.LUB.BLIN.1794.078;wiersz 'nr karty' (z nazwiskiem) -> tylko w pliku kart
+595;CH.LUB.BLIN.1794.079;wiersz 'nr karty' (z nazwiskiem) -> tylko w pliku kart
+596;CH.LUB.BLIN.1794.079;wiersz 'nr karty' (z nazwiskiem) -> tylko w pliku kart
+597;CH.LUB.BLIN.1794.079;wiersz 'nr karty' (z nazwiskiem) -> tylko w pliku kart
+598;CH.LUB.BLIN.1794.079;wiersz 'nr karty' (z nazwiskiem) -> tylko w pliku kart
+599;CH.LUB.BLIN.1794.079;wiersz 'nr karty' (z nazwiskiem) -> tylko w pliku kart
+600;CH.LUB.BLIN.1794.079;wiersz 'nr karty' (z nazwiskiem) -> tylko w pliku kart
+601;CH.LUB.BLIN.1794.079;wiersz 'nr karty' (z nazwiskiem) -> tylko w pliku kart
+602;CH.LUB.BLIN.1794.080;wiersz 'nr karty' (z nazwiskiem) -> tylko w pliku kart
+603;CH.LUB.BLIN.1794.080;wiersz 'nr karty' (z nazwiskiem) -> tylko w pliku kart
+604;CH.LUB.BLIN.1794.080;wiersz 'nr karty' (z nazwiskiem) -> tylko w pliku kart
+605;CH.LUB.BLIN.1794.081;wiersz 'nr karty' (z nazwiskiem) -> tylko w pliku kart
+606;CH.LUB.BLIN.1794.081;wiersz 'nr karty' (z nazwiskiem) -> tylko w pliku kart
+607;CH.LUB.BLIN.1794.081;wiersz 'nr karty' (z nazwiskiem) -> tylko w pliku kart
+608;CH.LUB.BLIN.1794.081;wiersz 'nr karty' (z nazwiskiem) -> tylko w pliku kart
+609;CH.LUB.BLIN.1794.081;wiersz 'nr karty' (z nazwiskiem) -> tylko w pliku kart
+610;CH.LUB.BLIN.1794.081;wiersz 'nr karty' (z nazwiskiem) -> tylko w pliku kart
+611;CH.LUB.BLIN.1794.081;wiersz 'nr karty' (z nazwiskiem) -> tylko w pliku kart
+612;CH.LUB.BLIN.1794.081;wiersz 'nr karty' (z nazwiskiem) -> tylko w pliku kart
+613;CH.LUB.BLIN.1794.082;wiersz 'nr karty' (z nazwiskiem) -> tylko w pliku kart
+614;CH.LUB.BLIN.1794.082;wiersz 'nr karty' (z nazwiskiem) -> tylko w pliku kart
+615;CH.LUB.BLIN.1794.liber;"wiersz 'liber' (nie akt; data 30.12.1899 to prawdopodobnie błąd arkusza) -> osobno"
+616;CH.LUB.BLIN.1794.liber;"wiersz 'liber' (nie akt; data 30.12.1899 to prawdopodobnie błąd arkusza) -> osobno"
+617;CH.LUB.BLIN.1794.liber;"wiersz 'liber' (nie akt; data 30.12.1899 to prawdopodobnie błąd arkusza) -> osobno"
+618;CH.LUB.BLIN.1794.liber;"wiersz 'liber' (nie akt; data 30.12.1899 to prawdopodobnie błąd arkusza) -> osobno"
+619;CH.LUB.BLIN.1794.liber;"wiersz 'liber' (nie akt; data 30.12.1899 to prawdopodobnie błąd arkusza) -> osobno"
+620;CH.LUB.BLIN.1794.liber;"wiersz 'liber' (nie akt; data 30.12.1899 to prawdopodobnie błąd arkusza) -> osobno"
+621;CH.LUB.BLIN.1794.liber;"wiersz 'liber' (nie akt; data 30.12.1899 to prawdopodobnie błąd arkusza) -> osobno"
+622;CH.LUB.BLIN.1794.liber;"wiersz 'liber' (nie akt; data 30.12.1899 to prawdopodobnie błąd arkusza) -> osobno"
+623;CH.LUB.BLIN.1794.liber;"wiersz 'liber' (nie akt; data 30.12.1899 to prawdopodobnie błąd arkusza) -> osobno"
+624;CH.LUB.BLIN.1794.liber;"wiersz 'liber' (nie akt; data 30.12.1899 to prawdopodobnie błąd arkusza) -> osobno"
+625;CH.LUB.BLIN.1794.liber;"wiersz 'liber' (nie akt; data 30.12.1899 to prawdopodobnie błąd arkusza) -> osobno"
+626;CH.LUB.BLIN.1794.liber;"wiersz 'liber' (nie akt; data 30.12.1899 to prawdopodobnie błąd arkusza) -> osobno"
+627;CH.LUB.BLIN.1794.liber;"wiersz 'liber' (nie akt; data 30.12.1899 to prawdopodobnie błąd arkusza) -> osobno"
+628;CH.LUB.BLIN.1794.liber;"wiersz 'liber' (nie akt; data 30.12.1899 to prawdopodobnie błąd arkusza) -> osobno"
+629;CH.LUB.BLIN.1794.liber;"wiersz 'liber' (nie akt; data 30.12.1899 to prawdopodobnie błąd arkusza) -> osobno"
+630;CH.LUB.BLIN.1795.082;wiersz 'nr karty' (z nazwiskiem) -> tylko w pliku kart
+631;CH.LUB.BLIN.1795.082;wiersz 'nr karty' (z nazwiskiem) -> tylko w pliku kart
+632;CH.LUB.BLIN.1795.082;wiersz 'nr karty' (z nazwiskiem) -> tylko w pliku kart
+633;CH.LUB.BLIN.1795.082;wiersz 'nr karty' (z nazwiskiem) -> tylko w pliku kart
+634;CH.LUB.BLIN.1795.082;wiersz 'nr karty' (z nazwiskiem) -> tylko w pliku kart
+635;CH.LUB.BLIN.1795.083;wiersz 'nr karty' (z nazwiskiem) -> tylko w pliku kart
+636;CH.LUB.BLIN.1795.083;wiersz 'nr karty' (z nazwiskiem) -> tylko w pliku kart
+637;CH.LUB.BLIN.1795.083;wiersz 'nr karty' (z nazwiskiem) -> tylko w pliku kart
+638;CH.LUB.BLIN.1795.083;wiersz 'nr karty' (z nazwiskiem) -> tylko w pliku kart
+639;CH.LUB.BLIN.1795.083;wiersz 'nr karty' (z nazwiskiem) -> tylko w pliku kart
+640;CH.LUB.BLIN.1795.083;wiersz 'nr karty' (z nazwiskiem) -> tylko w pliku kart
+641;CH.LUB.BLIN.1795.083;wiersz 'nr karty' (z nazwiskiem) -> tylko w pliku kart
+642;CH.LUB.BLIN.1795.083;wiersz 'nr karty' (z nazwiskiem) -> tylko w pliku kart
+643;CH.LUB.BLIN.1795.083;wiersz 'nr karty' (z nazwiskiem) -> tylko w pliku kart
+644;CH.LUB.BLIN.1795.084;wiersz 'nr karty' (z nazwiskiem) -> tylko w pliku kart
+645;CH.LUB.BLIN.1795.084;wiersz 'nr karty' (z nazwiskiem) -> tylko w pliku kart
+646;CH.LUB.BLIN.1795.084;wiersz 'nr karty' (z nazwiskiem) -> tylko w pliku kart
+647;CH.LUB.BLIN.1795.084;wiersz 'nr karty' (z nazwiskiem) -> tylko w pliku kart
+648;CH.LUB.BLIN.1795.084;wiersz 'nr karty' (z nazwiskiem) -> tylko w pliku kart
+649;CH.LUB.BLIN.1795.084;wiersz 'nr karty' (z nazwiskiem) -> tylko w pliku kart
+650;CH.LUB.BLIN.1795.084;wiersz 'nr karty' (z nazwiskiem) -> tylko w pliku kart
+651;CH.LUB.BLIN.1795.084;wiersz 'nr karty' (z nazwiskiem) -> tylko w pliku kart
+652;CH.LUB.BLIN.1795.084;wiersz 'nr karty' (z nazwiskiem) -> tylko w pliku kart
+653;CH.LUB.BLIN.1795.085;wiersz 'nr karty' (z nazwiskiem) -> tylko w pliku kart
+654;CH.LUB.BLIN.1795.085;wiersz 'nr karty' (z nazwiskiem) -> tylko w pliku kart
+655;CH.LUB.BLIN.1795.085;wiersz 'nr karty' (z nazwiskiem) -> tylko w pliku kart
+656;CH.LUB.BLIN.1795.085;wiersz 'nr karty' (z nazwiskiem) -> tylko w pliku kart
+657;CH.LUB.BLIN.1795.085;wiersz 'nr karty' (z nazwiskiem) -> tylko w pliku kart
+658;CH.LUB.BLIN.1795.085;wiersz 'nr karty' (z nazwiskiem) -> tylko w pliku kart
+659;CH.LUB.BLIN.1795.085;wiersz 'nr karty' (z nazwiskiem) -> tylko w pliku kart
+660;CH.LUB.BLIN.1795.085;wiersz 'nr karty' (z nazwiskiem) -> tylko w pliku kart
+661;CH.LUB.BLIN.1795.086;wiersz 'nr karty' (z nazwiskiem) -> tylko w pliku kart
+662;CH.LUB.BLIN.1795.086;wiersz 'nr karty' (z nazwiskiem) -> tylko w pliku kart
+663;CH.LUB.BLIN.1795.086;wiersz 'nr karty' (z nazwiskiem) -> tylko w pliku kart
+664;CH.LUB.BLIN.1795.089;wiersz 'nr karty' (z nazwiskiem) -> tylko w pliku kart
+665;CH.LUB.BLIN.1795.089;wiersz 'nr karty' (z nazwiskiem) -> tylko w pliku kart
+666;CH.LUB.BLIN.1795.liber;"wiersz 'liber' (nie akt; data 30.12.1899 to prawdopodobnie błąd arkusza) -> osobno"
+667;CH.LUB.BLIN.1795.liber;"wiersz 'liber' (nie akt; data 30.12.1899 to prawdopodobnie błąd arkusza) -> osobno"
+668;CH.LUB.BLIN.1795.liber;"wiersz 'liber' (nie akt; data 30.12.1899 to prawdopodobnie błąd arkusza) -> osobno"
+669;CH.LUB.BLIN.1795.liber;"wiersz 'liber' (nie akt; data 30.12.1899 to prawdopodobnie błąd arkusza) -> osobno"
+670;CH.LUB.BLIN.1795.liber;"wiersz 'liber' (nie akt; data 30.12.1899 to prawdopodobnie błąd arkusza) -> osobno"
+671;CH.LUB.BLIN.1795.liber;"wiersz 'liber' (nie akt; data 30.12.1899 to prawdopodobnie błąd arkusza) -> osobno"
+672;CH.LUB.BLIN.1795.liber;"wiersz 'liber' (nie akt; data 30.12.1899 to prawdopodobnie błąd arkusza) -> osobno"
+673;CH.LUB.BLIN.1795.liber;"wiersz 'liber' (nie akt; data 30.12.1899 to prawdopodobnie błąd arkusza) -> osobno"
+674;CH.LUB.BLIN.1795.liber;"wiersz 'liber' (nie akt; data 30.12.1899 to prawdopodobnie błąd arkusza) -> osobno"
+675;CH.LUB.BLIN.1795.liber;"wiersz 'liber' (nie akt; data 30.12.1899 to prawdopodobnie błąd arkusza) -> osobno"
+676;CH.LUB.BLIN.1795.liber;"wiersz 'liber' (nie akt; data 30.12.1899 to prawdopodobnie błąd arkusza) -> osobno"
+677;CH.LUB.BLIN.1795.liber;"wiersz 'liber' (nie akt; data 30.12.1899 to prawdopodobnie błąd arkusza) -> osobno"
+678;CH.LUB.BLIN.1795.liber;"wiersz 'liber' (nie akt; data 30.12.1899 to prawdopodobnie błąd arkusza) -> osobno"
+679;CH.LUB.BLIN.1795.liber;"wiersz 'liber' (nie akt; data 30.12.1899 to prawdopodobnie błąd arkusza) -> osobno"
+680;CH.LUB.BLIN.1795.liber;"wiersz 'liber' (nie akt; data 30.12.1899 to prawdopodobnie błąd arkusza) -> osobno"
+681;CH.LUB.BLIN.1795.liber;"wiersz 'liber' (nie akt; data 30.12.1899 to prawdopodobnie błąd arkusza) -> osobno"
+682;CH.LUB.BLIN.1796.089;wiersz 'nr karty' (z nazwiskiem) -> tylko w pliku kart
+683;CH.LUB.BLIN.1796.089;wiersz 'nr karty' (z nazwiskiem) -> tylko w pliku kart
+684;CH.LUB.BLIN.1796.089;wiersz 'nr karty' (z nazwiskiem) -> tylko w pliku kart
+685;CH.LUB.BLIN.1796.090;wiersz 'nr karty' (z nazwiskiem) -> tylko w pliku kart
+686;CH.LUB.BLIN.1796.090;wiersz 'nr karty' (z nazwiskiem) -> tylko w pliku kart
+687;CH.LUB.BLIN.1796.090;wiersz 'nr karty' (z nazwiskiem) -> tylko w pliku kart
+688;CH.LUB.BLIN.1796.090;wiersz 'nr karty' (z nazwiskiem) -> tylko w pliku kart
+689;CH.LUB.BLIN.1796.090;wiersz 'nr karty' (z nazwiskiem) -> tylko w pliku kart
+690;CH.LUB.BLIN.1796.090;wiersz 'nr karty' (z nazwiskiem) -> tylko w pliku kart
+691;CH.LUB.BLIN.1796.090;wiersz 'nr karty' (z nazwiskiem) -> tylko w pliku kart
+692;CH.LUB.BLIN.1796.091;wiersz 'nr karty' (z nazwiskiem) -> tylko w pliku kart
+693;CH.LUB.BLIN.1796.091;wiersz 'nr karty' (z nazwiskiem) -> tylko w pliku kart
+694;CH.LUB.BLIN.1796.091;wiersz 'nr karty' (z nazwiskiem) -> tylko w pliku kart
+695;CH.LUB.BLIN.1796.091;wiersz 'nr karty' (z nazwiskiem) -> tylko w pliku kart
+696;CH.LUB.BLIN.1796.091;wiersz 'nr karty' (z nazwiskiem) -> tylko w pliku kart
+697;CH.LUB.BLIN.1796.091;wiersz 'nr karty' (z nazwiskiem) -> tylko w pliku kart
+698;CH.LUB.BLIN.1796.091;wiersz 'nr karty' (z nazwiskiem) -> tylko w pliku kart
+699;CH.LUB.BLIN.1796.092;wiersz 'nr karty' (z nazwiskiem) -> tylko w pliku kart
+700;CH.LUB.BLIN.1796.092;wiersz 'nr karty' (z nazwiskiem) -> tylko w pliku kart
+701;CH.LUB.BLIN.1796.092;wiersz 'nr karty' (z nazwiskiem) -> tylko w pliku kart
+702;CH.LUB.BLIN.1796.092;wiersz 'nr karty' (z nazwiskiem) -> tylko w pliku kart
+703;CH.LUB.BLIN.1796.092;wiersz 'nr karty' (z nazwiskiem) -> tylko w pliku kart
+704;CH.LUB.BLIN.1796.092;wiersz 'nr karty' (z nazwiskiem) -> tylko w pliku kart
+705;CH.LUB.BLIN.1796.092;wiersz 'nr karty' (z nazwiskiem) -> tylko w pliku kart
+706;CH.LUB.BLIN.1796.092;wiersz 'nr karty' (z nazwiskiem) -> tylko w pliku kart
+707;CH.LUB.BLIN.1796.092;wiersz 'nr karty' (z nazwiskiem) -> tylko w pliku kart
+708;CH.LUB.BLIN.1796.092;wiersz 'nr karty' (z nazwiskiem) -> tylko w pliku kart
+709;CH.LUB.BLIN.1796.093;wiersz 'nr karty' (z nazwiskiem) -> tylko w pliku kart
+710;CH.LUB.BLIN.1796.093;wiersz 'nr karty' (z nazwiskiem) -> tylko w pliku kart
+711;CH.LUB.BLIN.1796.094;wiersz 'nr karty' (z nazwiskiem) -> tylko w pliku kart
+712;CH.LUB.BLIN.1796.094;wiersz 'nr karty' (z nazwiskiem) -> tylko w pliku kart
+713;CH.LUB.BLIN.1796.094;wiersz 'nr karty' (z nazwiskiem) -> tylko w pliku kart
+714;CH.LUB.BLIN.1796.094;wiersz 'nr karty' (z nazwiskiem) -> tylko w pliku kart
+715;CH.LUB.BLIN.1796.096;wiersz 'nr karty' (z nazwiskiem) -> tylko w pliku kart
+716;CH.LUB.BLIN.1796.096;wiersz 'nr karty' (z nazwiskiem) -> tylko w pliku kart
+717;CH.LUB.BLIN.1796.097;wiersz 'nr karty' (z nazwiskiem) -> tylko w pliku kart
+718;CH.LUB.BLIN.1796.097;wiersz 'nr karty' (z nazwiskiem) -> tylko w pliku kart
+719;CH.LUB.BLIN.1796.097;wiersz 'nr karty' (z nazwiskiem) -> tylko w pliku kart
+720;CH.LUB.BLIN.1796.097;wiersz 'nr karty' (z nazwiskiem) -> tylko w pliku kart
+721;CH.LUB.BLIN.1796.097;wiersz 'nr karty' (z nazwiskiem) -> tylko w pliku kart
+722;CH.LUB.BLIN.1796.liber;"wiersz 'liber' (nie akt; data 30.12.1899 to prawdopodobnie błąd arkusza) -> osobno"
+723;CH.LUB.BLIN.1796.liber;"wiersz 'liber' (nie akt; data 30.12.1899 to prawdopodobnie błąd arkusza) -> osobno"
+724;CH.LUB.BLIN.1796.liber;"wiersz 'liber' (nie akt; data 30.12.1899 to prawdopodobnie błąd arkusza) -> osobno"
+725;CH.LUB.BLIN.1796.liber;"wiersz 'liber' (nie akt; data 30.12.1899 to prawdopodobnie błąd arkusza) -> osobno"
+726;CH.LUB.BLIN.1796.liber;"wiersz 'liber' (nie akt; data 30.12.1899 to prawdopodobnie błąd arkusza) -> osobno"
+727;CH.LUB.BLIN.1796.liber;"wiersz 'liber' (nie akt; data 30.12.1899 to prawdopodobnie błąd arkusza) -> osobno"
+728;CH.LUB.BLIN.1796.liber;"wiersz 'liber' (nie akt; data 30.12.1899 to prawdopodobnie błąd arkusza) -> osobno"
+729;CH.LUB.BLIN.1796.liber;"wiersz 'liber' (nie akt; data 30.12.1899 to prawdopodobnie błąd arkusza) -> osobno"
+730;CH.LUB.BLIN.1796.liber;"wiersz 'liber' (nie akt; data 30.12.1899 to prawdopodobnie błąd arkusza) -> osobno"
+731;CH.LUB.BLIN.1796.liber;"wiersz 'liber' (nie akt; data 30.12.1899 to prawdopodobnie błąd arkusza) -> osobno"
+732;CH.LUB.BLIN.1796.liber;"wiersz 'liber' (nie akt; data 30.12.1899 to prawdopodobnie błąd arkusza) -> osobno"
+733;CH.LUB.BLIN.1796.liber;"wiersz 'liber' (nie akt; data 30.12.1899 to prawdopodobnie błąd arkusza) -> osobno"
+734;CH.LUB.BLIN.1796.liber;"wiersz 'liber' (nie akt; data 30.12.1899 to prawdopodobnie błąd arkusza) -> osobno"
+735;CH.LUB.BLIN.1796.liber;"wiersz 'liber' (nie akt; data 30.12.1899 to prawdopodobnie błąd arkusza) -> osobno"
+736;CH.LUB.BLIN.1796.liber;"wiersz 'liber' (nie akt; data 30.12.1899 to prawdopodobnie błąd arkusza) -> osobno"
+737;CH.LUB.BLIN.1796.liber;"wiersz 'liber' (nie akt; data 30.12.1899 to prawdopodobnie błąd arkusza) -> osobno"
+738;CH.LUB.BLIN.1796.liber;"wiersz 'liber' (nie akt; data 30.12.1899 to prawdopodobnie błąd arkusza) -> osobno"
+739;CH.LUB.BLIN.1796.liber;"wiersz 'liber' (nie akt; data 30.12.1899 to prawdopodobnie błąd arkusza) -> osobno"
+740;CH.LUB.BLIN.1796.liber;"wiersz 'liber' (nie akt; data 30.12.1899 to prawdopodobnie błąd arkusza) -> osobno"
+741;CH.LUB.BLIN.1796.liber;"wiersz 'liber' (nie akt; data 30.12.1899 to prawdopodobnie błąd arkusza) -> osobno"
+742;CH.LUB.BLIN.1796.liber;"wiersz 'liber' (nie akt; data 30.12.1899 to prawdopodobnie błąd arkusza) -> osobno"
+743;CH.LUB.BLIN.1796.liber;"wiersz 'liber' (nie akt; data 30.12.1899 to prawdopodobnie błąd arkusza) -> osobno"
+744;CH.LUB.BLIN.1796.liber;"wiersz 'liber' (nie akt; data 30.12.1899 to prawdopodobnie błąd arkusza) -> osobno"
+745;CH.LUB.BLIN.1796.liber;"wiersz 'liber' (nie akt; data 30.12.1899 to prawdopodobnie błąd arkusza) -> osobno"
+6002;-;kopia bloku 5900-5987 (usunięta)
+6003;-;kopia bloku 5900-5987 (usunięta)
+6004;-;kopia bloku 5900-5987 (usunięta)
+6005;-;kopia bloku 5900-5987 (usunięta)
+6006;-;kopia bloku 5900-5987 (usunięta)
+6007;-;kopia bloku 5900-5987 (usunięta)
+6008;-;kopia bloku 5900-5987 (usunięta)
+6009;-;kopia bloku 5900-5987 (usunięta)
+6010;-;kopia bloku 5900-5987 (usunięta)
+6011;-;kopia bloku 5900-5987 (usunięta)
+6012;-;kopia bloku 5900-5987 (usunięta)
+6013;-;kopia bloku 5900-5987 (usunięta)
+6014;-;kopia bloku 5900-5987 (usunięta)
+6015;-;kopia bloku 5900-5987 (usunięta)
+6016;-;kopia bloku 5900-5987 (usunięta)
+6017;-;kopia bloku 5900-5987 (usunięta)
+6018;-;kopia bloku 5900-5987 (usunięta)
+6019;-;kopia bloku 5900-5987 (usunięta)
+6020;-;kopia bloku 5900-5987 (usunięta)
+6021;-;kopia bloku 5900-5987 (usunięta)
+6022;-;kopia bloku 5900-5987 (usunięta)
+6023;-;kopia bloku 5900-5987 (usunięta)
+6024;-;kopia bloku 5900-5987 (usunięta)
+6025;-;kopia bloku 5900-5987 (usunięta)
+6026;-;kopia bloku 5900-5987 (usunięta)
+6027;-;kopia bloku 5900-5987 (usunięta)
+6028;-;kopia bloku 5900-5987 (usunięta)
+6029;-;kopia bloku 5900-5987 (usunięta)
+6030;-;kopia bloku 5900-5987 (usunięta)
+6031;-;kopia bloku 5900-5987 (usunięta)
+6032;-;kopia bloku 5900-5987 (usunięta)
+6033;-;kopia bloku 5900-5987 (usunięta)
+6034;-;kopia bloku 5900-5987 (usunięta)
+6035;-;kopia bloku 5900-5987 (usunięta)
+6036;-;kopia bloku 5900-5987 (usunięta)
+6037;-;kopia bloku 5900-5987 (usunięta)
+6038;-;kopia bloku 5900-5987 (usunięta)
+6039;-;kopia bloku 5900-5987 (usunięta)
+6040;-;kopia bloku 5900-5987 (usunięta)
+6041;-;kopia bloku 5900-5987 (usunięta)
+6042;-;kopia bloku 5900-5987 (usunięta)
+6043;-;kopia bloku 5900-5987 (usunięta)
+6044;-;kopia bloku 5900-5987 (usunięta)
+6045;-;kopia bloku 5900-5987 (usunięta)
+6046;-;kopia bloku 5900-5987 (usunięta)
+6047;-;kopia bloku 5900-5987 (usunięta)
+6048;-;kopia bloku 5900-5987 (usunięta)
+6049;-;kopia bloku 5900-5987 (usunięta)
+6050;-;kopia bloku 5900-5987 (usunięta)
+6051;-;kopia bloku 5900-5987 (usunięta)
+6052;-;kopia bloku 5900-5987 (usunięta)
+6053;-;kopia bloku 5900-5987 (usunięta)
+6054;-;kopia bloku 5900-5987 (usunięta)
+6055;-;kopia bloku 5900-5987 (usunięta)
+6056;-;kopia bloku 5900-5987 (usunięta)
+6057;-;kopia bloku 5900-5987 (usunięta)
+6058;-;kopia bloku 5900-5987 (usunięta)
+6059;-;kopia bloku 5900-5987 (usunięta)
+6060;-;kopia bloku 5900-5987 (usunięta)
+6061;-;kopia bloku 5900-5987 (usunięta)
+6062;-;kopia bloku 5900-5987 (usunięta)
+6063;-;kopia bloku 5900-5987 (usunięta)
+6064;-;kopia bloku 5900-5987 (usunięta)
+6065;-;kopia bloku 5900-5987 (usunięta)
+6066;-;kopia bloku 5900-5987 (usunięta)
+6067;-;kopia bloku 5900-5987 (usunięta)
+6068;-;kopia bloku 5900-5987 (usunięta)
+6069;-;kopia bloku 5900-5987 (usunięta)
+6070;-;kopia bloku 5900-5987 (usunięta)
+6071;-;kopia bloku 5900-5987 (usunięta)
+6072;-;kopia bloku 5900-5987 (usunięta)
+6073;-;kopia bloku 5900-5987 (usunięta)
+6074;-;kopia bloku 5900-5987 (usunięta)
+6075;-;kopia bloku 5900-5987 (usunięta)
+6076;-;kopia bloku 5900-5987 (usunięta)
+6077;-;kopia bloku 5900-5987 (usunięta)
+6078;-;kopia bloku 5900-5987 (usunięta)
+6079;-;kopia bloku 5900-5987 (usunięta)
+6080;-;kopia bloku 5900-5987 (usunięta)
+6081;-;kopia bloku 5900-5987 (usunięta)
+6082;-;kopia bloku 5900-5987 (usunięta)
+6083;-;kopia bloku 5900-5987 (usunięta)
+6084;-;kopia bloku 5900-5987 (usunięta)
+6085;-;kopia bloku 5900-5987 (usunięta)
+6086;-;kopia bloku 5900-5987 (usunięta)
+6087;-;kopia bloku 5900-5987 (usunięta)
+6088;-;kopia bloku 5900-5987 (usunięta)
+6089;-;kopia bloku 5900-5987 (usunięta)
+212;CH.LUB.BLIN.1787.012;ID powtórzony z innymi danymi -> CH.LUB.BLIN.1787.012#2
+1050;CH.LUB.BLIN.1832.025;ID powtórzony z innymi danymi -> CH.LUB.BLIN.1832.025#2
+1058;CH.LUB.BLIN.1832.040;ID powtórzony z innymi danymi -> CH.LUB.BLIN.1832.040#2
+1083;CH.LUB.BLIN.1832.057;ID powtórzony z innymi danymi -> CH.LUB.BLIN.1832.057#2
+1090;CH.LUB.BLIN.1832.010;ID powtórzony z innymi danymi -> CH.LUB.BLIN.1832.010#2
+1161;CH.LUB.BLIN.1833.010;ID powtórzony z innymi danymi -> CH.LUB.BLIN.1833.010#2
+1198;CH.LUB.BLIN.1834.015;ID powtórzony z innymi danymi -> CH.LUB.BLIN.1834.015#2
+1203;CH.LUB.BLIN.1834.049;ID powtórzony z innymi danymi -> CH.LUB.BLIN.1834.049#2
+1732;CH.LUB.BLIN.1843.043;ID powtórzony z innymi danymi -> CH.LUB.BLIN.1843.043#2
+1744;CH.LUB.BLIN.1843.025;ID powtórzony z innymi danymi -> CH.LUB.BLIN.1843.025#2
+1816;CH.LUB.BLIN.1844.003;ID powtórzony z innymi danymi -> CH.LUB.BLIN.1844.003#2
+2007;CH.LUB.BLIN.1847.044;ID powtórzony z innymi danymi -> CH.LUB.BLIN.1847.044#2
+2016;CH.LUB.BLIN.1847.003;ID powtórzony z innymi danymi -> CH.LUB.BLIN.1847.003#2
+2020;CH.LUB.BLIN.1847.049;ID powtórzony z innymi danymi -> CH.LUB.BLIN.1847.049#2
+2022;CH.LUB.BLIN.1847.036;ID powtórzony z innymi danymi -> CH.LUB.BLIN.1847.036#2
+2028;CH.LUB.BLIN.1847.049;ID powtórzony z innymi danymi -> CH.LUB.BLIN.1847.049#3
+2070;CH.LUB.BLIN.1848.004;ID powtórzony z innymi danymi -> CH.LUB.BLIN.1848.004#2
+2184;CH.LUB.BLIN.1850.013;ID powtórzony z innymi danymi -> CH.LUB.BLIN.1850.013#2
+2200;CH.LUB.BLIN.1850.046;ID powtórzony z innymi danymi -> CH.LUB.BLIN.1850.046#2
+2243;CH.LUB.BLIN.1851.023;ID powtórzony z innymi danymi -> CH.LUB.BLIN.1851.023#2
+2497;CH.LUB.BLIN.1855.002;ID powtórzony z innymi danymi -> CH.LUB.BLIN.1855.002#2
+2895;CH.LUB.BLIN.1863.057;ID powtórzony z innymi danymi -> CH.LUB.BLIN.1863.057#2
+3174;CH.LUB.BLIN.1867.004;ID powtórzony z innymi danymi -> CH.LUB.BLIN.1867.004#2
+3287;CH.LUB.BLIN.1869.042;ID powtórzony z innymi danymi -> CH.LUB.BLIN.1869.042#2
+3293;CH.LUB.BLIN.1869.051;ID powtórzony z innymi danymi -> CH.LUB.BLIN.1869.051#2
+5371;CH.LUB.BLIN.1902.059;ID powtórzony z innymi danymi -> CH.LUB.BLIN.1902.059#2
+5989;CH.LUB.BLIN.1908.002;identyczny wiersz już istnieje (usunięty)
+5990;CH.LUB.BLIN.1908.003;identyczny wiersz już istnieje (usunięty)
+5991;CH.LUB.BLIN.1908.004;ID powtórzony z innymi danymi -> CH.LUB.BLIN.1908.004#2
+5992;CH.LUB.BLIN.1908.004;identyczny wiersz już istnieje (usunięty)
+5993;CH.LUB.BLIN.1908.005;ID powtórzony z innymi danymi -> CH.LUB.BLIN.1908.005#2
+5994;CH.LUB.BLIN.1908.005;identyczny wiersz już istnieje (usunięty)
+5995;CH.LUB.BLIN.1908.006;ID powtórzony z innymi danymi -> CH.LUB.BLIN.1908.006#2
+5996;CH.LUB.BLIN.1908.006;identyczny wiersz już istnieje (usunięty)
+5997;CH.LUB.BLIN.1908.007;ID powtórzony z innymi danymi -> CH.LUB.BLIN.1908.007#2
+5998;CH.LUB.BLIN.1908.007;identyczny wiersz już istnieje (usunięty)
+5999;CH.LUB.BLIN.1908.008;ID powtórzony z innymi danymi -> CH.LUB.BLIN.1908.008#2
+6000;CH.LUB.BLIN.1908.008;identyczny wiersz już istnieje (usunięty)
+6001;CH.LUB.BLIN.1908.009;ID powtórzony z innymi danymi -> CH.LUB.BLIN.1908.009#2
+6525;-;brak ID
+4;CH.LUB.BLIN.1783.002b;brak nazwiska dziecka
+1138;CH.LUB.BLIN.1833.002;nazwisko z małej litery: osidłowna
+1255;CH.LUB.BLIN.1835.030;brak nazwiska dziecka
+2299;CH.LUB.BLIN.1852.009;brak nazwiska dziecka
+5964;CH.LUB.BLIN.1908.073;brak nazwiska dziecka
+5965;CH.LUB.BLIN.1908.074;brak nazwiska dziecka
+5966;CH.LUB.BLIN.1908.075;brak nazwiska dziecka
+5967;CH.LUB.BLIN.1908.076;brak nazwiska dziecka
+5968;CH.LUB.BLIN.1908.077;brak nazwiska dziecka
+5969;CH.LUB.BLIN.1908.078;brak nazwiska dziecka
+5970;CH.LUB.BLIN.1908.079;brak nazwiska dziecka
+5971;CH.LUB.BLIN.1908.080;brak nazwiska dziecka
+5972;CH.LUB.BLIN.1908.081;brak nazwiska dziecka
+5973;CH.LUB.BLIN.1908.082;brak nazwiska dziecka
+5974;CH.LUB.BLIN.1908.083;brak nazwiska dziecka
+5975;CH.LUB.BLIN.1908.084;brak nazwiska dziecka
+5976;CH.LUB.BLIN.1908.085;brak nazwiska dziecka
+5977;CH.LUB.BLIN.1908.086;brak nazwiska dziecka
+5978;CH.LUB.BLIN.1908.087;brak nazwiska dziecka
+5979;CH.LUB.BLIN.1908.088;brak nazwiska dziecka
+5980;CH.LUB.BLIN.1908.089;brak nazwiska dziecka
+5981;CH.LUB.BLIN.1908.090;brak nazwiska dziecka
+5982;CH.LUB.BLIN.1908.091;brak nazwiska dziecka
+5983;CH.LUB.BLIN.1908.092;brak nazwiska dziecka
+5984;CH.LUB.BLIN.1908.093;brak nazwiska dziecka
+5985;CH.LUB.BLIN.1908.094;brak nazwiska dziecka
+5986;CH.LUB.BLIN.1908.095;brak nazwiska dziecka
+5987;CH.LUB.BLIN.1908.096;brak nazwiska dziecka
+6525;;znak ` w polu
