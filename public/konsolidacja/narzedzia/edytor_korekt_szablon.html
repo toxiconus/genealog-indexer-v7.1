@@ -94,6 +94,27 @@ details summary{cursor:pointer;color:var(--acc);margin-top:8px}
       </div>
     </div>
 
+    <div class="card" style="margin-bottom:10px">
+      <h2>Skan aktu</h2>
+      <div class="toolbar">
+        <label class="mut">pliki <input type="file" id="sc_in" accept="image/*" multiple></label>
+        <label class="mut">folder <input type="file" id="sc_dir" accept="image/*" webkitdirectory></label>
+      </div>
+      <div class="toolbar">
+        <select id="sc_file" style="flex:1;min-width:120px"><option value="">— brak skanu —</option></select>
+        <button id="sc_clear" class="danger">usuń obszar</button>
+      </div>
+      <div class="note">Przeciągnij myszą po skanie, żeby zaznaczyć akt. Obszar zapisuje się przy rekordzie. Wycinek pokazuje się poniżej.</div>
+      <div id="sc_scroll" style="max-height:42vh;overflow:auto;border:1px solid var(--line);border-radius:6px">
+        <div id="sc_stage" style="position:relative;touch-action:none;cursor:crosshair;user-select:none">
+          <img id="sc_img" alt="" style="display:none;width:100%;height:auto;pointer-events:none;-webkit-user-drag:none">
+          <div id="sc_box" style="position:absolute;border:2px solid var(--acc);background:rgba(122,74,30,.18);display:none;pointer-events:none"></div>
+        </div>
+      </div>
+      <canvas id="sc_crop" style="width:100%;margin-top:6px;border:1px solid var(--line);border-radius:6px;display:none"></canvas>
+      <div class="note" id="sc_info"></div>
+    </div>
+
     <div class="card">
       <h2>Podgląd aktu</h2>
       <div class="note">Tekst składany z aktualnych pól. Najpierw PL, potem LA i RU z pól zapisanych w tych językach.</div>
@@ -154,6 +175,8 @@ details summary{cursor:pointer;color:var(--acc);margin-top:8px}
       <button id="k_formy">eksport form imion i nazwisk (CSV)</button>
       <label>import korekt (CSV) <input type="file" id="k_imp" accept=".csv,text/csv" style="border:none;padding:0"></label>
       <button class="danger" id="k_clr">wyczyść dziennik</button>
+      <button id="k_scan">eksport obszarów skanów (CSV)</button>
+      <label>import obszarów skanów <input type="file" id="k_scan_imp" accept=".csv,text/csv" style="border:none;padding:0"></label>
     </div>
     <div class="note">Dziennik to jedyny zapis zmian. Po wczytaniu strony stan odtwarza się z dziennika. Plik CSV ma średniki, kodowanie UTF-8 z BOM. Kolumna „ksiega” to kod: ch = chrzty, mal = małżeństwa, zg = zgony.</div>
     <div class="tablewrap"><table id="k_tab"></table></div>
@@ -179,7 +202,9 @@ const TR = {a:'а',ą:'он',b:'б',c:'ц',ć:'ч',d:'д',e:'е',ę:'ен',f:'ф
 const STATUSES = ['poprawne','prawdopodobnie poprawne','do sprawdzenia','do poprawy (dopełniacz/mnoga)','błędne (wariant)','niepewne','nie zmieniać'];
 const KEY = 'blinow_edytor_v1';
 
-let ST = {log:[], dict:[], forms:{}};
+let ST = {log:[], dict:[], forms:{}, scan:{}};
+let SCANS = new Map();
+let DRAG = null;
 let RECS = [], BYKEY = {}, CUR = null, ACTIVE = null, GROUPS = {}, NCOUNT = null;
 const $ = s => document.querySelector(s);
 const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
@@ -240,7 +265,7 @@ function init(){
       RECS.push(r); BYKEY[key]=r;
     }
   }
-  try{ const s = JSON.parse(localStorage.getItem(KEY)||'null'); if(s){ ST.log=s.log||[]; ST.dict=s.dict||[]; ST.forms=s.forms||{}; } }catch(e){}
+  try{ const s = JSON.parse(localStorage.getItem(KEY)||'null'); if(s){ ST.log=s.log||[]; ST.dict=s.dict||[]; ST.forms=s.forms||{}; ST.scan=s.scan||{}; } }catch(e){}
   if(!ST.dict.length) ST.dict = JSON.parse(JSON.stringify(DICT0));
   for(const e of ST.log){
     const r = BYKEY[e.ksiega+':'+e.wiersz]; if(!r) continue;
@@ -464,11 +489,49 @@ function renderKorekty(){
     (ST.log.length>500?`<tr><td colspan="9" class="mut">pokazano ostatnie 500 z ${ST.log.length}</td></tr>`:'');
 }
 
+function loadScans(files){
+  for(const f of files){ if(f.type.startsWith('image/') && !SCANS.has(f.name)) SCANS.set(f.name, URL.createObjectURL(f)); }
+  const sel=$('#sc_file'), cur=sel.value;
+  sel.innerHTML = '<option value="">— brak skanu —</option>' + [...SCANS.keys()].sort().map(n=>`<option>${esc(n)}</option>`).join('');
+  sel.value = SCANS.has(cur) ? cur : '';
+  renderScan();
+}
+function drawCrop(){
+  const r=BYKEY[CUR], img=$('#sc_img'), cv=$('#sc_crop'), m=r?ST.scan[r.key]:null, want=$('#sc_file').value;
+  if(!m || m.f!==want || !img.complete || !img.naturalWidth){ cv.style.display='none'; return; }
+  cv.style.display='block';
+  const W=img.naturalWidth, H=img.naturalHeight;
+  cv.width = Math.max(200, Math.round((cv.clientWidth||400)*2));
+  cv.height = Math.round(cv.width*(m.h*H)/(m.w*W));
+  cv.getContext('2d').drawImage(img, m.x*W, m.y*H, m.w*W, m.h*H, 0, 0, cv.width, cv.height);
+}
+function renderScan(){
+  const r=BYKEY[CUR], sel=$('#sc_file'), img=$('#sc_img'), box=$('#sc_box'), cv=$('#sc_crop'), info=$('#sc_info');
+  const m = r ? ST.scan[r.key] : null;
+  const want = sel.value;
+  if(!r || !want || !SCANS.has(want)){
+    img.style.display='none'; box.style.display='none'; cv.style.display='none';
+    info.textContent = !r ? '' : (m ? `zapisany obszar dotyczy skanu ${m.f} (wczytaj ten plik)` : 'Wybierz skan z listy albo wczytaj pliki.');
+    return;
+  }
+  if(img.dataset.name!==want){ img.dataset.name=want; img.src=SCANS.get(want); }
+  img.style.display='block';
+  const same = m && m.f===want;
+  box.style.display = same ? 'block' : 'none';
+  if(same){ box.style.left=(m.x*100)+'%'; box.style.top=(m.y*100)+'%'; box.style.width=(m.w*100)+'%'; box.style.height=(m.h*100)+'%'; }
+  info.textContent = same ? `obszar: x ${m.x.toFixed(3)}, y ${m.y.toFixed(3)}, w ${m.w.toFixed(3)}, h ${m.h.toFixed(3)}` : (m ? `obszar zapisany dla skanu ${m.f}` : 'Brak zapisanego obszaru. Zaznacz myszą.');
+  drawCrop();
+}
+function fracFromEvent(e){
+  const rc=$('#sc_img').getBoundingClientRect();
+  return {x:Math.min(1,Math.max(0,(e.clientX-rc.left)/rc.width)), y:Math.min(1,Math.max(0,(e.clientY-rc.top)/rc.height))};
+}
 function renderAll(){
   NCOUNT = counts();
   buildGroups(NCOUNT.nazwisko);
   renderList();
   renderEditor();
+  renderScan();
   renderImiona(NCOUNT);
   renderNazwiska(NCOUNT);
   renderSlownik();
@@ -531,7 +594,56 @@ document.querySelectorAll('header button[data-tab]').forEach(b => b.addEventList
   document.querySelectorAll('.sec').forEach(s=>s.classList.toggle('on', s.id==='sec-'+b.dataset.tab));
 }));
 ['#f_book','#f_q','#f_pyt','#f_chg'].forEach(s => $(s).addEventListener('input', renderList));
-$('#list').addEventListener('click', e => { const it=e.target.closest('[data-k]'); if(!it) return; CUR=it.dataset.k; ACTIVE=null; renderAll(); });
+$('#list').addEventListener('click', e => {
+  const it=e.target.closest('[data-k]'); if(!it) return;
+  CUR=it.dataset.k; ACTIVE=null;
+  const m=ST.scan[CUR]; if(m && SCANS.has(m.f)) $('#sc_file').value=m.f;
+  renderAll();
+});
+$('#sc_in').addEventListener('change', e => loadScans(e.target.files));
+$('#sc_dir').addEventListener('change', e => loadScans(e.target.files));
+$('#sc_file').addEventListener('change', renderScan);
+$('#sc_img').addEventListener('load', drawCrop);
+$('#sc_clear').addEventListener('click', () => { if(CUR && ST.scan[CUR]){ delete ST.scan[CUR]; save(); renderScan(); $('#stat').textContent='obszar usunięty'; } });
+const stageEl = $('#sc_stage');
+stageEl.addEventListener('pointerdown', e => {
+  if(!CUR || !$('#sc_file').value || $('#sc_img').style.display==='none') return;
+  e.preventDefault();
+  const p = fracFromEvent(e); DRAG = {x0:p.x, y0:p.y, x1:p.x, y1:p.y};
+  stageEl.setPointerCapture(e.pointerId);
+});
+stageEl.addEventListener('pointermove', e => {
+  if(!DRAG) return;
+  const p = fracFromEvent(e); DRAG.x1=p.x; DRAG.y1=p.y;
+  const box=$('#sc_box');
+  box.style.display='block';
+  box.style.left=Math.min(DRAG.x0,DRAG.x1)*100+'%'; box.style.top=Math.min(DRAG.y0,DRAG.y1)*100+'%';
+  box.style.width=Math.abs(DRAG.x1-DRAG.x0)*100+'%'; box.style.height=Math.abs(DRAG.y1-DRAG.y0)*100+'%';
+});
+stageEl.addEventListener('pointerup', () => {
+  if(!DRAG) return;
+  const d=DRAG; DRAG=null;
+  const x=Math.min(d.x0,d.x1), y=Math.min(d.y0,d.y1), w=Math.abs(d.x1-d.x0), h=Math.abs(d.y1-d.y0);
+  if(!CUR) { renderScan(); return; }
+  if(w<0.01 || h<0.01){ renderScan(); return; }
+  ST.scan[CUR] = {f:$('#sc_file').value, x, y, w, h};
+  save(); renderScan(); $('#stat').textContent='obszar zapisany';
+});
+$('#k_scan').addEventListener('click', () => {
+  const lines=['ksiega;wiersz_zrodlo;plik;x;y;w;h'];
+  for(const k of Object.keys(ST.scan)){ const m=ST.scan[k]; const [b,w]=k.split(':'); lines.push([b,w,m.f,m.x,m.y,m.w,m.h].map(csvCell).join(';')); }
+  download('skany_obszary.csv', lines.join('\n'));
+});
+$('#k_scan_imp').addEventListener('change', async e => {
+  const rows=parseCSV(await e.target.files[0].text()); const h=rows[0]||[]; let n=0;
+  for(const row of rows.slice(1)){
+    const get=k=>row[h.indexOf(k)]||'';
+    if(!BYKEY[get('ksiega')+':'+get('wiersz_zrodlo')]) continue;
+    ST.scan[get('ksiega')+':'+get('wiersz_zrodlo')] = {f:get('plik'), x:parseFloat(get('x')), y:parseFloat(get('y')), w:parseFloat(get('w')), h:parseFloat(get('h'))};
+    n++;
+  }
+  save(); renderAll(); $('#stat').textContent=`zaimportowano obszarów: ${n}`;
+});
 $('#ed_fields').addEventListener('focusin', e => { const f=e.target.dataset.f; if(!f) return; ACTIVE=f; renderChips(); document.querySelectorAll('.fld').forEach(x=>x.classList.toggle('act', x.dataset.f===f)); });
 $('#ed_chips').addEventListener('click', e => {
   const b=e.target.closest('[data-ch]'); if(!b) return;
