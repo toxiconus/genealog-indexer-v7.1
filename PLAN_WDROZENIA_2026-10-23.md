@@ -50,9 +50,27 @@ Pracować na tabeli danych i jednocześnie oglądać skan aktu. Poprawiać pola,
 3. **Kilka źródeł danych i brak wiedzy, które jest najnowsze** (TSV, `chrzty_cleaned`, JSON, dwa `.db`). Najpierw trzeba je porównać.
 4. **Dokumentacja jest w kilku wersjach** (ACTA v1, v3.0–3.2, KOMPENDIUM, roadmapa). Ten plan zastępuje je jako punkt startowy.
 
-## 6. Pytania do autora
+**Decyzja autora (2026-10-23):** reguła `public_imports` zostaje otwarta na etap rozwoju. Dane pochodzą z publicznych baz genealogicznych. Zamknięcie dostępu (logowanie) ma nastąpić po dopracowaniu struktury danych, przed szerszym udostępnieniem. Do tego czasu nie zmieniać reguł bez zgody autora.
+
+## 6. Dlaczego baza się sypie (ustalenia z kodu)
+
+To jest najważniejsza przyczyna problemów przy poprawkach:
+
+1. **Deserializacja nie sprawdza braków.** W `public/acta-v1-models.js` funkcje `fromJSON` czytają zagnieżdżone pola bez zabezpieczeń, np. `HistoricalDate.fromJSON(data.birthDate)` i `HistoricalDate.fromJSON(h.fromDate)`. Gdy brakuje pola, wywołanie rzuca błąd, a cały import się wykrzacza. Przy zmianie modelu stare zapisy przestają się wczytywać.
+2. **Brak wersji schematu i migracji.** Model nie ma `schemaVersion`. Nie ma też funkcji, które przenoszą stare dane do nowego układu. Każda zmiana pola wymaga ręcznej naprawy.
+3. **Dane są zapisywane w wielu miejscach naraz.** `viewer-osd-v8.21.html` odwołuje się do `localStorage` (48 razy), Supabase (45), Firebase/Firestore (12) i IndexedDB (2). Każdy magazyn ma inny kształt danych, więc zmiana w jednym psuje pozostałe.
+4. **Wiele sposobów zapisu tej samej informacji.** ACTA przewiduje tablice (aliasy, migracje, zawody, zdrowie, majątek), ale płaski formularz zakłada pojedynczą wartość. Te dwa światy nie są ze sobą uzgodnione.
+
+**Propozycja poprawy (zamiast kolejnej przebudowy):**
+- Jeden format zapisu z polem `schemaVersion` i jednym miejscem prawdy (IndexedDB).
+- Każde `fromJSON` z wartościami domyślnymi i sprawdzeniem braków (`data?.date`), żeby brak pola nie zabijał całego wczytywania.
+- Migracje z numerem wersji: stare dane są przenoszone automatycznie, a nie naprawiane ręcznie.
+- Raport przy wczytywaniu: ile rekordów wczytano, ile odrzucono i dlaczego.
+- Wielokrotne wartości jako lista z pewnością, np. `imie: [{wartość: "Jan", źródło: "akt", pewność: 100}, {wartość: "Johann", źródło: "chrzest"}]`. Rubryka formularza pokazuje wartość główną, a alternatywy są w osobnej liście.
+
+## 7. Pytania do autora
 
 1. Które źródło danych jest najnowsze i prawdziwe: `CH BLIN.txt`, `chrzty_cleaned.txt`, `CH_BLIN_FIRESTORE.json`, czy XLS? Można wgrać XLS na czat.
 2. Gdzie leżą skany aktów?
-3. Czy dane mogą pozostać tylko lokalnie (IndexedDB), czy mają być w chmurze? Jeśli w chmurze, reguły trzeba zamknąć przed dalszą pracą.
-4. Czy zgadzasz się na etapy E1–E4 w tej kolejności?
+3. Czy zgadzasz się, żeby wielokrotne wartości (aliasy, warianty imion) były listą z pewnością, a rubryka pokazywała wartość główną?
+4. Czy zgadzasz się na etapy E1–E4 w tej kolejności (z dodanym wcześniej krokiem: najpierw walidacja i migracje)?
