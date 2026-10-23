@@ -1,0 +1,151 @@
+﻿id_archiwalne;wiersz_zrodlo;typ_wpisu;rok;nr;nazwisko_dziecka;imie_dziecka;data_tekst;data_iso;ojciec_imie;ojciec_nazwisko;ojciec_wiek;ojciec_rok_ur_przyb;miejscowosc;matka_imie;matka_nazwisko;matka_wiek;matka_rok_ur_przyb;karta_nr;uwagi_surowe;flagi
+U001953;1941;akt;1846;62;Machulak;Jan;;;;;;;;;;;;;;brak daty w kol. F
+U001952;1942;akt;1846;58;Machulak;Katarzyna;;;;;;;;;;;;;;brak daty w kol. F
+U001955;1943;akt;1846;55;Machulek;Franciszek;;;Machulak;;;;;;;;;;;"brak daty w kol. F; brak wieku ojca (~RRRR nie policzono)"
+U001954;1944;akt;1846;47;Machulek;Rozalia;;;Machulak;;;;;;;;;;;"brak daty w kol. F; brak wieku ojca (~RRRR nie policzono)"
+U001956;1945;akt;1846;64;Mazurek;Katarzyna;;;;;;;;;;;;;;brak daty w kol. F
+U001957;1946;akt;1846;38;Michałko;Piotr;;;;;;;;;;;;;;brak daty w kol. F
+U001958;1947;akt;1846;65;Obydź;Katarzyna;;;;;;;;;;;;;;brak daty w kol. F
+U001959;1948;akt;1846;41;Ogon;Anna;;;;;;;;;;;;;;brak daty w kol. F
+U001960;1949;akt;1846;77;Parzkoski;Marianna;;;Paczkowski;;;;;;;;;;;"brak daty w kol. F; brak wieku ojca (~RRRR nie policzono)"
+U001961;1950;akt;1846;23;Pasternak;Zofia;;;;;;;;;;;;;;brak daty w kol. F
+U001962;1951;akt;1846;33;Pawłasek;Antoni;;;;;;;;;;;;;;brak daty w kol. F
+U001963;1952;akt;1846;59;Pawłasek;Katarzyna;;;;;;;;;;;;;;brak daty w kol. F
+U001964;1953;akt;1846;73;Pawłasek;Katarzyna;;;;;;;;;;;;;;brak daty w kol. F
+U001966;1954;akt;1846;57;Pawłasek;Marcin;;;;;;;;;;;;;;brak daty w kol. F
+U001965;1955;akt;1846;9;Pawłasek;Marianna;;;;;;;;;;;;;;brak daty w kol. F
+U001967;1956;akt;1846;5;Pcionek;Marianna;;;;;;;;;;;;;;brak daty w kol. F
+U001968;1957;akt;1846;16;Pścionek;Wojciech;;;;;;;;;;;;;;brak daty w kol. F
+U001969;1958;akt;1846;10;Samuel;Marianna;;;;;;;;;;;;;;brak daty w kol. F
+U001970;1959;akt;1846;3;Sikora;Michał;;;;;;;;;;;;;;brak daty w kol. F
+U001971;1960;akt;1846;70;Spryczuk ?;Andrzej;;;;;;;;;;;;;;brak daty w kol. F
+U001972;1961;akt;1846;27;Stępień;Stanisław;;;;;;;;;;;;;;brak daty w kol. F
+U001973;1962;akt;1846;37;Studzińska;Anna;;;;;;;;;;;;;;brak daty w kol. F
+U001974;1963;akt;1846;56;Suloski;Franciszek;;;;;;;;;;;;;;brak daty w kol. F
+U001975;1964;akt;1846;8;Szabat;Marianna;;;;;;;;;;;;;;brak daty w kol. F
+U001977;1965;akt;1846;49;Szuba;Franciszka;;;;;;;;;;;;;kol.Q: V;brak daty w kol. F
+U001978;1966;akt;1846;72;Szuba;Katarzyna;;;;;;;;;;;;;;brak daty w kol. F
+U001976;1967;akt;1846;48;Szuba;Tekla;;;;;;;;;;;;;;brak daty w kol. F
+U001979;1968;akt;1846;34;Szydłoska;Anna;;;Szydłowska;;;;;;;;;;;"brak daty w kol. F; brak wieku ojca (~RRRR nie policzono)"
+U001980;1969;akt;1846;15;Szyszka;Wojciech;;;;;;;;;;;;;;brak daty w kol. F
+U001983;1970;akt;1846;26;Wcisło;Anna;;;;;;;;;;;;;;brak daty w kol. F
+U001981;1971;akt;1846;2;Wcisło;Marianna;;;;;;;;;;;;;;brak daty w kol. F
+U001982;1972;akt;1846;18;Wcisło;Wojciech;;;;;;;;;;;;;;brak daty w kol. F
+U001984;1973;akt;1846;25;Wieleba;Maciej;;;;;;;;;;;;;;brak daty w kol. F
+U001985;1974;akt;1846;69;Woytowicz;Katarzyna;;;Wójtowicz ?;;;;;;;;;;;"brak daty w kol. F; brak wieku ojca (~RRRR nie policzono)"
+U001986;1975;akt;1846;11;Zielińska;Marianna;;;;;;;;;;;;;;brak daty w kol. F
+U001988;1976;akt;1847;38;Babiarz;Franciszka;;;;;;;;;;;;;;brak daty w kol. F
+U001989;1977;akt;1847;26;Brzeski;Antoni;;;;;;;;;;;;;kol.O: około 1847;brak daty w kol. F
+U001990;1978;akt;1847;10;Brzuszkiewicz;Justyna;;;;;;;;;;;;;kol.O: około 1847;brak daty w kol. F
+U001991;1979;akt;1847;7;Bucoń;Maciej;;;;;;;;;;;;;"kol.J: około 1847; kol.O: około 1847";brak daty w kol. F
+U001992;1980;akt;1847;40;Ciechówna;Katarzyna;;;;;;;;;;;;;;brak daty w kol. F
+U001993;1981;akt;1847;19;Garbaczówna;Katarzyna;;;;;;;;;;;;;;brak daty w kol. F
+U001994;1982;akt;1847;39;Gnat;Szymon;;;;;;;;;;;;;;brak daty w kol. F
+U001995;1983;akt;1847;9;Jędrzejczak;Walenty;;;;;;;;;;;;;;brak daty w kol. F
+U001996;1984;akt;1847;27;Jędrzejczak;Petronella;;;;;;;;;;;;;;brak daty w kol. F
+U001997;1985;akt;1847;11;Kachelkówna;Franciszka;;;;;;;;;;;;;;brak daty w kol. F
+U001998;1986;akt;1847;23;Kania;Marianna;;;;;;;;;;;;;;brak daty w kol. F
+U001999;1987;akt;1847;6;Kolasa;Jozef;;;;;;;;;;;;;;brak daty w kol. F
+U002000;1988;akt;1847;15;Kopiwoda;Józef;;;;;;;;;;;;;kol.J: około 1847;brak daty w kol. F
+U002001;1989;akt;1847;32;Kopyt;Jakób;;;;;;;;;;;;;;brak daty w kol. F
+U002004;1990;akt;1847;46;Kosidło;Roman;;;;;;;;;;;;;;brak daty w kol. F
+U002002;1991;akt;1847;1;Kosidło;walenty;;;;;;;;;;;;;;brak daty w kol. F
+U002003;1992;akt;1847;20;Kosidło;Wojciech;;;;;;;;;;;;;;brak daty w kol. F
+U002006;1993;akt;1847;42;Kosidło;Katarzyna;;;;;;;;;;;;;"kol.J: około 1847; kol.O: około 1847";brak daty w kol. F
+U002005;1994;akt;1847;34;Kosidło;Magdalena;;;;;;;;;;;;;"kol.J: około 1847; kol.O: około 1847";brak daty w kol. F
+U002007;1995;akt;1847;17;Kudrelkówna;Józefa;;;;;;;;;;;;;;brak daty w kol. F
+U002008;1996;akt;1847;3;Kurczak;Anna;;;;;;;;;;;;;;brak daty w kol. F
+U002009;1997;akt;1847;43;Kwietłówna;Katarzyna;;;;;;;;;;;;;;brak daty w kol. F
+U002010;1998;akt;1847;25;Machulak;Stanisław;;;;;;;;;;;;;;brak daty w kol. F
+U002011;1999;akt;1847;14;Nieściór;Jan;;;;;;;;;;;;;;brak daty w kol. F
+U002012;2000;akt;1847;13;Ogon;Maciej;;;;;;;;;;;;;;brak daty w kol. F
+U002013;2001;akt;1847;44;Ogon;Roman;;;;;;;;;;;;;;brak daty w kol. F
+U002014;2002;akt;1847;24;Pawłasek;Józefa;;;;;;;;;;;;;;brak daty w kol. F
+U002015;2003;akt;1847;44;Pawłasek;Katarzyna;;;;;;;;;;;;;;brak daty w kol. F
+U002016;2004;akt;1847;28;Pścionek;Michał;;;;;;;;;;;;;;brak daty w kol. F
+U002017;2005;akt;1847;36;Pścionek;Wawrzyniec Michał;;;;;;;;;;;;;;brak daty w kol. F
+U002018;2006;akt;1847;2;Pudło;Agnieszka;20.01.1847;1847-01-20;Michał;Pudło;53;~1794;Brzozówka;Jadwiga;Ogon;38;~1809;;"kol.J: około 1794; kol.O: około 1809";
+U002019;2007;akt;1847;49;Rębacz;Tomasz;;;;;;;;;;;;;;brak daty w kol. F
+U002020;2008;akt;1847;48;Simbiedówna;Marianna;;;;;;;;;;;;;;brak daty w kol. F
+U002021;2009;akt;1847;35;Skorywilk;Franciszek;;;;;;;;;;;;;;brak daty w kol. F
+U002023;2010;akt;1847;31;Sobonieska;Anna;;;;;;;;;;;;;;brak daty w kol. F
+U002022;2011;akt;1847;18;Sobonieska;Józefa;;;;;;;;;;;;;;brak daty w kol. F
+U002025;2012;akt;1847;4;Sobulka;Ignacy;;;;;;;;;;;;;;brak daty w kol. F
+U002024;2013;akt;1847;3;Sobulka;Walenty;;;;;;;;;;;;;;brak daty w kol. F
+U002026;2014;akt;1847;33;Sobutka;Wawrzyniec;;;;;;;;;;;;;;brak daty w kol. F
+U002027;2015;akt;1847;8;Sokołówna;Zofia;;;;;;;;;;;;;;brak daty w kol. F
+U002028;2016;akt;1847;49;Suloska;Ewa;;;;;;;;;;;;;;brak daty w kol. F
+U002029;2017;akt;1847;22;Szumlański;Onufry;;;;;;;;;;;;;;brak daty w kol. F
+U002030;2018;akt;1847;36;Szyszka;Wincenty;;;;;;;;;;;;;;brak daty w kol. F
+U002031;2019;akt;1847;29;Wieleba;Piotr;;;;;;;;;;;;;;brak daty w kol. F
+U002032;2020;akt;1847;21;Wielebionka;Anastazja;;;;;;;;;;;;;;brak daty w kol. F
+U002033;2021;akt;1847;37;Wścieło;Michał;;;;;;;;;;;;;;brak daty w kol. F
+U002034;2022;akt;1847;16;Zielińska;Franciszka;;;;;;;;;;;;;;brak daty w kol. F
+U002035;2023;akt;1847;47;Zielińska;Katarzyna;;;;;;;;;;;;;;brak daty w kol. F
+U002036;2024;akt;1847;49;Zyśko;Walenty;;;;;;;;;;;;;;brak daty w kol. F
+U002040;2025;akt;1848;47;Baran;Jan;;;;;;;;;;;;;;brak daty w kol. F
+U002038;2026;akt;1848;1;Baran;Józef;;;;;;;;;;;;;;brak daty w kol. F
+U002039;2027;akt;1848;19;Baran;Wojciech;;;;;;;;;;;;;;brak daty w kol. F
+U002041;2028;akt;1848;39;Barbarzak;Michał;;;;;;;;;;;;;;brak daty w kol. F
+U002042;2029;akt;1848;41;Bucoń;Jadwiga;;;;;;;;;;;;;"kol.J: około 1848; kol.O: około 1848";brak daty w kol. F
+U002043;2030;akt;1848;53;Chmiel;Mikołaj;;;;;;;;;;;;;;brak daty w kol. F
+U002044;2031;akt;1848;38;Czuba;Tekla;;;;;;;;;;;;;;brak daty w kol. F
+U002045;2032;akt;1848;27;Ćwiek;Marianna;;;;;;;;;;;;;;brak daty w kol. F
+U002047;2033;akt;1848;13;Dobrzyńska;Józefa;;;;;;;;;;;;;"kol.J: około 1848; kol.O: około 1848";brak daty w kol. F
+U002046;2034;akt;1848;9;Dobrzyńska;Zofia;;;;;;;;;;;;;"kol.J: około 1848; kol.O: około 1848";brak daty w kol. F
+U002048;2035;akt;1848;46;Dobrzyński;Andrzej;;;;;;;;;;;;;"kol.J: około 1848; kol.O: około 1848";brak daty w kol. F
+U002049;2036;akt;1848;10;Dziewa;Wojciech;;;;;;;;;;;;;;brak daty w kol. F
+U002050;2037;akt;1848;22;Dziuba;Franciszek;;;;;;;;;;;;;;brak daty w kol. F
+U002051;2038;akt;1848;16;Głaz;Wojciech;;;;;;;;;;;;;;brak daty w kol. F
+U002052;2039;akt;1848;50;Gnat;Barbara;;;;;;;;;;;;;;brak daty w kol. F
+U002053;2040;akt;1848;14;Igras;Zofia;;;;;;;;;;;;;;brak daty w kol. F
+U002055;2041;akt;1848;43;Jachura;Katarzyna;;;;;;;;;;;;;;brak daty w kol. F
+U002054;2042;akt;1848;54;Jachura;Szczepan;;;;;;;;;;;;;;brak daty w kol. F
+U002056;2043;akt;1848;32;Jopek;Józef;;;;;;;;;;;;;;brak daty w kol. F
+U002057;2044;akt;1848;8;Kaczyński;Walenty;;;;;;;;;;;;;;brak daty w kol. F
+U002058;2045;akt;1848;58;Kadziorówna;Franciszka;;;;;;;;;;;;;;brak daty w kol. F
+U002059;2046;akt;1848;4;Kamieniak;Franciszka;;;brak karty;;;;;;;;;;;"brak daty w kol. F; brak wieku ojca (~RRRR nie policzono)"
+U002061;2047;akt;1848;56;Karpiński;Roman;;;;;;;;;;;;;;brak daty w kol. F
+U002060;2048;akt;1848;57;Kędziora;Ewa;;;;;;;;;;;;;;brak daty w kol. F
+U002062;2049;akt;1848;33;Kędziora;Franciszek;;;;;;;;;;;;;;brak daty w kol. F
+U002064;2050;akt;1848;36;Koguc;Franciszek;;;;;;;;;;;;;;brak daty w kol. F
+U002063;2051;akt;1848;18;Koguc;Stanisław;;;;;;;;;;;;;;brak daty w kol. F
+U002065;2052;akt;1848;30;Kolasa;Franciszek;;;;;;;;;;;;;;brak daty w kol. F
+U002066;2053;akt;1848;55;Kolasa;Roman;;;;;;;;;;;;;;brak daty w kol. F
+U002068;2054;akt;1848;48;Kosidło;Andrzej;;;;;;;;;;;;;;brak daty w kol. F
+U002067;2055;akt;1848;5;Kosidło;Paweł;;;;;;;;;;;;;;brak daty w kol. F
+U002069;2056;akt;1848;3;Kozyra;Paweł;;;;;;;;;;;;;;brak daty w kol. F
+U002070;2057;akt;1848;23;Machulak;Antoni;;;;;;;;;;;;;;brak daty w kol. F
+U002071;2058;akt;1848;12;Machulak;Zofia;;;;;;;;;;;;;;brak daty w kol. F
+U002072;2059;akt;1848;44;Machulkówna;Marianna;;;;;;;;;;;;;;brak daty w kol. F
+U002073;2060;akt;1848;31;Mazurek;Jan;;;;;;;;;;;;;;brak daty w kol. F
+U002074;2061;akt;1848;35;Nieściór;Mateusz;;;;;;;;;;;;;;brak daty w kol. F
+U002075;2062;akt;1848;15;Obydź;Wojciech;;;;;;;;;;;;;;brak daty w kol. F
+U002076;2063;akt;1848;25;Paszkowska;Fraciszka;;;;;;;;;;;;;;brak daty w kol. F
+U002081;2064;akt;1848;51;Pawłasek;Barbara;;;;;;;;;;;;;;brak daty w kol. F
+U002079;2065;akt;1848;4;Pawłasek;Franciszka;;;;;;;;;;;;;;brak daty w kol. F
+U002078;2066;akt;1848;42;Pawłasek;Szymon;;;;;;;;;;;;;;brak daty w kol. F
+U002080;2067;akt;1848;34;Pawłasek;Tekla;;;;;;;;;;;;;;brak daty w kol. F
+U002077;2068;akt;1848;6;Pawłasek;Walenty;;;;;;;;;;;;;;brak daty w kol. F
+U002082;2069;akt;1848;11;Pscionek;Kazimierz;;;;;;;;;;;;;;brak daty w kol. F
+U002083;2070;akt;1848;20;Pscionek;Stanisław;;;;;;;;;;;;;;brak daty w kol. F
+U002084;2071;akt;1848;52;Pyzówna;Marianna;;;;;;;;;;;;;;brak daty w kol. F
+U002085;2072;akt;1848;29;Samuel;Wincenty;;;;;;;;;;;;;;brak daty w kol. F
+U002086;2073;akt;1848;21;Siembiedówna;Marianna;;;;;;;;;;;;;;brak daty w kol. F
+U002087;2074;akt;1848;17;Siliorówna;Marianna;;;;;;;;;;;;;;brak daty w kol. F
+U002088;2075;akt;1848;28;Szabal;Wincenty;;;;;;;;;;;;;;brak daty w kol. F
+U002089;2076;akt;1848;24;Szubstarska;Anna;;;;;;;;;;;;;;brak daty w kol. F
+U002090;2077;akt;1848;40;Szydłoski;Franciszek;;;;;;;;;;;;;;brak daty w kol. F
+U002091;2078;akt;1848;45;Szyszka;Andrzej;;;;;;;;;;;;;;brak daty w kol. F
+U002092;2079;akt;1848;2;Tokarska;Marysinna;;;;;;;;;;;;;;brak daty w kol. F
+U002093;2080;akt;1848;26;Wieleba;Antoni;;;;;;;;;;;;;;brak daty w kol. F
+U002094;2081;akt;1848;49;Wnuk;Andrzej;;;;;;;;;;;;;;brak daty w kol. F
+U002095;2082;akt;1848;37;Woś;Michał;;;;;;;;;;;;;;brak daty w kol. F
+U002096;2083;akt;1848;7;Zieliński;Jan;;;;;;;;;;;;;;brak daty w kol. F
+U002099;2084;akt;1849;56;Baran;Franciszek;;;;;;;;;;;;;;brak daty w kol. F
+U002098;2085;akt;1849;15;Baran;Józef;;;;;;;;;;;;;;brak daty w kol. F
+U002100;2086;akt;1849;62;Baran;Szymon;;;;;;;;;;;;;;brak daty w kol. F
+U002101;2087;akt;1849;26;Biakowska;Józefa;;;;;;;;;;;;;;brak daty w kol. F
+U002102;2088;akt;1849;27;Bigos;Stanisław;brak akt;;;;;;;;;;;;"kol.J: około 1849; kol.O: około 1849";data nieprawidłowa lub nietekstowa: 'brak akt'
+U002103;2089;akt;1849;8;Brzeska;Józefa;;;;;;;;;;;;;kol.O: około 1849;brak daty w kol. F
+U002105;2090;akt;1849;30;Bucoń;Jan;;;;;;;;;;;;;"kol.J: około 1849; kol.O: około 1849";brak daty w kol. F

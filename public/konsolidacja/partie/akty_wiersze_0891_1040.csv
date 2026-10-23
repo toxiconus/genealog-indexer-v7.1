@@ -1,0 +1,151 @@
+﻿id_archiwalne;wiersz_zrodlo;typ_wpisu;rok;nr;nazwisko_dziecka;imie_dziecka;data_tekst;data_iso;ojciec_imie;ojciec_nazwisko;ojciec_wiek;ojciec_rok_ur_przyb;miejscowosc;matka_imie;matka_nazwisko;matka_wiek;matka_rok_ur_przyb;karta_nr;uwagi_surowe;flagi
+U000895;891;akt;1829;21;Kopiwoda;Tekla;16.05.1829;1829-05-16;Antoni;Kopiwoda;;;Brzozówka;Marianna;Woś;;;;kol.J: około 1829;"brak wieku ojca (~RRRR nie policzono); brak wieku matki (~RRRR nie policzono)"
+U000896;892;akt;1829;27;Kosidlak;Małgorzata;;;;;;;;;;;;;kol.G: Paweł i Maryanna Kurczak;"brak daty w kol. F; rodzice w jednym polu (do ręcznego rozdzielenia); przesunięty układ: brak F, rodzice w G"
+U000898;893;akt;1829;23;Kosidło;Antoni;;;;;;;;;;;;;kol.G: Michał i Agata Kurczak;"brak daty w kol. F; rodzice w jednym polu (do ręcznego rozdzielenia); przesunięty układ: brak F, rodzice w G"
+U000900;894;akt;1829;50;Kosidło;Jadwiga;;;;;;;;;;;;;kol.G: Woyciech i Maryanna Pcion?;"brak daty w kol. F; rodzice w jednym polu (do ręcznego rozdzielenia); przesunięty układ: brak F, rodzice w G"
+U000897;895;akt;1829;18;Kosidło;Małgorzata;;;;;;;;;;;;;kol.G: Kasper i Agata Kedziora;"brak daty w kol. F; rodzice w jednym polu (do ręcznego rozdzielenia); przesunięty układ: brak F, rodzice w G"
+U000899;896;akt;1829;60;Kosidło;Tomasz;;;;;;;;;;;;;kol.G: Stanisław i Katarzyna Kozak;"brak daty w kol. F; rodzice w jednym polu (do ręcznego rozdzielenia); przesunięty układ: brak F, rodzice w G"
+U000901;897;akt;1829;11;Kozaczek;Sebastyan;;;;;;;;;;;;;kol.G: Michał i Maryanna Solarz;"brak daty w kol. F; rodzice w jednym polu (do ręcznego rozdzielenia); przesunięty układ: brak F, rodzice w G"
+U000902;898;akt;1829;7;Kozak;Helena;;;;;;;;;;;;;kol.G: Woyciech i Anna Szorma;"brak daty w kol. F; rodzice w jednym polu (do ręcznego rozdzielenia); przesunięty układ: brak F, rodzice w G"
+U000903;899;akt;1829;45;Kudrel;Łukasz;;;;;;;;;;;;;kol.G: Józef i Jadwiga Głaz;"brak daty w kol. F; rodzice w jednym polu (do ręcznego rozdzielenia); przesunięty układ: brak F, rodzice w G"
+U000906;900;akt;1829;64;Kurczak;Agnieszka;;;;;;;;;;;;;kol.G: Woyciech i Franciszka Pasternak;"brak daty w kol. F; rodzice w jednym polu (do ręcznego rozdzielenia); przesunięty układ: brak F, rodzice w G"
+U000905;901;akt;1829;2;Kurczak;Agniszka;;;;;;;;;;;;;kol.G: Paweł i Tekla Pudło;"brak daty w kol. F; rodzice w jednym polu (do ręcznego rozdzielenia); przesunięty układ: brak F, rodzice w G"
+U000904;902;akt;1829;36;Kurczak;Rozalia;;;;;;;;;;;;;kol.G: Antoni i Maryanna Mazur?;"brak daty w kol. F; rodzice w jednym polu (do ręcznego rozdzielenia); przesunięty układ: brak F, rodzice w G"
+U000907;903;akt;1829;51;Kurczak;Szymon;;;;;;;;;;;;;kol.G: Woyciech i Zofia Woytalas;"brak daty w kol. F; rodzice w jednym polu (do ręcznego rozdzielenia); przesunięty układ: brak F, rodzice w G"
+U000908;904;akt;1829;46;Kurczak;Szymon;;;;;;;;;;;;;kol.G: Woyciech i Zofia Woytowicz;"brak daty w kol. F; rodzice w jednym polu (do ręcznego rozdzielenia); przesunięty układ: brak F, rodzice w G"
+U000909;905;akt;1829;28;Mochulak;Antonina;;;;;;;;;;;;;kol.G: Wawrzeniec i Katarzyna Mazurek;"brak daty w kol. F; rodzice w jednym polu (do ręcznego rozdzielenia); przesunięty układ: brak F, rodzice w G"
+U000910;906;akt;1829;59;Obydź;Ewa;;;;;;;;;;;;;kol.G: Jakub i Anna Głaz;"brak daty w kol. F; rodzice w jednym polu (do ręcznego rozdzielenia); przesunięty układ: brak F, rodzice w G"
+U000911;907;akt;1829;34;Olexak;Franciszek;;;;;;;;;;;;;kol.G: Paweł i Maryanna Pyc;"brak daty w kol. F; rodzice w jednym polu (do ręcznego rozdzielenia); przesunięty układ: brak F, rodzice w G"
+U000912;908;akt;1829;15;Paciorek;Filip;;;;;;;;;;;;;kol.G: Józef i Jadwiga Cisło;"brak daty w kol. F; rodzice w jednym polu (do ręcznego rozdzielenia); przesunięty układ: brak F, rodzice w G"
+U000913;909;akt;1829;5;Pasternak;Maciey;;;;;;;;;;;;;kol.G: Maciey i Maryanna Kosidło;"brak daty w kol. F; rodzice w jednym polu (do ręcznego rozdzielenia); przesunięty układ: brak F, rodzice w G"
+U000914;910;akt;1829;13;Pasternak;Marek Benedykt;;;;;;;;;;;;;kol.G: Marcin i Jadwiga Michałek;"brak daty w kol. F; rodzice w jednym polu (do ręcznego rozdzielenia); przesunięty układ: brak F, rodzice w G"
+U000915;911;akt;1829;10;Pawłasek;Antonina;;;;;;;;;;;;;kol.G: Jakub i Tekla Dybel;"brak daty w kol. F; rodzice w jednym polu (do ręcznego rozdzielenia); przesunięty układ: brak F, rodzice w G"
+U000916;912;akt;1829;26;Pawłasek;Piotr;;;;;;;;;;;;;kol.G: Paweł i Agnieszka Zaręba;"brak daty w kol. F; rodzice w jednym polu (do ręcznego rozdzielenia); przesunięty układ: brak F, rodzice w G"
+U000919;913;akt;1829;63;Pazdrak;Szczepan;;;;;;;;;;;;;kol.G: Tomasz i Maryanna Samel,Samal;"brak daty w kol. F; rodzice w jednym polu (do ręcznego rozdzielenia); przesunięty układ: brak F, rodzice w G"
+U000918;914;akt;1829;33;Pazdrak;Wawrzeniec;;;;;;;;;;;;;kol.G: Maciey i ?;"brak daty w kol. F; rodzice w jednym polu (do ręcznego rozdzielenia); przesunięty układ: brak F, rodzice w G"
+U000917;915;akt;1829;37;Pazdrak;Zofia;;;;;;;;;;;;;kol.G: Jan i Maryanna Niescior;"brak daty w kol. F; rodzice w jednym polu (do ręcznego rozdzielenia); przesunięty układ: brak F, rodzice w G"
+U000920;916;akt;1829;44;Pcionek;Michał;;;;;;;;;;;;;kol.G: Józef i Tekla Kiszka?;"brak daty w kol. F; rodzice w jednym polu (do ręcznego rozdzielenia); przesunięty układ: brak F, rodzice w G"
+U000921;917;akt;1829;24;Pieczykolano;Marianna;;;;;;;;;;;;;kol.G: Józef i Anna Rębiak;"brak daty w kol. F; rodzice w jednym polu (do ręcznego rozdzielenia); przesunięty układ: brak F, rodzice w G"
+U000922;918;akt;1829;58;Sagan;Marianna;;;;;;;;;;;;;kol.G: Stanisław i Katarzyna? Gil;"brak daty w kol. F; rodzice w jednym polu (do ręcznego rozdzielenia); przesunięty układ: brak F, rodzice w G"
+U000923;919;akt;1829;61;Samel , Samal;Adam Tomasz;;;;;;;;;;;;;kol.G: Woyciech i Maryanna Kozak;"brak daty w kol. F; rodzice w jednym polu (do ręcznego rozdzielenia); przesunięty układ: brak F, rodzice w G"
+U000924;920;akt;1829;62;Samel,Samal;Ewa;;;;;;;;;;;;;kol.G: Woyciech i Maryanna Kozak;"brak daty w kol. F; rodzice w jednym polu (do ręcznego rozdzielenia); przesunięty układ: brak F, rodzice w G"
+U000925;921;akt;1829;30;Samul;Marianna;;;;;;;;;;;;;kol.G: Sebastyan i Ewa ...;"brak daty w kol. F; rodzice w jednym polu (do ręcznego rozdzielenia); przesunięty układ: brak F, rodzice w G"
+U000926;922;akt;1829;55;Solarz;Zofia;;;;;;;;;;;;;kol.G: Tomasz i Maryanna Kosidło;"brak daty w kol. F; rodzice w jednym polu (do ręcznego rozdzielenia); przesunięty układ: brak F, rodzice w G"
+U000927;923;akt;1829;39;Spryszak;Franciszka;;;;;;;;;;;;;kol.G: Sebastyan i Franciszka Jakubaszek;"brak daty w kol. F; rodzice w jednym polu (do ręcznego rozdzielenia); przesunięty układ: brak F, rodzice w G"
+U000928;924;akt;1829;40;Spryszak;Marianna;;;;;;;;;;;;;kol.G: Sebastyan i Franciszka Jakubaszek;"brak daty w kol. F; rodzice w jednym polu (do ręcznego rozdzielenia); przesunięty układ: brak F, rodzice w G"
+U000929;925;akt;1829;56;Szyszka;Marianna;;;Józef? I Katarzyna Cwik;;;;;;;;;;;"brak daty w kol. F; brak wieku ojca (~RRRR nie policzono)"
+U000931;926;akt;1829;57;Wcisło;Marianna;;;;;;;;;;;;;kol.G: Filip i Maryanna Machulek;"brak daty w kol. F; rodzice w jednym polu (do ręcznego rozdzielenia); przesunięty układ: brak F, rodzice w G"
+U000930;927;akt;1829;3;Wcisło;Paweł;;;;;;;;;;;;;kol.G: Bartłomiey i Maryanna Kurczak;"brak daty w kol. F; rodzice w jednym polu (do ręcznego rozdzielenia); przesunięty układ: brak F, rodzice w G"
+U000932;928;akt;1829;52;Wiąckowski;Andrzey;;;;;;;;;;;;;kol.G: Karol i Anna Abusiewicz?;"brak daty w kol. F; rodzice w jednym polu (do ręcznego rozdzielenia); przesunięty układ: brak F, rodzice w G"
+U000933;929;akt;1829;43;Wieleba;Michał;;;;;;;;;;;;;kol.G: Tomasz i Franciszka Kędziora;"brak daty w kol. F; rodzice w jednym polu (do ręcznego rozdzielenia); przesunięty układ: brak F, rodzice w G"
+U000934;930;akt;1829;22;Zaręba;Jan;;;;;;;;;;;;;kol.G: Paweł i Katarzyna Wcisło;"brak daty w kol. F; rodzice w jednym polu (do ręcznego rozdzielenia); przesunięty układ: brak F, rodzice w G"
+U000935;931;akt;1829;1;Zych;Marianna;;;;;;;;;;;;;kol.G: Jakub i Jadwiga Wnuk;"brak daty w kol. F; rodzice w jednym polu (do ręcznego rozdzielenia); przesunięty układ: brak F, rodzice w G"
+U000937;932;akt;1830;61;Andrzejczak;Andrzey;;;;;;;;;;;;;kol.G: Woyciech i Maryanna Baran;"brak daty w kol. F; rodzice w jednym polu (do ręcznego rozdzielenia); przesunięty układ: brak F, rodzice w G"
+U000938;933;akt;1830;2;Baran;Agnieszka;;;;;;;;;;;;;kol.G: Paweł i Krystyna Mazurek;"brak daty w kol. F; rodzice w jednym polu (do ręcznego rozdzielenia); przesunięty układ: brak F, rodzice w G"
+U000939;934;akt;1830;25;Baran;Katarzyna;;;;;;;;;;;;;kol.G: Woyciech i Zofia Kędziora;"brak daty w kol. F; rodzice w jednym polu (do ręcznego rozdzielenia); przesunięty układ: brak F, rodzice w G"
+U000940;935;akt;1830;11;Barbarzak;Scholastyka;;;;;;;;;;;;;kol.G: Woyciech i Marianna Jakubaszek;"brak daty w kol. F; rodzice w jednym polu (do ręcznego rozdzielenia); przesunięty układ: brak F, rodzice w G"
+U000941;936;akt;1830;16;Bosak;Józef;;;;;;;;;;;;;kol.G: Jan i Tekla Samol;"brak daty w kol. F; rodzice w jednym polu (do ręcznego rozdzielenia); przesunięty układ: brak F, rodzice w G"
+U000942;937;akt;1830;53;Chyz (Pastucha?);Wawrzeniec;;;;;;;;;;;;;kol.G: Krzysztof i Agniszka Osuch?;"brak daty w kol. F; rodzice w jednym polu (do ręcznego rozdzielenia); przesunięty układ: brak F, rodzice w G"
+U000943;938;akt;1830;21;Dąbrowska;Maryianna;;;;;;;;;;;;;kol.G: Woyciech i Anastazya Boguń;"brak daty w kol. F; rodzice w jednym polu (do ręcznego rozdzielenia); przesunięty układ: brak F, rodzice w G"
+U000944;939;akt;1830;62;Dobrzańska;Barbara;;;;;;;;;;;;;kol.G: Antoni i Zofia Winiarz;"brak daty w kol. F; rodzice w jednym polu (do ręcznego rozdzielenia); przesunięty układ: brak F, rodzice w G"
+U000945;940;akt;1830;46;Gałka;Jakub;;;;;;;;;;;;;kol.G: Tomasz i Krystyna Łucionska?;"brak daty w kol. F; rodzice w jednym polu (do ręcznego rozdzielenia); przesunięty układ: brak F, rodzice w G"
+U000946;941;akt;1830;40;Głowacki;Jan;;;;;;;;;;;;;kol.G: Antoni i Maryanna Chwałek;"brak daty w kol. F; rodzice w jednym polu (do ręcznego rozdzielenia); przesunięty układ: brak F, rodzice w G"
+U000947;942;akt;1830;48;Gnat;Ignacy;;;;;;;;;;;;;kol.G: Jakub i Zofia Krupa;"brak daty w kol. F; rodzice w jednym polu (do ręcznego rozdzielenia); przesunięty układ: brak F, rodzice w G"
+U000948;943;akt;1830;58;Gnat;Tekla;;;;;;;;;;;;;kol.G: Kasper i Antonina Paiąk;"brak daty w kol. F; rodzice w jednym polu (do ręcznego rozdzielenia); przesunięty układ: brak F, rodzice w G"
+U000949;944;akt;1830;32;Guz;Jan;;;;;;;;;;;;;kol.G: Maciey i Maryanna Liberowska;"brak daty w kol. F; rodzice w jednym polu (do ręcznego rozdzielenia); przesunięty układ: brak F, rodzice w G"
+U000951;945;akt;1830;47;Jachura;Jakub;;;;;;;;;;;;;kol.G: Tomasz i Maryanna Mochulek;"brak daty w kol. F; rodzice w jednym polu (do ręcznego rozdzielenia); przesunięty układ: brak F, rodzice w G"
+U000950;946;akt;1830;54;Jachura;Rozalia;;;;;;;;;;;;;kol.G: Mateusz i Maryanna Andrzeyczyk;"brak daty w kol. F; rodzice w jednym polu (do ręcznego rozdzielenia); przesunięty układ: brak F, rodzice w G"
+U000952;947;akt;1830;7;Janik;Paweł;;;;;;;;;;;;;kol.G: Sebastyian i Agniszka Babiarz?;"brak daty w kol. F; rodzice w jednym polu (do ręcznego rozdzielenia); przesunięty układ: brak F, rodzice w G"
+U000953;948;akt;1830;45;Kamieński?;Małgorzata;;;;;;;;;;;;;kol.G: Andrzey i Katarzyna Michałek;"brak daty w kol. F; rodzice w jednym polu (do ręcznego rozdzielenia); przesunięty układ: brak F, rodzice w G"
+U000954;949;akt;1830;27;Kędziora;Stanisław;;;;;;;;;;;;;kol.G: Bartłomiey i Agniszka Pawłasek;"brak daty w kol. F; rodzice w jednym polu (do ręcznego rozdzielenia); przesunięty układ: brak F, rodzice w G"
+U000955;950;akt;1830;42;Kolasa;Anna;;;;;;;;;;;;;kol.G: Woyciech i Maryanna Pudło;"brak daty w kol. F; rodzice w jednym polu (do ręcznego rozdzielenia); przesunięty układ: brak F, rodzice w G"
+U000956;951;akt;1830;57;Kopiwoda;Marianna;26.10.1830;1830-10-26;Sebastian;Kopiwoda;40;~1790;Brzozówka;Cecylia;Paluch;30;~1800;;kol.J: około 1790;
+U000958;952;akt;1830;17;Kosidło;Helena;;;;;;;;;;;;;kol.G: Jan i Maryanna Kaczenska;"brak daty w kol. F; rodzice w jednym polu (do ręcznego rozdzielenia); przesunięty układ: brak F, rodzice w G"
+U000959;953;akt;1830;55;Kosidło;Michał;;;;;;;;;;;;;kol.G: Maciey i Maryanna Wcisło;"brak daty w kol. F; rodzice w jednym polu (do ręcznego rozdzielenia); przesunięty układ: brak F, rodzice w G"
+U000960;954;akt;1830;60;Kosidło;Salomea;;;;;;;;;;;;;kol.G: Michał i Anna Samel;"brak daty w kol. F; rodzice w jednym polu (do ręcznego rozdzielenia); przesunięty układ: brak F, rodzice w G"
+U000957;955;akt;1830;65;Kosidło;Tomasz;;;;;;;;;;;;;kol.G: Bartłomiey i ?;"brak daty w kol. F; rodzice w jednym polu (do ręcznego rozdzielenia); przesunięty układ: brak F, rodzice w G"
+U000961;956;akt;1830;23;Kosidło;Woyciech;;;;;;;;;;;;;kol.G: Szymon i Agniszka Kozak;"brak daty w kol. F; rodzice w jednym polu (do ręcznego rozdzielenia); przesunięty układ: brak F, rodzice w G"
+U000962;957;akt;1830;29;Kowalczyk;Stanisław;;;;;;;;;;;;;"kol.G: Sobestyan i Jadwiga Pizon; kol.J: około 1830; kol.O: około 1830";"brak daty w kol. F; rodzice w jednym polu (do ręcznego rozdzielenia); przesunięty układ: brak F, rodzice w G"
+U000963;958;akt;1830;44;Kozyra;Wawrzeniec;;;;;;;;;;;;;kol.G: Szczepan i Bosak?;"brak daty w kol. F; rodzice w jednym polu (do ręcznego rozdzielenia); przesunięty układ: brak F, rodzice w G"
+U000964;959;akt;1830;13;Krawczyk;Walenty;;;;;;;;;;;;;kol.G: Woyciech i Zofia Kaczeńska;"brak daty w kol. F; rodzice w jednym polu (do ręcznego rozdzielenia); przesunięty układ: brak F, rodzice w G"
+U000965;960;akt;1830;59;Król;Franciszek;;;Rozalia Król;;;;;;;;;;;"brak daty w kol. F; brak wieku ojca (~RRRR nie policzono)"
+U000966;961;akt;1830;15;Kurczak;Benedykt;;;;;;;;;;;;;kol.G: Maciey i ?;"brak daty w kol. F; rodzice w jednym polu (do ręcznego rozdzielenia); przesunięty układ: brak F, rodzice w G"
+U000967;962;akt;1830;26;Kurczak;Stanisław;;;;;;;;;;;;;kol.G: Woyciech i Bregida Kozak?;"brak daty w kol. F; rodzice w jednym polu (do ręcznego rozdzielenia); przesunięty układ: brak F, rodzice w G"
+U000968;963;akt;1830;20;Liberowska;Maryianna;;;;;;;;;;;;;kol.G: Marcin i Zofia Dobrzańska;"brak daty w kol. F; rodzice w jednym polu (do ręcznego rozdzielenia); przesunięty układ: brak F, rodzice w G"
+U000969;964;akt;1830;67;Machulek;Tomasz;;;;;;;;;;;;;kol.G: Józef i Franciszka Mazur;"brak daty w kol. F; rodzice w jednym polu (do ręcznego rozdzielenia); przesunięty układ: brak F, rodzice w G"
+U000970;965;akt;1830;14;Mazurek;Zofiia;;;;;;;;;;;;;kol.G: Józef i Barbara Kartacz?;"brak daty w kol. F; rodzice w jednym polu (do ręcznego rozdzielenia); przesunięty układ: brak F, rodzice w G"
+U000971;966;akt;1830;64;Mcisło;Tomasz;;;;;;;;;;;;;kol.G: Józef i Tekla Bosak;"brak daty w kol. F; rodzice w jednym polu (do ręcznego rozdzielenia); przesunięty układ: brak F, rodzice w G"
+U000972;967;akt;1830;52;Nieściór;Katarzyna;;;;;;;;;;;;;kol.G: Stanisław i Agnieszka Cwik;"brak daty w kol. F; rodzice w jednym polu (do ręcznego rozdzielenia); przesunięty układ: brak F, rodzice w G"
+U000973;968;akt;1830;43;Obydź;Dominik;;;;;;;;;;;;;kol.G: Woyciech i Agniszka Baran;"brak daty w kol. F; rodzice w jednym polu (do ręcznego rozdzielenia); przesunięty układ: brak F, rodzice w G"
+U000974;969;akt;1830;9;Ogon;Marianna;;;;;;;;;;;;;kol.G: Antoni i Franciszka Pikuła;"brak daty w kol. F; rodzice w jednym polu (do ręcznego rozdzielenia); przesunięty układ: brak F, rodzice w G"
+U000975;970;akt;1830;8;Pasternak;Walenty;;;;;;;;;;;;;kol.G: Maciey i Maryanna Kosidło;"brak daty w kol. F; rodzice w jednym polu (do ręcznego rozdzielenia); przesunięty układ: brak F, rodzice w G"
+U000977;971;akt;1830;50;Pawłasek;Konstancyia;;;;;;;;;;;;;kol.G: Józef i Agniszka Woytowicz;"brak daty w kol. F; rodzice w jednym polu (do ręcznego rozdzielenia); przesunięty układ: brak F, rodzice w G"
+U000978;972;akt;1830;12;Pawłasek;Scholastyka;;;Mateusz Elżbieta Ciesuk?;;;;;;;;;;;"brak daty w kol. F; brak wieku ojca (~RRRR nie policzono)"
+U000976;973;akt;1830;30;Pawłasek;Stanisław;;;;;;;;;;;;;kol.G: ? i Zofia Pazdrak;"brak daty w kol. F; rodzice w jednym polu (do ręcznego rozdzielenia); przesunięty układ: brak F, rodzice w G"
+U000979;974;akt;1830;1;Pazdrak;Marianna;;;;;;;;;;;;;kol.G: Andrzey i Anastazya Pawłasek;"brak daty w kol. F; rodzice w jednym polu (do ręcznego rozdzielenia); przesunięty układ: brak F, rodzice w G"
+U000980;975;akt;1830;49;Pazdrak;Wawrzeniec;;;;;;;;;;;;;kol.G: Kazimierz i Maryanna Zeręba;"brak daty w kol. F; rodzice w jednym polu (do ręcznego rozdzielenia); przesunięty układ: brak F, rodzice w G"
+U000981;976;akt;1830;35;Pcion;Jan;;;;;;;;;;;;;kol.G: Marcin i Teresa Kawecka;"brak daty w kol. F; rodzice w jednym polu (do ręcznego rozdzielenia); przesunięty układ: brak F, rodzice w G"
+U000982;977;akt;1830;41;Pcionek;Anna;;;;;;;;;;;;;kol.G: Marcin i Anastazya Jachura;"brak daty w kol. F; rodzice w jednym polu (do ręcznego rozdzielenia); przesunięty układ: brak F, rodzice w G"
+U000983;978;akt;1830;18;Pcionek;Marianna;;;;;;;;;;;;;kol.G: Wincenty i Anna Kędzora?;"brak daty w kol. F; rodzice w jednym polu (do ręcznego rozdzielenia); przesunięty układ: brak F, rodzice w G"
+U000984;979;akt;1830;38;Pcionek;Piotr;;;;;;;;;;;;;kol.G: Woyciech i Katarzyna Paciorek;"brak daty w kol. F; rodzice w jednym polu (do ręcznego rozdzielenia); przesunięty układ: brak F, rodzice w G"
+U000985;980;akt;1830;66;Pudło;Tomasz;12.12.1828;1828-12-12;Maciej;Pudło;40;~1790;Brzozówka;Katarzyna;Pcionek;30;~1800;;"kol.J: około 1790; kol.O: około 1800";rok daty 1828 różni się od roku wpisu 1830
+U000986;981;akt;1830;63;Rębecka;Agniszka;;;;;;;;;;;;;kol.G: Stanisław i Anaztazya Rybak;"brak daty w kol. F; rodzice w jednym polu (do ręcznego rozdzielenia); przesunięty układ: brak F, rodzice w G"
+U000987;982;akt;1830;33;Sikorska , Sikora;Marianna;;;;;;;;;;;;;kol.G: Jan i Franciszka Stefańska?;"brak daty w kol. F; rodzice w jednym polu (do ręcznego rozdzielenia); przesunięty układ: brak F, rodzice w G"
+U000988;983;akt;1830;4;Sobolewska;Agniszka;;;;;;;;;;;;;kol.G: Woyciech i Katarzyna Kowalska;"brak daty w kol. F; rodzice w jednym polu (do ręcznego rozdzielenia); przesunięty układ: brak F, rodzice w G"
+U000989;984;akt;1830;31;Sobutka;Zuzanna;;;;;;;;;;;;;kol.G: Woyciech i Franciszka Boczek;"brak daty w kol. F; rodzice w jednym polu (do ręcznego rozdzielenia); przesunięty układ: brak F, rodzice w G"
+U000990;985;akt;1830;24;Sobutka,Sobudka;Anna;;;;;;;;;;;;;kol.G: Marcin i Maryanna Pazdrak;"brak daty w kol. F; rodzice w jednym polu (do ręcznego rozdzielenia); przesunięty układ: brak F, rodzice w G"
+U000991;986;akt;1830;28;Solarz;Konstancyia;;;Agata Solarz;;;;;;;;;;;"brak daty w kol. F; brak wieku ojca (~RRRR nie policzono)"
+U000992;987;akt;1830;19;Spryszak;Maciey;;;;;;;;;;;;;kol.G: Wincenty i Agniszka Tryk;"brak daty w kol. F; rodzice w jednym polu (do ręcznego rozdzielenia); przesunięty układ: brak F, rodzice w G"
+U000993;988;akt;1830;56;Stępien;Szymon;;;;;;;;;;;;;kol.G: Maciey i Dorota Solarz;"brak daty w kol. F; rodzice w jednym polu (do ręcznego rozdzielenia); przesunięty układ: brak F, rodzice w G"
+U000994;989;akt;1830;10;Stępnik;Jadwiga;;;;;;;;;;;;;kol.G: Józef i Katarzyna Kędziora;"brak daty w kol. F; rodzice w jednym polu (do ręcznego rozdzielenia); przesunięty układ: brak F, rodzice w G"
+U000995;990;akt;1830;6;Sulowska;Dorota;;;;;;;;;;;;;kol.G: Franciszek i Maryanna Kopyt;"brak daty w kol. F; rodzice w jednym polu (do ręcznego rozdzielenia); przesunięty układ: brak F, rodzice w G"
+U000996;991;akt;1830;51;Szabat;Wawrzeniec;;;;;;;;;;;;;kol.G: Woyciech i Teresa Bucoń;"brak daty w kol. F; rodzice w jednym polu (do ręcznego rozdzielenia); przesunięty układ: brak F, rodzice w G"
+U000997;992;akt;1830;36;Szuba;Antoni;;;;;;;;;;;;;kol.G: Wincenty i Franciszka Kurczak;"brak daty w kol. F; rodzice w jednym polu (do ręcznego rozdzielenia); przesunięty układ: brak F, rodzice w G"
+U000998;993;akt;1830;5;Wieleba;Marianna;;;;;;;;;;;;;kol.G: Józef i Maryanna Boczek;"brak daty w kol. F; rodzice w jednym polu (do ręcznego rozdzielenia); przesunięty układ: brak F, rodzice w G"
+U000999;994;akt;1830;3;Wieleba;Marianna;;;;;;;;;;;;;kol.G: Woyciech i Katarzyna Kot;"brak daty w kol. F; rodzice w jednym polu (do ręcznego rozdzielenia); przesunięty układ: brak F, rodzice w G"
+U001000;995;akt;1830;22;Wolski;Woyciech;;;;;;;;;;;;;kol.G: Michał i Anna Goch;"brak daty w kol. F; rodzice w jednym polu (do ręcznego rozdzielenia); przesunięty układ: brak F, rodzice w G"
+U001001;996;akt;1830;34;Woś;Antoni;;;;;;;;;;;;;kol.G: Jakub i Maryanna Gaier?;"brak daty w kol. F; rodzice w jednym polu (do ręcznego rozdzielenia); przesunięty układ: brak F, rodzice w G"
+U001002;997;akt;1830;39;Zielenska;Magdalena;;;;;;;;;;;;;kol.G: Woyciech i Katarzyna Król;"brak daty w kol. F; rodzice w jednym polu (do ręcznego rozdzielenia); przesunięty układ: brak F, rodzice w G"
+U001003;998;akt;1830;37;Zych;Anna;;;;;;;;;;;;;kol.G: Jakub i Jadwiga Wnuk;"brak daty w kol. F; rodzice w jednym polu (do ręcznego rozdzielenia); przesunięty układ: brak F, rodzice w G"
+U001005;999;akt;1831;32;Chwałek;Franciszek;;;;;;;;;;;;;;brak daty w kol. F
+U001006;1000;akt;1831;22;Ciechówna;Magdalena;;;;;;;;;;;;;;brak daty w kol. F
+U001007;1001;akt;1831;30;Dziewa;Magdalena;;;;;;;;;;;;;;brak daty w kol. F
+U001008;1002;akt;1831;18;Gnut;Stanisław;;;;;;;;;;;;;;brak daty w kol. F
+U001009;1003;akt;1831;28;Goch;Teresa;;;;;;;;;;;;;;brak daty w kol. F
+U001010;1004;akt;1831;8;Jachura;Józefa;;;;;;;;;;;;;;brak daty w kol. F
+U001011;1005;akt;1831;6;Kaczenszczanka;Marianna;;;;;;;;;;;;;;brak daty w kol. F
+U001012;1006;akt;1831;7;Kamieniak;Benedykt;;;;;;;;;;;;;;brak daty w kol. F
+U001014;1007;akt;1831;26;Kosidło;Piotr;;;;;;;;;;;;;;brak daty w kol. F
+U001013;1008;akt;1831;14;Kosidło;Stanisław;;;;;;;;;;;;;;brak daty w kol. F
+U001015;1009;akt;1831;3;Kozaczek;Agata;;;;;;;;;;;;;;brak daty w kol. F
+U001016;1010;akt;1831;36;Kozioł;Jadwiga;;;;;;;;;;;;;;brak daty w kol. F
+U001017;1011;akt;1831;27;Król;Anna;;;;;;;;;;;;;;brak daty w kol. F
+U001019;1012;akt;1831;12;Kurczak;Benedykt;;;;;;;;;;;;;;brak daty w kol. F
+U001018;1013;akt;1831;1;Kurczak;Walenty;;;;;;;;;;;;;;brak daty w kol. F
+U001020;1014;akt;1831;19;Kurczak;Dorota;;;;;;;;;;;;;;brak daty w kol. F
+U001021;1015;akt;1831;2;Michałkowna;Marianna;;;;;;;;;;;;;;brak daty w kol. F
+U001022;1016;akt;1831;33;Mochulak;Franciszek;;;;;;;;;;;;;;brak daty w kol. F
+U001023;1017;akt;1831;34;Mochulak;Szymon;;;;;;;;;;;;;;brak daty w kol. F
+U001024;1018;akt;1831;39;Mochulczonka;Barbara;;;;;;;;;;;;;;brak daty w kol. F
+U001025;1019;akt;1831;25;Nieściór;Anna;;;;;;;;;;;;;;brak daty w kol. F
+U001026;1020;akt;1831;29;Pasternak;Wawrzyniec;;;;;;;;;;;;;;brak daty w kol. F
+U001028;1021;akt;1831;20;Pawłasek;Antoni;;;;;;;;;;;;;;brak daty w kol. F
+U001027;1022;akt;1831;5;Pawłasek;Maciej;;;;;;;;;;;;;;brak daty w kol. F
+U001029;1023;akt;1831;37;Pawłasek;Marcin;;;;;;;;;;;;;;brak daty w kol. F
+U001030;1024;akt;1831;4;Pazdruk;Andrzej Walenty;;;;;;;;;;;;;;brak daty w kol. F
+U001031;1025;akt;1831;23;Pudło;Antoni;11.06.1830;1830-06-11;Michał;Pudło;30;~1801;Brzozówka;Jadwiga;Ogon;20;~1811;;"kol.J: około 1801; kol.O: około 1811";rok daty 1830 różni się od roku wpisu 1831
+U001032;1026;akt;1831;24;Sagankowna;Antonina;;;;;;;;;;;;;;brak daty w kol. F
+U001033;1027;akt;1831;21;Samel;Augustyn;;;;;;;;;;;;;;brak daty w kol. F
+U001034;1028;akt;1831;17;Solorzowna;Helena;;;;;;;;;;;;;;brak daty w kol. F
+U001035;1029;akt;1831;10;Wcisłowa;Józefa;;;;;;;;;;;;;;brak daty w kol. F
+U001036;1030;akt;1831;15;Wielbionka;Katarzyna;;;;;;;;;;;;;;brak daty w kol. F
+U001037;1031;akt;1831;11;Wnuk;Benedykt;;;;;;;;;;;;;;brak daty w kol. F
+U001038;1032;akt;1831;9;Woytowiczowna;Franciszka;;;;;;;;;;;;;;brak daty w kol. F
+U001039;1033;akt;1831;40;Zarębianka;Katarzyna;;;;;;;;;;;;;;brak daty w kol. F
+U001040;1034;akt;1832;22;Baran;Antoni;;;;;;;;;;;;;;brak daty w kol. F
+U001041;1035;akt;1832;6;Barbarzak;Paweł;;;;;;;;;;;;;;brak daty w kol. F
+U001044;1036;akt;1832;25;Bosak;Konstancja;;;;;;;;;;;;;;brak daty w kol. F
+U001042;1037;akt;1832;31;Bosak;Mateusz;;;;;;;;;;;;;;brak daty w kol. F
+U001043;1038;akt;1832;40;Bosak;Mikołaj;;;;;;;;;;;;;;brak daty w kol. F
+U001045;1039;akt;1832;4;Brzuszkiewicz;Szczepan;;;;;;;;;;;;;kol.O: około 1832;brak daty w kol. F
+U001046;1040;akt;1832;30;Brzyszczonka;Jadwiga;;;;;;;;;;;;;;brak daty w kol. F
