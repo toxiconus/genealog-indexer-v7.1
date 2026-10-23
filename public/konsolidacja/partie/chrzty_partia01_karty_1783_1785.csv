@@ -1,0 +1,151 @@
+﻿id_archiwalne;wiersz_zrodlo;typ_wpisu;rok;nr;nazwisko_dziecka;imie_dziecka;data_tekst;data_iso;ojciec_imie;ojciec_nazwisko;ojciec_wiek;ojciec_rok_ur_przyb;matka_imie;matka_nazwisko;matka_wiek;matka_rok_ur_przyb;karta_nr;uwagi_surowe;flagi
+U000001;1;karta;1783;1;Barbarzak;Józef;;;;;;;;;;;1;;data w oryginale '-' (brak)
+U000002;2;karta;1783;3;Bucoń;Jakub;;;;;;;;;;;3;;
+U000003;3;karta;1783;2;Czuba;Zofia;;;;;;;;;;;2;;
+U000004;4;karta;1783;2;Faber;Wojciech;;;;;;;;;;;2;;
+U000005;5;karta;1783;4;Gnat;Łukasz;;;;;;;;;;;4;;
+U000006;6;karta;1783;2;Grabowska;Zofia;;;;;;;;;;;2;;
+U000007;7;karta;1783;4;Jasińska;Katarzyna;;;;;;;;;;;4;;niepewne (?)
+U000008;8;karta;1783;5;Jędrzejczak;Jan;;;;;;;;;;;5;;
+U000009;9;karta;1783;2;Kłos;Zofia;;;;;;;;;;;2;;
+U000010;10;karta;1783;1;Kopiwoda;Franciszka;;;;;;;;;;;1;;
+U000011;11;karta;1783;1;Kozaczek;Marianna;;;;;;;;;;;1;"kol.9: około 1783; kol.14: około 1783";
+U000012;12;karta;1783;4;Krupa;Mateusz;;;;;;;;;;;4;;
+U000013;13;karta;1783;1;Kudrelek;Zofia;;;;;;;;;;;1;;
+U000014;14;karta;1783;3;Kurczak;Magdalena;;;;;;;;;;;3;;
+U000015;15;karta;1783;5;Kurczak;Marianna;;;;;;;;;;;5;;
+U000016;16;karta;1783;4;Łata;Mateusz;;;;;;;;;;;4;;
+U000017;17;karta;1783;5;Machulak;Wiktoria;;;;;;;;;;;5;;
+U000018;18;karta;1783;3;Mścisło;Magdalena;;;;;;;;;;;3;;
+U000020;19;karta;1783;5;Mścisło;Marianna;;;;;;;;;;;5;;
+U000019;20;karta;1783;4;Mścisło;Salomea;;;;;;;;;;;4;;
+U000021;21;karta;1783;2;Murawska;Magdalena;;;;;;;;;;;2;;
+U000022;22;karta;1783;3;Pamud;Antoni;;;;;;;;;;;3;;
+U000023;23;karta;1783;2;Pastyga;Antoni;;;;;;;;;;;2;;
+U000024;24;karta;1783;2;Pastyga;Elżbieta;;;;;;;;;;;2;;
+U000025;25;karta;1783;4;Pazdrak;Salomea;;;;;;;;;;;4;;
+U000026;26;karta;1783;1;Pcionek;Stanisław;;;;;;;;;;;1;;
+U000028;27;karta;1783;4;Pęk;Mateusz;;;;;;;;;;;4;;
+U000027;28;karta;1783;1;Pęk;Walenty;;;;;;;;;;;1;;
+U000030;29;karta;1783;4;Rataj;Augustyn;;;;;;;;;;;4;;
+U000029;30;karta;1783;1;Rataj;Małgorzata;;;;;;;;;;;1;;
+U000031;31;karta;1783;1;Rembacz;Agata;;;;;;;;;;;1;;
+U000032;32;karta;1783;4;Siembida;Jadwiga;;;;;;;;;;;4;;
+U000033;33;karta;1783;4;Siemiankówna;Jadwiga Teresa;;;;;;;;;;;4;;
+U000034;34;karta;1783;4;Skrzypek;Franciszek;;;;;;;;;;;4;;
+U000036;35;karta;1783;4;Sobutka;Bartłomiej;;;;;;;;;;;4;;
+U000037;36;karta;1783;4;Sobutka;Jadwiga;;;;;;;;;;;4;;
+U000035;37;karta;1783;2;Sobutka;Stanisław;;;;;;;;;;;2;;
+U000038;38;karta;1783;5;Solarz;Katarzyna;;;;;;;;;;;5;;
+U000039;39;karta;1783;2;Szopówna;Elżbieta;;;;;;;;;;;2;;
+U000040;40;karta;1783;4;Tabaka;Marcin;;;;;;;;;;;4;;
+U000041;41;karta;1783;4;Terlecki;Bartłomiej;;;;;;;;;;;4;;
+U000042;42;karta;1783;2;Wiśniowski;Antoni;;;;;;;;;;;2;;
+U000043;43;karta;1783;3;Woś;Wawrzyniec;;;;;;;;;;;3;;
+U000044;44;karta;1783;1;Żurak;Maciej;;;;;;;;;;;1;;
+U000045;45;karta;1784;6;Baran;Franciszka;;;;;;;;;;;6;;
+U000046;46;karta;1784;9;Barbarzak;Jadwiga;;;;;;;;;;;9;;
+U000047;47;karta;1784;9;Bigos;Michał;;;;;;;;;;;9;kol.14: około 1784;
+U000048;48;karta;1784;5;Bolibrzuch;Franciszka;;;;;;;;;;;5;;
+U000049;49;karta;1784;8;Brożek;Marianna;;;;;;;;;;;8;;
+U000050;50;karta;1784;0;Brzyska;Zofia;;;;;;;;;;;;kol.14: około 1784;"bez numeru w księdze (nr 0); brak nr karty"
+U000051;51;karta;1784;9;Chmiel;Salomea;;;;;;;;;;;9;;
+U000052;52;karta;1784;8;Czarna;Anna;;;;;;;;;;;8;;
+U000053;53;karta;1784;10;Dobrzyński;Sebastian;;;;;;;;;;;10;"kol.9: około 1784; kol.14: około 1784";
+U000054;54;karta;1784;9;Dzierba;Szymon;;;;;;;;;;;9;;
+U000055;55;karta;1784;10;Gąsior;Wiktoria;;;;;;;;;;;10;;
+U000056;56;karta;1784;0;Goch;Marianna;;;;;;;;;;;;;"bez numeru w księdze (nr 0); brak nr karty"
+U000057;57;karta;1784;5;Igras;Agnieszka;;;;;;;;;;;5;;
+U000058;58;karta;1784;6;Igras;Walenty;;;;;;;;;;;6;;
+U000059;59;karta;1784;8;Jędrzejczak;Marianna;;;;;;;;;;;8;;
+U000060;60;karta;1784;7;Kaczyński;Filip;;;;;;;;;;;7;;
+U000061;61;karta;1784;7;Kosidło;Antoni;;;;;;;;;;;7;;
+U000062;62;karta;1784;8;Kosidło;Małgorzata;;;;;;;;;;;8;;
+U000063;63;karta;1784;6;Kozaczek;Maciej;;;;;;;;;;;6;"kol.9: około 1784; kol.14: około 1784";
+U000064;64;karta;1784;6;Kozaczek;Walenty;;;;;;;;;;;6;"kol.9: około 1784; kol.14: około 1784";
+U000065;65;karta;1784;8;Krupa;Zofia;;;;;;;;;;;8;;
+U000066;66;karta;1784;5;Kurczak;Baltazar;;;;;;;;;;;5;;
+U000067;67;karta;1784;8;Kurczak;Jakub;;;;;;;;;;;8;;
+U000069;68;karta;1784;6;Machulak;Maciej;;;;;;;;;;;6;;
+U000068;69;karta;1784;10;Machulak;Marianna;;;;;;;;;;;10;;
+U000070;70;karta;1784;9;Machulak;Mateusz;;;;;;;;;;;9;;
+U000071;71;karta;1784;8;Mcionek;Antonina;;;;;;;;;;;8;;
+U000072;72;karta;1784;0;Paluch;Marianna Zofia;;;;;;;;;;;;;"bez numeru w księdze (nr 0); brak nr karty"
+U000073;73;karta;1784;10;Pasternak;Paweł;;;;;;;;;;;10;;
+U000074;74;karta;1784;9;Pawłasek;Michał;;;;;;;;;;;9;;
+U000075;75;karta;1784;0;Pazdrak;Kazimierz;;;;;;;;;;;;;"bez numeru w księdze (nr 0); brak nr karty"
+U000076;76;karta;1784;0;Pyć;Maciej;;;;;;;;;;;;;"bez numeru w księdze (nr 0); brak nr karty"
+U000077;77;karta;1784;5;S?;Agnieszka;;;;;;;;;;;5;;niepewne (?)
+U000078;78;karta;1784;0;Sobutka;Franciszka;;;;;;;;;;;;;"bez numeru w księdze (nr 0); brak nr karty"
+U000079;79;karta;1784;0;Sokół;Józef;;;;;;;;;;;;;"bez numeru w księdze (nr 0); brak nr karty"
+U000080;80;karta;1784;0;Stępień;Franciszka;;;;;;;;;;;;;"bez numeru w księdze (nr 0); brak nr karty"
+U000081;81;karta;1784;0;Stępnik;Wojciech;;;;;;;;;;;;;"bez numeru w księdze (nr 0); brak nr karty"
+U000082;82;karta;1784;8;Szabat;Marianna;;;;;;;;;;;8;;
+U000083;83;karta;1784;9;Szost;Zofia;;;;;;;;;;;9;;
+U000084;84;karta;1784;7;Szyska;Filip;;;;;;;;;;;7;;
+U000085;85;karta;1784;0;Wcisło;Marianna;;;;;;;;;;;;;"bez numeru w księdze (nr 0); brak nr karty"
+U000086;86;karta;1784;8;Wojtusiak;Antonina;;;;;;;;;;;8;;
+U000087;87;karta;1784;8;Wojtusiak;Wawrzyniec;;;;;;;;;;;8;;
+U000088;88;karta;1784;0;Woś;Zofia;;;;;;;;;;;;;"bez numeru w księdze (nr 0); brak nr karty"
+U000090;89;karta;1784;6;Zdybel;Franciszka;;;;;;;;;;;6;;
+U000089;90;karta;1784;5;Zdybel;Marianna;;;;;;;;;;;5;;
+U000091;91;karta;1785;17;Babiarz;Grzegorz;;;;;;;;;;;17;;
+U000092;92;karta;1785;11;Baran;Marianna;;;;;;;;;;;11;;
+U000093;93;karta;1785;13;Barbarzak;Marianna;;;;;;;;;;;13;;
+U000094;94;karta;1785;15;Białkowska;Antonina;;;;;;;;;;;15;;
+U000095;95;karta;1785;16;Bogon;Jakub;;;;;;;;;;;16;;
+U000096;96;karta;1785;12;Bolibrzuch;Józef;;;;;;;;;;;12;;
+U000097;97;karta;1785;17;Brożek;Andrzej;;;;;;;;;;;17;;
+U000098;98;karta;1785;10;Bucoń;Agnieszka;;;;;;;;;;;10;;
+U000100;99;karta;1785;17;Bucoń;Barbara;;;;;;;;;;;17;;
+U000099;100;karta;1785;14;Bucoń;Zofia;;;;;;;;;;;14;;
+U000101;101;karta;1785;11;Bzdyrak;Konstancja;;;;;;;;;;;11;;
+U000102;102;karta;1785;14;Cielepak;Zofia;;;;;;;;;;;14;;
+U000103;103;karta;1785;16;Czerein;Jadwiga;;;;;;;;;;;16;;
+U000105;104;karta;1785;17;Czuba;Szymon;;;;;;;;;;;17;;
+U000104;105;karta;1785;16;Czuba;Wawrzyniec;;;;;;;;;;;16;;
+U000106;106;karta;1785;14;Ćwiek;Zofia;;;;;;;;;;;14;;niepewne (?)
+U000107;107;karta;1785;13;Długosz;Zofia;;;;;;;;;;;13;;
+U000108;108;karta;1785;16;Dobrzyński;Jacenty;;;;;;;;;;;16;"kol.9: około 1785; kol.14: około 1785";
+U000109;109;karta;1785;18;Dziura;Agnieszka;;;;;;;;;;;18;;
+U000110;110;karta;1785;12;Haber;Grzegorz;;;;;;;;;;;12;;
+U000111;111;karta;1785;11;Igras;Marianna;;;;;;;;;;;11;;
+U000112;112;karta;1785;17;Jagosiak;Marcin;;;;;;;;;;;17;;
+U000113;113;karta;1785;15;Kaczyńska;Antonina;;;;;;;;;;;15;;
+U000114;114;karta;1785;15;Kochaniak;Magdalena;;;;;;;;;;;15;;
+U000115;115;karta;1785;15;Kosidło;Anna;;;;;;;;;;;15;;
+U000117;116;karta;1785;18;Kosidło;Maciej;;;;;;;;;;;18;;
+U000116;117;karta;1785;16;Kosidło;Mateusz;;;;;;;;;;;16;;
+U000119;118;karta;1785;11;Kozaczek;Agnieszka;;;;;;;;;;;11;"kol.9: około 1785; kol.14: około 1785";
+U000118;119;karta;1785;10;Kozaczek;Paweł;;;;;;;;;;;10;"kol.9: około 1785; kol.14: około 1785";
+U000120;120;karta;1785;17;Kozak;Andrzej;;;;;;;;;;;17;;
+U000121;121;karta;1785;10;Kudrelek;Marcjanna;;;;;;;;;;;10;;
+U000123;122;karta;1785;14;Kurczak;Wojciech;;;;;;;;;;;14;;
+U000122;123;karta;1785;12;Kurczak;Zofia;;;;;;;;;;;12;;
+U000124;124;karta;1785;13;Łach;Zofia;;;;;;;;;;;13;;
+U000125;125;karta;1785;12;Łata;Marianna;;;;;;;;;;;12;;
+U000126;126;karta;1785;14;Machawa;Antoni;;;;;;;;;;;14;;
+U000128;127;karta;1785;15;Mcionek;Magdalena;;;;;;;;;;;15;;
+U000127;128;karta;1785;14;Mcionek;Małgorzata;;;;;;;;;;;14;;
+U000129;129;karta;1785;11;Michałek;Konstancja;;;;;;;;;;;11;;
+U000130;130;karta;1785;14;Mikolasionek;Antoni;;;;;;;;;;;14;;
+U000131;131;karta;1785;11;Mścisło;Kazimierz;;;;;;;;;;;11;;
+U000132;132;karta;1785;13;Mścisło;Marianna;;;;;;;;;;;13;;
+U000133;133;karta;1785;12;Ogon;Stanisław;;;;;;;;;;;12;;
+U000134;134;karta;1785;10;Pasternak;Paweł;;;;;;;;;;;10;;
+U000137;135;karta;1785;15;Pawłasek;Antoni;;;;;;;;;;;15;;
+U000136;136;karta;1785;14;Pawłasek;Filip;;;;;;;;;;;14;;
+U000135;137;karta;1785;11;Pawłasek;Franciszka;;;;;;;;;;;11;;
+U000138;138;karta;1785;18;Pazdrak;Jan;;;;;;;;;;;18;;
+U000139;139;karta;1785;18;Pazdrak;Tomasz;;;;;;;;;;;18;;
+U000140;140;karta;1785;13;Pęk;Jakub;;;;;;;;;;;13;;
+U000141;141;karta;1785;16;Przybylska;Benigna Rozalia Mich;;;;;;;;;;;16;;
+U000142;142;karta;1785;13;Pyć;Wojciech;;;;;;;;;;;13;;
+U000143;143;karta;1785;18;Rataj;Agnieszka;;;;;;;;;;;18;;
+U000144;144;karta;1785;12;Rembacz;Grzegorz;;;;;;;;;;;12;;
+U000145;145;karta;1785;18;Rzeszutko;Tomasz;;;;;;;;;;;18;;
+U000146;146;karta;1785;12;Sobutka;Marianna;;;;;;;;;;;12;;
+U000147;147;karta;1785;17;Solarz;Tomasz;;;;;;;;;;;17;;
+U000148;148;karta;1785;15;Strzemieński;Paweł;;;;;;;;;;;15;;
+U000149;149;karta;1785;11;Tabaka;Maciej;;;;;;;;;;;11;;
+U000150;150;karta;1785;17;Tomach;Andrzej;;;;;;;;;;;17;;
