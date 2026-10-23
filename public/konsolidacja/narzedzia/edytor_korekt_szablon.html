@@ -132,6 +132,7 @@ details summary{cursor:pointer;color:var(--acc);margin-top:8px}
     <div class="toolbar">
       <input id="i_q" placeholder="szukaj wariantu" style="min-width:160px">
       <select id="i_st"><option value="">każdy status</option></select>
+      <label class="mut">sortowanie <select id="i_sort"><option value="akty">wg kolejności aktów</option><option value="alf">alfabetycznie</option><option value="licz">wg liczby</option></select></label>
       <span class="mut" id="i_cnt"></span>
     </div>
     <div class="note">Zmiana formy zapisuje się od razu jako propozycja. „Zastosuj” przepisuje wariant na formę PL we wszystkich rekordach i zapisuje formy LA/RU przy polach. Zmiany idą do dziennika (zakładka Korekty).</div>
@@ -146,6 +147,7 @@ details summary{cursor:pointer;color:var(--acc);margin-top:8px}
       <input id="n_q" placeholder="szukaj wariantu lub rodziny" style="min-width:160px">
       <select id="n_st"><option value="">każdy status</option></select>
       <label><input type="checkbox" id="n_only"> tylko rodziny z więcej niż 1 wariantem</label>
+      <label class="mut">sortowanie <select id="n_sort"><option value="akty">wg kolejności aktów</option><option value="alf">alfabetycznie</option><option value="licz">wg liczby</option></select></label>
       <span class="mut" id="n_cnt"></span>
     </div>
     <div class="note">Rodzina = wariant po odcięciu końcówek (-ów, -owa, -a, -o itd.). Sugerowana forma to najczęstszy wariant w rodzinie, który nie jest dopełniaczem ani mnogą. To tylko podpowiedź: decyzję podejmujesz Ty. Forma RU jest automatyczną transkrypcją do poprawienia.</div>
@@ -283,17 +285,31 @@ function logChange(r, pole, po, la, ru, zrodlo){
   if(ru!==undefined) r.ru[pole]=ru;
 }
 
+const SHORT = {ch:'ch', mal:'mal', zg:'zg'};
 function counts(){
+  // RECS jest w kolejności aktów (księga, potem wiersz), więc pierwsze wystąpienie = pozycja w aktach
   const m = {imie:new Map(), nazwisko:new Map()};
-  for(const r of RECS){
+  RECS.forEach((r, ri) => {
     for(const f of NAMEF[r.book]){
       const v = (r.cur[f]||'').trim(); if(!v) continue;
       const t = nameType(f);
-      const e = m[t].get(v) || {n:0, g:{m:0,k:0,'?':0}};
-      e.n++; e.g[genderOf(r,f)]++; m[t].set(v,e);
+      const e = m[t].get(v) || {n:0, first:ri, g:{m:0,k:0,'?':0}, occ:[]};
+      e.n++; e.g[genderOf(r,f)]++;
+      const ref = SHORT[r.book]+' '+r.w;
+      if(e.occ[e.occ.length-1] !== ref) e.occ.push(ref);
+      m[t].set(v,e);
     }
-  }
+  });
   return m;
+}
+function sortRows(rows, mode){
+  if(mode==='alf') return rows.sort((a,b)=>a[0].localeCompare(b[0],'pl'));
+  if(mode==='licz') return rows.sort((a,b)=>b[1].n-a[1].n || a[1].first-b[1].first);
+  return rows.sort((a,b)=>a[1].first-b[1].first);
+}
+function occText(e, max){
+  const shown = e.occ.slice(0, max).join(', ');
+  return e.occ.length > max ? shown + ` … (+${e.occ.length-max})` : shown;
 }
 function buildGroups(names){
   GROUPS = {};
@@ -440,24 +456,24 @@ function restoreRec(){
 
 function renderImiona(names){
   const q=$('#i_q').value.trim().toLowerCase(), st=$('#i_st').value;
-  const rows=[...names.imie].sort((a,b)=>b[1].n-a[1].n);
+  const rows=sortRows([...names.imie], $('#i_sort').value);
   let out=[];
   for(const [v,e] of rows){
     if(q && !v.toLowerCase().includes(q)) continue;
     const f = formOf('imie', v, e.n);
     if(st && f.status!==st) continue;
     const sex = e.g.m>=e.g.k ? (e.g.m||e.g.k ? 'm' : '?') : 'k';
-    out.push(`<tr data-t="imie" data-v="${esc(v)}"><td>${esc(v)}</td><td>${e.n}</td><td>${sex}</td>
+    out.push(`<tr data-t="imie" data-v="${esc(v)}"><td>${esc(v)}</td><td>${e.n}</td><td>${sex}</td><td class="mut" title="${esc(e.occ.join(', '))}">${esc(occText(e,6))}</td>
       <td><select data-fld="status">${STATUSES.map(s=>`<option ${s===f.status?'selected':''}>${s}</option>`).join('')}</select></td>
       <td><input data-fld="pl" value="${esc(f.pl)}"></td><td><input data-fld="la" value="${esc(f.la)}"></td><td><input data-fld="ru" value="${esc(f.ru)}"></td>
       <td><button data-act="apply">zastosuj</button></td></tr>`);
   }
   $('#i_cnt').textContent = out.length + ' wariantów';
-  $('#i_tab').innerHTML = `<tr><th>wariant</th><th>liczba</th><th>płeć</th><th>status</th><th>PL</th><th>LA</th><th>RU</th><th></th></tr>` + out.join('');
+  $('#i_tab').innerHTML = `<tr><th>wariant</th><th>liczba</th><th>płeć</th><th>wystąpienia (kolejność aktów)</th><th>status</th><th>PL</th><th>LA</th><th>RU</th><th></th></tr>` + out.join('');
 }
 function renderNazwiska(names){
   const q=$('#n_q').value.trim().toLowerCase(), st=$('#n_st').value, only=$('#n_only').checked;
-  const rows=[...names.nazwisko].sort((a,b)=>b[1].n-a[1].n);
+  const rows=sortRows([...names.nazwisko], $('#n_sort').value);
   let out=[];
   for(const [v,e] of rows){
     const s = stem(v);
@@ -466,13 +482,13 @@ function renderNazwiska(names){
     if(q && !v.toLowerCase().includes(q) && !s.includes(q)) continue;
     const f = formOf('nazwisko', v, e.n);
     if(st && f.status!==st) continue;
-    out.push(`<tr data-t="nazwisko" data-v="${esc(v)}"><td>${esc(v)}</td><td>${e.n}</td><td class="mut">${esc(s)} (${fam.length})</td>
+    out.push(`<tr data-t="nazwisko" data-v="${esc(v)}"><td>${esc(v)}</td><td>${e.n}</td><td class="mut">${esc(s)} (${fam.length})</td><td class="mut" title="${esc(e.occ.join(', '))}">${esc(occText(e,6))}</td>
       <td><select data-fld="status">${STATUSES.map(x=>`<option ${x===f.status?'selected':''}>${x}</option>`).join('')}</select></td>
       <td><input data-fld="pl" value="${esc(f.pl)}"></td><td><input data-fld="la" value="${esc(f.la)}"></td><td><input data-fld="ru" value="${esc(f.ru)}"></td>
       <td><button data-act="apply">zastosuj</button></td></tr>`);
   }
   $('#n_cnt').textContent = out.length + ' wariantów';
-  $('#n_tab').innerHTML = `<tr><th>wariant</th><th>liczba</th><th>rodzina</th><th>status</th><th>PL</th><th>LA</th><th>RU</th><th></th></tr>` + out.join('');
+  $('#n_tab').innerHTML = `<tr><th>wariant</th><th>liczba</th><th>rodzina</th><th>wystąpienia (kolejność aktów)</th><th>status</th><th>PL</th><th>LA</th><th>RU</th><th></th></tr>` + out.join('');
 }
 function renderSlownik(){
   $('#d_tab').innerHTML = `<tr><th>PL</th><th>płeć</th><th>LA</th><th>RU</th><th>status</th><th></th></tr>` + ST.dict.map((d,i)=>`<tr data-i="${i}">
@@ -561,11 +577,11 @@ function exportWersje(){
 }
 function exportFormy(){
   const m = counts();
-  const lines = ['typ;wariant;liczba;status;pl;la;ru'];
+  const lines = ['typ;wariant;liczba;pierwsze_wystapienie;wystapienia;status;pl;la;ru'];
   for(const t of ['imie','nazwisko']){
-    for(const [v,e] of m[t]){
+    for(const [v,e] of sortRows([...m[t]], 'akty')){
       const f = formOf(t, v, e.n);
-      lines.push([t,v,e.n,f.status,f.pl,f.la,f.ru].map(csvCell).join(';'));
+      lines.push([t,v,e.n,e.occ[0]||'',e.occ.join(' | '),f.status,f.pl,f.la,f.ru].map(csvCell).join(';'));
     }
   }
   download('formy_imion_nazwisk.csv', lines.join('\n'));
@@ -667,6 +683,8 @@ $('#n_q').addEventListener('input', ()=>renderNazwiska(counts()));
 $('#n_st').innerHTML = '<option value="">każdy status</option>' + STATUSES.map(s=>`<option>${s}</option>`).join('');
 $('#n_st').addEventListener('change', ()=>renderNazwiska(counts()));
 $('#n_only').addEventListener('change', ()=>renderNazwiska(counts()));
+$('#i_sort').addEventListener('change', ()=>renderImiona(counts()));
+$('#n_sort').addEventListener('change', ()=>renderNazwiska(counts()));
 
 function formsChange(e){
   const tr=e.target.closest('tr[data-t]'); if(!tr) return;
