@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="pl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Przegląd CH BLIN.txt</title>
+<style>
+:root{--bg:#fbfaf7;--fg:#1d1d1b;--mut:#6b6a64;--card:#fff;--line:#e4e1d8;--acc:#7a4a1e;--warn:#b25d00;--bad:#a1281f;--ok:#2f6b3a}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#1b1a17;--fg:#ece9e1;--mut:#a09d93;--card:#24231f;--line:#3a3833;--acc:#e0a86a;--warn:#f0a350;--bad:#ff8a7e;--ok:#8fd19e}}
+:root[data-theme="dark"]{--bg:#1b1a17;--fg:#ece9e1;--mut:#a09d93;--card:#24231f;--line:#3a3833;--acc:#e0a86a;--warn:#f0a350;--bad:#ff8a7e;--ok:#8fd19e}
+body{margin:0;background:var(--bg);color:var(--fg);font:16px/1.5 system-ui,-apple-system,"Segoe UI",sans-serif}
+main{max-width:860px;margin:0 auto;padding:20px 16px 48px}
+h1{font-size:1.6rem;margin:.2em 0 .3em}
+h2{font-size:1.2rem;margin:1.6em 0 .5em;color:var(--acc)}
+p.lead{color:var(--mut);margin:0 0 1em}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin:14px 0}
+.tile{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:12px}
+.tile b{display:block;font-size:1.5rem}
+.tile span{color:var(--mut);font-size:.85rem}
+table{width:100%;border-collapse:collapse;background:var(--card);border:1px solid var(--line);border-radius:10px;overflow:hidden;font-size:.92rem}
+th,td{text-align:left;padding:8px 10px;border-bottom:1px solid var(--line);vertical-align:top}
+th{background:transparent;color:var(--mut);font-weight:600}
+tr:last-child td{border-bottom:none}
+.tag{display:inline-block;font-size:.75rem;padding:1px 7px;border-radius:99px;border:1px solid currentColor}
+.bad{color:var(--bad)} .warn{color:var(--warn)} .ok{color:var(--ok)}
+code{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:.85em;background:var(--line);padding:0 4px;border-radius:4px}
+.box{background:var(--card);border-left:4px solid var(--acc);border-radius:6px;padding:10px 14px;margin:12px 0}
+ol li,ul li{margin:.3em 0}
+.scroll{overflow-x:auto}
+</style>
+</head>
+<body>
+<main>
+<h1>Przegląd pliku <code>public/CH BLIN.txt</code></h1>
+<p class="lead">Wyniki analizy tylko do odczytu. Plik nie został zmieniony. Numery wierszy odnoszą się do pliku, linia 1 to nagłówek.</p>
+
+<div class="grid">
+  <div class="tile"><b>6089</b><span>wierszy danych</span></div>
+  <div class="tile"><b>27</b><span>kolumn, każdy wiersz ma 27</span></div>
+  <div class="tile"><b class="bad">88</b><span>wierszy to kopia innych (l. 6002–6089 = 5900–5987)</span></div>
+  <div class="tile"><b class="warn">407</b><span>wierszy zawiera „nr karty” (do rozstrzygnięcia)</span></div>
+  <div class="tile"><b class="warn">197</b><span>ID występuje więcej niż raz (749 wierszy)</span></div>
+  <div class="tile"><b>124</b><span>ID z literą, np. <code>…1783.002b</code></span></div>
+</div>
+
+<div class="box">
+<strong>Najważniejsze:</strong> przesunięć liczby kolumn nie ma (każdy wiersz ma 27 pól). Są natomiast trzy poważniejsze problemy: powielony blok na końcu pliku, wiersze „nr karty”, które mogą pochodzić z innej tabeli, oraz powtórzone ID z różnymi osobami.
+</div>
+
+<h2>1. Powielony blok na końcu pliku</h2>
+<p>Wiersze <code>6002–6089</code> są dokładną kopią wierszy <code>5900–5987</code> (przesunięcie 102). Zakres ID: <code>CH.LUB.BLIN.1908.009 … 1908.096</code>. Część z tych 95 identycznych wierszy w pliku to właśnie ta kopia. <strong>Propozycja:</strong> usunąć drugą kopię po akceptacji (zachować pierwszą).</p>
+
+<h2>2. Wiersze „nr karty” (407)</h2>
+<p>W kolumnie uwag (kol. 13) występuje wpis typu <code>nr karty 29</code>. Dotyczy to dużych bloków, np. linie <code>242–293</code>, <code>303–345</code>, <code>353–401</code>, <code>462–564</code>, <code>571–614</code>, <code>630–665</code>, <code>682–721</code>. Układ tych wierszy (nazwisko ojca = nazwisko dziecka, brak wieku i miejscowości, numer aktu zgodny z kartą) wygląda na <strong>indeks osób wg kart</strong>, a nie na akty.</p>
+<p>Przykład linii <code>242–243</code>: wiersz <code>242</code> nie ma ID (<code>1787 | Bucon Katarzyna | nr karty 29</code>), wiersz <code>243</code> ma ID <code>CH.LUB.BLIN.1787.043</code> (<code>Chmiel Marcin</code>) i tę samą kartę 29. Oba są w tym samym bloku, więc ID i nazwiska mogą być z różnych tabel.</p>
+<p>Uwaga: wpis „nr karty” pojawia się też w zwykłym akcie, np. linia <code>101</code> (ID <code>CH.LUB.BLIN.1785.004</code>, pełne dane, „nr karty 10”). Dlatego 407 to liczba wierszy z tym wpisem, a nie potwierdzona liczba wierszy z innej tabeli.</p>
+
+<h2>3. Powtórzone ID z różnymi osobami</h2>
+<table>
+  <thead><tr><th>ID</th><th>Linie</th><th>Problem</th></tr></thead>
+  <tbody>
+    <tr><td><code>CH.LUB.BLIN.1787.012</code></td><td>sprawdzić</td><td>dwie różne osoby: Kozak Franciszka i Sobotka Franciszka; prawdopodobnie zły numer aktu</td></tr>
+    <tr><td><code>CH.LUB.BLIN.1788.031</code></td><td>5 wierszy</td><td>to samo ID, „nr karty 31”, nazwisko ojca = nazwisko dziecka; wygląda na listę z karty, nie na akt</td></tr>
+    <tr><td>197 ID (749 wierszy)</td><td>różne</td><td>część to legalne wpisy dodatkowe (bliźnięta), część to kopie lub błędy numeracji</td></tr>
+  </tbody>
+</table>
+
+<h2>4. Błędy zapisu i pola niekompletne</h2>
+<table>
+  <thead><tr><th>Linia</th><th>Dane</th><th>Problem</th><th>Ocena</th></tr></thead>
+  <tbody>
+    <tr><td>1138</td><td><code>CH.LUB.BLIN.1833.002</code>, <code>osidłowna Agnieszka</code></td><td>nazwisko z małej litery; to prawdopodobnie błąd lub nazwisko żeńskie</td><td class="warn">sprawdzić w skanie</td></tr>
+    <tr><td>6525</td><td>kolumna 6 zawiera <code>`</code></td><td>znak niezwiązany z danymi</td><td class="bad">błąd, do usunięcia</td></tr>
+    <tr><td>6090</td><td>pusty</td><td>pusta linia na końcu</td><td class="ok">bez znaczenia</td></tr>
+    <tr><td>1255</td><td><code>CH.LUB.BLIN.1835.030</code>, tylko imię <code>Mateusz</code>, uwaga „nieczytelne nazwisko”</td><td>brak nazwiska dziecka</td><td class="warn">do uzupełnienia ze skanu</td></tr>
+    <tr><td>2299</td><td><code>CH.LUB.BLIN.1852.009</code>, tylko <code>Józef</code></td><td>brak nazwiska dziecka</td><td class="warn">do uzupełnienia</td></tr>
+    <tr><td>5964–5972</td><td><code>CH.LUB.BLIN.1908.073+</code></td><td>puste poza ID, rokiem i nr</td><td class="warn">do sprawdzenia</td></tr>
+    <tr><td>16 wierszy</td><td>bez ID</td><td>nie wiadomo, czy to akty</td><td class="warn">do sprawdzenia</td></tr>
+    <tr><td>51 wierszy</td><td>ID bez nazwiska dziecka</td><td>część to wpisy z kart</td><td class="warn">do sprawdzenia</td></tr>
+  </tbody>
+</table>
+
+<h2>5. Wiersze z datą w uwagach (88)</h2>
+<p>Od linii <code>985</code> występuje wzorzec: w kol. uwag jest data w formacie <code>1828.12.12 Pt</code>, a wiek ojca i matki jest w osobnych kolumnach (np. linia 2298: wiek 32 i 24). To wygląda na poprawny układ, nie na przesunięcie, więc <strong>nie traktuję tego jako błędu</strong>, tylko jako pole do weryfikacji (data urodzenia/chrztu jest w uwagach, a nie w osobnym polu).</p>
+
+<h2>6. Warianty pisowni tego samego nazwiska</h2>
+<p>W tej samej rodzinie występują różne zapisy: <code>Bucon</code> i <code>Bucoń</code> (linie 101 i 2300), <code>Bigos </code> z końcową spacją (linia 2298). Część może być autentyczna (różne zapisy w księgach), część to literówki. Proponuję nie ujednolicać automatycznie, tylko oznaczyć i decydować ręcznie.</p>
+
+<h2>7. Uwagi w blokach rodzinnych</h2>
+<p>Od linii <code>5894</code> uwagi zawierają nawiasy z notatkami rodzinnymi, np. <code>[ †1984 Blinów ]</code>, <code>[ Janina Kurczak ∞ 1939 ? ]</code>. To nie są dane z aktu, tylko notatki z drzewa. Warto je przenieść do osobnego pola i nie traktować jako uwag do aktu.</p>
+
+<h2>Proponowany następny krok</h2>
+<ol>
+  <li>Usunąć powielony blok <code>6002–6089</code> (po Twojej zgodzie).</li>
+  <li>Rozdzielić plik: osobno akty (ID zgodny, nazwisko dziecka obecne) i osobno wiersze „nr karty”. Nie kasować, tylko przenieść do osobnego pliku.</li>
+  <li>Wypisać raport wierszy do weryfikacji ze skanami (ID z literą, powtórki, puste pola, linie 1138, 1255, 2299, 6525).</li>
+  <li>Potwierdzić, z którego pliku korzystać jako źródła (TXT, <code>chrzty_cleaned.txt</code>, JSON, <code>.db</code>).</li>
+</ol>
+</main>
+</body>
+</html>
