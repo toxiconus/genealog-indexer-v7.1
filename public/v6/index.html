@@ -1,0 +1,2484 @@
+<!doctype html>
+<html lang="pl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Genealog – indeksowanie aktów</title>
+<script src="https://cdn.jsdelivr.net/npm/openseadragon@3.1.0/build/openseadragon/openseadragon.min.js"></script>
+<script src="templates-config.js"></script>
+<style>
+:root{
+  --bg:#f2f3f5; --panel:#ffffff; --panel2:#f6f7f9; --line:#dcdfe5; --text:#1d2129; --muted:#667085;
+  --acc:#2563eb; --acc-soft:#e8f0fe; --ok:#15803d; --ok-soft:#dcfce7; --warn:#b45309; --warn-soft:#fef3c7;
+  --bad:#b42318; --bad-soft:#fde8e6; --new:#667085; --r:8px; --shadow:0 1px 2px rgba(16,24,40,.08);
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#15171b; --panel:#1d2026; --panel2:#252931; --line:#353a44; --text:#e7e9ee; --muted:#9aa3b2;
+    --acc:#6ea8fe; --acc-soft:#1e2d4a; --ok:#4ade80; --ok-soft:#14321f; --warn:#fbbf24; --warn-soft:#3a2d10;
+    --bad:#f87171; --bad-soft:#3b1716; --new:#9aa3b2; --shadow:none;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#15171b; --panel:#1d2026; --panel2:#252931; --line:#353a44; --text:#e7e9ee; --muted:#9aa3b2;
+  --acc:#6ea8fe; --acc-soft:#1e2d4a; --ok:#4ade80; --ok-soft:#14321f; --warn:#fbbf24; --warn-soft:#3a2d10;
+  --bad:#f87171; --bad-soft:#3b1716; --new:#9aa3b2; --shadow:none;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%;background:var(--bg);color:var(--text);font:14px/1.45 system-ui,"Segoe UI",sans-serif;overflow:hidden}
+button,select,input,textarea{font:inherit;color:inherit}
+button{background:var(--panel);border:1px solid var(--line);border-radius:6px;min-height:32px;padding:5px 11px;cursor:pointer;white-space:nowrap}
+button:hover:not(:disabled){border-color:var(--acc)}
+button:disabled{opacity:.45;cursor:default}
+button.primary{background:var(--acc);border-color:var(--acc);color:#fff;font-weight:600}
+button.danger{color:var(--bad)}
+button[aria-pressed="true"],button.on{background:var(--acc-soft);border-color:var(--acc);color:var(--acc);font-weight:600}
+input,select,textarea{background:var(--panel2);border:1px solid var(--line);border-radius:6px;padding:6px 8px;min-height:32px;width:100%}
+input:focus,select:focus,textarea:focus{outline:none;border-color:var(--acc);box-shadow:0 0 0 3px var(--acc-soft)}
+textarea{min-height:58px;resize:vertical}
+:focus-visible{outline:2px solid var(--acc);outline-offset:2px}
+.muted{color:var(--muted);font-size:13px}
+.grow{flex:1}
+.sep{width:1px;align-self:stretch;background:var(--line);margin:4px 2px}
+
+/* ---------- układ ---------- */
+#app{height:100vh;display:grid;grid-template-rows:auto minmax(0,1fr) 6px var(--tableH,26vh);grid-template-columns:var(--thW,92px) minmax(0,1fr) var(--sideW,390px)}
+#app.tablehide{grid-template-rows:auto minmax(0,1fr) 0 0}
+#app.tablehide #resizer,#app.tablehide #tablePanel{display:none}
+#resizer,#tablePanel{grid-column:1/-1}
+#app.nothumbs{grid-template-columns:0 minmax(0,1fr) var(--sideW,390px)}
+#app.nothumbs #thumbs{display:none}
+
+/* pasek główny */
+.top{grid-column:1/-1;display:flex;flex-wrap:wrap;gap:5px;align-items:center;padding:6px 10px;background:var(--panel);border-bottom:1px solid var(--line);box-shadow:var(--shadow);z-index:2}
+.brand{font-weight:800;color:var(--acc);letter-spacing:.2px;margin-right:4px}
+.brand small{display:none;font-size:11px;font-weight:500;color:var(--muted);letter-spacing:0}
+.seg{display:inline-flex;border:1px solid var(--line);border-radius:8px;overflow:hidden}
+.seg button{border:0;border-radius:0;min-height:30px;background:transparent}
+.seg button+button{border-left:1px solid var(--line)}
+.seg button[aria-pressed="true"]{background:var(--acc);color:#fff}
+.seg .n{display:inline-block;min-width:20px;margin-left:5px;padding:0 5px;border-radius:9px;background:var(--panel2);font-size:12px;color:var(--text)}
+.seg button[aria-pressed="true"] .n{background:rgba(255,255,255,.25);color:#fff}
+.grp{display:flex;gap:4px;align-items:center}
+#tplSel{width:auto;min-width:170px}
+#saveState{font-size:13px;color:var(--muted);min-width:170px;text-align:right}
+#saveState.dirty{color:var(--warn)}
+
+/* miniatury */
+#thumbs{overflow-y:auto;overflow-x:hidden;background:var(--panel);border-right:1px solid var(--line);padding:6px;display:flex;flex-direction:column;gap:6px;min-height:0}
+#thumbs .thHead{position:sticky;top:0;z-index:2;display:flex;gap:4px;flex:none;background:var(--panel)}
+#thumbs .thHead button{min-height:24px;padding:1px 4px;font-size:12px;flex:1}
+#thumbs .th img{min-height:20px}
+#thumbs .th.row{display:flex;align-items:center;gap:6px;background:transparent;padding:4px 6px;border-radius:4px;font-size:12.5px;border-width:0 0 0 3px}
+#thumbs .th.row.cur{background:var(--acc-soft)}
+#thumbs .th.row .no{min-width:26px;font-variant-numeric:tabular-nums;color:var(--muted)}
+#thumbs .th.row .nm{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+#thumbs .th.row .cnt{position:static}
+#app.thlist{--thW:170px}
+#side{position:relative;z-index:3;min-width:0}
+#thumbs .th{flex:none;position:relative;border:2px solid transparent;border-radius:6px;cursor:pointer;background:#000;overflow:hidden}
+#thumbs .th.cur{border-color:var(--acc)}
+#thumbs img{display:block;width:100%;height:auto}
+#thumbs .lbl{position:absolute;left:4px;bottom:4px;background:rgba(0,0,0,.72);color:#fff;font-size:12px;padding:0 6px;border-radius:4px}
+#thumbs .cnt.alldone{background:var(--ok)}
+#thumbs .cnt{position:absolute;right:4px;top:4px;background:var(--acc);color:#fff;font-size:11px;padding:0 6px;border-radius:9px}
+#thumbs .empty{color:var(--muted);font-size:11px;padding:6px 2px;text-align:center}
+
+/* środek: skan + tabela */
+#center{min-width:0;min-height:0;display:grid;grid-template-rows:auto minmax(0,1fr);overflow:hidden}
+#viewerBar{display:flex;gap:6px;align-items:center;flex-wrap:wrap;padding:6px 8px;background:var(--panel);border-bottom:1px solid var(--line)}
+#viewerBar label{font-size:13px;color:var(--muted)}
+#viewerBar input[type=range]{width:110px;min-height:auto;padding:0}
+#viewerWrap{position:relative;min-height:0;background:#000}
+#viewer{position:absolute;inset:0}
+.roi-box{position:absolute;border:2px solid var(--acc);background:rgba(37,99,235,.05);pointer-events:none;border-radius:2px}
+.roi-box.ok{border-color:var(--ok);background:rgba(21,128,61,.05)}
+#viewerWrap.rs-out .roi-box{background:transparent}
+#viewerWrap.rs-cur .roi-box:not(.cur):not(.drag){display:none!important}
+#viewerWrap.rs-none .roi-box:not(.drag){display:none!important}
+#viewerWrap.roimode .roi-box{pointer-events:none!important}
+.roi-box.drag{background:rgba(37,99,235,.08)}
+.roi-box.warn{border-color:var(--warn)}
+.roi-box.cur{box-shadow:0 0 0 3px rgba(255,255,255,.7)}
+.roi-box .n{position:absolute;left:-2px;top:-22px;background:var(--acc);color:#fff;font-size:12px;padding:0 6px;border-radius:4px;white-space:nowrap}
+.roi-box.ok .n{background:var(--ok)}
+.roi-box.warn .n{background:var(--warn)}
+#hint{position:absolute;left:12px;bottom:12px;background:rgba(0,0,0,.75);color:#fff;padding:6px 10px;border-radius:6px;font-size:13px;pointer-events:none;display:none}
+#confirmBar{display:none;position:absolute;top:10px;left:50%;transform:translateX(-50%);background:var(--panel);border:1px solid var(--warn);padding:8px 12px;border-radius:8px;gap:8px;align-items:center;z-index:5;box-shadow:var(--shadow)}
+#confirmBar.show{display:flex}
+#resizer{cursor:ns-resize;background:var(--line);touch-action:none}
+#resizer:hover{background:var(--acc)}
+
+/* tabela */
+#tablePanel{min-height:0;display:flex;flex-direction:column;background:var(--panel)}
+.tbHead{display:flex;gap:8px;align-items:center;flex-wrap:wrap;padding:6px 10px;border-bottom:1px solid var(--line)}
+.tbHead strong{font-size:13px}
+#filter{width:220px;min-height:30px}
+.tbBody{flex:1;min-height:0;overflow:auto}
+table{width:100%;border-collapse:collapse;font-size:13.5px}
+th,td{border-bottom:1px solid var(--line);padding:5px 8px;text-align:left;white-space:nowrap;max-width:230px;overflow:hidden;text-overflow:ellipsis}
+th{position:sticky;top:0;background:var(--panel2);font-weight:600;cursor:pointer;user-select:none;z-index:1;color:var(--muted);font-size:12.5px}
+th.sorted::after{content:" ▲";color:var(--acc)}
+th.sorted.desc::after{content:" ▼"}
+tr.flt th{top:31px;cursor:default;padding:3px 4px;background:var(--panel2)}
+tr.flt input{min-height:26px;padding:2px 6px;font-size:12.5px;font-weight:400}
+tbody tr{cursor:pointer}
+tbody tr:hover{background:var(--acc-soft)}
+tbody tr.sel{background:var(--acc-soft);box-shadow:inset 3px 0 0 var(--acc)}
+tbody tr.isCheck td:first-child{box-shadow:inset 3px 0 0 var(--warn)}
+td[data-edit]{cursor:text}
+td.edit{padding:2px}
+td.edit input{min-height:26px;padding:2px 4px;font-size:13px}
+.badge{display:inline-block;padding:0 8px;border-radius:10px;font-size:12px;line-height:20px;font-weight:600}
+.b-new{background:var(--panel2);color:var(--new);border:1px solid var(--line)}
+.b-work{background:var(--acc-soft);color:var(--acc)}
+.b-check{background:var(--warn-soft);color:var(--warn)}
+.b-ok{background:var(--ok-soft);color:var(--ok)}
+.pin{color:var(--acc);font-size:12px}
+
+/* panel boczny: rekord */
+#side{min-height:0;display:flex;flex-direction:column;background:var(--panel);border-left:1px solid var(--line)}
+.sideHead{padding:10px 12px 8px;border-bottom:1px solid var(--line);display:grid;gap:8px}
+.sideHead .row{display:flex;gap:6px;align-items:center;justify-content:space-between;flex-wrap:wrap}
+#recMeta{font-size:12.5px;color:var(--muted)}
+.statusSeg{display:grid;grid-template-columns:repeat(4,1fr);border:1px solid var(--line);border-radius:8px;overflow:hidden}
+.statusSeg button{border:0;border-radius:0;min-height:30px;font-size:12.5px;background:transparent;padding:3px 4px}
+.statusSeg button+button{border-left:1px solid var(--line)}
+.statusSeg button[aria-pressed="true"]{color:#fff;font-weight:600}
+.statusSeg button[data-st="nowy"][aria-pressed="true"]{background:var(--new)}
+.statusSeg button[data-st="w_toku"][aria-pressed="true"]{background:var(--acc)}
+.statusSeg button[data-st="check"][aria-pressed="true"]{background:var(--warn)}
+.statusSeg button[data-st="ok"][aria-pressed="true"]{background:var(--ok)}
+.sideNav{display:flex;gap:6px;flex-wrap:wrap;align-items:center;padding:5px 12px;border-bottom:1px solid var(--line)}
+.sideNav button{min-height:28px;padding:3px 9px;font-size:13px}
+#recForm{flex:1;min-height:0;overflow:auto;padding:6px 12px 12px}
+details.fgrp{border:1px solid var(--line);border-radius:var(--r);margin-bottom:8px;background:var(--panel)}
+details.fgrp>summary{list-style:none;cursor:pointer;padding:7px 10px;font-weight:600;font-size:13px;display:flex;justify-content:space-between;align-items:center;gap:8px;user-select:none}
+details.fgrp>summary::-webkit-details-marker{display:none}
+details.fgrp>summary::before{content:"▸";color:var(--muted);margin-right:4px;transition:transform .15s}
+details.fgrp[open]>summary::before{transform:rotate(90deg)}
+details.fgrp>summary .cnt{font-weight:500;font-size:12px;color:var(--muted)}
+.fgrid{display:grid;grid-template-columns:1fr 1fr;gap:8px 10px;padding:4px 10px 10px}
+.fg{display:flex;flex-direction:column;gap:3px;min-width:0}
+.fg.wide{grid-column:1/-1}
+.fg label{font-size:12px;color:var(--muted)}
+.fg label.req::after{content:" *";color:var(--bad)}
+.fg.filled input,.fg.filled select{border-color:var(--ok)}
+.fg.empty-req input{border-color:var(--warn)}
+.fg.unc input,.fg.unc select,.fg.unc textarea{border-color:var(--warn);background:var(--warn-soft)}
+.fglab{display:flex;align-items:center;gap:6px}
+.fglab .qbtn{min-height:18px;height:18px;width:18px;padding:0;font-size:11px;line-height:16px;border-radius:9px;text-align:center;color:var(--muted);opacity:.45}
+.fglab .qbtn:hover,.fglab .qbtn[aria-pressed="true"]{opacity:1;color:var(--warn)}
+.fglab .qbtn[aria-pressed="true"]{background:var(--warn);border-color:var(--warn);color:#fff}
+.emptyForm{padding:16px 12px;color:var(--muted);font-size:13px;line-height:1.5}
+.sideFoot button{min-height:30px;padding:3px 9px;font-size:13px}
+.sideFoot{display:flex;gap:5px;flex-wrap:wrap;padding:6px 12px;border-top:1px solid var(--line);background:var(--panel2)}
+.sideFoot .grow{flex:1}
+.keys{font-size:11.5px;color:var(--muted);padding:0 12px 6px}
+.keys{display:none}
+@media (min-height:1000px){.keys{display:block}}
+kbd{font:12px ui-monospace,Menlo,Consolas,monospace;background:var(--panel);border:1px solid var(--line);border-bottom-width:2px;border-radius:4px;padding:0 4px}
+
+/* okna dialogów */
+dialog{background:var(--panel);color:var(--text);border:1px solid var(--line);border-radius:12px;max-width:760px;width:92vw;max-height:88vh;padding:0;box-shadow:0 10px 40px rgba(0,0,0,.25)}
+dialog::backdrop{background:rgba(0,0,0,.45)}
+.dlgHead{display:flex;align-items:center;gap:8px;padding:12px 16px;border-bottom:1px solid var(--line)}
+.dlgHead strong{font-size:15px;flex:1}
+.dlgBody{padding:12px 16px;overflow:auto;max-height:calc(88vh - 110px)}
+.dlgFoot{display:flex;gap:6px;justify-content:flex-end;padding:10px 16px;border-top:1px solid var(--line)}
+.dropzone{border:2px dashed var(--line);border-radius:10px;padding:18px;text-align:center;color:var(--muted);background:var(--panel2)}
+.dropzone.over{border-color:var(--acc);color:var(--acc)}
+.dlgBody table{font-size:13px}
+.dlgBody table th{position:static;cursor:default}
+.dlgBody table td{white-space:normal}
+.dlgBody select{min-width:140px}
+
+#toast{position:fixed;right:404px;bottom:14px;pointer-events:none;display:flex;flex-direction:column;gap:6px;z-index:9}
+#toast div{background:var(--panel);border:1px solid var(--line);border-left:4px solid var(--acc);padding:6px 10px;font-size:13px;border-radius:6px;max-width:340px;box-shadow:var(--shadow)}
+
+/* postęp, wycinek aktu, narzędzia zbiorcze */
+.prog{display:flex;align-items:center;gap:6px;min-width:110px}
+#btnTheme,#btnHelp{padding-left:8px;padding-right:8px;min-width:0}
+.top button{white-space:nowrap}
+#saveState{white-space:nowrap;max-width:120px;overflow:hidden;text-overflow:ellipsis;font-size:12px}
+.prog .bar{min-width:50px}
+.prog span{font-size:12px}
+.prog .bar{flex:1;height:6px;border-radius:3px;background:var(--panel2);border:1px solid var(--line);overflow:hidden;min-width:70px}
+.prog .bar i{display:block;height:100%;width:0;background:var(--ok);transition:width .3s}
+.prog span{font-size:12.5px;color:var(--muted);white-space:nowrap}
+.bulk{display:none;gap:6px;align-items:center}
+.bulk.show{display:flex}
+.bulk button{min-height:26px;padding:2px 9px;font-size:12.5px}
+.warnico{color:var(--warn);margin-left:4px;cursor:help}
+tbody tr.alt:not(.sel):not(:hover){background:color-mix(in srgb,var(--panel2) 60%,transparent)}
+tbody tr.r{height:34px}
+tbody tr.r td{height:34px;box-sizing:border-box;line-height:20px;padding-top:6px;padding-bottom:6px}
+tbody td{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:240px}
+tbody tr.sp td{padding:0;border:0}
+tbody tr.r td input[type=checkbox]{min-height:0;width:16px;height:16px;padding:0;margin:0;display:block}
+tbody tr.r .badge{display:inline-block;line-height:18px;padding-top:0;padding-bottom:0}
+th{box-shadow:0 1px 0 var(--line)}
+td,th{padding-top:6px;padding-bottom:6px}
+thead th{padding-top:4px;padding-bottom:4px}
+.flt input{min-height:24px;padding:2px 6px;font-size:12px}
+.chkRow{display:flex;gap:6px;align-items:center;font-size:13px;color:var(--muted)}
+.chkRow input{width:auto;min-height:auto}
+#fndPreview ul{margin:6px 0 0 18px}
+.helpGrid{display:grid;grid-template-columns:auto 1fr;gap:8px 16px;font-size:13.5px}
+
+/* filtry obrazu */
+#imgPanel{position:absolute;top:8px;right:8px;width:290px;max-width:calc(100% - 16px);background:var(--panel);border:1px solid var(--line);border-radius:10px;box-shadow:var(--shadow);padding:10px 12px;z-index:6;display:flex;flex-direction:column;gap:8px}
+#imgPanel[hidden]{display:none}
+.fxHead{display:flex;justify-content:space-between;align-items:center}
+.fxHead button{min-height:24px;padding:0 8px}
+.fxPresets{display:flex;flex-wrap:wrap;gap:5px}
+.fxPresets button{min-height:26px;padding:2px 9px;font-size:12.5px}
+.fxPresets button.on{background:var(--acc);color:#fff;border-color:var(--acc)}
+.fxRow{display:grid;grid-template-columns:96px 1fr 38px;gap:6px;align-items:center;font-size:12.5px;color:var(--muted)}
+.fxRow input{min-height:auto;padding:0}
+.fxRow output{text-align:right;font-variant-numeric:tabular-nums;color:var(--text)}
+.fxChk{display:flex;gap:12px;flex-wrap:wrap;font-size:13px}
+.fxChk label{display:flex;gap:5px;align-items:center}
+.fxChk input{width:auto;min-height:auto}
+.fxFoot{display:flex;gap:8px;align-items:center}
+.fxFoot button{min-height:26px;padding:2px 9px;font-size:12.5px;flex:none}
+.fxFoot .muted{font-size:11px;line-height:1.2}
+#ruler{position:absolute;left:0;right:0;height:34px;background:rgba(250,204,21,.16);border-top:1px solid rgba(250,204,21,.7);border-bottom:1px solid rgba(250,204,21,.7);pointer-events:none;display:none;z-index:4}
+#ruler.on{display:block}
+#btnImgFx.active{background:var(--acc-soft);border-color:var(--acc);color:var(--acc)}
+
+/* podpowiedzi z liczbą wystąpień, kontrola, przypinanie */
+#sug{position:fixed;z-index:50;background:var(--panel);border:1px solid var(--acc);border-radius:8px;box-shadow:var(--shadow);overflow:auto;max-height:260px;display:none}
+#sug .sugi{display:flex;justify-content:space-between;gap:10px;padding:6px 10px;cursor:pointer;font-size:14px}
+#sug .sugi b{color:var(--muted);font-weight:600;font-variant-numeric:tabular-nums;font-size:12.5px}
+#sug .sugi.on,#sug .sugi:hover{background:var(--acc-soft)}
+#sug .sugi.fz{color:var(--warn)}
+#sug .sugi.hist{color:var(--acc);font-weight:600}
+#sug .sugi.hist small{font-weight:400;color:var(--muted)}
+#sug .sugi.fz b{color:var(--warn)}
+#sug .sugh{padding:4px 10px;font-size:11px;color:var(--muted);border-top:1px solid var(--line);background:var(--panel2)}
+.vcnt{margin-left:auto;font-size:11.5px;color:var(--muted);font-variant-numeric:tabular-nums;white-space:nowrap}
+.vcnt.age[data-b]{cursor:pointer;color:var(--acc);font-weight:600;text-decoration:underline dotted}
+.vcnt.new{color:var(--warn)}
+.fglab .pbtn{min-height:18px;height:18px;width:18px;padding:0;font-size:11px;line-height:16px;border-radius:9px;color:var(--muted);opacity:.3}
+.fglab .pbtn:hover{opacity:1}
+.fglab .pbtn[aria-pressed="true"]{opacity:1;background:var(--acc);border-color:var(--acc);color:#fff}
+#issueBar{display:flex;flex-wrap:wrap;gap:5px;padding:0 12px}
+#issueBar:not(:empty){padding:6px 12px;border-bottom:1px solid var(--line);background:color-mix(in srgb,var(--warn) 9%,var(--panel))}
+#issueBar button{min-height:24px;padding:1px 9px;font-size:12.5px;border-color:var(--warn);color:var(--warn);background:transparent;border-radius:12px;text-align:left}
+#issueBar button.err{border-color:var(--bad,#dc2626);color:var(--bad,#dc2626)}
+.chkList{display:flex;flex-direction:column;gap:2px;font-size:13.5px}
+.chkList button{text-align:left;border:0;background:transparent;padding:4px 6px;min-height:0;border-radius:4px;display:flex;gap:10px}
+.chkList button:hover{background:var(--acc-soft)}
+.chkList .k{color:var(--muted);min-width:70px;font-variant-numeric:tabular-nums}
+.chkSum{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:10px}
+.chkSum span{background:var(--panel2);border:1px solid var(--line);border-radius:12px;padding:2px 10px;font-size:12.5px}
+#sess{font-size:12px;color:var(--muted);white-space:nowrap}
+
+/* podstrona Narzędzia */
+#tools{position:fixed;left:0;right:0;bottom:0;top:var(--topH,56px);z-index:30;background:var(--bg);display:flex;flex-direction:column}
+#tools[hidden]{display:none}
+.tlHead{display:flex;gap:12px;align-items:center;padding:8px 14px;border-bottom:1px solid var(--line);background:var(--panel);flex-wrap:wrap}
+#tlNav{display:flex;gap:4px;flex-wrap:wrap}
+#tlNav button{border-radius:16px;min-height:30px}
+#tlNav button[aria-selected="true"]{background:var(--acc);border-color:var(--acc);color:#fff}
+.tlBody{flex:1;min-height:0;overflow:auto;padding:16px 18px 40px}
+.tlWrap{max-width:1000px;margin:0 auto;display:flex;flex-direction:column;gap:18px}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:14px 16px;box-shadow:var(--shadow)}
+.card h3{font-size:15px;margin:0 0 10px}
+.kpis{display:flex;gap:10px;flex-wrap:wrap}
+.kpi{background:var(--panel2);border:1px solid var(--line);border-radius:8px;padding:8px 14px;min-width:110px}
+.kpi b{display:block;font-size:22px;font-variant-numeric:tabular-nums}
+.kpi span{font-size:12px;color:var(--muted)}
+.brow{display:grid;grid-template-columns:150px 1fr 90px;gap:10px;align-items:center;font-size:13px;padding:2px 0}
+.brow .bar{height:10px;background:var(--panel2);border:1px solid var(--line);border-radius:5px;overflow:hidden}
+.brow .bar i{display:block;height:100%;background:var(--acc)}
+.brow .bar i.ok{background:var(--ok)}
+.brow .bar i.warn{background:var(--warn)}
+.brow span:last-child{text-align:right;color:var(--muted);font-variant-numeric:tabular-nums}
+.tblS{width:100%;border-collapse:collapse;font-size:13.5px}
+.tblS td,.tblS th{padding:4px 8px;border-bottom:1px solid var(--line);text-align:left}
+.tblS td.n{text-align:right;font-variant-numeric:tabular-nums;color:var(--muted)}
+.tblS tr:hover{background:var(--acc-soft)}
+.tlRow{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.tlRow input[type=text],.tlRow select{width:auto;min-width:150px}
+.scroll300{max-height:340px;overflow:auto;border:1px solid var(--line);border-radius:8px}
+.pairs{display:flex;flex-direction:column;gap:3px;font-size:13.5px;margin-top:8px}
+.pairs button{text-align:left;min-height:0;padding:3px 8px;border-radius:6px}
+body.compact .fg input,body.compact .fg select{min-height:28px;padding-top:3px;padding-bottom:3px}
+body.compact .fgrid{gap:4px 8px}
+#side{zoom:var(--sz,1)}
+
+/* uchwyt szerokości formularza */
+#sideResizer{position:absolute;left:-3px;top:0;bottom:0;width:7px;cursor:ew-resize;z-index:5;touch-action:none}
+#sideResizer:hover,#sideResizer.drag{background:var(--acc);opacity:.5}
+/* tabela: przypięte kolumny */
+#recTable th:nth-child(-n+3),#recTable td:nth-child(-n+3){position:sticky;background:var(--panel)}
+#recTable th:nth-child(1),#recTable td:nth-child(1){left:0}
+#recTable th:nth-child(2),#recTable td:nth-child(2){left:30px}
+#recTable th:nth-child(3),#recTable td:nth-child(3){left:88px;box-shadow:1px 0 0 var(--line)}
+#recTable th:nth-child(-n+3){z-index:4;background:var(--panel2)}
+#recTable td:nth-child(-n+3){z-index:1}
+#recTable tbody tr.alt:not(.sel):not(:hover) td:nth-child(-n+3){background:var(--panel2)}
+#recTable tbody tr.sel td:nth-child(-n+3),#recTable tbody tr:hover td:nth-child(-n+3){background:color-mix(in srgb,var(--acc) 14%,var(--panel))}
+/* kolumny */
+#colMenu,#moreMenu{position:fixed;z-index:40;background:var(--panel);border:1px solid var(--line);border-radius:10px;box-shadow:var(--shadow);padding:8px;min-width:210px;max-height:70vh;overflow:auto}
+#colMenu[hidden],#moreMenu[hidden]{display:none}
+#colMenu label{display:flex;gap:8px;align-items:center;padding:3px 6px;font-size:13.5px;border-radius:4px;cursor:pointer}
+#colMenu label:hover{background:var(--acc-soft)}
+#colMenu input{width:auto;min-height:auto}
+#moreMenu button{display:block;width:100%;text-align:left;border:0;background:transparent;min-height:32px}
+#moreMenu button:hover{background:var(--acc-soft)}
+/* formularz: tylko wypełnione, podświetlenie problemów */
+#recForm.onlyfilled .fg:not(.filled):not(.empty-req){display:none}
+#recForm.onlyfilled details.fgrp:not(:has(.fg.filled,.fg.empty-req)){display:none}
+.fg.bad input,.fg.bad select{border-color:var(--bad,#dc2626);box-shadow:0 0 0 2px color-mix(in srgb,var(--bad,#dc2626) 22%,transparent)}
+.fg.warnf input,.fg.warnf select{border-color:var(--warn);box-shadow:0 0 0 2px color-mix(in srgb,var(--warn) 22%,transparent)}
+.sideNav .ic{min-width:30px;padding:3px 7px}
+.sideNav .ic[aria-pressed="true"]{background:var(--acc-soft);border-color:var(--acc);color:var(--acc)}
+
+/* prostowanie kartki (perspektywa i zagięcie) */
+#warpSvg{position:absolute;inset:0;width:100%;height:100%;z-index:5;pointer-events:none;overflow:visible}
+#warpSvg[hidden]{display:none}
+#warpSvg path{fill:none;stroke:#f59e0b;stroke-width:2;vector-effect:non-scaling-stroke}
+#warpSvg .fill{fill:rgba(245,158,11,.08);stroke:none}
+#warpSvg circle{pointer-events:all;cursor:move;fill:#fff;stroke:#f59e0b;stroke-width:2.5}
+#warpSvg circle.c{r:8;fill:#f59e0b;stroke:#fff}
+#warpSvg circle.m{r:6}
+#warpBar{position:absolute;left:8px;right:8px;bottom:8px;z-index:6;background:var(--panel);border:1px solid var(--line);border-radius:10px;box-shadow:var(--shadow);padding:8px 10px;display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+#warpBar[hidden]{display:none}
+#warpBar #warpMsg{flex:1 1 260px;font-size:13px;color:var(--muted)}
+#warpBar button{min-height:30px}
+
+/* swobodny obrót */
+.angbox{display:inline-flex;align-items:center;gap:2px}
+.angbox button{min-width:30px;padding:3px 6px}
+.angbox input{width:68px;text-align:center;padding:4px 2px;min-height:32px}
+
+/* uchwyty ramki */
+.roi-box.cur{cursor:move}
+.roi-box .hd{position:absolute;width:12px;height:12px;background:#fff;border:2px solid var(--acc);border-radius:3px;box-sizing:border-box;pointer-events:auto}
+#viewerWrap.roimode .roi-box .hd{display:none}
+.hd-nw{left:-6px;top:-6px;cursor:nwse-resize}.hd-n{left:calc(50% - 6px);top:-6px;cursor:ns-resize}.hd-ne{right:-6px;top:-6px;cursor:nesw-resize}
+.hd-e{right:-6px;top:calc(50% - 6px);cursor:ew-resize}.hd-se{right:-6px;bottom:-6px;cursor:nwse-resize}.hd-s{left:calc(50% - 6px);bottom:-6px;cursor:ns-resize}
+.hd-sw{left:-6px;bottom:-6px;cursor:nesw-resize}.hd-w{left:-6px;top:calc(50% - 6px);cursor:ew-resize}
+.fxRow.ang{grid-template-columns:96px 1fr 44px}
+.fxAng{display:flex;gap:6px;flex-wrap:wrap}
+.fxAng button{min-height:26px;padding:2px 9px;font-size:12.5px}
+
+/* małe ekrany */
+@media (max-width:1100px){
+  #app,#app.nothumbs{grid-template-columns:0 minmax(0,1fr) var(--sideW,340px)}
+  #app #thumbs{display:none}
+  .fgrid{grid-template-columns:1fr}
+}
+@media (max-width:820px){
+  /* wąski ekran: skan u góry (stała wysokość), formularz pod nim przewija się osobno, lista rekordów jako szuflada */
+  html,body{height:100%;overflow:hidden}
+  #app,#app.nothumbs,#app.tablehide{height:100vh;height:100dvh;grid-template-columns:minmax(0,1fr);grid-template-rows:auto auto var(--viewH,34dvh) minmax(0,1fr)}
+  #center{display:contents}
+  #resizer{display:none}
+  .top{flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none}
+  .top>*,.top .grp{flex:none}
+  .top .brand small,.prog{display:none}
+  #viewerBar{flex-wrap:nowrap;overflow-x:auto;row-gap:4px;padding:4px 8px}
+  #viewerBar>*{flex:none}
+  #viewerBar .sep{display:none}
+  #app.bigview{--viewH:58dvh}
+  #viewerWrap,#side{min-width:0}
+  #side{border-left:0;border-top:2px solid var(--acc);min-height:0;overflow:hidden}
+  #recForm{overflow:auto}
+  #tablePanel{grid-column:auto;position:fixed;left:0;right:0;bottom:0;top:12dvh;z-index:20;box-shadow:0 -8px 30px rgba(0,0,0,.35);border-top:2px solid var(--acc);transform:translateY(105%);transition:transform .2s;max-height:none}
+  #app.listopen #tablePanel{transform:none}
+  .tbBody{overflow:auto;flex:1;max-height:none}
+  #toast{right:14px;left:14px;bottom:70px}
+  #toast div{max-width:none}
+  #saveState{min-width:0}
+  .narrowOnly{display:inline-flex!important}
+  #btnTable,#btnThumbs{display:none}
+  #app.tablehide #tablePanel{display:flex}
+}
+.narrowOnly{display:none}
+#btnListClose{display:none}
+@media (max-width:820px){#btnListClose{display:inline-flex}}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+  <filter id="fxSharp" color-interpolation-filters="sRGB"><feConvolveMatrix id="fxConv" order="3" kernelMatrix="0 0 0 0 1 0 0 0 0" preserveAlpha="true"/></filter>
+  <filter id="fxThresh" color-interpolation-filters="sRGB"><feColorMatrix type="saturate" values="0"/><feComponentTransfer id="fxTT"><feFuncR type="linear" slope="1" intercept="0"/><feFuncG type="linear" slope="1" intercept="0"/><feFuncB type="linear" slope="1" intercept="0"/></feComponentTransfer></filter>
+</svg>
+<div id="app">
+
+  <header class="top">
+    <div class="brand">Genealog<small>indeksowanie aktów</small></div>
+    <select id="tplSel" aria-label="Rodzaj aktu"></select>
+    <div class="seg" role="tablist" aria-label="Widok rekordów">
+      <button id="tabWork" role="tab" aria-pressed="true" title="Wszystkie rekordy oprócz zweryfikowanych">Praca <span class="n" id="nWork">0</span></button>
+      <button id="tabCheck" role="tab" aria-pressed="false" title="Tylko do sprawdzenia i z niepewnymi polami">Do sprawdzenia <span class="n" id="nCheck">0</span></button>
+      <button id="tabAll" role="tab" aria-pressed="false" title="Wszystkie rekordy">Wszystkie <span class="n" id="nAll">0</span></button>
+    </div>
+    <div class="prog" id="prog" title="Gotowe rekordy w tym rodzaju aktu"><div class="bar"><i id="progBar"></i></div><span id="progTxt"></span></div>
+    <span id="sess" title="Gotowe w tej sesji i tempo"></span>
+    <div class="grow"></div>
+    <div class="grp">
+      <button id="btnFolder" title="Wczytaj cały folder ze skanami">Skany</button>
+      <button id="btnFiles" title="Dodaj pojedyncze obrazy">Obrazy</button>
+    </div>
+    <span class="sep"></span>
+    <div class="grp">
+      <button id="btnImport" title="Import CSV, TSV, TXT lub JSON">Import</button>
+      <button id="btnExport" title="Eksport CSV w kolejności szablonu">Eksport</button>
+      <button id="btnTools" title="Statystyki, słownik nazwisk, skróty, kopia zapasowa, ustawienia">Narzędzia</button>
+    </div>
+    <span class="sep"></span>
+    <button id="btnTable" aria-pressed="true" title="Pokaż lub ukryj listę rekordów na dole">Lista</button>
+    <button id="btnThumbs" aria-pressed="true" title="Pokaż lub ukryj miniatury stron">Strony</button>
+    <button id="btnMore" aria-expanded="false" title="Więcej: duplikaty, motyw, skróty">Więcej ▾</button>
+    <span id="saveState" aria-live="polite"></span>
+  </header>
+
+  <aside id="thumbs" aria-label="Miniatury stron"><div class="empty">Dodaj skany („Folder skanów” albo „Obrazy”) lub przeciągnij pliki na okno.</div></aside>
+
+  <main id="center">
+    <div id="viewerBar">
+      <button id="prevImg" title="Poprzednia strona (←)" aria-label="Poprzednia strona">◀</button>
+      <button id="nextImg" title="Następna strona (→)" aria-label="Następna strona">▶</button>
+      <span id="pageInfo" class="muted" style="min-width:110px"></span>
+      <span class="sep"></span>
+      <button id="btnWarp" aria-pressed="false" title="Wyprostuj kartkę ze zdjęcia: perspektywa i zagięcie (rogi i punkty na krawędziach)">Kartka</button>
+      <button id="btnRoi" aria-pressed="false" title="Przeciągnij prostokąt wokół aktu (klawisz A)">Zaznacz akt</button>
+      <button id="btnRoiSticky" aria-pressed="false" title="Ciągłe zaznaczanie: tryb zaznaczania zostaje włączony po każdym akcie (Esc kończy)">Ciągłe</button>
+      <button id="btnRoiDel" title="Usuń ramkę bieżącego aktu (dane zostają)" disabled>Usuń ramkę</button>
+      <button id="btnRoiRedo" title="Narysuj ramkę bieżącego aktu od nowa" disabled>Przerysuj</button>
+      <button id="btnRoiShow" title="Ramki aktów na skanie: wszystkie / kontury / tylko bieżąca / ukryte (klawisz H)">Ramki: wszystkie</button>
+      <button id="btnFit" title="Dopasuj stronę do okna">Dopasuj</button>
+      <span class="angbox"><button id="angL" title="Obróć w lewo o 0,5° (klawisz [ ; z Shift 5°)">⟲</button><input id="angNum" type="number" step="0.1" value="0" title="Kąt obrotu w stopniach (dowolny)" aria-label="Kąt obrotu"><button id="angR" title="Obróć w prawo o 0,5° (klawisz ] ; z Shift 5°)">⟳</button></span>
+      <button id="btnRot" title="Obróć o 90°">90°</button>
+      <button id="btnList" class="narrowOnly" title="Lista rekordów">Lista</button>
+      <button id="btnBig" class="narrowOnly" aria-pressed="false" title="Powiększ lub zmniejsz skan">Skan ⤢</button>
+      <span class="sep"></span>
+      <button id="btnImgFx" aria-pressed="false" aria-expanded="false" title="Filtry obrazu: kontrast, jasność, szarość, negatyw, wyostrzanie, próg">Obraz ▾</button>
+    </div>
+    <div id="viewerWrap">
+      <div id="viewer" aria-label="Skan strony"></div>
+      <div id="ruler" aria-hidden="true"></div>
+      <svg id="warpSvg" hidden></svg>
+      <div id="warpBar" hidden>
+        <span id="warpMsg">Ustaw 4 rogi kartki, a punkty na krawędziach na linię brzegu (górną i dolną linię tekstu lub krawędź papieru).</span>
+        <label class="chkRow" title="Zdjęcie rozkładówki: dwie kartki obok siebie. Wynik to obie strony wyprostowane i ustawione obok siebie."><input type="checkbox" id="warpSpread"> rozkładówka (2 strony)</label>
+        <button id="warpApply" class="primary">Wyprostuj</button>
+        <button id="warpAuto" title="Znajdź brzegi papieru automatycznie">Auto</button>
+        <button id="warpReset">Ułóż od nowa</button>
+        <button id="warpRemove">Usuń prostowanie</button>
+        <button id="warpCancel">Anuluj</button>
+      </div>
+      <div id="imgPanel" role="dialog" aria-label="Filtry obrazu" hidden>
+        <div class="fxHead"><strong>Czytelność obrazu</strong><button id="fxClose" aria-label="Zamknij">✕</button></div>
+        <div class="fxPresets" id="fxPresets"></div>
+        <div class="fxRow ang"><label for="fxAng">Prostowanie strony</label><input id="fxAng" type="range" min="-45" max="45" step="0.1" value="0"><output id="oAng">0.0°</output></div>
+        <div class="fxAng"><button id="angAuto" title="Wykryj przechylenie linii tekstu i obróć stronę, by były poziome">Wyprostuj automatycznie</button><button id="angZero">0°</button></div>
+        <div class="fxRow"><label for="fxBri">Jasność</label><input id="fxBri" type="range" min="50" max="200" step="5"><output id="oBri"></output></div>
+        <div class="fxRow"><label for="fxCon">Kontrast</label><input id="fxCon" type="range" min="50" max="300" step="5"><output id="oCon"></output></div>
+        <div class="fxRow"><label for="fxShp">Wyostrzanie</label><input id="fxShp" type="range" min="0" max="3" step="0.25"><output id="oShp"></output></div>
+        <div class="fxRow"><label for="fxThr">Próg czerni i bieli</label><input id="fxThr" type="range" min="0" max="90" step="5"><output id="oThr"></output></div>
+        <div class="fxChk"><label><input type="checkbox" id="fxGray"> szarość</label><label><input type="checkbox" id="fxInv"> negatyw</label><label><input type="checkbox" id="fxRuler"> linijka czytania</label></div>
+        <div class="fxFoot"><button id="fxReset">Przywróć</button><span class="muted">Dotyczy tylko podglądu, plik skanu się nie zmienia.</span></div>
+      </div>
+      <div id="hint">Przeciągnij prostokąt wokół aktu. Esc = wyjście z trybu. Poprzednie ramki: klawisz H.</div>
+      <div id="confirmBar" role="alertdialog" aria-live="assertive">
+        <span id="confirmText"></span>
+        <button id="confirmYes" class="primary">Tak</button>
+        <button id="confirmNo">Nie</button>
+      </div>
+    </div>
+  </main>
+
+  <aside id="side" aria-label="Rekord">
+    <div id="sideResizer" role="separator" aria-orientation="vertical" title="Przeciągnij, by zmienić szerokość formularza (dwuklik: szeroki / zwykły)"></div>
+    <div class="sideHead">
+      <div class="row">
+        <strong id="recTitle">Brak wybranego rekordu</strong>
+        <span id="recMeta"></span>
+      </div>
+      <div class="statusSeg" id="statusSeg" role="group" aria-label="Status rekordu">
+        <button data-st="nowy" aria-pressed="false">Nowy</button>
+        <button data-st="w_toku" aria-pressed="false">W toku</button>
+        <button data-st="check" aria-pressed="false">Sprawdzić</button>
+        <button data-st="ok" aria-pressed="false">Gotowe</button>
+      </div>
+    </div>
+    <div id="issueBar" aria-live="polite"></div>
+    <div class="sideNav">
+      <button id="btnNew" class="primary" title="Nowy rekord (Alt+N)">+ Nowy</button>
+      <button id="btnPrevRec" title="Poprzedni rekord (↑)">↑</button>
+      <button id="btnNextRec" title="Następny rekord (↓)">↓</button>
+      <button id="btnNextUnread" title="Następny rekord, który nie jest gotowy">Do sprawdzenia →</button>
+      <button id="btnGroups" class="ic" title="Zwiń lub rozwiń wszystkie grupy pól">⇕</button>
+      <button id="btnFilled" class="ic" aria-pressed="false" title="Pokaż tylko wymagane i wypełnione pola">Skrót</button>
+      <label class="chkRow" title="Nowy akt dostaje rok i kolejny numer po najwyższym dotychczasowym"><input type="checkbox" id="chkSuggest"> nr auto</label>
+    </div>
+    <input id="parentsQuick" placeholder="Rodzice: Joannes i Marianna Szopa ⏎" title="Wpisz oboje rodziców jednym ciągiem, np. „Joannes Szopa et Marianna Kowalska”. Gdy jest jedno nazwisko na końcu, trafia do ojca." autocomplete="off" style="width:calc(100% - 24px);margin:4px 12px;padding:5px 8px;border:1px solid var(--line,#d8dce3);border-radius:6px;font:inherit;background:var(--bg,#fff);color:inherit">
+    <form id="recForm" autocomplete="off"></form>
+    <div class="keys"><kbd>Enter</kbd> następne pole · <kbd>Ctrl</kbd>+<kbd>Enter</kbd> zapisz i dalej · <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>Enter</kbd> gotowe i dalej · <kbd>Ctrl</kbd>+<kbd>D</kbd> wartość z poprzedniego aktu</div>
+    <footer class="sideFoot">
+      <button id="btnUndo" title="Cofnij ostatnią zmianę (Ctrl+Z)">Cofnij</button>
+      <button id="btnCopyPrev" title="Skopiuj dane rodziców i chrzestnych z poprzedniego aktu">Rodzice z poprzedniego</button>
+      <span class="grow"></span>
+      <button id="btnDelete" class="danger" title="Usuń ten rekord">Usuń</button>
+      <button id="btnSave" title="Zapisz (Ctrl+S)">Zapisz<span id="dirtyCnt"></span></button>
+      <button id="btnFinish" class="primary" title="Ustaw status Gotowe i przejdź do następnego (Ctrl+Shift+Enter)">Gotowe i następny →</button>
+    </footer>
+  </aside>
+
+    <div id="resizer" role="separator" aria-orientation="horizontal" title="Przeciągnij, by zmienić wysokość tabeli"></div>
+    <section id="tablePanel" aria-label="Lista rekordów">
+      <div class="tbHead">
+        <button id="btnListClose">✕ Zamknij listę</button>
+        <strong>Rekordy</strong>
+        <span id="recCount" class="muted"></span>
+        <input id="filter" placeholder="Szukaj we wszystkich polach…" aria-label="Szukaj w rekordach">
+        <span class="grow"></span>
+        <span class="bulk" id="bulk"><span class="muted">Zbiorczo:</span><button data-bulk="w_toku">W toku</button><button data-bulk="check">Sprawdzić</button><button data-bulk="ok">Gotowe</button></span>
+        <button id="btnCols" title="Wybierz kolumny tabeli">Kolumny</button>
+        <button id="btnCheck" title="Kontrola: przeskoki numeracji, dziwne wartości, brakujące pola">Kontrola</button>
+        <button id="btnFind" title="Znajdź i zamień w jednym polu w wielu rekordach">Znajdź i zamień</button>
+        <button id="btnDelChecked" class="danger" disabled>Usuń zaznaczone</button>
+      </div>
+      <div class="tbBody" id="recTable"></div>
+    </section>
+
+</div>
+
+<input type="file" id="fileInput" multiple accept="image/*" style="display:none">
+<input type="file" id="folderInput" multiple accept="image/*" webkitdirectory style="display:none">
+<input type="file" id="importInput" multiple accept=".csv,.tsv,.txt,.json" style="display:none">
+
+<dialog id="dlgImport" aria-labelledby="impTitle">
+  <div class="dlgHead"><strong id="impTitle">Import danych</strong><button data-dlg-close="dlgImport">Zamknij</button></div>
+  <div class="dlgBody">
+    <div class="dropzone" id="dropImp">Przeciągnij CSV, TSV, TXT lub JSON tutaj albo <button id="btnPickImp">wybierz pliki</button></div>
+    <div id="impPreview" style="margin-top:12px"></div>
+    <div id="batches" style="margin-top:14px"></div>
+  </div>
+</dialog>
+
+<dialog id="dlgDup" aria-labelledby="dupTitle">
+  <div class="dlgHead"><strong id="dupTitle">Możliwe duplikaty</strong><button data-dlg-close="dlgDup">Zamknij</button></div>
+  <div class="dlgBody" id="dupBody"></div>
+</dialog>
+
+<dialog id="dlgFind" aria-labelledby="findTitle">
+  <div class="dlgHead"><strong id="findTitle">Znajdź i zamień</strong><button data-dlg-close="dlgFind">Zamknij</button></div>
+  <div class="dlgBody">
+    <p class="muted" style="margin-bottom:10px">Poprawia pisownię w jednym polu w wielu rekordach naraz. Całą zamianę cofniesz jednym Ctrl+Z.</p>
+    <div class="fgrid" style="padding:0">
+      <div class="fg wide"><label for="fndField">Pole</label><select id="fndField"></select></div>
+      <div class="fg"><label for="fndFind">Znajdź</label><input id="fndFind" autocomplete="off"></div>
+      <div class="fg"><label for="fndRepl">Zamień na</label><input id="fndRepl" autocomplete="off"></div>
+      <label class="chkRow"><input type="checkbox" id="fndWhole" checked> całe pole (nie fragment)</label>
+      <label class="chkRow"><input type="checkbox" id="fndCase"> uwzględnij wielkość liter</label>
+      <label class="chkRow wide" style="grid-column:1/-1"><input type="checkbox" id="fndView"> tylko rekordy z bieżącego widoku i filtrów</label>
+    </div>
+    <div id="fndPreview" class="muted" style="margin-top:12px"></div>
+  </div>
+  <div class="dlgFoot"><button id="fndApply" class="primary" disabled>Zamień</button></div>
+</dialog>
+
+<dialog id="dlgHelp" aria-labelledby="helpTitle">
+  <div class="dlgHead"><strong id="helpTitle">Skróty klawiszowe</strong><button data-dlg-close="dlgHelp">Zamknij</button></div>
+  <div class="dlgBody">
+    <div class="helpGrid">
+      <span><kbd>Enter</kbd></span><span>następne pole (Shift+Enter: poprzednie); w ostatnim polu zapisuje i przechodzi do następnego aktu</span>
+      <span><kbd>Ctrl</kbd>+<kbd>Enter</kbd></span><span>zapisz i przejdź do następnego rekordu</span>
+      <span><kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>Enter</kbd></span><span>ustaw „Gotowe” i przejdź do następnego</span>
+      <span><kbd>Ctrl</kbd>+<kbd>D</kbd></span><span>w polu: wpisz wartość z poprzedniego aktu (jak w arkuszu)</span>
+      <span><kbd>Ctrl</kbd>+<kbd>S</kbd></span><span>zapisz</span>
+      <span><kbd>Ctrl</kbd>+<kbd>Z</kbd></span><span>cofnij ostatnią zmianę (zamiana zbiorcza cofa się razem)</span>
+      <span><kbd>Alt</kbd>+<kbd>N</kbd></span><span>nowy rekord</span>
+      <span><kbd>[</kbd> <kbd>]</kbd></span><span>obrót skanu o 0,5° (z Shift 5°); dowolny kąt wpiszesz też w polu obok strzałek obrotu</span>
+      <span><kbd>H</kbd></span><span>ramki aktów: wszystkie / kontury / bieżąca / ukryte</span>
+      <span><kbd>R</kbd> / <kbd>0</kbd></span><span>skok do zaznaczenia aktu / cała strona (poza polami)</span>
+      <span><kbd>A</kbd></span><span>tryb zaznaczania aktu na skanie (jedno zaznaczenie, potem wraca przesuwanie)</span>
+      <span><kbd>←</kbd> <kbd>→</kbd></span><span>poprzednia i następna strona (poza polami)</span>
+      <span><kbd>↑</kbd> <kbd>↓</kbd></span><span>poprzedni i następny rekord (poza polami)</span>
+      <span><kbd>Esc</kbd></span><span>wyjście z trybu zaznaczania</span>
+    </div>
+    <p class="muted" style="margin-top:14px">Podpowiedź: „?” przy polu oznacza niepewny odczyt. Wycinek aktu nad formularzem powiększa się kliknięciem.</p>
+  </div>
+</dialog>
+
+<dialog id="dlgCheck" aria-labelledby="chkTitle">
+  <div class="dlgHead"><strong id="chkTitle">Kontrola danych</strong><button data-dlg-close="dlgCheck">Zamknij</button></div>
+  <div class="dlgBody" id="chkBody"></div>
+</dialog>
+<div id="moreMenu" hidden role="menu">
+  <button id="btnDup" role="menuitem" title="Pokaż możliwe duplikaty">Duplikaty</button>
+  <button id="btnTheme" role="menuitem" title="Motyw: auto / jasny / ciemny">Motyw: Auto</button>
+  <button id="btnHelp" role="menuitem" title="Skróty klawiszowe">Skróty klawiszowe</button>
+</div>
+<div id="colMenu" hidden></div>
+<section id="tools" hidden aria-label="Narzędzia">
+  <div class="tlHead"><button id="tlBack" class="primary">← Wróć do pracy</button><nav id="tlNav" role="tablist"></nav></div>
+  <div class="tlBody" id="tlBody"></div>
+</section>
+<div id="sug" role="listbox"></div>
+<div id="toast" aria-live="polite"></div>
+
+<script>
+/* ===================== STAN ===================== */
+const S = {
+  templates: [], tplId: null,
+  images: [],                 // {name, url}
+  page: -1,
+  viewer: null,
+  records: [],                // {id, tpl, v:{fieldId:value}, page, roi:{x,y,w,h,page}|null, status, by, at, uncertain}
+  cur: null,
+  filter: '', view: 'work', sort: null,
+  dirty: new Set(), undo: [], checked: new Set(), colF: {},
+  roiMode: false, roiStart: null, roiEl: null,
+  pendingConfirm: null,
+  imps: [], impIdx: 0,
+  tableH: null
+};
+
+/* ===================== POMOC ===================== */
+const $ = id => document.getElementById(id);
+const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const uid = () => 'r' + Date.now().toString(36) + Math.random().toString(36).slice(2, 6);
+const now = () => new Date().toISOString().slice(0, 16).replace('T', ' ');
+const tpl = () => S.templates.find(t => t.id === S.tplId) || S.templates[0];
+const fieldsOf = t => (t?.fields || []);
+const STATUS = {nowy:'Nowy', w_toku:'W toku', check:'Sprawdzić', ok:'Gotowe'};
+const BADGE = {nowy:'b-new', w_toku:'b-work', check:'b-check', ok:'b-ok'};
+// Nagłówki z CH BLIN.txt (i eksportów z nim zgodnych) -> pola szablonu chrztu. Kolumny spoza mapy są pomijane.
+const PRESET = {
+  'ID':'source_id', 'ROK':'christening_year', 'Nr.':'christening_act_number',
+  'Nazwisko':'child_last_name', 'Imię':'child_first_name', 'Miejscowość':'christening_place',
+  'ImięO':'father_first_name', 'NazwiskoO':'father_last_name', 'wO':'father_age',
+  'IM':'mother_first_name', 'NM':'mother_last_name', 'wM':'mother_age',
+  'uwagi':'notes', 'UWAGI ORG':'notes_org'
+};
+// Kolumny tabeli: najpierw te, które identyfikują akt
+const COL_PRIORITY = ['christening_act_number','christening_year','child_first_name','child_last_name',
+  'father_first_name','father_last_name','mother_first_name','mother_last_name',
+  'groom_first_name','groom_last_name','bride_first_name','bride_last_name',
+  'deceased_first_name','deceased_last_name','birth_date','marriage_date','death_date','notes'];
+// Grupy pól w formularzu (kolejność ma znaczenie)
+const GROUP_ORDER = ['Akt', 'Osoba', 'Pan młody', 'Panna młoda', 'Zmarły', 'Ojciec', 'Matka', 'Chrzestni i świadkowie', 'Uwagi i weryfikacja'];
+function groupOf(id){
+  if (/^(notes|verification_status|uncertain_fields)/.test(id)) return 'Uwagi i weryfikacja';
+  if (/^(godfather|godmother|witnesses|officiant)/.test(id)) return 'Chrzestni i świadkowie';
+  if (/^(father_|pan_ojciec)/.test(id)) return 'Ojciec';
+  if (/^mother_/.test(id)) return 'Matka';
+  if (/^groom_/.test(id)) return 'Pan młody';
+  if (/^bride_/.test(id)) return 'Panna młoda';
+  if (/^(deceased_|age$|profession$|cause_of_death)/.test(id)) return 'Zmarły';
+  if (/^child_/.test(id)) return 'Osoba';
+  return 'Akt';
+}
+// Pola z długim tekstem zajmują całą szerokość
+const isWide = f => f.type === 'textarea' || /^(child_birth_place|father_residence|mother_residence|witnesses|uncertain_fields|cause_of_death)$/.test(f.id);
+
+function toast(msg, ms = 2600){
+  const t = $('toast'); t.textContent = ''; clearTimeout(toast._t);
+  const d = document.createElement('div'); d.textContent = msg; t.appendChild(d);
+  toast._t = setTimeout(() => d.remove(), ms);
+}
+function setSaveState(msg, dirty){
+  const el = $('saveState'); el.textContent = msg; el.classList.toggle('dirty', !!dirty);
+}
+
+/* Potwierdzenie w pasku nad obrazem (nie modal) */
+function confirmBar(text, onYes){
+  S.pendingConfirm = onYes;
+  $('confirmText').textContent = text;
+  $('confirmBar').classList.add('show');
+  $('confirmYes').focus();
+}
+$('confirmYes').onclick = () => { const f = S.pendingConfirm; S.pendingConfirm = null; $('confirmBar').classList.remove('show'); f && f(); };
+$('confirmNo').onclick = () => { S.pendingConfirm = null; $('confirmBar').classList.remove('show'); };
+
+/* ===================== ZAPIS (IndexedDB, rezerwa w localStorage) ===================== */
+const DB = {
+  db: null,
+  open(){
+    return new Promise(res => {
+      try {
+        const r = indexedDB.open('genealog-v6', 1);
+        r.onupgradeneeded = () => r.result.createObjectStore('records', {keyPath:'id'});
+        r.onsuccess = () => { this.db = r.result; res(true); };
+        r.onerror = () => res(false);
+      } catch(e){ res(false); }
+    });
+  },
+  all(){
+    return new Promise(res => {
+      if (!this.db) return res(null);
+      const q = this.db.transaction('records').objectStore('records').getAll();
+      q.onsuccess = () => res(q.result); q.onerror = () => res(null);
+    });
+  },
+  put(recs){
+    return new Promise(res => {
+      if (!this.db) return res(false);
+      const tx = this.db.transaction('records', 'readwrite');
+      const st = tx.objectStore('records');
+      recs.forEach(r => st.put(r));
+      tx.oncomplete = () => res(true); tx.onerror = () => res(false);
+    });
+  },
+  del(id){
+    return new Promise(res => {
+      if (!this.db) return res(false);
+      const tx = this.db.transaction('records', 'readwrite');
+      tx.objectStore('records').delete(id);
+      tx.oncomplete = () => res(true); tx.onerror = () => res(false);
+    });
+  }
+};
+let saveTimer = null;
+function scheduleAutosave(){ clearTimeout(saveTimer); saveTimer = setTimeout(saveDirty, 2000); }
+async function saveDirty(){
+  if (!S.dirty.size) return true;
+  const batch = [...S.dirty].map(id => S.records.find(r => r.id === id)).filter(Boolean);
+  let ok = await DB.put(batch);
+  if (ok) { S.dirty.clear(); setSaveState('Zapisano ' + now(), false); }
+  else {
+    try { localStorage.setItem('genealog-v6', JSON.stringify(S.records)); S.dirty.clear(); setSaveState('Zapisano w rezerwie (przeglądarka)', false); ok = true; }
+    catch(e){ setSaveState('Nie udało się zapisać', true); }
+  }
+  updateDirtyCount();
+  return ok;
+}
+function markDirty(id){ _vocab = null; S.dirty.add(id); updateDirtyCount(); scheduleAutosave(); }
+function updateDirtyCount(){
+  $('dirtyCnt').textContent = S.dirty.size ? ` (${S.dirty.size})` : '';
+  if (S.dirty.size) setSaveState(`Niezapisane zmiany: ${S.dirty.size}`, true);
+}
+
+/* ===================== SZABLONY ===================== */
+function loadTemplates(){
+  S.templates = (window.TEMPLATES_CONFIG && window.TEMPLATES_CONFIG.templates) || [];
+  $('tplSel').innerHTML = S.templates.map(t => `<option value="${esc(t.id)}">${esc(t.name)}</option>`).join('');
+  S.tplId = S.templates[0]?.id || null;
+}
+$('tplSel').onchange = e => { syncFormToRec(); S.tplId = e.target.value; S.cur = null; S.checked.clear(); S.colF = {}; renderAll(); };
+
+/* ===================== FORMULARZ ===================== */
+function renderForm(){
+  const t = tpl(), form = $('recForm');
+  const rec = currentRec();
+  if (!t) { form.innerHTML = ''; return; }
+  if (!rec) { form.innerHTML = '<div class="emptyForm">Wybierz rekord w tabeli albo kliknij „+ Nowy”. Możesz też zaznaczyć akt na skanie (klawisz A), a rekord powstanie sam.</div>'; renderHeader(null); return; }
+  const hasUnc = fieldsOf(t).some(f => f.id === 'uncertain_fields');
+  const groups = {};
+  fieldsOf(t).forEach(f => { (groups[groupOf(f.id)] = groups[groupOf(f.id)] || []).push(f); });
+  const order = [...GROUP_ORDER, ...Object.keys(groups).filter(g => !GROUP_ORDER.includes(g))];
+  form.innerHTML = order.filter(g => groups[g]).map(g => {
+    const fs = groups[g];
+    const filled = rec ? fs.filter(f => String(rec.v[f.id] ?? '').trim() !== '').length : 0;
+    const open = g !== 'Uwagi i weryfikacja' || filled > 0 ? ' open' : '';
+    return `<details class="fgrp"${open}><summary>${esc(g)} <span class="cnt">${rec ? filled + '/' + fs.length : ''}</span></summary>
+      <div class="fgrid">${fs.map(f => fieldHtml(f, rec, hasUnc)).join('')}</div></details>`;
+  }).join('');
+  form.querySelectorAll('[data-q]').forEach(b => b.onclick = () => toggleUncertain(b.dataset.q));
+  form.querySelectorAll('input,select,textarea').forEach(inp => {
+    const fid = inp.name;
+    inp.disabled = !rec;
+    inp.addEventListener('input', () => { fieldChanged(fid, inp.value); updateVcnt(fid, inp.value); showSug(inp, fid); });
+    inp.addEventListener('change', () => { const nv = inp.tagName === 'INPUT' ? expandAbbr(fid, inp.value) : inp.value; if (nv !== inp.value) inp.value = nv; fieldChanged(fid, inp.value); updateVcnt(fid, inp.value); });
+    inp.addEventListener('blur', () => setTimeout(hideSug, 120));
+    inp.addEventListener('keydown', e => {
+      if (sugKey(e, inp, fid)) return;
+      const mod = e.ctrlKey || e.metaKey;
+      if (mod && e.key.toLowerCase() === 'd'){ e.preventDefault(); copyFromPrev(fid); return; }
+      if (e.key === 'Enter' && !mod && inp.tagName !== 'TEXTAREA'){
+        e.preventDefault();
+        { const nv = expandAbbr(fid, inp.value); if (nv !== inp.value){ inp.value = nv; fieldChanged(fid, nv); updateVcnt(fid, nv); } }
+        const all = [...form.querySelectorAll('input:not(:disabled),select:not(:disabled)')].filter(el => el.offsetParent !== null);   // pola wielowierszowe i ukryte Enter pomija
+        const i = all.indexOf(inp);
+        if (e.shiftKey) (all[i - 1] || inp).focus();
+        else if (i >= 0 && i < all.length - 1) all[i + 1].focus();
+        else saveAndNext();
+      }
+    });
+  });
+  renderHeader(rec);
+  form.querySelectorAll('[data-pin]').forEach(b => b.onclick = () => togglePin(b.dataset.pin));
+  if (rec) fieldsOf(t).forEach(f => updateVcnt(f.id, rec.v[f.id] ?? ''));
+  renderIssues(rec);
+}
+// Lista wcześniej użytych wartości pola (podpowiedzi przeglądarki), bez powtórzeń
+function datalists(fs){
+  return fs.filter(f => !f.type || f.type === 'text').map(f => {
+    const vals = [...new Set(S.records.filter(r => r.tpl === S.tplId).map(r => String(r.v[f.id] ?? '').trim()).filter(Boolean))].sort((a,b) => a.localeCompare(b, 'pl')).slice(0, 400);
+    return vals.length ? `<datalist id="dl_${esc(f.id)}">${vals.map(v => `<option value="${esc(v)}">`).join('')}</datalist>` : '';
+  }).join('');
+}
+function uncertainList(rec){ return String(rec.v.uncertain_fields || '').split(',').map(x => x.trim()).filter(Boolean); }
+function toggleUncertain(fid){
+  const rec = currentRec(); if (!rec) return;
+  syncFormToRec();
+  const list = uncertainList(rec);
+  const next = list.includes(fid) ? list.filter(x => x !== fid) : [...list, fid];
+  S.undo.push({id: rec.id, f: 'uncertain_fields', old: rec.v.uncertain_fields ?? '', at: Date.now()});
+  rec.v.uncertain_fields = next.join(', '); rec.at = now();
+  if (rec.status === 'nowy') rec.status = 'w_toku';
+  markDirty(rec.id); renderAll();
+}
+function fieldHtml(f, rec, hasUnc){
+  const val = rec ? (rec.v[f.id] ?? '') : '';
+  const req = f.required ? ' req' : '';
+  const unc = rec && hasUnc && uncertainList(rec).includes(f.id);
+  const cls = ['fg', isWide(f) ? 'wide' : '', rec && String(val).trim() !== '' ? 'filled' : '', rec && f.required && String(val).trim() === '' ? 'empty-req' : '', unc ? 'unc' : ''].join(' ');
+  const id = 'f_' + f.id;
+  const canUnc = hasUnc && !['uncertain_fields','notes','notes_org','verification_status'].includes(f.id);
+  const qbtn = canUnc ? `<button type="button" class="qbtn" data-q="${esc(f.id)}" aria-pressed="${unc ? 'true' : 'false'}" title="Oznacz niepewny odczyt tego pola">?</button>` : '';
+  let ctl;
+  if (f.type === 'textarea') ctl = `<textarea id="${id}" name="${esc(f.id)}" placeholder="${esc(f.placeholder||'')}">${esc(val)}</textarea>`;
+  else if (f.type === 'select') ctl = `<select id="${id}" name="${esc(f.id)}"><option value="">— wybierz —</option>${(f.options||[]).map(o => `<option${o === val ? ' selected' : ''}>${esc(o)}</option>`).join('')}</select>`;
+  else {
+    const isText = !f.type || f.type === 'text';
+    ctl = `<input id="${id}" name="${esc(f.id)}" type="${esc(f.type === 'number' ? 'number' : f.type === 'date' ? 'date' : 'text')}" value="${esc(val)}" placeholder="${esc(f.placeholder||'')}"${isText ? ' autocomplete="off"' : ''}>`;
+  }
+  return `<div class="${cls}"><div class="fglab"><label class="${req.trim()}" for="${id}">${esc(f.label || f.id)}</label>${qbtn}${pinBtn(f)}${(poolOf(f.id) && (!f.type || f.type === 'text')) || /_age$/.test(f.id) ? `<span class="vcnt${/_age$/.test(f.id) ? ' age' : ''}" id="vc_${esc(f.id)}"></span>` : ''}</div>${ctl}</div>`;
+}
+function renderHeader(rec){
+  document.querySelectorAll('#statusSeg button').forEach(b => b.setAttribute('aria-pressed', rec && rec.status === b.dataset.st ? 'true' : 'false'));
+  $('statusSeg').querySelectorAll('button').forEach(b => b.disabled = !rec);
+  if (!rec){ $('recTitle').textContent = 'Brak wybranego rekordu'; $('recMeta').textContent = 'Wybierz wiersz w tabeli albo kliknij „+ Nowy”.'; return; }
+  const idx = filteredRecords().findIndex(r => r.id === rec.id) + 1;
+  const n = filteredRecords().length;
+  $('recTitle').textContent = recTitle(rec);
+  $('recMeta').textContent = [idx ? `${idx} z ${n}` : '', rec.page >= 0 ? `strona ${rec.page + 1}` : '', rec.roi ? 'zaznaczony na skanie' : ''].filter(Boolean).join(' · ');
+}
+function recTitle(r){
+  const v = r.v, t = r.tpl;
+  if (t === 'chrzest') return [v.child_first_name, v.child_last_name].filter(Boolean).join(' ') || 'Akt chrztu (bez imienia)';
+  if (t === 'marriage') return [v.groom_first_name, v.groom_last_name].filter(Boolean).join(' ') + ' i ' + [v.bride_first_name, v.bride_last_name].filter(Boolean).join(' ') || 'Akt małżeństwa';
+  if (t === 'death') return [v.deceased_first_name, v.deceased_last_name].filter(Boolean).join(' ') || 'Akt zgonu (bez imienia)';
+  return [v.child_first_name, v.child_last_name].filter(Boolean).join(' ') || 'Akt';
+}
+function currentRec(){ return S.records.find(r => r.id === S.cur) || null; }
+function fieldChanged(fid, value){
+  const rec = currentRec(); if (!rec) return;
+  const old = rec.v[fid] ?? '';
+  if (old === value) return;
+  S.undo.push({id: rec.id, f: fid, old, at: Date.now()});
+  if (S.undo.length > 500) S.undo.shift();
+  rec.v[fid] = value;
+  if (rec.status === 'nowy') rec.status = 'w_toku';
+  rec.at = now();
+  markDirty(rec.id);
+  queueTable();
+  clearTimeout(fieldChanged._t); fieldChanged._t = setTimeout(() => renderIssues(currentRec()), 350);
+}
+function undoLast(){
+  const u = S.undo.pop(); if (!u) return toast('Nic do cofnięcia');
+  const batch = [u];
+  if (u.g) while (S.undo.length && S.undo[S.undo.length - 1].g === u.g) batch.push(S.undo.pop());
+  batch.forEach(x => {
+    const rec = S.records.find(r => r.id === x.id); if (!rec) return;
+    if (x.f === '__status') rec.status = x.old;
+    else if (x.f === '__roi'){ const o = JSON.parse(x.old); rec.roi = o.roi; rec.page = o.page; }
+    else rec.v[x.f] = x.old;
+    rec.at = now(); markDirty(rec.id);
+  });
+  renderAll(); drawRois(); toast(batch.length > 1 ? `Cofnięto ${batch.length} zmian` : 'Cofnięto zmianę');
+}
+/* Zbiera wartości z formularza, zanim przejdziemy do innego rekordu */
+function syncFormToRec(){
+  const rec = currentRec(); if (!rec) return;
+  fieldsOf(tpl()).forEach(f => {
+    const el = $('f_' + f.id);
+    if (el && !el.disabled && (rec.v[f.id] ?? '') !== el.value){
+      S.undo.push({id: rec.id, f: f.id, old: rec.v[f.id] ?? '', at: Date.now()});
+      rec.v[f.id] = el.value; rec.at = now(); markDirty(rec.id);
+    }
+  });
+}
+
+/* ===================== TABELA ===================== */
+function visibleFields(){
+  const fs = fieldsOf(tpl());
+  try { const saved = JSON.parse(lsGet('gv6.cols.' + S.tplId, 'null')); if (Array.isArray(saved)){ const c = saved.map(id => fs.find(f => f.id === id)).filter(Boolean); if (c.length) return c; } } catch(e){}
+  let cols = COL_PRIORITY.map(id => fs.find(f => f.id === id)).filter(Boolean).slice(0, 7);
+  if (cols.length < 4) cols = fs.filter(f => f.type !== 'textarea').slice(0, 6);
+  return cols;
+}
+function yearOf(r){
+  return parseInt(r.v.christening_year || (String(r.v.source_id || '').match(/\.(\d{4})\./) || [])[1]) || 9999;
+}
+function filteredRecords(){
+  let list = S.records.filter(r => r.tpl === S.tplId);
+  if (S.view === 'work') list = list.filter(r => r.status !== 'ok');
+  if (S.view === 'check') list = list.filter(r => r.status === 'check' || r.uncertain || (r.v.uncertain_fields || '').trim());
+  Object.entries(S.colF || {}).forEach(([f, v]) => { const t = v.trim().toLowerCase(); if (t) list = list.filter(r => String(r.v[f] ?? '').toLowerCase().includes(t)); });
+  const q = S.filter.trim().toLowerCase();
+  if (q) list = list.filter(r => Object.values(r.v).join(' ').toLowerCase().includes(q));
+  if (S.sort) {
+    const {f, dir} = S.sort;
+    list = [...list].sort((a,b) => String(a.v[f]??'').localeCompare(String(b.v[f]??''), 'pl', {numeric:true}) * dir);
+  } else {
+    // Domyślnie kolejność aktów: rok, numer aktu, identyfikator źródła
+    const act = r => parseInt(r.v.christening_act_number) || 0;
+    list = [...list].sort((a,b) => (yearOf(a) - yearOf(b)) || (act(a) - act(b)) || String(a.v.source_id || '').localeCompare(String(b.v.source_id || ''), 'pl', {numeric:true}));
+  }
+  return list;
+}
+let tableTimer = null;
+function queueTable(){ clearTimeout(tableTimer); tableTimer = setTimeout(renderTable, 150); }
+function renderAll(){ renderTable(); renderForm(); renderTabs(); renderThumbs(); renderBatches(); updateDelBtn(); renderCrop(); }
+function renderTabs(){
+  const mine = S.records.filter(r => r.tpl === S.tplId);
+  $('nAll').textContent = mine.length;
+  const done = mine.filter(r => r.status === 'ok').length;
+  $('progBar').style.width = (mine.length ? Math.round(done * 100 / mine.length) : 0) + '%';
+  $('progTxt').textContent = `${done}/${mine.length} gotowe`;
+  $('nWork').textContent = mine.filter(r => r.status !== 'ok').length;
+  $('nCheck').textContent = mine.filter(r => r.status === 'check' || r.uncertain || (r.v.uncertain_fields || '').trim()).length;
+  ['tabWork','tabCheck','tabAll'].forEach(id => $(id).setAttribute('aria-pressed', String({tabWork:'work',tabCheck:'check',tabAll:'all'}[id] === S.view)));
+  [...$('tplSel').options].forEach(o => {
+    const t = S.templates.find(x => x.id === o.value);
+    if (t) o.textContent = `${t.name} (${S.records.filter(r => r.tpl === t.id).length})`;
+  });
+}
+function renderTable(){
+  const list = filteredRecords();
+  const cols = visibleFields();
+  const dupCnt = {};
+  S.records.filter(r => r.tpl === S.tplId).forEach(r => { const nr = String(r.v.christening_act_number ?? '').trim(); if (nr){ const k = yearOf(r) + '|' + nr; dupCnt[k] = (dupCnt[k] || 0) + 1; } });
+  const isDup = r => { const nr = String(r.v.christening_act_number ?? '').trim(); return nr && dupCnt[yearOf(r) + '|' + nr] > 1; };
+  $('recCount').textContent = `${list.length} rek.`;
+  if (!list.length){
+    $('recTable').innerHTML = `<p class="muted" style="padding:14px">${S.records.some(r => r.tpl === S.tplId) ? 'Brak rekordów w tym widoku albo dla tego filtra.' : 'Brak rekordów. Kliknij „+ Nowy”, zaznacz akt na skanie albo zaimportuj plik.'}</p>`;
+    return;
+  }
+  const sortCls = f => S.sort?.f === f ? 'sorted' + (S.sort.dir < 0 ? ' desc' : '') : '';
+  const box = $('recTable'), keep = box.scrollTop;
+  let h = '<table><thead><tr>'
+    + '<th style="width:30px"><input type="checkbox" id="chkAll" aria-label="Zaznacz wszystkie"></th>'
+    + '<th style="width:58px">Strona</th><th style="width:96px">Status</th>'
+    + cols.map(f => `<th class="${sortCls(f.id)}" data-sort="${esc(f.id)}" title="Sortuj">${esc(f.label)}</th>`).join('')
+    + '</tr><tr class="flt"><th></th><th></th><th></th>'
+    + cols.map(f => `<th><input data-cf="${esc(f.id)}" value="${esc(S.colF[f.id] || '')}" placeholder="filtr" aria-label="Filtr: ${esc(f.label)}"></th>`).join('')
+    + '</tr></thead><tbody id="tbRows"></tbody></table>';
+  box.innerHTML = h;
+  S.view = {list, cols, isDup, from: -1, to: -1};
+  box.scrollTop = keep;
+  paintRows(true);
+  wireHead();
+}
+/* Okno wierszy: rysujemy tylko widoczne (tysiące rekordów nie zamulają) */
+const ROWH = 34;
+function rowHtml(r, i){
+  const {cols, isDup} = S.view;
+  let h = '';
+
+    const warn = r.status === 'check' || r.uncertain || (r.v.uncertain_fields || '').trim();
+    h += `<tr data-id="${esc(r.id)}" class="r${i % 2 ? ' alt' : ''}${r.id === S.cur ? ' sel' : ''}${warn && r.status !== 'ok' ? ' isCheck' : ''}">`
+      + `<td><input type="checkbox" class="rowChk" data-id="${esc(r.id)}" ${S.checked.has(r.id) ? 'checked' : ''} aria-label="Zaznacz rekord"></td>`
+      + `<td>${r.page >= 0 ? r.page + 1 : '—'}${r.roi ? ' <span class="pin" title="zaznaczony na skanie">●</span>' : ''}</td>`
+      + `<td><span class="badge ${BADGE[r.status]}">${STATUS[r.status]}</span></td>`
+      + cols.map(f => `<td data-edit="${esc(r.id)}" data-f="${esc(f.id)}" title="Dwuklik = edycja w tabeli">${esc(r.v[f.id])}${f.id === 'christening_act_number' && isDup(r) ? ' <span class="warnico" title="Powtórzony numer aktu w tym roku">⚠</span>' : ''}</td>`).join('')
+      + '</tr>';
+  return h;
+}
+function paintRows(force){
+  const V = S.view; if (!V) return;
+  const box = $('recTable'), tb = $('tbRows'); if (!tb) return;
+  const n = V.list.length, vis = Math.ceil((box.clientHeight || 400) / ROWH) + 2;
+  let from = Math.max(0, Math.floor(box.scrollTop / ROWH) - 10);
+  let to = Math.min(n, from + vis + 20);
+  if (!force && from >= V.from && to <= V.to && (from - V.from) < 6 && (V.to - to) < 6) return;
+  V.from = from; V.to = to;
+  const span = V.cols.length + 3;
+  let h = from > 0 ? `<tr class="sp"><td colspan="${span}" style="height:${from * ROWH}px"></td></tr>` : '';
+  for (let i = from; i < to; i++) h += rowHtml(V.list[i], i);
+  if (to < n) h += `<tr class="sp"><td colspan="${span}" style="height:${(n - to) * ROWH}px"></td></tr>`;
+  tb.innerHTML = h;
+  wireRows();
+}
+let _paintRaf = 0;
+$('recTable').addEventListener('scroll', () => { if (_paintRaf) return; _paintRaf = requestAnimationFrame(() => { _paintRaf = 0; paintRows(false); }); });
+window.addEventListener('resize', () => paintRows(true));
+function ensureRowVisible(id){
+  const V = S.view; if (!V) return;
+  const i = V.list.findIndex(r => r.id === id); if (i < 0) return;
+  const box = $('recTable'), head = box.querySelector('thead')?.offsetHeight || 80;
+  const top = head + i * ROWH, bottom = top + ROWH;
+  if (top < box.scrollTop + head) box.scrollTop = Math.max(0, top - head - ROWH);
+  else if (bottom > box.scrollTop + box.clientHeight) box.scrollTop = bottom - box.clientHeight + ROWH;
+  paintRows(true);
+}
+function wireRows(){
+  const box = $('recTable');
+  box.querySelectorAll('tbody tr.r').forEach(tr => tr.onclick = e => {
+    if (e.target.tagName === 'INPUT') return;
+    selectRecord(tr.dataset.id);
+  });
+  box.querySelectorAll('.rowChk').forEach(c => c.onchange = () => { if (c.checked) S.checked.add(c.dataset.id); else S.checked.delete(c.dataset.id); updateDelBtn(); });
+  box.querySelectorAll('td[data-edit]').forEach(td => td.ondblclick = e => { e.stopPropagation(); inlineEdit(td); });
+}
+function wireHead(){
+  const box = $('recTable');
+  const all = box.querySelector('#chkAll');
+  if (all) all.onchange = () => { filteredRecords().forEach(r => { if (all.checked) S.checked.add(r.id); else S.checked.delete(r.id); }); paintRows(true); updateDelBtn(); };
+  box.querySelectorAll('th[data-sort]').forEach(th => th.onclick = () => {
+    const f = th.dataset.sort; S.sort = {f, dir: S.sort?.f === f ? -S.sort.dir : 1}; renderTable();
+  });
+  box.querySelectorAll('input[data-cf]').forEach(inp => {
+    inp.onclick = e => e.stopPropagation();
+    inp.oninput = () => {
+      const id = inp.dataset.cf, pos = inp.selectionStart;
+      S.colF[id] = inp.value; renderTable();
+      const again = $('recTable').querySelector(`input[data-cf="${id}"]`);
+      if (again) { again.focus(); try { again.setSelectionRange(pos, pos); } catch(e){} }
+    };
+  });
+  updateDelBtn();
+}
+function inlineEdit(td){
+  const rec = S.records.find(r => r.id === td.dataset.edit); if (!rec) return;
+  const f = td.dataset.f;
+  const inp = document.createElement('input'); inp.value = rec.v[f] ?? '';
+  td.classList.add('edit'); td.innerHTML = ''; td.appendChild(inp); inp.focus(); inp.select();
+  let done = false;
+  const commit = () => { if (done) return; done = true; if ((rec.v[f] ?? '') !== inp.value) { S.undo.push({id: rec.id, f, old: rec.v[f] ?? '', at: Date.now()}); rec.v[f] = inp.value; if (rec.status === 'nowy') rec.status = 'w_toku'; rec.at = now(); markDirty(rec.id); } renderAll(); };
+  inp.onkeydown = e => { if (e.key === 'Enter') commit(); if (e.key === 'Escape') { done = true; renderTable(); } };
+  inp.onblur = commit;
+}
+function selectRecord(id){
+  if (id === S.cur) return;
+  syncFormToRec();
+  S.cur = id;
+  const rec = currentRec();
+  if (rec && rec.page >= 0 && rec.page !== S.page) showPage(rec.page, false);
+  renderAll(); ensureRowVisible(id); focusRoi();
+}
+function focusRoi(){
+  const rec = currentRec(); if (!rec?.roi || !S.viewer) return;
+  const r = rec.roi;
+  S.viewer.viewport.fitBounds(S.viewer.viewport.imageToViewportRectangle(new OpenSeadragon.Rect(r.x, r.y, r.w, r.h)), true);
+  drawRois();
+}
+
+/* ===================== NOWY, KOPIUJ, USUŃ, STATUS, NAWIGACJA ===================== */
+function newRecord(){
+  syncFormToRec();
+  const rec = {id: uid(), tpl: S.tplId, v: {}, page: S.page, roi: null, status: 'nowy', by: '', at: now(), uncertain: false};
+  applySuggest(rec);
+  S.records.push(rec); S.cur = rec.id;
+  markDirty(rec.id); renderAll();
+  const first = $('f_' + (fieldsOf(tpl())[0]?.id || ''));
+  if (first) first.focus();
+}
+$('btnNew').onclick = newRecord;
+function neighbour(dir){
+  syncFormToRec();
+  const list = filteredRecords(); if (!list.length) return;
+  const i = list.findIndex(r => r.id === S.cur);
+  const j = i < 0 ? (dir > 0 ? 0 : list.length - 1) : Math.min(list.length - 1, Math.max(0, i + dir));
+  selectRecord(list[j].id);
+}
+$('btnPrevRec').onclick = () => neighbour(-1);
+$('btnNextRec').onclick = () => neighbour(1);
+$('btnNextUnread').onclick = () => {
+  syncFormToRec();
+  const list = filteredRecords();
+  const i = list.findIndex(r => r.id === S.cur);
+  const after = list.slice(i + 1).find(r => r.status !== 'ok') || list.find(r => r.status !== 'ok' && r.id !== S.cur);
+  if (after) selectRecord(after.id); else toast('Wszystkie rekordy w tym widoku są gotowe');
+};
+function setStatus(st){
+  const rec = currentRec(); if (!rec) return;
+  if (rec.status === st) return;
+  S.undo.push({id: rec.id, f: '__status', old: rec.status, at: Date.now()});
+  const was = rec.status; rec.status = st; rec.at = now(); markDirty(rec.id); sessCount(was, st); renderAll();
+}
+$('statusSeg').addEventListener('click', e => { const b = e.target.closest('[data-st]'); if (b) setStatus(b.dataset.st); });
+$('btnCopyPrev').onclick = () => {
+  syncFormToRec();
+  const rec = currentRec(); if (!rec) return toast('Najpierw wybierz rekord');
+  const prev = prevOf(rec);
+  if (!prev) return toast('Brak poprzedniego aktu');
+  const keys = fieldsOf(tpl()).map(f => f.id).filter(k => /^(father_|mother_|godfather|godmother)/.test(k));
+  keys.forEach(k => { rec.v[k] = prev.v[k] ?? ''; });
+  if (rec.status === 'nowy') rec.status = 'w_toku';
+  markDirty(rec.id); renderAll();
+  toast('Skopiowano rodziców i chrzestnych z poprzedniego aktu');
+};
+$('parentsQuick').addEventListener('keydown', e => {
+  if (e.key !== 'Enter') return; e.preventDefault();
+  const rec = currentRec(); if (!rec) return toast('Najpierw wybierz rekord');
+  const keys = fieldsOf(tpl()).map(f => f.id); if (!keys.includes('father_first_name')) return toast('Ten szablon nie ma pól rodziców');
+  let t = e.target.value.replace(/\s+(conjuges|coniuges|legitimi|małżonkowie|małżonków)\b.*$/i, '').trim(); if (!t) return;
+  const parts = t.split(/\s+(?:et|i|oraz|und|&|\+)\s+/i); if (parts.length < 2) return toast('Rozdziel rodziców słowem „i” albo „et”');
+  const L = parts[0].split(/\s+/), R = parts.slice(1).join(' ').split(/\s+/);
+  let fn = L[0], fl = L.slice(1).join(' '), mn = R[0], ml = R.slice(1).join(' '), note = '';
+  if (!fl && ml){ fl = ml; ml = ''; note = ' Nazwisko wpisano ojcu, matka bez nazwiska.'; }
+  syncFormToRec();
+  const set = {father_first_name: fn, father_last_name: fl, mother_first_name: mn, mother_last_name: ml};
+  Object.entries(set).forEach(([k, v]) => { if (keys.includes(k) && (v || !rec.v[k])) rec.v[k] = v; });
+  if (rec.status === 'nowy') rec.status = 'w_toku';
+  markDirty(rec.id); renderAll(); e.target.value = ''; toast('Wpisano rodziców.' + note);
+});
+$('btnUndo').onclick = undoLast;
+$('btnSave').onclick = async () => { syncFormToRec(); const ok = await saveDirty(); if (ok) toast('Zapisano'); };
+$('btnDelete').onclick = () => {
+  const rec = currentRec(); if (!rec) return;
+  confirmBar('Usunąć ten rekord? Tej operacji nie cofniesz.', async () => {
+    S.records = S.records.filter(r => r.id !== rec.id); S.dirty.delete(rec.id);
+    await DB.del(rec.id); S.cur = null; renderAll(); drawRois(); toast('Usunięto rekord');
+  });
+};
+$('filter').oninput = e => { S.filter = e.target.value; renderTable(); };
+
+/* Widoki */
+function setView(v){ S.view = v; renderAll(); }
+$('tabWork').onclick = () => setView('work');
+$('tabCheck').onclick = () => setView('check');
+$('tabAll').onclick = () => setView('all');
+
+/* ===================== OBRAZY I MINIATURY ===================== */
+function addImages(files){
+  const imgs = [...files].filter(f => f.type.startsWith('image/')).sort((a,b) => a.name.localeCompare(b.name, 'pl', {numeric:true}));
+  if (!imgs.length) return toast('Nie znaleziono obrazów w wybranym miejscu');
+  imgs.forEach(f => S.images.push({name: f.name, url: URL.createObjectURL(f)}));
+  renderThumbs();
+  if (S.page < 0) showPage(0, true);
+  toast(`Dodano ${imgs.length} obraz(y)`);
+}
+$('btnFolder').onclick = () => { $('folderInput').value = ''; $('folderInput').click(); };
+$('btnFiles').onclick = () => { $('fileInput').value = ''; $('fileInput').click(); };
+$('fileInput').onchange = e => addImages(e.target.files);
+$('folderInput').onchange = e => addImages(e.target.files);
+let THLIST = lsGet('gv6.thlist', '0') === '1';
+function renderThumbs(){
+  const box = $('thumbs');
+  $('app').classList.toggle('thlist', THLIST);
+  const head = `<div class="thHead"><button class="thMode" title="Przełącz: miniatury / lista stron">${THLIST ? '▦' : '☰'}</button><button class="thClose" title="Ukryj panel (przywróć przyciskiem Strony)">✕</button></div>`;
+  const wire = () => {
+    box.querySelector('.thClose').onclick = () => $('btnThumbs').click();
+    box.querySelector('.thMode').onclick = () => { THLIST = !THLIST; lsSet('gv6.thlist', THLIST ? '1' : '0'); renderThumbs(); if (S.viewer) setTimeout(() => S.viewer.forceRedraw(), 50); };
+  };
+  if (!S.images.length){ box.innerHTML = head + '<div class="empty">Dodaj skany („Skany” lub „Obrazy”) albo przeciągnij pliki na okno.</div>'; wire(); return; }
+  const per = {};
+  S.records.forEach(r => { if (r.tpl === S.tplId && r.page >= 0){ const o = per[r.page] || (per[r.page] = {n:0, dn:0}); o.n++; if (r.status === 'ok') o.dn++; } });
+  box.innerHTML = head + S.images.map((im, i) => {
+    const o = per[i] || {n:0, dn:0};
+    const badge = o.n ? `<span class="cnt${o.dn === o.n ? ' alldone' : ''}" title="gotowe / wszystkie rekordy na stronie">${o.dn}/${o.n}</span>` : '';
+    if (THLIST) return `<div class="th row ${i === S.page ? 'cur' : ''}" data-i="${i}" title="${esc(im.name)}"><span class="no">${i + 1}</span><span class="nm">${esc(im.name)}</span>${badge}</div>`;
+    return `<div class="th ${i === S.page ? 'cur' : ''}" data-i="${i}" title="${esc(im.name)}"><img src="${im.url}" alt="Strona ${i+1}" loading="lazy" decoding="async"><span class="lbl">${i+1}</span>${badge}</div>`;
+  }).join('');
+  box.querySelectorAll('.th').forEach(d => d.onclick = () => showPage(+d.dataset.i, false));
+  wire();
+  const cur = box.querySelector('.th.cur'); if (cur) cur.scrollIntoView({block:'nearest'});
+}
+const VPMEM = {};
+function showPage(i, fit){
+  if (i < 0 || i >= S.images.length) return;
+  if (S.viewer && S.page >= 0 && S.page !== i){ try { VPMEM[S.page] = S.viewer.viewport.getBounds(); } catch(e){} }
+  S.page = i;
+  $('pageInfo').textContent = `Strona ${i+1} z ${S.images.length}`;
+  renderThumbs();
+  const im = S.images[i];
+  if (S.warpMode && S.warpPage !== i) exitWarp(false);
+  if (!S.warpMode && WARP[im.name] && !im.wurl){            // strona ma zapisane prostowanie – najpierw je zbuduj
+    toast('Prostuję stronę…');
+    buildWarp(im).then(() => { if (S.page === i) showPage(i, fit); }).catch(() => { delete WARP[im.name]; saveWarp(); toast('Nie udało się wyprostować strony'); if (S.page === i) showPage(i, fit); });
+    return;
+  }
+  if (S.viewer){
+    S.viewer.open({type:'image', url: S.warpMode ? im.url : (im.wurl || im.url)});
+    S.viewer.addOnceHandler('open', () => {
+      const cr = currentRec();
+      rotApply();
+      if (VPMEM[i] && !S.warpMode && !(cr && cr.roi && cr.page === i)) S.viewer.viewport.fitBounds(VPMEM[i], true);
+      else if (fit || S.warpMode) S.viewer.viewport.goHome(true);
+      drawRois(); if (S.warpMode) warpDraw();
+    });
+  }
+}
+$('prevImg').onclick = () => showPage(S.page - 1, true);
+$('nextImg').onclick = () => showPage(S.page + 1, true);
+$('btnFit').onclick = () => S.viewer && S.viewer.viewport.goHome();
+const ROTS = (() => { try { return JSON.parse(lsGet('gv6.rots', '{}')) || {}; } catch(e){ return {}; } })();
+const rotKey = () => (S.images[S.page] && S.images[S.page].name) || '';
+const rotGet = () => ROTS[rotKey()] || {q: 0, a: 0};
+function rotApply(){
+  if (!S.viewer) return; const r = rotGet();
+  S.viewer.viewport.setRotation(r.q * 90 + r.a, true);
+  $('fxAng').value = r.a; $('oAng').textContent = (+r.a).toFixed(1) + '°';
+  const tot = ((r.q * 90 + r.a) % 360 + 360) % 360; if (document.activeElement !== $('angNum')) $('angNum').value = (tot > 180 ? tot - 360 : tot).toFixed(1).replace(/\.0$/, '');
+  drawRois();
+}
+function rotSet(p){ const k = rotKey(); if (!k) return; ROTS[k] = Object.assign(rotGet(), p); lsSet('gv6.rots', JSON.stringify(ROTS)); rotApply(); }
+$('btnRot').onclick = () => rotSet({q: (rotGet().q + 1) % 4});
+function rotTotal(t){ if (isNaN(t)) return; t = ((t % 360) + 360) % 360; if (t > 180) t -= 360; const q = Math.round(t / 90); rotSet({q: ((q % 4) + 4) % 4, a: +(t - q * 90).toFixed(2)}); }
+const rotNow = () => { const r = rotGet(); return r.q * 90 + r.a; };
+$('angL').onclick = e => rotTotal(rotNow() - (e.shiftKey ? 5 : 0.5));
+$('angR').onclick = e => rotTotal(rotNow() + (e.shiftKey ? 5 : 0.5));
+$('angNum').onchange = e => rotTotal(parseFloat(e.target.value));
+$('angNum').onkeydown = e => { if (e.key === 'Enter'){ rotTotal(parseFloat(e.target.value)); e.target.blur(); } };
+
+$('btnThumbs').onclick = () => {
+  const off = $('app').classList.toggle('nothumbs');
+  $('btnThumbs').setAttribute('aria-pressed', String(!off));
+  if (S.viewer) setTimeout(() => S.viewer.forceRedraw(), 50);
+};
+
+$('btnTable').onclick = () => {
+  const hide = $('app').classList.toggle('tablehide'); lsSet('gv6.tablehide', hide ? '1' : '0');
+  $('btnTable').setAttribute('aria-pressed', String(!hide));
+  if (S.viewer) setTimeout(() => S.viewer.forceRedraw(), 50);
+};
+
+/* ===================== ZAZNACZANIE AKTU NA SKANIE ===================== */
+function setRoiMode(on){
+  S.roiMode = on;
+  $('btnRoi').setAttribute('aria-pressed', String(on));
+  if (S.viewer) S.viewer.canvas.style.cursor = on ? 'crosshair' : '';
+  $('hint').style.display = on ? 'block' : 'none';
+  $('viewerWrap').classList.toggle('roimode', !!on);
+}
+$('btnRoi').onclick = () => setRoiMode(!S.roiMode);
+const RS_MODES = [['all','wszystkie'],['out','kontury'],['cur','bieżąca'],['none','ukryte']];
+let RS = lsGet('gv6.roishow', 'all');
+function rsApply(){
+  const w = $('viewerWrap'); RS_MODES.forEach(([k]) => w.classList.toggle('rs-' + k, k === RS));
+  $('btnRoiShow').textContent = 'Ramki: ' + (RS_MODES.find(m => m[0] === RS) || RS_MODES[0])[1];
+}
+function rsCycle(){ RS = RS_MODES[(RS_MODES.findIndex(m => m[0] === RS) + 1) % RS_MODES.length][0]; lsSet('gv6.roishow', RS); rsApply(); }
+$('btnRoiShow').onclick = rsCycle;
+S.roiSticky = lsGet('gv6.roisticky', '0') === '1';
+$('btnRoiSticky').setAttribute('aria-pressed', String(S.roiSticky));
+$('btnRoiSticky').onclick = () => { S.roiSticky = !S.roiSticky; lsSet('gv6.roisticky', S.roiSticky ? '1' : '0'); $('btnRoiSticky').setAttribute('aria-pressed', String(S.roiSticky)); if (S.roiSticky && !S.roiMode) setRoiMode(true); };
+rsApply();
+function initViewer(){
+  S.viewer = OpenSeadragon({
+    id: 'viewer', prefixUrl: 'https://cdn.jsdelivr.net/npm/openseadragon@3.1.0/build/openseadragon/images/',
+    showNavigator: true, navigatorPosition: 'BOTTOM_RIGHT', showRotationControl: false,
+    gestureSettingsMouse: {clickToZoom: false, dblClickToZoom: true},
+    minZoomLevel: 0.2, maxZoomPixelRatio: 4, visibilityRatio: 0.6, animationTime: 0.3
+  });
+  // Zdarzenia viewera, a nie osobny MouseTracker: tylko wtedy preventDefaultAction blokuje przesuwanie obrazu
+  S.viewer.addHandler('canvas-press', e => { if (!S.roiMode) return; S.roiStartPx = e.position.clone(); S.roiStart = true; e.preventDefaultAction = true; });
+  S.viewer.addHandler('canvas-drag', e => {
+    if (!S.roiMode || !S.roiStart) return; e.preventDefaultAction = true;
+    const a = S.roiStartPx, c = e.position;
+    if (!S.roiEl){ S.roiEl = document.createElement('div'); S.roiEl.className = 'roi-box cur drag'; S.roiEl.style.pointerEvents = 'none'; $('viewerWrap').appendChild(S.roiEl); }
+    const vr = $('viewer').getBoundingClientRect(), wr = $('viewerWrap').getBoundingClientRect();
+    Object.assign(S.roiEl.style, {left: (vr.left - wr.left + Math.min(a.x, c.x)) + 'px', top: (vr.top - wr.top + Math.min(a.y, c.y)) + 'px', width: Math.abs(c.x - a.x) + 'px', height: Math.abs(c.y - a.y) + 'px'});
+  });
+  S.viewer.addHandler('canvas-release', e => {
+    if (!S.roiMode || !S.roiStart) return;
+    const a = S.roiStartPx, c = e.position;
+    S.roiStart = null;
+    if (S.roiEl){ S.roiEl.remove(); S.roiEl = null; }
+    const item = S.viewer.world.getItemAt(0);
+    if (!item || Math.abs(c.x - a.x) < 12 || Math.abs(c.y - a.y) < 12) return;
+    const roi = roiFromPixels(a, c);
+    if (roi.w < 8 || roi.h < 8) return;
+    if (!S.roiSticky) setRoiMode(false);
+    syncFormToRec();
+    const rec = currentRec();
+    // Bieżący rekord bierze zaznaczenie tylko wtedy, gdy go jeszcze nie ma; w przeciwnym razie powstaje nowy akt
+    if (rec && !rec.roi){
+      S.undo.push({id: rec.id, f: '__roi', old: JSON.stringify({roi: null, page: rec.page})});
+      rec.roi = roi; rec.page = S.page; markDirty(rec.id);
+      toast('Akt zaznaczony i przypisany do bieżącego rekordu');
+    } else {
+      const nr = {id: uid(), tpl: S.tplId, v: {}, page: S.page, roi, status: 'nowy', by: '', at: now(), uncertain: false};
+      applySuggest(nr);
+      S.records.push(nr); S.cur = nr.id; markDirty(nr.id);
+      toast('Nowy rekord z zaznaczenia – uzupełnij dane po prawej');
+    }
+    renderAll(); drawRois();
+  });
+}
+// Prostokąt narysowany na ekranie -> obwiednia we współrzędnych obrazu (poprawna także po obrocie o dowolny kąt)
+function roiFromPixels(a, c){
+  const vp = S.viewer.viewport, xs = [], ys = [];
+  [[a.x, a.y], [c.x, a.y], [c.x, c.y], [a.x, c.y]].forEach(([x, y]) => { const i = vp.viewportToImageCoordinates(vp.pointFromPixel(new OpenSeadragon.Point(x, y))); xs.push(i.x); ys.push(i.y); });
+  const sz = S.viewer.world.getItemAt(0).getContentSize();
+  const x0 = Math.max(0, Math.min(...xs)), y0 = Math.max(0, Math.min(...ys)), x1 = Math.min(sz.x, Math.max(...xs)), y1 = Math.min(sz.y, Math.max(...ys));
+  return {x: Math.round(x0), y: Math.round(y0), w: Math.round(x1 - x0), h: Math.round(y1 - y0), page: S.page};
+}
+const HANDLES = ['nw','n','ne','e','se','s','sw','w'];
+function drawRois(){
+  if (!S.viewer) return;
+  S.viewer.clearOverlays();
+  if (S.warpMode) return;
+  S.records.filter(r => r.page === S.page && r.roi && r.tpl === S.tplId).forEach(r => {
+    const el = document.createElement('div'), isCur = r.id === S.cur;
+    el.className = 'roi-box ' + (r.status === 'ok' ? 'ok' : (r.status === 'check' || r.uncertain) ? 'warn' : '') + (isCur ? ' cur' : '');
+    el.dataset.id = r.id;
+    el.innerHTML = `<span class="n">${esc(r.v.christening_act_number || '?')} ${esc(recTitle(r) === 'Akt' ? '' : recTitle(r))}</span>` + (isCur ? HANDLES.map(h => `<i class="hd hd-${h}" data-h="${h}"></i>`).join('') : '');
+    el.onclick = e => { e.stopPropagation(); if (!S.roiDragged) selectRecord(r.id); S.roiDragged = false; };
+    el.style.pointerEvents = 'auto';
+    if (isCur) el.addEventListener('pointerdown', ev => startRoiEdit(ev, r, el));
+    S.viewer.addOverlay({element: el, location: S.viewer.viewport.imageToViewportRectangle(new OpenSeadragon.Rect(r.roi.x, r.roi.y, r.roi.w, r.roi.h)), rotationMode: OpenSeadragon.OverlayRotationMode.EXACT});
+  });
+  roiBtns();
+}
+/* Przesuwanie i zmiana rozmiaru zaznaczenia bieżącego aktu (uchwyty na rogach i krawędziach) */
+function startRoiEdit(ev, rec, el){
+  if (S.roiMode || ev.button) return;
+  const h = ev.target.dataset && ev.target.dataset.h || 'move';
+  ev.stopPropagation(); ev.preventDefault();
+  const vp = S.viewer.viewport, vr = $('viewer').getBoundingClientRect();
+  const toImg = (cx, cy) => vp.viewportToImageCoordinates(vp.pointFromPixel(new OpenSeadragon.Point(cx - vr.left, cy - vr.top)));
+  const p0 = toImg(ev.clientX, ev.clientY), o = Object.assign({}, rec.roi), sz = S.viewer.world.getItemAt(0).getContentSize();
+  let moved = false, cur = Object.assign({}, o);
+  const MIN = 20;
+  const onMove = e => {
+    const p = toImg(e.clientX, e.clientY), dx = p.x - p0.x, dy = p.y - p0.y;
+    let x0 = o.x, y0 = o.y, x1 = o.x + o.w, y1 = o.y + o.h;
+    if (h === 'move'){ x0 += dx; x1 += dx; y0 += dy; y1 += dy; const w = o.w, hh = o.h; if (x0 < 0){ x0 = 0; x1 = w; } if (y0 < 0){ y0 = 0; y1 = hh; } if (x1 > sz.x){ x1 = sz.x; x0 = sz.x - w; } if (y1 > sz.y){ y1 = sz.y; y0 = sz.y - hh; } }
+    else { if (h.includes('w')) x0 = Math.min(x1 - MIN, Math.max(0, x0 + dx)); if (h.includes('e')) x1 = Math.max(x0 + MIN, Math.min(sz.x, x1 + dx)); if (h.includes('n')) y0 = Math.min(y1 - MIN, Math.max(0, y0 + dy)); if (h.includes('s')) y1 = Math.max(y0 + MIN, Math.min(sz.y, y1 + dy)); }
+    if (Math.abs(e.clientX - ev.clientX) + Math.abs(e.clientY - ev.clientY) > 3) moved = true;
+    cur = {x: Math.round(x0), y: Math.round(y0), w: Math.round(x1 - x0), h: Math.round(y1 - y0), page: o.page};
+    S.viewer.updateOverlay(el, vp.imageToViewportRectangle(new OpenSeadragon.Rect(cur.x, cur.y, cur.w, cur.h)));
+  };
+  const onUp = () => {
+    document.removeEventListener('pointermove', onMove); document.removeEventListener('pointerup', onUp);
+    if (!moved) return;
+    S.roiDragged = true; setTimeout(() => S.roiDragged = false, 50);
+    S.undo.push({id: rec.id, f: '__roi', old: JSON.stringify({roi: o, page: rec.page})});
+    rec.roi = cur; rec.at = now(); markDirty(rec.id); drawRois();
+  };
+  document.addEventListener('pointermove', onMove); document.addEventListener('pointerup', onUp);
+}
+function roiBtns(){
+  const rec = currentRec(), has = !!(rec && rec.roi);
+  $('btnRoiDel').disabled = !has; $('btnRoiRedo').disabled = !rec;
+}
+function deleteRoi(){
+  const rec = currentRec(); if (!rec || !rec.roi) return;
+  S.undo.push({id: rec.id, f: '__roi', old: JSON.stringify({roi: rec.roi, page: rec.page})});
+  rec.roi = null; rec.at = now(); markDirty(rec.id); renderAll(); drawRois(); toast('Usunięto ramkę (rekord zostaje). Ctrl+Z cofa.');
+}
+$('btnRoiDel').onclick = deleteRoi;
+$('btnRoiRedo').onclick = () => { const rec = currentRec(); if (!rec) return; if (rec.roi) deleteRoi(); setRoiMode(true); toast('Narysuj ramkę na nowo'); };
+
+/* ===================== IMPORT (w oknie dialogu) ===================== */
+function openDlg(id){ const d = $(id); if (!d.open) d.showModal(); }
+document.querySelectorAll('[data-dlg-close]').forEach(b => b.onclick = () => $(b.dataset.dlgClose).close());
+function guessTemplate(headers){
+  const h = headers.map(x => x.trim());
+  if ((h.includes('ROK') && h.includes('Nr.')) || h.includes('christening_year')) return 'chrzest';
+  return S.tplId;
+}
+function openImport(file){
+  openDlg('dlgImport');
+  const reader = new FileReader();
+  reader.onload = () => parseImport(String(reader.result), file.name);
+  reader.readAsText(file, 'utf-8');
+}
+$('btnImport').onclick = () => openDlg('dlgImport');
+$('btnPickImp').onclick = () => { $('importInput').value = ''; $('importInput').click(); };
+$('importInput').onchange = e => [...e.target.files].forEach(openImport);
+const dz = $('dropImp');
+dz.ondragover = e => { e.preventDefault(); dz.classList.add('over'); };
+dz.ondragleave = () => dz.classList.remove('over');
+dz.ondrop = e => { e.preventDefault(); dz.classList.remove('over'); [...e.dataTransfer.files].forEach(openImport); };
+
+function detectDelim(line){
+  const cands = ['\t', ';', ','];
+  return cands.map(d => [d, line.split(d).length]).sort((a,b) => b[1]-a[1])[0][0];
+}
+function parseImport(text, name){
+  text = text.replace(/^﻿/, '');
+  if (/^\s*[\[{]/.test(text)) return parseJsonImport(text, name);
+  const lines = text.split(/\r?\n/).filter(l => l.trim() !== '');
+  if (lines.length < 2) return toast(`${name}: plik jest pusty albo ma tylko nagłówek`);
+  const d = detectDelim(lines[0]);
+  const rows = lines.map(l => l.split(d).map(c => c.trim()));
+  return finishImport(name, rows[0], rows.slice(1), guessTemplate(rows[0]));
+}
+// JSON z eksportu Firestore ({documents:[{id,data}]}) albo tablica obiektów
+function parseJsonImport(text, name){
+  let j;
+  try { j = JSON.parse(text); }
+  catch(e){ return toast(`${name}: błędny JSON – ${e.message}`, 9000); }
+  const docs = Array.isArray(j) ? j : (j.documents || j.records || j.items || []);
+  const list = docs.map(d => (d && d.data && typeof d.data === 'object') ? {id: d.id, ...d.data} : d)
+                   .filter(x => x && typeof x === 'object' && !Array.isArray(x));
+  if (!list.length) return toast(`${name}: w pliku JSON nie ma rekordów (oczekiwano "documents" albo tablicy)`, 7000);
+  const headers = [...new Set(list.flatMap(o => Object.keys(o)))];
+  const data = list.map(o => headers.map(k => (o[k] ?? '').toString()));
+  return finishImport(name, headers, data, guessTemplate(headers));
+}
+function finishImport(name, headers, data, tplId){
+  const fields = fieldsOf(S.templates.find(t => t.id === tplId));
+  const sig = headers.map(h => h.toLowerCase()).join('|') + '#' + tplId;
+  let saved = {}; try { saved = JSON.parse(localStorage.getItem('map:' + sig) || '{}'); } catch(e){}
+  const map = {};
+  headers.forEach((h, i) => {
+    const norm = h.toLowerCase().replace(/[^a-ząćęłńóśźż0-9]/g, '');
+    const hit = fields.find(f => f.id.replace(/_/g,'') === norm || (f.label||'').toLowerCase().replace(/[^a-ząćęłńóśźż0-9]/g,'') === norm);
+    const pre = tplId === 'chrzest' ? PRESET[h] : '';
+    map[i] = saved[i] ?? (pre || (hit ? hit.id : ''));
+  });
+  S.imps.push({name, headers, data, tplId, map, sig});
+  S.impIdx = S.imps.length - 1;
+  renderImportPanel();
+}
+function renderImportPanel(){
+  const box = $('impPreview');
+  if (!S.imps.length){ box.innerHTML = '<p class="muted">Kolejka jest pusta. Wybierz pliki albo przeciągnij je na pole powyżej.</p>'; return; }
+  const total = S.imps.reduce((n, f) => n + f.data.length, 0);
+  let h = `<p class="muted" style="margin-bottom:8px">Krok 1: sprawdź szablon każdego pliku. Krok 2: w tabeli dopasuj kolumny do pól. Krok 3: „Importuj wszystkie”. Duplikaty (ten sam numer aktu i rok, albo ten sam identyfikator) są pomijane.</p>`;
+  h += `<div class="bar" style="display:flex;gap:8px;align-items:center;margin-bottom:8px"><strong>Kolejka: ${S.imps.length} plik(ów), ${total} wierszy</strong></div>`;
+  h += '<table><thead><tr><th>Plik</th><th>Szablon</th><th>Wiersze</th><th></th></tr></thead><tbody>';
+  S.imps.forEach((f, i) => {
+    h += `<tr class="${i === S.impIdx ? 'sel' : ''}"><td><button data-show="${i}" title="Pokaż mapowanie kolumn">${esc(f.name)}</button></td>`
+       + `<td><select data-tpl="${i}">${S.templates.map(t => `<option value="${esc(t.id)}" ${t.id === f.tplId ? 'selected' : ''}>${esc(t.name)}</option>`).join('')}</select></td>`
+       + `<td>${f.data.length}</td><td><button data-drop="${i}" title="Usuń z kolejki">Usuń</button></td></tr>`;
+  });
+  h += '</tbody></table>';
+  const cur = S.imps[S.impIdx];
+  if (cur){
+    const fields = fieldsOf(S.templates.find(t => t.id === cur.tplId));
+    h += `<p class="muted" style="margin:12px 0 6px">Mapowanie kolumn – ${esc(cur.name)}</p>`;
+    h += '<div style="overflow:auto"><table><thead><tr>' + cur.headers.map(x => `<th>${esc(x)}</th>`).join('') + '</tr><tr>' +
+         cur.headers.map((x,i) => `<td><select data-col="${i}" aria-label="Pole dla kolumny ${esc(x)}"><option value="">— pomiń —</option>${fields.map(f => `<option value="${esc(f.id)}" ${cur.map[i] === f.id ? 'selected' : ''}>${esc(f.label || f.id)}</option>`).join('')}</select></td>`).join('') + '</tr></thead><tbody>';
+    cur.data.slice(0, 4).forEach(r => { h += '<tr>' + cur.headers.map((_,i) => `<td>${esc(r[i])}</td>`).join('') + '</tr>'; });
+    h += '</tbody></table></div>';
+  }
+  h += '<div style="display:flex;gap:8px;margin-top:12px"><button id="impApply" class="primary">Importuj wszystkie</button><button id="impClear">Wyczyść kolejkę</button></div>';
+  box.innerHTML = h;
+  box.querySelectorAll('[data-show]').forEach(b => b.onclick = () => { S.impIdx = +b.dataset.show; renderImportPanel(); });
+  box.querySelectorAll('[data-drop]').forEach(b => b.onclick = () => { S.imps.splice(+b.dataset.drop, 1); S.impIdx = Math.max(0, Math.min(S.impIdx, S.imps.length - 1)); renderImportPanel(); });
+  box.querySelectorAll('select[data-tpl]').forEach(s => s.onchange = () => { const f = S.imps[+s.dataset.tpl]; f.tplId = s.value; f.map = {}; f.headers.forEach((h, i) => { f.map[i] = ''; }); renderImportPanel(); });
+  box.querySelectorAll('select[data-col]').forEach(s => s.onchange = () => { cur.map[s.dataset.col] = s.value; });
+  $('impApply').onclick = applyImport;
+  $('impClear').onclick = () => { S.imps = []; S.impIdx = 0; renderImportPanel(); };
+}
+function applyImport(){
+  if (!S.imps.length) return;
+  const report = {};
+  S.imps.forEach(I => {
+    try { localStorage.setItem('map:' + I.sig, JSON.stringify(I.map)); } catch(e){}
+    let added = 0, skipped = 0;
+    I.data.forEach(row => {
+      const v = {};
+      Object.entries(I.map).forEach(([col, fid]) => { if (fid && row[col] !== undefined && row[col] !== '') v[fid] = row[col]; });
+      if (!Object.keys(v).length) return;
+      const dup = v.source_id
+        ? S.records.some(r => r.tpl === I.tplId && r.v.source_id === v.source_id)
+        : S.records.some(r => r.tpl === I.tplId && r.v.christening_act_number === v.christening_act_number && r.v.christening_year === v.christening_year && r.v.child_last_name === v.child_last_name);
+      if (dup){ skipped++; return; }
+      const rec = {id: uid(), tpl: I.tplId, v, page: -1, roi: null, status: 'nowy', by: I.name, at: now(), uncertain: false};
+      S.records.push(rec); markDirty(rec.id); added++;
+    });
+    const k = S.templates.find(t => t.id === I.tplId)?.name || I.tplId;
+    report[k] = (report[k] || 0) + added;
+    report[k + ' (pominięto)'] = (report[k + ' (pominięto)'] || 0) + skipped;
+  });
+  S.imps = []; S.impIdx = 0;
+  renderImportPanel(); renderAll();
+  toast(Object.entries(report).map(([k, n]) => `${k}: ${n}`).join(' · '), 7000);
+}
+
+/* ===================== EKSPORT ===================== */
+$('btnExport').onclick = async () => {
+  syncFormToRec();
+  const t = tpl(); const cols = fieldsOf(t);
+  const only = S.view === 'work' || S.view === 'check' ? r => r.status !== 'ok' : () => true;
+  const list = S.records.filter(r => r.tpl === t.id).filter(only);
+  const esc2 = s => { s = String(s ?? ''); return /[;"\n]/.test(s) ? '"' + s.replace(/"/g,'""') + '"' : s; };
+  const head = ['status', ...cols.map(c => c.id)].join(';');
+  const body = list.map(r => [STATUS[r.status], ...cols.map(c => r.v[c.id] ?? '')].map(esc2).join(';'));
+  const blob = new Blob(['﻿' + [head, ...body].join('\r\n')], {type: 'text/csv;charset=utf-8'});
+  const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = `${t.id}_${new Date().toISOString().slice(0,10)}.csv`; a.click();
+  toast(`Wyeksportowano ${list.length} rekord(ów)`);
+};
+
+/* ===================== DUPLIKATY ===================== */
+$('btnDup').onclick = () => {
+  syncFormToRec();
+  const map = {};
+  S.records.filter(r => r.tpl === S.tplId).forEach(r => {
+    const k = [r.v.christening_year, r.v.christening_act_number, (r.v.child_last_name||'').toLowerCase()].join('|');
+    (map[k] = map[k] || []).push(r);
+  });
+  const groups = Object.entries(map).filter(([k, a]) => a.length > 1 && k.replace(/\|/g,'').trim());
+  $('dupBody').innerHTML = groups.length
+    ? groups.map(([k, a]) => `<p style="margin-bottom:6px"><strong>${esc(k.replace(/\|/g,' / '))}</strong>: ${a.length} rekordy</p>`).join('')
+    : '<p class="muted">Nie znaleziono możliwych duplikatów.</p>';
+  openDlg('dlgDup');
+};
+
+/* ===================== ZAZNACZANIE I USUWANIE ===================== */
+function updateDelBtn(){
+  const n = S.checked.size;
+  $('btnDelChecked').textContent = n ? `Usuń zaznaczone (${n})` : 'Usuń zaznaczone';
+  $('btnDelChecked').disabled = !n;
+  $('bulk').classList.toggle('show', n > 0);
+}
+function removeRecords(ids, label){
+  confirmBar(`Usunąć ${ids.length} rekord(ów) (${label})? Tego nie cofniesz.`, async () => {
+    const set = new Set(ids);
+    S.records = S.records.filter(r => !set.has(r.id));
+    ids.forEach(id => { S.dirty.delete(id); S.checked.delete(id); });
+    if (S.cur && set.has(S.cur)) S.cur = null;
+    for (const id of ids) await DB.del(id);
+    renderAll(); drawRois();
+    toast(`Usunięto ${ids.length} rekord(ów)`);
+  });
+}
+$('btnDelChecked').onclick = () => removeRecords([...S.checked], 'zaznaczone');
+// Partia = rekordy wczytane z jednego pliku w jednym szablonie
+function renderBatches(){
+  const groups = {};
+  S.records.forEach(r => { const k = r.tpl + '||' + (r.by || '(ręcznie)'); (groups[k] = groups[k] || []).push(r.id); });
+  const keys = Object.keys(groups);
+  if (!keys.length){ $('batches').innerHTML = '<p class="muted">Brak wczytanych partii.</p>'; return; }
+  $('batches').innerHTML = '<strong>Wczytane partie</strong>' + keys.map((k, i) => {
+    const [tid, by] = k.split('||');
+    const t = S.templates.find(x => x.id === tid);
+    return `<div style="display:flex;justify-content:space-between;align-items:center;gap:8px;padding:6px 0;border-bottom:1px solid var(--line)"><span>${esc(by)} · ${esc(t?.name || tid)} · ${groups[k].length}</span><button data-batch="${i}" class="danger">Usuń partię</button></div>`;
+  }).join('');
+  $('batches').querySelectorAll('[data-batch]').forEach(b => b.onclick = () => {
+    const k = keys[+b.dataset.batch];
+    removeRecords(groups[k], k.split('||')[1]);
+  });
+}
+
+/* Wysokość tabeli: przeciągnij uchwyt */
+(function tableResize(){
+  const h = $('resizer'), c = $('app');
+  let drag = false;
+  h.addEventListener('pointerdown', e => { drag = true; h.setPointerCapture(e.pointerId); });
+  h.addEventListener('pointermove', e => {
+    if (!drag) return;
+    const r = c.getBoundingClientRect();
+    const nh = Math.min(r.height - 260, Math.max(90, r.bottom - e.clientY));
+    S.tableH = nh; c.style.setProperty('--tableH', nh + 'px');
+  });
+  h.addEventListener('pointerup', () => { drag = false; if (S.viewer) S.viewer.forceRedraw(); });
+})();
+
+/* ===================== SKRÓTY ===================== */
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape' && (!$('moreMenu').hidden || !$('colMenu').hidden)){ $('moreMenu').hidden = true; $('colMenu').hidden = true; $('btnMore').setAttribute('aria-expanded','false'); return; }
+  if (e.key === 'Escape' && !$('tools').hidden && !document.querySelector('dialog[open]')){ closeTools(); return; }
+  const typing = ['INPUT','TEXTAREA','SELECT'].includes(document.activeElement?.tagName);
+  const mod = e.ctrlKey || e.metaKey;
+  if (mod && e.key.toLowerCase() === 's'){ e.preventDefault(); $('btnSave').click(); return; }
+  if (mod && e.key === 'Enter'){ e.preventDefault(); if (e.shiftKey) finishAndNext(); else saveAndNext(); return; }
+  if (mod && e.key.toLowerCase() === 'z' && !typing){ e.preventDefault(); undoLast(); return; }
+  if (e.altKey && e.key.toLowerCase() === 'n'){ e.preventDefault(); newRecord(); return; }
+  if (e.key === 'Escape'){ if (S.roiMode) setRoiMode(false); S.pendingConfirm = null; $('confirmBar').classList.remove('show'); return; }
+  if (typing) return;
+  if (e.key === 'a' || e.key === 'A') { setRoiMode(!S.roiMode); return; }
+  if (e.key === 'r' || e.key === 'R') { focusRoi(); return; }
+  if (e.key === 'h' || e.key === 'H') { rsCycle(); return; }
+  if (e.key === '[' || e.key === ']') { rotTotal(rotNow() + (e.key === ']' ? 1 : -1) * (e.shiftKey ? 5 : 0.5)); return; }
+  if (e.key === '{' || e.key === '}') { rotTotal(rotNow() + (e.key === '}' ? 5 : -5)); return; }
+  if (e.key === '0') { if (S.viewer) S.viewer.viewport.goHome(); return; }
+  if (e.key === 'ArrowRight') $('nextImg').click();
+  if (e.key === 'ArrowLeft') $('prevImg').click();
+  if (e.key === 'ArrowDown') $('btnNextRec').click();
+  if (e.key === 'ArrowUp') $('btnPrevRec').click();
+});
+// Ctrl+Enter: zapisz bieżący rekord i przejdź do następnego w widoku
+async function saveAndNext(){
+  syncFormToRec();
+  await saveDirty();
+  const before = S.cur;
+  neighbour(1);
+  if (S.cur === before) toast('To ostatni rekord w widoku');
+  focusFirstField();
+}
+
+/* Ostrzeżenie przed zamknięciem z niezapisanymi zmianami */
+window.addEventListener('beforeunload', e => { if (S.dirty.size){ e.preventDefault(); e.returnValue = ''; } });
+
+/* ===================== MOTYW, POSTĘP, WYCINEK, PODPOWIEDZI ===================== */
+const THEME_KEY = 'gv6.theme', SUG_KEY = 'gv6.suggest';
+function lsGet(k, d){ try { const v = localStorage.getItem(k); return v === null ? d : v; } catch(e){ return d; } }
+function lsSet(k, v){ try { localStorage.setItem(k, v); } catch(e){} }
+function applyTheme(t){
+  const r = document.documentElement;
+  if (t === 'light' || t === 'dark') r.setAttribute('data-theme', t); else r.removeAttribute('data-theme');
+  $('btnTheme').textContent = 'Motyw: ' + (t === 'light' ? 'Jasny' : t === 'dark' ? 'Ciemny' : 'Auto');
+}
+$('btnTheme').onclick = e => { e.stopPropagation(); const order = ['auto','light','dark']; const next = order[(order.indexOf(lsGet(THEME_KEY,'auto')) + 1) % 3]; lsSet(THEME_KEY, next); applyTheme(next); };
+
+function renderCrop(){}   // wycinek aktu usunięty (to samo daje powiększenie skanu)
+
+// Poprzedni akt w kolejności aktów (niezależnie od filtra widoku)
+function sortedAll(tid){
+  const act = r => parseInt(r.v.christening_act_number) || 0;
+  return S.records.filter(r => r.tpl === tid).sort((a,b) => (yearOf(a) - yearOf(b)) || (act(a) - act(b)) || String(a.v.source_id || '').localeCompare(String(b.v.source_id || ''), 'pl', {numeric:true}));
+}
+function prevOf(rec){ const list = sortedAll(rec.tpl); const i = list.findIndex(r => r.id === rec.id); return i > 0 ? list[i-1] : null; }
+function copyFromPrev(fid){
+  const rec = currentRec(); if (!rec) return;
+  const prev = prevOf(rec);
+  if (!prev || String(prev.v[fid] ?? '') === '') return toast('Poprzedni akt nie ma wartości w tym polu');
+  const el = $('f_' + fid); if (!el) return;
+  el.value = prev.v[fid]; fieldChanged(fid, el.value); if (el.select) el.select();
+}
+// Nowy akt dostaje rok i kolejny numer po najwyższym dotychczasowym
+function applySuggest(rec){
+  Object.keys(PINS).forEach(k => { if (!rec.v[k] && PINS[k] !== '') rec.v[k] = PINS[k]; });
+  if (lsGet(SUG_KEY, '1') === '0') return;
+  const mine = S.records.filter(r => r.tpl === rec.tpl && r.id !== rec.id && String(r.v.christening_act_number ?? '') !== '');
+  if (!mine.length) return;
+  const num = r => parseInt(r.v.christening_act_number) || 0;
+  const last = mine.slice().sort((a,b) => (yearOf(a) - yearOf(b)) || (num(a) - num(b))).pop();
+  if (last.v.christening_year && !rec.v.christening_year) rec.v.christening_year = last.v.christening_year;
+  const n = parseInt(last.v.christening_act_number);
+  if (!isNaN(n) && !rec.v.christening_act_number) rec.v.christening_act_number = String(n + 1);
+}
+$('chkSuggest').checked = lsGet(SUG_KEY, '1') !== '0';
+$('chkSuggest').onchange = e => lsSet(SUG_KEY, e.target.checked ? '1' : '0');
+
+function focusFirstField(){ const el = document.querySelector('#recForm input:not(:disabled),#recForm select:not(:disabled)'); if (el) el.focus(); }
+async function finishAndNext(){
+  syncFormToRec();
+  const rec = currentRec(); if (!rec) return;
+  const list = filteredRecords(); const i = list.findIndex(r => r.id === rec.id);
+  const nextId = list[i + 1]?.id || null;
+  setStatus('ok'); await saveDirty();
+  if (nextId){ selectRecord(nextId); focusFirstField(); } else toast('To był ostatni rekord w widoku');
+}
+$('btnFinish').onclick = finishAndNext;
+
+/* ===================== ZBIORCZO: STATUS ===================== */
+document.querySelectorAll('[data-bulk]').forEach(b => b.onclick = () => {
+  const st = b.dataset.bulk, g = 'g' + Date.now();
+  let n = 0;
+  S.checked.forEach(id => { const r = S.records.find(x => x.id === id); if (r && r.status !== st){ S.undo.push({id, f:'__status', old:r.status, g}); sessCount(r.status, st); r.status = st; r.at = now(); markDirty(id); n++; } });
+  renderAll(); toast(`Zmieniono status: ${n} rekord(ów)`);
+});
+
+/* ===================== ZNAJDŹ I ZAMIEŃ ===================== */
+function fndMatches(){
+  const f = $('fndField').value, find = $('fndFind').value;
+  if (!f || !find) return [];
+  const whole = $('fndWhole').checked, cs = $('fndCase').checked;
+  const pool = $('fndView').checked ? filteredRecords() : S.records.filter(r => r.tpl === S.tplId);
+  const norm = s => cs ? s : s.toLowerCase(), nf = norm(find);
+  return pool.filter(r => { const v = norm(String(r.v[f] ?? '')); return whole ? v === nf : v.includes(nf); });
+}
+function fndNew(v){
+  const find = $('fndFind').value, repl = $('fndRepl').value;
+  if ($('fndWhole').checked) return repl;
+  const re = new RegExp(find.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), $('fndCase').checked ? 'g' : 'gi');
+  return v.replace(re, () => repl);
+}
+function fndRefresh(){
+  const m = fndMatches(), f = $('fndField').value;
+  $('fndApply').disabled = !m.length;
+  if (!$('fndFind').value){ $('fndPreview').textContent = 'Wpisz tekst do znalezienia.'; return; }
+  $('fndPreview').innerHTML = m.length
+    ? `Znaleziono <strong>${m.length}</strong> rekord(ów).<ul>${m.slice(0, 8).map(r => `<li>${esc(r.v[f])} → <strong>${esc(fndNew(String(r.v[f] ?? '')))}</strong></li>`).join('')}${m.length > 8 ? '<li class="muted">…</li>' : ''}</ul>`
+    : 'Brak pasujących rekordów.';
+}
+$('btnFind').onclick = () => {
+  syncFormToRec();
+  $('fndField').innerHTML = fieldsOf(tpl()).filter(f => f.type !== 'textarea').map(f => `<option value="${esc(f.id)}">${esc(f.label || f.id)}</option>`).join('');
+  $('fndPreview').textContent = 'Wpisz tekst do znalezienia.'; $('fndApply').disabled = true;
+  openDlg('dlgFind'); $('fndFind').focus();
+};
+['fndField','fndFind','fndRepl','fndWhole','fndCase','fndView'].forEach(id => { $(id).addEventListener('input', fndRefresh); $(id).addEventListener('change', fndRefresh); });
+$('fndApply').onclick = () => {
+  const m = fndMatches(), f = $('fndField').value, g = 'g' + Date.now();
+  m.forEach(r => { const old = String(r.v[f] ?? ''); const nv = fndNew(old); if (nv !== old){ S.undo.push({id:r.id, f, old, g}); r.v[f] = nv; r.at = now(); markDirty(r.id); } });
+  $('dlgFind').close(); renderAll(); toast(`Zamieniono w ${m.length} rekord(ach). Ctrl+Z cofa całość.`);
+};
+$('btnHelp').onclick = () => openDlg('dlgHelp');
+
+
+/* ===================== WĄSKI EKRAN: lista jako szuflada, skan większy/mniejszy ===================== */
+$('btnList').onclick = () => $('app').classList.add('listopen');
+$('btnListClose').onclick = () => $('app').classList.remove('listopen');
+$('btnBig').onclick = () => { const on = $('app').classList.toggle('bigview'); $('btnBig').setAttribute('aria-pressed', on); };
+$('tablePanel').addEventListener('click', e => { if (window.matchMedia('(max-width:820px)').matches && e.target.closest('tbody tr') && !e.target.closest('input,button,select')) setTimeout(() => $('app').classList.remove('listopen'), 60); });
+
+
+/* ===================== FILTRY OBRAZU (czytelność akt metrykalnych) ===================== */
+const FX_KEY = 'gv6.fx', FX_DEF = {bri:100, con:100, shp:0, thr:0, gray:false, inv:false, ruler:false};
+const FX_PRESETS = [
+  ['Normalny', {}],
+  ['Atrament', {gray:true, con:160, bri:105}],
+  ['Wyostrz', {gray:true, con:130, shp:1.25}],
+  ['Wyblakłe', {gray:true, con:220, bri:115}],
+  ['Czarno-białe', {gray:true, thr:55}],
+  ['Negatyw', {gray:true, inv:true, con:130}]
+];
+let FX = Object.assign({}, FX_DEF);
+try { Object.assign(FX, JSON.parse(lsGet(FX_KEY, '{}'))); } catch(e){}
+function imgFilter(){
+  const parts = [];
+  if (FX.bri !== 100) parts.push(`brightness(${FX.bri}%)`);
+  if (FX.con !== 100) parts.push(`contrast(${FX.con}%)`);
+  if (FX.gray) parts.push('grayscale(100%)');
+  if (FX.shp > 0) parts.push('url(#fxSharp)');
+  if (FX.thr > 0) parts.push('url(#fxThresh)');
+  if (FX.inv) parts.push('invert(100%)');
+  return parts.length ? parts.join(' ') : 'none';
+}
+function fxApply(){
+  const s = FX.shp;
+  $('fxConv').setAttribute('kernelMatrix', `0 ${-s} 0 ${-s} ${1 + 4 * s} ${-s} 0 ${-s} 0`);
+  const k = 40, t = FX.thr / 100;                   // stromość progu; t = poziom jasności, przy którym zaczyna się biel
+  [...$('fxTT').children].forEach(f => { f.setAttribute('slope', k); f.setAttribute('intercept', (0.5 - k * t).toFixed(3)); });
+  const flt = imgFilter();
+  $('viewer').querySelectorAll('canvas').forEach(c => { if (c.style.filter !== (flt === 'none' ? '' : flt)) c.style.filter = flt === 'none' ? '' : flt; });
+  $('ruler').classList.toggle('on', !!FX.ruler);
+  const changed = JSON.stringify(FX) !== JSON.stringify(FX_DEF);
+  $('btnImgFx').classList.toggle('active', changed);
+  $('btnImgFx').textContent = changed ? 'Obraz ● ▾' : 'Obraz ▾';
+  renderCrop();
+}
+function fxSync(){
+  $('fxBri').value = FX.bri; $('fxCon').value = FX.con; $('fxShp').value = FX.shp; $('fxThr').value = FX.thr;
+  $('oBri').textContent = FX.bri + '%'; $('oCon').textContent = FX.con + '%'; $('oShp').textContent = FX.shp; $('oThr').textContent = FX.thr ? FX.thr + '%' : 'wył.';
+  $('fxGray').checked = FX.gray; $('fxInv').checked = FX.inv; $('fxRuler').checked = FX.ruler;
+  const cur = JSON.stringify(Object.assign({}, FX, {ruler:false}));
+  [...$('fxPresets').children].forEach((b, i) => b.classList.toggle('on', JSON.stringify(Object.assign({}, FX_DEF, FX_PRESETS[i][1], {ruler:false})) === cur));
+}
+function fxSet(patch){ Object.assign(FX, patch); lsSet(FX_KEY, JSON.stringify(FX)); fxSync(); fxApply(); }
+$('fxPresets').innerHTML = FX_PRESETS.map((p, i) => `<button data-i="${i}">${p[0]}</button>`).join('');
+$('fxPresets').onclick = e => { const b = e.target.closest('button'); if (!b) return; fxSet(Object.assign({}, FX_DEF, FX_PRESETS[+b.dataset.i][1], {ruler: FX.ruler})); };
+[['fxBri','bri'],['fxCon','con'],['fxShp','shp'],['fxThr','thr']].forEach(([id, k]) => $(id).oninput = e => fxSet({[k]: +e.target.value}));
+[['fxGray','gray'],['fxInv','inv'],['fxRuler','ruler']].forEach(([id, k]) => $(id).onchange = e => fxSet({[k]: e.target.checked}));
+$('fxReset').onclick = () => fxSet(Object.assign({}, FX_DEF, {ruler: FX.ruler}));
+function fxToggle(on){ const open = on ?? $('imgPanel').hidden; $('imgPanel').hidden = !open; $('btnImgFx').setAttribute('aria-expanded', String(open)); }
+$('btnImgFx').onclick = () => fxToggle();
+$('fxClose').onclick = () => fxToggle(false);
+// nowe płytki/płótna OSD dostają filtr automatycznie
+new MutationObserver(() => { const flt = imgFilter(); if (flt === 'none') return; $('viewer').querySelectorAll('canvas').forEach(c => { if (c.style.filter !== flt) c.style.filter = flt; }); }).observe($('viewer'), {childList:true, subtree:true});
+// linijka czytania: pas podąża za kursorem
+$('viewerWrap').addEventListener('mousemove', e => { if (!FX.ruler) return; const r = $('viewerWrap').getBoundingClientRect(); $('ruler').style.top = Math.max(0, e.clientY - r.top - 17) + 'px'; });
+fxSync(); fxApply();
+
+
+/* ===================== SŁOWNIK Z LICZBĄ WYSTĄPIEŃ ===================== */
+function fold(x){ return String(x).toLowerCase().replace(/ł/g,'l').normalize('NFD').replace(/[̀-ͯ]/g,''); }
+function poolOf(fid){
+  if (/last_name$/.test(fid)) return 'nazwiska';
+  if (/first_name$/.test(fid)) return 'imiona';
+  if (/(place|residence)$/.test(fid)) return 'miejsca';
+  if (/(occupation|profession)$/.test(fid)) return 'zawody';
+  if (['godfather_name','godmother_name','witnesses','officiant'].includes(fid)) return 'osoby';
+  return null;
+}
+/* Formy łacińskie i dawne pisownie imion → współczesne (z danych Blinowa, 66 par). Tylko podpowiedź, nic nie zmienia samo. */
+const NAMEMAP = {"adalbertus": "Wojciech", "sophia": "Zofia", "andreas": "Andrzej", "catharina": "Katarzyna", "martinus": "Marcin", "joannes": "Jan", "josephus": "Józef", "lucas": "Łukasz", "elisabetha": "Elżbieta", "mathias": "Maciej", "antonius": "Antoni", "christophorus": "Krzysztof", "francisca": "Franciszka", "stanislaus": "Stanisław", "jacobus": "Jakub", "simon": "Szymon", "agnes": "Agnieszka", "paulus": "Paweł", "hedvigis": "Jadwiga", "bartholomaeus": "Bartłomiej", "gaspar": "Kacper", "dorothea": "Dorota", "franciscus": "Franciszek", "eva": "Ewa", "rosalia": "Rozalia", "michael": "Michał", "nicolaus": "Mikołaj", "laurentius": "Wawrzyniec", "casimirus": "Kazimierz", "petrus": "Piotr", "thomas": "Tomasz", "valentinus": "Walenty", "sebastianus": "Sebastian", "blasius": "Błażej", "anastasia": "Anastazja", "margarita": "Małgorzata", "susanna": "Zuzanna", "kasper": "Kacper", "woyciech": "Wojciech", "jakob": "Jakub", "maciey": "Maciej", "sebastyan": "Sebastian", "jedrzey": "Jędrzej", "petronella": "Petronela", "wawrzeniec": "Wawrzyniec", "maryanna": "Marianna", "andrzey": "Andrzej", "anastazya": "Anastazja", "bartlomiey": "Bartłomiej", "agniszka": "Agnieszka", "maryianna": "Marianna", "zofiaa": "Zofia", "konstancyia": "Konstancja", "lucya": "Łucja", "felix": "Feliks", "walety": "Walenty", "wicenty": "Wincenty", "fraciszka": "Franciszka", "fraciszek": "Franciszek", "wiktorya": "Wiktoria", "blazey": "Błażej", "katzryna": "Katarzyna", "anastazji": "Anastazja", "agnieszki": "Agnieszka", "jozef(a)": "Józefa"};
+const POOL_LABEL = {nazwiska:'nazwisk', imiona:'imion', miejsca:'miejscowości', zawody:'zawodów', osoby:'osób'};
+let _vocab = null, _vocabKey = '';
+function vocab(){
+  const key = S.tplId + '|' + S.cur + '|' + S.records.length;
+  if (_vocab && _vocabKey === key) return _vocab;
+  const t = tpl(), fs = t ? fieldsOf(t).filter(f => (!f.type || f.type === 'text') && poolOf(f.id)) : [];
+  const pools = {};
+  S.records.forEach(r => {
+    if (r.tpl !== S.tplId || r.id === S.cur) return;
+    const seen = {};
+    fs.forEach(f => {
+      const v = String(r.v[f.id] ?? '').trim(); if (!v) return;
+      const pl = poolOf(f.id), k = pl + '\u0001' + v;
+      if (seen[k]) return; seen[k] = 1;
+      const m = pools[pl] || (pools[pl] = new Map());
+      m.set(v, (m.get(v) || 0) + 1);
+    });
+  });
+  Object.values(pools).forEach(m => { m._arr = [...m.entries()].map(([v, n]) => ({v, n, f: fold(v)})); });
+  _vocab = pools; _vocabKey = key; return pools;
+}
+function lev(a, b, max){
+  if (Math.abs(a.length - b.length) > max) return max + 1;
+  let prev = Array.from({length: b.length + 1}, (_, i) => i);
+  for (let i = 1; i <= a.length; i++){
+    const cur = [i]; let best = i;
+    for (let j = 1; j <= b.length; j++){ const v = Math.min(prev[j] + 1, cur[j-1] + 1, prev[j-1] + (a[i-1] === b[j-1] ? 0 : 1)); cur.push(v); if (v < best) best = v; }
+    if (best > max) return max + 1; prev = cur;
+  }
+  return prev[b.length];
+}
+function updateVcnt(fid, val){
+  if (/_age$/.test(fid)) return ageHint(fid, val);
+  const el = $('vc_' + fid); if (!el) return;
+  const pl = poolOf(fid), v = String(val ?? '').trim();
+  if (!v){ el.textContent = ''; el.className = 'vcnt'; return; }
+  const n = (vocab()[pl]?.get(v)) || 0;
+  el.textContent = n ? `×${n} w bazie` : 'nowe w bazie';
+  el.className = 'vcnt' + (n ? '' : ' new');
+  el.title = n ? `Tyle innych aktów ma dokładnie taki zapis (${POOL_LABEL[pl]})` : 'Żaden inny akt nie ma takiego zapisu. Sprawdź pisownię.';
+}
+$('recForm').addEventListener('click', e => {
+  const b = e.target.closest('.vcnt.age[data-b]'); if (!b) return;
+  const fid = b.id.slice(3), inp = $('f_' + fid), rec = currentRec(); if (!inp || !rec) return;
+  const raw = b.dataset.raw, nv = '~' + b.dataset.b;
+  inp.value = nv; fieldChanged(fid, nv);
+  const o = $('f_notes_org'); if (o){ const T = tpl(), lab = (T ? fieldsOf(T).find(f => f.id === fid)?.label : '') || fid, note = lab + ' oryg.: ' + raw; if (!o.value.includes(note)){ o.value = (o.value.trim() ? o.value.trim() + '; ' : '') + note; fieldChanged('notes_org', o.value); } }
+  ageHint(fid, nv); toast('Wiek zapisany jako ' + nv);
+});
+let sugState = {items: [], i: -1, inp: null, fid: null};
+function hideSug(){ $('sug').style.display = 'none'; sugState.items = []; sugState.i = -1; }
+function showSug(inp, fid){
+  const pl = poolOf(fid), val = inp.value.trim();
+  if (!pl || !val || document.activeElement !== inp){ hideSug(); return; }
+  const M0 = vocab()[pl], fv = fold(val);
+  if (!M0 && !(pl === 'imiona' && NAMEMAP[fv])){ hideSug(); return; }
+  const M = M0 || Object.assign(new Map(), {_arr: []});
+  let pre = M._arr.filter(e => e.f.startsWith(fv) && e.v !== val);
+  pre.sort((a, b) => b.n - a.n || a.v.localeCompare(b.v, 'pl'));
+  let items = pre.slice(0, 8).map(e => ({v: e.v, n: e.n}));
+  if (pl === 'imiona' && NAMEMAP[fv] && NAMEMAP[fv] !== val){ const t = NAMEMAP[fv]; items = items.filter(e => e.v !== t); items.unshift({v: t, n: M.get(t) || 0, hist: true, from: val}); }
+  if (items.length < 6){
+    const inc = M._arr.filter(e => !e.f.startsWith(fv) && e.f.includes(fv) && fv.length >= 2);
+    inc.sort((a, b) => b.n - a.n); items = items.concat(inc.slice(0, 6 - items.length).map(e => ({v: e.v, n: e.n})));
+  }
+  const exact = M.get(val) || 0;
+  if (!exact && fv.length >= 4){
+    const max = fv.length >= 7 ? 2 : 1;
+    const fz = M._arr.filter(e => e.n >= 2 && !items.some(i => i.v === e.v) && lev(fv, e.f, max) <= max).sort((a, b) => b.n - a.n).slice(0, 3);
+    items = items.concat(fz.map(e => ({v: e.v, n: e.n, fz: true})));
+  }
+  sugState = {items, i: -1, inp, fid};
+  if (!items.length){ hideSug(); return; }
+  const box = $('sug');
+  box.innerHTML = items.map((it, i) => `<div class="sugi${it.fz ? ' fz' : ''}${it.hist ? ' hist' : ''}" data-i="${i}" role="option"><span>${it.hist ? '→ ' : ''}${esc(it.v)}${it.fz ? ' <small>(podobne?)</small>' : ''}${it.hist ? ' <small>(forma współczesna; oryginał zostaje w notatkach)</small>' : ''}</span><b>×${it.n}</b></div>`).join('')
+    + `<div class="sugh">↑↓ wybór · Enter wstawia · Esc zamyka · ×N = ile innych aktów ma ten zapis</div>`;
+  const r = inp.getBoundingClientRect();
+  box.style.display = 'block'; box.style.width = Math.max(r.width, 220) + 'px'; box.style.left = Math.min(r.left, innerWidth - Math.max(r.width, 220) - 8) + 'px';
+  const h = box.offsetHeight;
+  box.style.top = (innerHeight - r.bottom < h + 12 ? Math.max(4, r.top - h - 2) : r.bottom + 2) + 'px';
+}
+function pickSug(i){
+  const it = sugState.items[i]; if (!it || !sugState.inp) return;
+  const inp = sugState.inp, fid = sugState.fid;
+  inp.value = it.v; fieldChanged(fid, it.v); updateVcnt(fid, it.v);
+  if (it.hist && it.from){ const o = $('f_notes_org'); if (o){ const note = 'imię oryg.: ' + it.from; if (!o.value.includes(note)){ o.value = (o.value.trim() ? o.value.trim() + '; ' : '') + note; fieldChanged('notes_org', o.value); } } }
+  hideSug(); inp.focus();
+}
+$('sug').addEventListener('mousedown', e => { const d = e.target.closest('.sugi'); if (d){ e.preventDefault(); pickSug(+d.dataset.i); } });
+function sugKey(e, inp, fid){
+  if ($('sug').style.display === 'none' || sugState.inp !== inp) return false;
+  const n = sugState.items.length;
+  const mark = () => { $('sug').querySelectorAll('.sugi').forEach((d, k) => d.classList.toggle('on', k === sugState.i)); const on = $('sug').querySelector('.sugi.on'); if (on) on.scrollIntoView({block:'nearest'}); };
+  if (e.key === 'ArrowDown'){ e.preventDefault(); sugState.i = (sugState.i + 1) % n; mark(); return true; }
+  if (e.key === 'ArrowUp'){ e.preventDefault(); sugState.i = (sugState.i - 1 + n) % n; mark(); return true; }
+  if (e.key === 'Escape'){ e.preventDefault(); e.stopPropagation(); hideSug(); return true; }
+  if ((e.key === 'Enter' || e.key === 'Tab') && sugState.i >= 0 && !e.shiftKey){ e.preventDefault(); pickSug(sugState.i); return true; }
+  return false;
+}
+
+/* ===================== PRZYPIĘTE WARTOŚCI (nowe akty dostają je same) ===================== */
+let PINS = {};
+try { PINS = JSON.parse(lsGet('gv6.pins', '{}')) || {}; } catch(e){ PINS = {}; }
+function pinBtn(f){
+  if (!(!f.type || f.type === 'text' || f.type === 'number' || f.type === 'select')) return '';
+  if (['uncertain_fields','verification_status','source_id'].includes(f.id) || /act_number$/.test(f.id)) return '';
+  const on = Object.prototype.hasOwnProperty.call(PINS, f.id);
+  return `<button type="button" class="pbtn" data-pin="${esc(f.id)}" aria-pressed="${on}" title="${on ? 'Przypięte: nowe akty dostaną „' + esc(PINS[f.id]) + '”. Kliknij, by odpiąć.' : 'Przypnij tę wartość: każdy nowy akt dostanie ją automatycznie'}">⚑</button>`;
+}
+function togglePin(fid){
+  syncFormToRec();
+  const rec = currentRec();
+  if (Object.prototype.hasOwnProperty.call(PINS, fid)){ delete PINS[fid]; toast('Odpięto pole'); }
+  else { const v = rec ? String(rec.v[fid] ?? '') : ''; if (!v.trim()) return toast('Najpierw wpisz wartość, potem ją przypnij'); PINS[fid] = v; toast(`Przypięto: nowe akty dostaną „${v}”`); }
+  lsSet('gv6.pins', JSON.stringify(PINS)); renderForm();
+}
+
+/* ===================== KONTROLA DANYCH ===================== */
+const NAME_OK = /^[\p{L}][\p{L}\s.'’\-\/()?]*$/u;
+function parseAge(raw, year){
+  const t = String(raw ?? '').trim().toLowerCase().replace(',', '.'); if (!t) return null;
+  let m = t.match(/^~\s*(\d{4})$/); if (m) return year < 9999 ? {y: year - +m[1], birth: +m[1], tilde: true} : null;
+  m = t.match(/^(?:(l|lat|lata|m|mies|mcy|t|tyg|d|dni)\.?\s*)?(\d{1,3}(?:\.\d+)?)(?:\s*(l|lat|lata|m|mies|mcy|t|tyg|d|dni)\.?)?$/);
+  if (!m) return null;
+  const u = m[1] || m[3] || 'l', n = +m[2], div = /^(m|mies|mcy)$/.test(u) ? 12 : /^(t|tyg)$/.test(u) ? 52 : /^(d|dni)$/.test(u) ? 365 : 1;
+  const y = n / div;
+  return {y, unit: u, birth: year < 9999 ? year - Math.round(y) : null, tilde: false};
+}
+function ageNum(raw, year){ const a = parseAge(raw, year); return a ? a.y : null; }
+function ageHint(fid, val){
+  const el = $('vc_' + fid); if (!el) return;
+  const rec = currentRec(), a = rec ? parseAge(val, yearOf(rec)) : null;
+  if (!a || a.tilde || a.birth == null){ el.textContent = ''; el.className = 'vcnt age'; el.removeAttribute('data-b'); return; }
+  el.textContent = `→ ~${a.birth}`; el.dataset.b = a.birth; el.dataset.raw = String(val).trim();
+  el.className = 'vcnt age'; el.title = `Zapisz jako ~${a.birth}. Surowy zapis „${String(val).trim()}” trafi do notatek oryginalnych.`;
+}
+function issuesOf(rec, ctx){
+  const out = [], v = rec.v, t = rec.tpl;
+  const add = (f, msg, lvl = 'warn') => out.push({f, msg, lvl});
+  const T = S.templates.find(x => x.id === t);
+  (T ? fieldsOf(T) : []).forEach(f => { if (f.required && String(v[f.id] ?? '').trim() === '' && rec.status !== 'nowy') add(f.id, `brak: ${f.label}`, rec.status === 'ok' ? 'err' : 'warn'); });
+  Object.keys(v).forEach(fid => {
+    if (!/(first|last)_name$/.test(fid)) return;
+    const x = String(v[fid] ?? '').trim(); if (!x) return;
+    if (x.length < 2) add(fid, `„${x}” – za krótkie`);
+    else if (!NAME_OK.test(x)) add(fid, `„${x}” – nietypowe znaki`);
+  });
+  if (t === 'chrzest'){
+    const y = parseInt(v.christening_year);
+    if (String(v.christening_year ?? '').trim() && (isNaN(y) || y < 1500 || y > 1950)) add('christening_year', `rok „${v.christening_year}” poza zakresem 1500–1950`);
+    const nr = String(v.christening_act_number ?? '').trim();
+    if (nr && ctx && ctx.dup[yearOf(rec) + '|' + nr] > 1) add('christening_act_number', `numer ${nr} powtórzony w roku ${yearOf(rec)}`);
+    const ya = yearOf(rec);
+    const fa = ageNum(v.father_age, ya), ma = ageNum(v.mother_age, ya);
+    if (fa !== null && (fa < 15 || fa > 85)) add('father_age', `wiek ojca ${fa} lat – sprawdź`);
+    if (ma !== null && (ma < 13 || ma > 55)) add('mother_age', `wiek matki ${ma} lat – sprawdź`);
+    if (v.child_legitimacy === 'ślubne' && !String(v.father_first_name ?? '').trim() && !String(v.father_last_name ?? '').trim()) add('father_first_name', 'ślubne, ale brak ojca');
+  }
+  return out;
+}
+function dupCtx(){
+  const dup = {};
+  S.records.filter(r => r.tpl === S.tplId).forEach(r => { const nr = String(r.v.christening_act_number ?? '').trim(); if (nr){ const k = yearOf(r) + '|' + nr; dup[k] = (dup[k] || 0) + 1; } });
+  return {dup};
+}
+function renderIssues(rec){
+  const el = $('issueBar'); if (!rec){ el.innerHTML = ''; return; }
+  const list = issuesOf(rec, dupCtx());
+  document.querySelectorAll('#recForm .fg.bad,#recForm .fg.warnf').forEach(g => g.classList.remove('bad', 'warnf'));
+  list.forEach(x => { const g = $('f_' + x.f)?.closest('.fg'); if (g) g.classList.add(x.lvl === 'err' ? 'bad' : 'warnf'); });
+  el.innerHTML = list.slice(0, 6).map((x, i) => `<button class="${x.lvl}" data-f="${esc(x.f)}" title="Przejdź do pola">⚠ ${esc(x.msg)}</button>`).join('') + (list.length > 6 ? `<span class="muted">+${list.length - 6}</span>` : '');
+  el.querySelectorAll('button').forEach(b => b.onclick = () => { const i = $('f_' + b.dataset.f); if (i){ const g = i.closest('details'); if (g) g.open = true; i.focus(); if (i.select) i.select(); } });
+}
+function gapsOf(){
+  const by = {};
+  S.records.filter(r => r.tpl === 'chrzest').forEach(r => { const n = parseInt(r.v.christening_act_number); if (!isNaN(n)){ (by[yearOf(r)] = by[yearOf(r)] || new Set()).add(n); } });
+  const out = [];
+  Object.keys(by).sort().forEach(y => {
+    const a = [...by[y]].sort((p, q) => p - q); let miss = [];
+    for (let i = 1; i < a.length; i++){ if (a[i] - a[i-1] > 1) miss.push(a[i-1] + 1 === a[i] - 1 ? `${a[i-1] + 1}` : `${a[i-1] + 1}–${a[i] - 1}`); }
+    if (miss.length) out.push({y, miss, max: a[a.length - 1], n: a.length});
+  });
+  return out;
+}
+function openCheck(){
+  syncFormToRec();
+  const ctx = dupCtx(), all = [];
+  S.records.filter(r => r.tpl === S.tplId).forEach(r => issuesOf(r, ctx).forEach(x => all.push({r, ...x})));
+  const kinds = {}; all.forEach(x => { const k = x.msg.replace(/[„“"][^”"]*[”"]/g, '…').replace(/\d+/g, 'N').replace(/ – .*$/, ' – …'); kinds[k] = (kinds[k] || 0) + 1; });
+  const gaps = S.tplId === 'chrzest' ? gapsOf() : [];
+  const cap = 300;
+  $('chkBody').innerHTML = `<div class="chkSum"><span><b>${all.length}</b> uwag w ${new Set(all.map(x => x.r.id)).size} rekordach</span>${Object.entries(kinds).sort((a, b) => b[1] - a[1]).slice(0, 6).map(([k, n]) => `<span>${esc(k)}: ${n}</span>`).join('')}</div>`
+    + (gaps.length ? `<p><strong>Przeskoki numeracji</strong> (brakujące numery między wpisanymi):</p><ul>${gaps.map(g => `<li>${g.y === '9999' ? 'rok nieznany' : g.y}: brak ${esc(g.miss.slice(0, 12).join(', '))}${g.miss.length > 12 ? '…' : ''}</li>`).join('')}</ul>` : '')
+    + (all.length ? `<p><strong>Rekordy z uwagami</strong>${all.length > cap ? ` (pierwsze ${cap})` : ''}:</p><div class="chkList">${all.slice(0, cap).map((x, i) => `<button data-i="${i}"><span class="k">${esc(x.r.v.christening_year || '')} ${esc(x.r.v.christening_act_number || '—')}</span><span>${esc(recTitle(x.r))} – ${esc(x.msg)}</span></button>`).join('')}</div>` : '<p>Brak uwag. 👍</p>');
+  $('chkBody').querySelectorAll('.chkList button').forEach(b => b.onclick = () => {
+    const x = all[+b.dataset.i]; $('dlgCheck').close();
+    if (!filteredRecords().some(r => r.id === x.r.id)) $('tabAll').click();
+    S.colF = {}; selectRecord(x.r.id); ensureRowVisible(x.r.id);
+    setTimeout(() => { const i = $('f_' + x.f); if (i){ const g = i.closest('details'); if (g) g.open = true; i.focus(); } }, 50);
+  });
+  openDlg('dlgCheck');
+}
+$('btnCheck').onclick = openCheck;
+
+/* ===================== STATYSTYKA SESJI ===================== */
+let SESS = {day: new Date().toDateString(), n: 0, t0: Date.now()};
+try { const o = JSON.parse(lsGet('gv6.sess', 'null')); if (o && o.day === SESS.day) SESS = o; } catch(e){}
+function sessCount(was, now_){
+  if (now_ === 'ok' && was !== 'ok') SESS.n++; else if (was === 'ok' && now_ !== 'ok' && SESS.n > 0) SESS.n--;
+  lsSet('gv6.sess', JSON.stringify(SESS)); sessShow();
+}
+function sessShow(){
+  const h = (Date.now() - SESS.t0) / 3600000;
+  const el = $('sess'); if (!el) return;
+  el.textContent = SESS.n ? `dziś +${SESS.n}${h > 0.05 ? ' · ' + Math.round(SESS.n / h) + '/h' : ''}` : '';
+}
+setInterval(sessShow, 60000); sessShow();
+
+
+/* ===================== NARZĘDZIA (podstrona) ===================== */
+const TOOL_TABS = [['stat','Statystyki'],['dict','Słownik'],['abbr','Skróty'],['data','Kopia i dane'],['set','Ustawienia']];
+let toolTab = 'stat';
+const dictSt = {pool:'nazwiska', q:'', sel:new Set(), armed:false, pairs:null};
+let ABBR = [];
+try { ABBR = JSON.parse(lsGet('gv6.abbr', '[]')) || []; } catch(e){ ABBR = []; }
+let UI = {sz:1, compact:false};
+try { Object.assign(UI, JSON.parse(lsGet('gv6.ui', '{}'))); } catch(e){}
+function uiApply(){ document.documentElement.style.setProperty('--sz', UI.sz); document.body.classList.toggle('compact', !!UI.compact); }
+function uiSet(p){ Object.assign(UI, p); lsSet('gv6.ui', JSON.stringify(UI)); uiApply(); }
+function openTools(tab){
+  syncFormToRec(); if (tab) toolTab = tab;
+  $('tools').style.setProperty('--topH', document.querySelector('.top').getBoundingClientRect().bottom + 'px');
+  $('tools').hidden = false; renderTools(); $('tlBack').focus();
+}
+function closeTools(){ $('tools').hidden = true; renderAll(); }
+$('btnTools').onclick = () => openTools();
+$('tlBack').onclick = closeTools;
+window.addEventListener('resize', () => { if (!$('tools').hidden) $('tools').style.setProperty('--topH', document.querySelector('.top').getBoundingClientRect().bottom + 'px'); });
+function renderTools(){
+  $('tlNav').innerHTML = TOOL_TABS.map(([k, n]) => `<button role="tab" data-k="${k}" aria-selected="${k === toolTab}">${n}</button>`).join('');
+  $('tlNav').onclick = e => { const b = e.target.closest('button'); if (b){ toolTab = b.dataset.k; renderTools(); } };
+  ({stat: toolStat, dict: toolDict, abbr: toolAbbr, data: toolData, set: toolSet})[toolTab]();
+}
+const bar = (pct, cls = '') => `<div class="bar"><i class="${cls}" style="width:${Math.max(0, Math.min(100, pct))}%"></i></div>`;
+function poolCounts(pool){
+  const t = tpl(), fs = fieldsOf(t).filter(f => (!f.type || f.type === 'text') && poolOf(f.id) === pool), m = new Map();
+  S.records.forEach(r => { if (r.tpl !== S.tplId) return; const seen = new Set(); fs.forEach(f => { const v = String(r.v[f.id] ?? '').trim(); if (v && !seen.has(v)){ seen.add(v); m.set(v, (m.get(v) || 0) + 1); } }); });
+  return m;
+}
+/* ---- Statystyki ---- */
+function toolStat(){
+  const t = tpl(), mine = S.records.filter(r => r.tpl === S.tplId), N = mine.length;
+  const st = {nowy:0, w_toku:0, check:0, ok:0}; mine.forEach(r => st[r.status] = (st[r.status] || 0) + 1);
+  const years = {}; mine.forEach(r => { const y = yearOf(r) === 9999 ? 'brak roku' : String(yearOf(r)); const o = years[y] || (years[y] = {n:0, ok:0}); o.n++; if (r.status === 'ok') o.ok++; });
+  const fs = fieldsOf(t).filter(f => !['notes','notes_org','uncertain_fields','verification_status'].includes(f.id));
+  const fill = fs.map(f => ({f, n: mine.filter(r => String(r.v[f.id] ?? '').trim() !== '').length})).sort((a, b) => a.n - b.n);
+  const topN = pool => [...poolCounts(pool).entries()].sort((a, b) => b[1] - a[1]).slice(0, 10);
+  const top = pool => `<table class="tblS">${topN(pool).map(([v, n]) => `<tr><td>${esc(v)}</td><td class="n">${n}</td></tr>`).join('') || '<tr><td class="muted">brak danych</td></tr>'}</table>`;
+  $('tlBody').innerHTML = `<div class="tlWrap">
+    <div class="card"><h3>${esc(t.name)} – stan pracy</h3><div class="kpis">
+      <div class="kpi"><b>${N}</b><span>rekordów</span></div>
+      <div class="kpi"><b>${st.ok}</b><span>gotowe (${N ? Math.round(st.ok * 100 / N) : 0}%)</span></div>
+      <div class="kpi"><b>${st.check}</b><span>do sprawdzenia</span></div>
+      <div class="kpi"><b>${st.w_toku}</b><span>w toku</span></div>
+      <div class="kpi"><b>${st.nowy}</b><span>nowe</span></div>
+      <div class="kpi"><b>${mine.filter(r => r.roi).length}</b><span>powiązane ze skanem</span></div>
+      <div class="kpi"><b>${SESS.n}</b><span>gotowe dziś</span></div></div></div>
+    <div class="card"><h3>Według roku</h3>${Object.keys(years).sort().map(y => { const o = years[y]; return `<div class="brow"><span>${esc(y)}</span>${bar(o.n ? o.ok * 100 / o.n : 0, 'ok')}<span>${o.ok}/${o.n}</span></div>`; }).join('') || '<p class="muted">Brak danych.</p>'}</div>
+    <div class="card"><h3>Wypełnienie pól <span class="muted">(od najbardziej pustych)</span></h3>${fill.map(x => `<div class="brow"><span title="${esc(x.f.label)}">${esc((x.f.label || x.f.id).slice(0, 26))}</span>${bar(N ? x.n * 100 / N : 0, x.n / (N || 1) < .5 ? 'warn' : '')}<span>${N ? Math.round(x.n * 100 / N) : 0}% (${x.n})</span></div>`).join('')}</div>
+    <div class="card"><h3>Najczęstsze nazwiska</h3>${top('nazwiska')}</div>
+    <div class="card"><h3>Najczęstsze imiona</h3>${top('imiona')}</div>
+  </div>`;
+}
+/* ---- Słownik ---- */
+function toolDict(){
+  const m = poolCounts(dictSt.pool), q = fold(dictSt.q);
+  const all = [...m.entries()].filter(([v]) => !q || fold(v).includes(q)).sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0], 'pl'));
+  const shown = all.slice(0, 300);
+  const selN = [...dictSt.sel].reduce((a, v) => a + (m.get(v) || 0), 0);
+  const best = [...dictSt.sel].sort((a, b) => (m.get(b) || 0) - (m.get(a) || 0))[0] || '';
+  $('tlBody').innerHTML = `<div class="tlWrap">
+    <div class="card"><h3>Słownik zapisów</h3>
+      <p class="muted" style="margin-bottom:10px">Wszystkie wartości z bazy z liczbą aktów. Zaznacz warianty tego samego zapisu (np. „Kowalski”, „Kowalsky”) i połącz je w jeden. Nic nie zmienia się samo; całość cofniesz Ctrl+Z.</p>
+      <div class="tlRow">
+        <select id="dcPool">${Object.entries(POOL_LABEL).map(([k, n]) => `<option value="${k}"${k === dictSt.pool ? ' selected' : ''}>${n}</option>`).join('')}</select>
+        <input type="text" id="dcQ" placeholder="Szukaj w słowniku…" value="${esc(dictSt.q)}" autocomplete="off">
+        <span class="muted">${all.length} różnych zapisów${all.length > 300 ? ' (pokazano 300)' : ''}</span>
+        <button id="dcSim">Znajdź podobne</button>
+      </div>
+      <div id="dcPairs" class="pairs"></div>
+    </div>
+    <div class="card"><div class="tlRow" style="margin-bottom:8px">
+        <span><b>${dictSt.sel.size}</b> zaznaczonych (${selN} aktów)</span>
+        <input type="text" id="dcTarget" placeholder="połącz w…" value="${esc(dictSt.target ?? best)}" autocomplete="off" ${dictSt.sel.size ? '' : 'disabled'}>
+        <button id="dcMerge" class="${dictSt.armed ? 'danger' : 'primary'}" ${dictSt.sel.size > 1 || (dictSt.sel.size === 1) ? '' : 'disabled'}>${dictSt.armed ? 'Na pewno? Kliknij ponownie' : 'Połącz'}</button>
+        <button id="dcClear" ${dictSt.sel.size ? '' : 'disabled'}>Wyczyść zaznaczenie</button></div>
+      <div class="scroll300"><table class="tblS"><thead><tr><th style="width:30px"></th><th>Zapis</th><th style="text-align:right">Akty</th><th></th></tr></thead><tbody>
+      ${shown.map(([v, n]) => `<tr><td><input type="checkbox" data-v="${esc(v)}" ${dictSt.sel.has(v) ? 'checked' : ''} aria-label="Zaznacz"></td><td>${esc(v)}</td><td class="n">${n}</td><td><button data-go="${esc(v)}" style="min-height:22px;padding:0 8px;font-size:12px">pokaż akty</button></td></tr>`).join('')}
+      </tbody></table></div></div>
+  </div>`;
+  $('dcPool').onchange = e => { dictSt.pool = e.target.value; dictSt.sel.clear(); dictSt.pairs = null; dictSt.armed = false; dictSt.target = undefined; toolDict(); };
+  $('dcQ').oninput = e => { dictSt.q = e.target.value; const pos = e.target.selectionStart; toolDict(); const el = $('dcQ'); el.focus(); el.setSelectionRange(pos, pos); };
+  $('dcTarget').oninput = e => { dictSt.target = e.target.value; dictSt.armed = false; $('dcMerge').textContent = 'Połącz'; $('dcMerge').className = 'primary'; };
+  $('dcClear').onclick = () => { dictSt.sel.clear(); dictSt.armed = false; dictSt.target = undefined; toolDict(); };
+  $('tlBody').querySelectorAll('input[data-v]').forEach(c => c.onchange = () => { if (c.checked) dictSt.sel.add(c.dataset.v); else dictSt.sel.delete(c.dataset.v); dictSt.armed = false; dictSt.target = undefined; toolDict(); });
+  $('tlBody').querySelectorAll('[data-go]').forEach(b => b.onclick = () => { closeTools(); $('tabAll').click(); $('filter').value = b.dataset.go; $('filter').dispatchEvent(new Event('input')); });
+  $('dcSim').onclick = () => showSimilar(m);
+  $('dcMerge').onclick = () => {
+    const target = ($('dcTarget').value || '').trim(); if (!target) return toast('Wpisz zapis docelowy');
+    if (!dictSt.armed){ dictSt.armed = true; dictSt.target = target; $('dcMerge').textContent = 'Na pewno? Kliknij ponownie'; $('dcMerge').className = 'danger'; return; }
+    mergeValues(dictSt.pool, new Set(dictSt.sel), target); dictSt.sel.clear(); dictSt.armed = false; dictSt.target = undefined; toolDict();
+  };
+  if (dictSt.pairs) renderPairs();
+}
+function showSimilar(m){
+  const arr = [...m.entries()].map(([v, n]) => ({v, n, f: fold(v)})).filter(e => e.f.length >= 4);
+  const bucket = {}; arr.forEach(e => { (bucket[e.f[0]] = bucket[e.f[0]] || []).push(e); });
+  const pairs = [];
+  Object.values(bucket).forEach(b => { for (let i = 0; i < b.length; i++) for (let j = i + 1; j < b.length; j++){ const a = b[i], c = b[j]; if (Math.abs(a.f.length - c.f.length) > 1) continue; if (a.f !== c.f && lev(a.f, c.f, 1) <= 1) pairs.push(a.n >= c.n ? [a, c] : [c, a]); else if (a.f === c.f && a.v !== c.v) pairs.push(a.n >= c.n ? [a, c] : [c, a]); } });
+  pairs.sort((p, q) => (q[0].n + q[1].n) - (p[0].n + p[1].n));
+  dictSt.pairs = pairs.slice(0, 40); renderPairs();
+}
+function renderPairs(){
+  const el = $('dcPairs'); if (!el) return;
+  el.innerHTML = dictSt.pairs.length ? `<span class="muted">Podobne zapisy (kliknij, by zaznaczyć oba):</span>` + dictSt.pairs.map((p, i) => `<button data-i="${i}">${esc(p[0].v)} <b>×${p[0].n}</b> ↔ ${esc(p[1].v)} <b>×${p[1].n}</b></button>`).join('') : '<span class="muted">Nie znaleziono podobnych zapisów.</span>';
+  el.querySelectorAll('button').forEach(b => b.onclick = () => { const p = dictSt.pairs[+b.dataset.i]; dictSt.sel.clear(); dictSt.sel.add(p[0].v); dictSt.sel.add(p[1].v); dictSt.target = p[0].v; dictSt.armed = false; const keep = dictSt.pairs; toolDict(); dictSt.pairs = keep; renderPairs(); });
+}
+function mergeValues(pool, set, target){
+  const t = tpl(), fs = fieldsOf(t).filter(f => (!f.type || f.type === 'text') && poolOf(f.id) === pool), g = 'g' + Date.now();
+  let recs = 0, cells = 0;
+  S.records.forEach(r => { if (r.tpl !== S.tplId) return; let hit = false; fs.forEach(f => { const v = String(r.v[f.id] ?? '').trim(); if (set.has(v) && v !== target){ S.undo.push({id: r.id, f: f.id, old: r.v[f.id], g}); r.v[f.id] = target; cells++; hit = true; } }); if (hit){ r.at = now(); markDirty(r.id); recs++; } });
+  toast(`Połączono: ${cells} zapisów w ${recs} aktach. Ctrl+Z cofa.`);
+}
+/* ---- Skróty ---- */
+function expandAbbr(fid, val){
+  const pl = poolOf(fid); if (!pl || !ABBR.length) return val;
+  const v = String(val).trim(), map = new Map(ABBR.filter(a => a.k && a.v).map(a => [a.k, a.v]));
+  if (map.has(v)) return map.get(v);
+  if (pl === 'imiona' || pl === 'osoby') return v.split(/\s+/).map(w => map.get(w) || w).join(' ');
+  return val;
+}
+function toolAbbr(){
+  $('tlBody').innerHTML = `<div class="tlWrap"><div class="card"><h3>Skróty rozwijane</h3>
+    <p class="muted" style="margin-bottom:10px">Wpisz w polu skrót i naciśnij Enter lub Tab: zamieni się na pełny zapis. W polach imion i osób rozwija każde słowo z osobna, w pozostałych (nazwiska, miejscowości, zawody) tylko cały wpis. Skróty rozróżniają wielkość liter.</p>
+    <table class="tblS"><thead><tr><th>Skrót</th><th>Rozwija się do</th><th></th></tr></thead><tbody id="abBody">
+    ${ABBR.map((a, i) => `<tr><td><input type="text" data-i="${i}" data-w="k" value="${esc(a.k)}" autocomplete="off"></td><td><input type="text" data-i="${i}" data-w="v" value="${esc(a.v)}" autocomplete="off"></td><td><button data-del="${i}" style="min-height:24px">usuń</button></td></tr>`).join('')}
+    </tbody></table>
+    <div class="tlRow" style="margin-top:10px"><button id="abAdd">+ Dodaj skrót</button><button id="abEx">Wstaw przykłady łacińskie</button></div></div></div>`;
+  const save = () => lsSet('gv6.abbr', JSON.stringify(ABBR));
+  $('abBody').querySelectorAll('input').forEach(i => i.oninput = () => { ABBR[+i.dataset.i][i.dataset.w] = i.value; save(); });
+  $('abBody').querySelectorAll('[data-del]').forEach(b => b.onclick = () => { ABBR.splice(+b.dataset.del, 1); save(); toolAbbr(); });
+  $('abAdd').onclick = () => { ABBR.push({k:'', v:''}); save(); toolAbbr(); const ins = $('abBody').querySelectorAll('input'); if (ins.length) ins[ins.length - 2].focus(); };
+  $('abEx').onclick = () => { [['Jo','Joannes'],['Ant','Antonius'],['Mat','Matthaeus'],['Sta','Stanislaus'],['Mich','Michael'],['Thom','Thomas'],['Mar','Maria']].forEach(([k, v]) => { if (!ABBR.some(a => a.k === k)) ABBR.push({k, v}); }); save(); toolAbbr(); };
+}
+/* ---- Kopia i dane ---- */
+function dl(name, text, type){ const a = document.createElement('a'); a.href = URL.createObjectURL(new Blob([text], {type})); a.download = name; a.click(); setTimeout(() => URL.revokeObjectURL(a.href), 2000); }
+function toolData(){
+  const last = lsGet('gv6.lastBackup', ''), size = Math.round(JSON.stringify(S.records).length / 1024);
+  $('tlBody').innerHTML = `<div class="tlWrap">
+    <div class="card"><h3>Kopia zapasowa</h3>
+      <p class="muted" style="margin-bottom:10px">Dane są w przeglądarce (IndexedDB). Przy 5000+ rekordach rób kopię przynajmniej raz dziennie i trzymaj ją poza komputerem. Kopia zawiera rekordy, przypięte wartości, skróty i ustawienia filtra obrazu. Skany w niej nie ma.</p>
+      <div class="tlRow"><button id="bkSave" class="primary">Pobierz kopię (JSON)</button><span class="muted">${S.records.length} rekordów · ok. ${size} KB · ostatnia kopia: ${last ? esc(new Date(last).toLocaleString('pl-PL')) : 'nie robiono w tej przeglądarce'}</span></div></div>
+    <div class="card"><h3>Przywracanie</h3>
+      <p class="muted" style="margin-bottom:10px">Wczytuje plik kopii i <b>scala</b> go z bazą: rekordy o tym samym ID zostają zastąpione wersją z pliku, nowe są dodane. Niczego nie usuwa.</p>
+      <div class="tlRow"><input type="file" id="bkFile" accept=".json,application/json"><span id="bkMsg" class="muted"></span></div></div>
+    <div class="card"><h3>Eksport</h3><div class="tlRow"><button id="exCsv">Eksport CSV (bieżący rodzaj aktu)</button><button id="exOk">Tylko gotowe (JSON)</button><button id="exView">CSV bieżącego widoku i filtrów</button></div></div>
+  </div>`;
+  $('bkSave').onclick = () => {
+    syncFormToRec();
+    const d = {app:'genealog-v6', at:new Date().toISOString(), records:S.records, pins:PINS, abbr:ABBR, fx:FX};
+    const n = new Date(), pad = x => String(x).padStart(2, '0');
+    dl(`genealog-kopia-${n.getFullYear()}${pad(n.getMonth() + 1)}${pad(n.getDate())}-${pad(n.getHours())}${pad(n.getMinutes())}.json`, JSON.stringify(d), 'application/json');
+    lsSet('gv6.lastBackup', n.toISOString()); toast('Kopia pobrana'); toolData();
+  };
+  $('bkFile').onchange = async e => {
+    const f = e.target.files[0]; if (!f) return;
+    try {
+      const d = JSON.parse(await f.text()); if (!d || !Array.isArray(d.records)) throw new Error('to nie jest kopia Genealog v6');
+      const idx = new Map(S.records.map((r, i) => [r.id, i])); let add = 0, rep = 0;
+      d.records.forEach(r => { if (!r || !r.id || !r.v || !r.tpl) return; if (idx.has(r.id)){ S.records[idx.get(r.id)] = r; rep++; } else { S.records.push(r); add++; } markDirty(r.id); });
+      if (d.pins && !Object.keys(PINS).length){ PINS = d.pins; lsSet('gv6.pins', JSON.stringify(PINS)); }
+      if (Array.isArray(d.abbr) && !ABBR.length){ ABBR = d.abbr; lsSet('gv6.abbr', JSON.stringify(ABBR)); }
+      $('bkMsg').textContent = `Wczytano: dodano ${add}, zastąpiono ${rep}.`; saveDirty();
+    } catch(err){ $('bkMsg').textContent = 'Błąd: ' + err.message; }
+  };
+  $('exCsv').onclick = () => $('btnExport').click();
+  $('exView').onclick = () => {
+    const t = tpl(), cols = fieldsOf(t), list = filteredRecords();
+    const e2 = x => { x = String(x ?? ''); return /[;"\n]/.test(x) ? '"' + x.replace(/"/g, '""') + '"' : x; };
+    const csv = ['status', ...cols.map(c => c.id)].join(';') + '\r\n' + list.map(r => [STATUS[r.status], ...cols.map(c => r.v[c.id] ?? '')].map(e2).join(';')).join('\r\n');
+    dl(`${t.id}_widok_${new Date().toISOString().slice(0, 10)}.csv`, '\ufeff' + csv, 'text/csv;charset=utf-8'); toast(`${list.length} rekordów z bieżącego widoku`);
+  };
+  $('exOk').onclick = () => { const ok = S.records.filter(r => r.status === 'ok'); dl(`genealog-gotowe-${new Date().toISOString().slice(0, 10)}.json`, JSON.stringify({app:'genealog-v6', at:new Date().toISOString(), records:ok}), 'application/json'); toast(`${ok.length} gotowych rekordów`); };
+}
+/* ---- Ustawienia ---- */
+function toolSet(){
+  const theme = lsGet(THEME_KEY, 'auto'), pinKeys = Object.keys(PINS);
+  $('tlBody').innerHTML = `<div class="tlWrap">
+    <div class="card"><h3>Wygląd i wygoda</h3>
+      <div class="tlRow" style="margin-bottom:10px"><span style="min-width:150px">Motyw</span>${[['auto','Auto'],['light','Jasny'],['dark','Ciemny']].map(([k, n]) => `<button data-th="${k}" aria-pressed="${theme === k}" class="${theme === k ? 'primary' : ''}">${n}</button>`).join('')}</div>
+      <div class="tlRow" style="margin-bottom:10px"><span style="min-width:150px">Rozmiar formularza</span>${[[.9,'90%'],[1,'100%'],[1.15,'115%'],[1.3,'130%']].map(([k, n]) => `<button data-sz="${k}" class="${UI.sz === k ? 'primary' : ''}">${n}</button>`).join('')}</div>
+      <div class="tlRow" style="margin-bottom:10px"><span style="min-width:150px">Gęstość pól</span><label><input type="checkbox" id="stCompact" ${UI.compact ? 'checked' : ''} style="width:auto;min-height:auto"> zwarta (więcej pól na ekranie)</label></div>
+      <div class="tlRow"><span style="min-width:150px">Numer nowego aktu</span><label><input type="checkbox" id="stSug" ${lsGet(SUG_KEY, '1') !== '0' ? 'checked' : ''} style="width:auto;min-height:auto"> podpowiadaj rok i kolejny numer</label></div></div>
+    <div class="card"><h3>Przypięte wartości</h3>${pinKeys.length ? pinKeys.map(k => { const f = fieldsOf(tpl()).find(x => x.id === k); return `<div class="tlRow" style="margin-bottom:4px"><span style="min-width:200px">${esc(f ? f.label : k)}</span><b>${esc(PINS[k])}</b><button data-unpin="${esc(k)}" style="min-height:24px">odepnij</button></div>`; }).join('') : '<p class="muted">Brak. Kliknij ⚑ przy polu w formularzu, by przypiąć wartość.</p>'}</div>
+    <div class="card"><h3>Skróty klawiszowe</h3><button id="stHelp">Pokaż listę skrótów</button></div>
+  </div>`;
+  $('tlBody').querySelectorAll('[data-th]').forEach(b => b.onclick = () => { lsSet(THEME_KEY, b.dataset.th); applyTheme(b.dataset.th); toolSet(); });
+  $('tlBody').querySelectorAll('[data-sz]').forEach(b => b.onclick = () => { uiSet({sz: +b.dataset.sz}); toolSet(); });
+  $('stCompact').onchange = e => uiSet({compact: e.target.checked});
+  $('stSug').onchange = e => { lsSet(SUG_KEY, e.target.checked ? '1' : '0'); $('chkSuggest').checked = e.target.checked; };
+  $('tlBody').querySelectorAll('[data-unpin]').forEach(b => b.onclick = () => { delete PINS[b.dataset.unpin]; lsSet('gv6.pins', JSON.stringify(PINS)); toolSet(); });
+  $('stHelp').onclick = () => openDlg('dlgHelp');
+}
+uiApply();
+
+
+/* ===================== UKŁAD: szerokość formularza, kolumny, więcej ===================== */
+(function sideResize(){
+  const h = $('sideResizer'), MIN = 280, MAX = 640;
+  const set = w => document.documentElement.style.setProperty('--sideW', w + 'px');
+  const saved = parseInt(lsGet('gv6.sideW', '')); if (saved >= MIN && saved <= MAX) set(saved);
+  let drag = false;
+  h.addEventListener('pointerdown', e => { drag = true; h.classList.add('drag'); h.setPointerCapture(e.pointerId); e.preventDefault(); });
+  h.addEventListener('pointermove', e => { if (!drag) return; set(Math.round(Math.min(MAX, Math.max(MIN, innerWidth - e.clientX)))); });
+  h.addEventListener('pointerup', () => { if (!drag) return; drag = false; h.classList.remove('drag'); const w = parseInt(getComputedStyle($('side')).width); lsSet('gv6.sideW', String(w)); if (S.viewer) S.viewer.forceRedraw(); paintRows(true); });
+  h.addEventListener('dblclick', () => { const w = parseInt(getComputedStyle($('side')).width), nw = w < 500 ? 540 : 390; set(nw); lsSet('gv6.sideW', String(nw)); if (S.viewer) setTimeout(() => S.viewer.forceRedraw(), 50); });
+})();
+function placeMenu(menu, btn){
+  menu.hidden = false;
+  const r = btn.getBoundingClientRect(), w = menu.offsetWidth;
+  menu.style.left = Math.max(6, Math.min(innerWidth - w - 6, r.right - w)) + 'px';
+  const below = innerHeight - r.bottom, h = menu.offsetHeight;
+  menu.style.top = (below > h + 8 || r.top < h ? r.bottom + 4 : r.top - h - 4) + 'px';
+}
+document.addEventListener('click', e => {
+  if (!e.target.closest('#moreMenu,#btnMore')){ $('moreMenu').hidden = true; $('btnMore').setAttribute('aria-expanded', 'false'); }
+  if (!e.target.closest('#colMenu,#btnCols')) $('colMenu').hidden = true;
+});
+$('btnMore').onclick = () => { const open = $('moreMenu').hidden; if (open) placeMenu($('moreMenu'), $('btnMore')); else $('moreMenu').hidden = true; $('btnMore').setAttribute('aria-expanded', String(open)); };
+$('moreMenu').addEventListener('click', e => { if (e.target.closest('button') && e.target.id !== 'btnTheme'){ $('moreMenu').hidden = true; } });
+$('btnCols').onclick = () => {
+  if (!$('colMenu').hidden){ $('colMenu').hidden = true; return; }
+  const fs = fieldsOf(tpl()).filter(f => f.type !== 'textarea'), cur = new Set(visibleFields().map(f => f.id));
+  $('colMenu').innerHTML = `<div class="muted" style="padding:2px 6px 6px">Kolumny tabeli (zapamiętane dla tego rodzaju aktu)</div>` + fs.map(f => `<label><input type="checkbox" value="${esc(f.id)}" ${cur.has(f.id) ? 'checked' : ''}> ${esc(f.label || f.id)}</label>`).join('') + `<div style="padding:6px 6px 2px"><button id="colReset" style="min-height:26px">Domyślne</button></div>`;
+  placeMenu($('colMenu'), $('btnCols'));
+  $('colMenu').querySelectorAll('input').forEach(c => c.onchange = () => {
+    const ids = fs.map(f => f.id).filter(id => $('colMenu').querySelector(`input[value="${id}"]`).checked);
+    if (!ids.length){ c.checked = true; return; }
+    lsSet('gv6.cols.' + S.tplId, JSON.stringify(ids)); renderTable();
+  });
+  $('colReset').onclick = () => { lsSet('gv6.cols.' + S.tplId, 'null'); $('colMenu').hidden = true; renderTable(); };
+};
+$('btnGroups').onclick = () => { const ds = [...document.querySelectorAll('#recForm details.fgrp')]; const anyOpen = ds.some(d => d.open); ds.forEach(d => d.open = !anyOpen); };
+$('btnFilled').onclick = () => { const on = $('recForm').classList.toggle('onlyfilled'); $('btnFilled').setAttribute('aria-pressed', String(on)); lsSet('gv6.onlyfilled', on ? '1' : '0'); };
+if (lsGet('gv6.onlyfilled', '0') === '1'){ $('recForm').classList.add('onlyfilled'); $('btnFilled').setAttribute('aria-pressed', 'true'); }
+window.addEventListener('beforeunload', e => { if (S.dirty && S.dirty.size){ e.preventDefault(); e.returnValue = ''; } });
+
+
+/* ===================== PROSTOWANIE STRONY ===================== */
+$('fxAng').oninput = e => rotSet({a: +e.target.value});
+$('angZero').onclick = () => rotSet({a: 0});
+function loadImg(url){ return new Promise((res, rej) => { const im = new Image(); im.onload = () => res(im); im.onerror = rej; im.src = url; }); }
+async function detectSkew(){
+  const cur = S.images[S.page]; if (!cur) return null;
+  const im = await loadImg(cur.wurl || cur.url), q = rotGet().q;
+  const sc = Math.min(1, 800 / Math.max(im.naturalWidth, im.naturalHeight));
+  let w = Math.round(im.naturalWidth * sc), h = Math.round(im.naturalHeight * sc);
+  const base = document.createElement('canvas'); const swap = q % 2 === 1; base.width = swap ? h : w; base.height = swap ? w : h;
+  const bx = base.getContext('2d', {willReadFrequently: true});
+  bx.translate(base.width / 2, base.height / 2); bx.rotate(q * Math.PI / 2); bx.drawImage(im, -w / 2, -h / 2, w, h);
+  // binaryzacja (ciemne = tusz), próg z lokalnej średniej globalnej
+  const W = base.width, H = base.height, d = bx.getImageData(0, 0, W, H), px = d.data; let sum = 0;
+  for (let i = 0; i < px.length; i += 4) sum += px[i] * .3 + px[i+1] * .59 + px[i+2] * .11;
+  const thr = (sum / (W * H)) * 0.78;
+  for (let i = 0; i < px.length; i += 4){ const v = (px[i] * .3 + px[i+1] * .59 + px[i+2] * .11) < thr ? 0 : 255; px[i] = px[i+1] = px[i+2] = v; px[i+3] = 255; }
+  bx.putImageData(d, 0, 0);
+  const work = document.createElement('canvas'); work.width = W; work.height = H; const wx = work.getContext('2d', {willReadFrequently: true});
+  const x0 = Math.round(W * .15), y0 = Math.round(H * .15), cw = Math.round(W * .7), ch = Math.round(H * .7);
+  const score = ang => {
+    wx.fillStyle = '#fff'; wx.fillRect(0, 0, W, H); wx.save(); wx.translate(W / 2, H / 2); wx.rotate(ang * Math.PI / 180); wx.drawImage(base, -W / 2, -H / 2); wx.restore();
+    const a = wx.getImageData(x0, y0, cw, ch).data; let sc = 0;
+    for (let y = 0; y < ch; y++){ let r = 0; const row = y * cw * 4; for (let x = 0; x < cw; x++) if (a[row + x * 4] === 0) r++; sc += r * r; }
+    return sc;
+  };
+  let best = 0, bs = -1;
+  for (let a = -10; a <= 10; a += 1){ const v = score(a); if (v > bs){ bs = v; best = a; } }
+  for (let a = best - 1; a <= best + 1.001; a += 0.2){ const v = score(a); if (v > bs){ bs = v; best = a; } }
+  const v0 = score(0);
+  return {angle: Math.round(best * 10) / 10, gain: v0 > 0 ? bs / v0 : 1};
+}
+$('angAuto').onclick = async () => {
+  if (!S.images[S.page]) return toast('Najpierw wczytaj skany');
+  const b = $('angAuto'); b.disabled = true; b.textContent = 'Liczę…';
+  await new Promise(r => setTimeout(r, 30));
+  try {
+    const r = await detectSkew();
+    if (!r || r.gain < 1.02 || Math.abs(r.angle) < 0.2) toast('Strona wygląda na prostą (albo za mało tekstu, by to ocenić)');
+    else { rotSet({a: Math.max(-45, Math.min(45, r.angle))}); toast(`Obrócono o ${r.angle}°. Suwak koryguje ręcznie.`); }
+  } catch(e){ toast('Nie udało się wykryć kąta'); }
+  b.disabled = false; b.textContent = 'Wyprostuj automatycznie';
+};
+
+
+/* ===================== PROSTOWANIE KARTKI: PERSPEKTYWA I ZAGIĘCIE ===================== */
+let WARP = (() => { try { return JSON.parse(lsGet('gv6.warp', '{}')) || {}; } catch(e){ return {}; } })();
+const saveWarp = () => lsSet('gv6.warp', JSON.stringify(WARP));
+const WN = {top: 3, bot: 3, left: 2, right: 2};          // punkty pośrednie na krawędziach
+function warpDefault(w, h, idx = 0, count = 1){
+  const xa = count === 2 ? (idx === 0 ? .04 : .52) : .1, xb = count === 2 ? (idx === 0 ? .48 : .96) : .9;
+  const x0 = w * xa, x1 = w * xb, y0 = h * .05, y1 = h * .95, L = (a, b, k, n) => ({x: a.x + (b.x - a.x) * k / (n + 1), y: a.y + (b.y - a.y) * k / (n + 1)});
+  const tl = {x: x0, y: y0}, tr = {x: x1, y: y0}, br = {x: x1, y: y1}, bl = {x: x0, y: y1};
+  const mk = (a, b, n) => Array.from({length: n}, (_, k) => L(a, b, k + 1, n));
+  return {tl, tr, br, bl, top: mk(tl, tr, WN.top), bot: mk(bl, br, WN.bot), left: mk(tl, bl, WN.left), right: mk(tr, br, WN.right)};
+}
+function crPoint(P, t){                                   // krzywa Catmull-Rom przez punkty P, t w [0,1]
+  const n = P.length - 1, f = Math.min(Math.max(t, 0), 1) * n, i = Math.min(Math.floor(f), n - 1), u = f - i;
+  const p0 = P[Math.max(i - 1, 0)], p1 = P[i], p2 = P[i + 1], p3 = P[Math.min(i + 2, n)];
+  const c = (a, b, cc, d) => .5 * ((2 * b) + (-a + cc) * u + (2 * a - 5 * b + 4 * cc - d) * u * u + (-a + 3 * b - 3 * cc + d) * u * u * u);
+  return {x: c(p0.x, p1.x, p2.x, p3.x), y: c(p0.y, p1.y, p2.y, p3.y)};
+}
+const normWarp = x => Array.isArray(x) ? x : [x];
+const warpEdges = W => ({top: [W.tl, ...W.top, W.tr], bot: [W.bl, ...W.bot, W.br], left: [W.tl, ...W.left, W.bl], right: [W.tr, ...W.right, W.br]});
+function coons(E, W, u, v){                               // v=0 góra, v=1 dół; u=0 lewa, u=1 prawa
+  const T = crPoint(E.top, u), B = crPoint(E.bot, u), Lf = crPoint(E.left, v), R = crPoint(E.right, v);
+  const g = k => (1 - u) * (1 - v) * W.tl[k] + u * (1 - v) * W.tr[k] + (1 - u) * v * W.bl[k] + u * v * W.br[k];
+  return {x: (1 - v) * T.x + v * B.x + (1 - u) * Lf.x + u * R.x - g('x'), y: (1 - v) * T.y + v * B.y + (1 - u) * Lf.y + u * R.y - g('y')};
+}
+const plen = P => { let l = 0; for (let i = 1; i < P.length; i++) l += Math.hypot(P[i].x - P[i-1].x, P[i].y - P[i-1].y); return l; };
+function warpRenderOne(im, W){
+  const E = warpEdges(W);
+  let ow = Math.max(plen(E.top), plen(E.bot)), oh = Math.max(plen(E.left), plen(E.right));
+  const k = Math.min(1, 3200 / Math.max(ow, oh)); ow = Math.max(40, Math.round(ow * k)); oh = Math.max(40, Math.round(oh * k));
+  const cv = document.createElement('canvas'); cv.width = ow; cv.height = oh;
+  const ctx = cv.getContext('2d'); ctx.fillStyle = '#fff'; ctx.fillRect(0, 0, ow, oh); ctx.imageSmoothingQuality = 'high';
+  const cols = Math.min(70, Math.max(16, Math.round(ow / 50))), rows = Math.min(90, Math.max(16, Math.round(oh / 50)));
+  const G = [];
+  for (let j = 0; j <= rows; j++){ const row = []; for (let i = 0; i <= cols; i++){ const sp = coons(E, W, i / cols, j / rows); row.push({s: sp, d: {x: ow * i / cols, y: oh * j / rows}}); } G.push(row); }
+  const tri = (a, b, c) => {
+    const s0 = a.s, s1 = b.s, s2 = c.s, d0 = a.d, d1 = b.d, d2 = c.d;
+    const det = (s1.x - s0.x) * (s2.y - s0.y) - (s1.y - s0.y) * (s2.x - s0.x); if (Math.abs(det) < 1e-9) return;
+    const A = ((d1.x - d0.x) * (s2.y - s0.y) - (d2.x - d0.x) * (s1.y - s0.y)) / det;
+    const C = ((s1.x - s0.x) * (d2.x - d0.x) - (s2.x - s0.x) * (d1.x - d0.x)) / det;
+    const B = ((d1.y - d0.y) * (s2.y - s0.y) - (d2.y - d0.y) * (s1.y - s0.y)) / det;
+    const D = ((s1.x - s0.x) * (d2.y - d0.y) - (s2.x - s0.x) * (d1.y - d0.y)) / det;
+    const E0 = d0.x - A * s0.x - C * s0.y, F0 = d0.y - B * s0.x - D * s0.y;
+    const cx = (d0.x + d1.x + d2.x) / 3, cy = (d0.y + d1.y + d2.y) / 3, ex = p => ({x: p.x + Math.sign(p.x - cx) * .7, y: p.y + Math.sign(p.y - cy) * .7});
+    ctx.save(); ctx.beginPath(); const e0 = ex(d0), e1 = ex(d1), e2 = ex(d2); ctx.moveTo(e0.x, e0.y); ctx.lineTo(e1.x, e1.y); ctx.lineTo(e2.x, e2.y); ctx.closePath(); ctx.clip();
+    ctx.transform(A, B, C, D, E0, F0);
+    const bx = Math.max(0, Math.floor(Math.min(s0.x, s1.x, s2.x) - 3)), by = Math.max(0, Math.floor(Math.min(s0.y, s1.y, s2.y) - 3));
+    const bx2 = Math.min(im.naturalWidth, Math.ceil(Math.max(s0.x, s1.x, s2.x) + 3)), by2 = Math.min(im.naturalHeight, Math.ceil(Math.max(s0.y, s1.y, s2.y) + 3));
+    if (bx2 > bx && by2 > by) ctx.drawImage(im, bx, by, bx2 - bx, by2 - by, bx, by, bx2 - bx, by2 - by);
+    ctx.restore();
+  };
+  for (let j = 0; j < rows; j++) for (let i = 0; i < cols; i++){ const a = G[j][i], b = G[j][i+1], c = G[j+1][i], d = G[j+1][i+1]; tri(a, b, c); tri(b, d, c); }
+  return cv;
+}
+function warpRender(im, list){
+  const L = normWarp(list);
+  if (L.length === 1) return warpRenderOne(im, L[0]);
+  const cvs = L.map(W => warpRenderOne(im, W)), H = Math.max(...cvs.map(c => c.height)), gap = 16;
+  const sc = cvs.map(c => H / c.height), Wd = cvs.reduce((a, c, i) => a + Math.round(c.width * sc[i]), 0) + gap * (cvs.length - 1);
+  const out = document.createElement('canvas'); out.width = Wd; out.height = H;
+  const cx = out.getContext('2d'); cx.fillStyle = '#888'; cx.fillRect(0, 0, Wd, H);
+  let x = 0; cvs.forEach((c, i) => { const w = Math.round(c.width * sc[i]); cx.drawImage(c, x, 0, w, H); x += w + gap; });
+  return out;
+}
+async function buildWarp(imObj){
+  const W = WARP[imObj.name]; if (!W) return;
+  const im = await loadImg(imObj.url);
+  const cv = warpRender(im, W);
+  const blob = await new Promise(r => cv.toBlob(r, 'image/jpeg', .92));
+  if (imObj.wurl) URL.revokeObjectURL(imObj.wurl);
+  imObj.wurl = URL.createObjectURL(blob);
+}
+/* ---- tryb ustawiania punktów ---- */
+let WRK = null;       // robocze punkty (współrzędne obrazu oryginalnego)
+function warpEnter(){
+  const im = S.images[S.page]; if (!im) return toast('Najpierw wczytaj skany');
+  setRoiMode(false);
+  S.warpMode = true; S.warpPage = S.page;
+  $('btnWarp').setAttribute('aria-pressed', 'true');
+  $('warpSvg').removeAttribute('hidden'); $('warpBar').hidden = false;
+  S.warpArmed = false; $('warpApply').textContent = 'Wyprostuj';
+  loadImg(im.url).then(img => { S.warpSize = {w: img.naturalWidth, h: img.naturalHeight}; WRK = WARP[im.name] ? JSON.parse(JSON.stringify(normWarp(WARP[im.name]))) : [warpDefault(img.naturalWidth, img.naturalHeight)]; $('warpSpread').checked = WRK.length === 2; warpDraw(); });
+  showPage(S.page, true);
+}
+
+/* ---- Auto: brzegi papieru z jasności (Otsu), potem ręczne poprawki ---- */
+function warpAuto(img, count){
+  const sc = Math.min(1, 480 / img.naturalWidth), w = Math.max(8, Math.round(img.naturalWidth * sc)), h = Math.max(8, Math.round(img.naturalHeight * sc));
+  const cv = document.createElement('canvas'); cv.width = w; cv.height = h; const cx = cv.getContext('2d', {willReadFrequently: true}); cx.filter = 'blur(' + Math.round(w / 45) + 'px)'; cx.drawImage(img, 0, 0, w, h);
+  const d = cx.getImageData(0, 0, w, h).data, g = new Float32Array(w * h), hist = new Array(256).fill(0);
+  for (let i = 0; i < w * h; i++){ const v = (d[i*4] * .3 + d[i*4+1] * .59 + d[i*4+2] * .11) | 0; g[i] = v; hist[v]++; }
+  let tot = w * h, sum = 0; for (let i = 0; i < 256; i++) sum += i * hist[i];
+  let wB = 0, sB = 0, best = 0, thr = 128; for (let t = 0; t < 256; t++){ wB += hist[t]; if (!wB) continue; const wF = tot - wB; if (!wF) break; sB += t * hist[t]; const mB = sB / wB, mF = (sum - sB) / wF, v = wB * wF * (mB - mF) ** 2; if (v > best){ best = v; thr = t; } }
+  const centerBright = g[(h >> 1) * w + (w >> 1)] > thr, P = i => (g[i] > thr) === centerBright;
+  const med = a => { const b = a.filter(x => x != null).sort((x, y) => x - y); return b.length ? b[b.length >> 1] : null; };
+  // rozpiętość papieru w wierszach i kolumnach (najdłuższy ciąg)
+  const rowExt = [], colExt = [];
+  const longest = (n, on, gap) => { const runs = []; let s0 = -1; for (let i = 0; i <= n; i++){ const o = i < n && on(i); if (o && s0 < 0) s0 = i; if (!o && s0 >= 0){ runs.push([s0, i - 1]); s0 = -1; } }
+    const m = []; for (const r of runs){ const l = m[m.length - 1]; if (l && r[0] - l[1] <= gap) l[1] = r[1]; else m.push(r.slice()); }
+    let best = null; for (const r of m) if (!best || r[1] - r[0] > best[1] - best[0]) best = r; return best; };
+  for (let y = 0; y < h; y++){ const r = longest(w, x => P(y * w + x), w * .06); rowExt.push(r && r[1] - r[0] > w * .15 ? r : null); }
+  for (let x = 0; x < w; x++){ const r = longest(h, y => P(y * w + x), h * .04); colExt.push(r && r[1] - r[0] > h * .15 ? r : null); }
+  const ys = rowExt.map((r, i) => r ? i : null).filter(v => v != null), xs = colExt.map((r, i) => r ? i : null).filter(v => v != null);
+  if (ys.length < h * .3 || xs.length < w * .3) return null;
+  const x0 = med(rowExt.filter(Boolean).map(r => r[0])), x1 = med(rowExt.filter(Boolean).map(r => r[1]));
+  const Lx = y => { const a = []; for (let k = -6; k <= 6; k++){ const r = rowExt[Math.min(h - 1, Math.max(0, Math.round(y) + k))]; a.push(r ? r[0] : null); } return med(a); };
+  const Rx = y => { const a = []; for (let k = -6; k <= 6; k++){ const r = rowExt[Math.min(h - 1, Math.max(0, Math.round(y) + k))]; a.push(r ? r[1] : null); } return med(a); };
+  const Ty = x => { const a = []; for (let k = -6; k <= 6; k++){ const c = colExt[Math.min(w - 1, Math.max(0, Math.round(x) + k))]; a.push(c ? c[0] : null); } return med(a); };
+  const By = x => { const a = []; for (let k = -6; k <= 6; k++){ const c = colExt[Math.min(w - 1, Math.max(0, Math.round(x) + k))]; a.push(c ? c[1] : null); } return med(a); };
+  const yA = ys[0] + (ys[ys.length - 1] - ys[0]) * .03, yB = ys[0] + (ys[ys.length - 1] - ys[0]) * .97, inv = 1 / sc;
+  let mid = (x0 + x1) / 2;
+  if (count === 2){ let bx = mid, bv = 1e9; for (let x = Math.round(w * .35); x < w * .65; x++){ let t = 0; for (let y = Math.round(h * .1); y < h * .9; y++) t += g[y * w + x]; if (t < bv){ bv = t; bx = x; } } mid = bx; }
+  const out = [];
+  for (let q = 0; q < count; q++){
+    const xl = count === 2 ? (q === 0 ? null : mid) : null, xr = count === 2 ? (q === 0 ? mid : null) : null;
+    const lf = y => xl != null ? xl : (Lx(y) ?? x0), rt = y => xr != null ? xr : (Rx(y) ?? x1);
+    const xa = lf(yA), xb = rt(yA), xc = lf(yB), xd = rt(yB), pad = 0.02 * (x1 - x0);
+    const tl = {x: lf(yA) + (q === 0 ? 0 : pad), y: Ty(lf(yA) + 4) ?? yA}, tr = {x: rt(yA) - (q === 1 || count === 1 ? 0 : pad), y: Ty(rt(yA) - 4) ?? yA};
+    const bl = {x: lf(yB) + (q === 0 ? 0 : pad), y: By(lf(yB) + 4) ?? yB}, br = {x: rt(yB) - (q === 1 || count === 1 ? 0 : pad), y: By(rt(yB) - 4) ?? yB};
+    const along = (a, b, n, fn) => Array.from({length: n}, (_, k) => { const t = (k + 1) / (n + 1), x = a.x + (b.x - a.x) * t; return fn(x, t); });
+    const top = along(tl, tr, WN.top, x => ({x, y: Ty(x) ?? tl.y})), bot = along(bl, br, WN.bot, x => ({x, y: By(x) ?? bl.y}));
+    const left = along(tl, bl, WN.left, (x, t) => { const y = tl.y + (bl.y - tl.y) * t; return {x: lf(y), y}; }), right = along(tr, br, WN.right, (x, t) => { const y = tr.y + (br.y - tr.y) * t; return {x: rt(y), y}; });
+    const up = a => ({x: a.x * inv, y: a.y * inv}), U = L => L.map(up);
+    if (tr.x - tl.x < w * (count === 2 ? .2 : .4) || br.x - bl.x < w * (count === 2 ? .2 : .4) || bl.y - tl.y < h * .5) return null;
+    out.push({tl: up(tl), tr: up(tr), br: up(br), bl: up(bl), top: U(top), bot: U(bot), left: U(left), right: U(right)});
+  }
+  return out;
+}
+function exitWarp(reopen){
+  S.warpMode = false; $('btnWarp').setAttribute('aria-pressed', 'false'); $('warpSvg').setAttribute('hidden',''); $('warpBar').hidden = true; WRK = null;
+  if (reopen !== false) showPage(S.page, true);
+}
+let _wd=0; function warpSoon(){ if(_wd||!S.warpMode) return; _wd=requestAnimationFrame(()=>{_wd=0;warpDraw();}); }
+function warpDraw(){
+  if (!S.warpMode || !WRK || !S.viewer) return;
+  const vp = S.viewer.viewport, svg = $('warpSvg');
+  if (!S.viewer.world.getItemAt(0)) return;
+  const vr = $('viewer').getBoundingClientRect(), wr = $('viewerWrap').getBoundingClientRect(), ox = vr.left - wr.left, oy = vr.top - wr.top;
+  const px = p => { const q = vp.imageToViewerElementCoordinates(new OpenSeadragon.Point(p.x, p.y)); return {x: q.x + ox, y: q.y + oy}; };
+  const sample = P => Array.from({length: 41}, (_, k) => px(crPoint(P, k / 40)));
+  const pathOf = pts => 'M' + pts.map(q => q.x.toFixed(1) + ' ' + q.y.toFixed(1)).join(' L');
+  let h = '';
+  WRK.forEach((W, qi) => {
+    const E = warpEdges(W), top = sample(E.top), right = sample(E.right), bot = sample(E.bot).reverse(), left = sample(E.left).reverse();
+    h += `<path class="fill" d="${pathOf([...top, ...right, ...bot, ...left])} Z"/>` + [E.top, E.bot, E.left, E.right].map(P => `<path d="${pathOf(sample(P))}"/>`).join('');
+    const dot = (p, key, cls) => { const q = px(p); return `<circle class="${cls}" data-k="${qi}|${key}" cx="${q.x.toFixed(1)}" cy="${q.y.toFixed(1)}" r="${cls==='c'?8:6}"/>`; };
+    ['tl','tr','br','bl'].forEach(k => h += dot(W[k], k, 'c'));
+    ['top','bot','left','right'].forEach(k => W[k].forEach((p, i) => h += dot(p, k + ':' + i, 'm')));
+  });
+  svg.innerHTML = h;
+}
+$('warpSvg').addEventListener('pointerdown', e => {
+  const c = e.target.closest('circle'); if (!c || !WRK) return;
+  e.preventDefault(); e.stopPropagation(); c.setPointerCapture(e.pointerId);
+  const [qi0, k] = c.dataset.k.split('|'), W0 = WRK[+qi0], vr = $('viewer').getBoundingClientRect(), vp = S.viewer.viewport;
+  const move = ev => {
+    const ip = vp.viewerElementToImageCoordinates(new OpenSeadragon.Point(ev.clientX - vr.left, ev.clientY - vr.top));
+    const pt = {x: Math.min(S.warpSize.w, Math.max(0, ip.x)), y: Math.min(S.warpSize.h, Math.max(0, ip.y))};
+    if (k.includes(':')){ const [e2, i] = k.split(':'); W0[e2][+i] = pt; } else W0[k] = pt;
+    warpDraw();
+  };
+  const up = () => { c.removeEventListener('pointermove', move); c.removeEventListener('pointerup', up); S.warpArmed = false; $('warpApply').textContent = 'Wyprostuj'; };
+  c.addEventListener('pointermove', move); c.addEventListener('pointerup', up);
+});
+['animation', 'animation-finish', 'resize', 'rotate', 'pan', 'zoom', 'update-viewport'].forEach(ev => S.viewer && S.viewer.addHandler(ev, warpDraw));
+$('btnWarp').onclick = () => S.warpMode ? exitWarp() : warpEnter();
+$('warpCancel').onclick = () => exitWarp();
+const warpFresh = n => Array.from({length: n}, (_, i) => warpDefault(S.warpSize.w, S.warpSize.h, i, n));
+$('warpAuto').onclick = async () => { if (!S.warpSize || !WRK) return; const im = S.images[S.page], img = await loadImg(im.url), r = warpAuto(img, WRK.length); if (!r) return toast('Nie znalazłem brzegów papieru, ustaw punkty ręcznie'); WRK = r; S.warpArmed = false; $('warpApply').textContent = 'Wyprostuj'; warpDraw(); toast('Ustawiono automatycznie. Popraw punkty i kliknij Wyprostuj'); };
+$('warpReset').onclick = () => { if (S.warpSize && WRK) { WRK = warpFresh(WRK.length); warpDraw(); } };
+$('warpSpread').onchange = e => { if (S.warpSize) { WRK = warpFresh(e.target.checked ? 2 : 1); warpDraw(); S.warpArmed = false; } };
+$('warpRemove').onclick = () => { const im = S.images[S.page]; if (!im) return; delete WARP[im.name]; saveWarp(); if (im.wurl){ URL.revokeObjectURL(im.wurl); im.wurl = null; } toast('Usunięto prostowanie tej strony'); exitWarp(); };
+$('warpApply').onclick = async () => {
+  const im = S.images[S.page]; if (!im || !WRK) return;
+  const hasRoi = S.records.some(r => r.page === S.page && r.roi && r.tpl === S.tplId);
+  if (hasRoi && !S.warpArmed && !WARP[im.name]){ S.warpArmed = true; $('warpApply').textContent = 'Ramki aktów się przesuną. Kliknij ponownie'; return; }
+  const b = $('warpApply'); b.disabled = true; b.textContent = 'Liczę…';
+  await new Promise(r => setTimeout(r, 30));
+  try { WARP[im.name] = JSON.parse(JSON.stringify(WRK)); saveWarp(); await buildWarp(im); exitWarp(); toast('Strona wyprostowana. „Kartka” pozwala poprawić punkty.'); }
+  catch(e){ toast('Nie udało się wyprostować'); }
+  b.disabled = false; b.textContent = 'Wyprostuj'; S.warpArmed = false;
+};
+
+/* ===================== START ===================== */
+async function boot(){
+  applyTheme(lsGet(THEME_KEY, 'auto'));
+  if (lsGet('gv6.tablehide','0') === '1'){ $('app').classList.add('tablehide'); $('btnTable').setAttribute('aria-pressed','false'); }
+  loadTemplates();
+  initViewer();
+  const ok = await DB.open();
+  if (ok){
+    const all = await DB.all();
+    if (Array.isArray(all)) S.records = all;
+  } else {
+    try { S.records = JSON.parse(localStorage.getItem('genealog-v6') || '[]'); } catch(e){ S.records = []; }
+  }
+  renderAll();
+  // Automatyczne zapisanie formularza (nie tylko przez zdarzenia), gdy przeglądarka gubi zdarzenia
+  setInterval(() => { syncFormToRec(); }, 1500);
+  setSaveState(ok ? 'Gotowe · zapis w IndexedDB' : 'Gotowe · zapis w rezerwie (przeglądarka)', false);
+}
+boot();
+</script>
+
+</body>
+</html>
