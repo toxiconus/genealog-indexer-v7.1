@@ -37,7 +37,7 @@ Pain pointy do rozwiązania: powtarzanie metadanych, przełączanie obraz ↔ fo
 | Źródło | Gdzie | Rola |
 |---|---|---|
 | `public_imports` | Supabase (44 kolumny, 5512+ rekordów, ID `CH.LUB.BLIN.YYYY.NNN`) | **Główna tabela pracy** wg dokumentacji. Źródło referencyjne dla pól. |
-| `imported_records` | `public/genealogia_2026-02-03.db` (~483 KB) i `(5).db` (~3,5 MB) | Płaska kopia do pracy offline. Dwie wersje do porównania. |
+| `imported_records` | `public/genealogia_2026-02-03.db` (483 KB): **5515 wierszy, stary układ kolumn** (`imie`, `nazwisko_o`…), unikalne `id`. `public/genealogia_2026-02-03 (3).db` i `(5).db` (po 3,5 MB): **5512 wierszy, nowy układ** (`child_first_name`…), unikalne `id`. Różnica 3 rekordów i zawartość `(5)` do zweryfikowania. | Płaska kopia do pracy offline. |
 | `CH BLIN.txt` | `public/` (~787 KB, TSV) | Dane wejściowe wklejane w `import-ch-blin.html`. Działało. |
 | `chrzty_cleaned.txt` | `public/` (~774 KB) | Prawdopodobnie najnowsze czyszczenie. Do porównania. |
 | `CH_BLIN_FIRESTORE.json` | `public/` (~4,7 MB) | Eksport do Firestore. Do porównania. |
