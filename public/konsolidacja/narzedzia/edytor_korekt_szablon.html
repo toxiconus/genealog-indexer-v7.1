@@ -1,0 +1,598 @@
+<!doctype html>
+<html lang="pl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Edytor korekt – Blinów</title>
+<style>
+:root{--bg:#fbfaf7;--fg:#1d1d1b;--mut:#6b6a64;--card:#fff;--line:#e4e1d8;--acc:#7a4a1e;--warn:#b25d00;--bad:#a1281f;--ok:#2f6b3a;--sel:#f3ead9}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#1b1a17;--fg:#ece9e1;--mut:#a09d93;--card:#24231f;--line:#3a3833;--acc:#e0a86a;--warn:#f0a350;--bad:#ff8a7e;--ok:#8fd19e;--sel:#34302a}}
+:root[data-theme="dark"]{--bg:#1b1a17;--fg:#ece9e1;--mut:#a09d93;--card:#24231f;--line:#3a3833;--acc:#e0a86a;--warn:#f0a350;--bad:#ff8a7e;--ok:#8fd19e;--sel:#34302a}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--fg);font:14px/1.45 system-ui,-apple-system,"Segoe UI",sans-serif}
+header{position:sticky;top:0;z-index:5;background:var(--card);border-bottom:1px solid var(--line);padding:8px 12px;display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+header h1{font-size:1rem;margin:0 10px 0 0}
+input,select,button{font:inherit;color:inherit;background:var(--card);border:1px solid var(--line);border-radius:6px;padding:4px 6px}
+button{cursor:pointer}
+button.on{border-color:var(--acc);color:var(--acc)}
+button.primary{border-color:var(--acc);color:var(--acc);font-weight:600}
+button.danger{color:var(--bad)}
+.sec{display:none;padding:12px}
+.sec.on{display:block}
+.grid3{display:grid;grid-template-columns:minmax(230px,1fr) minmax(300px,1.3fr) minmax(260px,1fr);gap:12px;align-items:start}
+@media (max-width:980px){.grid3{grid-template-columns:1fr}}
+.card{background:var(--card);border:1px solid var(--line);border-radius:8px;padding:10px;min-width:0}
+.card h2{font-size:.95rem;margin:0 0 8px;color:var(--acc)}
+.list{max-height:70vh;overflow:auto;border:1px solid var(--line);border-radius:6px}
+.item{padding:6px 8px;border-bottom:1px solid var(--line);cursor:pointer}
+.item:last-child{border-bottom:none}
+.item.sel{background:var(--sel)}
+.item .mut{font-size:.8rem}
+.mut{color:var(--mut)}
+.bad{color:var(--bad)}.warn{color:var(--warn)}.ok{color:var(--ok)}
+.tag{font-size:.72rem;border:1px solid currentColor;border-radius:99px;padding:0 6px;white-space:nowrap}
+.fld{display:grid;grid-template-columns:130px 1fr 1fr 1fr;gap:6px;align-items:center;margin:5px 0}
+.fld .lab{color:var(--mut);font-size:.82rem}
+.fld input{width:100%}
+.fld.act{background:var(--sel);border-radius:6px}
+@media (max-width:620px){.fld{grid-template-columns:1fr}}
+.chips{display:flex;flex-wrap:wrap;gap:4px;max-height:160px;overflow:auto;margin:6px 0}
+.chips button{font-size:.82rem;padding:2px 6px}
+.preview{white-space:pre-wrap;background:var(--bg);border-left:3px solid var(--acc);padding:8px;border-radius:6px;font-size:.92rem}
+.raw{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:.78rem;white-space:pre-wrap;color:var(--mut);margin-top:6px;word-break:break-word}
+table{width:100%;border-collapse:collapse;font-size:.88rem}
+th,td{padding:4px 6px;border-bottom:1px solid var(--line);text-align:left;vertical-align:middle}
+th{color:var(--mut);font-weight:600;position:sticky;top:0;background:var(--card)}
+td input{width:100%;min-width:90px}
+td select{width:100%}
+.tablewrap{max-height:72vh;overflow:auto;border:1px solid var(--line);border-radius:6px}
+.toolbar{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-bottom:8px}
+.note{font-size:.85rem;color:var(--mut);margin:6px 0}
+details summary{cursor:pointer;color:var(--acc);margin-top:8px}
+</style>
+</head>
+<body>
+<header>
+  <h1>Edytor korekt · Blinów</h1>
+  <button data-tab="akty" class="on">Akty</button>
+  <button data-tab="imiona">Imiona</button>
+  <button data-tab="nazwiska">Nazwiska</button>
+  <button data-tab="slownik">Słownik</button>
+  <button data-tab="korekty">Korekty</button>
+  <span class="mut">język podpowiedzi:</span>
+  <select id="lang"><option value="LA">łacina</option><option value="RU">rosyjski</option><option value="PL">polski</option></select>
+  <span id="stat" class="mut" style="margin-left:auto"></span>
+</header>
+
+<section id="sec-akty" class="sec on">
+  <div class="grid3">
+    <div class="card">
+      <h2>Rekordy</h2>
+      <div class="toolbar">
+        <select id="f_book"><option value="">wszystkie księgi</option><option value="ch">Chrzty</option><option value="mal">Małżeństwa</option><option value="zg">Zgony</option></select>
+        <input id="f_q" placeholder="szukaj (nazwisko, imię)" style="flex:1;min-width:120px">
+      </div>
+      <div class="toolbar">
+        <label><input type="checkbox" id="f_pyt"> tylko z „?” / nieczytelne / puste</label>
+      </div>
+      <div class="toolbar">
+        <label><input type="checkbox" id="f_chg"> tylko zmienione</label>
+      </div>
+      <div class="note" id="f_cnt"></div>
+      <div class="list" id="list"></div>
+    </div>
+
+    <div class="card">
+      <h2 id="ed_title">Wybierz rekord</h2>
+      <div id="ed_meta" class="note"></div>
+      <div class="note">Kolumny: PL = forma polska (zapisywana w pliku), LA = łacina, RU = rosyjski. Kliknij pole, aby zobaczyć podpowiedzi z słownika.</div>
+      <div id="ed_fields"></div>
+      <div class="chips" id="ed_chips"></div>
+      <div class="toolbar">
+        <button class="primary" id="btn_save">Zapisz rekord</button>
+        <button id="btn_restore" class="danger">Przywróć oryginał</button>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>Podgląd aktu</h2>
+      <div class="note">Tekst składany z aktualnych pól. Najpierw PL, potem LA i RU z pól zapisanych w tych językach.</div>
+      <div id="pv_pl" class="preview"></div>
+      <details><summary>Wersja łacińska</summary><div id="pv_la" class="preview"></div></details>
+      <details><summary>Wersja rosyjska</summary><div id="pv_ru" class="preview"></div></details>
+      <details open><summary>Surowe dane z arkusza</summary><div id="pv_raw" class="raw"></div></details>
+    </div>
+  </div>
+</section>
+
+<section id="sec-imiona" class="sec">
+  <div class="card">
+    <h2>Imiona – wariant, liczba wystąpień, formy PL / LA / RU</h2>
+    <div class="toolbar">
+      <input id="i_q" placeholder="szukaj wariantu" style="min-width:160px">
+      <select id="i_st"><option value="">każdy status</option></select>
+      <span class="mut" id="i_cnt"></span>
+    </div>
+    <div class="note">Zmiana formy zapisuje się od razu jako propozycja. „Zastosuj” przepisuje wariant na formę PL we wszystkich rekordach i zapisuje formy LA/RU przy polach. Zmiany idą do dziennika (zakładka Korekty).</div>
+    <div class="tablewrap"><table id="i_tab"></table></div>
+  </div>
+</section>
+
+<section id="sec-nazwiska" class="sec">
+  <div class="card">
+    <h2>Nazwiska – warianty, rodziny (wspólna podstawa), formy</h2>
+    <div class="toolbar">
+      <input id="n_q" placeholder="szukaj wariantu lub rodziny" style="min-width:160px">
+      <select id="n_st"><option value="">każdy status</option></select>
+      <label><input type="checkbox" id="n_only"> tylko rodziny z więcej niż 1 wariantem</label>
+      <span class="mut" id="n_cnt"></span>
+    </div>
+    <div class="note">Rodzina = wariant po odcięciu końcówek (-ów, -owa, -a, -o itd.). Sugerowana forma to najczęstszy wariant w rodzinie, który nie jest dopełniaczem ani mnogą. To tylko podpowiedź: decyzję podejmujesz Ty. Forma RU jest automatyczną transkrypcją do poprawienia.</div>
+    <div class="tablewrap"><table id="n_tab"></table></div>
+  </div>
+</section>
+
+<section id="sec-slownik" class="sec">
+  <div class="card">
+    <h2>Słownik imion (PL, łacina, rosyjski)</h2>
+    <div class="note">Pozycje ze statusem „propozycja” są do zatwierdzenia. Płeć: m, k, ob (obie). Dodawaj i poprawiaj tutaj, a podpowiedzi w edytorze będą aktualne.</div>
+    <div class="toolbar">
+      <button id="d_add">+ dodaj imię</button>
+      <button id="d_exp">eksport słownika (CSV)</button>
+      <label>import CSV <input type="file" id="d_imp" accept=".csv,text/csv" style="border:none;padding:0"></label>
+    </div>
+    <div class="tablewrap"><table id="d_tab"></table></div>
+  </div>
+</section>
+
+<section id="sec-korekty" class="sec">
+  <div class="card">
+    <h2>Dziennik korekt</h2>
+    <div class="toolbar">
+      <button class="primary" id="k_exp">eksport korekt (CSV)</button>
+      <button id="k_wers">eksport wersji PL/LA/RU (CSV)</button>
+      <button id="k_formy">eksport form imion i nazwisk (CSV)</button>
+      <label>import korekt (CSV) <input type="file" id="k_imp" accept=".csv,text/csv" style="border:none;padding:0"></label>
+      <button class="danger" id="k_clr">wyczyść dziennik</button>
+    </div>
+    <div class="note">Dziennik to jedyny zapis zmian. Po wczytaniu strony stan odtwarza się z dziennika. Plik CSV ma średniki, kodowanie UTF-8 z BOM. Kolumna „ksiega” to kod: ch = chrzty, mal = małżeństwa, zg = zgony.</div>
+    <div class="tablewrap"><table id="k_tab"></table></div>
+  </div>
+</section>
+
+<script>
+const DATA = /*DATA*/null;
+const DICT0 = /*DICT*/[];
+const BOOKS = {ch:'Chrzty', mal:'Małżeństwa', zg:'Zgony'};
+const NAMEF = {
+  ch:['nazwisko_dziecka','imie_dziecka','ojciec_imie','ojciec_nazwisko','matka_imie','matka_nazwisko'],
+  mal:['pan_imie','pan_nazwisko','pan_ojciec_imie','pan_ojciec_nazwisko','pan_matka_imie','pan_matka_nazwisko','panna_imie','panna_nazwisko','panna_ojciec_imie','panna_ojciec_nazwisko','panna_matka_imie','panna_matka_nazwisko','swiadek1_imie','swiadek1_nazwisko','swiadek2_imie','swiadek2_nazwisko'],
+  zg:['nazwisko','imie','ojciec_imie','matka_imie','matka_nazwisko','rodowe']
+};
+const RAWF = {
+  ch:[['uwagi_surowe','uwagi'],['flagi','flagi']],
+  mal:[['surowe_kol_6_8','kol. 6–8'],['surowe_kol_21_23','kol. 21–23'],['flagi','flagi']],
+  zg:[['surowe_kol_6','kol. G'],['surowe_pozostale','kol. F, H–S'],['flagi','flagi']]
+};
+const VARMAP = {maryanna:'marianna',maryanny:'marianny',woyciech:'wojciech',jakób:'jakub',maciey:'maciej',zofji:'zofia',marjanna:'marianna',anastazya:'anastazja',jozef:'józef',woyciecha:'wojciecha'};
+const TR = {a:'а',ą:'он',b:'б',c:'ц',ć:'ч',d:'д',e:'е',ę:'ен',f:'ф',g:'г',h:'х',i:'и',j:'й',k:'к',l:'л',ł:'л',m:'м',n:'н',ń:'нь',o:'о',ó:'у',p:'п',r:'р',s:'с',ś:'сь',t:'т',u:'у',w:'в',y:'ы',z:'з',ź:'зь',ż:'ж'};
+const STATUSES = ['poprawne','prawdopodobnie poprawne','do sprawdzenia','do poprawy (dopełniacz/mnoga)','błędne (wariant)','niepewne','nie zmieniać'];
+const KEY = 'blinow_edytor_v1';
+
+let ST = {log:[], dict:[], forms:{}};
+let RECS = [], BYKEY = {}, CUR = null, ACTIVE = null, GROUPS = {}, NCOUNT = null;
+const $ = s => document.querySelector(s);
+const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const cap = s => s ? s[0].toUpperCase() + s.slice(1) : s;
+const isGen = v => /(ów|owa|owna|ówna|ego|ową)$/i.test(v);
+
+function nameType(f){ return f.includes('imie') ? 'imie' : 'nazwisko'; }
+function genderOf(r, f){
+  if(r.book==='mal'){ if(f.startsWith('pan_')) return 'm'; if(f.startsWith('panna_')) return 'k'; return '?'; }
+  if(r.book==='zg'){
+    if(f==='ojciec_imie') return 'm';
+    if(f==='matka_imie'||f==='matka_nazwisko') return 'k';
+    return r.cur.plec==='k'?'k':(r.cur.plec==='m'?'m':'?');
+  }
+  if(f==='ojciec_imie'||f==='ojciec_nazwisko') return 'm';
+  if(f==='matka_imie'||f==='matka_nazwisko') return 'k';
+  return '?';
+}
+function stem(s){
+  let t = s.replace(/\?/g,'').trim().toLowerCase().replace(/ł/g,'l').replace(/ó/g,'o').replace(/ś/g,'s').replace(/ć/g,'c').replace(/ń/g,'n').replace(/ź|ż/g,'z');
+  for(const suf of ['owna','ow','owa','ego','em','a','o','e','i','y']){
+    if(t.endsWith(suf) && t.length - suf.length >= 3) return t.slice(0, -suf.length);
+  }
+  return t;
+}
+function translit(s){
+  let t = s.toLowerCase().replace(/sz/g,'ш').replace(/cz/g,'ч').replace(/rz/g,'ж').replace(/ch/g,'х').replace(/dz/g,'дз');
+  let out=''; for(const c of t){ out += (TR[c]!==undefined ? TR[c] : c); }
+  return cap(out);
+}
+function csvCell(v){ v = String(v ?? ''); return /[;"\n\r]/.test(v) ? '"' + v.replace(/"/g,'""') + '"' : v; }
+function parseCSV(text){
+  const rows=[]; let row=[], cell='', q=false;
+  for(let i=0;i<text.length;i++){
+    const c=text[i];
+    if(q){ if(c==='"'){ if(text[i+1]==='"'){cell+='"';i++;} else q=false; } else cell+=c; }
+    else if(c==='"') q=true;
+    else if(c===';'){ row.push(cell); cell=''; }
+    else if(c==='\n'||c==='\r'){ if(c==='\r'&&text[i+1]==='\n') i++; row.push(cell); rows.push(row); row=[]; cell=''; }
+    else cell+=c;
+  }
+  if(cell.length||row.length){ row.push(cell); rows.push(row); }
+  return rows.filter(r=>r.length>1 || (r[0]||'').trim()!=='');
+}
+function download(name, text){
+  const blob = new Blob(['﻿'+text], {type:'text/csv;charset=utf-8'});
+  const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = name; a.click();
+  setTimeout(()=>URL.revokeObjectURL(a.href), 1000);
+}
+
+function save(){ try{ localStorage.setItem(KEY, JSON.stringify(ST)); }catch(e){} }
+
+function init(){
+  for(const b of ['ch','mal','zg']){
+    for(const row of DATA[b]){
+      const key = b+':'+row.wiersz_zrodlo;
+      const r = {key, book:b, w:row.wiersz_zrodlo, orig:{...row}, cur:{...row}, la:{}, ru:{}};
+      RECS.push(r); BYKEY[key]=r;
+    }
+  }
+  try{ const s = JSON.parse(localStorage.getItem(KEY)||'null'); if(s){ ST.log=s.log||[]; ST.dict=s.dict||[]; ST.forms=s.forms||{}; } }catch(e){}
+  if(!ST.dict.length) ST.dict = JSON.parse(JSON.stringify(DICT0));
+  for(const e of ST.log){
+    const r = BYKEY[e.ksiega+':'+e.wiersz]; if(!r) continue;
+    r.cur[e.pole] = e.po;
+    if(e.la!==undefined) r.la[e.pole]=e.la;
+    if(e.ru!==undefined) r.ru[e.pole]=e.ru;
+  }
+}
+
+function logChange(r, pole, po, la, ru, zrodlo){
+  const e = {ksiega:r.book, wiersz:r.w, pole, przed:r.cur[pole]??'', po, la, ru, zrodlo, czas:new Date().toISOString().slice(0,16)};
+  ST.log.push(e);
+  r.cur[pole]=po;
+  if(la!==undefined) r.la[pole]=la;
+  if(ru!==undefined) r.ru[pole]=ru;
+}
+
+function counts(){
+  const m = {imie:new Map(), nazwisko:new Map()};
+  for(const r of RECS){
+    for(const f of NAMEF[r.book]){
+      const v = (r.cur[f]||'').trim(); if(!v) continue;
+      const t = nameType(f);
+      const e = m[t].get(v) || {n:0, g:{m:0,k:0,'?':0}};
+      e.n++; e.g[genderOf(r,f)]++; m[t].set(v,e);
+    }
+  }
+  return m;
+}
+function buildGroups(names){
+  GROUPS = {};
+  for(const [v,e] of names){
+    const s = stem(v);
+    (GROUPS[s] = GROUPS[s] || []).push([v,e.n]);
+  }
+  for(const s in GROUPS){ GROUPS[s].sort((a,b)=>b[1]-a[1]); }
+}
+function groupCanon(v){
+  const g = GROUPS[stem(v)] || [];
+  const best = g.find(([x])=>!isGen(x));
+  return best ? best[0] : (g[0] ? g[0][0] : v);
+}
+function dictFind(pl){
+  const k = (pl||'').toLowerCase(); const kk = VARMAP[k]||k;
+  return ST.dict.find(d=>d.pl.toLowerCase()===kk);
+}
+function defaultStatus(type, v, pl, n){
+  if(/\?|nieczytel/i.test(v)) return 'niepewne';
+  if(type==='imie'){
+    if(VARMAP[v.toLowerCase()]) return 'błędne (wariant)';
+    if(dictFind(v)) return 'poprawne';
+    return 'do sprawdzenia';
+  }
+  if(isGen(v)) return 'do poprawy (dopełniacz/mnoga)';
+  if(v===pl && n>=3) return 'prawdopodobnie poprawne';
+  return 'do sprawdzenia';
+}
+function formOf(type, v, n){
+  const k = type+'|'+v;
+  if(ST.forms[k]) return {...ST.forms[k]};
+  let pl, la='', ru='';
+  if(type==='imie'){
+    const kk = VARMAP[v.toLowerCase()] || v.toLowerCase();
+    pl = cap(kk);
+    const d = dictFind(kk);
+    if(d){ la = d.la||''; ru = d.ru||''; }
+  } else {
+    pl = groupCanon(v);
+    ru = translit(pl);
+  }
+  return {type, v, pl, la, ru, status: defaultStatus(type, v, pl, n)};
+}
+function saveForm(f){ ST.forms[f.type+'|'+f.v] = {type:f.type, v:f.v, pl:f.pl, la:f.la, ru:f.ru, status:f.status}; save(); }
+function applyForm(type, v, n){
+  const f = formOf(type, v, n); saveForm(f);
+  let c = 0;
+  for(const r of RECS){
+    for(const fld of NAMEF[r.book]){
+      if(nameType(fld)!==type || (r.cur[fld]||'')!==v) continue;
+      const la = f.la||'', ru = f.ru||'';
+      if(f.pl===v && la===(r.la[fld]||'') && ru===(r.ru[fld]||'')) continue;
+      logChange(r, fld, f.pl, la, ru, 'formy-'+type); c++;
+    }
+  }
+  save(); return c;
+}
+
+function changed(r){ return NAMEF[r.book].some(f => r.cur[f]!==r.orig[f] || (r.la[f]||'')!=='' || (r.ru[f]||'')!==''); }
+function isQuestion(r){ return NAMEF[r.book].some(f => { const v=r.cur[f]||''; return v==='' || /\?|nieczytel/i.test(v); }); }
+
+function renderList(){
+  const book=$('#f_book').value, q=$('#f_q').value.trim().toLowerCase(), pyt=$('#f_pyt').checked, chg=$('#f_chg').checked;
+  let rows = RECS.filter(r => (!book || r.book===book)
+    && (!q || NAMEF[r.book].some(f => (r.cur[f]||'').toLowerCase().includes(q)))
+    && (!pyt || isQuestion(r)) && (!chg || changed(r)));
+  $('#f_cnt').textContent = rows.length + ' rekordów' + (rows.length>300 ? ' (pokazano 300)' : '');
+  $('#list').innerHTML = rows.slice(0,300).map(r => {
+    const name = r.book==='zg' ? (r.cur.imie||'')+' '+(r.cur.nazwisko||'') : r.book==='mal' ? (r.cur.pan_imie||'')+' '+(r.cur.pan_nazwisko||'')+' + '+(r.cur.panna_imie||'')+' '+(r.cur.panna_nazwisko||'') : (r.cur.imie_dziecka||'')+' '+(r.cur.nazwisko_dziecka||'');
+    const tags = (changed(r)?'<span class="tag ok">zmieniony</span> ':'') + (isQuestion(r)?'<span class="tag warn">?</span>':'');
+    return `<div class="item ${r.key===CUR?'sel':''}" data-k="${esc(r.key)}"><div>${esc(name.trim())} ${tags}</div><div class="mut">${BOOKS[r.book]} · rok ${esc(r.cur.rok)} · nr ${esc(r.cur.nr||r.cur.nr_wpisu||'')} · wiersz ${esc(r.w)}</div></div>`;
+  }).join('');
+}
+
+function renderEditor(){
+  const r = BYKEY[CUR];
+  if(!r){ $('#ed_title').textContent='Wybierz rekord'; $('#ed_fields').innerHTML=''; $('#ed_meta').textContent=''; $('#ed_chips').innerHTML=''; previewClear(); return; }
+  $('#ed_title').textContent = BOOKS[r.book] + ' · wiersz ' + r.w;
+  const c = r.cur;
+  const meta = r.book==='ch' ? `rok ${c.rok}, nr ${c.nr}, karta ${c.karta_nr||'—'}, ${c.data_tekst||''}` :
+               r.book==='mal' ? `rok ${c.rok}, nr ${c.nr}, ${c.data_tekst||''}` :
+               `rok ${c.rok}, ${c.miejscowosc||'brak miejscowości'}, nr ${c.nr_wpisu||'—'}, karta ${c.karta||'—'}`;
+  $('#ed_meta').textContent = meta;
+  $('#ed_fields').innerHTML = NAMEF[r.book].map(f => {
+    const act = ACTIVE===f ? ' act' : '';
+    return `<div class="fld${act}" data-f="${f}">
+      <div class="lab">${f} <span class="mut">(${genderOf(r,f)})</span></div>
+      <input id="e_pl_${f}" data-f="${f}" value="${esc(c[f]||'')}" placeholder="PL">
+      <input id="e_la_${f}" data-f="${f}" value="${esc(r.la[f]||'')}" placeholder="LA">
+      <input id="e_ru_${f}" data-f="${f}" value="${esc(r.ru[f]||'')}" placeholder="RU">
+    </div>`;
+  }).join('');
+  renderChips();
+  renderPreview(r);
+}
+
+function renderChips(){
+  const r = BYKEY[CUR];
+  const box = $('#ed_chips');
+  if(!r || !ACTIVE){ box.innerHTML = '<span class="mut">Kliknij pole, aby zobaczyć podpowiedzi.</span>'; return; }
+  const lang = $('#lang').value;
+  const g = genderOf(r, ACTIVE);
+  const list = ST.dict.filter(d => g==='?' || d.plec===g || d.plec==='ob');
+  box.innerHTML = list.map((d,i) => {
+    const label = lang==='RU' ? (d.ru||d.pl) : lang==='PL' ? d.pl : (d.la||d.pl);
+    return `<button data-ch="${i}" title="${esc(d.pl)}">${esc(label)}</button>`;
+  }).join('') || '<span class="mut">Brak pozycji w słowniku dla tej płci.</span>';
+  box.dataset.ids = JSON.stringify(list.map(d=>d.pl));
+}
+
+function previewClear(){ $('#pv_pl').textContent=''; $('#pv_la').textContent=''; $('#pv_ru').textContent=''; $('#pv_raw').textContent=''; }
+function sentence(r, lang){
+  const c = r.cur;
+  const g = f => lang==='PL' ? (c[f]||'') : ((lang==='LA'? r.la[f] : r.ru[f]) || c[f] || '');
+  if(r.book==='ch') return `Chrzest: ${g('imie_dziecka')} ${g('nazwisko_dziecka')}. Rok ${c.rok}, ${c.data_tekst||'data nieznana'}, nr ${c.nr||'—'}, karta ${c.karta_nr||'—'}. Ojciec: ${g('ojciec_imie')} ${g('ojciec_nazwisko')}${c.ojciec_wiek?' ('+c.ojciec_wiek+' l.)':''}. Matka: ${g('matka_imie')} ${g('matka_nazwisko')}${c.matka_wiek?' ('+c.matka_wiek+' l.)':''}.`;
+  if(r.book==='mal') return `Ślub, rok ${c.rok}, nr ${c.nr||'—'}, ${c.data_tekst||''}.\nPan: ${g('pan_imie')} ${g('pan_nazwisko')}${c.pan_wiek?' ('+c.pan_wiek+' l.)':''}, stan ${c.pan_stan||'—'}; ojciec ${g('pan_ojciec_imie')} ${g('pan_ojciec_nazwisko')}, matka ${g('pan_matka_imie')} ${g('pan_matka_nazwisko')}.\nPanna: ${g('panna_imie')} ${g('panna_nazwisko')}${c.panna_wiek?' ('+c.panna_wiek+' l.)':''}, stan ${c.panna_stan||'—'}; ojciec ${g('panna_ojciec_imie')} ${g('panna_ojciec_nazwisko')}, matka ${g('panna_matka_imie')} ${g('panna_matka_nazwisko')}.\nŚwiadkowie: ${g('swiadek1_imie')} ${g('swiadek1_nazwisko')}, ${g('swiadek2_imie')} ${g('swiadek2_nazwisko')}.`;
+  return `Zgon: ${g('imie')} ${g('nazwisko')}${g('rodowe')?', zd. '+g('rodowe'):''}. Rok ${c.rok}, ${c.miejscowosc||'miejscowość —'}, nr ${c.nr_wpisu||'—'}, karta ${c.karta||'—'}. Wiek ${c.wiek||'—'} ${c.jednostka_wieku||''}, płeć ${c.plec||'—'}, stan ${c.stan||'—'}. Ojciec: ${g('ojciec_imie')}; matka: ${g('matka_imie')} ${g('matka_nazwisko')}. Małżonek żyjący: ${c.zyjacy_malzonek||'—'}.`;
+}
+function renderPreview(r){
+  $('#pv_pl').textContent = sentence(r,'PL');
+  $('#pv_la').textContent = sentence(r,'LA');
+  $('#pv_ru').textContent = sentence(r,'RU');
+  $('#pv_raw').textContent = RAWF[r.book].map(([k,lab]) => `${lab}: ${r.orig[k]||''}`).join('\n');
+}
+
+function saveRec(){
+  const r = BYKEY[CUR]; if(!r) return;
+  let n=0;
+  for(const f of NAMEF[r.book]){
+    const pl=$('#e_pl_'+f).value, la=$('#e_la_'+f).value, ru=$('#e_ru_'+f).value;
+    if(pl!==(r.cur[f]||'') || la!==(r.la[f]||'') || ru!==(r.ru[f]||'')){ logChange(r,f,pl,la,ru,'akty'); n++; }
+  }
+  save(); renderAll(); $('#stat').textContent = n ? `zapisano zmian: ${n}` : 'bez zmian';
+}
+function restoreRec(){
+  const r = BYKEY[CUR]; if(!r) return;
+  let n=0;
+  for(const f of NAMEF[r.book]){
+    if(r.cur[f]!==r.orig[f] || (r.la[f]||'') || (r.ru[f]||'')){ logChange(r,f,r.orig[f]||'','','','przywroc'); n++; }
+  }
+  save(); renderAll(); $('#stat').textContent = n ? `przywrócono pól: ${n}` : 'nic do przywrócenia';
+}
+
+function renderImiona(names){
+  const q=$('#i_q').value.trim().toLowerCase(), st=$('#i_st').value;
+  const rows=[...names.imie].sort((a,b)=>b[1].n-a[1].n);
+  let out=[];
+  for(const [v,e] of rows){
+    if(q && !v.toLowerCase().includes(q)) continue;
+    const f = formOf('imie', v, e.n);
+    if(st && f.status!==st) continue;
+    const sex = e.g.m>=e.g.k ? (e.g.m||e.g.k ? 'm' : '?') : 'k';
+    out.push(`<tr data-t="imie" data-v="${esc(v)}"><td>${esc(v)}</td><td>${e.n}</td><td>${sex}</td>
+      <td><select data-fld="status">${STATUSES.map(s=>`<option ${s===f.status?'selected':''}>${s}</option>`).join('')}</select></td>
+      <td><input data-fld="pl" value="${esc(f.pl)}"></td><td><input data-fld="la" value="${esc(f.la)}"></td><td><input data-fld="ru" value="${esc(f.ru)}"></td>
+      <td><button data-act="apply">zastosuj</button></td></tr>`);
+  }
+  $('#i_cnt').textContent = out.length + ' wariantów';
+  $('#i_tab').innerHTML = `<tr><th>wariant</th><th>liczba</th><th>płeć</th><th>status</th><th>PL</th><th>LA</th><th>RU</th><th></th></tr>` + out.join('');
+}
+function renderNazwiska(names){
+  const q=$('#n_q').value.trim().toLowerCase(), st=$('#n_st').value, only=$('#n_only').checked;
+  const rows=[...names.nazwisko].sort((a,b)=>b[1].n-a[1].n);
+  let out=[];
+  for(const [v,e] of rows){
+    const s = stem(v);
+    const fam = GROUPS[s]||[];
+    if(only && fam.length<2) continue;
+    if(q && !v.toLowerCase().includes(q) && !s.includes(q)) continue;
+    const f = formOf('nazwisko', v, e.n);
+    if(st && f.status!==st) continue;
+    out.push(`<tr data-t="nazwisko" data-v="${esc(v)}"><td>${esc(v)}</td><td>${e.n}</td><td class="mut">${esc(s)} (${fam.length})</td>
+      <td><select data-fld="status">${STATUSES.map(x=>`<option ${x===f.status?'selected':''}>${x}</option>`).join('')}</select></td>
+      <td><input data-fld="pl" value="${esc(f.pl)}"></td><td><input data-fld="la" value="${esc(f.la)}"></td><td><input data-fld="ru" value="${esc(f.ru)}"></td>
+      <td><button data-act="apply">zastosuj</button></td></tr>`);
+  }
+  $('#n_cnt').textContent = out.length + ' wariantów';
+  $('#n_tab').innerHTML = `<tr><th>wariant</th><th>liczba</th><th>rodzina</th><th>status</th><th>PL</th><th>LA</th><th>RU</th><th></th></tr>` + out.join('');
+}
+function renderSlownik(){
+  $('#d_tab').innerHTML = `<tr><th>PL</th><th>płeć</th><th>LA</th><th>RU</th><th>status</th><th></th></tr>` + ST.dict.map((d,i)=>`<tr data-i="${i}">
+    <td><input data-fld="pl" value="${esc(d.pl)}"></td>
+    <td><select data-fld="plec">${['m','k','ob'].map(x=>`<option ${x===d.plec?'selected':''}>${x}</option>`).join('')}</select></td>
+    <td><input data-fld="la" value="${esc(d.la)}"></td><td><input data-fld="ru" value="${esc(d.ru)}"></td>
+    <td><select data-fld="status">${['propozycja','zatwierdzone'].map(x=>`<option ${x===d.status?'selected':''}>${x}</option>`).join('')}</select></td>
+    <td><button data-act="del" class="danger">usuń</button></td></tr>`).join('');
+}
+function renderKorekty(){
+  const rows = ST.log.slice(-500).reverse();
+  $('#k_tab').innerHTML = `<tr><th>czas</th><th>księga</th><th>wiersz</th><th>pole</th><th>przed</th><th>po</th><th>LA</th><th>RU</th><th>źródło</th></tr>` +
+    rows.map(e=>`<tr><td class="mut">${esc(e.czas)}</td><td>${esc(BOOKS[e.ksiega])}</td><td>${esc(e.wiersz)}</td><td>${esc(e.pole)}</td><td>${esc(e.przed)}</td><td><b>${esc(e.po)}</b></td><td>${esc(e.la||'')}</td><td>${esc(e.ru||'')}</td><td class="mut">${esc(e.zrodlo)}</td></tr>`).join('') +
+    (ST.log.length>500?`<tr><td colspan="9" class="mut">pokazano ostatnie 500 z ${ST.log.length}</td></tr>`:'');
+}
+
+function renderAll(){
+  NCOUNT = counts();
+  buildGroups(NCOUNT.nazwisko);
+  renderList();
+  renderEditor();
+  renderImiona(NCOUNT);
+  renderNazwiska(NCOUNT);
+  renderSlownik();
+  renderKorekty();
+  $('#stat').textContent = `rekordów: ${RECS.length} · zmian w dzienniku: ${ST.log.length}`;
+}
+
+function exportKorekty(){
+  const h = ['ksiega','wiersz_zrodlo','pole','przed','po','la','ru','zrodlo','czas'];
+  const lines = [h.join(';')].concat(ST.log.map(e => [e.ksiega,e.wiersz,e.pole,e.przed,e.po,e.la??'',e.ru??'',e.zrodlo,e.czas].map(csvCell).join(';')));
+  download('korekty.csv', lines.join('\n'));
+}
+function exportWersje(){
+  const fields = [...new Set(Object.values(NAMEF).flat())];
+  const h = ['ksiega','wiersz_zrodlo'];
+  for(const f of fields) h.push(f+'_PL', f+'_LA', f+'_RU');
+  const lines = [h.join(';')];
+  for(const r of RECS){
+    const row = [r.book, r.w];
+    for(const f of fields){
+      if(NAMEF[r.book].includes(f)) row.push(r.cur[f]||'', r.la[f]||'', r.ru[f]||'');
+      else row.push('','','');
+    }
+    lines.push(row.map(csvCell).join(';'));
+  }
+  download('wersje_PL_LA_RU.csv', lines.join('\n'));
+}
+function exportFormy(){
+  const m = counts();
+  const lines = ['typ;wariant;liczba;status;pl;la;ru'];
+  for(const t of ['imie','nazwisko']){
+    for(const [v,e] of m[t]){
+      const f = formOf(t, v, e.n);
+      lines.push([t,v,e.n,f.status,f.pl,f.la,f.ru].map(csvCell).join(';'));
+    }
+  }
+  download('formy_imion_nazwisk.csv', lines.join('\n'));
+}
+function exportSlownik(){
+  const lines = ['pl;plec;la;ru;status'].concat(ST.dict.map(d => [d.pl,d.plec,d.la,d.ru,d.status].map(csvCell).join(';')));
+  download('slownik_imion.csv', lines.join('\n'));
+}
+
+function importKorekty(text){
+  const rows = parseCSV(text); if(rows.length<2) return 0;
+  const h = rows[0]; const ix = n => h.indexOf(n);
+  let c=0;
+  for(const row of rows.slice(1)){
+    const r = BYKEY[row[ix('ksiega')]+':'+row[ix('wiersz_zrodlo')]]; if(!r) continue;
+    const pole=row[ix('pole')], po=row[ix('po')]??'';
+    if(!NAMEF[r.book].includes(pole)) continue;
+    if(r.cur[pole]===po && (r.la[pole]||'')===(row[ix('la')]||'') && (r.ru[pole]||'')===(row[ix('ru')]||'')) continue;
+    logChange(r, pole, po, row[ix('la')]||'', row[ix('ru')]||'', 'import'); c++;
+  }
+  save(); renderAll(); return c;
+}
+
+document.querySelectorAll('header button[data-tab]').forEach(b => b.addEventListener('click', () => {
+  document.querySelectorAll('header button[data-tab]').forEach(x=>x.classList.toggle('on', x===b));
+  document.querySelectorAll('.sec').forEach(s=>s.classList.toggle('on', s.id==='sec-'+b.dataset.tab));
+}));
+['#f_book','#f_q','#f_pyt','#f_chg'].forEach(s => $(s).addEventListener('input', renderList));
+$('#list').addEventListener('click', e => { const it=e.target.closest('[data-k]'); if(!it) return; CUR=it.dataset.k; ACTIVE=null; renderAll(); });
+$('#ed_fields').addEventListener('focusin', e => { const f=e.target.dataset.f; if(!f) return; ACTIVE=f; renderChips(); document.querySelectorAll('.fld').forEach(x=>x.classList.toggle('act', x.dataset.f===f)); });
+$('#ed_chips').addEventListener('click', e => {
+  const b=e.target.closest('[data-ch]'); if(!b) return;
+  const r=BYKEY[CUR]; if(!r||!ACTIVE) return;
+  const d = ST.dict.find(x=>x.pl===JSON.parse($('#ed_chips').dataset.ids)[+b.dataset.ch]);
+  if(!d) return;
+  const lang=$('#lang').value;
+  if(lang==='RU'){ $('#e_ru_'+ACTIVE).value=d.ru||''; }
+  else if(lang==='PL'){ $('#e_pl_'+ACTIVE).value=d.pl; }
+  else { $('#e_la_'+ACTIVE).value=d.la||''; }
+  if(!$('#e_pl_'+ACTIVE).value) $('#e_pl_'+ACTIVE).value=d.pl;
+});
+$('#btn_save').addEventListener('click', saveRec);
+$('#btn_restore').addEventListener('click', restoreRec);
+$('#lang').addEventListener('change', renderChips);
+
+$('#i_q').addEventListener('input', ()=>renderImiona(counts()));
+$('#i_st').innerHTML = '<option value="">każdy status</option>' + STATUSES.map(s=>`<option>${s}</option>`).join('');
+$('#i_st').addEventListener('change', ()=>renderImiona(counts()));
+$('#n_q').addEventListener('input', ()=>renderNazwiska(counts()));
+$('#n_st').innerHTML = '<option value="">każdy status</option>' + STATUSES.map(s=>`<option>${s}</option>`).join('');
+$('#n_st').addEventListener('change', ()=>renderNazwiska(counts()));
+$('#n_only').addEventListener('change', ()=>renderNazwiska(counts()));
+
+function formsChange(e){
+  const tr=e.target.closest('tr[data-t]'); if(!tr) return;
+  const type=tr.dataset.t, v=tr.dataset.v, fld=e.target.dataset.fld; if(!fld) return;
+  const n = +tr.children[1].textContent;
+  const f = formOf(type, v, n); f[fld]=e.target.value; saveForm(f);
+  $('#stat').textContent = `forma zapisana: ${v} → ${f.pl}`;
+}
+$('#i_tab').addEventListener('change', formsChange);
+$('#n_tab').addEventListener('change', formsChange);
+$('#i_tab').addEventListener('click', e => { const b=e.target.closest('[data-act="apply"]'); if(!b) return; const tr=b.closest('tr'); const c=applyForm('imie', tr.dataset.v, +tr.children[1].textContent); $('#stat').textContent=`zastosowano: ${c} pól`; renderAll(); });
+$('#n_tab').addEventListener('click', e => { const b=e.target.closest('[data-act="apply"]'); if(!b) return; const tr=b.closest('tr'); const c=applyForm('nazwisko', tr.dataset.v, +tr.children[1].textContent); $('#stat').textContent=`zastosowano: ${c} pól`; renderAll(); });
+
+$('#d_add').addEventListener('click', ()=>{ ST.dict.push({pl:'',plec:'m',la:'',ru:'',status:'propozycja'}); save(); renderSlownik(); });
+$('#d_tab').addEventListener('change', e => {
+  const tr=e.target.closest('tr[data-i]'); if(!tr) return;
+  const d=ST.dict[+tr.dataset.i]; d[e.target.dataset.fld]=e.target.value; save(); renderAll();
+});
+$('#d_tab').addEventListener('click', e => { const b=e.target.closest('[data-act="del"]'); if(!b) return; const i=+b.closest('tr').dataset.i; ST.dict.splice(i,1); save(); renderAll(); });
+$('#d_exp').addEventListener('click', exportSlownik);
+$('#d_imp').addEventListener('change', async e => {
+  const rows = parseCSV(await e.target.files[0].text()); const h=rows[0]||[];
+  for(const row of rows.slice(1)){ const get=n=>row[h.indexOf(n)]||''; const pl=get('pl'); if(!pl) continue;
+    const i = ST.dict.findIndex(d=>d.pl.toLowerCase()===pl.toLowerCase());
+    const item={pl, plec:get('plec')||'ob', la:get('la'), ru:get('ru'), status:get('status')||'propozycja'};
+    if(i>=0) ST.dict[i]=item; else ST.dict.push(item);
+  }
+  save(); renderAll();
+});
+
+$('#k_exp').addEventListener('click', exportKorekty);
+$('#k_wers').addEventListener('click', exportWersje);
+$('#k_formy').addEventListener('click', exportFormy);
+$('#k_clr').addEventListener('click', ()=>{ if(confirm('Wyczyścić dziennik korekt? Zmiany w tej przeglądarce znikną.')){ ST.log=[]; save(); location.reload(); } });
+$('#k_imp').addEventListener('change', async e => { const n = importKorekty(await e.target.files[0].text()); $('#stat').textContent = `zaimportowano zmian: ${n}`; });
+
+init();
+renderAll();
+</script>
+</body>
+</html>
