@@ -407,6 +407,7 @@ body.compact .fgrid{gap:4px 8px}
 <body>
 <svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
   <filter id="fxSharp" color-interpolation-filters="sRGB"><feConvolveMatrix id="fxConv" order="3" kernelMatrix="0 0 0 0 1 0 0 0 0" preserveAlpha="true"/></filter>
+  <filter id="fxFlat" color-interpolation-filters="sRGB" x="0" y="0" width="100%" height="100%"><feColorMatrix type="saturate" values="0" result="g"/><feGaussianBlur in="g" stdDeviation="22" edgeMode="duplicate" result="b"/><feComposite in="g" in2="b" operator="arithmetic" k1="0" k2="1" k3="-1" k4="0.85"/></filter>
   <filter id="fxThresh" color-interpolation-filters="sRGB"><feColorMatrix type="saturate" values="0"/><feComponentTransfer id="fxTT"><feFuncR type="linear" slope="1" intercept="0"/><feFuncG type="linear" slope="1" intercept="0"/><feFuncB type="linear" slope="1" intercept="0"/></feComponentTransfer></filter>
 </svg>
 <div id="app">
@@ -483,7 +484,7 @@ body.compact .fgrid{gap:4px 8px}
         <div class="fxRow"><label for="fxCon">Kontrast</label><input id="fxCon" type="range" min="50" max="300" step="5"><output id="oCon"></output></div>
         <div class="fxRow"><label for="fxShp">Wyostrzanie</label><input id="fxShp" type="range" min="0" max="3" step="0.25"><output id="oShp"></output></div>
         <div class="fxRow"><label for="fxThr">Próg czerni i bieli</label><input id="fxThr" type="range" min="0" max="90" step="5"><output id="oThr"></output></div>
-        <div class="fxChk"><label><input type="checkbox" id="fxGray"> szarość</label><label><input type="checkbox" id="fxInv"> negatyw</label><label><input type="checkbox" id="fxRuler"> linijka czytania</label></div>
+        <div class="fxChk"><label><input type="checkbox" id="fxFlat2"> wyrównaj tło</label><label><input type="checkbox" id="fxGray"> szarość</label><label><input type="checkbox" id="fxInv"> negatyw</label><label><input type="checkbox" id="fxRuler"> linijka czytania</label></div>
         <div class="fxFoot"><button id="fxReset">Przywróć</button><span class="muted">Dotyczy tylko podglądu, plik skanu się nie zmienia.</span></div>
       </div>
       <div id="hint">Przeciągnij prostokąt wokół aktu. Esc = wyjście z trybu. Poprzednie ramki: klawisz H.</div>
@@ -1706,11 +1707,12 @@ $('tablePanel').addEventListener('click', e => { if (window.matchMedia('(max-wid
 
 
 /* ===================== FILTRY OBRAZU (czytelność akt metrykalnych) ===================== */
-const FX_KEY = 'gv6.fx', FX_DEF = {bri:100, con:100, shp:0, thr:0, gray:false, inv:false, ruler:false};
+const FX_KEY = 'gv6.fx', FX_DEF = {bri:100, con:100, shp:0, thr:0, flat:false, gray:false, inv:false, ruler:false};
 const FX_PRESETS = [
   ['Normalny', {}],
   ['Atrament', {gray:true, con:160, bri:105}],
   ['Wyostrz', {gray:true, con:130, shp:1.25}],
+  ['Bez tła (słaby tusz)', {flat:true, con:170}],
   ['Wyblakłe', {gray:true, con:220, bri:115}],
   ['Czarno-białe', {gray:true, thr:55}],
   ['Negatyw', {gray:true, inv:true, con:130}]
@@ -1719,6 +1721,7 @@ let FX = Object.assign({}, FX_DEF);
 try { Object.assign(FX, JSON.parse(lsGet(FX_KEY, '{}'))); } catch(e){}
 function imgFilter(){
   const parts = [];
+  if (FX.flat) parts.push('url(#fxFlat)');
   if (FX.bri !== 100) parts.push(`brightness(${FX.bri}%)`);
   if (FX.con !== 100) parts.push(`contrast(${FX.con}%)`);
   if (FX.gray) parts.push('grayscale(100%)');
@@ -1743,7 +1746,7 @@ function fxApply(){
 function fxSync(){
   $('fxBri').value = FX.bri; $('fxCon').value = FX.con; $('fxShp').value = FX.shp; $('fxThr').value = FX.thr;
   $('oBri').textContent = FX.bri + '%'; $('oCon').textContent = FX.con + '%'; $('oShp').textContent = FX.shp; $('oThr').textContent = FX.thr ? FX.thr + '%' : 'wył.';
-  $('fxGray').checked = FX.gray; $('fxInv').checked = FX.inv; $('fxRuler').checked = FX.ruler;
+  $('fxFlat2').checked = !!FX.flat; $('fxGray').checked = FX.gray; $('fxInv').checked = FX.inv; $('fxRuler').checked = FX.ruler;
   const cur = JSON.stringify(Object.assign({}, FX, {ruler:false}));
   [...$('fxPresets').children].forEach((b, i) => b.classList.toggle('on', JSON.stringify(Object.assign({}, FX_DEF, FX_PRESETS[i][1], {ruler:false})) === cur));
 }
@@ -1751,7 +1754,7 @@ function fxSet(patch){ Object.assign(FX, patch); lsSet(FX_KEY, JSON.stringify(FX
 $('fxPresets').innerHTML = FX_PRESETS.map((p, i) => `<button data-i="${i}">${p[0]}</button>`).join('');
 $('fxPresets').onclick = e => { const b = e.target.closest('button'); if (!b) return; fxSet(Object.assign({}, FX_DEF, FX_PRESETS[+b.dataset.i][1], {ruler: FX.ruler})); };
 [['fxBri','bri'],['fxCon','con'],['fxShp','shp'],['fxThr','thr']].forEach(([id, k]) => $(id).oninput = e => fxSet({[k]: +e.target.value}));
-[['fxGray','gray'],['fxInv','inv'],['fxRuler','ruler']].forEach(([id, k]) => $(id).onchange = e => fxSet({[k]: e.target.checked}));
+[['fxFlat2','flat'],['fxGray','gray'],['fxInv','inv'],['fxRuler','ruler']].forEach(([id, k]) => $(id).onchange = e => fxSet({[k]: e.target.checked}));
 $('fxReset').onclick = () => fxSet(Object.assign({}, FX_DEF, {ruler: FX.ruler}));
 function fxToggle(on){ const open = on ?? $('imgPanel').hidden; $('imgPanel').hidden = !open; $('btnImgFx').setAttribute('aria-expanded', String(open)); }
 $('btnImgFx').onclick = () => fxToggle();
