@@ -17,6 +17,8 @@ cols_out = ['rok','nr','wiersz_zrodlo','data_tekst','data_iso',
  'panna_rok_ur_przyb','panna_rok_ur_przyb_surowe',
  'swiadek1_imie','swiadek1_nazwisko','swiadek1_wiek',
  'swiadek2_imie','swiadek2_nazwisko','swiadek2_wiek',
+ 'pan_poprzednia_zona_imie','pan_poprzednia_zona_nazwisko','pan_poprzednia_zona_data_surowe','pan_poprzednia_zona_data_iso',
+ 'panna_poprzedni_maz_imie','panna_poprzedni_maz_nazwisko','panna_poprzedni_maz_data_surowe','panna_poprzedni_maz_data_iso',
  'surowe_kol_6_8','surowe_kol_21_23','flagi']
 
 def clean(v):
@@ -129,10 +131,26 @@ for rn, cells in rows:
     surowe68 = ' | '.join(x for x in [d.get('G',''), d.get('H',''), d.get('I','')] if x)
     surowe2123 = ' | '.join(x for x in [d.get('V',''), d.get('W',''), d.get('X','')] if x)
 
+    def prev(vals, year_ok=True):
+        im, na, da = vals
+        ph = lambda x: '' if x in ('', '-----', '?', '.', '0') else x
+        im, na, da = ph(im), ph(na), ph(da)
+        m = re.fullmatch(r'(\d{1,2})\.(\d{1,2})\.(\d{4})', da)
+        iso_ = f'{m.group(3)}-{int(m.group(2)):02d}-{int(m.group(1)):02d}' if m else ''
+        if da and not iso_:
+            flags.append(f'data poprzedniego małżonka nieparsowana: {da}')
+        return im, na, da, iso_
+    pim, pna, pda, piso = prev((d.get('G',''), d.get('H',''), d.get('I','')))
+    qim, qna, qda, qiso = prev((d.get('V',''), d.get('W',''), d.get('X','')))
+    prevcols = dict(pan_poprzednia_zona_imie=pim, pan_poprzednia_zona_nazwisko=pna,
+                    pan_poprzednia_zona_data_surowe=pda, pan_poprzednia_zona_data_iso=piso,
+                    panna_poprzedni_maz_imie=qim, panna_poprzedni_maz_nazwisko=qna,
+                    panna_poprzedni_maz_data_surowe=qda, panna_poprzedni_maz_data_iso=qiso)
+
     rec = dict(rok=str(year) if year else d.get('A',''), nr=d.get('B',''), wiersz_zrodlo=str(rn),
                data_tekst=dt, data_iso=iso, surowe_kol_6_8=surowe68, surowe_kol_21_23=surowe2123,
                flagi='; '.join(flags))
-    rec.update(pan); rec.update(panna); rec.update(sw)
+    rec.update(pan); rec.update(panna); rec.update(sw); rec.update(prevcols)
     out.append(rec)
 
 with open(OUT, 'w', encoding='utf-8-sig', newline='') as f:
