@@ -225,20 +225,34 @@ Preprocessing (HEAVY-DUTY: tło, kontrast, morfologia, auto-invert) – działa 
 
 ---
 
-## 12a. Moje założenia (do weryfikacji przez autora)
+## 12a. Założenia od zera – z perspektywy genealoga
 
-Autor poprosił, żebym przyjął własne założenia. Oto one, z uzasadnieniem. Każde można odwrócić.
+Autor poprosił, żebym sam wymyślił założenia, jakby to projektował genealog. Poniżej: najpierw jak genealog naprawdę pracuje z aktem, potem co z tego wynika dla aplikacji. Każde założenie można odwrócić.
 
-1. **Źródłem prawdy jest `public_imports` (Supabase), a nie Firestore.** Dokumentacja nazywa ją „główną tabelą pracy” i ma 5512 rekordów. Firestore ma osobny model ACTA.
-2. **Pierwszy cel to płaski rekord, nie ACTA.** Pełny model ACTA (DNA, zdrowie, migracje) nie jest potrzebny do indeksowania akt, a psuje UI.
-3. **IndexedDB jako magazyn lokalny.** Mam to jako jedyny działający tryb offline (v8.21). Chmura jako sync, nie prawda.
-4. **Odręczne akta: praca ręczna + klik w słowo, nie automat.** Tesseract słabo czyta odręczne pismo, więc nie obiecuję wyników OCR.
-5. **Nic nie usuwam, tylko oznaczam duplikaty.** Usuwanie zostawiam autorowi.
-6. **Firestore otwarty do czasu dopracowania** (decyzja autora, zapisana w sekcji 8).
-7. **Najpierw E1 (import + testy), potem UI.** Bez powtarzalnego importu każdy eksperyment z UI psuje dane.
-8. **Nie zmieniam kodu w tej gałęzi.** To plan. Kod zaczyna się w E1 po akceptacji.
-9. **Zakres wizualizacji: ROI + klik w słowo, bez wachlarza w MVP.** Wachlarz to P2.
-10. **Pliki danych w repo traktuję jako wejście, nie jako wzorzec.** Które jest najnowsze – nie wiem; porównanie w E1.
+**Jak to widzi genealog:**
+1. **Akt to dokument, nie osoba.** Indeksuję to, co jest na papierze, w jednym wierszu na akt. Powiązania osób (ten sam ojciec w trzech aktach) dochodzą później i nie mogą być wymuszane przy wpisywaniu.
+2. **Pusty ≠ błąd.** Brak pola nie jest problemem. Ale trzeba odróżnić: *nieczytelne* (`?`), *wnioskowane* (`[ ]`, np. wiek z kontekstu), *z innego źródła* (np. data z odpisu).
+3. **Zapisuję to, co stoi na akcie, nie to, co wiem.** „Józef” i „Jozef” to dwie wartości: oryginalna pisownia (zawsze) i forma znormalizowana (osobno, opcjonalnie). Oryginału nigdy nie poprawiam.
+4. **Daty zostają tekstem jak na akcie** („1884, styczeń”, „ok. 1855”). Znormalizowana data to osobne, opcjonalne pole. Wiek to wiek, nie rok urodzenia.
+5. **Świadkowie i zgłaszający to osoby z nazwiskiem.** Wracają w innych aktach (wuj, sąsiad). Trzymam ich jako osoby z rolą, nie jako wolny tekst w uwagach.
+6. **Pracuję seriami z jednej parafii i roku.** Parafia, rok i typ aktu to stan serii, wpisywany raz. Każdy akt tylko zmienia nr i treść.
+7. **Klucz aktu to parafia + rok + nr (+ księga/strona gdy są).** Sam numer się powtarza w różnych księgach i latach. Dlatego „duplikat” to podejrzenie do sprawdzenia, nie błąd do usunięcia.
+8. **Skan jest dowodem.** Każde pole ma wskazanie na miejsce na skanie (ROI albo słowo), żeby dało się sprawdzić, skąd wartość.
+9. **Historia moich ustaleń.** Każda zmiana ma datę i powód (krótka notatka). Genealog pamięta, dlaczego coś poprawił, i musi to móc odtworzyć.
+10. **Pracuję w archiwum i na wsi.** Brak internetu to norma. Wszystko działa offline, a sieć tylko do synchronizacji.
+11. **Dane żyjących osób są prywatne.** Nie publikuję ich poza repo bez zgody. Reguła Firestore otwarta to decyzja autora, nie moje założenie.
+
+**Co z tego wynika dla aplikacji:**
+- Model: akt = wiersz + osoby z rolami (dziecko, zgłaszający, świadek) + zapis każdego pola w dwóch formach (oryginał / normalizacja) + dziennik zmian. Płasko w eksporcie, bez pełnego modelu ACTA w UI.
+- Interfejs: „stan serii” (parafia, rok, typ) na górze, licznik aktów, nawigacja po nr aktu, pola w kolejności z aktu.
+- Walidacja miękka: ostrzeżenia (nr powtórzony w tej samej księdze, data poza rokiem serii), nigdy blokada zapisu.
+- Dane: jedno źródło prawdy lokalnie, eksport w układzie wejścia, wszystko z `schemaVersion`.
+- Brak automatycznego scalania osób: aplikacja proponuje, genealog potwierdza.
+
+**Czego nie zakładam (świadomie):**
+- Że OCR odczyta odręczne pismo. Klik w słowo i praca ręczna to podstawa.
+- Że mam wszystkie dane. Nie wiem, która wersja jest najnowsza (patrz sekcja 11).
+- Że Supabase/Firestore są dostępne z tej sesji (patrz sekcja 4a).
 
 ---
 
