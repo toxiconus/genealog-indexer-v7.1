@@ -1414,8 +1414,8 @@ function parseJsonImport(text, name){
   const data = list.map(o => headers.map(k => (o[k] ?? '').toString()));
   return finishImport(name, headers, data, guessTemplate(headers));
 }
-function finishImport(name, headers, data, tplId){
-  const fields = fieldsOf(S.templates.find(t => t.id === tplId));
+function autoMap(headers, tplId){
+  const fields = exportCols(S.templates.find(t => t.id === tplId)).map(f => f.label ? f : Object.assign({label:'Niepewne pola'}, f));
   const sig = headers.map(h => h.toLowerCase()).join('|') + '#' + tplId;
   let saved = {}; try { saved = JSON.parse(localStorage.getItem('map:' + sig) || '{}'); } catch(e){}
   const map = {};
@@ -1425,6 +1425,10 @@ function finishImport(name, headers, data, tplId){
     const pre = tplId === 'chrzest' ? PRESET[h] : '';
     map[i] = saved[i] ?? (pre || (hit ? hit.id : ''));
   });
+  return {map, sig};
+}
+function finishImport(name, headers, data, tplId){
+  const {map, sig} = autoMap(headers, tplId);
   S.imps.push({name, headers, data, tplId, map, sig});
   S.impIdx = S.imps.length - 1;
   renderImportPanel();
@@ -1444,7 +1448,7 @@ function renderImportPanel(){
   h += '</tbody></table>';
   const cur = S.imps[S.impIdx];
   if (cur){
-    const fields = fieldsOf(S.templates.find(t => t.id === cur.tplId));
+    const fields = exportCols(S.templates.find(t => t.id === cur.tplId)).map(f => f.label ? f : Object.assign({label:'Niepewne pola'}, f));
     h += `<p class="muted" style="margin:12px 0 6px">Mapowanie kolumn – ${esc(cur.name)}</p>`;
     h += '<div style="overflow:auto"><table><thead><tr>' + cur.headers.map(x => `<th>${esc(x)}</th>`).join('') + '</tr><tr>' +
          cur.headers.map((x,i) => `<td><select data-col="${i}" aria-label="Pole dla kolumny ${esc(x)}"><option value="">— pomiń —</option>${fields.map(f => `<option value="${esc(f.id)}" ${cur.map[i] === f.id ? 'selected' : ''}>${esc(f.label || f.id)}</option>`).join('')}</select></td>`).join('') + '</tr></thead><tbody>';
@@ -1455,7 +1459,7 @@ function renderImportPanel(){
   box.innerHTML = h;
   box.querySelectorAll('[data-show]').forEach(b => b.onclick = () => { S.impIdx = +b.dataset.show; renderImportPanel(); });
   box.querySelectorAll('[data-drop]').forEach(b => b.onclick = () => { S.imps.splice(+b.dataset.drop, 1); S.impIdx = Math.max(0, Math.min(S.impIdx, S.imps.length - 1)); renderImportPanel(); });
-  box.querySelectorAll('select[data-tpl]').forEach(s => s.onchange = () => { const f = S.imps[+s.dataset.tpl]; f.tplId = s.value; f.map = {}; f.headers.forEach((h, i) => { f.map[i] = ''; }); renderImportPanel(); });
+  box.querySelectorAll('select[data-tpl]').forEach(s => s.onchange = () => { const f = S.imps[+s.dataset.tpl]; f.tplId = s.value; Object.assign(f, autoMap(f.headers, f.tplId)); renderImportPanel(); });
   box.querySelectorAll('select[data-col]').forEach(s => s.onchange = () => { cur.map[s.dataset.col] = s.value; });
   $('impApply').onclick = applyImport;
   $('impClear').onclick = () => { S.imps = []; S.impIdx = 0; renderImportPanel(); };
@@ -1470,9 +1474,13 @@ function applyImport(){
       const v = {};
       Object.entries(I.map).forEach(([col, fid]) => { if (fid && row[col] !== undefined && row[col] !== '') v[fid] = row[col]; });
       if (!Object.keys(v).length) return;
+      const SKIP = ['notes','notes_org','uncertain_fields','verification_status'];
+      const keys = Object.keys(v).filter(k => !SKIP.includes(k));
       const dup = v.source_id
         ? S.records.some(r => r.tpl === I.tplId && r.v.source_id === v.source_id)
-        : S.records.some(r => r.tpl === I.tplId && r.v.christening_act_number === v.christening_act_number && r.v.christening_year === v.christening_year && r.v.child_last_name === v.child_last_name);
+        : I.tplId === 'chrzest' && v.christening_act_number !== undefined
+          ? S.records.some(r => r.tpl === I.tplId && r.v.christening_act_number === v.christening_act_number && r.v.christening_year === v.christening_year && r.v.child_last_name === v.child_last_name)
+          : keys.length >= 2 && S.records.some(r => r.tpl === I.tplId && keys.every(k => String(r.v[k] ?? '').trim() === String(v[k]).trim()));
       if (dup){ skipped++; return; }
       const rec = {id: uid(), tpl: I.tplId, v, page: -1, roi: null, status: 'nowy', by: I.name, at: now(), uncertain: false};
       S.records.push(rec); markDirty(rec.id); added++;
