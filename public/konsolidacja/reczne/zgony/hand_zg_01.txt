@@ -1,0 +1,130 @@
+411 | miejsc=Blinów | nr=281 | fl=kol. F zawiera miejscowość zamiast daty; nazwisko z pytajnikiem
+574 | data=19.04.1813 | miejsc=Brzozówka | wiek=50 | jedn=lat
+741 | miejsc=Brzozówka | nr=830 | fl=kol. F zawiera miejscowość zamiast daty
+914 | miejsc=Brzozówka | nr=865 | fl=kol. F zawiera miejscowość zamiast daty
+942 | miejsc=Brzozówka | nr=867 | fl=kol. F zawiera miejscowość zamiast daty; imię w nawiasie 'Wojciech (Adalbert)' zostawione
+971 | data=03.10.1824 | miejsc=Brzozówka | nr=885 | wiek=58 | jedn=lat
+1020 | fl=nazwisko '??' nieczytelne; w G 'nieczytelne'
+1024 | plec=k | ojc=Jędrzeja | mat=Katarzyny
+1026 | plec=k | ojc=Antoniego | mat=Katarzyny | fl=nazwisko z pytajnikiem
+1030 | plec=m | ojc=Grzegorza | mat=Marjanny
+1033 | wiek=40 | jedn=lat
+1034 | plec=m | ojc=Józefa | mat=Ewy
+1035 | plec=k | ojc=Wojciecha | matn=Kolasa | fl=w G brak imienia matki ('i Kolasa')
+1038 | plec=k | ojc=Jędrzeja | mat=Zofii
+1049 | data=13.06.1827 | miejsc=Brzozówka | wiek=0 | fl=kol. K-O (Pudło, Katarzyna, Pcionek) nieopisane, zostają w surowych; wiek bez jednostki
+1077 | karta=45 | plec=k | ojc=Woyciecha | mat=Maryanny | wiek=5 | jedn=mies
+1082 | karta=51 | plec=m | ojc=Piotra | mat=Maryanny
+1084 | karta=52 | plec=m | ojc=Kaspra | mat=Antoniny | wiek=8 | jedn=tyg
+1086 | karta=52 | plec=m | ojc=Macieja | mat=Anny | wiek=56 | jedn=lat
+1089 | karta=51 | uw=Ekonom z Blinowa
+1093 | data=11.10.1829 | miejsc=Brzozówka | wiek=40 | jedn=lat | fl=kol. K-Q (Łach, Elżbieta, Michał, Pudło) nieopisane, zostają w surowych
+1095 | karta=50 | rodowe=Kisiel | uw=z domu Kisiel
+1096 | karta=45 | plec=k | ojc=Woyciecha | mat=Franciszki | wiek=39 | jedn=lat
+1097 | karta=52 | plec=m | ojc=Jakuba | mat=Jadwigi | wiek=70 | jedn=lat
+1098 | karta=58 | plec=m | ojc=Kazimierza | mat=Agaty | wiek=80 | jedn=lat
+1103 | karta=57 | uw=nazwisko 'Kuszai' zapisane obok karty | fl=w G nazwisko 'Kuszai' (w B 'Kuszay')
+1105 | karta=58 | wiek=40 | jedn=lat | uw=nazwisko 'Mruz' zapisane obok karty | fl=w G nazwisko 'Mruz' (w B 'Mróz')
+1110 | karta=58 | plec=m | ojc=Marcina | mat=Teresy | wiek=15 | jedn=tyg
+1116 | karta=57 | plec=m | ojc=Antoniego | mat=Małgorzaty | wiek=70 | jedn=lat
+1119 | karta=72 | plec=m | ojc=Jana | mat=Maryanny | wiek=2 | jedn=lat
+1124 | karta=71 | plec=m | ojc=Antoniego | mat=Zofji | wiek=3 | jedn=lat
+1143 | karta=72 | plec=m | ojc=Jana | mat=Agnieszki | wiek=40 | jedn=lat
+1149 | karta=64 | uw=Kucharz w Batorzu
+1158 | karta=75 | plec=m | ojc=Franciszka | mat=Magdaleny | wiek=7 | jedn=lat
+1167 | karta=86 | plec=m | ojc=Szczepana (?) | mat=Maryanny | wiek=70 | jedn=lat | fl=imię ojca z pytajnikiem
+1177 | karta=75 | plec=k | ojc=Jakuba | mat=Agnieszki | matn=Igrasów | wiek=30 | jedn=lat
+1180 | karta=85 | plec=m | ojc=Woyciecha | mat=Agnieszki | wiek=50 | jedn=lat
+1184 | data=14.04.1832 | miejsc=Brzozówka | wiek=2 | fl=kol. K-L (Pudło, Jadwiga) nieopisane; wiek bez jednostki
+1190 | karta=75 | plec=m | ojc=Wawrzenca | mat=Maryanny | wiek=19 | jedn=lat
+1196 | wiek=90 | jedn=lat
+1209 | wiek=40 | jedn=lat | rodowe=Chmiel
+1212 | miejsc=Brzozówka | data=29.12.1833 | fl=układ kolumn nietypowy (F=miejsce, G=data, H=k, I=1); K-P w surowych; brak wieku i rodziców
+1216 | wiek=50 | jedn=lat
+1220 | rodowe=Spryszak
+1228 | rodowe=Babiczów
+1288 | miejsc=Brzozówka | data=11.03.1848 | wiek=78 | fl=kol. I (78) bez jednostki
+1289 | miejsc=Blinów | data=28.10.1848 | wiek=7 | fl=kol. H='p' nieopisana, kol. I (7) bez jednostki, K-S w surowych
+1482 | miejsc=Brzozówka | data=21.03.1852 | wiek=54 | jedn=lat
+1586 | miejsc=Brzozówka | data=01.10.1854 | wiek=7 | fl=kol. I 'sty 20 1847' w surowych; wiek bez jednostki
+1647 | miejsc=Blinów | data=14.07.1855 | wiek=2 | fl=kol. H='p' nieopisana; wiek bez jednostki
+1648 | miejsc=Blinów | data=05.08.1855 | wiek=28 | fl=kol. H='m' niejasna; wiek bez jednostki
+1719 | miejsc=Brzozówka | data=05.09.1855 | wiek=60 | jedn=lat
+1837 | plec=m | wiek=26 | jedn=lat | ojc=Michała | mat=Agaty | matn=Kurczków | uw=żona Agnieszka z Chmielów (stan nieznany)
+1894 | data=21.03.1860 | wiek=39 | fl=kol. F kropka; K-R w surowych
+1896 | fl=brak danych poza imieniem i nazwiskiem; w kol. L powtórzone nazwisko
+1901 | fl=brak danych poza imieniem i nazwiskiem; w kol. L powtórzone nazwisko
+1908 | fl=brak danych poza imieniem i nazwiskiem; w kol. L powtórzone nazwisko
+1909 | fl=brak danych poza imieniem i nazwiskiem; w kol. L powtórzone nazwisko
+1914 | fl=brak danych poza imieniem i nazwiskiem; w kol. L powtórzone nazwisko
+1922 | miejsc=Blinów | data=05.01.1860 | wiek=57 | fl=kol. K-R nieopisane wprost (powtórzone nazwisko, brak pewnej struktury rodziców)
+1923 | miejsc=Brzozówka | data=08.02.1860 | wiek=49 | fl=kol. K-R nieopisane wprost (powtórzone nazwisko, brak pewnej struktury rodziców)
+1925 | miejsc=Blinów | data=04.02.1860 | wiek=17 | fl=kol. K-P nieopisane wprost
+1927 | miejsc=Blinów | data=29.01.1860 | wiek=3 | fl=kol. K-P nieopisane wprost
+2086 | rodowe=Kaczyńska | uw=G: 'd Kaczyńska'
+2092 | wiek=42 | jedn=lat
+2122 | wiek=2 | jedn=lat
+2127 | plec=m | wiek=43 | jedn=lat | ojc=Jakuba | mat=Zofii
+2128 | stan=wdowa | wiek=71 | jedn=lat | rodowe=Pawłasek
+2129 | plec=k | wiek=20 | jedn=lat | ojc=Wojciecha | mat=Maryanny | fl=w G 'maryanny' z małej litery, poprawiono
+2131 | wiek=41 | jedn=lat
+2133 | wiek=62 | jedn=lat
+2135 | wiek=4 | jedn=lat
+2137 | plec=k | wiek=2 | jedn=lat | ojc=Wincentego | mat=Agnieszki
+2138 | wiek=5 | jedn=lat
+2145 | stan=wdowiec | plec=m | wiek=61 | jedn=lat
+2149 | wiek=2 | jedn=lat
+2151 | wiek=37 | jedn=lat
+2156 | stan=wdowa | wiek=74 | jedn=lat | rodowe=Gnat
+2158 | wiek=44 | jedn=lat | uw=spisał Łukasz Prażmowski
+2300 | miejsc=Moczydła | plec=m | wiek=55 | jedn=lat | mat=Marianny | fl=imię ojca nieczytelne ('s??.')
+2301 | miejsc=Moczydła | plec=k | stan=wdowa | wiek=71 | jedn=lat | ojc=Mateusza | mat=Marianny | matn=Boguniów
+2303 | miejsc=Brzozówka | plec=k | wiek=6 | jedn=mies | ojc=Józefa | mat=Agaty
+2305 | miejsc=Moczydła | plec=k | wiek=41 | jedn=lat | ojc=Wojciecha | mat=Marianny | matn=Kaniów
+2306 | miejsc=Blinów | plec=m | stan=wdowiec | wiek=56 | jedn=lat | ojc=Andrzeja | mat=Tekli
+2308 | miejsc=Brzozówka | data=11.12.1871 | wiek=53 | fl=kol. H='m' niejasna; K-P w surowych; wiek bez jednostki
+2309 | miejsc=Blinów | plec=m | wiek=44 | jedn=lat | ojc=Jakuba | mat=Zofii | zyjacy_malzonek=owd. Katarzynę Olech
+2310 | miejsc=Blinów | plec=m | wiek=63 | jedn=lat | ojc=Pawła | mat=Marianny
+2313 | miejsc=Moczydła | plec=m | wiek=2 | jedn=lat | ojc=Szymona | mat=Anny | fl=w G literówka miejscowości 'Moczdła'
+2314 | miejsc=Moczydła | plec=m | wiek=3 | jedn=lat | ojc=Szymona | mat=Anny
+2315 | miejsc=Blinów | plec=m | wiek=8 | jedn=lat | ojc=Jana | mat=Rozalii | matn=Samuelów | fl=nazwisko nieczytelne (w B 'nieczytelne')
+2317 | miejsc=Blinów | plec=k | wiek=9 | jedn=mies | ojc=Piotra | mat=Marianny | matn=Pawłasków
+2318 | miejsc=Blinów | plec=m | wiek=1 | jedn=lat | ojc=Mikołaja | mat=Anieli | matn=Mrozów
+2319 | miejsc=Moczydła | plec=k | stan=wdowa | wiek=65 | jedn=lat | ojc=Tomasza | mat=Anny | matn=Czarneckich | fl=w G literówka 'Moczdła'
+2320 | miejsc=Moczydła | plec=k | wiek=5 | jedn=mies | ojc=Franciszka | mat=Marianny | matn=Jachurów
+2321 | miejsc=Blinów | plec=m | wiek=22 | jedn=lat | mat=Agaty | fl=imię ojca nieczytelne ('?.')
+2323 | miejsc=Blinów | plec=k | stan=wdowa | wiek=68 | jedn=lat | ojc=Andrzeja | mat=Ewy | matn=Kurczaków
+2324 | miejsc=Blinów | plec=m | wiek=53 | jedn=lat | ojc=Franciszka | mat=Łucji | zyjacy_malzonek=owd. Agnieszkę Jachura
+2325 | miejsc=Blinów | plec=k | wiek=1 | jedn=lat | mat=Marianny | fl=imię ojca nieczytelne ('?.')
+2326 | miejsc=Brzozówka | plec=k | wiek=2 | jedn=lat | ojc=Jana | mat=Agnieszki
+2327 | miejsc=Blinów | plec=m | wiek=2 | jedn=lat | ojc=Marcina | mat=Antoniny | matn=Kosidłów
+2328 | miejsc=Blinów | plec=m | wiek=40 | jedn=lat | mat=Marianny | matn=Babiarzowej | fl=brak imienia ojca w G
+2329 | miejsc=Blinów | plec=k | wiek=44 | jedn=lat | ojc=Szymona | mat=Petroneli | matn=Kurczaków
+2330 | miejsc=Blinów | plec=m | wiek=8 | jedn=mies | ojc=Michała | mat=Zofii | matn=Kudrelków
+2331 | miejsc=Blinów | plec=k | wiek=1 | jedn=lat | ojc=Andrzeja | mat=Katarzyna
+2332 | miejsc=Blinów | plec=m | wiek=7 | jedn=mies | ojc=Antoniego | mat=Marianny | matn=Mrozów
+2333 | miejsc=Blinów | plec=m | wiek=3 | jedn=lat | ojc=Pawła | mat=Jadwigi
+2334 | miejsc=Blinów | plec=k | wiek=8 | jedn=lat | ojc=Pawła | mat=Jadwigi | matn=Kosidłów
+2335 | miejsc=Blinów | plec=m | wiek=50 | jedn=lat | ojc=Tomasza | mat=Marianny | matn=Machulków | zyjacy_malzonek=owd. Mariannę z Jędrzejczaków
+2336 | miejsc=Blinów | plec=k | wiek=5 | jedn=mies | ojc=Wojciecha | mat=Zofii | matn=Nieściurów
+2337 | miejsc=Brzozówka | wiek=46 | jedn=lat | fl=nazwisko nieczytelne ('Ka??.')
+2338 | miejsc=Blinów | fl=w G 'akt nieczytelny'
+2339 | miejsc=Blinów | plec=k | ojc=Marcina | mat=Ewy | matn=Jachurów
+2340 | miejsc=Blinów | plec=k | wiek=2 | jedn=lat | ojc=Dominika | matn=Machulaków | fl=imię matki nieczytelne ('??')
+2341 | miejsc=Blinów | plec=k | wiek=9 | jedn=lat | ojc=Tomasza | mat=Marianny | matn=Wójtowiczów
+2342 | miejsc=Blinów | plec=m | wiek=5 | jedn=lat | ojc=Jana | mat=Katarzyny | matn=Janików
+2343 | miejsc=Blinów | plec=k | wiek=1 | jedn=lat | ojc=Wojciecha | mat=Józefy | matn=Jachurów
+2344 | miejsc=Blinów | plec=m | wiek=4 | jedn=lat | ojc=Pawła | mat=Petroneli | matn=Jędrzejczaków
+2345 | miejsc=Blinów | plec=k | wiek=49 | jedn=lat | ojc=Marcina | mat=Marianny | matn=Czernieskich | uw=ze wsi Skotnik
+2346 | miejsc=Blinów | plec=k | wiek=9 | jedn=lat | ojc=Pawła | mat=Zofii | matn=Solarzów
+2347 | miejsc=Blinów | plec=k | wiek=9 | jedn=mies | ojc=Pawła | mat=Zofii | matn=Solarzów
+2348 | miejsc=Blinów | plec=m | ojc=Macieja | mat=Marianny | matn=Kosidłów | fl=brak wieku
+2349 | miejsc=Moczydła | plec=m | wiek=7 | jedn=lat | ojc=Wojciecha | mat=Rozalii | matn=Marchewków
+2350 | miejsc=Moczydła | plec=k | wiek=20 | jedn=lat | ojc=Wojciecha | mat=Rozalii
+2351 | miejsc=Moczydła | plec=k | wiek=74 | jedn=lat | ojc=Wojciecha | mat=Agnieszki | matn=Pawłasków
+2352 | miejsc=Blinów | plec=m | wiek=1 | jedn=lat | ojc=Michała | mat=Anastazji | matn=Gnatów
+2353 | miejsc=Blinów | plec=k | stan=wdowa | wiek=71 | jedn=lat | ojc=Wojciecha | mat=Antoniny | matn=Wielebów
+2354 | miejsc=Blinów | plec=m | wiek=6 | jedn=lat | ojc=Jana | mat=Jadwigi | matn=Ciećków
+2355 | miejsc=Moczydła | plec=m | wiek=8 | jedn=lat | ojc=Wawrzyńca | mat=Katarzyny
+2356 | miejsc=Brzozówka | plec=k | wiek=34 | jedn=lat | ojc=Walentego | mat=Anny | matn=Gochów
+2357 | miejsc=Blinów | plec=k | stan=wdowa | wiek=48 | jedn=lat | ojc=Szymona | mat=Katarzyny | matn=Kosidło

@@ -1,0 +1,117 @@
+2488 | plec=m | wiek=21 | jedn=lat | ojc=Szymona | mat=Anny | matn=Królów
+2489 | plec=m | wiek=3 | jedn=lat | ojc=Michała | mat=Anastazji | matn=Gnatów
+2490 | plec=k | wiek=26 | jedn=lat | ojc=Józefa | mat=Jadwigi | matn=Głazów | uw=małż. Kudrelków
+2491 | plec=k | stan=wd. | wiek=62 | jedn=lat | ojc=Stanisława | mat=Marianny | matn=Saganów
+2492 | plec=m | wiek=6 | jedn=lat | ojc=Franciszka | mat=Marianny | matn=Jędrzejczaków
+2493 | plec=m | wiek=8 | jedn=lat | ojc=Adama | mat=Katarzyny | matn=Koguców
+2494 | plec=m | stan=wd. | wiek=75 | jedn=lat | ojc=Pawła | mat=Zofii
+2495 | plec=m | wiek=74 | jedn=lat | ojc=Mateusza | mat=Anastazji | zyjacy_malzonek=owd. Mariannę z Kotułów
+2496 | plec=m | stan=wd. | wiek=68 | jedn=lat | ojc=Jakuba | mat=Zofii
+2497 | plec=m | wiek=10 | jedn=lat | ojc=Adama | mat=Magdaleny | matn=Dąbrowskich
+2498 | plec=m | wiek=5 | jedn=mies | mat=Katarzyny | fl=brak imienia ojca
+2499 | plec=m | wiek=41 | jedn=lat | ojc=Mateusza | mat=Anastazji | matn=Jachurów | zyjacy_malzonek=owd. Anielę z Mrozów
+2500 | plec=m | wiek=7 | jedn=mies | ojc=Walentego | mat=Małgorzaty | matn=Soboniewskich
+2501 | plec=m | wiek=43 | jedn=lat | ojc=Pawła | mat=Katarzyny | matn=Saganów | zyjacy_malzonek=owd. Annę z Buconiów
+2502 | plec=m | stan=wd. | wiek=73 | jedn=lat | ojc=Pawła | mat=Marianny
+2503 | plec=m | wiek=1 | jedn=lat | ojc=Tomasza | mat=Katarzyny | matn=Kamińskich
+2504 | plec=m | wiek=7 | jedn=lat | ojc=Walentego | mat=Agnieszki
+2505 | plec=m | wiek=21 | jedn=lat | ojc=Marcina | mat=Zofii | matn=Kosidłów
+2506 | plec=k | wiek=10 | jedn=lat | ojc=Marcina | mat=Antoniny | matn=Kosidłów
+2507 | plec=k | wiek=9 | jedn=mies | ojc=Jana | mat=Jadwigi | matn=Ogonów
+2508 | plec=k | wiek=55 | jedn=lat | ojc=Wojciecha | mat=Katarzyny | matn=Saganów | zyjacy_malzonek=owd. Andrzeja Ciećka
+2509 | plec=m | wiek=50 | jedn=lat | ojc=Wojciecha | mat=Henryki | matn=Grudzińskich | uw=ur. w Polichnie
+2510 | plec=k | ojc=Pawła | mat=Jadwigi | matn=Kosidłów | fl=brak wieku
+2511 | plec=k | wiek=3 | jedn=lat | ojc=Bartłomieja | mat=Zofii | matn=Kosidłów
+2512 | plec=k | stan=wd. | wiek=73 | jedn=lat | ojc=Macieja | mat=Agnieszki | matn=Krupów
+2513 | plec=k | stan=wd. | wiek=65 | jedn=lat | ojc=Macieja | mat=Marianny | matn=Buconiów | uw=ur. w Szastarce
+2514 | plec=k | wiek=25 | jedn=lat | ojc=Walentego | mat=Marianny
+2515 | plec=k | wiek=25 | jedn=lat | ojc=Antoniego | mat=Agaty | matn=Krawczyków | zyjacy_malzonek=owd. Wojciecha Jachura
+2516 | plec=k | wiek=8 | jedn=mies | ojc=Wojciecha | mat=Jadwigi | matn=Krawczyków
+2517 | plec=k | wiek=2 | jedn=lat | ojc=Jana | mat=Katarzyny | matn=Janików
+2518 | plec=k | wiek=40 | jedn=lat | ojc=Michała | mat=Salomei
+2519 | plec=m | wiek=32 | jedn=lat | ojc=Andrzeja | mat=Agnieszki
+2520 | plec=m | wiek=10 | jedn=lat | ojc=Marcina | mat=Tekli | matn=Czarneckich
+2521 | plec=k | stan=wd. | wiek=67 | jedn=lat | ojc=Jakuba | mat=Marianny | matn=Głazów | uw=ur. w Błażku
+2522 | plec=m | wiek=5 | jedn=lat | ojc=Pawła | mat=Doroty | matn=Sobótków
+2523 | plec=k | wiek=48 | jedn=lat | ojc=Pawła | mat=Katarzyny | matn=Machulaków | uw=małż. Kozaczków | zyjacy_malzonek=owd. Walentego Kurczaka
+2524 | plec=k | wiek=58 | jedn=lat | ojc=Nikodema | mat=Anny | matn=Pawłasków | uw=małż. Kozaczków | zyjacy_malzonek=owd. Pawła Kurczaka
+2525 | plec=m | wiek=3 | jedn=mies | ojc=Jana | mat=Józefy | matn=Babiarzów
+2526 | plec=k | wiek=44 | jedn=lat | ojc=Mateusza | mat=Anastazji | matn=Kędziorów | uw=małż. Pawłasków | zyjacy_malzonek=owd. Antoniego Nieściura
+2527 | plec=m | wiek=8 | jedn=mies | ojc=Antoniego | mat=Anny | matn=Wcisłów
+2528 | plec=k | stan=wd. | wiek=77 | jedn=lat | ojc=Antoniego | mat=Marianny | matn=Wcisłów
+2529 | plec=k | stan=wd. | wiek=63 | jedn=lat | ojc=Bartłomieja | mat=Agnieszki | matn=Wcisłów
+2530 | plec=k | wiek=1 | jedn=lat | ojc=Adama | mat=Magdaleny
+2531 | plec=k | wiek=3 | jedn=mies | ojc=Wojciecha | mat=Katarzyny | matn=Pawłasków
+2532 | plec=k | wiek=3 | jedn=lat | ojc=Wojciecha | mat=Tekli
+2533 | plec=m | wiek=40 | jedn=lat | ojc=Wojciecha | mat=Agnieszki | zyjacy_malzonek=owd. Małgorzatę z Soboniewskich | uw=ur. w Słodkowie
+2534 | plec=m | wiek=2 | jedn=lat | ojc=Szymona | mat=Ewy | matn=Kędziorów
+2535 | plec=k | wiek=60 | jedn=lat | ojc=Kacpra | mat=Antoniny | matn=Gnatów | zyjacy_malzonek=owd. Stanisława Stępnia
+2536 | plec=m | wiek=13 | jedn=lat | ojc=Józefa | mat=Franciszki | matn=Obydziów
+2537 | plec=k | stan=wd. | wiek=55 | jedn=lat | ojc=Macieja | mat=Rozalii | matn=Makoskich
+2538 | plec=m | wiek=4 | jedn=lat | ojc=Piotra | mat=Zofii | matn=Sosnówków
+2539 | plec=k | stan=wd. | wiek=67 | jedn=lat | ojc=Marcina | mat=Marianny | matn=Boguniów | uw=małż. Wielebów
+2540 | plec=m | wiek=50 | jedn=lat | ojc=Grzegorza | mat=Marianny | zyjacy_malzonek=owd. Jadwigę z Czubów
+2541 | plec=k | wiek=1 | jedn=lat | ojc=Michała | mat=Zofii | matn=Serafinów
+2542 | plec=k | stan=wd. | wiek=70 | jedn=lat | ojc=Antoniego | mat=Anastazji | matn=Kołotów? | fl=nazwisko matki z pytajnikiem
+2543 | plec=k | stan=wd. | wiek=67 | jedn=lat | ojc=Andrzeja | mat=Agnieszki | matn=Sulowskich
+2544 | plec=m | wiek=38 | jedn=lat | ojc=Tomasza | mat=Katarzyny | zyjacy_malzonek=owd. Mariannę z Kudrelków
+2545 | plec=k | stan=wd. | wiek=60 | jedn=lat | ojc=Wojciecha | mat=Antoniny | matn=Wielebów
+2546 | plec=m | wiek=4 | jedn=lat | ojc=Franciszka | mat=Zofii | matn=Wcisłów
+2547 | plec=m | wiek=6 | jedn=mies | ojc=Tomasza | mat=Marianny | matn=Pcionków
+2548 | plec=m | wiek=40 | jedn=lat | ojc=Marcina | mat=Zofii | matn=Sulowskich | zyjacy_malzonek=owd. Katarzynę z Janików
+2549 | plec=m | stan=wd. | wiek=66 | jedn=lat | ojc=Marcina | mat=Anastazji
+2550 | plec=k | wiek=21 | jedn=lat | ojc=Kacpra | mat=Jadwigi | matn=Jędrzejczaków | uw=małż. Pawłasków | zyjacy_malzonek=owd. Ignacego Kolasę
+2551 | plec=k | wiek=1 | jedn=lat | ojc=Józefa | mat=Franciszki | matn=Machulaków
+2552 | plec=m | wiek=2 | jedn=lat | ojc=Wojciecha | mat=Rozalii | matn=Marchewków
+2553 | plec=m | wiek=4 | jedn=mies | ojc=Wojciecha | mat=Marianny | matn=Machulaków
+2554 | plec=m | wiek=2 | ojc=Wojciecha | mat=Rozalii | matn=Marchewków | fl=w G 't.2' (prawdopodobnie 'l.2'), jednostka nieustalona
+2555 | plec=m | stan=wd. | wiek=62 | jedn=lat | ojc=Andrzeja | mat=Zofii | matn=Kozaczków
+2556 | plec=m | wiek=1 | jedn=lat | ojc=Wojciecha | mat=Franciszki | matn=Chmielów
+2557 | plec=k | stan=wd. | wiek=60 | jedn=lat | ojc=Andrzeja | mat=Agnieszki | matn=Sulowskich
+2558 | plec=m | wiek=3 | jedn=lat | ojc=Tomasza | mat=Katarzyny | matn=Dobrzyńskich
+2559 | plec=m | wiek=16 | jedn=lat | ojc=Walentego | mat=Marianny | matn=Kudrelków
+2560 | plec=k | stan=wd. | wiek=70 | jedn=lat | ojc=Jana | mat=Marianny | matn=Czubów | uw=małż. Ogonów
+2561 | plec=m | wiek=9 | jedn=mies | mat=Marianny | matn=Sikora | fl=brak imienia ojca
+2562 | plec=m | wiek=60 | jedn=lat | ojc=Jakuba | mat=Małgorzaty | zyjacy_malzonek=owd. Agnieszkę z Drozdów
+2563 | plec=m | wiek=5 | jedn=mies | ojc=Jakuba | mat=Franciszki | matn=Jaworskich
+2564 | plec=m | wiek=2 | jedn=lat | ojc=Dominika | mat=Agnieszki | matn=Kosidłów
+2565 | plec=m | wiek=6 | jedn=lat | mat=Zofii | matn=Szłapów | uw=Baranowej sołdatki | fl=zapis matki niejasny ('Zofii z Szłapów Baranowej')
+2566 | plec=k | wiek=14 | jedn=lat | ojc=Franciszka | mat=Zofii | matn=Pcionków
+2567 | plec=k | wiek=3 | jedn=lat | ojc=Pawła | mat=Marianny | matn=Machulaków
+2568 | plec=k | wiek=1 | jedn=lat | ojc=Jana | mat=Józefy | matn=Nieściurów
+2569 | plec=k | wiek=8 | jedn=lat | ojc=Stanisława | mat=Anny | matn=Wcisłów
+2570 | plec=k | wiek=2 | jedn=lat | ojc=Tomasza | mat=Anny | matn=Pasternaków
+2587 | plec=m | wiek=7 | jedn=lat | ojc=Michała | mat=Katarzyny | matn=Koguców
+2592 | plec=m | wiek=35 | jedn=lat | ojc=Wojciecha | mat=Marianny | matn=Jakubaszków | zyjacy_malzonek=owd. Katarzynę z Szubstarskich
+2593 | plec=m | wiek=1 | jedn=lat | ojc=Andrzeja | mat=Katarzyny | matn=Pudłów
+2594 | plec=m | wiek=8 | jedn=lat | ojc=Andrzeja | mat=Franciszki | matn=Smylów
+2595 | plec=m | wiek=40 | jedn=lat | ojc=Jana | mat=Marianny | zyjacy_malzonek=owd. Zofię z Kosidłów
+2596 | plec=m | wiek=7 | jedn=lat | ojc=Jana | mat=Ewy | matn=Wielebów
+2597 | plec=m | wiek=58 | jedn=lat | ojc=Wojciecha | mat=Agaty | zyjacy_malzonek=owd. Jadwigę z Buconiów
+2598 | plec=m | wiek=2 | jedn=lat | ojc=Józefa | mat=Franciszki | matn=Machulaków
+2599 | plec=k | wiek=7 | jedn=lat | ojc=Wojciecha | mat=Rozalii | matn=Marchewków
+2600 | plec=k | wiek=27 | jedn=lat | ojc=Tomasza | mat=Zofii | matn=Zuniów | uw=małż. Zuniów | zyjacy_malzonek=owd. Wojciecha Kosidło
+2601 | plec=k | wiek=13 | jedn=lat | ojc=Wojciecha | mat=Agnieszki | matn=Kaczyńskich
+2602 | plec=k | wiek=6 | jedn=lat | ojc=Szymona | mat=Anny | matn=Królów
+2603 | plec=k | wiek=38 | jedn=lat | ojc=Franciszka | mat=Rozalii | matn=Szwedów | zyjacy_malzonek=owd. Michała Krawczyka
+2604 | plec=k | wiek=2 | jedn=lat | ojc=Onufrego | mat=Zuzanny | matn=Gancarzów
+2605 | plec=k | wiek=1 | jedn=lat | ojc=Stanisława | mat=Katarzyny
+2606 | plec=k | wiek=5 | jedn=lat | ojc=Andrzeja | mat=Marianny | matn=Kosidłów
+2607 | plec=k | wiek=5 | jedn=lat | ojc=Antoniego | mat=Marianny | matn=Pawłasków
+2608 | plec=k | stan=wd. | wiek=49 | jedn=lat | ojc=Macieja | mat=Anny | matn=Kotułów
+2609 | plec=m | wiek=53 | jedn=lat | ojc=Antoniego | mat=Marianny | matn=Felków | zyjacy_malzonek=owd. Jadwigę z Jędrzejczaków
+2610 | plec=m | wiek=8 | jedn=mies | ojc=Marcina | mat=Marianny | matn=Obydziów
+2611 | plec=m | wiek=4 | jedn=lat | ojc=Franciszka | mat=Marianny
+2612 | plec=m | wiek=6 | jedn=mies | ojc=Franciszka | mat=Marianny | matn=Jachurów
+2613 | plec=m | stan=wd. | wiek=72 | jedn=lat | ojc=Jana | mat=Katarzyny
+2614 | plec=m | wiek=1 | jedn=lat | ojc=Tomasza | mat=Marianny | matn=Gochów
+2615 | plec=k | stan=wd. | wiek=69 | jedn=lat | ojc=Stanisława | mat=Marianny | matn=Saganów
+2616 | plec=k | wiek=1 | jedn=lat | ojc=Wojciecha | mat=Marianny | matn=Traczów
+2617 | plec=m | wiek=1 | jedn=mies | ojc=Aleksandra | mat=Petroneli
+2618 | plec=m | wiek=52 | jedn=lat | ojc=Franciszka | mat=Marianny | zyjacy_malzonek=owd. Antoninę z Lewków
+2619 | plec=m | wiek=9 | jedn=mies | ojc=Pawła | mat=Marianny | matn=Machulaków
+2620 | plec=k | wiek=3 | jedn=lat | ojc=Feliksa | mat=Marianny | matn=Pcionków
+2621 | plec=m | wiek=25 | jedn=lat | ojc=Franciszka | mat=Ewy | matn=Babiarzów
+2622 | plec=m | wiek=20 | jedn=lat | ojc=Franciszka | mat=Ewy | matn=Babiarzów
+2623 | plec=k | stan=wd. | wiek=66 | jedn=lat | ojc=Marcina | mat=Teresy | matn=Pcionków
+2624 | plec=m | wiek=10 | jedn=mies | ojc=Józefa | mat=Anastazji | matn=Wielebów

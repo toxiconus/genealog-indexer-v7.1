@@ -70,3 +70,11 @@ Pozostałe do zrobienia (nie ruszane): arkusze `Mał` (774 wiersze) i `Zg` (2624
 3. Pole `ID` nie zawsze zgadza się z numerem wiersza (np. wiersz 741 ma `U000761`). Klucz to `wiersz_zrodlo`, ID zachowane jak w arkuszu.
 4. Daty ujemne (`-26925`) zachowane surowo i oznaczone, nie konwertowane.
 5. Formuły `około RRRR` z arkusza zapisane w `uwagi_surowe`. `~RRRR` wyliczone z roku wpisu i wieku, tylko gdy wiek jest liczbą.
+
+## Arkusz `Zg` (zgony, wiersze 1–2624)
+
+- `konsolidacja/zgony.csv`: 2624 wierszy, z czego 2257 prostych (`skrypty/build_zgony.py`, wiersze z samym miejscem/numerem lub kartą) i 367 wolnego tekstu przepisanego ręcznie (`reczne/zgony/hand_zg_01..03.txt`). Pokrycie każdego wiersza wolnego sprawdzone skryptem (dokładnie raz).
+- `typ_ksiegi` = `Liber mortuorum` (z nazwy arkusza). `zrodlo` = numer z kolumny D (`liber` = brak numeru księgi).
+- Kolumny rozszerzone: `wiek` + `jednostka_wieku` (lat/mies/tyg), `stan` (wd. = zmarły był wdowcem/wdową), `zyjacy_malzonek` (z „owd. X”: zmarły owdowił X, czyli X żyje), `rodowe` (zd./z domu), `rok_ur_wyliczony` (`~RRRR` = rok wpisu − wiek, tylko przy wieku w latach), `surowe_pozostale` (kolumny F, H–S zachowane surowo).
+- Znaczenie „owd.” potwierdzone składnią biernika (owd. Katarzynę = owdowił Katarzynę).
+- Pozostałe do zrobienia: arkusze Obl, A.Os, rody, Arkusz13; decyzja o zakresach `liber`.
