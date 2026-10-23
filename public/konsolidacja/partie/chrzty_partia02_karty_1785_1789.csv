@@ -1,0 +1,151 @@
+﻿id_archiwalne;wiersz_zrodlo;typ_wpisu;rok;nr;nazwisko_dziecka;imie_dziecka;data_tekst;data_iso;ojciec_imie;ojciec_nazwisko;ojciec_wiek;ojciec_rok_ur_przyb;matka_imie;matka_nazwisko;matka_wiek;matka_rok_ur_przyb;karta_nr;uwagi_surowe;flagi
+U000151;151;karta;1785;13;Trepka;Wojciech;;;;;;;;;;;13;;
+U000152;152;karta;1785;16;Woś;Bartłomiej;;;;;;;;;;;16;;
+U000153;153;karta;1785;15;Zielińska;Marianna;;;;;;;;;;;15;;
+U000154;154;karta;1786;19;Bigos;Sebastian;;;;;;;;;;;19;kol.O: około 1786;formuła około bez wieku (kart nie ma wieku)
+U000155;155;karta;1786;19;Brzyska;Anastazja;;;;;;;;;;;19;kol.O: około 1786;formuła około bez wieku (kart nie ma wieku)
+U000156;156;karta;1786;22;Bzdyrak;Jadwiga;;;;;;;;;;;22;;
+U000157;157;karta;1786;20;Chmiel;Franciszka;;;;;;;;;;;20;;
+U000158;158;karta;1786;21;Czajkowski;Antoni;;;;;;;;;;;21;;
+U000159;159;karta;1786;22;Gnat;Katarzyna;;;;;;;;;;;22;;
+U000160;160;karta;1786;19;Kasperek;Maciej;;;;;;;;;;;19;;
+U000161;161;karta;1786;23;Kochaniuk;Andrzej;;;;;;;;;;;23;;
+U000162;162;karta;1786;19;Koguc;Kacper;;;;;;;;;;;19;;
+U000163;163;karta;1786;21;Kosidło;Anna;;;;;;;;;;;21;;
+U000165;164;karta;1786;22;Kosidło;Katarzyna;;;;;;;;;;;22;;id poza kolejnością (ID U000165, wiersz 164)
+U000164;165;karta;1786;21;Kosidło;Krystyna;;;;;;;;;;;21;;id poza kolejnością (ID U000164, wiersz 165)
+U000166;166;karta;1786;20;Kozaczek;Wojciech;;;;;;;;;;;20;"kol.J: około 1786; kol.O: około 1786";formuła około bez wieku (kart nie ma wieku)
+U000167;167;karta;1786;20;Kudrelek;Jakub;;;;;;;;;;;20;;
+U000171;168;karta;1786;21;Kurczak;Jan;;;;;;;;;;;21;;id poza kolejnością (ID U000171, wiersz 168)
+U000168;169;karta;1786;20;Kurczak;Józef;;;;;;;;;;;20;;id poza kolejnością (ID U000168, wiersz 169)
+U000169;170;karta;1786;20;Kurczak;Marianna;;;;;;;;;;;20;;id poza kolejnością (ID U000169, wiersz 170)
+U000170;171;karta;1786;20;Kurczak;Petronela;;;;;;;;;;;20;;id poza kolejnością (ID U000170, wiersz 171)
+U000172;172;karta;1786;23;Kurczak;Tomasz;;;;;;;;;;;23;;
+U000173;173;karta;1786;23;Kurczak;Wiktoria;;;;;;;;;;;23;;
+U000174;174;karta;1786;21;Łata;Elżbieta;;;;;;;;;;;21;;
+U000175;175;karta;1786;21;Łbika;Wojciech;;;;;;;;;;;21;;znak '?' przy nr karty w oryginale
+U000176;176;karta;1786;20;Mcionek;Marianna;;;;;;;;;;;20;;
+U000177;177;karta;1786;19;Morawska;Helena;;;;;;;;;;;19;;
+U000178;178;karta;1786;23;Mścisło;Tomasz;;;;;;;;;;;23;;
+U000179;179;karta;1786;23;Paluchowski;Andrzej;;;;;;;;;;;23;;
+U000181;180;karta;1786;22;Pasternak;Jadwiga;;;;;;;;;;;22;;id poza kolejnością (ID U000181, wiersz 180)
+U000180;181;karta;1786;19;Pasternak;Sebastian;;;;;;;;;;;19;;id poza kolejnością (ID U000180, wiersz 181)
+U000182;182;karta;1786;20;Siemian;Józef;;;;;;;;;;;20;;
+U000183;183;karta;1786;18;Skrzypek;Kacper;;;;;;;;;;;18;;
+U000184;184;karta;1786;22;Sobutka;Andrzej;;;;;;;;;;;22;;
+U000185;185;karta;1786;22;Sobutka;Marcin;;;;;;;;;;;22;;
+U000186;186;karta;1786;19;Solarz;Agata;;;;;;;;;;;19;;
+U000187;187;karta;1786;19;Szyszka;Marianna;;;;;;;;;;;19;;
+U000188;188;karta;1786;21;Śmiałecki;Antoni;;;;;;;;;;;21;;
+U000189;189;karta;1786;23;Wieleba;Andrzej;;;;;;;;;;;23;;
+U000190;190;karta;1786;23;Wnuk;Ewa;;;;;;;;;;;23;;
+U000191;191;karta;1786;22;Zieleńska;Katarzyna;;;;;;;;;;;22;;
+U000192;192;karta;1787;30;Babiarz;Agnieszka;;;;;;;;;;;30;;
+U000193;193;karta;1787;26;Barbarzak;Anastazja;;;;;;;;;;;26;;
+U000194;194;karta;1787;28;Biała;Rozalia;;;;;;;;;;;28;;
+U000195;195;karta;1787;29;Bucoń;Katarzyna;;;;;;;;;;;29;;
+U000196;196;karta;1787;24;Cacaj;Agnieszka;;;;;;;;;;;24;;
+U000198;197;karta;1787;29;Chmiel;Marcin;;;;;;;;;;;29;;id poza kolejnością (ID U000198, wiersz 197)
+U000197;198;karta;1787;26;Chmiel;Marianna;;;;;;;;;;;26;;id poza kolejnością (ID U000197, wiersz 198)
+U000199;199;karta;1787;27;Czarna;Marianna;;;;;;;;;;;27;;
+U000200;200;karta;1787;26;Dobrzyńska;Marianna;;;;;;;;;;;26;"kol.J: około 1787; kol.O: około 1787";formuła około bez wieku (kart nie ma wieku)
+U000201;201;karta;1787;24;Goch;Agnieszka;;;;;;;;;;;24;;
+U000202;202;karta;1787;24;Gręda;Agnieszka;;;;;;;;;;;24;;
+U000203;203;karta;1787;25;Haber;Zofia;;;;;;;;;;;25;;
+U000204;204;karta;1787;26;Igras;Stanisław;;;;;;;;;;;26;;
+U000205;205;karta;1787;30;Jędrzejczak;Tomasz;;;;;;;;;;;30;;
+U000206;206;karta;1787;28;Kamieniak;Ignacy;;;;;;;;;;;28;;
+U000208;207;karta;1787;30;Kozaczek;Sebastian;;;;;;;;;;;30;"kol.J: około 1787; kol.O: około 1787";"id poza kolejnością (ID U000208, wiersz 207); formuła około bez wieku (kart nie ma wieku)"
+U000207;208;karta;1787;25;Kozaczek;Walenty;;;;;;;;;;;25;"kol.J: około 1787; kol.O: około 1787";"id poza kolejnością (ID U000207, wiersz 208); formuła około bez wieku (kart nie ma wieku)"
+U000212;209;karta;1787;30;Kozak;Andrzej;;;;;;;;;;;30;;id poza kolejnością (ID U000212, wiersz 209)
+U000210;210;karta;1787;25;Kozak;Franciszka;;;;;;;;;;;25;;
+U000211;211;karta;1787;28;Kozak;Michał;;;;;;;;;;;28;;
+U000209;212;karta;1787;24;Kozak;Paweł;;;;;;;;;;;24;;id poza kolejnością (ID U000209, wiersz 212)
+U000214;213;karta;1787;30;Krupa;Tomasz;;;;;;;;;;;30;;id poza kolejnością (ID U000214, wiersz 213)
+U000213;214;karta;1787;26;Krupa;Wojciech;;;;;;;;;;;26;;id poza kolejnością (ID U000213, wiersz 214)
+U000215;215;karta;1787;25;Kurczak;Franciszka;;;;;;;;;;;25;;
+U000217;216;karta;1787;30;Kurczak;Paweł;;;;;;;;;;;30;;id poza kolejnością (ID U000217, wiersz 216)
+U000216;217;karta;1787;26;Kurczak;Wojciech;;;;;;;;;;;26;;id poza kolejnością (ID U000216, wiersz 217)
+U000218;218;karta;1787;24;Kuś;Agnieszka;;;;;;;;;;;24;;
+U000219;219;karta;1787;26;Łach;Wojciech;;;;;;;;;;;26;;
+U000220;220;karta;1787;24;Machulak;Marianna;;;;;;;;;;;24;;
+U000221;221;karta;1787;24;Machulak;Sebastian;;;;;;;;;;;24;;
+U000222;222;karta;1787;25;Machulek;Józef;;;;;;;;;;;25;;
+U000223;223;karta;1787;27;Machulek;Wojciech;;;;;;;;;;;27;;
+U000224;224;karta;1787;30;Mazurek;Katarzyna;;;;;;;;;;;30;;
+U000225;225;karta;1787;28;Mcionek;Jacenty;;;;;;;;;;;28;;
+U000228;226;karta;1787;29;Mcionek;Marcin;;;;;;;;;;;29;;id poza kolejnością (ID U000228, wiersz 226)
+U000226;227;karta;1787;28;Mcionek;Mateusz;;;;;;;;;;;28;;id poza kolejnością (ID U000226, wiersz 227)
+U000227;228;karta;1787;28;Mcionek;Rozalia;;;;;;;;;;;28;;id poza kolejnością (ID U000227, wiersz 228)
+U000229;229;karta;1787;26;Mścisło;Wojciech;;;;;;;;;;;26;;
+U000230;230;karta;1787;29;Obydź;Szymon;;;;;;;;;;;29;;
+U000231;231;karta;1787;24;Pados;Paweł;;;;;;;;;;;24;;
+U000232;232;karta;1787;25;Pasternak;Benedykt;;;;;;;;;;;25;;
+U000233;233;karta;1787;29;Pawlak;Jadwiga;;;;;;;;;;;29;;
+U000234;234;karta;1787;27;Pyć;Wincenty;;;;;;;;;;;27;;
+U000235;235;karta;1787;28;Rataj;Tekla;;;;;;;;;;;28;;
+U000236;236;karta;1787;25;Sadowski;Benedykt;;;;;;;;;;;25;;
+U000237;237;karta;1787;27;Sagan;Magdalena;;;;;;;;;;;27;;
+U000238;238;karta;1787;28;Siembida;Jadwiga;;;;;;;;;;;28;;
+U000239;239;karta;1787;25;Sobutka;Franciszka;;;;;;;;;;;25;;
+U000240;240;karta;1787;27;Sobutka;Jan;;;;;;;;;;;27;;
+U000241;241;karta;1787;29;Solarz;Jadwiga;;;;;;;;;;;29;;
+U000242;242;karta;1787;27;Szalowicz;Jan;;;;;;;;;;;27;;
+U000243;243;karta;1787;28;Szpyt;Tekla;;;;;;;;;;;28;;
+U000244;244;karta;1787;27;Szyska;Marianna;;;;;;;;;;;27;;
+U000245;245;karta;1787;30;Tryska;Andrzej;;;;;;;;;;;30;;
+U000246;246;karta;1787;25;Wojtusiak;Marianna;;;;;;;;;;;25;;
+U000247;247;karta;1787;29;Wojtusiak;Szymon;;;;;;;;;;;29;;
+U000248;248;karta;1787;29;Woś;Marcin;;;;;;;;;;;29;;
+U000249;249;karta;1787;27;Zieleńska;Anna;;;;;;;;;;;27;;
+U000250;250;karta;1788;36;Baran;Jadwiga;;;;;;;;;;;36;;
+U000251;251;karta;1788;35;Białkowska;Jadwiga;;;;;;;;;;;35;;
+U000252;252;karta;1788;34;Bigos;Marianna;;;;;;;;;;;34;kol.O: około 1788;formuła około bez wieku (kart nie ma wieku)
+U000253;253;karta;1788;33;Bosak;Franciszka;;;;;;;;;;;33;;
+U000254;254;karta;1788;;Brzeska;Marianna;;;;;;;;;;;;;"bez numeru w księdze (nr 0); brak nr karty"
+U000255;255;karta;1788;32;Czuba;Franciszka;;;;;;;;;;;32;;
+U000256;256;karta;1788;33;Czuba;Wojciech;;;;;;;;;;;33;;
+U000257;257;karta;1788;31;Gąsior;Agata;;;;;;;;;;;31;;
+U000258;258;karta;1788;35;Gnat;Michał;;;;;;;;;;;35;;
+U000259;259;karta;1788;36;Jędrzejczak;Marianna;;;;;;;;;;;36;;
+U000260;260;karta;1788;;Kania;Józef Nikodem;;;;;;;;;;;;;"bez numeru w księdze (nr 0); brak nr karty"
+U000261;261;karta;1788;34;Kasperek;Jakub;;;;;;;;;;;34;;
+U000262;262;karta;1788;34;Koguc;Zofia;;;;;;;;;;;34;;
+U000263;263;karta;1788;35;Kosidło;Franciszka;;;;;;;;;;;35;;
+U000264;264;karta;1788;35;Kosidło;Michał;;;;;;;;;;;35;;
+U000265;265;karta;1788;36;Kosidło;Paweł;;;;;;;;;;;36;;
+U000266;266;karta;1788;;Kozaczek;Marianna;;;;;;;;;;;;"kol.J: około 1788; kol.O: około 1788";"bez numeru w księdze (nr 0); brak nr karty; formuła około bez wieku (kart nie ma wieku)"
+U000267;267;karta;1788;31;Kozaczek;Nikodem;;;;;;;;;;;31;"kol.J: około 1788; kol.O: około 1788";formuła około bez wieku (kart nie ma wieku)
+U000268;268;karta;1788;31;Kurczak;Paweł;;;;;;;;;;;31;;
+U000269;269;karta;1788;32;Łata;Wojciech;;;;;;;;;;;32;;
+U000270;270;karta;1788;;Machawa;Walenty;;;;;;;;;;;;;"bez numeru w księdze (nr 0); brak nr karty"
+U000271;271;karta;1788;34;Machulek;Bartłomiej;;;;;;;;;;;34;;
+U000272;272;karta;1788;34;Michalska;Marianna;;;;;;;;;;;34;;
+U000273;273;karta;1788;34;Mucha;Rozalia;;;;;;;;;;;34;;
+U000274;274;karta;1788;34;Paciorek;Jacenty;;;;;;;;;;;34;;
+U000275;275;karta;1788;35;Paroch;Michał;;;;;;;;;;;35;;
+U000276;276;karta;1788;31;Pasternak;Kacper;;;;;;;;;;;31;;
+U000277;277;karta;1788;36;Pawlak;Katarzyna;;;;;;;;;;;36;;
+U000278;278;karta;1788;;Pawłasek;Walenty;;;;;;;;;;;;;"bez numeru w księdze (nr 0); brak nr karty"
+U000279;279;karta;1788;;Pazdrak;Franciszka;;;;;;;;;;;;;"bez numeru w księdze (nr 0); brak nr karty"
+U000280;280;karta;1788;;Pazdrak;Marianna;;;;;;;;;;;;;"bez numeru w księdze (nr 0); brak nr karty"
+U000281;281;karta;1788;35;Pazdrak;Michał;;;;;;;;;;;35;;
+U000282;282;karta;1788;33;Pęk;Franciszka;;;;;;;;;;;33;;
+U000283;283;karta;1788;33;Pęk;Krzysztof;;;;;;;;;;;33;;
+U000284;284;karta;1788;32;Piech;Józef;;;;;;;;;;;32;;
+U000285;285;karta;1788;;Samuel;Maciej;;;;;;;;;;;;;"bez numeru w księdze (nr 0); brak nr karty"
+U000286;286;karta;1788;34;Siekierski;Bartłomiej;;;;;;;;;;;34;;
+U000287;287;karta;1788;33;Skrzypek;Marianna;;;;;;;;;;;33;;
+U000288;288;karta;1788;36;Stępień;Andrzej;;;;;;;;;;;36;;
+U000289;289;karta;1788;33;Szabat;Wojciech;;;;;;;;;;;33;;
+U000290;290;karta;1788;35;Szost;Łukasz;;;;;;;;;;;35;;
+U000291;291;karta;1788;33;Tutka;Magdalena;;;;;;;;;;;33;;
+U000292;292;karta;1788;;Wawro;Maciej;;;;;;;;;;;;;"bez numeru w księdze (nr 0); brak nr karty"
+U000293;293;karta;1788;31;Woś;Zofia;;;;;;;;;;;31;;
+U000294;294;karta;1788;33;Wścisło;Antoni;;;;;;;;;;;33;;
+U000295;295;karta;1789;37;Babiarz;Agnieszka;;;;;;;;;;;37;;
+U000296;296;karta;1789;42;Barbarzak;Szymon;;;;;;;;;;;42;;
+U000297;297;karta;1789;;Biała;Małgorzata;;;;;;;;;;;;;"bez numeru w księdze (nr 0); brak nr karty"
+U000298;298;karta;1789;38;Brzeska;Franciszka;;;;;;;;;;;38;;
+U000299;299;karta;1789;38;Brzeski;Kazimierz;;;;;;;;;;;38;kol.O: około 1789;formuła około bez wieku (kart nie ma wieku)
+U000300;300;karta;1789;41;Bzdyrak;Franciszek;;;;;;;;;;;41;;
