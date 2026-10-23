@@ -1,0 +1,151 @@
+﻿id_archiwalne;wiersz_zrodlo;typ_wpisu;rok;nr;nazwisko_dziecka;imie_dziecka;data_tekst;data_iso;ojciec_imie;ojciec_nazwisko;ojciec_wiek;ojciec_rok_ur_przyb;miejscowosc;matka_imie;matka_nazwisko;matka_wiek;matka_rok_ur_przyb;karta_nr;uwagi_surowe;flagi
+U005128;5069;akt;1898;32;Wcisło;Antonina;;;Mateusz;;34;~1864;Brzozówka;Tekla;Szabat;26;~1872;;kol.G: Brzozówka / Mateusz l.34 i Tekla Szabat l.26;brak nazwiska ojca (kol. H pusta)
+U005129;5070;akt;1898;69;Wcisło;Jan;;;Stanisław;;26;~1872;Brzozówka;Marianna;Kędziora;23;~1875;;kol.G: Brzozówka / Stanisław l.26 i Marianna Kędziora l.23;brak nazwiska ojca (kol. H pusta)
+U005130;5071;akt;1898;4;Wieleba;Antonina;;;Wojciech;;40;~1858;Moczydła;Marianna;Chmiel;32;~1866;;kol.G: Moczydła / Wojciech l.40 i Marianna Chmiel l.32;brak nazwiska ojca (kol. H pusta)
+U005131;5072;akt;1898;11;Wnuk;Kazimierz;;;Franciszek;;32;~1866;Blinów;Anna;Stępień;35;~1863;;kol.G: Blinów / Franciszek l.32 i Anna Stępień l.35;brak nazwiska ojca (kol. H pusta)
+U005132;5073;akt;1898;61;Wnuk;Marcin;;;Jan;;47;~1851;Blinów;Rozalia;Krawczyk;33;~1865;;kol.G: Blinów / Jan l.47 i Rozalia Krawczyk l.33;brak nazwiska ojca (kol. H pusta)
+U005134;5074;akt;1898;60;Woś;Katarzyna;;;Wojciech;;28;~1870;Blinów;Franciszka;Barbarzak;23;~1875;;kol.G: Blinów / Wojciech l.28 i Franciszka Barbarzak l.23;brak nazwiska ojca (kol. H pusta)
+U005133;5075;akt;1898;26;Woś;Stanisław;;;Piotr;;36;~1862;Brzozówka;Marianna;Ogon;26;~1872;;kol.G: Brzozówka / Piotr l.36 i Marianna Ogon l.26;brak nazwiska ojca (kol. H pusta)
+U005135;5076;akt;1898;21;Wójcik;Józefa;;;Józef;;47;~1851;Blinów;Anna;Kaczyńska;43;~1855;;kol.G: Blinów / Józef l.47 i Anna Kaczyńska l.43;brak nazwiska ojca (kol. H pusta)
+U005136;5077;akt;1898;9;Zuń;Jan;;;Walenty;;21;~1877;Moczydła;Agnieszka;Sulowska;20;~1878;;kol.G: Moczydła / Walenty l.21 i Agnieszka Sulowska l.20;brak nazwiska ojca (kol. H pusta)
+U005137;5078;akt;1898;39;Zyguła;Jan;;;Dominik;;28;~1870;Moczydła;Karolina;Kosidło;25;~1873;;kol.G: Moczydła / Dominik l.28 i Karolina Kosidło l.25;brak nazwiska ojca (kol. H pusta)
+U005139;5079;akt;1899;61;Barbarzak;Andrzej;;;Franciszek;;36;~1863;Blinów;Marianna;Kosidło;36;~1863;;kol.G: Blinów / Franciszek l.36 i Marianna Kosidło l.36;brak nazwiska ojca (kol. H pusta)
+U005141;5081;akt;1899;38;Boczek;Antonina;;;Stanisław;;34;~1865;Blinów;Tekla;Buczoń;25;~1874;;kol.G: Blinów / Stanisław l.34 i Tekla Buczoń l.25;brak nazwiska ojca (kol. H pusta)
+U005142;5082;akt;1899;58;Boczek;Marianna;;;Andrzej;;40;~1859;Blinów;Katarzyna;Lenart;38;~1861;;kol.G: Blinów / Andrzej l.40 i Katarzyna Lenart l.38;brak nazwiska ojca (kol. H pusta)
+U005143;5083;akt;1899;81;Borg;Waleria;;;;;;;Blinów;Franciszka;z Środków Bork;30;~1869;;kol.G: Blinów / Franciszka z Środków Bork l.30 wdowa;jedna osoba w G (matka, wdowa), ojciec nie podany
+U005144;5084;akt;1899;46;Bucoń;Katarzyna;;;Maciej;;53;~1846;Brzozówka;Ewa;Dobrzyńska;;;;kol.G: Brzozówka / Maciej l.53 i Ewa Dobrzyńska;"brak wieku matki w G; brak nazwiska ojca (kol. H pusta)"
+U005145;5085;akt;1899;6;Chmiel;Józefa;;;Franciszek;;42;~1857;Blinów;Marianna;Sobótka;40;~1859;;kol.G: Blinów / Franciszek l.42 i Marianna Sobótka l.40;brak nazwiska ojca (kol. H pusta)
+U005146;5086;akt;1899;7;Chmiel;Kazimierz;;;Franciszek;;42;~1857;Blinów;Marianna;Sobótka;40;~1859;;kol.G: Blinów / Franciszek l.42 i Marianna Sobótka l.40;"ten sam wpis rodziców co 5085 (inne dziecko); brak nazwiska ojca (kol. H pusta)"
+U005147;5087;akt;1899;29;Chuda;Marianna;;;Paweł;;37;~1862;Moczydła;Franciszka;Wieleba;31;~1868;;kol.G: Moczydła / Paweł l.37 i Franciszka Wieleba l.31;brak nazwiska ojca (kol. H pusta)
+U005148;5088;akt;1899;21;Czuba;Józef;;;Józef;;33;~1866;Blinów;Anastazja;Grela;30;~1869;;kol.G: Blinów / Józef l.33 i Anastazja Grela l.30;brak nazwiska ojca (kol. H pusta)
+U005149;5089;akt;1899;48;Dąbrowska;Katarzyna;;;Wojciech;;25;~1874;Moczydła;Marianna;Krawczyk;20;~1879;;kol.G: Moczydła / Wojciech l.25 i Marianna Krawczyk l.20;brak nazwiska ojca (kol. H pusta)
+U005150;5090;akt;1899;54;Dobrzyńska;Marianna;;;Jan;;27;~1872;Brzozówka;Anastazja;Kopiwoda;20;~1879;;"kol.G: Brzozówka / Jan l.27 i Anastazja Kopiwoda l.20; kol.J: około 1899; kol.O: około 1899";"J/O: około 1899; brak nazwiska ojca (kol. H pusta)"
+U005151;5091;akt;1899;90;Dobrzyńska;Agnieszka;;;Ludwik;;29;~1870;Blinów;Anna;Lenart;28;~1871;;"kol.G: Blinów / Ludwik l.29 i Anna Lenart l.28; kol.J: około 1899; kol.O: około 1899";"J/O: około 1899; brak nazwiska ojca (kol. H pusta)"
+U005152;5092;akt;1899;73;Felek;Marcin;;;Michał;;38;~1861;Blinów;Józefa;Kowalik;30;~1869;;kol.G: Blinów / Michał l.38 i Józefa Kowalik l.30;brak nazwiska ojca (kol. H pusta)
+U005153;5093;akt;1899;82;Grela;Aniela;;;Wojciech;;26;~1873;Blinów;Katarzyna;Wnuk;22;~1877;;kol.G: Blinów / Wojciech l.26 i Katarzyna Wnuk l.22;brak nazwiska ojca (kol. H pusta)
+U005154;5094;akt;1899;55;Gumiński;Henryk;;;Jan;;40;~1859;Blinów;Marianna;Gołębiowska;36;~1863;;kol.G: Blinów / Jan l.40 i Marianna Gołębiowska l.36;brak nazwiska ojca (kol. H pusta)
+U005155;5095;akt;1899;33;Igras;Jan;;;;;;;Brzozówka;Ewa;Igras;;;;kol.G: Brzozówka / Ewa Igras l.;"jedna osoba w G (matka), ojciec nie podany; brak wieku matki"
+U005157;5096;akt;1899;69;Jachura;Antonina;;;Walenty;;40;~1859;Moczydła;Agnieszka;Nieściur;35;~1864;;kol.G: Moczydła / Walenty l.40 i Agnieszka Nieściur l.35;brak nazwiska ojca (kol. H pusta)
+U005156;5097;akt;1899;18;Jachura;Tomasz;;;Antoni;;50;~1849;Blinów;Katarzyna;Szuba;45;~1854;;kol.G: Blinów / Antoni l.50 i Katarzyna Szuba l.45;brak nazwiska ojca (kol. H pusta)
+U005158;5098;akt;1899;45;Jachura / Matraszek;Franciszek;;;Piotr;;32;~1867;Blinów;Katarzyna;Zarzeczna;22;~1877;;kol.G: Blinów / Piotr l.32 i Katarzyna Zarzeczna l.22;"nazwisko dziecka w kol. B podwójne: Jachura / Matraszek (zapisane jak w arkuszu); brak nazwiska ojca (kol. H pusta)"
+U005159;5099;akt;1899;28;Jakubaszek;Wojciech;;;Tomasz;;32;~1867;Moczydła;Anastazja;Nieściur;24;~1875;;kol.G: Moczydła / Tomasz l.32 i Anastazja Nieściur l.24;brak nazwiska ojca (kol. H pusta)
+U005161;5100;akt;1899;62;Janik;Anna;;;Wojciech;;38;~1861;Moczydła;Katarzyna;Jędrzejczak;39;~1860;;kol.G: Moczydła / Wojciech l.38 i Katarzyna Jędrzejczak l.39;brak nazwiska ojca (kol. H pusta)
+U005160;5101;akt;1899;24;Janik;Jan;;;Jan;;46;~1853;Moczydła;Marianna;Sokół;48;~1851;;kol.G: Moczydła / Jan l.46 i Marianna Sokół l.48;brak nazwiska ojca (kol. H pusta)
+U005162;5102;akt;1899;97;Janik;Szczepan;;;Tomasz;;30;~1869;Moczydła;Marianna;Kudrelek;29;~1870;;kol.G: Moczydła / Tomasz l.30 i Marianna Kudrelek l.29;brak nazwiska ojca (kol. H pusta)
+U005163;5103;akt;1899;8;Januszczak;Jan;;;Wojciech;;25;~1874;Blinów;Zofia;Kaczyńska;25;~1874;;kol.G: Blinów / Wojciech l.25 i Zofia Kaczyńska l.25;brak nazwiska ojca (kol. H pusta)
+U005164;5104;akt;1899;22;Jędrzejczak;Marianna;;;Antoni;;34;~1865;Blinów;Zofia;Kosidlak;30;~1869;;kol.G: Blinów / Antoni l.34 i Zofia Kosidlak l.30;brak nazwiska ojca (kol. H pusta)
+U005165;5105;akt;1899;27;Kaczyńska;Antonina;;;Michał;;31;~1868;Moczydła;Katarzyna;Ładziak;26;~1873;;kol.G: Moczydła / Michał l.31 i Katarzyna Ładziak l.26;brak nazwiska ojca (kol. H pusta)
+U005166;5106;akt;1899;52;Kaczyńska;Katarzyna;;;Paweł;;25;~1874;Blinów;Marianna;Kosidlak;27;~1872;;kol.G: Blinów / Paweł l.25 i Marianna Kosidlak l.27;brak nazwiska ojca (kol. H pusta)
+U005167;5107;akt;1899;84;Kaczyński;Wojciech;;;Kazimierz;;42;~1857;Moczydła;Katarzyna;Janik;44;~1855;;kol.G: Moczyda / Kazimierz l.42 i Katarzyna Janik l.44;"miejscowość w G zapisana 'Moczyda' (literówka, poprawiono na Moczydła w polu miejsca); brak nazwiska ojca (kol. H pusta)"
+U005168;5108;akt;1899;53;Kamińska;Anna;;;Marcin;;29;~1870;Blinów;Katarzyna;Michałek;23;~1876;;kol.G: Blinów / Marcin l.29 i Katarzyna Michałek l.23;brak nazwiska ojca (kol. H pusta)
+U005169;5109;akt;1899;16;Kamiński;Józef;;;Tomasz;Kamiński;47;~1852;Brzozówka;Józefa;Buczoń;43;~1856;;kol.G: Brzozówka / Tomasz Kamiński l.47 i Józefa Buczoń l.43;
+U005170;5110;akt;1899;91;Karczmarczyk;Andrzej;;;Jakub;;35;~1864;Blinów;Marianna;Rębecka;37;~1862;;kol.G: Blinów / Jakub l.35 i Marianna Rębecka l.37;brak nazwiska ojca (kol. H pusta)
+U005171;5111;akt;1899;19;Karwat;Józefa;;;Stanisław;;34;~1865;Brzozówka;Józefa;Goch;32;~1867;;kol.G: Brzozówka / Stanisław l.34 i Józefa Goch l.32;brak nazwiska ojca (kol. H pusta)
+U005172;5112;akt;1899;1;Kędziora;Agnieszka;;;Dominik;;30;~1869;Blinów;Zofia;Grzegórska;22;~1877;;kol.G: Blinów / Dominik l.30 i Zofia Grzegórska l.22;brak nazwiska ojca (kol. H pusta)
+U005173;5113;akt;1899;3;Komsa;Józefa;;;Wojciech;;28;~1871;Brzozówka;Barbara;Kozyra;26;~1873;;kol.G: Brzozówka / Wojciech l.28 i Barbara Kozyra l.26;brak nazwiska ojca (kol. H pusta)
+U005176;5115;akt;1899;70;Kosidlak;Franciszek;;;Piotr;;42;~1857;Blinów;Marianna;Dziewa;41;~1858;;kol.G: Blinów / Piotr l.42 i Marianna Dziewa l.41;brak nazwiska ojca (kol. H pusta)
+U005175;5116;akt;1899;20;Kosidlak;Jan;;;Błażej;;33;~1866;Blinów;Agnieszka;Lenart;25;~1874;;kol.G: Blinów / Błażej l.33 i Agnieszka Lenart l.25;brak nazwiska ojca (kol. H pusta)
+U005177;5117;akt;1899;49;Kosidło;Franciszka;;;;;;;Blinów;Ewa;Kosidło;32;~1867;;"kol.G: Blinów / Ewa Kosidło l.32; kol.J: około 1899; kol.O: około 1899";"J/O: około 1899; jedna osoba w G (matka), ojciec nie podany"
+U005178;5118;akt;1899;57;Kosidło;Ignacy;;;Andrzej;;39;~1860;Blinów;Antonina;;36;~1863;;"kol.G: Blinów / Andrzej l.39 i Antonina l.36; kol.J: około 1899; kol.O: około 1899";"J/O: około 1899; brak nazwiska matki w G; brak nazwiska ojca (kol. H pusta)"
+U005182;5119;akt;1899;92;Kosidło;Józef;;;Ignacy;;34;~1865;Blinów;Barbara;Rębecka;26;~1873;;"kol.G: Blinów / Ignacy l.34 i Barbara Rębecka l.26; kol.J: około 1899; kol.O: około 1899";"J/O: około 1899; brak nazwiska ojca (kol. H pusta)"
+U005179;5120;akt;1899;64;Kosidło;Katarzyna;;;Wincenty;;24;~1875;Brzozówka;Franciszka;Kozyra;30;~1869;;"kol.G: Brzozówka / Wincenty l.24 i Franciszka Kozyra l.30; kol.J: około 1899; kol.O: około 1899";"J/O: około 1899; brak nazwiska ojca (kol. H pusta)"
+U005181;5121;akt;1899;75;Kosidło;Katarzyna;;;Kazimierz;;44;~1855;Blinów;Marianna;Karczmarczyk;36;~1863;;"kol.G: Blinów / Kazimierz l.44 i Marianna Karczmarczyk l.36; kol.J: około 1899; kol.O: około 1899";"J/O: około 1899; brak nazwiska ojca (kol. H pusta)"
+U005180;5122;akt;1899;74;Kosidło;Michalina;;;Kazimierz;;44;~1855;Blinów;Marianna;Karczmarczyk;36;~1863;;"kol.G: Blinów / Kazimierz l.44 i Marianna Karczmarczyk l.36; kol.J: około 1899; kol.O: około 1899";"J/O: około 1899; ten sam wpis rodziców co 5121 (inne dziecko); brak nazwiska ojca (kol. H pusta)"
+U005183;5123;akt;1899;79;Kozyra;Szymon;;;Paweł;;50;~1849;Blinów;Katarzyna;Wnuk;40;~1859;;kol.G: Blinów / Paweł l.50 i Katarzyna Wnuk l.40;brak nazwiska ojca (kol. H pusta)
+U005185;5124;akt;1899;67;Krawczyk;Anna;;;Ludwik;;26;~1873;Blinów;Marianna;Grela;23;~1876;;kol.G: Blinów / Ludwik l.26 i Marianna Grela l.23;brak nazwiska ojca (kol. H pusta)
+U005184;5125;akt;1899;39;Krawczyk;Zofia;;;Michał;;50;~1849;Moczydła;Agnieszka;Pcionek;38;~1861;;kol.G: Moczydła / Michał l.50 i Agnieszka Pcionek l.38;brak nazwiska ojca (kol. H pusta)
+U005186;5126;akt;1899;65;Kudrelek;Feliksa;;;Tomasz;;30;~1869;Blinów;Marianna;Kratoska;23;~1876;;kol.G: Blinów / Tomasz l.30 i Marianna Kratoska l.23;brak nazwiska ojca (kol. H pusta)
+U005187;5127;akt;1899;15;Kurczak;Józefa;;;;;;;Blinów;Zofia;Kurczak;37;~1862;;kol.G: Blinów / Zofia Kurczak l.37;jedna osoba w G (matka), ojciec nie podany
+U005188;5128;akt;1899;94;Łach;Marianna;;;Paweł;;29;~1870;Blinów;Zofia;Pcionek;19;~1880;;kol.G: Blinów / Paweł l.29 i Zofia Pcionek l.19;brak nazwiska ojca (kol. H pusta)
+U005189;5129;akt;1899;10;Machulak;Marianna;;;Wincenty;;34;~1865;Brzozówka;Katarzyna;Jachura;26;~1873;;kol.G: Brzozówka / Wincenty l.34 i Katarzyna Jachura l.26;brak nazwiska ojca (kol. H pusta)
+U005190;5130;akt;1899;89;Mazur;Jan;;;Tomasz;;40;~1859;Brzozówka;Józefa;Kopiwoda;36;~1863;;kol.G: Brzozówka / Tomasz l.40 i Józefa Kopiwoda l.36;brak nazwiska ojca (kol. H pusta)
+U005191;5131;akt;1899;72;Mazur;Marcin;;;Jan;;29;~1870;Brzozówka;Ludwika;Bigos;22;~1877;;kol.G: Brzozówka / Jan l.29 i Ludwika Bigos l.22;brak nazwiska ojca (kol. H pusta)
+U005192;5132;akt;1899;60;Mazurek;Józefa;;;Szymon;;38;~1861;Brzozówka;Teresa;Krzysztoń;36;~1863;;kol.G: Brzozówka / Szymon l.38 i Teresa Krzysztoń l.36;brak nazwiska ojca (kol. H pusta)
+U005193;5133;akt;1899;56;Michałek;Jan;;;Antoni;;28;~1871;Blinów;Anna;Sobótka;21;~1878;;kol.G: Blinów / Antoni l.28 i Anna Sobótka l.21;brak nazwiska ojca (kol. H pusta)
+U005195;5134;akt;1899;86;Michałek;Katarzyna;;;Walenty;;30;~1869;Blinów;Franciszka;Stępień;22;~1877;;kol.G: Blinów / Walenty l.30 i Franciszka Stępień l.22;brak nazwiska ojca (kol. H pusta)
+U005194;5135;akt;1899;80;Michałek;Marcin;;;Stanisław;;44;~1855;Blinów;Marianna;Samol;39;~1860;;kol.G: Blinów / Stanisław l.44 i Marianna Samol l.39;brak nazwiska ojca (kol. H pusta)
+U005197;5136;akt;1899;41;Mróz;Marianna;;;Paweł;;50;~1849;Blinów;Katarzyna;Kosidło;40;~1859;;kol.G: Blinów / Paweł l.50 i Katarzyna Kosidło l.40;brak nazwiska ojca (kol. H pusta)
+U005196;5137;akt;1899;25;Mróz;Stanisław;;;;;;;Blinów;Katarzyna;Mróz;30;~1869;;kol.G: Blinów / Katarzyna Mróz l.30;jedna osoba w G (matka), ojciec nie podany
+U005198;5138;akt;1899;44;Mróz / Dziewa;Antoni / Wojciech;;;Walenty;;23;~1876;Moczydła;Zofia;Pcionek;18;~1881;;kol.G: Moczydła / Walenty l.23 i Zofia Pcionek l.18;"imię dziecka w kol. C podwójne: Antoni / Wojciech; nazwisko Mróz / Dziewa (zapisane jak w arkuszu); brak nazwiska ojca (kol. H pusta)"
+U005199;5139;akt;1899;63;Nieściur;Agnieszka;;;Dominik;;40;~1859;Moczydła;Jadwiga;Paszkowska;35;~1864;;kol.G: Moczydła / Dominik l.40 i Jadwiga Paszkowska l.35;brak nazwiska ojca (kol. H pusta)
+U005200;5140;akt;1899;99;Niewiadomska;Marianna;;;Franciszek;;55;~1844;Blinów;Julianna;Mierzwa;26;~1873;;kol.G: Blinów / Franciszek l.55 i Julianna Mierzwa l.26;brak nazwiska ojca (kol. H pusta)
+U005201;5141;akt;1899;36;Nikolas;Antonina;;;Józef;;38;~1861;Moczydła;Rozalia;Pawłasek;40;~1859;;kol.G: Moczydła / Józef l.38 i Rozalia Pawłasek l.40;brak nazwiska ojca (kol. H pusta)
+U005202;5142;akt;1899;59;Ogon;Franciszek;;;;;;;Blinów;Anna;Ogon;38;~1861;;kol.G: Blinów / Anna Ogon l.38;jedna osoba w G (matka), ojciec nie podany
+U005203;5143;akt;1899;31;Paszkowska;Antonina;;;;;;;Moczydła;Anastazja;Paszkowska;40;~1859;;kol.G: Moczydła / Anastazja Paszkowska l.40;jedna osoba w G (matka), ojciec nie podany
+U005204;5144;akt;1899;68;Pawłasek;Katarzyna;;;Bartłomiej;;36;~1863;Blinów;Józefa;Dobrzyńska;24;~1875;;kol.G: Blinów / Bartłomiej l.36 i Józefa Dobrzyńska l.24;brak nazwiska ojca (kol. H pusta)
+U005205;5145;akt;1899;11;Pcionek;Jan;;;Bartłomiej;;30;~1869;Blinów;Katarzyna;Pcionek;30;~1869;;kol.G: Blinów / Bartłomiej l.30 i Katarzyna Pcionek l.30;brak nazwiska ojca (kol. H pusta)
+U005206;5146;akt;1899;12;Pcionek;Józef;;;Ignacy;;36;~1863;Blinów;Marianna;Kaczyńska;26;~1873;;kol.G: Blinów / Ignacy l.36 i Marianna Kaczyńska l.26;brak nazwiska ojca (kol. H pusta)
+U005207;5147;akt;1899;5;Pikuła;Marianna;;;Wojciech;;28;~1871;Blinów;Jadwiga;Chałabis;28;~1871;;kol.G: Blinów / Wojciech l.28 i Jadwiga Chałabis l.28;brak nazwiska ojca (kol. H pusta)
+U005208;5148;akt;1899;93;Pochwatka;Katarzyna;;;Franciszek;;40;~1859;Blinów;Tekla;Jachura;38;~1861;;kol.G: Blinów / Franciszek l.40 i Tekla Jachura l.38;brak nazwiska ojca (kol. H pusta)
+U005210;5150;akt;1899;71;Rębacz;Jan;;;Walenty;;40;~1859;Brzozówka;Agnieszka;Dobrzyńska;37;~1862;;kol.G: Brzozówka / Walenty l.40 i Agnieszka Dobrzyńska l.37;brak nazwiska ojca (kol. H pusta)
+U005211;5151;akt;1899;88;Rzeszutko;Katarzyna;;;Michał;;36;~1863;Brzozówka;Tekla;Kaczyńska;28;~1871;;kol.G: Brzozówka / Michał l.36 i Tekla Kaczyńska l.28;brak nazwiska ojca (kol. H pusta)
+U005212;5152;akt;1899;85;Samol;Marcin;;;Wojciech;;31;~1868;Blinów;Marianna;Gieral;30;~1869;;kol.G: Blinów / Wojciech l.31 i Marianna Gieral l.30;brak nazwiska ojca (kol. H pusta)
+U005213;5153;akt;1899;98;Sikora;Józef;;;Franciszek;;35;~1864;Blinów;Katarzyna;Nieściur;30;~1869;;kol.G: Blinów / Franciszek l.35 i Katarzyna Nieściur l.30;brak nazwiska ojca (kol. H pusta)
+U005215;5154;akt;1899;37;Sobótka;Antoni;;;Michał;;30;~1869;Blinów;Józefa;Serafin;34;~1865;;kol.G: Blinów / Michał l.30 i Józefa Serafin l.34;brak nazwiska ojca (kol. H pusta)
+U005216;5155;akt;1899;43;Sobótka;Jan;;;Wojciech;;37;~1862;Blinów;Agnieszka;Pizoń;25;~1874;;kol.G: Blinów / Wojciech l.37 i Agnieszka Pizoń l.25;brak nazwiska ojca (kol. H pusta)
+U005214;5156;akt;1899;30;Sobótka;Stanisław;;;Wojciech;;36;~1863;Blinów;Jadwiga;Jachura;40;~1859;;kol.G: Blinów / Wojciech l.36 i Jadwiga Jachura l.40;brak nazwiska ojca (kol. H pusta)
+U005217;5157;akt;1899;23;Spryszak;Józefa;;;Franciszek;;32;~1867;Brzozówka;Antonina;Żaba;37;~1862;;kol.G: Brzozówka / Franciszek l.32 i Antonina Żaba l.37;brak nazwiska ojca (kol. H pusta)
+U005218;5158;akt;1899;76;Spryszak;Michał;;;Andrzej;;42;~1857;Brzozówka;Marianna;Machulak;37;~1862;;kol.G: Brzozówka / Andrzej l.42 i Marianna Machulak l.37;brak nazwiska ojca (kol. H pusta)
+U005219;5159;akt;1899;4;Struski;Jan;;;Jan;;32;~1867;Moczydła;Agnieszka;Łatka;32;~1867;;kol.G: Moczydła / Jan l.32 i Agnieszka Łatka l.32;brak nazwiska ojca (kol. H pusta)
+U005220;5160;akt;1899;96;Sulowska;Waleria;;;Andrzej;;28;~1871;Blinów;Katarzyna;Stańczyk;22;~1877;;kol.G: Blinów / Andrzej l.28 i Katarzyna Stańczyk l.22;brak nazwiska ojca (kol. H pusta)
+U005222;5161;akt;1899;35;Sulowski;Franciszek;;;Jan;;30;~1869;Blinów;Antonina;Pikuła;34;~1865;;kol.G: Blinów / Jan l.30 i Antonina Pikuła l.34;brak nazwiska ojca (kol. H pusta)
+U005221;5162;akt;1899;32;Sulowski;Stanisław;;;Walenty;;40;~1859;Blinów;Marianna;Komsa;32;~1867;;kol.G: Blinów / Walenty l.40 i Marianna Komsa l.32;brak nazwiska ojca (kol. H pusta)
+U005223;5163;akt;1899;9;Szabat;Waleria;;;Franciszek;;38;~1861;Blinów;Tekla;Wcisło;25;~1874;;kol.G: Blinów / Franciszek l.38 i Tekla Wcisło l.25;brak nazwiska ojca (kol. H pusta)
+U005224;5164;akt;1899;14;Szabat;Jan;;;;;;;Blinów;Rozalia;Szabat;23;~1876;;kol.G: Blinów / Rozalia Szabat l.23;jedna osoba w G (matka), ojciec nie podany
+U005225;5165;akt;1899;17;Szczuka;Antoni;;;Walenty;;28;~1871;Blinów;Tekla;Borowska;24;~1875;;kol.G: Blinów / Walenty l.28 i Tekla Borowska l.24;brak nazwiska ojca (kol. H pusta)
+U005226;5166;akt;1899;26;Szuba;Marianna;;;Franciszek;;42;~1857;Blinów;Zofia;Wójcik;31;~1868;;kol.G: Blinów / Franciszek l.42 i Zofia Wójcik l.31;brak nazwiska ojca (kol. H pusta)
+U005227;5167;akt;1899;87;Szyszka;Katarzyna;;;Andrzej;;50;~1849;Brzozówka;Barbara;Białkowska;35;~1864;;kol.G: Brzozówka / Andrzej l.50 i Barbara Białkowska l.35;brak nazwiska ojca (kol. H pusta)
+U005228;5168;akt;1899;78;Śwircz;Franciszek;;;Michał;;24;~1875;Brzozówka;Anna;Karwat;24;~1875;;kol.G: Brzozówka / Michał l.24 i Anna Karwat l.24;brak nazwiska ojca (kol. H pusta)
+U005229;5169;akt;1899;34;Tracz;Stanisława;;;Antoni;;30;~1869;Blinów;Magdalena;Szyszka;36;~1863;;kol.G: Blinów / Antoni l.30 i Magdalena Szyszka l.36;brak nazwiska ojca (kol. H pusta)
+U005230;5170;akt;1899;13;Tylus;Józef;;;Paweł;;23;~1876;Brzozówka;Katarzyna;Sulowska;23;~1876;;kol.G: Brzozówka / Paweł l.23 i Katarzyna Sulowska l.23;brak nazwiska ojca (kol. H pusta)
+U005231;5171;akt;1899;40;Wcisło;Antoni;;;Franciszek;;34;~1865;Brzozówka;Marianna;Kaczyńska;30;~1869;;kol.G: Brzozówka / Franciszek l.34 i Marianna Kaczyńska l.30;brak nazwiska ojca (kol. H pusta)
+U005232;5172;akt;1899;66;Wcisło;Marcin;;;Walenty;;34;~1865;Brzozówka;Agata;Ogon;30;~1869;;kol.G: Brzozówka / Walenty l.34 i Agata Ogon l.30;brak nazwiska ojca (kol. H pusta)
+U005233;5173;akt;1899;51;Wieleba;Marianna;;;Stanisław;;32;~1867;Moczydła;Zofia;Fijoł;;;;kol.G: Moczydła / Stanisław l.32 i Zofia Fijoł;"brak wieku matki w G; brak nazwiska ojca (kol. H pusta)"
+U005234;5174;akt;1899;83;Wieleba;Szymon;;;Wojciech;;40;~1859;Moczydła;Marianna;Chmiel;32;~1867;;kol.G: Moczydła / Wojciech l.40 i Marianna Chmiel l.32;brak nazwiska ojca (kol. H pusta)
+U005235;5175;akt;1899;47;Wojcieszyn;Feliksa;;;Józef;;28;~1871;Brzozówka;Rozalia;Karwat;33;~1866;;kol.G: Brzozówka / Józef l.28 i Rozalia Karwat l.33;brak nazwiska ojca (kol. H pusta)
+U005236;5176;akt;1899;77;Woś;Katarzyna;;;Szymon;;32;~1867;Brzozówka;Jadwiga;Mazurek;22;~1877;;kol.G: Brzozówka / Szymon l.32 i Jadwiga Mazurek l.22;brak nazwiska ojca (kol. H pusta)
+U005237;5177;akt;1899;50;Wójtowicz;Jan;;;Tomasz;;40;~1859;Blinów;Antonina;Pazdrak;38;~1861;;kol.G: Blinów / Tomasz l.40 i Antonina Pazdrak l.38;brak nazwiska ojca (kol. H pusta)
+U005240;5178;akt;1900;24;Baran;Antonina;;;Piotr;;34;~1866;Blinów;Marianna;Ogon;24;~1876;;kol.G: Blinów / Piotr l.34 i Marianna Ogon l.24;brak nazwiska ojca (kol. H pusta)
+U005239;5179;akt;1900;21;Baran;Jan;;;Józef;;51;~1849;Blinów;Marianna;Boczek;30;~1870;;kol.G: Blinów / Józef l.51 i Marianna Boczek l.30;brak nazwiska ojca (kol. H pusta)
+U005241;5180;akt;1900;73;Białkowska;Katarzyna;;;Stanisław;;37;~1863;Brzozówka;Marianna;Machulak;42;~1858;;kol.G: Brzozówka / Stanisław l.37 i Marianna Machulak l.42;brak nazwiska ojca (kol. H pusta)
+U005242;5181;akt;1900;35;Białkowski;Stanisław;;;Antoni;;46;~1854;Blinów;Marianna;Buczoń;36;~1864;;kol.G: Blinów / Antoni l.46 i Marianna Buczoń l.36;brak nazwiska ojca (kol. H pusta)
+U005243;5182;akt;1900;26;Boczek;Marianna;;;;;;;Blinów;Rozalia;Boczek;23;~1877;;kol.G: Blinów / Rozalia Boczek l.23;jedna osoba w G (matka), ojciec nie podany
+U005244;5183;akt;1900;4;Boguń;Antoni;;;Mateusz;;26;~1874;Blinów;Marianna;Kosidło;24;~1876;;kol.G: Blinów / Mateusz l.26 i Marianna Kosidło l.24;brak nazwiska ojca (kol. H pusta)
+U005245;5184;akt;1900;95;Boguń;Franciszka;;;Walenty;;24;~1876;Moczydła;Franciszka;Janik;20;~1880;;kol.G: Moczydła / Walenty l.24 i Franciszka Janik l.20;brak nazwiska ojca (kol. H pusta)
+U005246;5185;akt;1900;2;Borowski;Stanisław;;;Jan;;22;~1878;Blinów;Marianna;Stępień;26;~1874;;kol.G: Blinów / Jan l.22 i Marianna Stępień l.26;brak nazwiska ojca (kol. H pusta)
+U005247;5186;akt;1900;39;Bucoń;Stanisław;;;Franciszek;;40;~1860;Blinów;Zofia;Szubstarska;33;~1867;;kol.G: Blinów / Franciszek l.40 i Zofia Szubstarska l.33;brak nazwiska ojca (kol. H pusta)
+U005248;5187;akt;1900;37;Chmiel;Andrzej;;;Tomasz;;37;~1863;Moczydła;Marianna;Żaba;27;~1873;;kol.G: Moczydła / Tomasz l.37 i Marianna Żaba l.27;brak nazwiska ojca (kol. H pusta)
+U005249;5188;akt;1900;6;Ćwiek;Walenty;;;Józef;;37;~1863;Blinów;Magdalena;Grabowska;34;~1866;;kol.G: Blinów / Józef l.37 i Magdalena Grabowska l.34;brak nazwiska ojca (kol. H pusta)
+U005250;5189;akt;1900;55;Dobrzyński;Adam;;;Ludwik;;34;~1866;Moczydła;Magdalena;Budkowska;30;~1870;;"kol.G: Moczydła / Ludwik l.34 i Magdalena Budkowska l.30; kol.J: około 1900; kol.O: około 1900";"J/O: około 1900; brak nazwiska ojca (kol. H pusta)"
+U005252;5190;akt;1900;46;Dziewa;Antoni;;;Antoni;;45;~1855;Moczydła;Anna;Pcionek;28;~1872;;kol.G: Moczydła / Antoni l.45 i Anna Pcionek l.28;brak nazwiska ojca (kol. H pusta)
+U005251;5191;akt;1900;28;Dziewa;Wojciech;;;Walenty;;23;~1877;Moczydła;Zofia;Pcionek;19;~1881;;kol.G: Moczydła / Walenty l.23 i Zofia Pcionek l.19;brak nazwiska ojca (kol. H pusta)
+U005253;5192;akt;1900;50;Dziura;Katarzyna;;;Maciej;;38;~1862;Blinów;Jadwiga;Ładziak;;;;kol.G: Blinów / Maciej l.38 i Jadwiga Ładziak;"brak wieku matki w G; brak nazwiska ojca (kol. H pusta)"
+U005254;5193;akt;1900;60;Felek;Franciszek;;;Józef;;28;~1872;Blinów;Franciszka;Machulak;23;~1877;;kol.G: Blinów / Józef l.28 i Franciszka Machulak l.23;brak nazwiska ojca (kol. H pusta)
+U005255;5194;akt;1900;9;Gancarz;Julianna;;;Michał;;34;~1866;Blinów;Magdalena;Gruszka;30;~1870;;kol.G: Blinów / Michał l.34 i Magdalena Gruszka l.30;brak nazwiska ojca (kol. H pusta)
+U005256;5195;akt;1900;14;Janik;Antonina;;;Walenty;;40;~1860;Brzozówka;Marianna;Bigos;39;~1861;;kol.G: Brzozówka / Walenty l.40 i Marianna Bigos l.39;brak nazwiska ojca (kol. H pusta)
+U005257;5196;akt;1900;67;Jędrzejczak;Antoni;;;Mateusz;;31;~1869;Blinów;Agata;Łata;28;~1872;;kol.G: Blinów / Mateusz l.31 i Agata Łata l.28;brak nazwiska ojca (kol. H pusta)
+U005258;5197;akt;1900;68;Jędrzejczak;Józef;;;Mateusz;;31;~1869;Blinów;Agata;Łata;28;~1872;;kol.G: Blinów / Mateusz l.31 i Agata Łata l.28;"ten sam wpis rodziców co 5196 (inne dziecko); brak nazwiska ojca (kol. H pusta)"
+U005259;5198;akt;1900;87;Jędrzejczak;Marianna;;;Maciej;;39;~1861;Blinów;Jadwiga;Boczek;25;~1875;;kol.G: Blinów / Maciej l.39 i Jadwiga Boczek l.25;brak nazwiska ojca (kol. H pusta)
+U005260;5199;akt;1900;49;Kania;Franciszka;;;Łukasz;;40;~1860;Brzozówka;Antonina;Kosidlak;36;~1864;;kol.G: Brzozówka / Łukasz l.40 i Antonina Kosidlak l.36;brak nazwiska ojca (kol. H pusta)
+U005261;5200;akt;1900;47;Karczmarczyk;Franciszek;;;Józef;;32;~1868;Blinów;Anna;Jędrzejczak;42;~1858;;kol.G: Blinów / Józef l.32 i Anna Jędrzejczak l.42;brak nazwiska ojca (kol. H pusta)
+U005262;5201;akt;1900;44;Kędziora;Jan;;;Wojciech;;30;~1870;Blinów;Katarzyna;Ogon;33;~1867;;kol.G: Blinów / Wojciech l.30 i Katarzyna Ogon l.33;brak nazwiska ojca (kol. H pusta)
+U005263;5202;akt;1900;58;Kędziora;Katarzyna;;;Marcin;;32;~1868;Blinów;Zofia;Wach;22;~1878;;kol.G: Blinów / Marcin l.32 i Zofia Wach l.22;brak nazwiska ojca (kol. H pusta)
+U005264;5203;akt;1900;54;Kędziora;Marianna;;;;;;;Blinów;Paulina;Kędziora;40;~1860;;kol.G: Blinów / Paulina Kędziora l.40;jedna osoba w G (matka), ojciec nie podany
+U005266;5204;akt;1900;78;Koguc;Marcin;;;Michał;;40;~1860;Brzozówka;Antonina;Krzysztoń;30;~1870;;"kol.G: Brzozówka / Michał l.40 i Antonina Krzysztoń l.30; kol.J: około 1900; kol.O: około 1900";"J/O: około 1900; brak nazwiska ojca (kol. H pusta)"
+U005265;5205;akt;1900;52;Koguc;Piotr;;;Wojciech;;42;~1858;Brzozówka;Katarzyna;Krawczyk;38;~1862;;"kol.G: Brzozówka / Wojciech l.42 i Katarzyna Krawczyk l.38; kol.J: około 1900; kol.O: około 1900";"J/O: około 1900; brak nazwiska ojca (kol. H pusta)"
+U005267;5206;akt;1900;43;Kolasa;Jan;;;Łukasz;;60;~1840;Moczydła;Zofia;Wach;40;~1860;;kol.G: Moczydła / Łukasz l.60 i Zofia Wach l.40;brak nazwiska ojca (kol. H pusta)
+U005268;5207;akt;1900;81;Komsa;Katarzyna;;;Wojciech;;31;~1869;Brzozówka;Barbara;Kozyra;26;~1874;;kol.G: Brzozówka / Wojciech l.31 i Barbara Kozyra l.26;brak nazwiska ojca (kol. H pusta)
+U005271;5208;akt;1900;75;Kosidło;Anna;;;;;;;Brzozówka;Katarzyna;Kosidło;28;~1872;;"kol.G: Brzozówka / Katarzyna Kosidło l.28; kol.J: około 1900; kol.O: około 1900";"J/O: około 1900; jedna osoba w G (matka), ojciec nie podany"
+U005269;5209;akt;1900;38;Kosidło;Antoni;;;Jan;;40;~1860;Blinów;Jadwiga;Pawłasek;27;~1873;;"kol.G: Blinów / Jan l.40 i Jadwiga Pawłasek l.27; kol.J: około 1900; kol.O: około 1900";"J/O: około 1900; brak nazwiska ojca (kol. H pusta)"
+U005270;5210;akt;1900;42;Kosidło;Jan;;;Józef;;42;~1858;Moczydła;Józefa;Nieściur;30;~1870;;"kol.G: Moczydła / Józef l.42 i Józefa Nieściur l.30; kol.J: około 1900; kol.O: około 1900";"J/O: około 1900; brak nazwiska ojca (kol. H pusta)"
+U005272;5211;akt;1900;88;Kosidło;Marianna;;;Marcin;;45;~1855;Blinów;Marianna;Krawczyk;33;~1867;;"kol.G: Blinów / Marcin l.45 i Marianna Krawczyk l.33; kol.J: około 1900; kol.O: około 1900";"J/O: około 1900; brak nazwiska ojca (kol. H pusta)"
+U005273;5212;akt;1900;92;Krajewski;Jan;;;Wawrzyniec;;27;~1873;Blinów;Felicja;Kozłowska;28;~1872;;kol.G: Blinów / Wawrzyniec l.27 i Felicja Kozłowska l.28;brak nazwiska ojca (kol. H pusta)
+U005275;5213;akt;1900;17;Krawczyk;Antoni;;;Andrzej;;42;~1858;Moczydła;Marianna;Pcionek;;;;kol.G: Moczydła / Andrzej l.42 i Marianna Pcionek;"brak wieku matki w G; brak nazwiska ojca (kol. H pusta)"
+U005276;5214;akt;1900;15;Krawczyk;Antonina;;;Mateusz;;;;Moczydła;Katarzyna;Wieleba;34;~1866;;kol.G: Moczydła / Mateusz i Katarzyna Wieleba l.34;"brak wieku ojca w G; brak nazwiska ojca (kol. H pusta)"
+U005277;5215;akt;1900;18;Krawczyk;Feliks;;;Paweł;;;;Moczydła;;;;;;kol.G: Moczydła / Paweł;"tylko ojciec w G, bez wieku; matka nie podana; brak nazwiska ojca (kol. H pusta)"
+U005278;5216;akt;1900;64;Krawczyk;Franciszek;;;Wawrzyniec;;37;~1863;Moczydła;Józefa;Woś;24;~1876;;kol.G: Moczydła / Wawrzyniec l.37 i Józefa Woś l.24;brak nazwiska ojca (kol. H pusta)
+U005274;5217;akt;1900;30;Krawczyk;Wojciech;;;Wojciech;;35;~1865;Blinów;Franciszka;Drozd;35;~1865;;kol.G: Blinów / Wojciech l.35 i Franciszka Drozd l.35;brak nazwiska ojca (kol. H pusta)
+U005280;5218;akt;1900;71;Kudrelek;Jan;;;Wincenty;;30;~1870;Blinów;Łucja;Rak;27;~1873;;kol.G: Blinów / Wincenty l.30 i Łucja Rak l.27;brak nazwiska ojca (kol. H pusta)
+U005279;5219;akt;1900;59;Kudrelek;Michał;;;Walenty;;27;~1873;Blinów;Józefa;Pasternak;21;~1879;;kol.G: Blinów / Walenty l.27 i Józefa Pasternak l.21;brak nazwiska ojca (kol. H pusta)
+U005281;5220;akt;1900;11;Kurczak;Józefa;;;Dominik;;32;~1868;Blinów;Marianna;Pasternak;23;~1877;;kol.G: Blinów / Dominik l.32 i Marianna Pasternak l.23;brak nazwiska ojca (kol. H pusta)
+U005282;5221;akt;1900;83;Kurczak;Katarzyna;;;Maciej;;41;~1859;Blinów;Marianna;Stępień;39;~1861;;kol.G: Blinów / Maciej l.41 i Marianna Stępień l.39;brak nazwiska ojca (kol. H pusta)
