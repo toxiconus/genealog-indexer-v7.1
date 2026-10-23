@@ -21,6 +21,9 @@ button.danger{color:var(--bad)}
 .sec.on{display:block}
 .grid3{display:grid;grid-template-columns:minmax(230px,1fr) minmax(300px,1.3fr) minmax(260px,1fr);gap:12px;align-items:start}
 @media (max-width:980px){.grid3{grid-template-columns:1fr}}
+.grid2{display:grid;grid-template-columns:minmax(320px,1.2fr) minmax(300px,1fr);gap:12px;align-items:start}
+@media (max-width:900px){.grid2{grid-template-columns:1fr}}
+.krow{display:flex;gap:6px;align-items:center;flex-wrap:wrap}
 .card{background:var(--card);border:1px solid var(--line);border-radius:8px;padding:10px;min-width:0}
 .card h2{font-size:.95rem;margin:0 0 8px;color:var(--acc)}
 .list{max-height:70vh;overflow:auto;border:1px solid var(--line);border-radius:6px}
@@ -55,6 +58,7 @@ details summary{cursor:pointer;color:var(--acc);margin-top:8px}
 <header>
   <h1>Edytor korekt · Blinów</h1>
   <button data-tab="akty" class="on">Akty</button>
+  <button data-tab="skan">Skan i kreator</button>
   <button data-tab="imiona">Imiona</button>
   <button data-tab="nazwiska">Nazwiska</button>
   <button data-tab="slownik">Słownik</button>
@@ -122,6 +126,40 @@ details summary{cursor:pointer;color:var(--acc);margin-top:8px}
       <details><summary>Wersja łacińska</summary><div id="pv_la" class="preview"></div></details>
       <details><summary>Wersja rosyjska</summary><div id="pv_ru" class="preview"></div></details>
       <details open><summary>Surowe dane z arkusza</summary><div id="pv_raw" class="raw"></div></details>
+    </div>
+  </div>
+</section>
+
+<section id="sec-skan" class="sec">
+  <div class="grid2">
+    <div class="card">
+      <h2>Skan księgi</h2>
+      <div class="toolbar">
+        <label class="mut">pliki <input type="file" id="sk_in" accept="image/*" multiple></label>
+        <select id="sk_file" style="flex:1;min-width:140px"><option value="">— brak skanu —</option></select>
+      </div>
+      <div class="toolbar">
+        <button id="sk_m_zaz" class="on">zaznaczaj akty</button>
+        <button id="sk_m_pan">przesuwaj</button>
+        <button id="sk_zin" title="przybliż">＋</button>
+        <button id="sk_zout" title="oddal">－</button>
+        <button id="sk_fit">dopasuj</button>
+        <button id="sk_rl" title="obróć w lewo">⟲</button>
+        <button id="sk_rr" title="obróć w prawo">⟳</button>
+      </div>
+      <canvas id="sk_cv" style="width:100%;height:58vh;display:block;border:1px solid var(--line);border-radius:6px;touch-action:none;cursor:crosshair"></canvas>
+      <div class="note" id="sk_hint">Zaznaczanie: przeciągnij po skanie. Kółko myszy = przybliżenie. „przesuwaj” = przeciąganie widoku.</div>
+      <div class="toolbar" style="margin-top:8px"><b>Akty na tym skanie</b><button id="sk_sortpos">sortuj wg położenia</button></div>
+      <div id="sk_list" class="list" style="max-height:30vh"></div>
+    </div>
+    <div class="card">
+      <h2>Kreator wpisów</h2>
+      <div class="toolbar">
+        <button id="kr_m_akt" class="on">po aktach</button>
+        <button id="kr_m_grp">po polach, kilka aktów</button>
+        <button id="kr_export">eksport CSV</button>
+      </div>
+      <div id="kr_box"></div>
     </div>
   </div>
 </section>
@@ -204,7 +242,7 @@ const TR = {a:'а',ą:'он',b:'б',c:'ц',ć:'ч',d:'д',e:'е',ę:'ен',f:'ф
 const STATUSES = ['poprawne','prawdopodobnie poprawne','do sprawdzenia','do poprawy (dopełniacz/mnoga)','błędne (wariant)','niepewne','nie zmieniać'];
 const KEY = 'blinow_edytor_v1';
 
-let ST = {log:[], dict:[], forms:{}, scan:{}};
+let ST = {log:[], dict:[], forms:{}, scan:{}, skan:{rot:{},regs:[],data:{},nid:1}};
 let SCANS = new Map();
 let DRAG = null;
 let RECS = [], BYKEY = {}, CUR = null, ACTIVE = null, GROUPS = {}, NCOUNT = null;
@@ -267,7 +305,7 @@ function init(){
       RECS.push(r); BYKEY[key]=r;
     }
   }
-  try{ const s = JSON.parse(localStorage.getItem(KEY)||'null'); if(s){ ST.log=s.log||[]; ST.dict=s.dict||[]; ST.forms=s.forms||{}; ST.scan=s.scan||{}; } }catch(e){}
+  try{ const s = JSON.parse(localStorage.getItem(KEY)||'null'); if(s){ ST.log=s.log||[]; ST.dict=s.dict||[]; ST.forms=s.forms||{}; ST.scan=s.scan||{}; if(s.skan && s.skan.regs) ST.skan=s.skan; } }catch(e){}
   if(!ST.dict.length) ST.dict = JSON.parse(JSON.stringify(DICT0));
   for(const e of ST.log){
     const r = BYKEY[e.ksiega+':'+e.wiersz]; if(!r) continue;
@@ -608,6 +646,7 @@ function importKorekty(text){
 document.querySelectorAll('header button[data-tab]').forEach(b => b.addEventListener('click', () => {
   document.querySelectorAll('header button[data-tab]').forEach(x=>x.classList.toggle('on', x===b));
   document.querySelectorAll('.sec').forEach(s=>s.classList.toggle('on', s.id==='sec-'+b.dataset.tab));
+  if(b.dataset.tab==='skan') skRefresh();
 }));
 ['#f_book','#f_q','#f_pyt','#f_chg'].forEach(s => $(s).addEventListener('input', renderList));
 $('#list').addEventListener('click', e => {
@@ -721,8 +760,300 @@ $('#k_formy').addEventListener('click', exportFormy);
 $('#k_clr').addEventListener('click', ()=>{ if(confirm('Wyczyścić dziennik korekt? Zmiany w tej przeglądarce znikną.')){ ST.log=[]; save(); location.reload(); } });
 $('#k_imp').addEventListener('change', async e => { const n = importKorekty(await e.target.files[0].text()); $('#stat').textContent = `zaimportowano zmian: ${n}`; });
 
+/* ===== SKAN I KREATOR (księga 1783: ręczne wpisy, bez OCR) ===== */
+const KR_FIELDS = [
+  {k:'nr',        lab:'Nr wpisu',            g:'-'},
+  {k:'miejsc',    lab:'Miejscowość',         g:'-'},
+  {k:'data',      lab:'Data (tekst)',        g:'-'},
+  {k:'dz_imie',   lab:'Imię dziecka',        g:'?'},
+  {k:'oj_imie',   lab:'Imię ojca',           g:'m'},
+  {k:'oj_nazw',   lab:'Nazwisko ojca',       g:'m'},
+  {k:'mat_imie',  lab:'Imię matki',          g:'k'},
+  {k:'mat_nazw',  lab:'Nazwisko matki',      g:'k'},
+  {k:'chrzestni', lab:'Chrzestni (Patrini)', g:'?'},
+  {k:'uwagi',     lab:'Uwagi / nieczytelne', g:'-'}
+];
+const KR_TYP = 'Liber primus Baptisatorum';
+const SV = {file:'', mode:'zaz', z:1, px:0, py:0, drag:null, sel:null, tgt:null, krMode:'akt', krF:0, krI:0};
+const IMG = new Map();
+const skCv = $('#sk_cv');
+const regsOf = f => ST.skan.regs.filter(r => r.f === f);
+const krList = () => ST.skan.regs.filter(r => r.inKr).sort((a,b) => a.ord - b.ord);
+const dataOf = id => (ST.skan.data[id] = ST.skan.data[id] || {});
+const krCur = () => SV.krMode==='akt' ? (krList()[SV.krI] || null) : null;
+const krActs = () => SV.krMode==='akt' ? (krCur() ? [krCur()] : []) : krList().filter(r => r.sel);
+
+function skImg(f){
+  if(!f || !SCANS.has(f)) return null;
+  let im = IMG.get(f);
+  if(!im){ im = new Image(); im.onload = () => skRefresh(); im.src = SCANS.get(f); IMG.set(f, im); }
+  return im.complete && im.naturalWidth ? im : null;
+}
+function skGeo(im){
+  const rot = ST.skan.rot[SV.file] || 0, odd = rot % 180 !== 0;
+  const W = skCv.width, H = skCv.height, iw = im.naturalWidth, ih = im.naturalHeight;
+  const dw = odd ? ih : iw, dh = odd ? iw : ih;
+  const s = Math.min(W/dw, H/dh) * 0.96 * SV.z;
+  return {iw, ih, s, a: rot*Math.PI/180, cx: W/2 + SV.px, cy: H/2 + SV.py};
+}
+function uvToScr(g,u,v){
+  const dx=(u-0.5)*g.iw, dy=(v-0.5)*g.ih, ca=Math.cos(g.a), sa=Math.sin(g.a);
+  return [g.cx + g.s*(dx*ca - dy*sa), g.cy + g.s*(dx*sa + dy*ca)];
+}
+function scrToUV(g,x,y){
+  const dx=(x-g.cx)/g.s, dy=(y-g.cy)/g.s, ca=Math.cos(g.a), sa=Math.sin(g.a);
+  const ox = dx*ca + dy*sa, oy = -dx*sa + dy*ca;
+  return [ox/g.iw + 0.5, oy/g.ih + 0.5];
+}
+function toDisp(u,v,rot){ return rot===90 ? [1-v,u] : rot===180 ? [1-u,1-v] : rot===270 ? [v,1-u] : [u,v]; }
+function skPoly(ctx,g,r,col,label){
+  const pts = [[r.u,r.v],[r.u+r.w,r.v],[r.u+r.w,r.v+r.h],[r.u,r.v+r.h]].map(p => uvToScr(g,p[0],p[1]));
+  ctx.beginPath(); pts.forEach((p,i) => i ? ctx.lineTo(p[0],p[1]) : ctx.moveTo(p[0],p[1])); ctx.closePath();
+  ctx.lineWidth = 2; ctx.strokeStyle = col; ctx.fillStyle = col+'22'; ctx.fill(); ctx.stroke();
+  if(label){ ctx.fillStyle = col; ctx.font = 'bold 13px system-ui'; ctx.fillText(label, pts[0][0]+4, pts[0][1]+15); }
+}
+function skDraw(){
+  skCv.width = skCv.clientWidth; skCv.height = skCv.clientHeight;
+  const ctx = skCv.getContext('2d'); ctx.clearRect(0,0,skCv.width,skCv.height);
+  ctx.fillStyle = getComputedStyle(skCv).color; ctx.font = '14px system-ui';
+  const im = skImg(SV.file);
+  if(!im){ ctx.fillText(SCANS.size ? 'Wybierz skan z listy.' : 'Wczytaj skan (przycisk „pliki”).', 12, 24); return; }
+  const g = skGeo(im);
+  ctx.save(); ctx.translate(g.cx,g.cy); ctx.rotate(g.a); ctx.scale(g.s,g.s);
+  ctx.drawImage(im,-g.iw/2,-g.ih/2,g.iw,g.ih); ctx.restore();
+  for(const r of regsOf(SV.file)) skPoly(ctx,g,r, r.id===SV.sel ? '#c0392b' : (r.inKr ? '#2f6b3a' : '#7a4a1e'), r.label || ('#'+r.id));
+  const cur = krCur();
+  if(cur) KR_FIELDS.forEach(fd => { const fr = (ST.skan.data[cur.id]||{})[fd.k]; if(fr && fr.rect && fr.rect.f===SV.file) skPoly(ctx,g,fr.rect,'#2b6cb0',fd.lab); });
+  if(SV.drag && SV.drag.type!=='pan') skPoly(ctx,g,skBox(SV.drag),'#888','');
+}
+function skBox(d){
+  const g = skGeo(skImg(SV.file)); const a = scrToUV(g,d.x0,d.y0), b = scrToUV(g,d.x1,d.y1);
+  return {f:SV.file, u:Math.min(a[0],b[0]), v:Math.min(a[1],b[1]), w:Math.abs(a[0]-b[0]), h:Math.abs(a[1]-b[1])};
+}
+function skHit(x,y){
+  const im = skImg(SV.file); if(!im) return null;
+  const [u,v] = scrToUV(skGeo(im),x,y); let best = null;
+  for(const r of regsOf(SV.file)) if(u>=r.u && u<=r.u+r.w && v>=r.v && v<=r.v+r.h && (!best || r.w*r.h < best.w*best.h)) best = r;
+  return best;
+}
+function skZoomAt(x,y,k){
+  const im = skImg(SV.file); if(!im) return;
+  const [u,v] = scrToUV(skGeo(im),x,y);
+  SV.z = Math.min(12, Math.max(0.5, SV.z*k));
+  const [X,Y] = uvToScr(skGeo(im),u,v);
+  SV.px += x-X; SV.py += y-Y; skDraw();
+}
+function skModes(){
+  $('#sk_m_zaz').classList.toggle('on', SV.mode==='zaz');
+  $('#sk_m_pan').classList.toggle('on', SV.mode==='pan');
+  skCv.style.cursor = SV.mode==='pan' ? 'grab' : 'crosshair';
+}
+function skRot(d){ if(!SV.file) return; ST.skan.rot[SV.file] = ((ST.skan.rot[SV.file]||0)+d) % 360; SV.px=0; SV.py=0; SV.z=1; save(); skRefresh(); }
+function skPt(e){ const r = skCv.getBoundingClientRect(); return [e.clientX - r.left, e.clientY - r.top]; }
+function skList(){
+  const list = regsOf(SV.file).sort((a,b) => a.id-b.id);
+  $('#sk_list').innerHTML = list.length ? list.map(r => `<div class="item ${r.id===SV.sel?'sel':''}" data-rid="${r.id}">
+      <div class="krow"><b>#${r.id}</b>
+        <input data-lab value="${esc(r.label)}" placeholder="etykieta, np. wpis 3" style="flex:1;min-width:90px">
+        <label class="mut"><input type="checkbox" data-inkr ${r.inKr?'checked':''}> kreator</label>
+        <button data-up title="wyżej">↑</button><button data-dn title="niżej">↓</button>
+        <button data-del class="danger">usuń</button></div>
+      <div class="mut">kolejność ${r.inKr ? r.ord : '—'} · u ${r.u.toFixed(3)} v ${r.v.toFixed(3)} w ${r.w.toFixed(3)} h ${r.h.toFixed(3)}</div></div>`).join('')
+    : '<div class="note">Brak aktów na tym skanie. Przeciągnij po skanie w trybie „zaznaczaj akty”.</div>';
+}
+function skFillSel(){
+  const s = $('#sk_file'), names = [...SCANS.keys()].sort();
+  s.innerHTML = '<option value="">— brak skanu —</option>' + names.map(n => `<option>${esc(n)}</option>`).join('');
+  if(!SCANS.has(SV.file)) SV.file = names[0] || '';
+  s.value = SV.file; skRefresh();
+}
+function skMove(id,dir){
+  const L = krList(); L.forEach((r,k) => r.ord = k+1);
+  const i = L.findIndex(r => r.id===id), j = i+dir;
+  if(i<0 || j<0 || j>=L.length) return;
+  [L[i].ord, L[j].ord] = [L[j].ord, L[i].ord]; save(); skRefresh();
+}
+function skSortPos(){
+  const L = ST.skan.regs.filter(r => r.inKr).sort((a,b) => Math.floor(a.v/0.05)-Math.floor(b.v/0.05) || a.u-b.u);
+  L.forEach((r,k) => r.ord = k+1); save(); skRefresh();
+}
+function skRefresh(){ skDraw(); skList(); krRender(); }
+
+/* --- kreator --- */
+function krChipList(){ const fd = KR_FIELDS[SV.krF]; return ST.dict.filter(d => fd.g==='?' || d.plec===fd.g || d.plec==='ob'); }
+function krChip(i){
+  const d = krChipList()[i]; if(!d) return; const lang = $('#lang').value;
+  if(lang==='RU') $('#kr_ru').value = d.ru || ''; else if(lang==='PL') $('#kr_pl').value = d.pl; else $('#kr_la').value = d.la || '';
+  if(!$('#kr_pl').value) $('#kr_pl').value = d.pl;
+}
+function krStore(){
+  const pl = $('#kr_pl'); if(!pl) return;
+  const fd = KR_FIELDS[SV.krF], vals = {pl:pl.value, la:$('#kr_la').value, ru:$('#kr_ru').value};
+  for(const a of krActs()){ const d = dataOf(a.id); d[fd.k] = {...(d[fd.k]||{}), ...vals}; }
+  save();
+}
+function krNav(dir, store=true){
+  if(store) krStore();
+  const n = KR_FIELDS.length, L = krList();
+  if(SV.krMode==='grupa'){ SV.krF = Math.max(0, Math.min(n-1, SV.krF+dir)); return skRefresh(); }
+  let f = SV.krF+dir, i = SV.krI;
+  if(f>=n){ f = 0; i++; } else if(f<0){ if(i>0){ i--; f = n-1; } else f = 0; }
+  if(i>=L.length){ i = L.length-1; f = n-1; $('#sk_hint').textContent = 'Koniec listy aktów w kreatorze.'; }
+  SV.krI = Math.max(0,i); SV.krF = f; skRefresh();
+}
+function krCrop(){
+  const cv = $('#kr_crop'), a = krCur(); if(!cv || !a) return;
+  const im = skImg(a.f); if(!im) return;
+  const rot = ST.skan.rot[a.f] || 0, odd = rot%180!==0, iw = im.naturalWidth, ih = im.naturalHeight;
+  const dw = odd ? ih : iw, dh = odd ? iw : ih;
+  const off = document.createElement('canvas'); off.width = dw; off.height = dh;
+  const o = off.getContext('2d'); o.translate(dw/2,dh/2); o.rotate(rot*Math.PI/180); o.drawImage(im,-iw/2,-ih/2,iw,ih);
+  const p = [[a.u,a.v],[a.u+a.w,a.v+a.h]].map(([u,v]) => toDisp(u,v,rot));
+  const u0 = Math.min(p[0][0],p[1][0]), v0 = Math.min(p[0][1],p[1][1]);
+  const sw = Math.max(1, Math.abs(p[0][0]-p[1][0])*dw), sh = Math.max(1, Math.abs(p[0][1]-p[1][1])*dh);
+  cv.width = Math.round(sw); cv.height = Math.round(sh);
+  cv.getContext('2d').drawImage(off, u0*dw, v0*dh, sw, sh, 0, 0, cv.width, cv.height);
+}
+function krRender(){
+  const box = $('#kr_box'); if(!box) return;
+  const L = krList();
+  if(!L.length){ box.innerHTML = '<div class="note">Brak aktów w kreatorze. Zaznacz akty na skanie, a w ich liście włącz „kreator”.</div>'; return; }
+  SV.krI = Math.max(0, Math.min(SV.krI, L.length-1));
+  const n = KR_FIELDS.length; SV.krF = Math.max(0, Math.min(SV.krF, n-1));
+  const fd = KR_FIELDS[SV.krF], cur = krCur(), acts = krActs();
+  const vals = acts.map(a => dataOf(a.id)[fd.k] || {});
+  const same = vals.length>0 && vals.every(x => (x.pl||'')===(vals[0].pl||'') && (x.la||'')===(vals[0].la||'') && (x.ru||'')===(vals[0].ru||''));
+  const val = SV.krMode==='grupa' ? (same ? vals[0] : {}) : (vals[0] || {});
+  const rc = cur ? dataOf(cur.id)[fd.k]?.rect : null;
+  const lang = $('#lang').value;
+  const chips = fd.g!=='-' ? krChipList() : [];
+  const chipsHtml = chips.map((d,i) => { const lab = lang==='RU' ? (d.ru||d.pl) : lang==='PL' ? d.pl : (d.la||d.pl); return `<button data-kch="${i}" title="${esc(d.pl)}">${esc(lab)}</button>`; }).join('');
+  const head = cur ? `<div class="note">Akt ${SV.krI+1} z ${L.length}: <b>${esc(cur.label||'#'+cur.id)}</b> · ${esc(cur.f)}</div>
+     <canvas id="kr_crop" style="width:100%;max-height:200px;display:block;border:1px solid var(--line);border-radius:6px;margin-bottom:6px"></canvas>
+     <div class="chips">${KR_FIELDS.map((f,i) => { const x = dataOf(cur.id)[f.k]||{}; const done = !!(x.pl||x.la||x.rect); return `<button data-kf="${i}" class="${i===SV.krF?'on':''}" style="${done?'color:var(--ok)':''}">${i+1}. ${esc(f.lab)}</button>`; }).join('')}</div>`
+    : `<div class="note">Tryb grupowy: wpisana wartość trafi do wszystkich zaznaczonych aktów (${acts.length}). Zaznacz je w liście niżej (pole „grupa”).</div>`;
+  const body = acts.length ? `
+    <div class="fld act"><div class="lab">${esc(fd.lab)} <span class="mut">pole ${SV.krF+1}/${n}</span></div>
+      <input id="kr_pl" placeholder="PL" value="${esc(val.pl||'')}">
+      <input id="kr_la" placeholder="LA" value="${esc(val.la||'')}">
+      <input id="kr_ru" placeholder="RU" value="${esc(val.ru||'')}"></div>
+    ${chipsHtml ? `<div class="chips">${chipsHtml}</div>` : ''}
+    <div class="note">${cur ? (rc ? 'Pole zaznaczone na skanie ('+esc(rc.f)+').' : 'Pole bez zaznaczenia na skanie.') : 'Wartość dla wszystkich zaznaczonych aktów.'}</div>
+    <div class="toolbar">
+      ${cur ? '<button id="kr_pick">zaznacz pole na skanie</button><button id="kr_unpick" class="danger">usuń zaznaczenie pola</button>' : ''}
+      <button id="kr_skip">pomiń pole</button>${cur ? '<button id="kr_skipact">pomiń akt »</button>' : ''}
+    </div>
+    <div class="toolbar"><button id="kr_prev">← wstecz</button><button class="primary" id="kr_next">zapisz i dalej →</button></div>
+    <div class="note">Enter w polu PL = zapisz i dalej.</div>`
+  : '<div class="note">Brak zaznaczonych aktów dla tego trybu.</div>';
+  const list = L.map((r,i) => `<div class="item ${SV.krMode==='akt' && i===SV.krI ? 'sel' : ''}" data-kl="${i}"><div class="krow"><span>${i+1}. ${esc(r.label||'#'+r.id)}</span><label class="mut"><input type="checkbox" data-ksel ${r.sel?'checked':''}> grupa</label></div></div>`).join('');
+  box.innerHTML = head + body + `<h2>Akty w kreatorze</h2><div class="list" style="max-height:24vh">${list}</div>`;
+  if(cur) krCrop();
+}
+function krExport(){
+  const L = krList();
+  const head = ['lp','liber','typ_ksiegi','plik','akt_id','etykieta','u','v','w','h'];
+  for(const fd of KR_FIELDS) head.push(fd.k+'_pl', fd.k+'_la', fd.k+'_ru', fd.k+'_rect');
+  const lines = [head.join(';')];
+  L.forEach((r,i) => {
+    const d = ST.skan.data[r.id] || {};
+    const row = [i+1, '', KR_TYP, r.f, r.id, r.label, r.u.toFixed(4), r.v.toFixed(4), r.w.toFixed(4), r.h.toFixed(4)];
+    for(const fd of KR_FIELDS){ const x = d[fd.k] || {}; const rc = x.rect ? `${x.rect.f}|${x.rect.u.toFixed(4)},${x.rect.v.toFixed(4)},${x.rect.w.toFixed(4)},${x.rect.h.toFixed(4)}` : ''; row.push(x.pl||'', x.la||'', x.ru||'', rc); }
+    lines.push(row.map(csvCell).join(';'));
+  });
+  download('ksiega_1783_akty.csv', lines.join('\n'));
+}
+
+/* --- zdarzenia --- */
+$('#sc_in').addEventListener('change', () => skFillSel());
+$('#sk_in').addEventListener('change', e => { loadScans(e.target.files); skFillSel(); });
+$('#sk_file').addEventListener('change', e => { SV.file = e.target.value; SV.px=0; SV.py=0; SV.z=1; SV.sel=null; skRefresh(); });
+$('#sk_m_zaz').addEventListener('click', () => { SV.mode='zaz'; skModes(); });
+$('#sk_m_pan').addEventListener('click', () => { SV.mode='pan'; skModes(); });
+$('#sk_zin').addEventListener('click', () => skZoomAt(skCv.width/2, skCv.height/2, 1.25));
+$('#sk_zout').addEventListener('click', () => skZoomAt(skCv.width/2, skCv.height/2, 0.8));
+$('#sk_fit').addEventListener('click', () => { SV.z=1; SV.px=0; SV.py=0; skRefresh(); });
+$('#sk_rl').addEventListener('click', () => skRot(270));
+$('#sk_rr').addEventListener('click', () => skRot(90));
+$('#sk_sortpos').addEventListener('click', skSortPos);
+skCv.addEventListener('wheel', e => { if(!skImg(SV.file)) return; e.preventDefault(); const [x,y] = skPt(e); skZoomAt(x, y, e.deltaY<0 ? 1.15 : 1/1.15); }, {passive:false});
+skCv.addEventListener('pointerdown', e => {
+  if(!skImg(SV.file)) return;
+  const [x,y] = skPt(e);
+  if(SV.mode==='pole' && !SV.tgt){ $('#sk_hint').textContent = 'Najpierw wybierz pole w kreatorze.'; return; }
+  e.preventDefault();
+  if(SV.mode==='pan') SV.drag = {type:'pan', x0:x, y0:y, px0:SV.px, py0:SV.py};
+  else SV.drag = {type: SV.mode==='pole' ? 'pole' : 'zaz', x0:x, y0:y, x1:x, y1:y};
+  skCv.setPointerCapture(e.pointerId);
+});
+skCv.addEventListener('pointermove', e => {
+  const d = SV.drag; if(!d) return;
+  const [x,y] = skPt(e);
+  if(d.type==='pan'){ SV.px = d.px0 + (x-d.x0); SV.py = d.py0 + (y-d.y0); } else { d.x1=x; d.y1=y; }
+  skDraw();
+});
+skCv.addEventListener('pointerup', () => {
+  const d = SV.drag; SV.drag = null; if(!d || d.type==='pan') return;
+  const moved = Math.hypot(d.x1-d.x0, d.y1-d.y0) > 5;
+  if(d.type==='zaz'){
+    if(!moved){ const hit = skHit(d.x0,d.y0); SV.sel = hit ? hit.id : null; $('#sk_hint').textContent = hit ? 'Zaznaczono akt '+(hit.label||'#'+hit.id)+'.' : 'Przeciągnij po skanie, aby dodać akt.'; }
+    else { const b = skBox(d); if(b.w>0.005 && b.h>0.005){ const id = ST.skan.nid++; ST.skan.regs.push({id, f:b.f, u:b.u, v:b.v, w:b.w, h:b.h, label:'', inKr:false, ord:0}); SV.sel = id; $('#sk_hint').textContent = 'Dodano akt #'+id+'. Nadaj etykietę i włącz „kreator”.'; } }
+  } else if(d.type==='pole'){
+    if(moved){ const b = skBox(d); if(b.w>0.003 && b.h>0.003){ const dd = dataOf(SV.tgt.act); dd[SV.tgt.fk] = {pl:'', la:'', ru:'', ...(dd[SV.tgt.fk]||{}), rect:{f:b.f,u:b.u,v:b.v,w:b.w,h:b.h}}; $('#sk_hint').textContent = 'Zaznaczono pole.'; } }
+    SV.mode='zaz'; SV.tgt=null; skModes(); save();
+  }
+  save(); skRefresh();
+});
+$('#sk_list').addEventListener('click', e => {
+  const it = e.target.closest('[data-rid]'); if(!it) return; const id = +it.dataset.rid;
+  if(e.target.matches('[data-up]')) return skMove(id,-1);
+  if(e.target.matches('[data-dn]')) return skMove(id,1);
+  if(e.target.matches('[data-del]')){ if(!confirm('Usunąć akt #'+id+' wraz z wpisami kreatora?')) return; ST.skan.regs = ST.skan.regs.filter(x => x.id!==id); delete ST.skan.data[id]; if(SV.sel===id) SV.sel=null; save(); return skRefresh(); }
+  if(e.target.matches('input')) return;
+  SV.sel = id; skRefresh();
+});
+$('#sk_list').addEventListener('change', e => {
+  const it = e.target.closest('[data-rid]'); if(!it) return; const r = ST.skan.regs.find(x => x.id===+it.dataset.rid); if(!r) return;
+  if(e.target.matches('[data-lab]')) r.label = e.target.value;
+  if(e.target.matches('[data-inkr]')){ r.inKr = e.target.checked; if(r.inKr) r.ord = Math.max(0, ...ST.skan.regs.filter(x => x.inKr && x!==r).map(x => x.ord)) + 1; }
+  save(); skRefresh();
+});
+function setKrMode(){ $('#kr_m_akt').classList.toggle('on', SV.krMode==='akt'); $('#kr_m_grp').classList.toggle('on', SV.krMode==='grupa'); krRender(); }
+$('#kr_m_akt').addEventListener('click', () => { SV.krMode='akt'; SV.krF=0; setKrMode(); });
+$('#kr_m_grp').addEventListener('click', () => { SV.krMode='grupa'; SV.krF=0; setKrMode(); });
+$('#kr_export').addEventListener('click', krExport);
+$('#lang').addEventListener('change', () => krRender());
+$('#kr_box').addEventListener('click', e => {
+  const t = e.target; if(t.matches('input')) return;
+  const kf = t.closest('[data-kf]'); if(kf){ SV.krF = +kf.dataset.kf; return krRender(); }
+  const kl = t.closest('[data-kl]'); if(kl){ SV.krI = +kl.dataset.kl; return skRefresh(); }
+  const ch = t.closest('[data-kch]'); if(ch) return krChip(+ch.dataset.kch);
+  switch(t.id){
+    case 'kr_next': return krNav(1);
+    case 'kr_prev': return krNav(-1);
+    case 'kr_skip': return krNav(1,false);
+    case 'kr_skipact':
+      if(SV.krI+1 >= krList().length){ $('#sk_hint').textContent = 'To był ostatni akt w kreatorze.'; return; }
+      SV.krI++; SV.krF=0; return skRefresh();
+    case 'kr_pick': {
+      const a = krCur(); if(!a) return;
+      SV.file = a.f; $('#sk_file').value = a.f; SV.tgt = {act:a.id, fk:KR_FIELDS[SV.krF].k};
+      SV.mode = 'pole'; skModes(); $('#sk_hint').textContent = 'Przeciągnij na skanie po polu: '+KR_FIELDS[SV.krF].lab+'.';
+      return skRefresh();
+    }
+    case 'kr_unpick': { const a = krCur(); const d = a && dataOf(a.id)[KR_FIELDS[SV.krF].k]; if(d){ delete d.rect; save(); } return skRefresh(); }
+  }
+});
+$('#kr_box').addEventListener('change', e => {
+  if(!e.target.matches('[data-ksel]')) return;
+  const li = e.target.closest('[data-kl]'); const r = li && krList()[+li.dataset.kl]; if(!r) return;
+  r.sel = e.target.checked; save(); if(SV.krMode==='grupa') krRender();
+});
+$('#kr_box').addEventListener('keydown', e => { if(e.key==='Enter' && e.target.id==='kr_pl'){ e.preventDefault(); krNav(1); } });
+
 init();
 renderAll();
+skRefresh();
 </script>
 </body>
 </html>
