@@ -17,6 +17,22 @@ Każdy wiersz 1–6017 występuje dokładnie raz we wszystkich partiach (sprawdz
 | `chrzty_partia05_karty_1793_1796.csv` | 140 | 601–740 | karty | mechanicznie wg kolumn, flagi |
 | `akty_wiersze_0741_*` … `akty_wiersze_5991_6017.csv` | 5277 | 741–6017 | akty i indeksy | **pierwszy przebieg mechaniczny, NIE przepisany ręcznie** (patrz niżej) |
 
+## Stan ręcznego przepisania wierszy wolnego tekstu
+
+Każda partia to 150 wierszy wolnego tekstu (kolejność z listy `free_rows`). Pliki w `reczne/` to przepis ręczny w formacie `wiersz | ojc=… | ojcw=… | mat=… | matw=… | nazw=… | miejsc=… | fl=…`. Skrypt `build_free2.py` scala je z kolumnami arkusza i sprawdza pokrycie (każdy wiersz z zakresu dokładnie raz).
+
+| Plik ręczny | Wiersze arkusza | Pliki CSV | Stan |
+|---|---|---|---|
+| `hand_01_wiersze_827_1522.txt` | 827–1522 | `akty_free_01_…` | zrobione, commit `b66df2d` |
+| `hand_02_wiersze_1545_2415.txt` | 1545–2415 | `akty_free_02_…` | zrobione, commit `b66df2d` |
+| `hand_03_wiersze_2416_2596.txt` | 2416–2596 | `akty_free_03_…` | zrobione, commit `f20355d` |
+| `hand_04_wiersze_2597_2748.txt` | 2597–2748 | `akty_free_04_…` | zrobione, commit `f20355d` |
+| `hand_05_wiersze_2749_2899.txt` | 2749–2899 | `akty_free_05_…` | zrobione, commit `f20355d` |
+| `hand_06_wiersze_2900_3051.txt` | 2900–3051 | `akty_free_06_…` | zrobione |
+| `hand_07_wiersze_3052_3205.txt` | 3052–3205 | `akty_free_07_…` | zrobione |
+
+Pozostało: wiersze wolnego tekstu od 3206 do 6017 (2639 wierszy, około 18 partii po 150).
+
 ## Układy w zakładce `Ur` (wiersze 741–6017)
 
 | Typ | Wiersze (ok.) | Ile | Co jest w kolumnach | W partiach |
