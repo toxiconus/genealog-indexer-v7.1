@@ -1511,17 +1511,23 @@ $('btnExport').onclick = async () => {
 /* ===================== DUPLIKATY ===================== */
 $('btnDup').onclick = () => {
   syncFormToRec();
+  const SK = ['notes','notes_org','uncertain_fields','verification_status','source_id'];
+  const norm = x => String(x ?? '').toLowerCase().replace(/\s+/g, ' ').trim();
   const map = {};
   S.records.filter(r => r.tpl === S.tplId).forEach(r => {
-    const k = [r.v.christening_year, r.v.christening_act_number, (r.v.child_last_name||'').toLowerCase()].join('|');
-    (map[k] = map[k] || []).push(r);
+    const k = S.tplId === 'chrzest' && (r.v.christening_act_number || r.v.christening_year)
+      ? [r.v.christening_year, r.v.christening_act_number, r.v.child_last_name].map(norm).join(' / ')
+      : fieldsOf(tpl()).filter(f => !SK.includes(f.id)).map(f => norm(r.v[f.id])).filter(Boolean).join(' / ');
+    if (k.replace(/[ \/]/g, '')) (map[k] = map[k] || []).push(r);
   });
-  const groups = Object.entries(map).filter(([k, a]) => a.length > 1 && k.replace(/\|/g,'').trim());
+  const groups = Object.entries(map).filter(([k, a]) => a.length > 1);
+  const lab = r => `${esc(r.v.child_first_name || r.v.groom_first_name || r.v.deceased_first_name || '')} ${esc(r.v.child_last_name || r.v.groom_last_name || r.v.deceased_last_name || '')}`.trim() || '(bez nazwiska)';
   $('dupBody').innerHTML = groups.length
-    ? groups.map(([k, a]) => `<p style="margin-bottom:6px"><strong>${esc(k.replace(/\|/g,' / '))}</strong>: ${a.length} rekordy</p>`).join('')
+    ? `<p class="muted" style="margin-bottom:8px">Rekordy o identycznych wartościach pól (bez uwag). Kliknij, aby przejść do rekordu.</p>` + groups.map(([k, a]) => `<div style="margin-bottom:10px"><strong>${esc(k)}</strong>: ${a.length} rekordy<br>${a.map(r => `<button class="dupGo" data-id="${esc(r.id)}" style="margin:2px 4px 0 0">${lab(r)} · ${esc(STATUS[r.status])}</button>`).join('')}</div>`).join('')
     : '<p class="muted">Nie znaleziono możliwych duplikatów.</p>';
   openDlg('dlgDup');
 };
+$('dupBody').addEventListener('click', e => { const b = e.target.closest('.dupGo'); if (!b) return; $('dlgDup').close(); selectRecord(b.dataset.id); });
 
 /* ===================== ZAZNACZANIE I USUWANIE ===================== */
 function updateDelBtn(){
@@ -2164,11 +2170,11 @@ function toolData(){
     const f = e.target.files[0]; if (!f) return;
     try {
       const d = JSON.parse(await f.text()); if (!d || !Array.isArray(d.records)) throw new Error('to nie jest kopia Genealog v6');
-      const idx = new Map(S.records.map((r, i) => [r.id, i])); let add = 0, rep = 0;
-      d.records.forEach(r => { if (!r || !r.id || !r.v || !r.tpl) return; if (idx.has(r.id)){ S.records[idx.get(r.id)] = r; rep++; } else { S.records.push(r); add++; } markDirty(r.id); });
+      const idx = new Map(S.records.map((r, i) => [r.id, i])); let add = 0, rep = 0, kept = 0;
+      d.records.forEach(r => { if (!r || !r.id || !r.v || !r.tpl) return; if (idx.has(r.id)){ const loc = S.records[idx.get(r.id)]; if (String(loc.at || '') > String(r.at || '')){ kept++; return; } S.records[idx.get(r.id)] = r; rep++; } else { S.records.push(r); add++; } markDirty(r.id); });
       if (d.pins && !Object.keys(PINS).length){ PINS = d.pins; lsSet('gv6.pins', JSON.stringify(PINS)); }
       if (Array.isArray(d.abbr) && !ABBR.length){ ABBR = d.abbr; lsSet('gv6.abbr', JSON.stringify(ABBR)); }
-      $('bkMsg').textContent = `Wczytano: dodano ${add}, zastąpiono ${rep}.`; saveDirty();
+      $('bkMsg').textContent = `Wczytano: dodano ${add}, zastąpiono ${rep}, zachowano nowsze lokalne ${kept}.`; saveDirty();
     } catch(err){ $('bkMsg').textContent = 'Błąd: ' + err.message; }
   };
   $('exCsv').onclick = () => $('btnExport').click();
