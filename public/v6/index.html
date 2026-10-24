@@ -1376,11 +1376,15 @@ function guessTemplate(headers){
   if ((h.includes('ROK') && h.includes('Nr.')) || h.includes('christening_year')) return 'chrzest';
   return S.tplId;
 }
+// Plik tekstowy: UTF-8, a gdy ma błędne bajty (stare eksporty z Excela/Notatnika) – Windows-1250
+async function readText(file){
+  const buf = await file.arrayBuffer();
+  try { return {text: new TextDecoder('utf-8', {fatal: true}).decode(buf), enc: 'UTF-8'}; }
+  catch(e){ return {text: new TextDecoder('windows-1250').decode(buf), enc: 'Windows-1250'}; }
+}
 function openImport(file){
   openDlg('dlgImport');
-  const reader = new FileReader();
-  reader.onload = () => parseImport(String(reader.result), file.name);
-  reader.readAsText(file, 'utf-8');
+  readText(file).then(({text, enc}) => { parseImport(text, file.name); if (enc !== 'UTF-8') toast(`${file.name}: odczytano w kodowaniu ${enc} (polskie litery zachowane)`, 6000); });
 }
 $('btnImport').onclick = () => openDlg('dlgImport');
 $('btnPickImp').onclick = () => { $('importInput').value = ''; $('importInput').click(); };
@@ -1481,7 +1485,7 @@ function applyImport(){
       const dup = v.source_id
         ? S.records.some(r => r.tpl === I.tplId && r.v.source_id === v.source_id)
         : I.tplId === 'chrzest' && v.christening_act_number !== undefined
-          ? S.records.some(r => r.tpl === I.tplId && r.v.christening_act_number === v.christening_act_number && r.v.christening_year === v.christening_year && r.v.child_last_name === v.child_last_name)
+          ? S.records.some(r => r.tpl === I.tplId && r.v.christening_act_number === v.christening_act_number && r.v.christening_year === v.christening_year && r.v.child_last_name === v.child_last_name && String(r.v.child_first_name ?? '').trim() === String(v.child_first_name ?? '').trim() && String(r.v.notes ?? '').trim() === String(v.notes ?? '').trim())
           : keys.length >= 2 && S.records.some(r => r.tpl === I.tplId && keys.every(k => String(r.v[k] ?? '').trim() === String(v[k]).trim()));
       if (dup){ skipped++; return; }
       const rec = {id: uid(), tpl: I.tplId, v, page: -1, roi: null, status: 'nowy', by: I.name, at: now(), uncertain: false};
@@ -1518,7 +1522,7 @@ $('btnDup').onclick = () => {
   const map = {};
   S.records.filter(r => r.tpl === S.tplId).forEach(r => {
     const k = S.tplId === 'chrzest' && (r.v.christening_act_number || r.v.christening_year)
-      ? [r.v.christening_year, r.v.christening_act_number, r.v.child_last_name].map(norm).join(' / ')
+      ? [r.v.christening_year, r.v.christening_act_number, r.v.child_last_name, r.v.child_first_name].map(norm).join(' / ')
       : fieldsOf(tpl()).filter(f => !SK.includes(f.id)).map(f => norm(r.v[f.id])).filter(Boolean).join(' / ');
     if (k.replace(/[ \/]/g, '')) (map[k] = map[k] || []).push(r);
   });
@@ -2169,8 +2173,10 @@ function cmpRun(){
     const k = cmpKey(v, CMP.tplId); const y = parseInt(v.christening_year || v.marriage_year || v.death_year); if (y) years.add(y);
     const hit = k ? idx.get(k) : null;
     if (!hit){ res.onlyFile.push(v); return; }
-    if (hit.length > 1 && k[0] === 'p'){ res.amb++; hit.forEach(r => seen.add(r.id)); return; }
-    const r = hit[0]; seen.add(r.id);
+    let cand = hit;
+    if (cand.length > 1){ const fn = cnorm(v.child_first_name || v.groom_first_name || v.deceased_first_name); cand = hit.filter(r => cnorm(r.v.child_first_name || r.v.groom_first_name || r.v.deceased_first_name) === fn); }
+    if (cand.length !== 1){ if (cand.length > 1 || hit.length > 1){ res.amb++; hit.forEach(r => seen.add(r.id)); return; } }
+    const r = cand[0]; seen.add(r.id);
     const d = [];
     Object.keys(v).filter(f => !SKIP.includes(f)).forEach(f => { const a = String(r.v[f] ?? '').trim(), b = String(v[f] ?? '').trim(); if (b && cnorm(a) !== cnorm(b)) d.push({f, a, b}); });
     if (d.length) res.diff.push({r, d}); else res.same++;
@@ -2185,7 +2191,7 @@ function toolCmp(){
     <div class="tlRow"><input type="file" id="cmpFile" accept=".csv,.tsv,.txt"><span class="muted" id="cmpMsg"></span></div></div><div id="cmpOut"></div></div>`;
   $('cmpFile').onchange = async e => {
     const f = e.target.files[0]; if (!f) return;
-    const text = (await f.text()).replace(/^﻿/, ''), lines = text.split(/\r?\n/).filter(l => l.trim());
+    const text = (await readText(f)).text.replace(/^﻿/, ''), lines = text.split(/\r?\n/).filter(l => l.trim());
     if (lines.length < 2){ $('cmpMsg').textContent = 'Plik jest pusty.'; return; }
     const d = detectDelim(lines[0]), rows = lines.map(l => l.split(d).map(c => c.trim())), headers = rows[0];
     const {map} = autoMap(headers, S.tplId);
