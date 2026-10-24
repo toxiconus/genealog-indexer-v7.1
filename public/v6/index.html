@@ -1148,7 +1148,7 @@ $('tabAll').onclick = () => setView('all');
 function addImages(files){
   const imgs = [...files].filter(f => f.type.startsWith('image/')).sort((a,b) => a.name.localeCompare(b.name, 'pl', {numeric:true}));
   if (!imgs.length) return toast('Nie znaleziono obrazów w wybranym miejscu');
-  imgs.forEach(f => S.images.push({name: f.name, url: URL.createObjectURL(f)}));
+  imgs.forEach(f => S.images.push({name: f.name, size: f.size, url: URL.createObjectURL(f)}));
   renderThumbs();
   if (S.page < 0) showPage(0, true);
   toast(`Dodano ${imgs.length} obraz(y)`);
@@ -1188,9 +1188,10 @@ function showPage(i, fit){
   renderThumbs();
   const im = S.images[i];
   if (S.warpMode && S.warpPage !== i) exitWarp(false);
-  if (!S.warpMode && WARP[im.name] && !im.wurl){            // strona ma zapisane prostowanie – najpierw je zbuduj
+  if (!S.warpMode && !WARP[wkey(im)] && WARP[im.name] && !im.legacyWarned){ im.legacyWarned = true; toast('Plik „' + im.name + '” miał zapisane prostowanie z innego skanu – nie zastosowano go, żeby nie ucinać marginesów.', 8000); }
+  if (!S.warpMode && WARP[wkey(im)] && !im.wurl){            // strona ma zapisane prostowanie – najpierw je zbuduj
     toast('Prostuję stronę…');
-    buildWarp(im).then(() => { if (S.page === i) showPage(i, fit); }).catch(() => { delete WARP[im.name]; saveWarp(); toast('Nie udało się wyprostować strony'); if (S.page === i) showPage(i, fit); });
+    buildWarp(im).then(() => { if (S.page === i) showPage(i, fit); }).catch(() => { delete WARP[wkey(im)]; saveWarp(); toast('Nie udało się wyprostować strony'); if (S.page === i) showPage(i, fit); });
     return;
   }
   if (S.viewer){
@@ -2297,6 +2298,7 @@ $('angAuto').onclick = async () => {
 
 /* ===================== PROSTOWANIE KARTKI: PERSPEKTYWA I ZAGIĘCIE ===================== */
 let WARP = (() => { try { return JSON.parse(lsGet('gv6.warp', '{}')) || {}; } catch(e){ return {}; } })();
+const wkey = im => im.name + '|' + (im.size || 0);
 const saveWarp = () => lsSet('gv6.warp', JSON.stringify(WARP));
 const WN = {top: 3, bot: 3, left: 2, right: 2};          // punkty pośrednie na krawędziach
 function warpDefault(w, h, idx = 0, count = 1){
@@ -2359,7 +2361,7 @@ function warpRender(im, list){
   return out;
 }
 async function buildWarp(imObj){
-  const W = WARP[imObj.name]; if (!W) return;
+  const W = WARP[wkey(imObj)]; if (!W) return;
   const im = await loadImg(imObj.url);
   const cv = warpRender(im, W);
   const blob = await new Promise(r => cv.toBlob(r, 'image/jpeg', .92));
@@ -2375,7 +2377,7 @@ function warpEnter(){
   $('btnWarp').setAttribute('aria-pressed', 'true');
   $('warpSvg').removeAttribute('hidden'); $('warpBar').hidden = false;
   S.warpArmed = false; $('warpApply').textContent = 'Wyprostuj';
-  loadImg(im.url).then(img => { S.warpSize = {w: img.naturalWidth, h: img.naturalHeight}; WRK = WARP[im.name] ? JSON.parse(JSON.stringify(normWarp(WARP[im.name]))) : [warpDefault(img.naturalWidth, img.naturalHeight)]; $('warpSpread').checked = WRK.length === 2; warpDraw(); });
+  loadImg(im.url).then(img => { S.warpSize = {w: img.naturalWidth, h: img.naturalHeight}; WRK = WARP[wkey(im)] ? JSON.parse(JSON.stringify(normWarp(WARP[wkey(im)]))) : [warpDefault(img.naturalWidth, img.naturalHeight)]; $('warpSpread').checked = WRK.length === 2; warpDraw(); });
   showPage(S.page, true);
 }
 
@@ -2465,14 +2467,14 @@ const warpFresh = n => Array.from({length: n}, (_, i) => warpDefault(S.warpSize.
 $('warpAuto').onclick = async () => { if (!S.warpSize || !WRK) return; const im = S.images[S.page], img = await loadImg(im.url), r = warpAuto(img, WRK.length); if (!r) return toast('Nie znalazłem brzegów papieru, ustaw punkty ręcznie'); WRK = r; S.warpArmed = false; $('warpApply').textContent = 'Wyprostuj'; warpDraw(); toast('Ustawiono automatycznie. Popraw punkty i kliknij Wyprostuj'); };
 $('warpReset').onclick = () => { if (S.warpSize && WRK) { WRK = warpFresh(WRK.length); warpDraw(); } };
 $('warpSpread').onchange = e => { if (S.warpSize) { WRK = warpFresh(e.target.checked ? 2 : 1); warpDraw(); S.warpArmed = false; } };
-$('warpRemove').onclick = () => { const im = S.images[S.page]; if (!im) return; delete WARP[im.name]; saveWarp(); if (im.wurl){ URL.revokeObjectURL(im.wurl); im.wurl = null; } toast('Usunięto prostowanie tej strony'); exitWarp(); };
+$('warpRemove').onclick = () => { const im = S.images[S.page]; if (!im) return; delete WARP[wkey(im)]; saveWarp(); if (im.wurl){ URL.revokeObjectURL(im.wurl); im.wurl = null; } toast('Usunięto prostowanie tej strony'); exitWarp(); };
 $('warpApply').onclick = async () => {
   const im = S.images[S.page]; if (!im || !WRK) return;
   const hasRoi = S.records.some(r => r.page === S.page && r.roi && r.tpl === S.tplId);
-  if (hasRoi && !S.warpArmed && !WARP[im.name]){ S.warpArmed = true; $('warpApply').textContent = 'Ramki aktów się przesuną. Kliknij ponownie'; return; }
+  if (hasRoi && !S.warpArmed && !WARP[wkey(im)]){ S.warpArmed = true; $('warpApply').textContent = 'Ramki aktów się przesuną. Kliknij ponownie'; return; }
   const b = $('warpApply'); b.disabled = true; b.textContent = 'Liczę…';
   await new Promise(r => setTimeout(r, 30));
-  try { WARP[im.name] = JSON.parse(JSON.stringify(WRK)); saveWarp(); await buildWarp(im); exitWarp(); toast('Strona wyprostowana. „Kartka” pozwala poprawić punkty.'); }
+  try { WARP[wkey(im)] = JSON.parse(JSON.stringify(WRK)); saveWarp(); await buildWarp(im); exitWarp(); toast('Strona wyprostowana. „Kartka” pozwala poprawić punkty.'); }
   catch(e){ toast('Nie udało się wyprostować'); }
   b.disabled = false; b.textContent = 'Wyprostuj'; S.warpArmed = false;
 };
