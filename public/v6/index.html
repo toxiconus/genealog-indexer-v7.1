@@ -2019,7 +2019,7 @@ setInterval(sessShow, 60000); sessShow();
 
 
 /* ===================== NARZĘDZIA (podstrona) ===================== */
-const TOOL_TABS = [['stat','Statystyki'],['dict','Słownik'],['abbr','Skróty'],['cmp','Porównanie'],['data','Kopia i dane'],['set','Ustawienia']];
+const TOOL_TABS = [['stat','Statystyki'],['dict','Słownik'],['abbr','Skróty'],['parse','Uwagi → pola'],['cmp','Porównanie'],['data','Kopia i dane'],['set','Ustawienia']];
 let toolTab = 'stat';
 const dictSt = {pool:'nazwiska', q:'', sel:new Set(), armed:false, pairs:null};
 let ABBR = [];
@@ -2040,7 +2040,7 @@ window.addEventListener('resize', () => { if (!$('tools').hidden) $('tools').sty
 function renderTools(){
   $('tlNav').innerHTML = TOOL_TABS.map(([k, n]) => `<button role="tab" data-k="${k}" aria-selected="${k === toolTab}">${n}</button>`).join('');
   $('tlNav').onclick = e => { const b = e.target.closest('button'); if (b){ toolTab = b.dataset.k; renderTools(); } };
-  ({stat: toolStat, dict: toolDict, abbr: toolAbbr, cmp: toolCmp, data: toolData, set: toolSet})[toolTab]();
+  ({stat: toolStat, dict: toolDict, abbr: toolAbbr, parse: toolParse, cmp: toolCmp, data: toolData, set: toolSet})[toolTab]();
 }
 const bar = (pct, cls = '') => `<div class="bar"><i class="${cls}" style="width:${Math.max(0, Math.min(100, pct))}%"></i></div>`;
 function poolCounts(pool){
@@ -2154,6 +2154,81 @@ function toolAbbr(){
   $('abEx').onclick = () => { [['Jo','Joannes'],['Ant','Antonius'],['Mat','Matthaeus'],['Sta','Stanislaus'],['Mich','Michael'],['Thom','Thomas'],['Mar','Maria']].forEach(([k, v]) => { if (!ABBR.some(a => a.k === k)) ABBR.push({k, v}); }); save(); toolAbbr(); };
 }
 
+
+/* ---- Uwagi → pola (rozbijanie zapisu „Miejscowość, O: …, M: …” na pola chrztu) ---- */
+function splitTop(str){ const out = []; let d = 0, cur = ''; for (const ch of str){ if (ch === '(') d++; if (ch === ')') d = Math.max(0, d - 1); if (ch === ',' && !d){ out.push(cur.trim()); cur = ''; } else cur += ch; } if (cur.trim()) out.push(cur.trim()); return out; }
+const CAPW = /^[A-ZĄĆĘŁŃÓŚŹŻ][A-Za-ząćęłńóśźż'\-]+(\/[A-ZĄĆĘŁŃÓŚŹŻ][A-Za-ząćęłńóśźż'\-]+)?$/;
+const NONAME = /^(wdowa|wdowiec|nieczytelne|nieznany|nieznana|nieślubny|nieslubny|brak|zm|zmarły|zmarla)\.?$/i;
+function capRun(words){ const ok = []; for (const w of words){ if (CAPW.test(w) && !NONAME.test(w)) ok.push(w); else break; } return {ok, rest: words.slice(ok.length)}; }
+function parsePerson(txt, mother){
+  let s = String(txt || '').trim(), occ = '', extra = '', unc = false; const left = [];
+  s = s.replace(/\(([^)]*)\)/g, (m, a) => { a = a.trim(); if (/^z(e)?\s/i.test(a)) extra += (extra ? '; ' : '') + a; else occ += (occ ? ', ' : '') + a; return ' '; });
+  let age = null; s = s.replace(/(?:\bl\.?|\blat|(?<=[a-ząćęłńóśźż])l\.)\s*(\d{1,2})\b/i, (m, a) => { age = +a; return ' '; });
+  if (s.includes('?')) unc = true; s = s.replace(/\?/g, ' ').replace(/\.{2,}/g, ' ').replace(/\s+/g, ' ').trim();
+  let first = '', last = '';
+  const words = s ? s.split(' ') : [];
+  const zi = mother ? words.findIndex((w, i) => i > 0 && /^ze?$/i.test(w)) : -1;
+  if (zi > 0 || (mother && /^ze?$/i.test(words[0] || ''))){
+    const before = capRun(words.slice(0, Math.max(zi, 0))), after = capRun(words.slice((zi >= 0 ? zi : 0) + 1));
+    first = before.ok[0] || ''; if (before.ok.length > 1) left.push('nazwisko po mężu: ' + before.ok.slice(1).join(' '));
+    last = after.ok.join(' '); const rest = [...before.rest, ...after.rest]; if (rest.length) left.push(rest.join(' '));
+  } else {
+    const r = capRun(words); first = r.ok[0] || ''; last = r.ok.slice(1).join(' ');
+    if (r.rest.length) left.push(r.rest.join(' '));
+  }
+  if (!first && !last && words.length) { left.length = 0; left.push(words.join(' ')); }
+  return {first, last, age, occ, extra, unc, left};
+}
+function parseNotes(raw, year, o = {}){
+  const segs = splitTop(String(raw || '')); const R = {v: {}, unc: [], left: [], hit: false};
+  let place = null, seenOM = false;
+  const ageVal = a => a == null ? '' : (year && year < 9999 ? '~' + (year - a) : 'l.' + a);
+  segs.forEach(sg => {
+    let m;
+    if ((m = sg.match(/^ur\.\s*dnia:\s*(.+)$/i))){ R.v.child_birth_date = m[1].trim(); return; }
+    if ((m = sg.match(/^([OM]):\s*(.*)$/))){
+      seenOM = true; const mo = m[1] === 'M', p = parsePerson(m[2], mo), pre = mo ? 'mother_' : 'father_';
+      if (R.v[pre + 'first_name'] || R.v[pre + 'last_name']){ R.dup = true; R.left.push(sg); return; }
+      if (p.first){ R.v[pre + 'first_name'] = p.first; R.hit = true; } if (p.last) R.v[pre + 'last_name'] = p.last;
+      if (p.age != null) R.v[pre + 'age'] = ageVal(p.age); if (p.occ) R.v[pre + 'occupation'] = p.occ;
+      if (p.extra) R.left.push((mo ? 'matka: ' : 'ojciec: ') + p.extra); p.left.forEach(x => R.left.push((mo ? 'matka: ' : 'ojciec: ') + x));
+      if (p.unc && p.first) R.unc.push(pre + 'first_name'); return; }
+    if (place === null && !seenOM && !/nr karty/i.test(sg) && !/\d/.test(sg)){ const pl = sg.replace(/\?/g, '').trim(); if (/^[A-ZĄĆĘŁŃÓŚŹŻ][A-Za-ząćęłńóśźż\-]+( [A-ZĄĆĘŁŃÓŚŹŻ][A-Za-ząćęłńóśźż\-]+)?$/.test(pl)){ place = pl; R.v.christening_place = pl; R.hit = true; if (sg.includes('?')) R.unc.push('christening_place'); return; } }
+    R.left.push(sg);
+  });
+  if (R.dup){ R.v = {}; R.unc = []; R.hit = false; }   // dwa razy „M:” (albo „O:”) – etykieta błędna, zostawiam do ręcznej obróbki
+  if (o.fatherSurname && R.v.father_first_name && !R.v.father_last_name) R.v.father_surname_from_child = true;
+  return R;
+}
+function parseTargets(){
+  return S.records.filter(r => r.tpl === 'chrzest' && /(^|,\s*|\s)(O|M):/.test(String(r.v.notes || r.v.notes_org || '')) && !r.v.father_first_name && !r.v.mother_first_name);
+}
+function toolParse(){
+  const t = S.templates.find(x => x.id === 'chrzest'), list = parseTargets();
+  let ok = 0, part = 0, none = 0; const sample = [];
+  list.forEach(r => { const R = parseNotes(r.v.notes || r.v.notes_org, yearOf(r)); const n = Object.keys(R.v).length; if (!R.hit) none++; else if (R.left.length) part++; else ok++; if (sample.length < 6 && R.hit) sample.push([r, R]); });
+  $('tlBody').innerHTML = `<div class="tlWrap"><div class="card"><h3>Uwagi → pola</h3>
+    <p class="muted" style="margin-bottom:10px">Rozbija zapis typu <i>Blinów, O: Józef l.51, M: Marianna z Boczków l.30</i> na pola: miejscowość, imię (i nazwisko) ojca, imię i nazwisko matki, wiek (jako ~rok urodzenia), zawód. Wypełnia tylko puste pola rekordów chrztu, które nie mają jeszcze rodziców. Oryginalny zapis zostaje w „Uwagi (oryginał)”. Nazwisko panieńskie matki („z Boczków”) wpisuję tak, jak jest w źródle, bez zamiany na mianownik. Ctrl+Z cofa całość.</p>
+    <div class="tlRow" style="gap:14px;flex-wrap:wrap"><span><b>${list.length}</b> rekordów do rozbicia</span><span><b>${ok}</b> w całości</span><span><b>${part}</b> z resztą w uwagach</span><span><b>${none}</b> bez rozpoznanych danych (zostają)</span></div>
+    ${sample.length ? `<div style="margin:10px 0;max-height:34vh;overflow:auto">${sample.map(([r, R]) => `<div style="margin-bottom:6px"><span class="muted">${esc(r.v.notes || r.v.notes_org)}</span><br>→ ${Object.entries(R.v).map(([k, v]) => `<b>${esc((t.fields.find(f => f.id === k) || {}).label || k)}</b>: ${esc(v)}`).join(' · ')}${R.left.length ? ` · <i>reszta: ${esc(R.left.join('; '))}</i>` : ''}</div>`).join('')}</div>` : ''}
+    <div class="tlRow"><label><input type="checkbox" id="prSur"> nazwisko ojca = nazwisko dziecka (tylko gdy imię dziecka nie kończy się na „a”, czyli chłopcy)</label></div>
+    <div class="tlRow" style="margin-top:8px"><button id="prGo" class="primary" ${list.length ? '' : 'disabled'}>Rozbij ${list.length} rekordów</button></div></div></div>`;
+  $('prGo').onclick = () => {
+    const sur = $('prSur').checked, gid = 'g' + Date.now(); let n = 0;
+    parseTargets().forEach(r => {
+      const R = parseNotes(r.v.notes || r.v.notes_org, yearOf(r)); if (!R.hit) return;
+      const put = (f, val) => { if (val === '' || val == null || String(r.v[f] ?? '').trim() !== '') return; S.undo.push({id: r.id, f, old: String(r.v[f] ?? ''), g: gid}); r.v[f] = val; };
+      const raw = String(r.v.notes || r.v.notes_org || '');
+      Object.entries(R.v).forEach(([f, v]) => { if (f !== 'father_surname_from_child') put(f, v); });
+      if (sur && !r.v.father_last_name && r.v.father_first_name && r.v.child_last_name && !/a$/i.test(String(r.v.child_first_name || '').trim())) put('father_last_name', r.v.child_last_name);
+      if (!String(r.v.notes_org || '').trim()){ S.undo.push({id: r.id, f: 'notes_org', old: '', g: gid}); r.v.notes_org = raw; }
+      S.undo.push({id: r.id, f: 'notes', old: String(r.v.notes ?? ''), g: gid}); r.v.notes = R.left.join('; ');
+      if (R.unc.length){ const cur = uncertainList(r); R.unc.forEach(u => { if (!cur.includes(u)) cur.push(u); }); S.undo.push({id: r.id, f: 'uncertain_fields', old: String(r.v.uncertain_fields ?? ''), g: gid}); r.v.uncertain_fields = cur.join(', '); }
+      r.at = now(); if (r.status === 'nowy') r.status = 'w_toku'; markDirty(r.id); n++;
+    });
+    renderAll(); toast(`Rozbito ${n} rekordów. Ctrl+Z cofa całość.`, 6000); toolParse();
+  };
+}
 /* ---- Porównanie z innym źródłem (np. indeks internetowy) ---- */
 let CMP = null;
 const cnorm = x => String(x ?? '').toLowerCase().replace(/[\s.,;:~]+/g, ' ').trim();

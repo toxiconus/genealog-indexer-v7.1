@@ -38,7 +38,8 @@ Data: 2026-10-24. Plik: `chrzty — kopia.csv` (archiwum z dysku J:). Test: impo
 
 ## 5. Czego nadal brakuje (kolejność wg zysku)
 
-1. **Automatyczne rozbijanie UWAGI na pola.** Wzorzec `Miejscowość, O: … l.N, M: … l.N` obejmuje 6916 z 7727 wierszy (ok. 90%). Każdy z nich wymaga dziś ręcznego przepisania 5–7 pól. Reguły do ustalenia: „z Wcisłów” to nazwisko panieńskie matki, `lat N` i `l.N` to wiek, a nazwisko ojca wyprowadzam z nazwiska dziecka tylko po potwierdzeniu, bo dla córek forma różni się (Białkowska/Białkowski). Nieregularne wiersze (24) zostają do ręcznej obróbki.
+0. **Zrobione 2026-10-24: Narzędzia → „Uwagi → pola”.** Na pełnym pliku: 6940 rekordów do rozbicia, 6661 w całości, 262 z resztą w uwagach (np. „z Szastarki”), 17 zostawionych do ręcznej obróbki (dwa razy „M:” albo „O:” – etykieta błędna). Nazwisko matki zapisane w dopełniaczu („z Boczków”) wpisuję tak, jak w źródle. Oryginał zostaje w „Uwagi (oryginał)”, a Ctrl+Z cofa całość.
+1. **(opis pierwotnego problemu) Automatyczne rozbijanie UWAGI na pola.** Wzorzec `Miejscowość, O: … l.N, M: … l.N` obejmuje 6916 z 7727 wierszy (ok. 90%). Każdy z nich wymaga dziś ręcznego przepisania 5–7 pól. Reguły do ustalenia: „z Wcisłów” to nazwisko panieńskie matki, `lat N` i `l.N` to wiek, a nazwisko ojca wyprowadzam z nazwiska dziecka tylko po potwierdzeniu, bo dla córek forma różni się (Białkowska/Białkowski). Nieregularne wiersze (24) zostają do ręcznej obróbki.
 2. **Znaczenie kolumny AKT zależne od okresu:** pole „numer karty” i pole „miesiąc” zamiast jednego „numeru aktu”.
 3. **Wpisy tylko z indeksu (628):** osobny status „tylko indeks”, żeby nie liczyły się jako braki.
 4. **Wiersz z przesuniętymi kolumnami** wykrywać przy imporcie (rok nie jest liczbą).
