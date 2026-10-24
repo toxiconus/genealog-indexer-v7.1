@@ -662,7 +662,7 @@ const PRESET = {
   'uwagi':'notes', 'UWAGI ORG':'notes_org'
 };
 // Kolumny tabeli: najpierw te, które identyfikują akt
-const COL_PRIORITY = ['christening_act_number','christening_year','child_first_name','child_last_name',
+const COL_PRIORITY = ['christening_act_number','christening_year','marriage_act_number','marriage_year','death_act_number','death_year','child_first_name','child_last_name',
   'father_first_name','father_last_name','mother_first_name','mother_last_name',
   'groom_first_name','groom_last_name','bride_first_name','bride_last_name',
   'deceased_first_name','deceased_last_name','birth_date','marriage_date','death_date','notes'];
@@ -670,7 +670,7 @@ const COL_PRIORITY = ['christening_act_number','christening_year','child_first_n
 const GROUP_ORDER = ['Akt', 'Osoba', 'Pan młody', 'Panna młoda', 'Zmarły', 'Ojciec', 'Matka', 'Chrzestni i świadkowie', 'Uwagi i weryfikacja'];
 function groupOf(id){
   if (/^(notes|verification_status|uncertain_fields)/.test(id)) return 'Uwagi i weryfikacja';
-  if (/^(godfather|godmother|witnesses|officiant)/.test(id)) return 'Chrzestni i świadkowie';
+  if (/^(godfather|godmother|witness|informant|officiant|previous_spouse)/.test(id)) return 'Chrzestni i świadkowie';
   if (/^(father_|pan_ojciec)/.test(id)) return 'Ojciec';
   if (/^mother_/.test(id)) return 'Matka';
   if (/^groom_/.test(id)) return 'Pan młody';
@@ -845,7 +845,7 @@ function fieldHtml(f, rec, hasUnc){
     const isText = !f.type || f.type === 'text';
     ctl = `<input id="${id}" name="${esc(f.id)}" type="${esc(f.type === 'number' ? 'number' : f.type === 'date' ? 'date' : 'text')}" value="${esc(val)}" placeholder="${esc(f.placeholder||'')}"${isText ? ' autocomplete="off"' : ''}>`;
   }
-  return `<div class="${cls}"><div class="fglab"><label class="${req.trim()}" for="${id}">${esc(f.label || f.id)}</label>${qbtn}${pinBtn(f)}${(poolOf(f.id) && (!f.type || f.type === 'text')) || /_age$/.test(f.id) ? `<span class="vcnt${/_age$/.test(f.id) ? ' age' : ''}" id="vc_${esc(f.id)}"></span>` : ''}</div>${ctl}</div>`;
+  return `<div class="${cls}"><div class="fglab"><label class="${req.trim()}" for="${id}">${esc(f.label || f.id)}</label>${qbtn}${pinBtn(f)}${(poolOf(f.id) && (!f.type || f.type === 'text')) || /(^|_)age$/.test(f.id) ? `<span class="vcnt${/(^|_)age$/.test(f.id) ? ' age' : ''}" id="vc_${esc(f.id)}"></span>` : ''}</div>${ctl}</div>`;
 }
 function renderHeader(rec){
   document.querySelectorAll('#statusSeg button').forEach(b => b.setAttribute('aria-pressed', rec && rec.status === b.dataset.st ? 'true' : 'false'));
@@ -911,7 +911,8 @@ function visibleFields(){
   return cols;
 }
 function yearOf(r){
-  return parseInt(r.v.christening_year || (String(r.v.source_id || '').match(/\.(\d{4})\./) || [])[1]) || 9999;
+  const dy = k => (String(r.v[k] || '').match(/\b(1[5-9]\d\d)\b/) || [])[1];
+  return parseInt(r.v.christening_year || r.v.marriage_year || r.v.death_year || (String(r.v.source_id || '').match(/\.(\d{4})\./) || [])[1] || dy('marriage_date') || dy('death_date') || dy('birth_date') || dy('christening_date')) || 9999;
 }
 function filteredRecords(){
   let list = S.records.filter(r => r.tpl === S.tplId);
@@ -1787,6 +1788,7 @@ function poolOf(fid){
   if (/last_name$/.test(fid)) return 'nazwiska';
   if (/first_name$/.test(fid)) return 'imiona';
   if (/(place|residence)$/.test(fid)) return 'miejsca';
+  if (/^(witness\d_name|informant\d|previous_spouse|deceased_spouse)$/.test(fid)) return 'osoby';
   if (/(occupation|profession)$/.test(fid)) return 'zawody';
   if (['godfather_name','godmother_name','witnesses','officiant'].includes(fid)) return 'osoby';
   return null;
@@ -1825,7 +1827,7 @@ function lev(a, b, max){
   return prev[b.length];
 }
 function updateVcnt(fid, val){
-  if (/_age$/.test(fid)) return ageHint(fid, val);
+  if (/(^|_)age$/.test(fid)) return ageHint(fid, val);
   const el = $('vc_' + fid); if (!el) return;
   const pl = poolOf(fid), v = String(val ?? '').trim();
   if (!v){ el.textContent = ''; el.className = 'vcnt'; return; }
