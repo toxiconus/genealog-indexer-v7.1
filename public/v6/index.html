@@ -655,7 +655,7 @@ const STATUS = {nowy:'Nowy', w_toku:'W toku', check:'Sprawdzić', ok:'Gotowe'};
 const BADGE = {nowy:'b-new', w_toku:'b-work', check:'b-check', ok:'b-ok'};
 // Nagłówki z CH BLIN.txt (i eksportów z nim zgodnych) -> pola szablonu chrztu. Kolumny spoza mapy są pomijane.
 const PRESET = {
-  'ID':'source_id', 'ROK':'christening_year', 'Nr.':'christening_act_number',
+  'ID':'source_id', 'ROK':'christening_year', 'Nr.':'christening_act_number', 'AKT':'christening_act_number', 'NAZWISKO':'child_last_name', 'IMIĘ':'child_first_name', 'UWAGI':'notes',
   'Nazwisko':'child_last_name', 'Imię':'child_first_name', 'Miejscowość':'christening_place',
   'ImięO':'father_first_name', 'NazwiskoO':'father_last_name', 'wO':'father_age',
   'IM':'mother_first_name', 'NM':'mother_last_name', 'wM':'mother_age',
@@ -2015,7 +2015,7 @@ setInterval(sessShow, 60000); sessShow();
 
 
 /* ===================== NARZĘDZIA (podstrona) ===================== */
-const TOOL_TABS = [['stat','Statystyki'],['dict','Słownik'],['abbr','Skróty'],['data','Kopia i dane'],['set','Ustawienia']];
+const TOOL_TABS = [['stat','Statystyki'],['dict','Słownik'],['abbr','Skróty'],['cmp','Porównanie'],['data','Kopia i dane'],['set','Ustawienia']];
 let toolTab = 'stat';
 const dictSt = {pool:'nazwiska', q:'', sel:new Set(), armed:false, pairs:null};
 let ABBR = [];
@@ -2036,7 +2036,7 @@ window.addEventListener('resize', () => { if (!$('tools').hidden) $('tools').sty
 function renderTools(){
   $('tlNav').innerHTML = TOOL_TABS.map(([k, n]) => `<button role="tab" data-k="${k}" aria-selected="${k === toolTab}">${n}</button>`).join('');
   $('tlNav').onclick = e => { const b = e.target.closest('button'); if (b){ toolTab = b.dataset.k; renderTools(); } };
-  ({stat: toolStat, dict: toolDict, abbr: toolAbbr, data: toolData, set: toolSet})[toolTab]();
+  ({stat: toolStat, dict: toolDict, abbr: toolAbbr, cmp: toolCmp, data: toolData, set: toolSet})[toolTab]();
 }
 const bar = (pct, cls = '') => `<div class="bar"><i class="${cls}" style="width:${Math.max(0, Math.min(100, pct))}%"></i></div>`;
 function poolCounts(pool){
@@ -2148,6 +2148,75 @@ function toolAbbr(){
   $('abBody').querySelectorAll('[data-del]').forEach(b => b.onclick = () => { ABBR.splice(+b.dataset.del, 1); save(); toolAbbr(); });
   $('abAdd').onclick = () => { ABBR.push({k:'', v:''}); save(); toolAbbr(); const ins = $('abBody').querySelectorAll('input'); if (ins.length) ins[ins.length - 2].focus(); };
   $('abEx').onclick = () => { [['Jo','Joannes'],['Ant','Antonius'],['Mat','Matthaeus'],['Sta','Stanislaus'],['Mich','Michael'],['Thom','Thomas'],['Mar','Maria']].forEach(([k, v]) => { if (!ABBR.some(a => a.k === k)) ABBR.push({k, v}); }); save(); toolAbbr(); };
+}
+
+/* ---- Porównanie z innym źródłem (np. indeks internetowy) ---- */
+let CMP = null;
+const cnorm = x => String(x ?? '').toLowerCase().replace(/[\s.,;:~]+/g, ' ').trim();
+function cmpKey(v, tplId){
+  const y = parseInt(v.christening_year || v.marriage_year || v.death_year || (String(v.source_id || '').match(/\.(\d{4})\./) || [])[1]) || 0;
+  const nr = String(v.christening_act_number || v.marriage_act_number || v.death_act_number || (String(v.source_id || '').match(/\.(\d{1,4})$/) || [])[1] || '').replace(/^0+/, '').trim();
+  if (y && nr) return 'n:' + y + '|' + nr;
+  const ln = v.child_last_name || v.groom_last_name || v.deceased_last_name || '', fn = v.child_first_name || v.groom_first_name || v.deceased_first_name || '';
+  return ln || fn ? 'p:' + cnorm(ln) + '|' + cnorm(fn) : '';
+}
+function cmpRun(){
+  const SKIP = ['notes','notes_org','uncertain_fields','verification_status','source_id'];
+  const mine = S.records.filter(r => r.tpl === CMP.tplId), idx = new Map();
+  mine.forEach(r => { const k = cmpKey(r.v, CMP.tplId); if (k) (idx.get(k) || idx.set(k, []).get(k)).push(r); });
+  const res = {same: 0, diff: [], onlyFile: [], onlyApp: [], amb: 0}, seen = new Set(), years = new Set();
+  CMP.rows.forEach(v => {
+    const k = cmpKey(v, CMP.tplId); const y = parseInt(v.christening_year || v.marriage_year || v.death_year); if (y) years.add(y);
+    const hit = k ? idx.get(k) : null;
+    if (!hit){ res.onlyFile.push(v); return; }
+    if (hit.length > 1 && k[0] === 'p'){ res.amb++; hit.forEach(r => seen.add(r.id)); return; }
+    const r = hit[0]; seen.add(r.id);
+    const d = [];
+    Object.keys(v).filter(f => !SKIP.includes(f)).forEach(f => { const a = String(r.v[f] ?? '').trim(), b = String(v[f] ?? '').trim(); if (b && cnorm(a) !== cnorm(b)) d.push({f, a, b}); });
+    if (d.length) res.diff.push({r, d}); else res.same++;
+  });
+  res.onlyApp = mine.filter(r => !seen.has(r.id) && (!years.size || years.has(parseInt(r.v.christening_year || r.v.marriage_year || r.v.death_year)) ));
+  CMP.res = res;
+}
+function toolCmp(){
+  const t = tpl();
+  $('tlBody').innerHTML = `<div class="tlWrap"><div class="card"><h3>Porównanie z innym źródłem</h3>
+    <p class="muted" style="margin-bottom:10px">Wczytaj plik (CSV/TSV, np. indeks internetowy) – rekordy zostaną dopasowane do Twoich po roku i numerze aktu (a gdy ich brak – po nazwisku i imieniu), w dowolnej kolejności. Nic nie zmienia się samo: ${esc(t.name)}, każdą różnicę zatwierdzasz sam.</p>
+    <div class="tlRow"><input type="file" id="cmpFile" accept=".csv,.tsv,.txt"><span class="muted" id="cmpMsg"></span></div></div><div id="cmpOut"></div></div>`;
+  $('cmpFile').onchange = async e => {
+    const f = e.target.files[0]; if (!f) return;
+    const text = (await f.text()).replace(/^﻿/, ''), lines = text.split(/\r?\n/).filter(l => l.trim());
+    if (lines.length < 2){ $('cmpMsg').textContent = 'Plik jest pusty.'; return; }
+    const d = detectDelim(lines[0]), rows = lines.map(l => l.split(d).map(c => c.trim())), headers = rows[0];
+    const {map} = autoMap(headers, S.tplId);
+    const data = rows.slice(1).map(r => { const v = {}; headers.forEach((h, i) => { if (map[i] && r[i] !== undefined && r[i] !== '') v[map[i]] = r[i]; }); return v; }).filter(v => Object.keys(v).length);
+    const mapped = Object.values(map).filter(Boolean).length;
+    CMP = {name: f.name, tplId: S.tplId, rows: data, mapped}; cmpRun();
+    $('cmpMsg').textContent = `${data.length} wierszy, rozpoznano ${mapped} z ${headers.length} kolumn.`;
+    cmpRender();
+  };
+  if (CMP && CMP.tplId === S.tplId){ cmpRun(); cmpRender(); }
+}
+function cmpRender(){
+  const R = CMP.res, lab = f => fieldsOf(tpl()).find(x => x.id === f)?.label || f;
+  const nameOf = v => [v.child_first_name || v.groom_first_name || v.deceased_first_name, v.child_last_name || v.groom_last_name || v.deceased_last_name].filter(Boolean).join(' ') || '(?)';
+  const empties = R.diff.reduce((n, x) => n + x.d.filter(z => !z.a).length, 0);
+  $('cmpOut').innerHTML = `<div class="card"><h3>Wynik</h3><div class="tlRow" style="flex-wrap:wrap;gap:14px">
+      <span><b>${R.same}</b> zgodnych</span><span><b>${R.diff.length}</b> z różnicami</span><span><b>${R.onlyFile.length}</b> tylko w pliku</span><span><b>${R.onlyApp.length}</b> tylko u Ciebie</span>${R.amb ? `<span><b>${R.amb}</b> niejednoznacznych (pominięte)</span>` : ''}</div>
+    <div class="tlRow" style="margin-top:10px;gap:8px;flex-wrap:wrap">
+      <button id="cmpFill" ${empties ? '' : 'disabled'}>Uzupełnij puste pola z pliku (${empties})</button>
+      <button id="cmpAdd" ${R.onlyFile.length ? '' : 'disabled'}>Dodaj brakujące jako nowe (${R.onlyFile.length})</button></div></div>
+    ${R.diff.length ? `<div class="card"><h3>Różnice (${R.diff.length})</h3><div style="max-height:46vh;overflow:auto">${R.diff.slice(0, 150).map(({r, d}, i) => `<div style="margin-bottom:8px"><button class="cmpGo" data-id="${esc(r.id)}"><b>${esc(nameOf(r.v))}</b></button> ${d.map((z, j) => `<div class="tlRow" style="gap:6px"><span style="min-width:170px">${esc(lab(z.f))}</span><span>u Ciebie: <b>${esc(z.a) || '—'}</b></span><span>plik: <b>${esc(z.b)}</b></span><button class="cmpTake" data-i="${i}" data-j="${j}" style="min-height:24px">weź z pliku</button></div>`).join('')}</div>`).join('')}${R.diff.length > 150 ? '<p class="muted">… pokazano 150 pierwszych</p>' : ''}</div></div>` : ''}
+    ${R.onlyFile.length ? `<div class="card"><h3>Tylko w pliku (${R.onlyFile.length})</h3><p class="muted">${R.onlyFile.slice(0, 40).map(v => esc(nameOf(v)) + (cmpKey(v)[0] === 'n' ? ' (' + esc(cmpKey(v).slice(2)) + ')' : '')).join(' · ')}${R.onlyFile.length > 40 ? ' …' : ''}</p></div>` : ''}
+    ${R.onlyApp.length ? `<div class="card"><h3>Tylko u Ciebie (${R.onlyApp.length})</h3><p class="muted">${R.onlyApp.slice(0, 40).map(r => esc(nameOf(r.v))).join(' · ')}${R.onlyApp.length > 40 ? ' …' : ''}</p></div>` : ''}`;
+  const g = 'g' + Date.now();
+  const put = (r, f, val, gid) => { const old = String(r.v[f] ?? ''); S.undo.push({id: r.id, f, old, g: gid}); r.v[f] = val; r.at = now(); if (r.status === 'nowy') r.status = 'w_toku'; markDirty(r.id); };
+  $('cmpOut').onclick = e => {
+    const go = e.target.closest('.cmpGo'); if (go){ closeTools(); selectRecord(go.dataset.id); return; }
+    const tk = e.target.closest('.cmpTake'); if (tk){ const {r, d} = R.diff[+tk.dataset.i], z = d[+tk.dataset.j]; put(r, z.f, z.b, 'g' + Date.now()); tk.disabled = true; tk.textContent = 'ok'; renderAll(); return; }
+    if (e.target.id === 'cmpFill'){ let n = 0; const gid = 'g' + Date.now(); R.diff.forEach(({r, d}) => d.forEach(z => { if (!z.a){ put(r, z.f, z.b, gid); n++; } })); renderAll(); toast(`Uzupełniono ${n} pól. Ctrl+Z cofa całość.`); cmpRun(); cmpRender(); return; }
+    if (e.target.id === 'cmpAdd'){ let n = 0; R.onlyFile.forEach(v => { const rec = {id: uid(), tpl: CMP.tplId, v: Object.assign({}, v), page: -1, roi: null, status: 'nowy', by: 'porównanie: ' + CMP.name, at: now(), uncertain: false}; S.records.push(rec); markDirty(rec.id); n++; }); renderAll(); toast(`Dodano ${n} rekordów (status: Nowy).`); cmpRun(); cmpRender(); }
+  };
 }
 /* ---- Kopia i dane ---- */
 function dl(name, text, type){ const a = document.createElement('a'); a.href = URL.createObjectURL(new Blob([text], {type})); a.download = name; a.click(); setTimeout(() => URL.revokeObjectURL(a.href), 2000); }
