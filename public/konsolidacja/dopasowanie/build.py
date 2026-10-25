@@ -12,6 +12,10 @@ D = [[r['id_archiwalne'], num(r['rok']), r['nazwisko'], r['imie'], r['plec'], r[
 M = [[f"{r['rok']}/{r['nr']}", num(r['rok']), r['nr'], r['data_tekst'], r['pan_nazwisko'], r['pan_imie'], r['pan_stan'], r['pan_ojciec_imie'], r['pan_ojciec_nazwisko'], r['pan_matka_imie'], r['pan_matka_nazwisko'], r['pan_miejscowosc'], num(r['pan_wiek']), num(r['pan_rok_ur_przyb']),
       r['panna_nazwisko'], r['panna_imie'], r['panna_stan'], r['panna_ojciec_imie'], r['panna_ojciec_nazwisko'], r['panna_matka_imie'], r['panna_matka_nazwisko'], r['panna_miejscowosc'], num(r['panna_wiek']), num(r['panna_rok_ur_przyb']),
       r['pan_poprzednia_zona_imie'], r['wdowa_poprzedni_maz_imie']] for r in rd('malzenstwa_mal.csv') if num(r['rok'])]
+seen={}
+for r in M:
+    n=seen.get(r[0],0); seen[r[0]]=n+1
+    if n: r[0]=r[0]+'-'+str(n+1)
 tpl = open(os.path.join(here, 'szablon.html'), encoding='utf-8').read()
 data = 'const B=' + json.dumps(B, ensure_ascii=False, separators=(',', ':')) + ';const D=' + json.dumps(D, ensure_ascii=False, separators=(',', ':')) + ';const M=' + json.dumps(M, ensure_ascii=False, separators=(',', ':')) + ';'
 out = tpl.replace('/*DATA*/', data)
