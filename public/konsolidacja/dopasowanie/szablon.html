@@ -32,12 +32,12 @@ kbd{background:var(--bg);border:1px solid var(--ln);border-radius:4px;padding:0 
 .leg{color:var(--mu);font-size:11.5px;margin-top:6px}.leg i{display:inline-block;width:10px;height:10px;border-radius:3px;margin:0 3px 0 8px;border:2px solid}
 </style></head><body>
 <header><h1>🧬 <b>Dopasowanie osób</b> · parafia Blinów</h1><span class="sp"></span>
-<span id="stat" style="color:var(--mu)"></span>
+<button id="zm">🔍−</button><button id="zp">🔍+</button><span id="stat" style="color:var(--mu)"></span>
 <button id="bCsv">⬇ CSV decyzji</button><button id="bJson">⬇ kopia JSON</button><button id="bLoad">⬆ wczytaj JSON</button><input type="file" id="fLoad" accept=".json" hidden></header>
 <main>
 <aside id="list"><input id="q" placeholder="szukaj: nazwisko, rok, nr…"><div id="lst"></div></aside>
 <section id="mid"><h2 id="ttl"></h2><div id="sub"></div><svg id="map" viewBox="0 0 960 500"></svg><div id="tl"></div>
-<div class="leg">Klawisze: <kbd>↑</kbd><kbd>↓</kbd> pole · <kbd>A</kbd> przyjmij najlepszego · <kbd>R</kbd> odrzuć · <kbd>0</kbd> brak w księgach · <kbd>←</kbd><kbd>→</kbd> inny akt
+<div class="leg">Klawisze: <kbd>↑</kbd><kbd>↓</kbd> pole · <kbd>A</kbd> przyjmij najlepszego · <kbd>R</kbd> odrzuć · <kbd>0</kbd> brak w księgach · <kbd>←</kbd><kbd>→</kbd> inny akt · <kbd>Ctrl</kbd>+kółko lub 🔍 = powiększenie środka
 <br>Kolor ramki: <i style="border-color:var(--ok)"></i>przyjęte <i style="border-color:var(--ac)"></i>mocny kandydat ≥75% <i style="border-color:var(--md)"></i>możliwy ≥50% <i style="border-color:var(--lo)"></i>słaby <i style="border-color:var(--ln)"></i>brak. Wynik to podpowiedź – decyzja zawsze Twoja.</div></section>
 <aside id="right"></aside>
 </main>
@@ -188,6 +188,10 @@ function lst(){const q=strip(filt);const el=document.getElementById('lst');
   return`<div class="mi ${cur&&cur.id===a[0]?'on':''}" data-m="${esc(a[0])}"><div><b>${esc(a[4])} ${esc(a[5])}</b> + ${esc(a[14])}<br><small>${a[1]} nr ${esc(a[2])}</small></div>${d?`<span class="d">${d}/13</span>`:''}</div>`}).join('');
  el.querySelectorAll('.mi').forEach(e=>e.onclick=()=>open(e.dataset.m));const on=el.querySelector('.mi.on');if(on&&!window.__sc){on.scrollIntoView({block:'center'});window.__sc=1}}
 function open(mid){window.__sc=0;compute(mid);sel='g.d';try{history.replaceState(null,'','#'+mid)}catch(e){}render();lst()}
+let ZM=+(localStorage.getItem('dop.zm')||1);
+function zoom(v){ZM=Math.max(.7,Math.min(2.2,v));document.getElementById('mid').style.zoom=ZM;try{localStorage.setItem('dop.zm',ZM)}catch(e){}}
+zoom(ZM);document.getElementById('zp').onclick=()=>zoom(ZM+.15);document.getElementById('zm').onclick=()=>zoom(ZM-.15);
+document.getElementById('mid').addEventListener('wheel',e=>{if(e.ctrlKey||e.metaKey){e.preventDefault();zoom(ZM+(e.deltaY<0?.1:-.1))}},{passive:false});
 document.getElementById('q').oninput=e=>{filt=e.target.value;lst()};
 function dl(name,txt,type){const a=document.createElement('a');a.href=URL.createObjectURL(new Blob(['﻿'+txt],{type}));a.download=name;a.click()}
 document.getElementById('bJson').onclick=()=>dl('dopasowanie_decyzje.json',JSON.stringify(DEC,null,1),'application/json');
