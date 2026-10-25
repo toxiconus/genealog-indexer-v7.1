@@ -14,7 +14,7 @@ aside,section{min-height:0;overflow:auto}
 .mi{padding:6px 12px;border-bottom:1px solid #16212d;cursor:pointer;display:flex;gap:8px;align-items:center}.mi:hover{background:var(--p2)}.mi.on{background:#103046;box-shadow:inset 3px 0 var(--ac)}
 .mi small{color:var(--mu)}.mi .d{margin-left:auto;font-size:11px;color:var(--ok)}
 #mid{padding:12px 16px}#ttl{margin:0 0 2px;font-size:18px}#sub{color:var(--mu);margin-bottom:8px}
-svg{width:100%;height:auto;display:block}
+svg{width:calc(100%*var(--z,1));max-width:none;height:auto;display:block}#tl,#map{overflow:visible}
 .nd rect.c{fill:var(--p1);stroke:var(--ln);stroke-width:1.2}.nd text{fill:var(--tx);font-size:12px}.nd .r{fill:var(--mu);font-size:10px;text-transform:uppercase;letter-spacing:.6px}.nd .s{fill:var(--mu);font-size:11px}
 .pill{cursor:pointer}.pill rect{stroke-width:1.4;fill:var(--p2)}.pill text{font-size:11px;fill:var(--tx);pointer-events:none}.pill:hover rect{stroke:#fff}
 .st-empty rect{stroke:var(--ln)}.st-lo rect{stroke:var(--lo)}.st-mid rect{stroke:var(--md)}.st-hi rect{stroke:var(--ac);fill:#0f3144}.st-ok rect{stroke:var(--ok);fill:#12452f}.st-none rect{stroke:var(--lo);stroke-dasharray:3 2}
@@ -189,7 +189,7 @@ function lst(){const q=strip(filt);const el=document.getElementById('lst');
  el.querySelectorAll('.mi').forEach(e=>e.onclick=()=>open(e.dataset.m));const on=el.querySelector('.mi.on');if(on&&!window.__sc){on.scrollIntoView({block:'center'});window.__sc=1}}
 function open(mid){window.__sc=0;compute(mid);sel='g.d';try{history.replaceState(null,'','#'+mid)}catch(e){}render();lst()}
 let ZM=+(localStorage.getItem('dop.zm')||1);
-function zoom(v){ZM=Math.max(.7,Math.min(2.2,v));document.getElementById('mid').style.zoom=ZM;try{localStorage.setItem('dop.zm',ZM)}catch(e){}}
+function zoom(v){ZM=Math.max(.7,Math.min(2.2,v));document.getElementById('mid').style.setProperty('--z',ZM);try{localStorage.setItem('dop.zm',ZM)}catch(e){}}
 zoom(ZM);document.getElementById('zp').onclick=()=>zoom(ZM+.15);document.getElementById('zm').onclick=()=>zoom(ZM-.15);
 document.getElementById('mid').addEventListener('wheel',e=>{if(e.ctrlKey||e.metaKey){e.preventDefault();zoom(ZM+(e.deltaY<0?.1:-.1))}},{passive:false});
 document.getElementById('q').oninput=e=>{filt=e.target.value;lst()};
