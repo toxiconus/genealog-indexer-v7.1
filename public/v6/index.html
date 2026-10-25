@@ -91,6 +91,19 @@ textarea{min-height:58px;resize:vertical}
 #viewerBar input[type=range]{width:110px;min-height:auto;padding:0}
 #viewerWrap{position:relative;min-height:0;background:#000}
 #viewer{position:absolute;inset:0}
+#recForm.sentmode .sentence{font-family:Georgia,'Times New Roman',serif;font-size:15px;line-height:2.3;padding:8px 4px 14px}
+.slot{display:inline-flex;align-items:baseline;white-space:nowrap;margin:0 2px;position:relative}
+input.inl,select.inl{width:auto;min-height:28px;padding:1px 4px;border:0;border-bottom:2px dotted var(--line);border-radius:0;background:transparent;font:inherit;font-size:15px;color:var(--text);field-sizing:content;min-width:5ch;max-width:30ch}
+input.inl::placeholder{color:var(--muted);opacity:.7;font-size:13px;font-style:italic}
+input.inl.filled,select.inl:not([value=""]){border-bottom-style:solid;border-bottom-color:var(--acc-soft)}
+input.inl.req:not(.filled){border-bottom-color:var(--warn)}
+input.inl:focus,select.inl:focus{border-bottom:2px solid var(--acc);box-shadow:none;background:var(--acc-soft)}
+.slot.unc input.inl{border-bottom:2px solid var(--warn)}
+.qbtn.inq{opacity:0;min-height:18px;padding:0 5px;font-size:11px;margin-left:2px;align-self:center;transition:opacity .12s}
+.slot:hover .qbtn.inq,.slot:focus-within .qbtn.inq,.slot.unc .qbtn.inq{opacity:1}
+.slot .vcnt.age{font-size:11px;font-family:system-ui,sans-serif}
+#loupe{position:absolute;width:240px;height:240px;border-radius:50%;border:3px solid #f59e0b;box-shadow:0 6px 28px rgba(0,0,0,.45);pointer-events:none;z-index:30;background:#fff}
+#loupe[hidden]{display:none}
 .roi-box{position:absolute;border:2px solid var(--acc);background:rgba(37,99,235,.05);pointer-events:none;border-radius:2px}
 .roi-box.ok{border-color:var(--ok);background:rgba(21,128,61,.05)}
 #viewerWrap.rs-out .roi-box{background:transparent}
@@ -103,6 +116,10 @@ textarea{min-height:58px;resize:vertical}
 .roi-box .n{position:absolute;left:-2px;top:-22px;background:var(--acc);color:#fff;font-size:12px;padding:0 6px;border-radius:4px;white-space:nowrap}
 .roi-box.ok .n{background:var(--ok)}
 .roi-box.warn .n{background:var(--warn)}
+.vgrp{display:inline-flex;align-items:center;gap:4px;padding:0 6px 0 0;margin-right:6px;border-right:1px solid var(--line)}
+.vgrp:last-child{border-right:0}
+.roi-box.nowy{border-color:#7c3aed;background:rgba(124,58,237,.05)}.roi-box.nowy .n{background:#7c3aed}
+.roi-leg{display:inline-flex;gap:10px;align-items:center;font-size:11px;color:var(--mut,#64748b);margin-left:8px}.roi-leg i{display:inline-block;width:10px;height:10px;border-radius:2px;margin-right:3px;vertical-align:-1px}
 #hint{position:absolute;left:12px;bottom:12px;background:rgba(0,0,0,.75);color:#fff;padding:6px 10px;border-radius:6px;font-size:13px;pointer-events:none;display:none}
 #confirmBar{display:none;position:absolute;top:10px;left:50%;transform:translateX(-50%);background:var(--panel);border:1px solid var(--warn);padding:8px 12px;border-radius:8px;gap:8px;align-items:center;z-index:5;box-shadow:var(--shadow)}
 #confirmBar.show{display:flex}
@@ -444,27 +461,37 @@ body.compact .fgrid{gap:4px 8px}
 
   <main id="center">
     <div id="viewerBar">
-      <button id="prevImg" title="Poprzednia strona (←)" aria-label="Poprzednia strona">◀</button>
-      <button id="nextImg" title="Następna strona (→)" aria-label="Następna strona">▶</button>
-      <span id="pageInfo" class="muted" style="min-width:110px"></span>
-      <span class="sep"></span>
-      <button id="btnWarp" aria-pressed="false" title="Wyprostuj kartkę ze zdjęcia: perspektywa i zagięcie (rogi i punkty na krawędziach)">Kartka</button>
-      <button id="btnRoi" aria-pressed="false" title="Przeciągnij prostokąt wokół aktu (klawisz A)">Zaznacz akt</button>
-      <button id="btnRoiSticky" aria-pressed="false" title="Ciągłe zaznaczanie: tryb zaznaczania zostaje włączony po każdym akcie (Esc kończy)">Ciągłe</button>
-      <button id="btnRoiDel" title="Usuń ramkę bieżącego aktu (dane zostają)" disabled>Usuń ramkę</button>
-      <button id="btnRoiRedo" title="Narysuj ramkę bieżącego aktu od nowa" disabled>Przerysuj</button>
-      <button id="btnRoiShow" title="Ramki aktów na skanie: wszystkie / kontury / tylko bieżąca / ukryte (klawisz H)">Ramki: wszystkie</button>
-      <button id="btnFit" title="Dopasuj stronę do okna">Dopasuj</button>
-      <span class="angbox"><button id="angL" title="Obróć w lewo o 0,5° (klawisz [ ; z Shift 5°)">⟲</button><input id="angNum" type="number" step="0.1" value="0" title="Kąt obrotu w stopniach (dowolny)" aria-label="Kąt obrotu"><button id="angR" title="Obróć w prawo o 0,5° (klawisz ] ; z Shift 5°)">⟳</button></span>
-      <button id="btnRot" title="Obróć o 90°">90°</button>
-      <button id="btnList" class="narrowOnly" title="Lista rekordów">Lista</button>
-      <button id="btnBig" class="narrowOnly" aria-pressed="false" title="Powiększ lub zmniejsz skan">Skan ⤢</button>
-      <span class="sep"></span>
-      <button id="btnImgFx" aria-pressed="false" aria-expanded="false" title="Filtry obrazu: kontrast, jasność, szarość, negatyw, wyostrzanie, próg">Obraz ▾</button>
+      <span class="vgrp" data-g="nav">
+        <button id="prevImg" title="Poprzednia strona (←)" aria-label="Poprzednia strona">◀</button>
+        <button id="nextImg" title="Następna strona (→)" aria-label="Następna strona">▶</button>
+        <span id="pageInfo" class="muted" style="min-width:110px"></span>
+      </span>
+      <span class="vgrp" data-g="roi">
+        <button id="btnRoi" aria-pressed="false" title="Przeciągnij prostokąt wokół aktu (klawisz A)">Zaznacz akt</button>
+        <button id="btnRoiSticky" aria-pressed="false" title="Ciągłe zaznaczanie: tryb zaznaczania zostaje włączony po każdym akcie (Esc kończy)">Ciągłe</button>
+        <button id="btnRoiDel" title="Usuń ramkę bieżącego aktu (dane zostają)" disabled>Usuń ramkę</button>
+        <button id="btnRoiRedo" title="Narysuj ramkę bieżącego aktu od nowa" disabled>Przerysuj</button>
+        <button id="btnRoiShow" title="Ramki aktów na skanie: wszystkie / kontury / tylko bieżąca / ukryte (klawisz H)">Ramki: wszystkie</button>
+      </span>
+      <span class="vgrp" data-g="view">
+        <button id="btnFit" title="Dopasuj stronę do okna">Dopasuj</button>
+        <button id="btnLoupe" aria-pressed="false" title="Lupa przy kursorze (klawisz Z): 3× większy fragment z pełnej rozdzielczości, z bieżącymi filtrami obrazu">Lupa</button>
+        <span class="angbox"><button id="angL" title="Obróć w lewo o 0,5° (klawisz [ ; z Shift 5°)">⟲</button><input id="angNum" type="number" step="0.1" value="0" title="Kąt obrotu w stopniach (dowolny)" aria-label="Kąt obrotu"><button id="angR" title="Obróć w prawo o 0,5° (klawisz ] ; z Shift 5°)">⟳</button></span>
+        <button id="btnRot" title="Obróć o 90°">90°</button>
+      </span>
+      <span class="vgrp" data-g="img">
+        <button id="btnWarp" aria-pressed="false" title="Wyprostuj kartkę ze zdjęcia: perspektywa i zagięcie (rogi i punkty na krawędziach)">Kartka</button>
+        <button id="btnImgFx" aria-pressed="false" aria-expanded="false" title="Filtry obrazu: kontrast, jasność, szarość, negatyw, wyostrzanie, próg">Obraz ▾</button>
+      </span>
+      <span class="vgrp narrowOnly" data-g="narrow">
+        <button id="btnList" class="narrowOnly" title="Lista rekordów">Lista</button>
+        <button id="btnBig" class="narrowOnly" aria-pressed="false" title="Powiększ lub zmniejsz skan">Skan ⤢</button>
+      </span>
     </div>
     <div id="viewerWrap">
       <div id="viewer" aria-label="Skan strony"></div>
       <div id="ruler" aria-hidden="true"></div>
+      <canvas id="loupe" width="480" height="480" hidden aria-hidden="true"></canvas>
       <svg id="warpSvg" hidden></svg>
       <div id="warpBar" hidden>
         <span id="warpMsg">Ustaw 4 rogi kartki, a punkty na krawędziach na linię brzegu (górną i dolną linię tekstu lub krawędź papieru).</span>
@@ -517,12 +544,13 @@ body.compact .fgrid{gap:4px 8px}
       <button id="btnNextRec" title="Następny rekord (↓)">↓</button>
       <button id="btnNextUnread" title="Następny rekord, który nie jest gotowy">Do sprawdzenia →</button>
       <button id="btnGroups" class="ic" title="Zwiń lub rozwiń wszystkie grupy pól">⇕</button>
+      <button id="btnSent" class="ic" aria-pressed="false" title="Układ jak w akcie: pola wpisujesz w treść zdania, w kolejności z księgi (Tab / Enter przeskakuje do następnej luki)">Akt</button>
       <button id="btnFilled" class="ic" aria-pressed="false" title="Pokaż tylko wymagane i wypełnione pola">Skrót</button>
       <label class="chkRow" title="Nowy akt dostaje rok i kolejny numer po najwyższym dotychczasowym"><input type="checkbox" id="chkSuggest"> nr auto</label>
     </div>
     <input id="parentsQuick" placeholder="Rodzice: Joannes i Marianna Szopa ⏎" title="Wpisz oboje rodziców jednym ciągiem, np. „Joannes Szopa et Marianna Kowalska”. Gdy jest jedno nazwisko na końcu, trafia do ojca." autocomplete="off" style="width:calc(100% - 24px);margin:4px 12px;padding:5px 8px;border:1px solid var(--line,#d8dce3);border-radius:6px;font:inherit;background:var(--bg,#fff);color:inherit">
     <form id="recForm" autocomplete="off"></form>
-    <div class="keys"><kbd>Enter</kbd> następne pole · <kbd>Ctrl</kbd>+<kbd>Enter</kbd> zapisz i dalej · <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>Enter</kbd> gotowe i dalej · <kbd>Ctrl</kbd>+<kbd>D</kbd> wartość z poprzedniego aktu</div>
+    <div class="keys"><kbd>Enter</kbd> następne pole · <kbd>Ctrl</kbd>+<kbd>Enter</kbd> zapisz i dalej · <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>Enter</kbd> gotowe i dalej · <kbd>Ctrl</kbd>+<kbd>D</kbd> wartość z poprzedniego aktu · <kbd>Z</kbd> lupa na skanie · przycisk „Akt” – wpisywanie w treść zdania</div>
     <footer class="sideFoot">
       <button id="btnUndo" title="Cofnij ostatnią zmianę (Ctrl+Z)">Cofnij</button>
       <button id="btnCopyPrev" title="Skopiuj dane rodziców i chrzestnych z poprzedniego aktu">Rodzice z poprzedniego</button>
@@ -768,6 +796,38 @@ function loadTemplates(){
 $('tplSel').onchange = e => { syncFormToRec(); S.tplId = e.target.value; S.cur = null; S.checked.clear(); S.colF = {}; renderAll(); };
 
 /* ===================== FORMULARZ ===================== */
+
+/* ===================== WIDOK AKTU (formuła z lukami) ===================== */
+const FORMULAS = {
+  chrzest: 'Rok {christening_year}, akt nr {christening_act_number}. Dnia {christening_date} w {christening_place} ochrzczono: {child_first_name} {child_last_name} ({child_sex}), ur. {child_birth_date} w {child_birth_place}, {child_legitimacy}, wyznania {child_religion}. Ojciec: {father_first_name} {father_last_name}, lat {father_age}, {father_occupation}, zam. {father_residence}. Matka: {mother_first_name} z {mother_last_name}, lat {mother_age}, {mother_occupation}, zam. {mother_residence}. Chrzestni: {godfather_name} i {godmother_name}. Świadkowie: {witnesses}. Ksiądz: {officiant}.',
+  marriage: 'Rok {marriage_year}, akt nr {marriage_act_number}. Dnia {marriage_date}, godz. {marriage_time}, w {marriage_place}. Zapowiedzi: {banns}. Pan młody: {groom_first_name} {groom_last_name}, {groom_status}, lat {groom_age}, {groom_occupation}, zam. {groom_residence}, syn {groom_father_first_name} {groom_father_last_name} i {groom_mother_first_name} z {groom_mother_last_name}. Panna młoda: {bride_first_name} {bride_last_name}, {bride_status}, lat {bride_age}, {bride_occupation}, zam. {bride_residence}, córka {bride_father_first_name} {bride_father_last_name} i {bride_mother_first_name} z {bride_mother_last_name}. Świadkowie: {witness1_name} i {witness2_name}. Poprzedni małżonek: {previous_spouse}. Ksiądz: {officiant}.',
+  death: 'Rok {death_year}, akt nr {death_act_number}. Dnia {death_date}, godz. {death_time}, w {death_place} zmarł(a): {deceased_first_name} {deceased_last_name} (z domu {deceased_maiden_name}), {deceased_sex}, lat {age}, {deceased_status}, małżonek: {deceased_spouse}, zawód: {profession}, zam. {deceased_residence}, ur. w {deceased_birth_place}. Rodzice: {father_first_name} {father_last_name} i {mother_first_name} z {mother_last_name}. Zgłaszający: {informant1} i {informant2}. Pochowany(a): {burial_place}. Ksiądz: {officiant}.',
+  birth: '{child_first_name} {child_last_name}, ur. {birth_date} w {birth_place}. Ojciec: {father_name}, {father_profession}. Matka: {mother_name}.'
+};
+S.sent = lsGet('gv6.sent', '0') === '1';
+const inlineOk = f => f.type !== 'textarea';
+function shortLabel(f){ return String(f.label || f.id).replace(/\s*\(.*?\)\s*/g, '').replace(/\s+(pana młodego|panny młodej|zmarłego|dziecka)$/i, '').toLowerCase(); }
+function inlineField(f, rec, unc){
+  const val = rec ? (rec.v[f.id] ?? '') : '', id = 'f_' + f.id, ph = esc(f.placeholder && f.placeholder.length < 18 ? f.placeholder : shortLabel(f));
+  let ctl;
+  if (f.type === 'select') ctl = `<select id="${id}" name="${esc(f.id)}" class="inl"><option value="">${ph}</option>${(f.options || []).map(o => `<option${o === val ? ' selected' : ''}>${esc(o)}</option>`).join('')}</select>`;
+  else ctl = `<input id="${id}" name="${esc(f.id)}" class="inl${String(val).trim() ? ' filled' : ''}${unc ? ' unc' : ''}${f.required ? ' req' : ''}" type="text" value="${esc(val)}" placeholder="${ph}" autocomplete="off" size="${Math.max(4, Math.min(24, String(val || ph).length + 1))}">`;
+  const hint = /(^|_)age$/.test(f.id) ? `<span class="vcnt age" id="vc_${esc(f.id)}"></span>` : '';
+  const q = !['uncertain_fields','notes','notes_org','verification_status'].includes(f.id) ? `<button type="button" class="qbtn inq" data-q="${esc(f.id)}" aria-pressed="${unc ? 'true' : 'false'}" tabindex="-1" title="Oznacz niepewny odczyt tego pola">?</button>` : '';
+  return `<span class="slot ${unc ? 'unc' : ''}">${ctl}${q}${hint}</span>`;
+}
+function sentenceHtml(t, rec){
+  const fs = new Map(fieldsOf(t).map(f => [f.id, f])), used = new Set(), ul = rec ? uncertainList(rec) : [];
+  const html = FORMULAS[t.id].split(/(\{\w+\})/).map(tok => {
+    const m = tok.match(/^\{(\w+)\}$/);
+    if (!m) return esc(tok);
+    const f = fs.get(m[1]); if (!f || !inlineOk(f) || used.has(f.id)) return '';
+    used.add(f.id); return inlineField(f, rec, ul.includes(f.id));
+  }).join('');
+  const rest = fieldsOf(t).filter(f => !used.has(f.id));
+  return `<div class="sentence">${html}</div>` + (rest.length ? `<details class="fgrp" open><summary>Pozostałe pola <span class="cnt"></span></summary><div class="fgrid">${rest.map(f => fieldHtml(f, rec, true)).join('')}</div></details>` : '');
+}
+
 function renderForm(){
   const t = tpl(), form = $('recForm');
   const rec = currentRec();
@@ -777,6 +837,9 @@ function renderForm(){
   const groups = {};
   fieldsOf(t).forEach(f => { (groups[groupOf(f.id)] = groups[groupOf(f.id)] || []).push(f); });
   const order = [...GROUP_ORDER, ...Object.keys(groups).filter(g => !GROUP_ORDER.includes(g))];
+  form.classList.toggle('sentmode', !!(S.sent && FORMULAS[t.id]));
+  $('btnSent').setAttribute('aria-pressed', String(!!S.sent));
+  if (S.sent && FORMULAS[t.id]) form.innerHTML = sentenceHtml(t, rec); else
   form.innerHTML = order.filter(g => groups[g]).map(g => {
     const fs = groups[g];
     const filled = rec ? fs.filter(f => String(rec.v[f.id] ?? '').trim() !== '').length : 0;
@@ -940,6 +1003,12 @@ function renderTabs(){
   const done = mine.filter(r => r.status === 'ok').length;
   $('progBar').style.width = (mine.length ? Math.round(done * 100 / mine.length) : 0) + '%';
   $('progTxt').textContent = `${done}/${mine.length} gotowe`;
+  const cr = currentRec(), Y = cr ? yearOf(cr) : 9999;
+  if (cr && Y !== 9999){
+    const yr = mine.filter(r => yearOf(r) === Y), yd = yr.filter(r => r.status === 'ok').length, yc = yr.filter(r => r.status === 'check' || r.uncertain || (r.v.uncertain_fields || '').trim()).length;
+    $('progTxt').textContent += ` · rocznik ${Y}: ${yd}/${yr.length}` + (yc ? ` · ${yc} do spr.` : '');
+    $('prog').title = `Gotowe rekordy w tym rodzaju aktu. Rocznik ${Y}: gotowe ${yd} z ${yr.length}` + (yc ? `, do sprawdzenia ${yc}` : '');
+  }
   $('nWork').textContent = mine.filter(r => r.status !== 'ok').length;
   $('nCheck').textContent = mine.filter(r => r.status === 'check' || r.uncertain || (r.v.uncertain_fields || '').trim()).length;
   ['tabWork','tabCheck','tabAll'].forEach(id => $(id).setAttribute('aria-pressed', String({tabWork:'work',tabCheck:'check',tabAll:'all'}[id] === S.view)));
@@ -1318,7 +1387,7 @@ function drawRois(){
   if (S.warpMode) return;
   S.records.filter(r => r.page === S.page && r.roi && r.tpl === S.tplId).forEach(r => {
     const el = document.createElement('div'), isCur = r.id === S.cur;
-    el.className = 'roi-box ' + (r.status === 'ok' ? 'ok' : (r.status === 'check' || r.uncertain) ? 'warn' : '') + (isCur ? ' cur' : '');
+    el.className = 'roi-box ' + (r.status === 'ok' ? 'ok' : (r.status === 'check' || r.uncertain) ? 'warn' : r.status === 'nowy' ? 'nowy' : '') + (isCur ? ' cur' : ''); el.title = STATUS[r.status] || '';
     el.dataset.id = r.id;
     el.innerHTML = `<span class="n">${esc(r.v.christening_act_number || '?')} ${esc(recTitle(r) === 'Akt' ? '' : recTitle(r))}</span>` + (isCur ? HANDLES.map(h => `<i class="hd hd-${h}" data-h="${h}"></i>`).join('') : '');
     el.onclick = e => { e.stopPropagation(); if (!S.roiDragged) selectRecord(r.id); S.roiDragged = false; };
@@ -1600,6 +1669,7 @@ document.addEventListener('keydown', e => {
   if (e.key === 'a' || e.key === 'A') { setRoiMode(!S.roiMode); return; }
   if (e.key === 'r' || e.key === 'R') { focusRoi(); return; }
   if (e.key === 'h' || e.key === 'H') { rsCycle(); return; }
+  if (e.key === 'z' || e.key === 'Z') { loupeSet(!LP.on); return; }
   if (e.key === '[' || e.key === ']') { rotTotal(rotNow() + (e.key === ']' ? 1 : -1) * (e.shiftKey ? 5 : 0.5)); return; }
   if (e.key === '{' || e.key === '}') { rotTotal(rotNow() + (e.key === '}' ? 5 : -5)); return; }
   if (e.key === '0') { if (S.viewer) S.viewer.viewport.goHome(); return; }
@@ -1725,6 +1795,45 @@ $('btnListClose').onclick = () => $('app').classList.remove('listopen');
 $('btnBig').onclick = () => { const on = $('app').classList.toggle('bigview'); $('btnBig').setAttribute('aria-pressed', on); };
 $('tablePanel').addEventListener('click', e => { if (window.matchMedia('(max-width:820px)').matches && e.target.closest('tbody tr') && !e.target.closest('input,button,select')) setTimeout(() => $('app').classList.remove('listopen'), 60); });
 
+
+
+/* ===================== LUPA ===================== */
+const LP = {on: false, img: null, url: '', x: 0, y: 0, ev: null};
+function loupeSet(on){
+  LP.on = on; $('btnLoupe').setAttribute('aria-pressed', String(on));
+  $('viewerWrap').style.cursor = on ? 'crosshair' : '';
+  if (!on){ $('loupe').hidden = true; return; }
+  const im = S.images[S.page]; if (!im) { LP.on = false; $('btnLoupe').setAttribute('aria-pressed', 'false'); return toast('Najpierw wczytaj skany'); }
+  loupeLoad().then(() => { if (LP.ev) loupeDraw(LP.ev); });
+}
+async function loupeLoad(){
+  const im = S.images[S.page]; if (!im) return;
+  const url = im.wurl || im.url; if (LP.url === url && LP.img) return;
+  LP.img = await loadImg(url); LP.url = url;
+}
+function loupeDraw(e){
+  const cv = $('loupe'), wrap = $('viewerWrap'), vw = S.viewer;
+  if (!LP.on || !vw || !LP.img){ cv.hidden = true; return; }
+  const wr = wrap.getBoundingClientRect(), vr = $('viewer').getBoundingClientRect();
+  const px = e.clientX - vr.left, py = e.clientY - vr.top;
+  if (e.clientX < wr.left || e.clientX > wr.right || e.clientY < wr.top || e.clientY > wr.bottom){ cv.hidden = true; return; }
+  const pt = vw.viewport.viewerElementToImageCoordinates(new OpenSeadragon.Point(px, py));
+  const z = vw.viewport.viewportToImageZoom(vw.viewport.getZoom(true)) || 1;   // piksele ekranu na piksel obrazu
+  const K = 3, side = 240 / (z * K);                                          // bok wycinka w pikselach obrazu
+  const ctx = cv.getContext('2d'), W = cv.width;
+  ctx.save(); ctx.clearRect(0, 0, W, W); ctx.fillStyle = '#fff'; ctx.fillRect(0, 0, W, W);
+  ctx.translate(W / 2, W / 2); ctx.rotate(-(vw.viewport.getRotation(true) || 0) * Math.PI / 180);
+  const sc = W / side; ctx.scale(sc, sc);
+  ctx.drawImage(LP.img, -pt.x, -pt.y);
+  ctx.restore();
+  cv.style.filter = ($('viewer').querySelector('canvas') || {style: {}}).style.filter || '';
+  cv.style.left = Math.min(Math.max(e.clientX - wr.left - 120, 0), wr.width - 240) + 'px';
+  cv.style.top = Math.max(e.clientY - wr.top - 270, 0) + 'px';
+  cv.hidden = false;
+}
+$('btnLoupe').onclick = () => loupeSet(!LP.on);
+$('viewerWrap').addEventListener('mousemove', e => { LP.ev = e; if (LP.on){ const im = S.images[S.page]; if (im && LP.url === (im.wurl || im.url) && LP.img) loupeDraw(e); else loupeLoad().then(() => loupeDraw(e)); } });
+$('viewerWrap').addEventListener('mouseleave', () => { $('loupe').hidden = true; });
 
 /* ===================== FILTRY OBRAZU (czytelność akt metrykalnych) ===================== */
 const FX_KEY = 'gv6.fx', FX_DEF = {bri:100, con:100, shp:0, thr:0, flat:false, gray:false, inv:false, ruler:false};
@@ -2398,6 +2507,7 @@ $('btnCols').onclick = () => {
   $('colReset').onclick = () => { lsSet('gv6.cols.' + S.tplId, 'null'); $('colMenu').hidden = true; renderTable(); };
 };
 $('btnGroups').onclick = () => { const ds = [...document.querySelectorAll('#recForm details.fgrp')]; const anyOpen = ds.some(d => d.open); ds.forEach(d => d.open = !anyOpen); };
+$('btnSent').onclick = () => { syncFormToRec(); S.sent = !S.sent; lsSet('gv6.sent', S.sent ? '1' : '0'); renderForm(); focusFirstField(); };
 $('btnFilled').onclick = () => { const on = $('recForm').classList.toggle('onlyfilled'); $('btnFilled').setAttribute('aria-pressed', String(on)); lsSet('gv6.onlyfilled', on ? '1' : '0'); };
 if (lsGet('gv6.onlyfilled', '0') === '1'){ $('recForm').classList.add('onlyfilled'); $('btnFilled').setAttribute('aria-pressed', 'true'); }
 window.addEventListener('beforeunload', e => { if (S.dirty && S.dirty.size){ e.preventDefault(); e.returnValue = ''; } });
