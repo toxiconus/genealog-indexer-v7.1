@@ -205,9 +205,12 @@ function parseSp(s){const m=(s||'').match(/(?:owd\.|wdow(?:iec|a|ca|cem|ie|y|ę)
 function peopleM(a){const g={sn:a[4],fn:a[5],stan:a[6],fa:a[7],faSn:a[8],mo:a[9],moSn:a[10],pl:a[11],wiek:a[12],by:yM(a),prev:a[24]},b={sn:a[14],fn:a[15],stan:a[16],fa:a[17],faSn:a[18],mo:a[19],moSn:a[20],pl:a[21],wiek:a[22],by:yP(a),prev:a[25]};
  const par=p=>({F:{k:'F',sn:known(p.faSn)?p.faSn:p.sn,fn:p.fa,sex:'m',childBy:p.by,spFn:p.mo},M:{k:'M',sn:p.sn,maiden:p.moSn,fn:p.mo,sex:'k',childBy:p.by,spFn:p.fa}});
  const gp=par(g),bp=par(b);
- return{g:{k:'g',...g,sex:'m',spFn:b.fn},b:{k:'b',...b,sex:'k',spFn:g.fn},gF:gp.F,gM:gp.M,bF:bp.F,bM:bp.M,G:g,Bd:b}}
+ return{g:{k:'g',...g,sex:'m',spFn:b.fn},b:{k:'b',...b,sex:'k',spFn:g.fn,maiden:known(b.faSn)&&snm(b.faSn)!==snm(b.sn)?b.faSn:''},gF:gp.F,gM:gp.M,bF:bp.F,bM:bp.M,G:g,Bd:b}}
+function refineRow(r,id){const a=r.slice();
+ [['g.b',13,7,9,10],['b.b',23,17,19,20]].forEach(([s,iy,fa,mo,ms])=>{const d=(DEC[id]||{})[s];const x=d&&d.acc[0]&&rec('B',d.acc[0].id);if(!x)return;
+  a[iy]=x[1];if(known(x[6]))a[fa]=x[6];if(known(x[9]))a[mo]=x[9];if(known(x[10]))a[ms]=x[10]});return a}
 function compute(mode,id){const r=rec(mode,id);cur={mode,id,r};CAND={};
- if(mode==='M'){const m={rok:r[1]},P=peopleM(r);cur.P=P;cur.slots=SL13;
+ if(mode==='M'){const m={rok:r[1]},P=peopleM(refineRow(r,id));cur.P=P;cur.slots=SL13;
   ['gF','gM','bF','bM'].forEach(k=>{const p=P[k];CAND[k+'.b']=known(p.fn)?candBirth(p,p.childBy):[];CAND[k+'.d']=known(p.fn)?candDeath(p,(p.childBy||r[1]-60)-1,r[1]):[]});
   ['g','b'].forEach(k=>{const p=P[k];CAND[k+'.b']=known(p.fn)?candBirth(p,r[1]):[];CAND[k+'.d']=known(p.fn)?candDeath(p,r[1],r[1]):[]});
   CAND.kids=candKids(P.G,P.Bd,r[1]);sel='g.d'}
@@ -314,8 +317,9 @@ function act(a,r){const s=sel,k=dkey(),d=JSON.parse(JSON.stringify(dget(k,s)));c
  else if(a==='rej'){if(!d.rej.some(eq))d.rej.push({t:r.t,id:r.id});}else if(a==='un'){d.acc=d.acc.filter(x=>!eq(x));d.rej=d.rej.filter(x=>!eq(x))}
  else if(a==='none'){d.none=true;d.acc=[]}else if(a==='unnone')d.none=false;
  else if(a==='rejweak'){pending(s).filter(x=>x.pct<50).forEach(x=>{if(!d.rej.some(y=>y.t===x.t&&y.id===x.id))d.rej.push({t:x.t,id:x.id})})}
- dset(k,s,d);render();lst()}
-function stat(){let n=0,t=0;Object.values(DEC).forEach(o=>Object.values(o).forEach(v=>{if(v.acc.length)n++;t+=v.acc.length}));document.getElementById('stat').textContent=`przyjęte pola: ${n} · powiązane rekordy: ${t}`}
+ dset(k,s,d);CH++;if(cur.mode==='M'&&/^[gb]\.b$/.test(s)){const keep=sel;compute(cur.mode,cur.id);sel=keep}render();lst()}
+let CH=0;
+function stat(){let n=0,t=0;Object.values(DEC).forEach(o=>Object.values(o).forEach(v=>{if(v.acc.length)n++;t+=v.acc.length}));document.getElementById('stat').textContent=`przyjęte pola: ${n} · powiązane rekordy: ${t}`+(CH>=10?` · ⚠ ${CH} zmian bez kopii (⬇ JSON)`:'');document.getElementById('stat').style.color=CH>=10?'var(--md)':''}
 function render(){cur.mode==='M'?renderM():renderC();panel();stat();treeBox();
  document.getElementById('crumb').textContent=({M:'ślub',B:'urodzenie',D:'zgon'})[cur.mode]+' '+cur.r[1]+' · '+(cur.mode==='M'?cur.r[5]+' '+cur.r[4]:cur.mode==='B'?cur.r[4]+' '+cur.r[3]:cur.r[3]+' '+cur.r[2]);
  document.getElementById('bBack').disabled=HIST.length<2}
@@ -540,7 +544,7 @@ document.getElementById('bPersonIndexClose').onclick=()=>document.getElementById
 document.getElementById('personIndexModal').addEventListener('click',e=>{if(e.target.id==='personIndexModal')e.currentTarget.hidden=true});
 document.addEventListener('keydown',e=>{if(e.key==='Escape')document.getElementById('personIndexModal').hidden=true});
 
-document.getElementById('bJson').onclick=()=>dl('dopasowanie_decyzje.json',JSON.stringify(DEC,null,1),'application/json');
+document.getElementById('bJson').onclick=()=>{CH=0;stat()};document.getElementById('bJson').addEventListener('click',()=>dl('dopasowanie_decyzje.json',JSON.stringify(DEC,null,1),'application/json'));
 document.getElementById('bLoad').onclick=()=>document.getElementById('fLoad').click();
 document.getElementById('fLoad').onchange=e=>{const f=e.target.files[0];if(!f)return;f.text().then(t=>{try{const parsed=JSON.parse(t.replace(/^﻿/,''));const clean=validateDecisions(parsed);if(!confirm('Import zastąpi wszystkie dotychczasowe decyzje zapisane w tej przeglądarce. Przed importem zostanie utworzona kopia bezpieczeństwa. Kontynuować?'))return;dl('dopasowanie_decyzje_backup.json',JSON.stringify(DEC,null,2),'application/json');DEC=clean;const saved=save();go(cur.mode,cur.id,true);alert('Import zakończony. Nieznane identyfikatory rekordów pominięto.'+(saved?'':'\nUWAGA: przeglądarka nie pozwoliła zapisać decyzji na stałe — wyeksportuj JSON i zachowaj plik.'))}catch(x){alert('Nie udało się wczytać JSON: '+(x.message||'nieprawidłowy format'))}finally{e.target.value=''}})};
 const SLN={};[SL13,SLB,SLD].forEach((L,i)=>L.forEach(([k,l])=>{SLN[['M','B','D'][i]+'|'+k]=l}));
@@ -564,7 +568,7 @@ function treeLoad(j){TREE={P:j.p,F:j.f,par:{},sp:{}};for(const fid in j.f){const
 const tnm=p=>p?`${p.fn||''} ${p.sn||''}`.trim():'?';
 function treeFind(){if(!TREE)return[];const r=cur.r,out=[],mode=cur.mode;
  if(mode==='M'){for(const fid in TREE.F){const f=TREE.F[fid],h=TREE.P[f.h],w=TREE.P[f.w];if(!h||!w)continue;
-  const cr=[['nazwisko pana',3,sSn(r[4],h.sn)],['imię pana',3,sFn(r[5],h.fn)],['imię panny',3,sFn(r[15],w.fn)],['nazwisko panny',3,sSn(r[14],w.sn)]];
+  const cr=[['nazwisko pana',3,sSn(r[4],h.sn)],['imię pana',3,sFn(r[5],h.fn)],['imię panny',3,sFn(r[15],w.fn)],['nazwisko panny',3,Math.max(sSn(r[14],w.sn)||0,sSn(r[18],w.sn)||0,sSn(r[14],w.ms)||0)]];
   if(cr.slice(0,3).some(c=>c[2]!=null&&c[2]<.3))continue;if(f.m)cr.push(['rok',2,sYear(r[1],tyr(f.m),2)]);
   const g=grade(cr);if(g&&g.pct>=60)out.push({k:'f',id:fid,pct:g.pct,why:g.why})}}
  else{const sn=mode==='B'?r[3]:(known(r[12])&&r[4]==='k'?r[12]:r[2]),fn=mode==='B'?r[4]:r[3],y=r[1];

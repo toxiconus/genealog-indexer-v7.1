@@ -14,6 +14,20 @@ window.TEMPLATES_CONFIG = {
           "placeholder": "CH.LUB.BLIN.1908.001"
         },
         {
+          "id": "index_card",
+          "label": "Karta indeksowa (nr)",
+          "type": "text",
+          "required": false,
+          "placeholder": "np. 12"
+        },
+        {
+          "id": "index_month",
+          "label": "Miesiąc wpisu (z indeksu)",
+          "type": "text",
+          "required": false,
+          "placeholder": "np. III"
+        },
+        {
           "id": "christening_year",
           "label": "Rok chrztu",
           "type": "number",

@@ -151,6 +151,7 @@ td.edit input{min-height:26px;padding:2px 4px;font-size:13px}
 .b-work{background:var(--acc-soft);color:var(--acc)}
 .b-check{background:var(--warn-soft);color:var(--warn)}
 .b-ok{background:var(--ok-soft);color:var(--ok)}
+.b-idx{background:var(--panel2);color:var(--muted);border:1px dashed var(--line)}
 .pin{color:var(--acc);font-size:12px}
 
 /* panel boczny: rekord */
@@ -158,7 +159,7 @@ td.edit input{min-height:26px;padding:2px 4px;font-size:13px}
 .sideHead{padding:10px 12px 8px;border-bottom:1px solid var(--line);display:grid;gap:8px}
 .sideHead .row{display:flex;gap:6px;align-items:center;justify-content:space-between;flex-wrap:wrap}
 #recMeta{font-size:12.5px;color:var(--muted)}
-.statusSeg{display:grid;grid-template-columns:repeat(4,1fr);border:1px solid var(--line);border-radius:8px;overflow:hidden}
+.statusSeg{display:grid;grid-template-columns:repeat(5,1fr);border:1px solid var(--line);border-radius:8px;overflow:hidden}
 .statusSeg button{border:0;border-radius:0;min-height:30px;font-size:12.5px;background:transparent;padding:3px 4px}
 .statusSeg button+button{border-left:1px solid var(--line)}
 .statusSeg button[aria-pressed="true"]{color:#fff;font-weight:600}
@@ -166,6 +167,7 @@ td.edit input{min-height:26px;padding:2px 4px;font-size:13px}
 .statusSeg button[data-st="w_toku"][aria-pressed="true"]{background:var(--acc)}
 .statusSeg button[data-st="check"][aria-pressed="true"]{background:var(--warn)}
 .statusSeg button[data-st="ok"][aria-pressed="true"]{background:var(--ok)}
+.statusSeg button[data-st="indeks"][aria-pressed="true"]{background:#6b7d8f}
 .sideNav{display:flex;gap:6px;flex-wrap:wrap;align-items:center;padding:5px 12px;border-bottom:1px solid var(--line)}
 .sideNav button{min-height:28px;padding:3px 9px;font-size:13px}
 #recForm{flex:1;min-height:0;overflow:auto;padding:6px 12px 12px}
@@ -535,6 +537,7 @@ body.compact .fgrid{gap:4px 8px}
         <button data-st="w_toku" aria-pressed="false">W toku</button>
         <button data-st="check" aria-pressed="false">Sprawdzić</button>
         <button data-st="ok" aria-pressed="false">Gotowe</button>
+        <button data-st="indeks" aria-pressed="false" title="Wiersz z indeksu, jeszcze niezweryfikowany ze skanem">Z indeksu</button>
       </div>
     </div>
     <div id="issueBar" aria-live="polite"></div>
@@ -567,9 +570,9 @@ body.compact .fgrid{gap:4px 8px}
         <button id="btnListClose">✕ Zamknij listę</button>
         <strong>Rekordy</strong>
         <span id="recCount" class="muted"></span>
-        <input id="filter" placeholder="Szukaj we wszystkich polach…" aria-label="Szukaj w rekordach">
+        <input id="filter" placeholder="Szukaj we wszystkich polach…" aria-label="Szukaj w rekordach"><select id="yearSel" aria-label="Filtr rocznika" title="Pokaż tylko jeden rocznik"><option value="">Wszystkie roczniki</option></select>
         <span class="grow"></span>
-        <span class="bulk" id="bulk"><span class="muted">Zbiorczo:</span><button data-bulk="w_toku">W toku</button><button data-bulk="check">Sprawdzić</button><button data-bulk="ok">Gotowe</button></span>
+        <span class="bulk" id="bulk"><span class="muted">Zbiorczo:</span><button data-bulk="w_toku">W toku</button><button data-bulk="check">Sprawdzić</button><button data-bulk="ok">Gotowe</button><button data-bulk="indeks">Z indeksu</button></span>
         <button id="btnCols" title="Wybierz kolumny tabeli">Kolumny</button>
         <button id="btnCheck" title="Kontrola: przeskoki numeracji, dziwne wartości, brakujące pola">Kontrola</button>
         <button id="btnFind" title="Znajdź i zamień w jednym polu w wielu rekordach">Znajdź i zamień</button>
@@ -679,15 +682,16 @@ const uid = () => 'r' + Date.now().toString(36) + Math.random().toString(36).sli
 const now = () => new Date().toISOString().slice(0, 16).replace('T', ' ');
 const tpl = () => S.templates.find(t => t.id === S.tplId) || S.templates[0];
 const fieldsOf = t => (t?.fields || []);
-const STATUS = {nowy:'Nowy', w_toku:'W toku', check:'Sprawdzić', ok:'Gotowe'};
-const BADGE = {nowy:'b-new', w_toku:'b-work', check:'b-check', ok:'b-ok'};
+const STATUS = {nowy:'Nowy', w_toku:'W toku', check:'Sprawdzić', ok:'Gotowe', indeks:'Z indeksu'};
+const BADGE = {nowy:'b-new', w_toku:'b-work', check:'b-check', ok:'b-ok', indeks:'b-idx'};
 // Nagłówki z CH BLIN.txt (i eksportów z nim zgodnych) -> pola szablonu chrztu. Kolumny spoza mapy są pomijane.
 const PRESET = {
   'ID':'source_id', 'ROK':'christening_year', 'Nr.':'christening_act_number', 'AKT':'christening_act_number', 'NAZWISKO':'child_last_name', 'IMIĘ':'child_first_name', 'UWAGI':'notes',
   'Nazwisko':'child_last_name', 'Imię':'child_first_name', 'Miejscowość':'christening_place',
   'ImięO':'father_first_name', 'NazwiskoO':'father_last_name', 'wO':'father_age',
   'IM':'mother_first_name', 'NM':'mother_last_name', 'wM':'mother_age',
-  'uwagi':'notes', 'UWAGI ORG':'notes_org'
+  'uwagi':'notes', 'UWAGI ORG':'notes_org',
+  'KARTA':'index_card', 'Karta':'index_card', 'NR KARTY':'index_card', 'MIESIĄC':'index_month', 'Miesiąc':'index_month'
 };
 // Kolumny tabeli: najpierw te, które identyfikują akt
 const COL_PRIORITY = ['christening_act_number','christening_year','marriage_act_number','marriage_year','death_act_number','death_year','child_first_name','child_last_name',
@@ -982,6 +986,7 @@ function filteredRecords(){
   if (S.view === 'work') list = list.filter(r => r.status !== 'ok');
   if (S.view === 'check') list = list.filter(r => r.status === 'check' || r.uncertain || (r.v.uncertain_fields || '').trim());
   Object.entries(S.colF || {}).forEach(([f, v]) => { const t = v.trim().toLowerCase(); if (t) list = list.filter(r => String(r.v[f] ?? '').toLowerCase().includes(t)); });
+  if (S.yearF) list = list.filter(r => String(yearOf(r)) === S.yearF);
   const q = S.filter.trim().toLowerCase();
   if (q) list = list.filter(r => Object.values(r.v).join(' ').toLowerCase().includes(q));
   if (S.sort) {
@@ -998,6 +1003,7 @@ let tableTimer = null;
 function queueTable(){ clearTimeout(tableTimer); tableTimer = setTimeout(renderTable, 150); }
 function renderAll(){ renderTable(); renderForm(); renderTabs(); renderThumbs(); renderBatches(); updateDelBtn(); renderCrop(); }
 function renderTabs(){
+  try { fillYears(); } catch(e){}
   const mine = S.records.filter(r => r.tpl === S.tplId);
   $('nAll').textContent = mine.length;
   const done = mine.filter(r => r.status === 'ok').length;
@@ -1207,6 +1213,16 @@ $('btnDelete').onclick = () => {
   });
 };
 $('filter').oninput = e => { S.filter = e.target.value; renderTable(); };
+S.yearF = '';
+function fillYears(){
+  const sel = $('yearSel'); if (!sel) return;
+  const ys = [...new Set(S.records.filter(r => r.tpl === S.tplId).map(r => yearOf(r)).filter(y => y !== 9999))].sort((a,b) => a-b);
+  const sig = S.tplId + ys.join(',');
+  if (sel.dataset.sig === sig) return;
+  sel.dataset.sig = sig; if (S.yearF && !ys.includes(+S.yearF)) S.yearF = '';
+  sel.innerHTML = '<option value="">Wszystkie roczniki</option>' + ys.map(y => `<option value="${y}"${String(y) === S.yearF ? ' selected' : ''}>${y}</option>`).join('');
+}
+$('yearSel').onchange = e => { S.yearF = e.target.value; renderTable(); };
 
 /* Widoki */
 function setView(v){ S.view = v; renderAll(); }
@@ -2048,7 +2064,7 @@ function issuesOf(rec, ctx){
   const out = [], v = rec.v, t = rec.tpl;
   const add = (f, msg, lvl = 'warn') => out.push({f, msg, lvl});
   const T = S.templates.find(x => x.id === t);
-  (T ? fieldsOf(T) : []).forEach(f => { if (f.required && String(v[f.id] ?? '').trim() === '' && rec.status !== 'nowy') add(f.id, `brak: ${f.label}`, rec.status === 'ok' ? 'err' : 'warn'); });
+  (T ? fieldsOf(T) : []).forEach(f => { if (f.required && String(v[f.id] ?? '').trim() === '' && rec.status !== 'nowy' && rec.status !== 'indeks') add(f.id, `brak: ${f.label}`, rec.status === 'ok' ? 'err' : 'warn'); });
   Object.keys(v).forEach(fid => {
     if (!/(first|last)_name$/.test(fid)) return;
     const x = String(v[fid] ?? '').trim(); if (!x) return;
