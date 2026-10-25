@@ -1,0 +1,205 @@
+<!doctype html>
+<html lang="pl"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Dopasowanie osób – Blinów</title>
+<style>
+:root{--bg:#0b1118;--p1:#111b26;--p2:#16222f;--ln:#243446;--tx:#dbe6f0;--mu:#7f93a6;--ac:#4cc3ff;--ok:#3ddc97;--md:#ffc857;--lo:#6b7d8f;--no:#ff6b6b}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--tx);font:14px/1.4 system-ui,Segoe UI,sans-serif;height:100vh;display:grid;grid-template-rows:auto 1fr}
+header{display:flex;gap:12px;align-items:center;padding:8px 14px;border-bottom:1px solid var(--ln);background:var(--p1)}
+header h1{font-size:15px;margin:0;font-weight:600;letter-spacing:.3px}header h1 b{color:var(--ac)}header .sp{flex:1}
+button,.btn{background:var(--p2);color:var(--tx);border:1px solid var(--ln);border-radius:7px;padding:5px 10px;cursor:pointer;font:inherit}
+button:hover{border-color:var(--ac)}button.pri{background:#0e4f6e;border-color:var(--ac)}button.ok{background:#12452f;border-color:var(--ok)}button.bad{border-color:#5a2b2b;color:#ffa0a0}
+main{display:grid;grid-template-columns:270px 1fr 400px;min-height:0}
+aside,section{min-height:0;overflow:auto}
+#list{border-right:1px solid var(--ln);background:var(--p1)}#list input{width:calc(100% - 16px);margin:8px;padding:6px 8px;background:var(--bg);border:1px solid var(--ln);color:var(--tx);border-radius:7px}
+.mi{padding:6px 12px;border-bottom:1px solid #16212d;cursor:pointer;display:flex;gap:8px;align-items:center}.mi:hover{background:var(--p2)}.mi.on{background:#103046;box-shadow:inset 3px 0 var(--ac)}
+.mi small{color:var(--mu)}.mi .d{margin-left:auto;font-size:11px;color:var(--ok)}
+#mid{padding:12px 16px}#ttl{margin:0 0 2px;font-size:18px}#sub{color:var(--mu);margin-bottom:8px}
+svg{width:100%;height:auto;display:block}
+.nd rect.c{fill:var(--p1);stroke:var(--ln);stroke-width:1.2}.nd text{fill:var(--tx);font-size:12px}.nd .r{fill:var(--mu);font-size:10px;text-transform:uppercase;letter-spacing:.6px}.nd .s{fill:var(--mu);font-size:11px}
+.pill{cursor:pointer}.pill rect{stroke-width:1.4;fill:var(--p2)}.pill text{font-size:11px;fill:var(--tx);pointer-events:none}.pill:hover rect{stroke:#fff}
+.st-empty rect{stroke:var(--ln)}.st-lo rect{stroke:var(--lo)}.st-mid rect{stroke:var(--md)}.st-hi rect{stroke:var(--ac);fill:#0f3144}.st-ok rect{stroke:var(--ok);fill:#12452f}.st-none rect{stroke:var(--lo);stroke-dasharray:3 2}
+.pill.sel rect{stroke:#fff;stroke-width:2.4}
+.edge{stroke:var(--ln);stroke-width:1.4;fill:none}
+#tl{margin-top:10px;background:var(--p1);border:1px solid var(--ln);border-radius:10px;padding:6px}
+#right{border-left:1px solid var(--ln);background:var(--p1);padding:10px 12px}
+#right h3{margin:0 0 2px;font-size:15px}#right .want{color:var(--mu);font-size:12.5px;margin-bottom:8px}
+.cd{border:1px solid var(--ln);border-radius:10px;padding:8px 10px;margin-bottom:8px;background:var(--p2)}.cd.acc{border-color:var(--ok);background:#12301f}.cd.rej{opacity:.55}
+.cd .h{display:flex;gap:8px;align-items:baseline}.cd .h b{font-size:14px}.cd .h span{margin-left:auto;font-weight:700}
+.cd .d{color:var(--mu);font-size:12.5px;margin:2px 0}.bar{height:5px;background:#0b1118;border-radius:3px;margin:5px 0}.bar i{display:block;height:100%;border-radius:3px}
+.chips{display:flex;flex-wrap:wrap;gap:4px;margin:4px 0}.chip{font-size:11px;padding:1px 7px;border-radius:9px;border:1px solid}.chip.y{color:var(--ok);border-color:#1f6b49}.chip.p{color:var(--md);border-color:#6b5520}.chip.n{color:var(--no);border-color:#6b2b2b}
+.warn{color:var(--md);font-size:11.5px}.act{display:flex;gap:6px;margin-top:5px}
+kbd{background:var(--bg);border:1px solid var(--ln);border-radius:4px;padding:0 4px;font-size:11px}
+.leg{color:var(--mu);font-size:11.5px;margin-top:6px}.leg i{display:inline-block;width:10px;height:10px;border-radius:3px;margin:0 3px 0 8px;border:2px solid}
+</style></head><body>
+<header><h1>🧬 <b>Dopasowanie osób</b> · parafia Blinów</h1><span class="sp"></span>
+<span id="stat" style="color:var(--mu)"></span>
+<button id="bCsv">⬇ CSV decyzji</button><button id="bJson">⬇ kopia JSON</button><button id="bLoad">⬆ wczytaj JSON</button><input type="file" id="fLoad" accept=".json" hidden></header>
+<main>
+<aside id="list"><input id="q" placeholder="szukaj: nazwisko, rok, nr…"><div id="lst"></div></aside>
+<section id="mid"><h2 id="ttl"></h2><div id="sub"></div><svg id="map" viewBox="0 0 960 500"></svg><div id="tl"></div>
+<div class="leg">Klawisze: <kbd>↑</kbd><kbd>↓</kbd> pole · <kbd>A</kbd> przyjmij najlepszego · <kbd>R</kbd> odrzuć · <kbd>0</kbd> brak w księgach · <kbd>←</kbd><kbd>→</kbd> inny akt
+<br>Kolor ramki: <i style="border-color:var(--ok)"></i>przyjęte <i style="border-color:var(--ac)"></i>mocny kandydat ≥75% <i style="border-color:var(--md)"></i>możliwy ≥50% <i style="border-color:var(--lo)"></i>słaby <i style="border-color:var(--ln)"></i>brak. Wynik to podpowiedź – decyzja zawsze Twoja.</div></section>
+<aside id="right"></aside>
+</main>
+<script>
+/*DATA*/
+const esc=s=>String(s==null?'':s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const strip=s=>(s||'').toLowerCase().replace(/ł/g,'l').normalize('NFD').replace(/[̀-ͯ]/g,'');
+const known=s=>/[a-zA-ZąćęłńóśźżĄĆĘŁŃÓŚŹŻ]{3,}/.test(s||'');
+function snm(s){s=strip(s).replace(/[^a-z]/g,'').replace(/y/g,'i').replace(/rz/g,'z').replace(/ch/g,'h').replace(/(owna|owa)$/,'').replace(/ska$/,'ski').replace(/cka$/,'cki').replace(/dzka$/,'dzki');return s}
+function fnm(s){return strip(s).split(/[\s,.-]+/).map(t=>t.replace(/[^a-z]/g,'').replace(/y/g,'i').replace(/[aei]$/,'')).filter(t=>t.length>1)}
+function lev(a,b){const m=a.length,n=b.length;if(!m)return n;if(!n)return m;let p=[...Array(n+1).keys()];for(let i=1;i<=m;i++){const c=[i];for(let j=1;j<=n;j++)c[j]=Math.min(p[j]+1,c[j-1]+1,p[j-1]+(a[i-1]===b[j-1]?0:1));p=c}return p[n]}
+const sim=(a,b)=>a&&b?1-lev(a,b)/Math.max(a.length,b.length):0;
+const lv=x=>x>=.999?1:x>=.8?.85:x>=.7?.6:x>=.6?.3:0;
+function sSn(a,b){if(!known(a)||!known(b))return null;return lv(sim(snm(a),snm(b)))}
+function sFn(a,b){if(!known(a)||!known(b))return null;const A=fnm(a),B=fnm(b);if(!A.length||!B.length)return null;let best=0;A.forEach((x,i)=>B.forEach((y,j)=>{let v=lv(sim(x,y));if(i!==j)v*=.8;best=Math.max(best,v)}));return best}
+function sYear(a,b,tol){if(!a||!b)return null;const d=Math.abs(a-b);return d===0?1:d===1?.85:d===2?.6:d<=(tol||3)?.3:0}
+function sInc(hay,needle){if(!known(needle)||!known(hay))return null;const n=fnm(needle)[0];const hs=fnm(hay);return hs.some(h=>sim(h,n)>=.8)?1:0}
+/* ocena: crit=[[etykieta,waga,wynik0-1|null]] */
+function grade(crit,pen){let k=0,r=0,m=0;crit.forEach(([l,w,s])=>{if(s==null)m+=w;else{k+=w;r+=w*s}});if(!k)return null;let p=100*r/(k+.5*m);if(pen)p*=pen;return{pct:Math.round(p),why:crit.filter(c=>c[2]!=null).map(c=>[c[0],c[2]>=.8?'y':c[2]>=.3?'p':'n'])}}
+/* osoby małżeństwa */
+const m2o=a=>({id:a[0],rok:a[1],nr:a[2],data:a[3],pan:{sn:a[4],fn:a[5],stan:a[6],fa:a[7],faSn:a[8],mo:a[9],moSn:a[10],pl:a[11],wiek:a[12],by:a[13]||(a[12]&&a[1]?a[1]-a[12]:0),prev:a[24]},
+ panna:{sn:a[14],fn:a[15],stan:a[16],fa:a[17],faSn:a[18],mo:a[19],moSn:a[20],pl:a[21],wiek:a[22],by:a[23]||(a[22]&&a[1]?a[1]-a[22]:0),prev:a[25]}});
+function people(m){const g=m.pan,b=m.panna;
+ const par=(p,sx)=>({F:{k:'F',sn:known(p.faSn)?p.faSn:p.sn,fn:p.fa,sex:'m',childBy:p.by,spFn:p.mo,role:'Ojciec'},M:{k:'M',sn:p.sn,maiden:p.moSn,fn:p.mo,sex:'k',childBy:p.by,spFn:p.fa,role:'Matka'}});
+ const gp=par(g),bp=par(b);
+ return{g:{k:'g',sn:g.sn,fn:g.fn,by:g.by,fa:g.fa,mo:g.mo,moSn:g.moSn,pl:g.pl,sex:'m',spFn:b.fn,role:'Pan młody'},b:{k:'b',sn:b.sn,fn:b.fn,by:b.by,fa:b.fa,mo:b.mo,moSn:b.moSn,pl:b.pl,sex:'k',spFn:g.fn,role:'Panna młoda'},
+ gF:gp.F,gM:gp.M,bF:bp.F,bM:bp.M}}
+/* kandydaci: urodzenie osoby */
+function candBirth(p,m){const out=[];const par=!p.by;
+ B.forEach(r=>{const mn=p.maiden&&known(p.maiden)?p.maiden:p.sn;
+  const cr=[['nazwisko',3,sSn(mn,r[3])],['imię',3,sFn(p.fn,r[4])]];
+  if(cr[0][2]!=null&&cr[0][2]<.3||cr[1][2]!=null&&cr[1][2]<.3)return;
+  let pen=1;
+  if(p.by){cr.push(['rok ur.',3,sYear(p.by,r[1],3)])}else if(p.childBy){const gap=p.childBy-r[1];cr.push(['pokolenie',2,gap>=20&&gap<=42?1:gap>=16&&gap<=52?.5:0]);if(gap<14)pen=.2}
+  if(p.fa)cr.push(['ojciec',2,sFn(p.fa,r[6])]);if(p.mo)cr.push(['matka',2,sFn(p.mo,r[9])]);if(p.moSn)cr.push(['nazwisko matki',2,sSn(p.moSn,r[10])]);
+  if(p.pl&&r[5])cr.push(['miejsc.',1,sInc(r[5],p.pl)]);
+  const g=grade(cr,pen);if(g&&g.pct>=28)out.push({t:'B',r,...g,id:r[0],yr:r[1]})});
+ return out.sort((a,b)=>b.pct-a.pct)}
+/* zgon osoby */
+function candDeath(p,m,minYear){const out=[];
+ D.forEach(r=>{if(r[1]<minYear)return;
+  const sx=r[4];if(sx&&p.sex&&sx!==p.sex)return;
+  let s1=sSn(p.sn,r[2]);if(p.sex==='k'){const a=p.maiden||p.sn;const s2=Math.max(sSn(a,r[12])||0,sSn(a,r[2])||0);if(s2>(s1||0))s1=s2}
+  const cr=[['nazwisko',3,s1],['imię',3,sFn(p.fn,r[3])]];
+  if(cr[0][2]!=null&&cr[0][2]<.3||cr[1][2]!=null&&cr[1][2]<.3)return;
+  let by=p.by;if(by&&r[14])cr.push(['rok ur.',3,sYear(by,r[14],4)]);else if(p.childBy&&r[14]){const gap=p.childBy-r[14];cr.push(['pokolenie',1.5,gap>=18&&gap<=45?1:gap>=14?.4:0])}
+  if(p.spFn&&r[13])cr.push(['małżonek',2,sInc(r[13],p.spFn)]);
+  if(p.fa)cr.push(['ojciec',1.5,sFn(p.fa,r[9])]);if(p.mo)cr.push(['matka',1.5,sFn(p.mo,r[10])]);
+  if(p.pl&&r[5])cr.push(['miejsc.',1,sInc(r[5],p.pl)]);
+  let pen=1;if(p.k==='g'||p.k==='b'){if(r[1]<m.rok)pen=.15}else if(p.childBy&&r[1]<p.childBy-1)pen=.3;
+  const g=grade(cr,pen);if(g&&g.pct>=28)out.push({t:'D',r,...g,id:r[0],yr:r[1]})});
+ return out.sort((a,b)=>b.pct-a.pct)}
+/* dzieci */
+function candKids(m){const g=m.pan,b=m.panna,out=[];
+ B.forEach(r=>{if(r[1]<m.rok-1||r[1]>m.rok+38)return;
+  const cr=[['nazwisko ojca',3,sSn(g.sn,r[7])],['ojciec',3,sFn(g.fn,r[6])],['matka',3,sFn(b.fn,r[9])],['nazwisko matki',3,sSn(b.sn,r[10])]];
+  if(cr[0][2]!=null&&cr[0][2]<.3||cr[1][2]!=null&&cr[1][2]<.3||cr[2][2]!=null&&cr[2][2]<.3)return;
+  if(b.by&&r[11])cr.push(['wiek matki',2,sYear(b.by,r[1]-r[11],4)]);if(g.by&&r[8])cr.push(['wiek ojca',2,sYear(g.by,r[1]-r[8],4)]);
+  if(g.pl&&r[5])cr.push(['miejsc.',1,sInc(r[5],g.pl)]);
+  const x=grade(cr,r[1]<m.rok?.7:1);if(x&&x.pct>=40)out.push({t:'B',r,...x,id:r[0],yr:r[1]})});
+ return out.sort((a,b)=>a.yr-b.yr||b.pct-a.pct)}
+/* decyzje */
+let DEC={};try{DEC=JSON.parse(localStorage.getItem('dop.v1')||'{}')}catch(e){}
+const save=()=>{try{localStorage.setItem('dop.v1',JSON.stringify(DEC))}catch(e){}};
+const dget=(mid,s)=>(DEC[mid]&&DEC[mid][s])||{acc:[],rej:[],none:false};
+function dset(mid,s,v){(DEC[mid]=DEC[mid]||{})[s]=v;save()}
+const SLOTS=['gF.b','gF.d','gM.b','gM.d','bF.b','bF.d','bM.b','bM.d','g.b','g.d','b.b','b.d','kids'];
+let cur=null,CAND={},sel='g.d',filt='';
+function usedElsewhere(mid,t,id){const o=[];for(const k in DEC){if(k===mid)continue;for(const s in DEC[k])if(DEC[k][s].acc.some(a=>a.t===t&&a.id===id))o.push(k+' '+s)}return o}
+function compute(mid){const m=m2o(M.find(x=>x[0]===mid));cur=m;const P=people(m);CAND={};
+ const by=k=>P[k].by||0;
+ ['gF','gM','bF','bM'].forEach(k=>{const p=P[k];CAND[k+'.b']=known(p.fn)?candBirth(p,m):[];CAND[k+'.d']=known(p.fn)?candDeath(p,m,(p.childBy||m.rok-60)-1):[]});
+ ['g','b'].forEach(k=>{const p=P[k];CAND[k+'.b']=known(p.fn)?candBirth(p,m):[];CAND[k+'.d']=known(p.fn)?candDeath(p,m,m.rok):[]});
+ CAND.kids=candKids(m);cur.P=P}
+function slotState(s){const d=dget(cur.id,s),c=CAND[s]||[];if(d.acc.length)return'ok';if(d.none)return'none';const top=c.filter(x=>!d.rej.some(a=>a.t===x.t&&a.id===x.id))[0];if(!top)return'empty';return top.pct>=75?'hi':top.pct>=50?'mid':'lo'}
+const recName=c=>c.t==='B'?`${c.r[3]} ${c.r[4]}`:`${c.r[2]} ${c.r[3]}`;
+/* mapa */
+function pill(x,y,s,label){const st=slotState(s),n=(CAND[s]||[]).length,d=dget(cur.id,s);
+ const top=(CAND[s]||[]).filter(c=>!d.rej.some(a=>a.t===c.t&&a.id===c.id))[0];
+ const t=st==='ok'?`${label} ✓`+(s==='kids'?` ${d.acc.length}`:''):st==='none'?`${label} –`:st==='empty'?`${label} ·`:`${label} ${s==='kids'?n+' kand.':top.pct+'%'}`;
+ return`<g class="pill st-${st} ${sel===s?'sel':''}" data-s="${s}"><rect x="${x}" y="${y}" width="${s==='kids'?200:88}" height="22" rx="11"/><text x="${x+(s==='kids'?100:44)}" y="${y+15}" text-anchor="middle">${esc(t)}</text></g>`}
+function node(k,x,y,w,title,sub,role,slots){return`<g class="nd"><rect class="c" x="${x}" y="${y}" width="${w}" height="92" rx="12"/><text class="r" x="${x+12}" y="${y+16}">${esc(role)}</text><text x="${x+12}" y="${y+34}" style="font-weight:600">${esc((title||'—').slice(0,Math.floor(w/7)))}</text><text class="s" x="${x+12}" y="${y+50}">${esc(sub.slice(0,Math.floor(w/6)))}</text>${slots}</g>`}
+function render(){const P=cur.P,m=cur;
+ document.getElementById('ttl').textContent=`Małżeństwo ${m.rok} nr ${m.nr}: ${m.pan.fn} ${m.pan.sn} + ${m.panna.fn} ${m.panna.sn}`;
+ document.getElementById('sub').textContent=`${m.data||''} · pan ${m.pan.wiek?m.pan.wiek+' l.':''}${m.pan.by?' (~'+m.pan.by+')':''} · panna ${m.panna.wiek?m.panna.wiek+' l.':''}${m.panna.by?' (~'+m.panna.by+')':''}`+(m.pan.prev?` · wdowiec po ${m.pan.prev}`:'')+(m.panna.prev?` · wdowa po ${m.panna.prev}`:'');
+ const pp=(k,x,y,w,role)=>{const p=P[k];const ok=known(p.fn);const nm=ok?`${p.fn} ${p.maiden&&known(p.maiden)?p.maiden:p.sn||''}`:'brak danych';
+  return node(k,x,y,w,nm,ok?(p.by?'ur. ~'+p.by:p.childBy?'dziecko ur. ~'+p.childBy:''):'nie podano w akcie',role,ok?pill(x+10,y+62,k+'.b','Ur.')+pill(x+108,y+62,k+'.d','Zg.'):'')};
+ let h='';
+ const E=(a,b,c,d)=>`<path class="edge" d="M${a} ${b} C${a} ${(b+d)/2} ${c} ${(b+d)/2} ${c} ${d}"/>`;
+ h+=E(115,92,295,210)+E(335,92,295,210)+E(595,92,665,210)+E(845,92,665,210);
+ h+=E(295,302,480,380)+E(665,302,480,380);
+ h+=pp('gF',20,10,200,'Ojciec pana')+pp('gM',240,10,200,'Matka pana')+pp('bF',500,10,200,'Ojciec panny')+pp('bM',740,10,200,'Matka panny');
+ h+=pp('g',180,210,230,'Pan młody')+pp('b',550,210,230,'Panna młoda');
+ const kd=dget(m.id,'kids').acc;
+ h+=node('kids',330,380,300,`Dzieci pary (${CAND.kids.length} kand.)`,kd.length?kd.map(a=>{const c=CAND.kids.find(x=>x.id===a.id);return c?c.r[4].split(' ')[0]+' '+c.yr:''}).join(', '):'urodzenia po ślubie, nazwisko ojca + matka','Potomstwo',pill(380,442,'kids','Dzieci'));
+ document.getElementById('map').innerHTML=h;
+ document.querySelectorAll('.pill').forEach(e=>e.onclick=()=>{sel=e.dataset.s;render()});
+ timeline();panel();stat()}
+function timeline(){const m=cur,ev=[];const add=(lane,y,txt,ok)=>y&&ev.push({lane,y,txt,ok});
+ SLOTS.forEach(s=>{const d=dget(m.id,s),c=CAND[s]||[];const lane=s[0]==='g'&&s[1]==='.'?0:s[0]==='b'&&s[1]==='.'?1:s==='kids'?2:null;if(lane==null)return;
+  const kind=s.endsWith('.b')?'ur.':s.endsWith('.d')?'zg.':'';
+  if(d.acc.length)d.acc.forEach(a=>{const x=c.find(z=>z.t===a.t&&z.id===a.id);if(x)add(lane,x.yr,kind||String(x.r[4]).split(' ')[0],1)});
+  else{const t=c.filter(z=>!d.rej.some(a=>a.t===z.t&&a.id===z.id))[0];if(t&&t.pct>=50&&s!=='kids')add(lane,t.yr,kind+'?',0)}
+  if(s==='kids'&&!d.acc.length)c.filter(z=>z.pct>=60).slice(0,12).forEach(z=>add(2,z.yr,'?',0))});
+ add(0,m.pan.by,'ur.~',0);add(1,m.panna.by,'ur.~',0);
+ const ys=ev.map(e=>e.y).concat([m.rok]);const a=Math.min(...ys)-3,b=Math.max(...ys)+3,W=920,sx=y=>30+(y-a)/(b-a)*(W-60);
+ let h=`<svg viewBox="0 0 ${W} 130"><text x="6" y="26" fill="#7f93a6" font-size="10">PAN</text><text x="6" y="66" fill="#7f93a6" font-size="10">PANNA</text><text x="6" y="106" fill="#7f93a6" font-size="10">DZIECI</text>`;
+ for(let y=Math.ceil(a/10)*10;y<=b;y+=10)h+=`<line x1="${sx(y)}" x2="${sx(y)}" y1="8" y2="118" stroke="#1b2a3a"/><text x="${sx(y)}" y="128" fill="#4d6176" font-size="9" text-anchor="middle">${y}</text>`;
+ h+=`<line x1="${sx(m.rok)}" x2="${sx(m.rok)}" y1="4" y2="118" stroke="#ffc857" stroke-width="2"/><text x="${sx(m.rok)+4}" y="14" fill="#ffc857" font-size="10">ślub ${m.rok}</text>`;
+ ev.forEach((e,i)=>{const y=26+e.lane*40-4+((i%2)*10-5);h+=`<circle cx="${sx(e.y)}" cy="${y}" r="5" fill="${e.ok?'#3ddc97':'none'}" stroke="${e.ok?'#3ddc97':'#4cc3ff'}" stroke-width="1.6"/><text x="${sx(e.y)+8}" y="${y+3}" fill="${e.ok?'#3ddc97':'#8bd6ff'}" font-size="9.5">${esc(e.txt)} ${e.y}</text>`});
+ document.getElementById('tl').innerHTML=h+'</svg>'}
+const SL_NAME={'gF.b':'Urodzenie ojca pana','gF.d':'Zgon ojca pana','gM.b':'Urodzenie matki pana','gM.d':'Zgon matki pana','bF.b':'Urodzenie ojca panny','bF.d':'Zgon ojca panny','bM.b':'Urodzenie matki panny','bM.d':'Zgon matki panny','g.b':'Urodzenie pana młodego','g.d':'Zgon pana młodego','b.b':'Urodzenie panny młodej','b.d':'Zgon panny młodej','kids':'Dzieci pary'};
+function cardHtml(c,s,state){const r=c.r,d=dget(cur.id,s);const col=c.pct>=75?'var(--ok)':c.pct>=50?'var(--md)':'var(--lo)';
+ const line=c.t==='B'?`ur. ${r[1]} nr ${r[2]} · ${esc(r[5])||''}`:`zgon ${r[1]} nr ${esc(r[15])||''} · ${esc(r[5])||''}`;
+ const det=c.t==='B'?`ojciec: ${esc(r[6]||'?')} ${esc(r[7])}${r[8]?' ('+r[8]+' l.)':''} · matka: ${esc(r[9]||'?')} ${esc(r[10])}${r[11]?' ('+r[11]+' l.)':''}`:
+  `${r[6]?'wiek '+r[6]+' '+esc(r[7]):''}${r[14]?' · ur. ~'+r[14]:''} ${r[8]?'· '+esc(r[8]):''}<br>rodzice: ${esc(r[9]||'?')} i ${esc(r[10]||'?')} ${esc(r[11])}${r[12]?' · z domu '+esc(r[12]):''}${r[13]?'<br>'+esc(r[13]):''}`;
+ const used=usedElsewhere(cur.id,c.t,c.id);
+ return`<div class="cd ${state||''}" data-id="${esc(c.id)}" data-t="${c.t}"><div class="h"><b>${esc(recName(c))}</b><span style="color:${col}">${c.pct}%</span></div><div class="d">${line}</div><div class="d">${det}</div><div class="bar"><i style="width:${c.pct}%;background:${col}"></i></div>
+ <div class="chips">${c.why.map(w=>`<span class="chip ${w[1]}">${w[1]==='y'?'✓':w[1]==='p'?'≈':'✗'} ${esc(w[0])}</span>`).join('')}</div>${used.length?`<div class="warn">⚠ już przypisany w: ${esc(used.join(', '))}</div>`:''}
+ <div class="act">${state==='acc'?'<button class="bad" data-a="un">cofnij wybór</button>':state==='rej'?'<button data-a="un">przywróć</button>':'<button class="ok" data-a="acc">✓ to ta osoba</button><button class="bad" data-a="rej">✗ nie</button>'}</div></div>`}
+function pending(s){const d=dget(cur.id,s);return(CAND[s]||[]).filter(c=>!d.acc.some(a=>a.t===c.t&&a.id===c.id)&&!d.rej.some(a=>a.t===c.t&&a.id===c.id))}
+function panel(){const s=sel,d=dget(cur.id,s),c=CAND[s]||[];const P=cur.P,k=s.split('.')[0];
+ const want=s==='kids'?`Dzieci ${cur.pan.fn} ${cur.pan.sn} i ${cur.panna.fn} ${cur.panna.sn} (matka z domu ${cur.panna.sn}), urodzone po ${cur.rok}.`:(()=>{const p=P[k];return`Szukam: ${p.fn||'?'} ${(p.maiden&&known(p.maiden))?p.maiden:p.sn||''}${p.by?', ur. ~'+p.by:''}${p.spFn?', małżonek: '+p.spFn:''}${s.endsWith('.d')?' · po roku '+(p.by?cur.rok:(p.childBy||0)):''}`})();
+ const acc=d.acc.map(a=>c.find(z=>z.t===a.t&&z.id===a.id)).filter(Boolean),rej=c.filter(z=>d.rej.some(a=>a.t===z.t&&a.id===z.id));
+ const pe=pending(s),lim=s==='kids'?40:8;
+ let h=`<h3>${SL_NAME[s]}</h3><div class="want">${esc(want)}</div>`;
+ if(!known((P[k]||{}).fn)&&s!=='kids')h+='<div class="want">W akcie brak imienia – nie ma czego dopasować.</div>';
+ h+=acc.map(x=>cardHtml(x,s,'acc')).join('');
+ if(d.none)h+=`<div class="cd acc"><b>Oznaczono: brak w księgach</b><div class="act"><button data-a="unnone">cofnij</button></div></div>`;
+ h+=pe.slice(0,lim).map(x=>cardHtml(x,s,'')).join('');
+ if(!c.length)h+='<div class="want">Brak kandydatów powyżej progu 28%. Rekord może leżeć w niezindeksowanej księdze.</div>';
+ if(pe.length>lim)h+=`<div class="want">…i ${pe.length-lim} słabszych kandydatów.</div>`;
+ if(!d.none&&!d.acc.length)h+=`<button data-a="none">0 · sprawdzone – brak w księgach</button> `;
+ if(rej.length)h+=`<details style="margin-top:8px"><summary>odrzucone (${rej.length})</summary>${rej.map(x=>cardHtml(x,s,'rej')).join('')}</details>`;
+ const el=document.getElementById('right');el.innerHTML=h;
+ el.querySelectorAll('[data-a]').forEach(b=>b.onclick=()=>{const card=b.closest('.cd'),a=b.dataset.a;act(a,card&&{t:card.dataset.t,id:card.dataset.id})})}
+function act(a,rec){const s=sel,d=JSON.parse(JSON.stringify(dget(cur.id,s)));
+ const eq=x=>rec&&x.t===rec.t&&x.id===rec.id;
+ if(a==='acc'){d.rej=d.rej.filter(x=>!eq(x));d.none=false;if(s==='kids')d.acc.push(rec);else d.acc=[rec]}
+ else if(a==='rej'){d.rej.push(rec)}
+ else if(a==='un'){d.acc=d.acc.filter(x=>!eq(x));d.rej=d.rej.filter(x=>!eq(x))}
+ else if(a==='none'){d.none=true;d.acc=[]}else if(a==='unnone'){d.none=false}
+ dset(cur.id,s,d);render();lst()}
+function stat(){let n=0,t=0;Object.values(DEC).forEach(o=>Object.values(o).forEach(v=>{if(v.acc.length)n++;t+=v.acc.length}));
+ document.getElementById('stat').textContent=`przyjęte pola: ${n} · powiązane rekordy: ${t}`}
+function lst(){const q=strip(filt);const el=document.getElementById('lst');
+ el.innerHTML=M.filter(a=>!q||strip(a.slice(0,8).concat(a.slice(14,16)).join(' ')).includes(q)).slice(0,600).map(a=>{const d=Object.values(DEC[a[0]]||{}).filter(v=>v.acc.length).length;
+  return`<div class="mi ${cur&&cur.id===a[0]?'on':''}" data-m="${esc(a[0])}"><div><b>${esc(a[4])} ${esc(a[5])}</b> + ${esc(a[14])}<br><small>${a[1]} nr ${esc(a[2])}</small></div>${d?`<span class="d">${d}/13</span>`:''}</div>`}).join('');
+ el.querySelectorAll('.mi').forEach(e=>e.onclick=()=>open(e.dataset.m));const on=el.querySelector('.mi.on');if(on&&!window.__sc){on.scrollIntoView({block:'center'});window.__sc=1}}
+function open(mid){window.__sc=0;compute(mid);sel='g.d';try{history.replaceState(null,'','#'+mid)}catch(e){}render();lst()}
+document.getElementById('q').oninput=e=>{filt=e.target.value;lst()};
+function dl(name,txt,type){const a=document.createElement('a');a.href=URL.createObjectURL(new Blob(['﻿'+txt],{type}));a.download=name;a.click()}
+document.getElementById('bJson').onclick=()=>dl('dopasowanie_decyzje.json',JSON.stringify(DEC,null,1),'application/json');
+document.getElementById('bLoad').onclick=()=>document.getElementById('fLoad').click();
+document.getElementById('fLoad').onchange=e=>{const f=e.target.files[0];if(!f)return;f.text().then(t=>{try{DEC=JSON.parse(t.replace(/^﻿/,''));save();open(cur.id)}catch(x){alert('Błędny plik JSON')}})};
+document.getElementById('bCsv').onclick=()=>{const rows=[['akt_malzenstwa','pole','typ','id_rekordu','rok','osoba','decyzja']];
+ for(const mid in DEC)for(const s in DEC[mid]){const d=DEC[mid][s];d.acc.forEach(a=>{const src=a.t==='B'?B.find(x=>x[0]===a.id):D.find(x=>x[0]===a.id);rows.push([mid,SL_NAME[s],a.t==='B'?'urodzenie':'zgon',a.id,src?src[1]:'',src?(a.t==='B'?src[3]+' '+src[4]:src[2]+' '+src[3]):'','przyjęty'])});if(d.none)rows.push([mid,SL_NAME[s],'','','','','brak w księgach'])}
+ dl('dopasowanie_decyzje.csv',rows.map(r=>r.map(x=>'"'+String(x).replace(/"/g,'""')+'"').join(';')).join('\r\n'),'text/csv')};
+document.addEventListener('keydown',e=>{if(/INPUT|TEXTAREA/.test(e.target.tagName))return;const i=SLOTS.indexOf(sel);
+ if(e.key==='ArrowDown'){sel=SLOTS[(i+1)%13];render();e.preventDefault()}else if(e.key==='ArrowUp'){sel=SLOTS[(i+12)%13];render();e.preventDefault()}
+ else if(e.key==='ArrowRight'||e.key==='ArrowLeft'){const j=M.findIndex(x=>x[0]===cur.id)+(e.key==='ArrowRight'?1:-1);if(M[j])open(M[j][0])}
+ else if(e.key==='a'||e.key==='A'){const t=pending(sel)[0];if(t)act('acc',{t:t.t,id:t.id})}
+ else if(e.key==='r'||e.key==='R'){const t=pending(sel)[0];if(t)act('rej',{t:t.t,id:t.id})}else if(e.key==='0')act('none')});
+open((location.hash.slice(1)&&M.find(x=>x[0]===decodeURIComponent(location.hash.slice(1))))?decodeURIComponent(location.hash.slice(1)):(M.find(x=>x[0]==='1864/15')||M[0])[0]);
+</script></body></html>
