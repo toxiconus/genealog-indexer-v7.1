@@ -1,6 +1,6 @@
 <!doctype html>
 <html lang="pl"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Dopasowanie osób – Blinów</title>
+<title>Dopasowanie osób – Blinów · v7</title>
 <style>
 :root{--bg:#0b1118;--p1:#111b26;--p2:#16222f;--ln:#243446;--tx:#dbe6f0;--mu:#7f93a6;--ac:#4cc3ff;--ok:#3ddc97;--md:#ffc857;--lo:#6b7d8f;--no:#ff6b6b}
 *{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--tx);font:14px/1.4 system-ui,Segoe UI,sans-serif;height:100vh;display:grid;grid-template-rows:auto 1fr}
@@ -38,17 +38,46 @@ svg{width:calc(100%*var(--z,1));max-width:none;height:auto;display:block}#tl,#ma
 details.full{margin-top:4px;font-size:12px}details.full summary{cursor:pointer;color:var(--ac)}details.full table{width:100%;border-collapse:collapse;margin-top:3px}details.full td{padding:1px 4px;border-top:1px solid #1d2c3c;vertical-align:top}details.full td:first-child{color:var(--mu);width:42%}
 kbd{background:var(--bg);border:1px solid var(--ln);border-radius:4px;padding:0 4px;font-size:11px}
 .leg{color:var(--mu);font-size:11.5px;margin-top:6px}.leg i{display:inline-block;width:10px;height:10px;border-radius:3px;margin:0 3px 0 8px;border:2px solid}
+
+@media(max-width:1100px){main{grid-template-columns:220px minmax(0,1fr)}#right{grid-column:1/-1;border-left:0;border-top:1px solid var(--ln);max-height:none}#mid{min-width:0}}
+@media(max-width:700px){body{height:auto;min-height:100vh;display:block}header{position:sticky;top:0;z-index:10;padding:7px;gap:5px}header h1{width:100%;font-size:14px}header .sp{display:none}header button{padding:5px 7px;font-size:12px}main{display:flex;flex-direction:column}#list{border-right:0;border-bottom:1px solid var(--ln);max-height:36vh}#lst{display:grid;grid-template-columns:repeat(auto-fit,minmax(145px,1fr))}.mi{padding:7px 9px}#mid{padding:9px}#right{padding:10px;border-top:1px solid var(--ln)}#map{width:100%;height:auto}#tl{overflow:auto}.facts{grid-template-columns:1fr}.ctl{align-items:flex-start}.ctl input[type=text]{min-width:120px}#ttl{font-size:17px}}
+@media(prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;transition:none!important;animation:none!important}}
+button:focus-visible,input:focus-visible,select:focus-visible,.mi:focus-visible{outline:2px solid var(--ac);outline-offset:2px}
+
+.net-modal{position:fixed;inset:0;z-index:1000;background:rgba(8,18,16,.72);padding:2vh 2vw;overflow:auto}
+.net-modal[hidden]{display:none}.net-sheet{max-width:1400px;margin:0 auto;background:var(--bg);color:var(--tx);border:1px solid var(--bd);border-radius:14px;padding:16px;box-shadow:0 15px 60px #0005}
+.net-head{display:flex;justify-content:space-between;gap:16px;align-items:flex-start}.net-head h2{margin:0 0 5px}.net-head p{margin:0 0 12px;color:var(--mu);font-size:13px}
+.net-stats{display:flex;flex-wrap:wrap;gap:8px;margin:10px 0}.net-stat{padding:8px 10px;border:1px solid var(--bd);border-radius:8px;font-size:13px}.net-tools{display:flex;gap:8px;flex-wrap:wrap;margin:12px 0}.net-tools input{flex:1;min-width:180px}
+.net-table-wrap{overflow:auto;max-height:65vh;border:1px solid var(--bd);border-radius:8px}.net-table{width:100%;border-collapse:collapse;font-size:13px}.net-table th,.net-table td{text-align:left;padding:8px;border-bottom:1px solid var(--bd);vertical-align:top}.net-table th{position:sticky;top:0;background:var(--panel);z-index:1}.net-table button{padding:4px 7px}.net-warn{color:var(--warn,var(--md))}.net-muted{color:var(--mu)}
+@media(max-width:700px){.net-modal{padding:0}.net-sheet{border-radius:0;min-height:100vh;padding:12px}.net-head{position:sticky;top:0;background:var(--bg);z-index:2}.net-table{min-width:780px}}
+@media(prefers-reduced-motion:reduce){.net-modal *{scroll-behavior:auto!important}}
 </style></head><body>
-<header><h1>🧬 <b>Dopasowanie osób</b> · Blinów</h1><button id="bBack" disabled>◀ wstecz</button><span id="crumb" style="color:var(--mu);font-size:12.5px"></span><span class="sp"></span>
+<header><h1>🧬 <b>Dopasowanie osób</b> · Blinów · v7</h1><button id="bBack" disabled>◀ wstecz</button><span id="crumb" style="color:var(--mu);font-size:12.5px"></span><span class="sp"></span>
 <button id="zm">🔍−</button><button id="zp">🔍+</button><span id="stat" style="color:var(--mu)"></span>
-<button id="bCsv">⬇ CSV</button><button id="bJson">⬇ JSON</button><button id="bLoad">⬆ JSON</button><input type="file" id="fLoad" accept=".json" hidden></header>
+<button id="bNetwork">Sieć powiązań</button><button id="bFamilies">Rodziny i gałęzie</button><button id="bBridges">Śluby rodziców</button><button id="bPersonIndex">Indeks osób</button><button id="bTree" title="Wczytaj lokalny plik drzewa (JSON) – zostaje tylko w przeglądarce">🌳 Drzewo</button><input type="file" id="fTree" accept=".json" hidden><button id="bCsv">⬇ CSV</button><button id="bJson">⬇ JSON</button><button id="bLoad">⬆ JSON</button><input type="file" id="fLoad" accept=".json" hidden></header>
 <main>
 <aside id="list"><div class="tabs"><button data-md="M">Małżeństwa</button><button data-md="B">Urodzenia</button><button data-md="D">Zgony</button></div><input id="q" placeholder="szukaj: nazwisko, imię, rok…"><div id="lst"></div></aside>
-<section id="mid"><h2 id="ttl"></h2><div id="sub"></div><svg id="map" viewBox="0 0 960 500"></svg><div id="cen"></div><div id="tl"></div>
+<section id="mid"><h2 id="ttl"></h2><div id="sub"></div><svg id="map" viewBox="0 0 960 500"></svg><div id="cen"></div><div id="tl"></div><div id="treeBox"></div>
 <div class="leg">Klawisze: <kbd>↑</kbd><kbd>↓</kbd> pole · <kbd>A</kbd> przyjmij najlepszego · <kbd>R</kbd> odrzuć · <kbd>0</kbd> brak w księgach · <kbd>←</kbd><kbd>→</kbd> sąsiedni akt · <kbd>Backspace</kbd> wstecz · <kbd>Ctrl</kbd>+kółko = powiększenie
-<br>Ramka: <i style="border-color:var(--ok)"></i>przyjęte <i style="border-color:var(--ac)"></i>mocny ≥75% <i style="border-color:var(--md)"></i>możliwy ≥50% <i style="border-color:var(--lo)"></i>słaby <i style="border-color:var(--ln)"></i>brak. Wynik to podpowiedź – decyzja zawsze Twoja. Przycisk „↗ otwórz” przechodzi do rekordu kandydata i pozwala iść po drzewie rodziny.</div></section>
+<br>Ramka: <i style="border-color:var(--ok)"></i>przyjęte <i style="border-color:var(--ac)"></i>mocny ≥75% <i style="border-color:var(--md)"></i>możliwy ≥50% <i style="border-color:var(--lo)"></i>słaby <i style="border-color:var(--ln)"></i>brak. Wynik to podpowiedź, nie dowód pokrewieństwa. Decyzja i weryfikacja źródła pozostają po Twojej stronie. Przycisk „↗ otwórz” przechodzi do rekordu kandydata i pozwala iść po drzewie rodziny.</div></section>
 <aside id="right"></aside>
 </main>
+<div id="networkModal" class="net-modal" hidden role="dialog" aria-modal="true" aria-labelledby="netTitle">
+ <div class="net-sheet"><div class="net-head"><div><h2 id="netTitle">Sieć zaakceptowanych powiązań</h2><p>Pokazuje wyłącznie relacje zapisane jako zaakceptowane. Nie rozstrzyga samodzielnie pokrewieństwa.</p></div><button id="bNetClose" aria-label="Zamknij sieć">Zamknij ×</button></div>
+ <div id="netStats" class="net-stats"></div><div class="net-tools"><input id="netQ" placeholder="Filtruj osoby, miejscowości, lata…"><button id="bNetCsv">Eksportuj sieć CSV</button></div><div id="netBody"></div></div>
+</div>
+<div id="familyModal" class="net-modal" hidden role="dialog" aria-modal="true" aria-labelledby="familyTitle">
+ <div class="net-sheet"><div class="net-head"><div><h2 id="familyTitle">Rodziny i możliwe gałęzie</h2><p>Grupy są wyszukiwane w surowych aktach urodzeń na podstawie zapisanych danych rodziców. To tropy do weryfikacji, nie potwierdzone rodzeństwo.</p></div><button id="bFamilyClose" aria-label="Zamknij analizę rodzin">Zamknij ×</button></div>
+ <div id="familyStats" class="net-stats"></div><div class="net-tools"><input id="familyQ" placeholder="Szukaj nazwiska, rodzica, miejscowości…"><select id="familySort" aria-label="Sortowanie grup rodzinnych"><option value="size">Największe grupy</option><option value="span">Najdłuższy okres</option><option value="year">Najstarsze grupy</option></select></div><div id="familyBody"></div></div>
+</div>
+<div id="bridgeModal" class="net-modal" hidden role="dialog" aria-modal="true" aria-labelledby="bridgeTitle">
+ <div class="net-sheet"><div class="net-head"><div><h2 id="bridgeTitle">Śluby rodziców — tropy do sprawdzenia</h2><p>Porównuję pary rodziców z aktów urodzeń z parami w aktach małżeństw. To kandydatury oparte na imionach, nazwiskach i chronologii; niczego nie zatwierdzam automatycznie.</p></div><button id="bBridgeClose" aria-label="Zamknij tropy ślubów rodziców">Zamknij ×</button></div>
+ <div id="bridgeStats" class="net-stats"></div><div class="net-tools"><input id="bridgeQ" placeholder="Szukaj nazwiska, imienia, roku…"><select id="bridgeSort" aria-label="Sortowanie tropów"><option value="score">Najmocniejsze dopasowania</option><option value="year">Najstarsze akty urodzeń</option><option value="count">Najwięcej dzieci w grupie</option></select></div><div id="bridgeBody"></div></div>
+</div>
+<div id="personIndexModal" class="net-modal" hidden role="dialog" aria-modal="true" aria-labelledby="personIndexTitle">
+ <div class="net-sheet"><div class="net-head"><div><h2 id="personIndexTitle">Indeks osób — kandydaci do połączenia</h2><p>Porównuję osoby z aktów małżeństw z aktami urodzeń i zgonów. To lista tropów, nie automatycznie scalone osoby.</p></div><button id="bPersonIndexClose" aria-label="Zamknij indeks osób">Zamknij ×</button></div>
+ <div id="personIndexStats" class="net-stats"></div><div class="net-tools"><input id="personIndexQ" placeholder="Szukaj osoby, nazwiska, roku, miejscowości…"><button id="bPersonIndexCsv">Eksportuj indeks CSV</button><select id="personIndexSort" aria-label="Sortowanie indeksu osób"><option value="quality">Najmocniejsze połączenia</option><option value="year">Najstarsze osoby</option><option value="unlinked">Brak odnalezionego urodzenia lub zgonu</option></select></div><div id="personIndexBody"></div></div>
+</div>
 <script>
 /*DATA*/
 const esc=s=>String(s==null?'':s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
@@ -68,7 +97,10 @@ const bad=(cr)=>cr.slice(0,2).some(c=>c[2]!=null&&c[2]<.3);
 const yM=a=>a[13]||(a[12]&&a[1]?a[1]-a[12]:0), yP=a=>a[23]||(a[22]&&a[1]?a[1]-a[22]:0);
 /* ---- kandydaci ---- */
 function candBirth(p,maxYear){const out=[];
- B.forEach(r=>{const mn=p.maiden&&known(p.maiden)?p.maiden:p.sn;
+ B.forEach(r=>{
+  // Rekord urodzenia nie może być późniejszy niż znane zdarzenie graniczne.
+  if(Number.isFinite(+maxYear)&&+maxYear>0&&Number(r[1])>+maxYear)return;
+  const mn=p.maiden&&known(p.maiden)?p.maiden:p.sn;
   const cr=[['nazwisko',3,sSn(mn,r[3])],['imię',3,sFn(p.fn,r[4])]];if(bad(cr))return;
   let pen=1;
   if(p.by){cr.push(['rok ur.',3,sYear(p.by,r[1],3)])}else if(p.childBy){const gap=p.childBy-r[1];cr.push(['pokolenie',2,gap>=20&&gap<=42?1:gap>=16&&gap<=52?.5:0]);if(gap<14)pen=.2}
@@ -96,19 +128,26 @@ function candKids(g,b,mRok){const out=[];
   const x=grade(cr,r[1]<mRok?.7:1);if(x&&x.pct>=40)out.push({t:'B',r,...x,id:r[0],yr:r[1]})});
  return out.sort((a,b)=>a.yr-b.yr||b.pct-a.pct)}
 function candMar(F,Mo,minY,maxY){const out=[];
- M.forEach(r=>{const cr=[['nazwisko pana',3,sSn(F.sn,r[4])],['imię pana',3,sFn(F.fn,r[5])],['imię panny',3,sFn(Mo.fn,r[15])],['nazwisko panny',3,sSn(Mo.sn,r[14])]];
-  if(cr.slice(0,3).some(c=>c[2]!=null&&c[2]<.3))return;
-  let pen=1;if(maxY&&r[1]>maxY)pen=.2;if(minY&&r[1]<minY)pen=.3;
-  const g=grade(cr,pen);if(g&&g.pct>=35)out.push({t:'M',r,...g,id:r[0],yr:r[1]})});
+ M.forEach(r=>{
+  // Daty graniczne są twardymi ograniczeniami; tolerancja historyczna jest
+  // dodawana w miejscu wywołania (np. rok urodzenia dziecka + 1).
+  if(minY&&r[1]<minY)return;if(maxY&&r[1]>maxY)return;
+  const cr=[['nazwisko pana',3,sSn(F.sn,r[4])],['imię pana',3,sFn(F.fn,r[5])],['imię panny',3,sFn(Mo.fn,r[15])],['nazwisko panny',3,sSn(Mo.sn,r[14])]];
+  // Wszystkie znane dane identyfikujące obie osoby muszą być zgodne.
+  if(cr.some(c=>c[2]!=null&&c[2]<.3))return;
+  const g=grade(cr,1);if(g&&g.pct>=35)out.push({t:'M',r,...g,id:r[0],yr:r[1]})});
  return out.sort((a,b)=>b.pct-a.pct)}
 function candOwnMar(p,death,excl){const out=[];
- M.forEach(r=>{if(r[0]===excl)return;[['pan',4,5,7,9,10,yM],['panna',14,15,17,19,20,yP]].forEach(([side,sn,fn,fa,mo,moSn,yf])=>{
+ M.forEach(r=>{
+  // Ślub osoby nie może nastąpić po jej znanym zgonie.
+  if(r[0]===excl||(death&&r[1]>death))return;
+  [['pan',4,5,7,9,10,yM],['panna',14,15,17,19,20,yP]].forEach(([side,sn,fn,fa,mo,moSn,yf])=>{
   if(p.sex==='m'&&side==='panna'||p.sex==='k'&&side==='pan')return;
   const cr=[['nazwisko',3,sSn(p.sn,r[sn])],['imię',3,sFn(p.fn,r[fn])]];if(bad(cr))return;
   const by=yf(r);if(p.by&&by)cr.push(['rok ur.',3,sYear(p.by,by,4)]);
   if(p.fa)cr.push(['ojciec',1.5,sFn(p.fa,r[fa])]);if(p.mo)cr.push(['matka',1.5,sFn(p.mo,r[mo])]);if(p.moSn)cr.push(['nazwisko matki',1.5,sSn(p.moSn,r[moSn])]);
   if(p.spFn)cr.push(['małżonek',1.5,sFn(p.spFn,r[side==='pan'?15:5])]);
-  let pen=1;if(p.by&&r[1]<p.by+14)pen=.2;if(death&&r[1]>death)pen*=.3;
+  let pen=1;if(p.by&&r[1]<p.by+14)pen=.2;
   const g=grade(cr,pen);if(g&&g.pct>=35)out.push({t:'M',r,...g,id:r[0],yr:r[1],side})})});
  return out.sort((a,b)=>b.pct-a.pct)}
 function candKidsOf(p,minY,maxY){const out=[];if(!p.sex)return out;
@@ -133,23 +172,44 @@ const LD=['id','rok','nazwisko','imię','płeć','miejscowość','wiek','jednost
 const LM=['id','rok','nr','data','pan – nazwisko','pan – imię','pan – stan','pan – ojciec imię','pan – ojciec nazwisko','pan – matka imię','pan – matka nazwisko','pan – miejscowość','pan – wiek','pan – rok ur.','panna – nazwisko','panna – imię','panna – stan','panna – ojciec imię','panna – ojciec nazwisko','panna – matka imię','panna – matka nazwisko','panna – miejscowość','panna – wiek','panna – rok ur.','poprzednia żona (pana)','poprzedni mąż (wdowy)'];
 const LAB={B:LB,D:LD,M:LM},ARR={B,D,M};
 const rec=(t,id)=>ARR[t].find(x=>x[0]===id);
-let DEC={};try{DEC=JSON.parse(localStorage.getItem('dop.v1')||'{}')}catch(e){}
-const save=()=>{try{localStorage.setItem('dop.v1',JSON.stringify(DEC))}catch(e){}};
+let DEC={};try{DEC=validateDecisions(JSON.parse(localStorage.getItem('dop.v1')||'{}'))}catch(e){DEC={}}
+const save=()=>{try{localStorage.setItem('dop.v1',JSON.stringify(DEC));return true}catch(e){console.warn('Nie udało się zapisać decyzji w localStorage',e);return false}};
 let cur=null,CAND={},sel='',listMode='M',filt='',HIST=[];
 const RP={min:28,sort:'score',q:'',hideUsed:false};
 const dkey=()=>cur.mode==='M'?cur.id:cur.mode+':'+cur.id;
 const dget=(k,s)=>(DEC[k]&&DEC[k][s])||{acc:[],rej:[],none:false};
-function dset(k,s,v){(DEC[k]=DEC[k]||{})[s]=v;save()}
+function cleanDecision(v){
+ const uniq=a=>{const seen=new Set();return (Array.isArray(a)?a:[]).filter(x=>{if(!x||!['B','D','M'].includes(x.t)||typeof x.id!=='string'||!rec(x.t,x.id))return false;const k=x.t+'|'+x.id;if(seen.has(k))return false;seen.add(k);return true}).map(x=>({t:x.t,id:x.id}))};
+ const acc=uniq(v&&v.acc), accKeys=new Set(acc.map(x=>x.t+'|'+x.id));
+ // Ten sam rekord nie może jednocześnie figurować jako zaakceptowany i odrzucony.
+ const rej=uniq(v&&v.rej).filter(x=>!accKeys.has(x.t+'|'+x.id));
+ // Jawnie przyjęte powiązanie ma pierwszeństwo przed stanem „brak w księgach”.
+ return {acc,rej,none:acc.length?false:!!(v&&v.none)};
+}
+function validateDecisions(obj){
+ if(!obj||typeof obj!=='object'||Array.isArray(obj))throw Error('Oczekiwano obiektu JSON.');
+ const out={};
+ for(const [k,slots] of Object.entries(obj)){
+  if(!k||!slots||typeof slots!=='object'||Array.isArray(slots))continue;
+  const mode=k.includes(':')?k.split(':')[0]:'M',id=k.includes(':')?k.slice(2):k;
+  if(!['M','B','D'].includes(mode)||!rec(mode,id))continue;
+  const allowed=new Set(({M:SL13,B:SLB,D:SLD})[mode].map(x=>x[0]));
+  out[k]={};
+  for(const [sl,v] of Object.entries(slots))if(allowed.has(sl))out[k][sl]=cleanDecision(v);
+ }
+ return out;
+}
+function dset(k,s,v){(DEC[k]=DEC[k]||{})[s]=cleanDecision(v);save()}
 function usedElsewhere(k,t,id){const o=[];for(const x in DEC){if(x===k)continue;for(const s in DEC[x])if(DEC[x][s].acc.some(a=>a.t===t&&a.id===id))o.push(x+' '+s)}return o}
-function parseSp(s){const m=(s||'').match(/(?:owd\.|wdow\w*)\s+([A-ZĄĆĘŁŃÓŚŹŻ][\wąćęłńóśźż]+)/);return m?m[1]:''}
+function parseSp(s){const m=(s||'').match(/(?:owd\.|wdow(?:iec|a|ca|cem|ie|y|ę)?\w*)\s+([A-ZĄĆĘŁŃÓŚŹŻ][\wąćęłńóśźż-]*)/i);return m?m[1]:''}
 function peopleM(a){const g={sn:a[4],fn:a[5],stan:a[6],fa:a[7],faSn:a[8],mo:a[9],moSn:a[10],pl:a[11],wiek:a[12],by:yM(a),prev:a[24]},b={sn:a[14],fn:a[15],stan:a[16],fa:a[17],faSn:a[18],mo:a[19],moSn:a[20],pl:a[21],wiek:a[22],by:yP(a),prev:a[25]};
  const par=p=>({F:{k:'F',sn:known(p.faSn)?p.faSn:p.sn,fn:p.fa,sex:'m',childBy:p.by,spFn:p.mo},M:{k:'M',sn:p.sn,maiden:p.moSn,fn:p.mo,sex:'k',childBy:p.by,spFn:p.fa}});
  const gp=par(g),bp=par(b);
  return{g:{k:'g',...g,sex:'m',spFn:b.fn},b:{k:'b',...b,sex:'k',spFn:g.fn},gF:gp.F,gM:gp.M,bF:bp.F,bM:bp.M,G:g,Bd:b}}
 function compute(mode,id){const r=rec(mode,id);cur={mode,id,r};CAND={};
  if(mode==='M'){const m={rok:r[1]},P=peopleM(r);cur.P=P;cur.slots=SL13;
-  ['gF','gM','bF','bM'].forEach(k=>{const p=P[k];CAND[k+'.b']=known(p.fn)?candBirth(p):[];CAND[k+'.d']=known(p.fn)?candDeath(p,(p.childBy||r[1]-60)-1,r[1]):[]});
-  ['g','b'].forEach(k=>{const p=P[k];CAND[k+'.b']=known(p.fn)?candBirth(p):[];CAND[k+'.d']=known(p.fn)?candDeath(p,r[1],r[1]):[]});
+  ['gF','gM','bF','bM'].forEach(k=>{const p=P[k];CAND[k+'.b']=known(p.fn)?candBirth(p,p.childBy):[];CAND[k+'.d']=known(p.fn)?candDeath(p,(p.childBy||r[1]-60)-1,r[1]):[]});
+  ['g','b'].forEach(k=>{const p=P[k];CAND[k+'.b']=known(p.fn)?candBirth(p,r[1]):[];CAND[k+'.d']=known(p.fn)?candDeath(p,r[1],r[1]):[]});
   CAND.kids=candKids(P.G,P.Bd,r[1]);sel='g.d'}
  else if(mode==='B'){const by=r[1],p={sn:r[3],fn:r[4],by,fa:r[6],faSn:r[7],mo:r[9],moSn:r[10],pl:r[5]};cur.P={self:p};cur.slots=SLB;
   const F=known(p.fa),Mo=known(p.mo);
@@ -159,7 +219,7 @@ function compute(mode,id){const r=rec(mode,id);cur={mode,id,r};CAND={};
   CAND.fD=F?candDeath({k:'F',sn:p.faSn||p.sn,fn:p.fa,sex:'m',childBy:by,spFn:p.mo},by-1,0):[];
   CAND.mD=Mo?candDeath({k:'M',sn:p.faSn||p.sn,maiden:p.moSn,fn:p.mo,sex:'k',childBy:by,spFn:p.fa},by-1,0):[];sel='par'}
  else{const sex=r[4],mai=known(r[12])?r[12]:'',p={sn:sex==='k'&&mai?mai:r[2],fn:r[3],by:r[14],fa:r[9],mo:r[10],moSn:r[11],pl:r[5],sex,spFn:parseSp(r[13])};cur.P={self:p};cur.slots=SLD;
-  CAND.birth=candBirth({sn:p.sn,fn:p.fn,by:p.by,fa:p.fa,mo:p.mo,moSn:p.moSn,pl:p.pl});
+  CAND.birth=candBirth({sn:p.sn,fn:p.fn,by:p.by,fa:p.fa,mo:p.mo,moSn:p.moSn,pl:p.pl},r[1]);
   CAND.mrg=candOwnMar(p,r[1],null);
   CAND.par=known(p.fa)&&known(p.mo)?candMar({fn:p.fa,sn:p.sn},{fn:p.mo,sn:p.moSn},0,p.by?p.by+1:r[1]):[];
   CAND.kids=candKidsOf(p,p.by?p.by+14:0,r[1]);sel='birth'}
@@ -251,12 +311,12 @@ function panel(){const s=sel,d=dget(dkey(),s),c=CAND[s]||[];
 function act(a,r){const s=sel,k=dkey(),d=JSON.parse(JSON.stringify(dget(k,s)));const eq=x=>r&&x.t===r.t&&x.id===r.id;
  if(a==='go'){go(r.t,r.id);return}
  if(a==='acc'){d.rej=d.rej.filter(x=>!eq(x));d.none=false;if(s==='kids'||s==='sib')d.acc.push(r);else d.acc=[r]}
- else if(a==='rej')d.rej.push(r);else if(a==='un'){d.acc=d.acc.filter(x=>!eq(x));d.rej=d.rej.filter(x=>!eq(x))}
+ else if(a==='rej'){if(!d.rej.some(eq))d.rej.push({t:r.t,id:r.id});}else if(a==='un'){d.acc=d.acc.filter(x=>!eq(x));d.rej=d.rej.filter(x=>!eq(x))}
  else if(a==='none'){d.none=true;d.acc=[]}else if(a==='unnone')d.none=false;
- else if(a==='rejweak'){pending(s).filter(x=>x.pct<50).forEach(x=>d.rej.push({t:x.t,id:x.id}))}
+ else if(a==='rejweak'){pending(s).filter(x=>x.pct<50).forEach(x=>{if(!d.rej.some(y=>y.t===x.t&&y.id===x.id))d.rej.push({t:x.t,id:x.id})})}
  dset(k,s,d);render();lst()}
 function stat(){let n=0,t=0;Object.values(DEC).forEach(o=>Object.values(o).forEach(v=>{if(v.acc.length)n++;t+=v.acc.length}));document.getElementById('stat').textContent=`przyjęte pola: ${n} · powiązane rekordy: ${t}`}
-function render(){cur.mode==='M'?renderM():renderC();panel();stat();
+function render(){cur.mode==='M'?renderM():renderC();panel();stat();treeBox();
  document.getElementById('crumb').textContent=({M:'ślub',B:'urodzenie',D:'zgon'})[cur.mode]+' '+cur.r[1]+' · '+(cur.mode==='M'?cur.r[5]+' '+cur.r[4]:cur.mode==='B'?cur.r[4]+' '+cur.r[3]:cur.r[3]+' '+cur.r[2]);
  document.getElementById('bBack').disabled=HIST.length<2}
 function go(mode,id,noPush){compute(mode,id);if(!noPush){HIST.push({mode,id});if(HIST.length>60)HIST.shift()}
@@ -272,7 +332,7 @@ function lst(){document.querySelectorAll('.tabs button').forEach(b=>b.classList.
  el.innerHTML=f.slice(0,500).map(a=>{const dd=Object.values(DEC[key(a)]||{}).filter(v=>v.acc.length).length;
   const t=listMode==='M'?`<b>${esc(a[4])} ${esc(a[5])}</b> + ${esc(a[14])}<br><small>${a[1]} nr ${esc(a[2])}</small>`:listMode==='B'?`<b>${esc(a[3])} ${esc(a[4])}</b><br><small>ur. ${a[1]} nr ${esc(a[2])} · ${esc(a[6])} ${esc(a[7])}</small>`:`<b>${esc(a[2])} ${esc(a[3])}</b><br><small>zgon ${a[1]}${a[6]?' · '+a[6]+' '+esc(a[7]):''}</small>`;
   return`<div class="mi ${cur&&cur.mode===listMode&&cur.id===a[0]?'on':''}" data-id="${esc(a[0])}">${'<div>'+t+'</div>'}${dd?`<span class="d">${dd}</span>`:''}</div>`}).join('')+(f.length>500?`<div class="mi"><small>… ${f.length-500} dalszych – zawęź szukanie</small></div>`:'');
- el.querySelectorAll('.mi[data-id]').forEach(e=>e.onclick=()=>go(listMode,e.dataset.id));
+ el.querySelectorAll('.mi[data-id]').forEach(e=>{e.onclick=()=>go(listMode,e.dataset.id);e.tabIndex=0;e.setAttribute('role','button');e.onkeydown=ev=>{if(ev.key==='Enter'||ev.key===' '){ev.preventDefault();go(listMode,e.dataset.id)}}});
  const on=el.querySelector('.mi.on');if(on&&!window.__sc){on.scrollIntoView({block:'center'});window.__sc=1}}
 document.querySelectorAll('.tabs button').forEach(b=>b.onclick=()=>{listMode=b.dataset.md;window.__sc=1;lst();document.getElementById('lst').scrollTop=0});
 document.getElementById('q').oninput=e=>{filt=e.target.value;lst()};
@@ -284,9 +344,205 @@ function zoom(v){ZM=Math.max(.7,Math.min(2.2,v));document.getElementById('mid').
 zoom(ZM);document.getElementById('zp').onclick=()=>zoom(ZM+.15);document.getElementById('zm').onclick=()=>zoom(ZM-.15);
 document.getElementById('mid').addEventListener('wheel',e=>{if(e.ctrlKey||e.metaKey){e.preventDefault();zoom(ZM+(e.deltaY<0?.1:-.1))}},{passive:false});
 function dl(name,txt,type){const a=document.createElement('a');a.href=URL.createObjectURL(new Blob(['﻿'+txt],{type}));a.download=name;a.click()}
+function netSource(k){if(k.includes(':')){const i=k.indexOf(':');return{t:k.slice(0,i),id:k.slice(i+1)}}return{t:'M',id:k}}
+function netLabel(t,id){const r=rec(t,id);if(!r)return `${t}:${id} (rekord niedostępny)`;
+ if(t==='M')return `${r[5]||''} ${r[4]||''} + ${r[15]||''} ${r[14]||''} · ${r[1]} nr ${r[2]}`;
+ if(t==='B')return `${r[4]||''} ${r[3]||''} · ur. ${r[1]} · rodzice: ${r[6]||'?'} ${r[7]||''} i ${r[9]||'?'} ${r[10]||''}`;
+ return `${r[3]||''} ${r[2]||''} · zm. ${r[1]} · rodzice: ${r[9]||'?'} i ${r[10]||'?'}`}
+function netRelation(t,slot){const maps={M:Object.fromEntries(SL13.map(x=>[x[0],x[1]])),B:Object.fromEntries(SLB.map(x=>[x[0],x[1]])),D:Object.fromEntries(SLD.map(x=>[x[0],x[1]]))};return (maps[t]||{})[slot]||slot}
+function networkEdges(){const out=[];for(const [k,slots] of Object.entries(DEC)){const src=netSource(k);if(!rec(src.t,src.id))continue;for(const [slot,v] of Object.entries(slots||{})){for(const a of (v.acc||[])){if(!rec(a.t,a.id))continue;out.push({k,src,slot,t:a.t,id:a.id,rel:netRelation(src.t,slot),left:netLabel(src.t,src.id),right:netLabel(a.t,a.id)})}}}return out}
+function renderNetwork(){const modal=document.getElementById('networkModal');modal.hidden=false;document.getElementById('netQ').value='';
+ const edges=networkEdges(),nodes=new Set();edges.forEach(e=>{nodes.add(e.src.t+':'+e.src.id);nodes.add(e.t+':'+e.id)});
+ const parent=new Map([...nodes].map(n=>[n,n]));const find=x=>{let p=parent.get(x);while(p!==parent.get(p))p=parent.get(p);let y=x;while(parent.get(y)!==p){const z=parent.get(y);parent.set(y,p);y=z}return p};const union=(a,b)=>{a=find(a);b=find(b);if(a!==b)parent.set(a,b)};
+ edges.forEach(e=>union(e.src.t+':'+e.src.id,e.t+':'+e.id));const comps=new Set([...nodes].map(find));
+ document.getElementById('netStats').innerHTML=[['zaakceptowane powiązania',edges.length],['rekordy w sieci',nodes.size],['połączone składowe rekordów',comps.size],['rekordy poza siecią','nie są liczone']].map(([a,b])=>`<div class="net-stat"><b>${b}</b><br>${a}</div>`).join('');
+ const qEl=document.getElementById('netQ');const body=document.getElementById('netBody');
+ const draw=()=>{const q=strip(qEl.value.trim());const filtered=edges.filter(e=>!q||strip([e.left,e.right,e.rel,e.k,e.slot].join(' ')).includes(q));
+ body.innerHTML=`<div class="net-table-wrap"><table class="net-table"><thead><tr><th>Źródło</th><th>Rola / pole</th><th>Powiązany rekord</th><th>Przejdź</th></tr></thead><tbody>${filtered.map((e,i)=>`<tr><td>${esc(e.left)}<div class="net-muted">${esc(e.k)}</div></td><td>${esc(e.rel)}</td><td>${esc(e.right)}<div class="net-muted">${esc(e.t+':'+e.id)}</div></td><td><button data-net-go="${i}" data-net-mode="${e.src.t}" data-net-id="${esc(e.src.id)}">Źródło</button> <button data-net-go="${i}" data-net-mode="${e.t}" data-net-id="${esc(e.id)}">Cel</button></td></tr>`).join('')||'<tr><td colspan="4">Brak powiązań pasujących do filtra.</td></tr>'}</tbody></table></div><p class="net-muted">Uwaga: połączenie w tabeli oznacza zaakceptowaną decyzję w aplikacji, nie automatyczny dowód biologicznego pokrewieństwa. Jedna osoba może pojawiać się w wielu relacjach.</p>`;
+ body.querySelectorAll('[data-net-mode]').forEach(b=>b.onclick=()=>{modal.hidden=true;go(b.dataset.netMode,b.dataset.netId)});
+ };
+ qEl.oninput=draw;draw();
+ document.getElementById('bNetCsv').onclick=()=>{const rows=[['typ źródła','id źródła','opis źródła','pole / relacja','typ celu','id celu','opis celu']];edges.forEach(e=>rows.push([e.src.t,e.src.id,e.left,e.rel,e.t,e.id,e.right]));dl('dopasowanie_siec_powiazan.csv',rows.map(r=>r.map(x=>'"'+String(x).replace(/"/g,'""')+'"').join(';')).join('\r\n'),'text/csv')};
+}
+document.getElementById('bNetwork').onclick=renderNetwork;document.getElementById('bNetClose').onclick=()=>document.getElementById('networkModal').hidden=true;
+document.getElementById('networkModal').addEventListener('click',e=>{if(e.target.id==='networkModal')e.currentTarget.hidden=true});document.addEventListener('keydown',e=>{if(e.key==='Escape')document.getElementById('networkModal').hidden=true});
+
+/* ---- analiza grup rodzinnych z księgi urodzeń ----
+   Grupy są tworzone z nazwisk i imion obojga rodziców. Nie łączymy automatycznie
+   podobnie brzmiących nazwisk: normalizacja służy wyłącznie do odnajdywania tropów. */
+function familyKeyPart(s){return strip(String(s||'')).replace(/[^a-z0-9]/g,'').replace(/y/g,'i')}
+function familyName(r){return `${r[6]||'?'} ${r[7]||''} + ${r[9]||'?'} ${r[10]||''}`.replace(/\s+/g,' ').trim()}
+function buildBirthFamilies(){
+ const groups=new Map();
+ for(const r of B){
+  const fatherName=familyKeyPart(r[6]),fatherSn=familyKeyPart(r[7]),motherName=familyKeyPart(r[9]),motherSn=familyKeyPart(r[10]);
+  // Bez imion obojga rodziców nie tworzymy grupy: ryzyko fałszywego łączenia jest zbyt duże.
+  if(fatherName.length<3||motherName.length<3)continue;
+  const full=fatherSn.length>=3&&motherSn.length>=3;
+  const key=[fatherName,fatherSn||'?',motherName,motherSn||'?'].join('|');
+  if(!groups.has(key))groups.set(key,{key,full,records:[],father:`${r[6]||''} ${r[7]||''}`.trim(),mother:`${r[9]||''} ${r[10]||''}`.trim(),places:new Set()});
+  const g=groups.get(key);g.records.push(r);if(r[5])g.places.add(r[5]);
+ }
+ return [...groups.values()].filter(g=>g.records.length>=2).map(g=>{
+  g.records.sort((a,b)=>a[1]-b[1]||String(a[2]).localeCompare(String(b[2]),'pl',{numeric:true}));
+  g.first=g.records[0][1];g.last=g.records[g.records.length-1][1];g.span=g.last-g.first;
+  g.name=`${g.father} + ${g.mother}`;
+  g.risk=[];
+  if(!g.full)g.risk.push('brak pełnego nazwiska jednego z rodziców');
+  if(g.span>35)g.risk.push('bardzo długi okres — sprawdź, czy nie chodzi o dwie pary o tych samych imionach');
+  if(g.places.size>3)g.risk.push('wiele miejscowości');
+  return g;
+ }).sort((a,b)=>b.records.length-a.records.length||a.first-b.first)
+}
+let FAMILY_CACHE=null;
+function renderFamilies(){
+ const modal=document.getElementById('familyModal');modal.hidden=false;
+ const groups=FAMILY_CACHE||(FAMILY_CACHE=buildBirthFamilies());
+ const uniqueRecords=new Set(groups.flatMap(g=>g.records.map(r=>r[0]))).size;
+ document.getElementById('familyStats').innerHTML=[['grupy z co najmniej 2 urodzeniami',groups.length],['akty urodzeń w grupach',uniqueRecords],['grupy wymagające ostrożności',groups.filter(g=>g.risk.length).length],['zasada','hipoteza, nie dowód']].map(([a,b])=>`<div class="net-stat"><b>${esc(String(b))}</b><br>${esc(a)}</div>`).join('');
+ const qEl=document.getElementById('familyQ'),sortEl=document.getElementById('familySort'),body=document.getElementById('familyBody');qEl.value='';
+ const draw=()=>{
+  const q=familyKeyPart(qEl.value.trim());let list=groups.filter(g=>!q||familyKeyPart([g.name,...g.places,...g.records.map(r=>`${r[3]} ${r[4]} ${r[1]} ${r[5]}`)].join(' ')).includes(q));
+  if(sortEl.value==='span')list.sort((a,b)=>b.span-a.span||b.records.length-a.records.length);
+  else if(sortEl.value==='year')list.sort((a,b)=>a.first-b.first||b.records.length-a.records.length);
+  else list.sort((a,b)=>b.records.length-a.records.length||a.first-b.first);
+  body.innerHTML=`<div class="net-table-wrap"><table class="net-table"><thead><tr><th>Rodzice zapisani w aktach</th><th>Lata</th><th>Liczba urodzeń</th><th>Miejscowości</th><th>Uwagi do weryfikacji</th><th>Akty</th></tr></thead><tbody>${list.map((g,i)=>`<tr><td><b>${esc(g.name)}</b><div class="net-muted">${g.full?'nazwiska obojga rodziców zapisane':'niepełne dane nazwiskowe'}</div></td><td>${g.first}–${g.last}<div class="net-muted">rozpiętość: ${g.span} lat</div></td><td>${g.records.length}</td><td>${esc([...g.places].join(', ')||'—')}</td><td>${esc(g.risk.join('; ')||'sprawdź zgodność rodziców w źródłach')}</td><td>${g.records.map(r=>`<button data-family-go="${esc(r[0])}" title="Otwórz akt ${esc(r[0])}">${esc(String(r[1]))} · nr ${esc(r[2])}</button>`).join(' ')}</td></tr>`).join('')||'<tr><td colspan="6">Nie znaleziono grup pasujących do filtra.</td></tr>'}</tbody></table></div><p class="net-muted">Metoda: grupowanie po imionach i nazwiskach rodziców z aktów urodzeń. Powtarzające się imiona i nazwiska nie dowodzą, że chodzi o tę samą parę; przed połączeniem gałęzi porównaj miejscowości, wiek rodziców, śluby i zgony.</p>`;
+  body.querySelectorAll('[data-family-go]').forEach(b=>b.onclick=()=>{modal.hidden=true;go('B',b.dataset.familyGo)});
+ };
+ qEl.oninput=draw;sortEl.onchange=draw;draw();
+}
+document.getElementById('bFamilies').onclick=renderFamilies;
+document.getElementById('bFamilyClose').onclick=()=>document.getElementById('familyModal').hidden=true;
+document.getElementById('familyModal').addEventListener('click',e=>{if(e.target.id==='familyModal')e.currentTarget.hidden=true});
+document.addEventListener('keydown',e=>{if(e.key==='Escape'){document.getElementById('networkModal').hidden=true;document.getElementById('familyModal').hidden=true}});
+
+/* ---- most łączący rodzinę z aktem ślubu rodziców ----
+   Kandydaci są wyłącznie podpowiedziami; różnica nazwiska rodowego, wdowieństwo,
+   pisownia historyczna i powtórzenia imion mogą zmieniać interpretację. */
+function bridgeNorm(v){return strip(String(v||'')).replace(/[^a-z0-9]/g,'').replace(/y/g,'i')}
+function bridgeSim(a,b){a=bridgeNorm(a);b=bridgeNorm(b);if(!a||!b||a.length<2||b.length<2)return 0;if(a===b)return 1;return sim(a,b)}
+function bridgeBuild(){
+ const fam=new Map();
+ for(const r of B){const fn=bridgeNorm(r[6]),fs=bridgeNorm(r[7]),mn=bridgeNorm(r[9]),ms=bridgeNorm(r[10]);if(fn.length<2||mn.length<2||fs.length<2||ms.length<2)continue;
+  const k=[fn,fs,mn,ms].join('|');if(!fam.has(k))fam.set(k,{key:k,father:`${r[6]} ${r[7]}`.trim(),mother:`${r[9]} ${r[10]}`.trim(),records:[],places:new Set()});const g=fam.get(k);g.records.push(r);if(r[5])g.places.add(r[5]);}
+ const out=[];
+ for(const g of fam.values()){if(g.records.length<2)continue;g.records.sort((a,b)=>a[1]-b[1]);const first=g.records[0][1],last=g.records[g.records.length-1][1];
+  for(const m of M){const my=Number(m[1]);if(!my||my>=first||first-my>55)continue;
+   const fn=bridgeSim(g.records[0][6],m[5]),fs=bridgeSim(g.records[0][7],m[4]);
+   const mn=bridgeSim(g.records[0][9],m[15]),ms=bridgeSim(g.records[0][10],m[14]);
+   // Require both parent names and surnames to be strongly similar. We do not bridge on surname alone.
+   if(fn<.78||fs<.78||mn<.78||ms<.72)continue;
+   const score=Math.round((fn*0.27+fs*0.23+mn*0.27+ms*0.23)*100);
+   const ageGap=first-my;const flags=[];if(ageGap>35)flags.push('pierwsze dziecko ponad 35 lat po ślubie');if(g.places.size>3)flags.push('wiele miejscowości');if(m[6]&&/w|wdow/i.test(String(m[6])))flags.push('pan młody oznaczony jako wdowiec');if(m[16]&&/w|wdow/i.test(String(m[16])))flags.push('panna młoda oznaczona jako wdowa');
+   out.push({g,m,first,last,score,ageGap,flags});
+  }
+ }
+ // Avoid flooding with many near-identical candidates: one family+marriage pair once.
+ const seen=new Set();return out.filter(x=>{const k=x.g.key+'|'+x.m[0];if(seen.has(k))return false;seen.add(k);return true}).sort((a,b)=>b.score-a.score||b.g.records.length-a.g.records.length||a.first-b.first)
+}
+let BRIDGE_CACHE=null;
+function renderBridges(){const modal=document.getElementById('bridgeModal');modal.hidden=false;const rows=BRIDGE_CACHE||(BRIDGE_CACHE=bridgeBuild());
+ document.getElementById('bridgeStats').innerHTML=[['kandydackie pary rodzina–ślub',rows.length],['grupy z co najmniej 2 dziećmi',new Set(rows.map(x=>x.g.key)).size],['dopasowanie nazwisk i imion ≥ 90%',rows.filter(x=>x.score>=90).length],['status','do ręcznej weryfikacji']].map(([a,b])=>`<div class="net-stat"><b>${esc(String(b))}</b><br>${esc(a)}</div>`).join('');
+ const q=document.getElementById('bridgeQ'),sort=document.getElementById('bridgeSort'),body=document.getElementById('bridgeBody');q.value='';
+ const draw=()=>{const needle=bridgeNorm(q.value);let list=rows.filter(x=>!needle||bridgeNorm([x.g.father,x.g.mother,x.m[4],x.m[5],x.m[14],x.m[15],x.first,x.last,x.m[1],[...x.g.places].join(' ')].join(' ')).includes(needle));if(sort.value==='year')list.sort((a,b)=>a.first-b.first||b.score-a.score);else if(sort.value==='count')list.sort((a,b)=>b.g.records.length-a.g.records.length||b.score-a.score);else list.sort((a,b)=>b.score-a.score||b.g.records.length-a.g.records.length);
+ body.innerHTML=`<div class="net-table-wrap"><table class="net-table"><thead><tr><th>Rodzice w aktach urodzeń</th><th>Kandydat na ślub rodziców</th><th>Dzieci</th><th>Wynik</th><th>Uwagi</th><th>Otwórz</th></tr></thead><tbody>${list.slice(0,500).map(x=>`<tr><td><b>${esc(x.g.father)}</b><br>+ ${esc(x.g.mother)}<div class="net-muted">${x.first}–${x.last}; ${esc([...x.g.places].join(', ')||'miejscowość nieznana')}</div></td><td><b>${esc(String(x.m[1]))}/${esc(String(x.m[2]))}</b><br>${esc(String(x.m[4]))} ${esc(String(x.m[5]))} + ${esc(String(x.m[14]))} ${esc(String(x.m[15]))}<div class="net-muted">akt ślubu · różnica do pierwszego dziecka: ${x.ageGap} lat</div></td><td>${x.g.records.length}<div class="net-muted">${x.g.records.slice(0,4).map(r=>esc(String(r[1])+'/'+String(r[2]))).join(', ')}${x.g.records.length>4?'…':''}</div></td><td><b>${x.score}%</b><div class="net-muted">podobieństwo tekstowe, nie prawdopodobieństwo</div></td><td>${esc(x.flags.join('; ')||'sprawdź wiek rodziców, miejscowość i stan cywilny')}</td><td><button data-bridge-m="${esc(x.m[0])}">Ślub</button> <button data-bridge-b="${esc(x.g.records[0][0])}">Urodzenie</button></td></tr>`).join('')||'<tr><td colspan="6">Brak kandydatów spełniających rygorystyczne kryteria.</td></tr>'}</tbody></table></div><p class="net-muted">Pokazuję maksymalnie 500 wyników. Dopasowanie wymaga zgodności imion i nazwisk obojga rodziców oraz ślubu wcześniejszego od urodzeń. Wynik nie jest prawdopodobieństwem pokrewieństwa. Sprawdź oryginalny akt, nazwisko rodowe matki, warianty pisowni i możliwe drugie małżeństwa.</p>`;
+ body.querySelectorAll('[data-bridge-m]').forEach(b=>b.onclick=()=>{modal.hidden=true;go('M',b.dataset.bridgeM)});body.querySelectorAll('[data-bridge-b]').forEach(b=>b.onclick=()=>{modal.hidden=true;go('B',b.dataset.bridgeB)});
+ };q.oninput=draw;sort.onchange=draw;draw();
+}
+document.getElementById('bBridges').onclick=renderBridges;document.getElementById('bBridgeClose').onclick=()=>document.getElementById('bridgeModal').hidden=true;
+document.getElementById('bridgeModal').addEventListener('click',e=>{if(e.target.id==='bridgeModal')e.currentTarget.hidden=true});
+document.addEventListener('keydown',e=>{if(e.key==='Escape')document.getElementById('bridgeModal').hidden=true});
+
+/* ---- indeks osób: kandydaci łączący małżeństwa z urodzeniami i zgonami ----
+   Bez automatycznego scalania. Dwa rekordy z tym samym imieniem i nazwiskiem
+   mogą dotyczyć różnych osób; wiek, rodzice, miejscowość i źródło wymagają kontroli. */
+function piNorm(v){return snm(String(v||'')).replace(/[^a-z]/g,'')}
+function piBucket(sn){return piNorm(sn).slice(0,2)}
+function piYearBirth(m,side){return side==='pan'?yM(m):yP(m)}
+function piBuild(){
+ const bIndex=new Map(),dIndex=new Map();
+ const add=(idx,k,r)=>{if(!k)return;if(!idx.has(k))idx.set(k,[]);idx.get(k).push(r)};
+ B.forEach(r=>add(bIndex,piBucket(r[3]),r));D.forEach(r=>{add(dIndex,piBucket(r[2]),r);if(r[12])add(dIndex,piBucket(r[12]),r)});
+ const people=new Map();
+ for(const m of M){
+  for(const p of [
+   {side:'pan młody',sn:m[4],fn:m[5],by:piYearBirth(m,'pan'),sex:'m',fa:m[7],faSn:m[8],mo:m[9],moSn:m[10],spFn:m[15],marriage:m},
+   {side:'panna młoda',sn:m[14],fn:m[15],by:piYearBirth(m,'panna'),sex:'k',fa:m[17],faSn:m[18],mo:m[19],moSn:m[20],spFn:m[5],marriage:m}
+  ]){
+   if(!known(p.fn)||!known(p.sn))continue;
+   const personKey=[p.sex,piNorm(p.fn),piNorm(p.sn),p.by||'?',piNorm(p.fa),piNorm(p.mo)].join('|');
+   if(!people.has(personKey))people.set(personKey,{...p,marriages:[],birth:null,death:null,score:0,flags:[]});
+   const person=people.get(personKey);person.marriages.push(m);
+  }
+ }
+ for(const p of people.values()){
+  // Jedna osoba może wystąpić w kilku ślubach. Granice chronologiczne liczymy
+  // względem wszystkich jej ślubów, a nie tylko pierwszego rekordu.
+  const marriageYears=p.marriages.map(m=>Number(m[1])).filter(Number.isFinite);
+  const firstMarriage=marriageYears.length?Math.min(...marriageYears):Number(p.marriage?.[1])||0;
+  const lastMarriage=marriageYears.length?Math.max(...marriageYears):Number(p.marriage?.[1])||0;
+  const bk=bIndex.get(piBucket(p.sn))||[];let bestB=null;
+  for(const r of bk){
+   const birthYear=Number(r[1]);
+   if(firstMarriage&&birthYear>firstMarriage)continue; // urodzenie musi poprzedzać pierwszy ślub
+   const sn=sSn(p.sn,r[3]),fn=sFn(p.fn,r[4]);if(sn==null||fn==null||sn<.55||fn<.55)continue;
+   const byDiff=p.by?Math.abs(birthYear-Number(p.by)):null;if(byDiff!=null&&byDiff>5)continue;
+   // Rodzice są silniejszym dowodem niż samo podobieństwo imienia i nazwiska.
+   const parentChecks=[
+    ['imię ojca',p.fa,r[6],sFn],['nazwisko ojca',p.faSn,r[7],sSn],
+    ['imię matki',p.mo,r[9],sFn],['nazwisko rodowe matki',p.moSn,r[10],sSn]
+   ].filter(x=>known(x[1])&&known(x[2])).map(x=>({label:x[0],score:x[3](x[1],x[2])}));
+   // Jawna, mocna sprzeczność w danych rodziców jest powodem do odrzucenia kandydata,
+   // nie tylko niewielkiej utraty punktów.
+   if(parentChecks.some(x=>x.score!=null&&x.score<.3))continue;
+   const base=100*(.40*sn+.32*fn+.13*(byDiff==null?.55:Math.max(0,1-byDiff/6)));
+   const parentAvg=parentChecks.length?parentChecks.reduce((a,x)=>a+(x.score??.5),0)/parentChecks.length:null;
+   const score=parentAvg==null?base:base*.78+parentAvg*100*.22;
+   if(!bestB||score>bestB.score)bestB={r,score:Math.round(score),byDiff,parentChecks};
+  }
+  p.birth=bestB;
+  const dk=[...(dIndex.get(piBucket(p.sn))||[]),...(p.sex==='k'?(dIndex.get(piBucket(p.moSn))||[]):[])];let bestD=null;const seenD=new Set();
+  for(const r of dk){if(seenD.has(r[0]))continue;seenD.add(r[0]);
+   const sn=Math.max(sSn(p.sn,r[2])||0,sSn(p.sn,r[12])||0,p.sex==='k'?(sSn(p.moSn,r[2])||0):0),fn=sFn(p.fn,r[3]);if(sn<.55||fn<.55)continue;
+   // Osoba zawierająca kolejne małżeństwo musi żyć co najmniej do ostatniego z nich.
+   if(lastMarriage&&Number(r[1])<lastMarriage)continue;
+   const byDeath=Number(r[14])||0,byDiff=(p.by&&byDeath)?Math.abs(Number(p.by)-byDeath):null;if(byDiff!=null&&byDiff>8)continue;
+   const score=Math.round(100*(.55*sn+.35*fn+.1*(byDiff==null?.55:Math.max(0,1-byDiff/9))));if(!bestD||score>bestD.score)bestD={r,score,byDiff};
+  }
+  p.death=bestD;p.score=Math.round(((p.birth?.score||0)+(p.death?.score||0))/((p.birth?1:0)+(p.death?1:0)||1));
+  if(p.birth){const r=p.birth.r;const parentScores=[];if(known(p.fa)&&known(r[6]))parentScores.push(sFn(p.fa,r[6]));if(known(p.faSn)&&known(r[7]))parentScores.push(sSn(p.faSn,r[7]));if(known(p.mo)&&known(r[9]))parentScores.push(sFn(p.mo,r[9]));if(known(p.moSn)&&known(r[10]))parentScores.push(sSn(p.moSn,r[10]));if(parentScores.some(v=>v!=null&&v<.45))p.flags.push('uwaga: dane rodziców nie zgadzają się dobrze z kandydatem na urodzenie');}
+  if(!p.birth)p.flags.push('urodzenie nieodnalezione po indeksie nazwiska');
+  if(!p.death)p.flags.push('zgon nieodnaleziony po indeksie nazwiska');
+  if(!p.by)p.flags.push('brak wiarygodnego roku urodzenia w akcie ślubu');
+  if(p.marriages.length>1)p.flags.push('osoba występuje w więcej niż jednym akcie ślubu — sprawdź wdowieństwo i homonimy');
+  if(p.birth&&p.birth.score<75)p.flags.push('urodzenie ma umiarkowaną zgodność');
+  if(p.death&&p.death.score<75)p.flags.push('zgon ma umiarkowaną zgodność');
+ }
+ return [...people.values()].sort((a,b)=>b.score-a.score||String(a.sn).localeCompare(String(b.sn),'pl'));
+}
+let PERSON_INDEX_CACHE=null;
+function renderPersonIndex(){
+ const modal=document.getElementById('personIndexModal');modal.hidden=false;const rows=PERSON_INDEX_CACHE||(PERSON_INDEX_CACHE=piBuild());
+ document.getElementById('personIndexStats').innerHTML=[['unikalne profile kandydackie',rows.length],['z kandydatem na urodzenie',rows.filter(x=>x.birth).length],['z kandydatem na zgon',rows.filter(x=>x.death).length],['zasada','bez automatycznego scalania']].map(([a,b])=>`<div class="net-stat"><b>${esc(String(b))}</b><br>${esc(a)}</div>`).join('');
+ const q=document.getElementById('personIndexQ'),sort=document.getElementById('personIndexSort'),body=document.getElementById('personIndexBody');q.value='';
+ const draw=()=>{const needle=piNorm(q.value);let list=rows.filter(p=>!needle||piNorm([p.sn,p.fn,p.fa,p.mo,p.moSn,p.spFn,p.by,p.marriages.map(m=>m[1]+'/'+m[2]).join(' '),p.birth?.r?.[5],p.death?.r?.[5],p.flags.join(' ')].join(' ')).includes(needle));
+  if(sort.value==='year')list.sort((a,b)=>(a.by||9999)-(b.by||9999)||b.score-a.score);
+  else if(sort.value==='unlinked')list.sort((a,b)=>((!b.birth)+(!b.death))-((!a.birth)+(!a.death))||b.score-a.score);
+  else list.sort((a,b)=>((b.birth?.score||0)+(b.death?.score||0))-((a.birth?.score||0)+(a.death?.score||0))||b.marriages.length-a.marriages.length);
+  body.innerHTML=`<div class="net-table-wrap"><table class="net-table"><thead><tr><th>Osoba z aktu ślubu</th><th>Możliwy akt urodzenia</th><th>Możliwy akt zgonu</th><th>Śluby</th><th>Ostrzeżenia</th></tr></thead><tbody>${list.slice(0,600).map(p=>`<tr><td><b>${esc(p.fn+' '+p.sn)}</b><div class="net-muted">${esc(p.side)} · ur. ok. ${p.by||'brak roku'} · rodzice: ${esc([p.fa,p.mo,p.moSn].filter(Boolean).join(' / ')||'brak danych')}</div><div class="net-muted">współmałżonek: ${esc(p.spFn||'—')}</div></td><td>${p.birth?`<b>${p.birth.score}% zgodności</b><div>${esc(String(p.birth.r[1]))} nr ${esc(String(p.birth.r[2]))}: ${esc(p.birth.r[4]+' '+p.birth.r[3])}</div><div class="net-muted">rodzice: ${esc(p.birth.r[6]+' '+p.birth.r[7]+'; '+p.birth.r[9]+' '+p.birth.r[10])}</div><button data-pi-go="B" data-pi-id="${esc(p.birth.r[0])}">Otwórz urodzenie</button>`:'— brak kandydata —'}</td><td>${p.death?`<b>${p.death.score}% zgodności</b><div>${esc(String(p.death.r[1]))}: ${esc(p.death.r[3]+' '+p.death.r[2])} · ${esc(p.death.r[5]||'')}</div><button data-pi-go="D" data-pi-id="${esc(p.death.r[0])}">Otwórz zgon</button>`:'— brak kandydata —'}</td><td>${p.marriages.map(m=>`<button data-pi-go="M" data-pi-id="${esc(m[0])}">${esc(String(m[1]))}/${esc(String(m[2]))}</button>`).join(' ')}</td><td>${esc(p.flags.join('; ')||'sprawdź zgodność źródeł')}</td></tr>`).join('')||'<tr><td colspan="5">Brak wyników dla tego filtra.</td></tr>'}</tbody></table></div><p class="net-muted">Indeks tworzy profile kandydackie z aktów małżeństw i wskazuje najlepsze kandydatury na urodzenie oraz zgon; uwzględnia nazwiska obojga rodziców, chronologię wszystkich ślubów profilu i sortuje niepowiązane profile na początku. Wynik jest oceną podobieństwa tekstowego i zgodności dat, nie prawdopodobieństwem tożsamości. Przed połączeniem sprawdź oryginalne akty, wiek, rodziców, małżonka, miejscowość oraz możliwe powtórne małżeństwa. Pokazuję maksymalnie 600 wierszy naraz.</p>`;
+  body.querySelectorAll('[data-pi-go]').forEach(b=>b.onclick=()=>{modal.hidden=true;go(b.dataset.piGo,b.dataset.piId)});
+ };
+ q.oninput=draw;sort.onchange=draw;draw();
+ document.getElementById('bPersonIndexCsv').onclick=()=>{const out=[['imię','nazwisko','rola','rok ur. szacowany','rodzic 1','rodzic 2','akt ślubu','urodzenie id','urodzenie rok','urodzenie zgodność','zgon id','zgon rok','zgon zgodność','ostrzeżenia']];rows.forEach(p=>p.marriages.forEach(m=>out.push([p.fn,p.sn,p.side,p.by||'',p.fa||'',p.mo||'',m[0],p.birth?.r?.[0]||'',p.birth?.r?.[1]||'',p.birth?.score||'',p.death?.r?.[0]||'',p.death?.r?.[1]||'',p.death?.score||'',p.flags.join('; ')])));dl('indeks_osob_kandydaci.csv',out.map(r=>r.map(x=>'"'+String(x).replace(/"/g,'""')+'"').join(';')).join('\r\n'),'text/csv')};
+}
+document.getElementById('bPersonIndex').onclick=renderPersonIndex;
+document.getElementById('bPersonIndexClose').onclick=()=>document.getElementById('personIndexModal').hidden=true;
+document.getElementById('personIndexModal').addEventListener('click',e=>{if(e.target.id==='personIndexModal')e.currentTarget.hidden=true});
+document.addEventListener('keydown',e=>{if(e.key==='Escape')document.getElementById('personIndexModal').hidden=true});
+
 document.getElementById('bJson').onclick=()=>dl('dopasowanie_decyzje.json',JSON.stringify(DEC,null,1),'application/json');
 document.getElementById('bLoad').onclick=()=>document.getElementById('fLoad').click();
-document.getElementById('fLoad').onchange=e=>{const f=e.target.files[0];if(!f)return;f.text().then(t=>{try{DEC=JSON.parse(t.replace(/^﻿/,''));save();go(cur.mode,cur.id,true)}catch(x){alert('Błędny plik JSON')}})};
+document.getElementById('fLoad').onchange=e=>{const f=e.target.files[0];if(!f)return;f.text().then(t=>{try{const parsed=JSON.parse(t.replace(/^﻿/,''));const clean=validateDecisions(parsed);if(!confirm('Import zastąpi wszystkie dotychczasowe decyzje zapisane w tej przeglądarce. Przed importem zostanie utworzona kopia bezpieczeństwa. Kontynuować?'))return;dl('dopasowanie_decyzje_backup.json',JSON.stringify(DEC,null,2),'application/json');DEC=clean;const saved=save();go(cur.mode,cur.id,true);alert('Import zakończony. Nieznane identyfikatory rekordów pominięto.'+(saved?'':'\nUWAGA: przeglądarka nie pozwoliła zapisać decyzji na stałe — wyeksportuj JSON i zachowaj plik.'))}catch(x){alert('Nie udało się wczytać JSON: '+(x.message||'nieprawidłowy format'))}finally{e.target.value=''}})};
 const SLN={};[SL13,SLB,SLD].forEach((L,i)=>L.forEach(([k,l])=>{SLN[['M','B','D'][i]+'|'+k]=l}));
 document.getElementById('bCsv').onclick=()=>{const rows=[['centrum','id_centrum','pole','typ_powiązanego','id_rekordu','rok','osoba/akt','decyzja']];
  for(const key in DEC){const mode=key.includes(':')?key.split(':')[0]:'M',cid=key.includes(':')?key.slice(2):key;
@@ -300,6 +556,36 @@ document.addEventListener('keydown',e=>{if(/INPUT|TEXTAREA|SELECT/.test(e.target
  else if(e.key==='Backspace'){e.preventDefault();back()}
  else if(e.key==='a'||e.key==='A'){const t=pending(sel)[0];if(t)act('acc',{t:t.t,id:t.id})}
  else if(e.key==='r'||e.key==='R'){const t=pending(sel)[0];if(t)act('rej',{t:t.t,id:t.id})}else if(e.key==='0')act('none')});
+
+/* ---- warstwa: drzewo MyHeritage (plik wczytywany lokalnie, nie jest częścią strony) ---- */
+let TREE=null;
+const tyr=s=>{const m=(s||'').match(/\d{4}/);return m?+m[0]:0};
+function treeLoad(j){TREE={P:j.p,F:j.f,par:{},sp:{}};for(const fid in j.f){const f=j.f[fid];(f.k||[]).forEach(c=>TREE.par[c]=[f.h,f.w,fid]);[f.h,f.w].forEach(i=>{if(i)(TREE.sp[i]=TREE.sp[i]||[]).push(fid)})}}
+const tnm=p=>p?`${p.fn||''} ${p.sn||''}`.trim():'?';
+function treeFind(){if(!TREE)return[];const r=cur.r,out=[],mode=cur.mode;
+ if(mode==='M'){for(const fid in TREE.F){const f=TREE.F[fid],h=TREE.P[f.h],w=TREE.P[f.w];if(!h||!w)continue;
+  const cr=[['nazwisko pana',3,sSn(r[4],h.sn)],['imię pana',3,sFn(r[5],h.fn)],['imię panny',3,sFn(r[15],w.fn)],['nazwisko panny',3,sSn(r[14],w.sn)]];
+  if(cr.slice(0,3).some(c=>c[2]!=null&&c[2]<.3))continue;if(f.m)cr.push(['rok',2,sYear(r[1],tyr(f.m),2)]);
+  const g=grade(cr);if(g&&g.pct>=60)out.push({k:'f',id:fid,pct:g.pct,why:g.why})}}
+ else{const sn=mode==='B'?r[3]:(known(r[12])&&r[4]==='k'?r[12]:r[2]),fn=mode==='B'?r[4]:r[3],y=r[1];
+  for(const id in TREE.P){const p=TREE.P[id];const cr=[['nazwisko',3,sSn(sn,p.sn)],['imię',3,sFn(fn,p.fn)]];
+   if(cr.some(c=>c[2]!=null&&c[2]<.3))continue;
+   if(mode==='B'){cr.push(['rok ur.',3,sYear(y,tyr(p.b)||tyr(p.b2),3)]);const pr=TREE.par[id];if(pr){const fa=TREE.P[pr[0]],mo=TREE.P[pr[1]];if(fa)cr.push(['ojciec',2,sFn(r[6],fa.fn)]);if(mo)cr.push(['matka',2,sFn(r[9],mo.fn)])}}
+   else{cr.push(['rok zgonu',3,sYear(y,tyr(p.d)||tyr(p.d2),2)]);if(r[14])cr.push(['rok ur.',2,sYear(r[14],tyr(p.b)||tyr(p.b2),4)])}
+   const g=grade(cr);if(g&&g.pct>=60)out.push({k:'p',id,pct:g.pct,why:g.why})}}
+ return out.sort((a,b)=>b.pct-a.pct).slice(0,4)}
+function treePerson(id){const p=TREE.P[id];if(!p)return'';const pr=TREE.par[id];
+ const par=pr?[pr[0],pr[1]].filter(Boolean).map(i=>tnm(TREE.P[i])).join(' i '):'';
+ const fams=(TREE.sp[id]||[]).map(f=>TREE.F[f]);const kids=fams.reduce((n,f)=>n+(f.k||[]).length,0);
+ const sp=fams.map(f=>tnm(TREE.P[f.h==id?f.w:f.h])+(f.m?' ('+f.m+')':'')).join(', ');
+ return`<b>${esc(tnm(p))}</b> <span style="color:var(--mu)">ur. ${esc(p.b||p.b2||'?')}${p.bp?', '+esc(p.bp):''}${p.d||p.d2?' · zm. '+esc(p.d||p.d2):''}</span>${par?'<br>rodzice: '+esc(par):''}${sp?'<br>małżonek: '+esc(sp):''}${kids?' · dzieci w drzewie: '+kids:''}${(p.notes||[]).length?'<br><i style="color:var(--mu)">'+esc(p.notes.join(' | ').replace(/<[^>]+>/g,'').slice(0,160))+'</i>':''}`}
+function treeBox(){const el=document.getElementById('treeBox');if(!el)return;
+ if(!TREE){el.innerHTML='<div class="leg">🌳 Kliknij „Drzewo” u góry i wskaż plik <code>drzewo_ftb.json</code>, a tu pojawi się, kogo z Twojego drzewa MyHeritage ten akt najpewniej dotyczy.</div>';return}
+ const res=treeFind();
+ el.innerHTML='<div class="pc"><h3>🌳 W drzewie MyHeritage</h3>'+(res.length?res.map(x=>{const h=x.k==='f'?(()=>{const f=TREE.F[x.id];return treePerson(f.h)+'<br>+ '+treePerson(f.w)+(f.m?`<br>ślub w drzewie: ${esc(f.m)} ${esc(f.mp||'')} · dzieci: ${(f.k||[]).length}`:'')})():treePerson(x.id);
+  return`<div class="cd"><div class="h"><span style="color:var(--mu)">id ${esc(x.id)}</span><span style="color:${x.pct>=80?'var(--ok)':'var(--md)'}">${x.pct}%</span></div><div class="d">${h}</div><div class="chips">${x.why.map(w=>`<span class="chip ${w[1]}">${w[1]==='y'?'✓':w[1]==='p'?'≈':'✗'} ${esc(w[0])}</span>`).join('')}</div></div>`}).join(''):'<div class="want">Nikogo pasującego w wczytanym drzewie (próg 60%) – może to nowa osoba do dopisania.</div>')+'</div>'}
+document.getElementById('bTree').onclick=()=>document.getElementById('fTree').click();
+document.getElementById('fTree').onchange=e=>{const f=e.target.files[0];if(!f)return;f.text().then(x=>{try{treeLoad(JSON.parse(x.replace(/^﻿/,'')));treeBox()}catch(err){alert('Nieprawidłowy plik drzewa')}})};
 (function(){let h=decodeURIComponent(location.hash.slice(1)),m='M',id=null;
  const mm=h.match(/^([MBD]):(.*)$/);if(mm){m=mm[1];id=mm[2]}else if(h){id=h}
  if(!id||!rec(m,id)){m='M';id=(M.find(x=>x[0]==='1864/15')||M[0])[0]}
