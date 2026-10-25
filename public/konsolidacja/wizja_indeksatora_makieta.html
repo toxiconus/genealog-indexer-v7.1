@@ -1,0 +1,129 @@
+<!doctype html><html><head><meta charset="utf-8"><style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{--bg:#070b14;--p:#0d1424;--p2:#111a2e;--ln:#1e2d4a;--cy:#38e1ff;--vi:#9b7bff;--am:#ffb454;--gr:#4ade80;--rd:#ff6b6b;--tx:#cfe0ff;--mu:#6f86ad}
+body{width:1920px;height:1080px;background:radial-gradient(1200px 700px at 50% 40%,#0e1a33 0%,#070b14 70%);font-family:Inter,sans-serif;color:var(--tx);overflow:hidden;position:relative}
+body:before{content:"";position:absolute;inset:0;background:repeating-linear-gradient(0deg,rgba(56,225,255,.025) 0 1px,transparent 1px 4px);pointer-events:none;z-index:50}
+.mono{font-family:"DejaVu Sans Mono",monospace}
+.panel{position:absolute;background:linear-gradient(180deg,rgba(17,26,46,.92),rgba(10,16,30,.92));border:1px solid var(--ln);border-radius:14px;box-shadow:0 0 0 1px rgba(56,225,255,.04) inset,0 10px 40px rgba(0,0,0,.5)}
+.panel:before{content:"";position:absolute;left:14px;right:14px;top:-1px;height:1px;background:linear-gradient(90deg,transparent,var(--cy),transparent);opacity:.6}
+.h{font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--mu);padding:12px 16px 8px;display:flex;justify-content:space-between}
+.h b{color:var(--cy);font-weight:600}
+#top{left:20px;top:16px;width:1880px;height:64px;display:flex;align-items:center;padding:0 22px;gap:28px}
+.logo{font-weight:700;letter-spacing:.3em;font-size:18px;color:#fff}.logo i{color:var(--cy);font-style:normal}
+.chip{font-size:12px;padding:6px 12px;border:1px solid var(--ln);border-radius:20px;color:var(--mu)}
+.chip.on{border-color:var(--cy);color:var(--cy);background:rgba(56,225,255,.08);box-shadow:0 0 16px rgba(56,225,255,.2)}
+.stat{display:flex;flex-direction:column;font-size:10px;letter-spacing:.14em;color:var(--mu)}.stat b{font-size:20px;color:#fff;letter-spacing:0;font-weight:600}
+#film{left:20px;top:96px;width:150px;height:700px;padding-bottom:10px;overflow:hidden}
+.th{margin:6px 14px;height:88px;border-radius:8px;border:1px solid var(--ln);background:linear-gradient(135deg,#2a2218,#3a2f1f);position:relative;overflow:hidden}
+.th.cur{border-color:var(--cy);box-shadow:0 0 18px rgba(56,225,255,.45)}
+.th span{position:absolute;left:6px;bottom:4px;font-size:10px;color:#fff;background:rgba(0,0,0,.55);padding:1px 6px;border-radius:8px}
+.th i{position:absolute;right:6px;top:6px;width:8px;height:8px;border-radius:50%}
+#scan{left:186px;top:96px;width:960px;height:700px;overflow:hidden}
+#sheet{position:absolute;left:18px;top:44px;width:924px;height:638px;border-radius:6px;background:url(scan.png) 0 0/924px auto no-repeat;box-shadow:0 0 0 1px #2a3b5e,0 0 50px rgba(56,225,255,.12);overflow:hidden}#sheet:after{content:'';position:absolute;inset:0;box-shadow:0 0 70px rgba(7,11,20,.55) inset;pointer-events:none}
+.roi{position:absolute;border:2px solid var(--cy);border-radius:4px;box-shadow:0 0 22px rgba(56,225,255,.7),0 0 0 3px rgba(56,225,255,.12) inset;background:rgba(56,225,255,.07)}
+.roi.v{border-color:var(--vi);box-shadow:0 0 18px rgba(155,123,255,.6);background:rgba(155,123,255,.06)}
+.roi.g{border-color:var(--gr);box-shadow:0 0 14px rgba(74,222,128,.5);background:rgba(74,222,128,.05)}
+.tag{position:absolute;top:-22px;left:-2px;font-size:10px;background:var(--cy);color:#001;padding:2px 8px;border-radius:4px;font-weight:700;letter-spacing:.06em;white-space:nowrap}
+.v .tag{background:var(--vi);color:#fff}.g .tag{background:var(--gr)}
+.ann{position:absolute;font-size:11px;background:rgba(7,11,20,.92);border:1px solid var(--vi);color:#e6dcff;border-radius:8px;padding:6px 10px;box-shadow:0 0 20px rgba(155,123,255,.45);white-space:nowrap}
+.ann b{color:var(--am)}
+.toolbar{position:absolute;left:18px;top:8px;display:flex;gap:6px}
+.tb{font-size:11px;padding:5px 10px;border:1px solid var(--ln);border-radius:8px;color:var(--mu);background:rgba(10,16,30,.8)}.tb.on{color:var(--cy);border-color:var(--cy)}
+#lens{position:absolute;left:560px;top:330px;width:200px;height:200px;border-radius:50%;border:2px solid var(--am);box-shadow:0 0 30px rgba(255,180,84,.55);overflow:hidden;background:#d8c49a;z-index:6}
+#form{left:1162px;top:96px;width:738px;height:700px;overflow:hidden}
+.row{display:flex;gap:12px;padding:0 16px}
+.f{flex:1;margin-bottom:12px}
+.f label{font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--mu);display:flex;justify-content:space-between;margin-bottom:4px}
+.in{height:38px;border:1px solid var(--ln);border-radius:8px;background:#0a1222;display:flex;align-items:center;padding:0 12px;font-size:15px;color:#fff;justify-content:space-between}
+.in.act{border-color:var(--cy);box-shadow:0 0 18px rgba(56,225,255,.3)}
+.in.ai{border-color:rgba(155,123,255,.7);background:linear-gradient(90deg,rgba(155,123,255,.12),#0a1222)}
+.in.unc{border-color:var(--am)}
+.q{font-size:11px;font-weight:700;color:#001;background:var(--am);border-radius:5px;padding:1px 6px}
+.conf{font-size:10px;color:var(--vi)}
+.meter{width:60px;height:5px;border-radius:3px;background:#1a2745;display:inline-block;vertical-align:middle;margin-left:6px;overflow:hidden}.meter i{display:block;height:100%;background:linear-gradient(90deg,var(--vi),var(--cy))}
+.sug{margin:-6px 16px 12px;display:flex;gap:6px;flex-wrap:wrap}
+.s{font-size:12px;padding:4px 10px;border-radius:14px;border:1px solid var(--ln);color:var(--tx);background:#0b1426}.s.h2{border-color:var(--vi);color:#e6dcff}
+.sec{font-size:10px;letter-spacing:.2em;color:var(--cy);padding:6px 16px 10px;display:flex;align-items:center;gap:10px}.sec:after{content:"";flex:1;height:1px;background:linear-gradient(90deg,var(--ln),transparent)}
+#tree{left:20px;top:812px;width:760px;height:252px}
+#diff{left:796px;top:812px;width:520px;height:252px}
+#stats{left:1332px;top:812px;width:568px;height:252px}
+.dr{display:grid;grid-template-columns:130px 1fr 1fr 70px;gap:8px;padding:6px 16px;font-size:13px;align-items:center;border-top:1px solid #15223b}
+.dr .a{color:var(--gr)}.dr .b{color:var(--rd)}.btn{font-size:10px;padding:3px 8px;border:1px solid var(--cy);color:var(--cy);border-radius:6px;text-align:center}
+.cmd{position:absolute;left:920px;top:24px;width:470px;height:38px;border-radius:19px;border:1px solid var(--cy);background:rgba(10,18,34,.9);box-shadow:0 0 24px rgba(56,225,255,.25);display:flex;align-items:center;padding:0 18px;gap:10px;font-size:14px;color:var(--mu)}
+.cmd b{color:var(--cy)}
+</style></head><body>
+<div class="panel" id="top">
+  <div class="logo">GENEA<i>LOG</i> <span style="font-weight:400;color:var(--mu);letter-spacing:.2em;font-size:11px">· OBSERWATORIUM AKTÓW</span></div>
+  <div class="chip on">INDEKSACJA</div><div class="chip">WERYFIKACJA</div><div class="chip">PORÓWNANIE</div><div class="chip">KRONIKA</div>
+  <div style="flex:1"></div>
+  <div class="stat">ROCZNIK<b class="mono">1783</b></div>
+  <div class="stat">AKT<b class="mono">2 / 44</b></div>
+  <div class="stat">TEMPO<b class="mono">41 s/akt</b></div>
+  <div class="stat">PEWNOŚĆ<b class="mono" style="color:var(--gr)">94,2%</b></div>
+  <svg width="46" height="46" viewBox="0 0 46 46"><circle cx="23" cy="23" r="19" fill="none" stroke="#1a2745" stroke-width="4"/><circle cx="23" cy="23" r="19" fill="none" stroke="#38e1ff" stroke-width="4" stroke-dasharray="120" stroke-dashoffset="86" transform="rotate(-90 23 23)" stroke-linecap="round"/><text x="23" y="27" text-anchor="middle" font-size="11" fill="#fff" font-family="Inter">28%</text></svg>
+</div>
+<div class="cmd"><b>⌘K</b> Przejdź do aktu, pola, osoby… </div>
+
+<div class="panel" id="film"><div class="h"><b>STRONY</b></div></div>
+<div class="panel" id="scan">
+  <div class="h"><b>SKAN · Blinów 1783 · s.1</b><span style="margin-left:18px;color:var(--mu);letter-spacing:.1em;font-size:10px">600 dpi · prostowanie ✓ · tło ✓</span><span></span></div>
+  <div class="toolbar" style="left:auto;right:16px;top:8px"><div class="tb on">Bez tła</div><div class="tb">Atrament</div><div class="tb">Kartka</div><div class="tb">Różnice</div></div>
+  <div id="sheet"></div>
+</div>
+<div class="panel" id="form">
+  <div class="h"><b>AKT 2 · CHRZEST</b><span>Zapisano 03:04:11 · rekord wersja 3</span></div>
+  <div class="sec">AKT</div>
+  <div class="row"><div class="f"><label>Rok</label><div class="in mono">1783</div></div><div class="f"><label>Nr aktu / karty</label><div class="in mono">2</div></div><div class="f"><label>Miejscowość</label><div class="in ai">Majdan <span class="conf">AI 91%<span class="meter"><i style="width:91%"></i></span></span></div></div></div>
+  <div class="sec">DZIECKO</div>
+  <div class="row"><div class="f"><label>Imię</label><div class="in act">Agata<span class="conf">z łac.: Agatham</span></div></div><div class="f"><label>Nazwisko</label><div class="in unc">Rembacz <span class="conf">AI 96%</span></div></div></div>
+  <div class="sug"><span class="s h2">→ Agata (forma współczesna)</span><span class="s">Rembaz</span><span class="s">Rębacz</span><span class="s">Rembacz ✓ w słowniku</span></div>
+  <div class="sec">RODZICE</div>
+  <div class="row"><div class="f"><label>Ojciec</label><div class="in">Adalbertus Rembacz <span class="conf">→ Wojciech</span></div></div><div class="f"><label>Wiek ojca</label><div class="in mono">— <span class="conf">brak wieku w akcie</span></div></div></div>
+  <div class="row"><div class="f"><label>Matka</label><div class="in ai">Sophia <span class="conf">→ Zofia · AI 88%<span class="meter"><i style="width:88%"></i></span></span></div></div><div class="f"><label>Nazwisko matki</label><div class="in" style="color:var(--mu)">Con… <span class="q" style="background:var(--rd)">!</span></div></div></div>
+  <div class="sec">CHRZESTNI</div>
+  <div class="row"><div class="f"><label>Chrzestny</label><div class="in">Franciscus <span class="conf">…cus? </span><span class="q">?</span></div></div><div class="f"><label>Chrzestna</label><div class="in">— nieczytelne —</div></div></div>
+  <div class="sec">UWAGI</div>
+  <div class="row"><div class="f"><label>Oryginał (tylko do odczytu)</label><div class="in mono" style="font-size:12px;color:var(--mu)">Maydan · 2 Januarij · Ego Mathias Ki?lewicz … Infantem Agatham … Laboriosi Adalberti Rembacz</div></div></div>
+  <div class="row" style="margin-top:6px"><div class="btn" style="flex:1;padding:10px;font-size:12px">◀ POPRZEDNI</div><div class="btn" style="flex:2;padding:10px;font-size:12px;background:rgba(56,225,255,.12)">ZATWIERDŹ I NASTĘPNY  ⏎</div><div class="btn" style="flex:1;padding:10px;font-size:12px;border-color:var(--am);color:var(--am)">DO SPRAWDZENIA</div></div>
+</div>
+<div class="panel" id="tree"><div class="h"><b>KRONIKA RODZINY · Rembacz</b><span>3 powiązania · 1 hipoteza</span></div><svg id="ts" width="760" height="200" style="position:absolute;left:0;top:44px"></svg></div>
+<div class="panel" id="diff"><div class="h"><b>RÓŻNICE · plik ⇄ indeks internetowy</b><span>12 do decyzji</span></div>
+ <div class="dr"><span style="color:var(--mu)">Imię dziecka</span><span class="b">Antonina</span><span class="a">Agata</span><span class="btn">ZATWIERDŹ</span></div>
+ <div class="dr"><span style="color:var(--mu)">Wiek matki</span><span class="b">l.22</span><span class="a">l.23</span><span class="btn">ZATWIERDŹ</span></div>
+ <div class="dr"><span style="color:var(--mu)">Miejscowość</span><span class="b">Maydan</span><span class="a">Majdan</span><span class="btn">SKAN</span></div>
+ <div class="dr"><span style="color:var(--mu)">Nazwisko ojca</span><span class="b">—</span><span class="a">Rembacz</span><span class="btn">UZUPEŁNIJ</span></div>
+</div>
+<div class="panel" id="stats"><div class="h"><b>POSTĘP · rocznik 1783–1790</b><span>sesja 02:41 h</span></div><svg id="ss" width="568" height="200" style="position:absolute;left:0;top:44px"></svg></div>
+
+<script>
+// pismo odręczne: proceduralne linie
+const sheet=document.getElementById('sheet');
+let seed=7;
+const R=(l,t,w,h,c,tag)=>sheet.insertAdjacentHTML('beforeend',`<div class="roi ${c}" style="left:${l}px;top:${t}px;width:${w}px;height:${h}px"><div class="tag">${tag}</div></div>`);
+R(180,40,700,86,'g','NAGŁÓWEK ROKU · 1783 ✓');
+R(150,132,730,206,'','AKT 2 · odczyt AI 94%');
+R(150,346,730,284,'v','AKT 3 · w kolejce');
+R(8,148,150,34,'g','MIEJSCOWOŚĆ · Majdan 91%');
+sheet.insertAdjacentHTML('beforeend','<div style="position:absolute;left:332px;top:250px;width:310px;height:36px;border:1px solid var(--am);border-radius:4px;box-shadow:0 0 14px rgba(255,180,84,.6)"><div class="tag" style="background:var(--am);color:#001;top:-20px">Adalberti Rembacz → Wojciech Rembacz · 96%</div></div>');
+sheet.insertAdjacentHTML('beforeend','<div style="position:absolute;left:18px;top:318px;width:310px;height:120px;border:1px dashed var(--vi);border-radius:8px;background:rgba(155,123,255,.10)"><div class="tag" style="background:var(--vi);color:#fff;top:-20px">NIEPEWNY ZAPIS PRZEZ TUSZ · tryb „Bez tła”</div></div>');
+sheet.insertAdjacentHTML('beforeend','<div class="ann" style="left:420px;top:236px;transform:translateY(-100%)">„Adalberti” = <b>Wojciech</b> · oryginał zostaje w uwagach</div><div class="ann" style="left:60px;top:520px">Wpis między aktami: <b>nieczytelny</b> · nie zgaduję</div>');
+sheet.insertAdjacentHTML('beforeend','<div id="lens"></div><div class="tag" style="left:700px;top:406px;background:var(--am);color:#001">LUPA 300%</div>');
+const L=document.getElementById('lens');L.style.background='url(scan.png) no-repeat';L.style.backgroundSize='2772px auto';L.style.backgroundPosition=(-(608*3-100))+'px '+(-(268*3-100))+'px';L.style.left='700px';L.style.top='430px';
+L.insertAdjacentHTML('beforeend','<div style="position:absolute;inset:0;border-radius:50%;box-shadow:0 0 0 2px rgba(255,180,84,.0) inset,0 0 40px rgba(0,0,0,.5) inset"></div>');
+// miniatury
+const f=document.getElementById('film');[0,1,2,3,4,5,6].forEach(i=>f.insertAdjacentHTML('beforeend',`<div class="th ${i==0?'cur':''}" style="background:url(scan.png) ${-i*14}px ${-i*40}px/220px auto;filter:${i==0?'none':'brightness(.7) saturate(.8)'}"><span>s.${1+i}</span><i style="background:${['#38e1ff','#6f86ad','#6f86ad','#6f86ad','#6f86ad','#6f86ad','#6f86ad'][i]}"></i></div>`));
+// drzewo
+const ts=document.getElementById('ts');let t='';
+const nodes=[[110,40,'Wojciech Rembacz','Adalbertus'],[270,40,'Zofia Con…?','nieczyt.'],[190,140,'Agata Rembacz','ur. 1783'],[470,40,'Franciscus …?','chrzestny?'],[630,40,'ks. Mathias Ki?lewicz','szafarz']];
+t+='<g stroke="#38e1ff" stroke-opacity=".6" fill="none"><path d="M110 62 C110 100 190 100 190 126"/><path d="M270 62 C270 100 190 100 190 126"/><path d="M110 40 L270 40" stroke-dasharray="3 3"/></g><g stroke="#9b7bff" stroke-dasharray="5 4" fill="none"><path d="M470 62 C400 130 260 150 262 150"/><path d="M630 62 C560 140 270 160 262 156"/></g>';
+nodes.forEach(([x,y,n,s],i)=>{const hy=i>2;t+=`<g><rect x="${x-70}" y="${y-22}" width="140" height="44" rx="10" fill="#0b1426" stroke="${hy?'#9b7bff':'#38e1ff'}" ${hy?'stroke-dasharray="4 3"':''}/><text x="${x}" y="${y-3}" text-anchor="middle" fill="#fff" font-size="13" font-family="Inter" font-weight="600">${n}</text><text x="${x}" y="${y+13}" text-anchor="middle" fill="#6f86ad" font-size="10" font-family="DejaVu Sans Mono">${s}</text></g>`});
+t+='<text x="400" y="176" fill="#9b7bff" font-size="11" font-family="Inter">hipoteza: ta sama Agata co w indeksie (rekord #24, 91%)</text><text x="400" y="192" fill="#6f86ad" font-size="10" font-family="Inter">nic nie zapisuje się samo – decyzja należy do Ciebie</text>';
+ts.innerHTML=t;
+// statystyki
+const ss=document.getElementById('ss');let s='';
+for(let i=0;i<22;i++){const h=20+Math.abs(Math.sin(i*1.3))*80+(i%5)*6;s+=`<rect x="${24+i*24}" y="${160-h}" width="16" height="${h}" rx="3" fill="url(#g)"/>`}
+s+='<defs><linearGradient id="g" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#38e1ff"/><stop offset="1" stop-color="#9b7bff" stop-opacity=".4"/></linearGradient></defs>';
+s+='<path d="M24 120 C100 95 170 130 250 90 S400 80 548 60" fill="none" stroke="#ffb454" stroke-width="2"/><text x="24" y="190" fill="#6f86ad" font-size="10" font-family="Inter">akty / godzinę · linia: pewność odczytu</text>';
+s+='<g font-family="DejaVu Sans Mono" font-size="11"><text x="24" y="14" fill="#4ade80">✓ 1 940 zatwierdzone</text><text x="214" y="14" fill="#ffb454">? 212 do sprawdzenia</text><text x="404" y="14" fill="#6f86ad">… 5 575 w kolejce</text></g>';
+ss.innerHTML=s;
+</script></body></html>
