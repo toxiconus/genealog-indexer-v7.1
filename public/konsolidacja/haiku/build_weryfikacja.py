@@ -1,16 +1,17 @@
 #!/usr/bin/env python3
 """Buduje weryfikacja_zgonow.html (jeden plik, offline) z: ZGONY_ai1_import.csv, ZGONY_ai1_roi.json,
 indeksu Lubgens (txt: NAZWISKO IMIE AKT ROK UWAGI), liczników nazwisk/imion z CSV w konsolidacji i skanów.
-Użycie: build_weryfikacja.py LUBGENS.txt KATALOG_SKANOW OUT.html"""
+Użycie: build_weryfikacja.py LUBGENS.txt KATALOG_SKANOW OUT.html [--bez-skanow]"""
 import csv, json, re, sys, os, base64, io, glob
 from PIL import Image
 here = os.path.dirname(os.path.abspath(__file__)); kons = os.path.dirname(here)
 lub_txt, scans_dir, out = sys.argv[1:4]
+NO_SCANS = "--bez-skanow" in sys.argv[4:]
 FIELDS = [("deceased_last_name","Nazwisko"),("deceased_first_name","Imię"),("deceased_maiden_name","Nazwisko rodowe"),("deceased_sex","Płeć (M/K)"),
  ("death_date","Data zgonu (RRRR-MM-DD)"),("death_time","Godzina zgonu"),("age","Wiek"),("deceased_status","Stan"),("deceased_spouse","Małżonek"),
  ("death_place","Miejsce zgonu"),("deceased_birth_place","Miejsce urodzenia"),("deceased_residence","Zamieszkanie"),("profession","Zawód"),
  ("father_first_name","Ojciec – imię"),("father_last_name","Ojciec – nazwisko"),("mother_first_name","Matka – imię"),("mother_last_name","Matka – nazwisko rodowe"),
- ("informant1","Świadek 1"),("informant2","Świadek 2"),("officiant","Duchowny"),("notes","Uwagi")]
+ ("act_date","Data aktu (spisania)"),("informant1","Świadek 1"),("informant2","Świadek 2"),("officiant","Duchowny"),("notes","Uwagi")]
 UNC = {"first_name":["deceased_first_name"],"date":["death_date"],"time":["death_time"],"age":["age"],"maiden":["deceased_maiden_name"],"birth":["deceased_birth_place"],
  "mother_last":["mother_last_name"],"father_last":["father_last_name"],"fa_last":["father_last_name"],"father_first":["father_first_name"],"father_first_name":["father_first_name"],
  "father":["father_first_name","father_last_name"],"mo":["mother_first_name","mother_last_name"],"informant1":["informant1"],"informant2":["informant2"],
@@ -93,9 +94,18 @@ nlub = len({n for (y, n) in lub if y == 1943})
 for p in REJ["prot"]:
     items.append({"id": p["id"], "kind": "prot", "year": 1943 if p["id"].endswith("43") else 1944, "act": p["lp"], "file": p["plik"], "roi": p["roi"], "unc": p["unc"],
                   "title": p["title"], "ai": p["ai"], "lub": p.get("lub"), "alts": {}, "lubRaw": "", "lubName": "", "cmp": p["cmp"].replace("64 akty", f"{nlub} akty") if False else p["cmp"]})
+# --- data aktu (spisania) z pełnego tekstu → podpowiedzi do daty zgonu
+import datetime
+_ORD = {"pierwszego":1,"drugiego":2,"trzeciego":3,"czwartego":4,"piątego":5,"szóstego":6,"siódmego":7,"ósmego":8,"dziewiątego":9,"dziesiątego":10,"jedenastego":11,"dwunastego":12,"trzynastego":13,"czternastego":14,"piętnastego":15,"szesnastego":16,"siedemnastego":17,"osiemnastego":18,"dziewiętnastego":19,"dwudziestego":20,"trzydziestego":30}
+_MON = {"stycznia":1,"lutego":2,"marca":3,"kwietnia":4,"maja":5,"czerwca":6,"lipca":7,"sierpnia":8,"września":9,"października":10,"listopada":11,"grudnia":12}
+ACTDATE = {}
+_md = open(os.path.join(here, "ZGONY_ai1_pelny_tekst.md"), encoding="utf-8").read()
+for _m in re.finditer(r"^## (ai1-(\d{4})-\d{3}) .*?^> Działo się we wsi \S+ dnia ([^\n]*?) (" + "|".join(_MON) + r") tysiąc", _md, re.S | re.M):
+    _d = sum(_ORD.get(w, 0) for w in _m.group(3).split())
+    if _d: ACTDATE[_m.group(1)] = datetime.date(int(_m.group(2)), _MON[_m.group(4)], _d)
 # --- skany
 scans = {}
-for f in sorted(glob.glob(os.path.join(scans_dir, "*-image.jpg"))):
+for f in ([] if NO_SCANS else sorted(glob.glob(os.path.join(scans_dir, "*-image.jpg")))):
     nm = os.path.basename(f)
     if not any(o["plik"] == nm for o in roi.values()) and nm not in REJ_FILES: continue
     im = Image.open(f).convert("RGB"); im.thumbnail((1700, 1700)); b = io.BytesIO(); im.save(b, "JPEG", quality=76, optimize=True)
@@ -110,6 +120,9 @@ for k in keys:
         unc = []
         for t in re.split(r"[;,]", r.get("uncertain_fields") or ""):
             unc += UNC.get(t.strip(), [t.strip()] if t.strip() in dict(FIELDS) else [])
+        a["ai"]["act_date"] = ACTDATE[id_].isoformat() if id_ in ACTDATE else ""
+        if id_ in ACTDATE:
+            _d0 = ACTDATE[id_]; a["alts"] = {"death_date": [["akt", "wczoraj", (_d0 - datetime.timedelta(1)).isoformat()], ["akt", "dzisiaj", _d0.isoformat()], ["akt", "przedwczoraj", (_d0 - datetime.timedelta(2)).isoformat()]]}
         a["unc"] = unc; a["file"] = roi.get(id_, {}).get("plik", ""); a["roi"] = roi.get(id_, {}).get("roi")
     else: a["ai"] = None; a["unc"] = []; a["file"] = ""; a["roi"] = None
     if k in lub:

@@ -50,7 +50,7 @@ main{padding:10px;max-width:760px;margin:0 auto 90px}
 .tag{font-size:11px;border-radius:6px;padding:1px 6px;margin-left:4px}
 .tag.eq{background:var(--lubb);color:var(--lub)}.tag.ne{background:var(--badb);color:var(--bad)}.tag.ap{background:var(--bzb);color:var(--bz)}.tag.q{background:var(--bzb);color:var(--bz)}
 #bar{position:fixed;left:0;right:0;bottom:0;z-index:30;background:var(--card);border-top:1px solid var(--line);padding:8px 10px calc(8px + env(safe-area-inset-bottom));display:flex;gap:8px}
-#bar button{flex:1}
+#bar button{flex:1}#bar #bOk{flex:2.2}#bar #bPrev,#bar #bNext,#bar #bWiz{flex:.7}.row.act{outline:3px solid var(--acc);border-radius:10px;padding-left:6px;padding-right:6px}
 details{margin-top:6px}details pre{white-space:pre-wrap;font-size:13px;background:var(--bg);padding:8px;border-radius:8px}
 #menu{display:none;position:fixed;right:8px;top:54px;z-index:60;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:8px;box-shadow:0 8px 24px rgba(0,0,0,.25);width:260px}
 #menu button{display:block;width:100%;margin:4px 0;text-align:left}
@@ -62,7 +62,7 @@ body.wz #wbar{display:flex}#wbar button{flex:1;padding:9px 4px}
 .mini b{color:var(--ink);font-weight:500}.mini button{min-height:30px;padding:2px 10px;font-size:13px}
 .chip.akt{background:#ede9fe;border-color:#6d28d9;color:#6d28d9}.chip.uncb{background:var(--bzb);border-color:var(--bz);color:var(--bz)}.chip.uncb.sel{box-shadow:0 0 0 3px var(--bz)}
 .nt{margin-top:5px}.nt input{padding:7px;font-size:15px}
-button.btn-ok,.chip.btn-ok,#bDone{background:#15803d!important;color:#fff!important;border-color:#15803d!important}
+button.btn-ok,.chip.btn-ok{background:#15803d!important;color:#fff!important;border-color:#15803d!important}
 button.btn-skip,.chip.btn-skip{background:#ea580c!important;color:#fff!important;border-color:#ea580c!important}
 .warn{border:2px solid var(--bad);background:var(--badb);border-radius:12px;padding:8px 10px;margin-bottom:10px;font-size:14px}
 #toast{position:fixed;left:50%;bottom:78px;transform:translateX(-50%);background:#111;color:#fff;padding:8px 14px;border-radius:10px;z-index:70;display:none;max-width:90%}
@@ -85,7 +85,7 @@ button.btn-skip,.chip.btn-skip{background:#ea580c!important;color:#fff!important
 <div id="view"><div id="layer"><img id="img" alt=""><div id="roi"></div></div><div id="noimg">Brak skanu dla tego aktu.<br>Wybierz skan poniżej albo dodaj z telefonu.</div>
  <div id="vbar"><button id="zIn">＋</button><button id="zOut">－</button><button id="zFit">◎</button><button id="zH">⇕</button><button id="zRoi">✎</button><button id="zRf" title="Ukryj/pokaż ramkę">▭</button></div></div>
 <main id="main"></main>
-<div id="bar"><button id="bPrev">◀</button><button id="bWiz">🧭 Kreator</button><button id="bAll">Zgodne ✓</button><button id="bDone" class="pri btn-ok">Zatwierdź ✓</button><button id="bNext">▶</button></div>
+<div id="bar"><button id="bPrev">◀</button><button id="bWiz">🧭</button><button id="bSkip" class="btn-skip">Pomiń</button><button id="bOk" class="btn-ok">✓ Zatwierdź pole</button><button id="bNext">▶</button></div>
 <div id="wbar"></div>
 <div id="toast"></div>
 <datalist id="dlS"></datalist><datalist id="dlN"></datalist>
@@ -94,16 +94,16 @@ const D = /*DATA*/null;
 const $ = id => document.getElementById(id);
 const FIELDS = D.fields, AM = {}; D.acts.forEach(a => AM[a.id] = a);
 // kolejność wg tekstu aktu: margines (nazwisko, miejsce) → data → godzina → świadkowie → reszta z treści
-// margines: nazwisko i imię (miejsce na marginesie bywa zgonu lub zamieszkania – nie traktujemy go jako zamieszkania); tekst: data, godzina, świadkowie, urodzony i zamieszkały, miejsce zgonu, reszta
-const ORD = ['deceased_last_name','deceased_first_name','death_date','death_time','informant1','informant2','deceased_birth_place','deceased_residence','death_place','deceased_sex','deceased_status','age','deceased_spouse','deceased_maiden_name','profession','father_first_name','father_last_name','mother_first_name','mother_last_name','officiant','notes'];
+// kolejność jak w akcie: margines (miejsce zgonu, imię i nazwisko) → data aktu → świadkowie → data i godzina zgonu → płeć, urodzony i zamieszkały → wiek, zawód, stan, małżonek → rodzice
+const ORD = ['death_place','deceased_last_name','deceased_first_name','act_date','informant1','informant2','death_date','death_time','deceased_sex','deceased_birth_place','deceased_residence','age','profession','deceased_status','deceased_spouse','deceased_maiden_name','father_first_name','father_last_name','mother_first_name','mother_last_name','officiant','notes'];
 const ORDF = [...ORD.map(id => FIELDS.find(f => f.id === id)).filter(Boolean), ...FIELDS.filter(f => !ORD.includes(f.id))];
 const NUMW = {'jeden':1,'dwa':2,'trzy':3,'cztery':4,'pięć':5,'sześć':6,'siedem':7,'osiem':8,'dziewięć':9,'dziesięć':10,'jedenaście':11,'dwanaście':12,'trzynaście':13,'czternaście':14};
 const sLow = a => (getv(a,'deceased_status') || '').toString().toLowerCase();
 const isSingle = a => /panna|kawaler/.test(sLow(a));
 const isChild = a => { const t = (getv(a,'age') || '').toString().toLowerCase(); if (!t) return false; if (/miesi|tygod|(^|\s)dni(\s|$)|(^|\s)dzie[ńn](\s|$)|(^|\s)godz/.test(t)) return true; const m = t.match(/\d+/); if (m) return +m[0] < 15; const w = t.split(/\s+/).find(x => NUMW[x] !== undefined); return w ? NUMW[w] < 15 : false; };
 // reguły: panna – bez męża; mężczyzna – nazwisko rodowe puste (nazwisko jest rodowe); dziecko – bez zawodu, chyba że wymieniony
-const appl = (a,f) => { if (f === 'deceased_maiden_name') return getv(a,'deceased_sex') === 'K'; if (f === 'deceased_spouse') return !isSingle(a) && !isChild(a); if (f === 'profession') return !isChild(a) || !!clean(getv(a,f)); return true; };
-const warnsOf = a => { if (!a.ai && !a.lub) return []; const w = []; if (getv(a,'deceased_sex') === 'M' && clean(getv(a,'deceased_maiden_name'))) w.push('Mężczyzna: nazwisko rodowe powinno być puste (nazwisko jest rodowe) — chyba że wyjątek.'); if (isSingle(a) && clean(getv(a,'deceased_spouse'))) w.push('Panna/kawaler: nie powinno być małżonka.'); if (isChild(a) && clean(getv(a,'profession'))) w.push('Dziecko z zawodem — potwierdź, że zawód jest wymieniony w akcie.'); return w; };
+const appl = (a,f) => { if (f === 'deceased_maiden_name') return getv(a,'deceased_sex') === 'K'; if (f === 'deceased_spouse') return !isSingle(a) && !isChild(a); if (f === 'profession' || f === 'deceased_status') return !isChild(a) || !!clean(getv(a,f)); return true; };
+const warnsOf = a => { if (!a.ai && !a.lub) return []; const w = []; if (getv(a,'deceased_sex') === 'M' && clean(getv(a,'deceased_maiden_name'))) w.push('Mężczyzna: nazwisko rodowe powinno być puste (nazwisko jest rodowe) — chyba że wyjątek.'); if (isSingle(a) && clean(getv(a,'deceased_spouse'))) w.push('Panna/kawaler: nie powinno być małżonka.'); if (isChild(a) && clean(getv(a,'deceased_status'))) w.push('Dziecko: stan cywilny (kawaler/panna) powinien być pusty.'); if (isChild(a) && clean(getv(a,'profession'))) w.push('Dziecko z zawodem — potwierdź, że zawód jest wymieniony w akcie.'); return w; };
 const warnHtml = a => { const w = warnsOf(a); return w.length ? `<div class="warn">${w.map(t => '⚠ ' + t).join('<br>')}</div>` : ''; };
 let S = {acts:{}, cur:null, year:'all', flt:'all', hideOk:true, hideDoneActs:true, noroi:false, wiz:false};
 const fieldsOf = a => a.kind==='prot' ? D.fieldsProt : a.kind==='rej' ? D.fieldsRej : ORDF;
@@ -157,11 +157,13 @@ function renderAct(){ const a = AM[S.cur]; const m = $('main'); if (!a){ m.inner
    ${a.cmp?`<div class="muted" style="margin-top:4px">Porównanie: ${esc(a.cmp)}</div>`:''}
    <div class="chips"><label class="muted">Skan:&nbsp;<select id="selScan">${Object.keys(allScans()).map(k => `<option ${k===scanOf(a)?'selected':''}>${k}</option>`).join('')}<option value="">— brak —</option></select></label>
    <button class="sm chip ${S.hideOk?'sel':''}" id="tHideOk">👁 Ukryj zatwierdzone pola</button></div>
+   ${a.kind?'':`<div class="chips"><button class="sm" id="hAll">Przyjmij zgodne</button><button class="sm btn-ok" id="hDone">${s.done?'↺ Cofnij zatwierdzenie aktu':'Zatwierdź akt ✓ i dalej'}</button></div>`}
    ${a.lubRaw?`<details><summary class="muted">Indeks Lubgens (surowo)</summary><pre>${a.lubName} · akt ${a.act}/${a.year}\n${a.lubRaw}</pre></details>`:(a.kind?'':'<div class="muted">Lubgens: brak szczegółów w uwagach.</div>')}</div><div class="card">`;
+  let actDone = false;
   FS.forEach(f => { const v = getv(a,f.id), x = s.f[f.id]; if (!appl(a,f.id) && !clean(v)) return;
     if (S.hideOk && (x?.ok || x?.skip)) { h += `<div class="mini"><span>${f.label}: <b>${x.skip?'— pominięte —':esc(v)}</b> ${x.unc?'<span class="tag q">? niepewne</span>':''} ${x.ok?'✓ '+(SRCN[x.src]||''):''}</span><button class="sm" data-undo="${f.id}">zmień</button></div>`; return; }
-    const long = f.id === 'notes' || f.id === 'p_note', uncOn = isUnc(a,f.id);
-    h += `<div class="row ${x?.ok?'ok':''}"><div class="lab"><span>${f.label} ${tagsFor(a,f.id,v,x)}</span><span>${x?.ok?'✓ '+(SRCN[x.src]||''):x?.skip?'pominięte':''}</span></div>
+    const long = f.id === 'notes' || f.id === 'p_note', uncOn = isUnc(a,f.id); const pend = !(x?.ok || x?.skip); const isAct = pend && !actDone; if (isAct) actDone = true;
+    h += `<div class="row ${x?.ok?'ok':''} ${isAct?'act':''}"><div class="lab"><span>${f.label} ${tagsFor(a,f.id,v,x)}</span><span>${x?.ok?'✓ '+(SRCN[x.src]||''):x?.skip?'pominięte':''}</span></div>
      ${long?`<textarea rows="2" data-f="${f.id}">${esc(v)}</textarea>`:`<input data-f="${f.id}" value="${esc(v)}" ${FT[f.id]?`list="${FT[f.id]==='s'?'dlS':'dlN'}"`:''} autocomplete="off">`}
      <div class="chips">${chipsFor(a,f.id)}${clean(v)&&!x?.ok?`<button class="chip btn-ok" data-ok="${f.id}">✓ zatwierdź</button>`:''}<button class="chip uncb ${x?.unc?'sel':''}" data-unc="${f.id}">? niepewne</button>${!x?.skip&&!x?.ok?`<button class="chip btn-skip" data-skip="${f.id}">pomiń</button>`:''}${x?`<button class="chip" data-undo="${f.id}">↺ cofnij</button>`:''}</div>
      ${x?.unc?`<div class="nt"><input data-note="${f.id}" placeholder="Opis niepewności (np. nieczytelne, dwa warianty)" value="${esc(x.note||'')}"></div>`:''}</div>`; });
@@ -174,11 +176,12 @@ function renderAct(){ const a = AM[S.cur]; const m = $('main'); if (!a){ m.inner
   m.querySelectorAll('[data-note]').forEach(i => i.onchange = () => { const x = st(a.id).f[i.dataset.note]; if (x) { x.note = i.value.trim(); save(); } });
   m.querySelectorAll('input[data-f],textarea[data-f]').forEach(i => { i.onchange = () => setf(a, i.dataset.f, i.value.trim(), 'edit'); i.onfocus = () => focusField(a, i.dataset.f); });
   $('tHideOk').onclick = () => { S.hideOk = !S.hideOk; save(); renderAct(); };
+  if ($('hAll')) { $('hAll').onclick = doAll; $('hDone').onclick = doDone; }
   $('selScan').onchange = e => { st(a.id).scan = e.target.value; save(); showScan(); }; }
 function commit(a,f,v,src,extra){ const o = st(a.id).f[f] || {}; st(a.id).f[f] = Object.assign({v: (src==='edit' ? v : clean(v) || v), src, ok:true, unc:o.unc, note:o.note}, extra||{}); save(); }
 function setf(a,f,v,src){ commit(a,f,v,src); keepScroll(true); }
 function keepScroll(next){ const y = window.scrollY; renderAct(); renderList(); window.scrollTo(0,y);
-  if (next && S.hideOk) { const r = $('main').querySelector('.row'); if (r) window.scrollTo({top: r.getBoundingClientRect().top + window.scrollY - $('view').offsetHeight - 8}); } }
+  if (next && S.hideOk) { const r = $('main').querySelector('.row.act') || $('main').querySelector('.row'); if (r) window.scrollTo({top: r.getBoundingClientRect().top + window.scrollY - $('view').offsetHeight - 8}); } }
 // ---- kreator (po jednym polu)
 const W = {on:false, i:0, unc:false, note:'', val:null};
 const emptyF = (a,f) => (!appl(a,f) && !clean(getv(a,f))) || !(a.ai?.[f] || a.lub?.[f] || (a.alts?.[f]||[]).length);
@@ -219,8 +222,10 @@ $('bWiz').onclick = () => wizToggle(true);
 function curAct(){ return AM[S.cur]; }
 function step(d){ const v = visible(); const i = v.findIndex(a => a.id === S.cur); const n = v[Math.max(0, Math.min(v.length-1, (i<0?0:i+d)))]; if (n) { open(n.id); window.scrollTo({top:0}); } }
 $('bPrev').onclick = () => step(-1); $('bNext').onclick = () => step(1);
-$('bAll').onclick = () => { const a = curAct(); if (!a || !a.ai) return toast('Brak odczytu AI do porównania'); let n = 0; fieldsOf(a).forEach(f => { if (diffState(a,f.id) === 'eq' && !st(a.id).f[f.id]) { st(a.id).f[f.id] = {v: clean(a.ai[f.id]), src:'ai', ok:true, unc:st(a.id).f[f.id]?.unc}; n++; } }); save(); renderAct(); toast(`Przyjęto zgodne pola: ${n}`); };
-$('bDone').onclick = () => { const a = curAct(); if (!a) return; const s = st(a.id); s.done = !s.done; save(); renderList(); renderAct(); toast(s.done ? 'Akt zatwierdzony ✓' : 'Cofnięto zatwierdzenie'); if (s.done) step(1); };
+$('bOk').onclick = () => { const a = curAct(), r = $('main').querySelector('.row.act'); if (!a) return; if (!r) return toast('Wszystkie pola zdecydowane — zatwierdź akt'); const inp = r.querySelector('input[data-f],textarea[data-f]'), f = inp.dataset.f, val = inp.value.trim(); const c = [...r.querySelectorAll('.chip[data-f]')].find(b => clean(b.dataset.v) === clean(val)); commit(a, f, val, c ? c.dataset.s : 'edit'); keepScroll(true); };
+$('bSkip').onclick = () => { const a = curAct(), r = $('main').querySelector('.row.act'); if (!a || !r) return; const f = r.querySelector('input[data-f],textarea[data-f]').dataset.f; commit(a, f, getv(a,f), 'ai', {skip:true, ok:false}); keepScroll(true); };
+const doAll = () => { const a = curAct(); if (!a || !a.ai) return toast('Brak odczytu AI do porównania'); let n = 0; fieldsOf(a).forEach(f => { if (diffState(a,f.id) === 'eq' && !st(a.id).f[f.id]) { st(a.id).f[f.id] = {v: clean(a.ai[f.id]), src:'ai', ok:true, unc:st(a.id).f[f.id]?.unc}; n++; } }); save(); renderAct(); toast(`Przyjęto zgodne pola: ${n}`); };
+const doDone = () => { const a = curAct(); if (!a) return; const s = st(a.id); s.done = !s.done; save(); renderList(); renderAct(); toast(s.done ? 'Akt zatwierdzony ✓' : 'Cofnięto zatwierdzenie'); if (s.done) step(1); };
 // ---- skany i widok
 let extra = {}; const allScans = () => Object.assign({}, D.scans, extra);
 const scanOf = a => (S.acts[a.id]?.scan !== undefined ? S.acts[a.id].scan : a.file) || '';
@@ -255,7 +260,7 @@ $('zRoi').onclick = e => { V.edit = !V.edit; e.currentTarget.classList.toggle('o
 // ---- eksport / import
 const dl = (name, text, type='text/csv') => { const b = new Blob(['﻿', text], {type: type+';charset=utf-8'}), u = URL.createObjectURL(b), l = document.createElement('a'); l.href = u; l.download = name; document.body.appendChild(l); l.click(); l.remove(); setTimeout(() => URL.revokeObjectURL(u), 4000); };
 const q = v => { v = (v ?? '').toString(); return /[;"\n\r]/.test(v) ? '"' + v.replace(/"/g,'""') + '"' : v; };
-const COLS = D.cols.concat(['verification_notes']);
+const COLS = D.cols.concat(['act_date','verification_notes']);
 function rows(){ return D.acts.filter(a => a.ai && !a.kind).map(a => { const s = S.acts[a.id] || {f:{}}; const r = {id:a.id, death_year:a.year, death_act_number:a.act}; COLS.forEach(c => { if (!(c in r)) r[c] = a.ai[c] ?? ''; });
   FIELDS.forEach(f => { if (s.f?.[f.id]) r[f.id] = s.f[f.id].v; });
   const unc = FIELDS.filter(f => (isUnc(a,f.id) && !s.f?.[f.id]?.ok) || (s.f?.[f.id]?.unc)).map(f => f.id); r.uncertain_fields = unc.join(';'); r.verification_notes = FIELDS.filter(f => s.f?.[f.id]?.note).map(f => f.id + ': ' + s.f[f.id].note).join(' | ');
