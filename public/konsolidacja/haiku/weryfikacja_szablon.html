@@ -168,7 +168,7 @@ function chipsFor(a,f){ const cur = getv(a,f); const out = []; const seen = new 
   if (a.ai?.[f]) add('ai','AI',a.ai[f],cnt(a.ai[f])); if (a.lub?.[f]) add('lub','LUB',a.lub[f],cnt(a.lub[f])); (a.alts?.[f]||[]).forEach(([c,l,v]) => add(c,l,v,cnt(v)));
   if (FT[f]) { [a.ai?.[f], a.lub?.[f]].filter(Boolean).forEach(v => { if (countOf(f,v) === 0) near(f,v).forEach(([n,c]) => add('bz','BAZA ≈',n,` <small>×${c}</small>`)); }); }
   return out.join(''); }
-const SRCN = {ai:'AI', lub:'LUB', bz:'BAZA', akt:'AKT', edit:'własne'};
+const SRCN = {txt:'z tekstu', ai:'AI', lub:'LUB', bz:'BAZA', akt:'AKT', edit:'własne'};
 const esc = v => String(v ?? '').replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;');
 function tagsFor(a,f,v,x){ const ds = diffState(a,f); const c = FT[f] ? countOf(f,v) : null;
   return (ds?`<span class="tag ${ds}">${ds==='eq'?'AI=LUB':ds==='ap'?'AI≈LUB':'AI≠LUB'}</span>`:'') + (isUnc(a,f)&&!x?.ok?'<span class="tag q">niepewne</span>':'') + (c===0&&clean(v)?'<span class="tag ne">brak w bazie</span>':(c?`<span class="tag eq">baza ×${c}</span>`:'')); }
@@ -316,7 +316,14 @@ async function loadExtra(){ try { const db = await idb(), os = db.transaction('s
 const TF_ORDER = ['informant1','informant2','death_place','deceased_first_name','deceased_last_name','deceased_birth_place','deceased_residence','profession','deceased_status','deceased_spouse','deceased_maiden_name','father_first_name','father_last_name','mother_first_name','mother_last_name','officiant'];
 let TF = null;
 const txtOf = a => { const s = S.acts[a.id]; return s && s.text != null ? s.text : (a.tekst || ''); };
-function stemOk(w, v){ const a = fold(w), b = fold(v); if (a.length < 3 || b.length < 3 || Math.abs(a.length-b.length) > 3) return false; let k = 0; while (k < a.length && k < b.length && a[k] === b[k]) k++; return k >= Math.max(3, Math.min(a.length, b.length) - 2); }
+const ENDS = ['owie','ami','ach','ich','ych','ego','emu','ow','om','em','ie','owi','a','e','y','i','u','o'].sort((x,y) => y.length-x.length);
+function stemOf(w){ w = fold(w); for (const e of ENDS) if (w.length - e.length >= 4 && w.endsWith(e)) return w.slice(0, -e.length); return w; }
+function stemOk(w, v){ const a = fold(w), b = fold(v); if (a.length < 3 || b.length < 3) return false; if (a === b) return true; const x = stemOf(w), y = stemOf(v); if (x === y) return true; if (Math.min(x.length, y.length) >= 5 && lev(x, y) <= 1) return true;
+  if (Math.abs(a.length-b.length) > 3) return false; let k = 0; while (k < a.length && k < b.length && a[k] === b[k]) k++; return k >= Math.max(3, Math.min(a.length, b.length) - 2); }
+// kandydaci formy podstawowej dla odmienionego słowa z tekstu – słownik z bazy (najczęstsze nazwiska/imiona)
+function baseCands(word, f, a){ const t = FT[f]; if (!t || !D.counts[t]) return []; const x = stemOf(word), sex = getv(a,'deceased_sex'), fem = f === 'mother_last_name' || f === 'deceased_maiden_name' || (f === 'deceased_last_name' && sex === 'K') || (f === 'deceased_spouse');
+  const out = []; for (const [n,c] of Object.entries(D.counts[t])) { if (c < 2) continue; const y = stemOf(n); if (y === x || (Math.min(x.length,y.length) >= 5 && lev(x,y) <= 1)) { let sc = c; if (t === 's' && /(sk|ck|dzk)[ai]$/i.test(n)) sc += (fem === /a$/i.test(n)) ? 1e6 : 0; out.push([n,c,sc]); } }
+  return out.sort((p,q) => q[2]-p[2]).slice(0,3); }
 function assignTok(a, t, FS){ const toks = []; const re = /[\p{L}]+/gu; let m; while ((m = re.exec(t))) toks.push({w:m[0], i:m.index, e:m.index+m[0].length, f:null});
   const ids = new Set(FS.map(f => f.id)); let cur = 0; const um = toks.findIndex(x => /^(umar|zmar)/i.test(x.w));
   for (const f of TF_ORDER) { if (!ids.has(f)) continue; const ws = (f.startsWith('informant') ? clean(getv(a,f)).split(',')[0] : clean(getv(a,f))).split(/[\s\-,]+/).filter(w => w.length >= 3); if (!ws.length) continue;
@@ -350,6 +357,10 @@ function approxFocus(a, kind, key){ clearFb(); const r = roiOf(a); if (!r || !im
   fit({x:r.x, y:y0, w:r.w, h:band}); if (S.noroi) return true; const e = document.createElement('div'); e.className = 'fb'; Object.assign(e.style, {position:'absolute', left:r.x*V.iw+'px', top:y0*V.ih+'px', width:r.w*V.iw+'px', height:band*V.ih+'px', background:'rgba(255,255,255,.16)', pointerEvents:'none'}); layer.appendChild(e); return true; }
 function focusTxt(a){ if (TF) { if (!focusField(a, TF)) approxFocus(a, 'f', TF); } else if (TQ) approxFocus(a, 'q', TQ); }
 let TA = null;
+function qWithLinks(a, FS, t){ const qs = qList(t), toks = assignTok(a, t, FS); toks.forEach(x => { if (x.f) { const q = qs.find(q => x.i < q.e && x.e > q.s); if (q && !q.link) q.link = x.f; } }); return qs; }
+function resolveLinked(a, FS, fields){ const t = txtOf(a); const T = qWithLinks(a, FS, t).filter(q => fields.includes(q.link) && qClean(q.txt)).sort((u,v) => v.s - u.s); if (!T.length) return 0; let r = t; T.forEach(q => { r = r.slice(0,q.s) + qClean(q.txt) + r.slice(q.e); }); setTxt(a, r); return T.length; }
+const GROUPS = [['deceased_last_name','father_last_name'], ['death_place','deceased_residence','deceased_birth_place']];
+function approveAll(a, FS, f, v, src, extra){ commit(a, f, v, src, extra); const done = [f]; const g = GROUPS.find(g => g.includes(f)); if (g) g.forEach(h => { if (h !== f && !st(a.id).f[h] && FS.some(x => x.id === h) && loose(getv(a,h), v)) { st(a.id).f[h] = {v: clean(v), src: src === 'edit' ? 'edit' : src, ok:true, note:'razem z: ' + f}; done.push(h); } }); save(); const nq = resolveLinked(a, FS, done); if (done.length > 1 || nq) toast(`Zatwierdzono razem: ${done.length > 1 ? done.length + ' pola' : ''}${done.length > 1 && nq ? ', ' : ''}${nq ? nq + ' w tekście' : ''}`); return done; }
 function seqOf(a, FS, t){ const toks = assignTok(a, t, FS), qs = qList(t), sk = S.acts[a.id]?.qs || {}, F = S.acts[a.id]?.f || {};
   toks.forEach(x => { if (x.f && qs.some(q => x.i < q.e && x.e > q.s)) x.f = null; });
   const o = []; qs.forEach(q => o.push({t:'q', k:q.key, pos:q.s, pend:!sk[q.key]})); const seen = new Set();
@@ -360,6 +371,7 @@ const pickIt = it => { if (it.t === 'q') { TQ = it.k; TF = null; } else { TF = i
 function tgo(a, FS, dir){ const o = seqOf(a, FS, txtOf(a)); if (!o.length) return; const i = o.findIndex(x => x.t === 'q' ? x.k === TQ : (!TQ && x.k === TF)); pickIt(o[((i < 0 ? (dir > 0 ? -1 : 0) : i) + dir + o.length) % o.length]); }
 function tafter(a, FS, pos, incl){ const o = seqOf(a, FS, txtOf(a)); const n = o.find(x => x.pend && (incl ? x.pos >= pos : x.pos > pos)) || o.find(x => x.pend); if (n) pickIt(n); else { TQ = null; TF = null; } }
 function selScroll(){ const e = document.querySelector('#main .qm.sel, #main .hl.sel'); if (!e) return; const r = e.getBoundingClientRect(), top = $('view').offsetHeight + 12, sh = $('tsheet'), bot = innerHeight - (sh ? sh.offsetHeight : 0) - 12; if (r.top < top || r.bottom > bot) window.scrollTo({top: window.scrollY + r.top - top - 40}); }
+function txtChips(a, f, FS, t){ if (FT[f] !== 's') return ''; const cur = clean(getv(a,f)), seen = new Set(), out = []; assignTok(a, t, FS).filter(x => x.f === f).forEach(x => { if (stemOf(x.w) === stemOf(cur)) return; baseCands(x.w, f, a).slice(0,2).forEach(([n,c]) => { if (fold(n) === fold(cur) || seen.has(n)) return; seen.add(n); out.push(`<button class="chip akt" data-f="${f}" data-v="${esc(n)}" data-s="txt">TEKST: ${esc(n)} <small>×${c} (z „${esc(x.w)}”)</small></button>`); }); }); return out.join(''); }
 function renderText(a){ const m = $('main'), s = st(a.id), FS = fieldsOf(a), md = S.tmode, t = txtOf(a); const fs = S.tfs || 18;
   if (TA !== a.id) { TA = a.id; TQ = null; TF = null; } if (!TQ && !TF && md !== 'popraw') { const f0 = seqOf(a, FS, t).find(x => x.pend); if (f0) pickIt(f0); }
   const SQ = seqOf(a, FS, t), curI = SQ.findIndex(x => x.t === 'q' ? x.k === TQ : (!TQ && x.k === TF)), cpos = curI >= 0 ? SQ[curI].pos : 0, pendN = SQ.filter(x => x.pend).length;
@@ -367,7 +379,7 @@ function renderText(a){ const m = $('main'), s = st(a.id), FS = fieldsOf(a), md 
   const modes = [['pola','Pola w tekście'],['czysty','Czysty tekst'],['popraw','Popraw tekst'],['lista','Lista pól']];
   let h = `<div class="card"><div class="hd"><b>${esc(nm)}</b><span class="muted">${s.done?'✓ zatwierdzony':'do weryfikacji'}${s.text!=null?' · tekst poprawiony':''}</span></div><div class="tm" style="margin-top:8px">${modes.map(([k,l]) => `<button class="sm ${md===k?'on':''}" data-tm="${k}">${l}</button>`).join('')}<button class="sm" data-tm="">✕ Pola</button></div>`;
   const edit = () => { if (!TF || !FS.some(f => f.id === TF)) return ''; const f = FS.find(f => f.id === TF), v = getv(a,TF), x = s.f[TF];
-    return `<div class="ted"><b>${esc(f.label)}</b> ${tagsFor(a,TF,v,x)} <span class="muted">${x?.ok?'✓ '+(SRCN[x.src]||''):x?.skip?'pominięte':''}</span><input id="tfv" value="${esc(v)}" ${FT[TF]?`list="${FT[TF]==='s'?'dlS':'dlN'}"`:''} autocomplete="off"><div class="chips">${chipsFor(a,TF)}</div><div class="act3"><button class="btn-skip" id="tfSkip">Pomiń</button><button class="uncb ${x?.unc?'sel':''}" id="tfUnc">? niepewne</button><button class="btn-ok" id="tfOk">✓ Zatwierdź</button></div>${x?.unc?`<div class="nt"><input id="tfNote" placeholder="Opis niepewności" value="${esc(x.note||'')}"></div>`:''}</div>`; };
+    return `<div class="ted"><b>${esc(f.label)}</b> ${tagsFor(a,TF,v,x)} <span class="muted">${x?.ok?'✓ '+(SRCN[x.src]||''):x?.skip?'pominięte':''}</span><input id="tfv" value="${esc(v)}" ${FT[TF]?`list="${FT[TF]==='s'?'dlS':'dlN'}"`:''} autocomplete="off"><div class="chips">${chipsFor(a,TF)}${txtChips(a,TF,FS,t)}</div><div class="act3"><button class="btn-skip" id="tfSkip">Pomiń</button><button class="uncb ${x?.unc?'sel':''}" id="tfUnc">? niepewne</button><button class="btn-ok" id="tfOk">✓ Zatwierdź</button></div>${x?.unc?`<div class="nt"><input id="tfNote" placeholder="Opis niepewności" value="${esc(x.note||'')}"></div>`:''}</div>`; };
   const qAll = qList(t), qOpen = qAll.filter(q => !(s.qs||{})[q.key]);
   const qedit = () => { const q = qAll.find(q => q.key === TQ); if (!q) return ''; const cl = qClean(q.txt); const ctx = esc(t.slice(Math.max(0,q.s-60), q.s)) + '<span class="qm sel">' + esc(q.txt) + '</span>' + esc(t.slice(q.e, q.e+60));
     return `<div class="ted"><b>Niepewny odczyt</b><div class="muted" style="margin:4px 0">…${ctx}…</div><input id="qv" value="${esc(cl)}" autocomplete="off"><div class="act3"><button class="btn-skip" id="qSkip">Pomiń</button><button id="qSave">✎ Zapisz</button><button class="btn-ok" id="qOk" ${cl?'':'disabled'}>✓ OK: „${esc(cl)}”</button></div></div>`; };
@@ -396,7 +408,7 @@ function renderText(a){ const m = $('main'), s = st(a.id), FS = fieldsOf(a), md 
   m.querySelectorAll('.hl[data-f]').forEach(b => b.onclick = () => { TF = b.dataset.f; TQ = null; rerender(); });
   m.querySelectorAll('.qm[data-q]').forEach(b => b.onclick = () => { TQ = b.dataset.q; TF = null; rerender(); });
   if ($('qFirst')) $('qFirst').onclick = () => { TQ = qOpen[0].key; TF = null; rerender(); };
-  if ($('tAll')) $('tAll').onclick = () => { let n = 0; FS.forEach(f => { if (diffState(a,f.id) === 'eq' && !st(a.id).f[f.id] && !isUnc(a,f.id)) { st(a.id).f[f.id] = {v: clean(a.ai[f.id]), src:'ai', ok:true}; n++; } }); save(); toast(`Przyjęto zgodne: ${n}`); tafter(a, FS, 0, true); rerender(); };
+  if ($('tAll')) $('tAll').onclick = () => { let n = 0; FS.forEach(f => { if (diffState(a,f.id) === 'eq' && !st(a.id).f[f.id] && !isUnc(a,f.id)) { st(a.id).f[f.id] = {v: clean(a.ai[f.id]), src:'ai', ok:true}; n++; } }); save(); const nq0 = resolveLinked(a, FS, FS.filter(f => st(a.id).f[f.id]?.ok).map(f => f.id)); toast(`Przyjęto zgodne: ${n}${nq0 ? ', w tekście: ' + nq0 : ''}`); tafter(a, FS, 0, true); rerender(); };
   if ($('tDone')) $('tDone').onclick = () => { doDone(); };
   $('tScan').onclick = () => { if (TF) { if (!focusField(a, TF)) { approxFocus(a, 'f', TF); toast('Brak ramki pola – pokazuję orientacyjny fragment'); } } else if (TQ) approxFocus(a, 'q', TQ); };
   $('tPrev').onclick = () => { tgo(a, FS, -1); rerender(); }; $('tNext').onclick = () => { tgo(a, FS, 1); rerender(); };
@@ -405,8 +417,8 @@ function renderText(a){ const m = $('main'), s = st(a.id), FS = fieldsOf(a), md 
     $('qSkip').onclick = () => { const s2 = st(a.id); (s2.qs = s2.qs || {})[q.key] = 'skip'; save(); tafter(a, FS, q.s, false); rerender(); }; }
   const adv = () => { tafter(a, FS, cpos, false); rerender(); };
   if ($('tfv')) { const f = TF; $('tfv').onchange = () => { commit(a, f, $('tfv').value.trim(), 'edit'); rerender(false); };
-    sh.querySelectorAll('.chip[data-f]').forEach(b => b.onclick = () => { commit(a, b.dataset.f, b.dataset.v, b.dataset.s); adv(); });
-    $('tfOk').onclick = () => { const v = $('tfv').value.trim(), c = sh.querySelector('.chip.sel[data-f]'); commit(a, f, v, c && clean(c.dataset.v) === clean(v) ? c.dataset.s : (st(a.id).f[f]?.src || 'edit')); adv(); };
+    sh.querySelectorAll('.chip[data-f]').forEach(b => b.onclick = () => { approveAll(a, FS, b.dataset.f, b.dataset.v, b.dataset.s); adv(); });
+    $('tfOk').onclick = () => { const v = $('tfv').value.trim(), c = sh.querySelector('.chip.sel[data-f]'); approveAll(a, FS, f, v, c && clean(c.dataset.v) === clean(v) ? c.dataset.s : (st(a.id).f[f]?.src || 'edit')); adv(); };
     $('tfSkip').onclick = () => { commit(a, f, getv(a,f), 'ai', {skip:true, ok:false}); adv(); };
     $('tfUnc').onclick = () => { const x = st(a.id).f[f] || {v:getv(a,f), src:(a.ai?.[f]?'ai':'lub'), ok:false}; x.unc = !isUnc(a,f); st(a.id).f[f] = x; save(); rerender(false); };
     if ($('tfNote')) $('tfNote').onchange = () => { const x = st(a.id).f[f]; if (x) { x.note = $('tfNote').value.trim(); save(); } }; }
