@@ -173,7 +173,7 @@ function renderAct(){ const a = AM[S.cur]; const m = $('main'); if (!a){ m.inner
   let h = `<div class="card"><div class="hd"><b>${a.kind?'':a.year+' · akt '+a.act+' · '}${nm}</b><span class="muted">${s.done?'✓ zatwierdzony':'do weryfikacji'}${a.ai?` · niepewnych pól: ${unc}`:' · tylko indeks Lubgens'}</span></div>
    ${a.cmp?`<div class="muted" style="margin-top:4px">Porównanie: ${esc(a.cmp)}</div>`:''}
    <div class="chips"><label class="muted">Skan:&nbsp;<select id="selScan">${Object.keys(allScans()).map(k => `<option ${k===scanOf(a)?'selected':''}>${k}</option>`).join('')}<option value="">— brak —</option></select></label>
-   <button class="sm chip ${S.hideOk?'sel':''}" id="tHideOk">👁 Ukryj zatwierdzone pola</button></div>
+   ${a.tekst?`<button class="sm pri" id="cText">Aa Tekst aktu (pola w tekście)</button>`:''}<button class="sm chip ${S.hideOk?'sel':''}" id="tHideOk">👁 Ukryj zatwierdzone pola</button></div>
    ${a.kind?'':`<div class="chips"><button class="sm" id="hAll">Przyjmij zgodne</button><button class="sm btn-ok" id="hDone">${s.done?'↺ Cofnij zatwierdzenie aktu':'Zatwierdź akt ✓ i dalej'}</button></div>`}
    ${a.lubRaw?`<details><summary class="muted">Indeks Lubgens (surowo)</summary><pre>${a.lubName} · akt ${a.act}/${a.year}\n${a.lubRaw}</pre></details>`:(a.kind?'':'<div class="muted">Lubgens: brak szczegółów w uwagach.</div>')}</div><div class="card">`;
   let actDone = false;
@@ -192,6 +192,7 @@ function renderAct(){ const a = AM[S.cur]; const m = $('main'); if (!a){ m.inner
   m.querySelectorAll('[data-unc]').forEach(b => b.onclick = () => { const f = b.dataset.unc, x = st(a.id).f[f] || {v:getv(a,f), src:(a.ai?.[f]?'ai':'lub'), ok:false}; x.unc = !isUnc(a,f); st(a.id).f[f] = x; save(); keepScroll(); });
   m.querySelectorAll('[data-note]').forEach(i => i.onchange = () => { const x = st(a.id).f[i.dataset.note]; if (x) { x.note = i.value.trim(); save(); } });
   m.querySelectorAll('input[data-f],textarea[data-f]').forEach(i => { i.onchange = () => setf(a, i.dataset.f, i.value.trim(), 'edit'); i.onfocus = () => focusField(a, i.dataset.f); });
+  if ($('cText')) $('cText').onclick = () => { S.tmode = 'pola'; save(); renderAct(); window.scrollTo(0,0); };
   $('tHideOk').onclick = () => { S.hideOk = !S.hideOk; save(); renderAct(); };
   if ($('hAll')) { $('hAll').onclick = doAll; $('hDone').onclick = doDone; }
   $('selScan').onchange = e => { st(a.id).scan = e.target.value; save(); showScan(); }; }
@@ -351,7 +352,7 @@ function renderText(a){ const m = $('main'), s = st(a.id), FS = fieldsOf(a), md 
   if ($('tfCopy')) $('tfCopy').onclick = async () => { try { await navigator.clipboard.writeText(t); toast('Skopiowano'); } catch(e) { toast('Nie można skopiować'); } };
   if ($('tfArea')) { const sv = () => { const v = $('tfArea').value; const s2 = st(a.id); if (v === (a.tekst||'')) delete s2.text; else s2.text = v; save(); }; $('tfArea').onchange = sv; $('tfSave').onclick = () => { sv(); toast('Zapisano tekst'); renderAct(); }; $('tfRest').onclick = () => { delete st(a.id).text; save(); toast('Przywrócono oryginał'); renderAct(); }; }
 }
-$('bText').onclick = () => { W.on = false; document.body.classList.remove('wz'); S.tmode = S.tmode ? '' : 'pola'; save(); renderAct(); window.scrollTo(0,0); };
+$('bText').onclick = () => { W.on = false; document.body.classList.remove('wz'); S.tmode = S.tmode ? '' : 'pola'; save(); if (S.tmode && !curAct()?.tekst) toast('Ta pozycja nie ma pełnego tekstu – wybierz akt z listy (np. 43/26)'); renderAct(); window.scrollTo(0,0); };
 $('mTxt').onclick = () => { const L = ['# Teksty aktów zmarłych (Haiku AI v1, z poprawkami z narzędzia)', '']; D.acts.filter(a => a.tekst).forEach(a => { const ch = S.acts[a.id]?.text != null; L.push(`## ${a.id}${ch ? ' · POPRAWIONY' : ''}`, '> ' + txtOf(a), ''); if (ch) L.push('Oryginał Haiku:', '> ' + a.tekst, ''); }); dl('ZGONY_teksty_poprawione.md', L.join('\n'), 'text/markdown'); };
 document.addEventListener('click', e => { if (!e.target.closest('#menu') && !e.target.closest('#bMenu')) $('menu').style.display = 'none'; });
 function init(){ $('zRf').classList.toggle('on', !!S.noroi); renderTabs(); renderList(); if (!S.cur || !AM[S.cur]) S.cur = (D.acts.find(a => a.ai) || D.acts[0])?.id; renderList(); renderAct(); showScan(); }
