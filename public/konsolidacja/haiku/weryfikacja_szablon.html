@@ -50,10 +50,11 @@ main{padding:10px;max-width:760px;margin:0 auto 90px}
 .tag{font-size:11px;border-radius:6px;padding:1px 6px;margin-left:4px}
 .tag.eq{background:var(--lubb);color:var(--lub)}.tag.ne{background:var(--badb);color:var(--bad)}.tag.ap{background:var(--bzb);color:var(--bz)}.tag.q{background:var(--bzb);color:var(--bz)}
 #bar{position:fixed;left:0;right:0;bottom:0;z-index:30;background:var(--card);border-top:1px solid var(--line);padding:8px 10px calc(8px + env(safe-area-inset-bottom));display:flex;gap:8px}
-#bar button{flex:1}#bar #bOk{flex:2.2}#bar #bPrev,#bar #bNext,#bar #bWiz{flex:.7}.row.act{outline:3px solid var(--acc);border-radius:10px;padding-left:6px;padding-right:6px}
+#bar{gap:5px}#bar button{flex:1;min-width:0;min-height:52px;padding:4px 2px}#bar #bOk{flex:2.4;font-size:16px;font-weight:700}#bar #bPrev,#bar #bNext,#bar #bWiz,#bar #bMenu2,#bar #bText2{flex:.62}#bar #bSkip{flex:1.2}
+#fab{display:none;position:fixed;right:12px;bottom:calc(14px + env(safe-area-inset-bottom));z-index:45;width:56px;height:56px;border-radius:50%;font-size:24px;box-shadow:0 4px 14px rgba(0,0,0,.35);background:var(--acc);color:#fff;border:0}body.textmode #fab{display:block}body:has(#tsheet) #fab{display:none}#tsheet .tnav #tMenu{min-width:48px}.row.act{outline:3px solid var(--acc);border-radius:10px;padding-left:6px;padding-right:6px}
 details{margin-top:6px}details pre{white-space:pre-wrap;font-size:13px;background:var(--bg);padding:8px;border-radius:8px}
-#menu{display:none;position:fixed;right:8px;top:8px;max-height:92vh;overflow:auto;z-index:60;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:8px;box-shadow:0 8px 24px rgba(0,0,0,.25);width:260px}
-#menu button{display:block;width:100%;margin:4px 0;text-align:left}
+#menu{display:none;position:fixed;right:8px;bottom:calc(70px + env(safe-area-inset-bottom));top:auto;max-height:78vh;overflow:auto;z-index:60;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:8px;box-shadow:0 8px 24px rgba(0,0,0,.25);width:260px}
+#menu button{display:block;width:100%;margin:4px 0;text-align:left;min-height:46px}
 #wbar{display:none;position:fixed;left:0;right:0;bottom:0;z-index:30;background:var(--card);border-top:1px solid var(--line);padding:8px 10px calc(8px + env(safe-area-inset-bottom));gap:6px}
 body.wz #wbar{display:flex}#wbar button{flex:1;padding:9px 4px}
 .wz-card .big{font-size:22px;font-weight:600;margin:4px 0}.wz-card .chip{font-size:18px;min-height:48px;padding:9px 16px}
@@ -68,7 +69,7 @@ button.btn-skip,.chip.btn-skip{background:#ea580c!important;color:#fff!important
 #toast{position:fixed;left:50%;bottom:78px;transform:translateX(-50%);background:#111;color:#fff;padding:8px 14px;border-radius:10px;z-index:70;display:none;max-width:90%}
 
 /* tryby tekstowe */
-#bText.on{background:var(--acc);color:#fff;border-color:var(--acc)}
+#bText.on,#bText2.on{background:var(--acc);color:#fff;border-color:var(--acc)}
 body.textmode #bar{display:none}body.textmode main{max-width:1000px;margin-bottom:24px}
 .tm{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:8px}.tm button.on{background:var(--acc);color:#fff;border-color:var(--acc)}
 .ttext{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px;line-height:2.1;overflow-wrap:anywhere}
@@ -121,7 +122,8 @@ body.textmode main{margin-bottom:330px}body.textmode #view{height:30vh}body.text
 <div id="view"><div id="layer"><img id="img" alt=""><div id="roi"></div></div><div id="noimg">Brak skanu dla tego aktu.<br>Wybierz skan poniżej albo dodaj z telefonu.</div>
  <div id="vbar"><button id="zMenu" title="Menu">☰</button><button id="zIn">＋</button><button id="zOut">－</button><button id="zFit">◎</button><button id="zH">⇕</button><button id="zRoi">✎</button><button id="zRf" title="Ukryj/pokaż zaznaczenia na skanie">▭</button></div></div>
 <main id="main"></main>
-<div id="bar"><button id="bPrev">◀</button><button id="bWiz">🧭</button><button id="bSkip" class="btn-skip">Pomiń</button><button id="bOk" class="btn-ok">✓ Zatwierdź pole</button><button id="bNext">▶</button></div>
+<div id="bar"><button id="bMenu2" title="Menu">⋯</button><button id="bText2" title="Tryby tekstu">Aa</button><button id="bPrev">◀</button><button id="bWiz">🧭</button><button id="bSkip" class="btn-skip">Pomiń</button><button id="bNext">▶</button><button id="bOk" class="btn-ok">✓ OK</button></div>
+<button id="fab" title="Menu">⋯</button>
 <div id="wbar"></div>
 <div id="toast"></div>
 <datalist id="dlS"></datalist><datalist id="dlN"></datalist>
@@ -281,7 +283,7 @@ function tagsFor(a,f,v,x){ const ds = diffState(a,f); const c = FT[f] ? countOf(
 function renderAct(){ const a = AM[S.cur]; const m = $('main'); if (!a){ m.innerHTML = '<div class="card muted">Wybierz pozycję z listy powyżej.</div>'; return; }
   if (W.on || !(S.tmode && a.tekst)) { const x = $('tsheet'); if (x) x.remove(); }
   if (W.on) return renderWiz();
-  document.body.classList.toggle('textmode', !!(S.tmode && a.tekst)); $('bText').classList.toggle('on', !!S.tmode);
+  document.body.classList.toggle('textmode', !!(S.tmode && a.tekst)); $('bText').classList.toggle('on', !!S.tmode); $('bText2').classList.toggle('on', !!S.tmode);
   if (S.tmode && a.tekst) return renderText(a);
   const s = st(a.id), FS = fieldsOf(a); const nm = a.kind ? a.title : (a.ai ? `${a.ai.deceased_last_name} ${a.ai.deceased_first_name}` : `${a.lubName||''}`);
   const unc = a.ai ? FS.filter(f => isUnc(a,f.id) && !s.f[f.id]?.ok && !s.f[f.id]?.skip).length : 0;
@@ -412,6 +414,7 @@ $('mRep').onclick = () => { $('menu').style.display = 'none'; renderRep(); };
 $('mFr').onclick = () => { $('menu').style.display = 'none'; $('zRf').click(); };
 $('mTop').onclick = () => { $('menu').style.display = 'none'; window.scrollTo({top:0}); };
 $('mOff').onclick = () => { $('menu').style.display = 'none'; if (W.on) wizToggle(false); S.tmode = ''; save(); renderAct(); };
+$('bMenu2').onclick = $('fab').onclick = () => $('bMenu').click(); $('bText2').onclick = () => $('bText').click();
 $('bMenu').onclick = () => { const m = $('menu'); m.style.display = m.style.display === 'block' ? 'none' : 'block'; };
 $('mAi').onclick = () => $('fAi').click();
 $('fAi').onchange = async e => { const t = (await e.target.files[0].text()).replace(/^﻿/,''); const L = t.split(/\r?\n/).filter(Boolean), H = L[0].split(';'); let n = 0;
@@ -516,7 +519,7 @@ function renderText(a){ const m = $('main'), s = st(a.id), FS = fieldsOf(a), md 
   sh.style.display = md === 'popraw' ? 'none' : 'block';
   const Fs = S.acts[a.id]?.f || {}, nEq = a.ai ? FS.filter(f => diffState(a,f.id) === 'eq' && !Fs[f.id] && !isUnc(a,f.id)).length : 0, isDone = !!S.acts[a.id]?.done;
   const tools = (nEq ? `<button class="sm" id="tAll">Przyjmij zgodne (${nEq})</button>` : '') + (!pendN || isDone ? `<button class="sm ${isDone?'':'btn-ok'}" id="tDone" style="flex:1">${isDone ? '↺ Cofnij zatwierdzenie aktu' : '✓ Zatwierdź akt i dalej'}</button>` : '');
-  sh.innerHTML = `<div class="tnav"><button id="tPrev">◀</button><span>${isDone ? '✓ akt zatwierdzony' : (curI >= 0 ? (curI+1)+'/'+SQ.length : '—') + ' · zostało: <b>' + pendN + '</b>'}</span><button id="tScan" title="Pokaż na skanie">🔍</button><button id="tNext">▶</button></div>${tools ? `<div class="chips" style="margin-top:6px">${tools}</div>` : ''}` + (qedit() || edit() || `<div class="muted" style="padding:8px">${pendN ? 'Dotknij podświetlony fragment albo ▶.' : '✓ Wszystko rozpatrzone – zatwierdź akt.'}</div>`);
+  sh.innerHTML = `<div class="tnav"><button id="tPrev">◀</button><span>${isDone ? '✓ akt zatwierdzony' : (curI >= 0 ? (curI+1)+'/'+SQ.length : '—') + ' · zostało: <b>' + pendN + '</b>'}</span><button id="tScan" title="Pokaż na skanie">🔍</button><button id="tNext">▶</button><button id="tMenu" title="Menu">⋯</button></div>${tools ? `<div class="chips" style="margin-top:6px">${tools}</div>` : ''}` + (qedit() || edit() || `<div class="muted" style="padding:8px">${pendN ? 'Dotknij podświetlony fragment albo ▶.' : '✓ Wszystko rozpatrzone – zatwierdź akt.'}</div>`);
   const rerender = (sc) => { renderAct(); renderList(); if (sc !== false) { selScroll(); focusTxt(a); } };
   m.querySelectorAll('[data-tm]').forEach(b => b.onclick = () => { S.tmode = b.dataset.tm; save(); renderAct(); window.scrollTo(0,0); });
   m.querySelectorAll('.hl[data-f]').forEach(b => b.onclick = () => { TF = b.dataset.f; TQ = null; rerender(); });
@@ -525,7 +528,7 @@ function renderText(a){ const m = $('main'), s = st(a.id), FS = fieldsOf(a), md 
   if ($('tAll')) $('tAll').onclick = () => { let n = 0; FS.forEach(f => { if (diffState(a,f.id) === 'eq' && !st(a.id).f[f.id] && !isUnc(a,f.id)) { st(a.id).f[f.id] = {v: clean(a.ai[f.id]), src:'ai', ok:true}; n++; } }); save(); const nq0 = resolveLinked(a, FS, FS.filter(f => st(a.id).f[f.id]?.ok).map(f => f.id)); toast(`Przyjęto zgodne: ${n}${nq0 ? ', w tekście: ' + nq0 : ''}`); tafter(a, FS, 0, true); rerender(); };
   if ($('tDone')) $('tDone').onclick = () => { doDone(); };
   $('tScan').onclick = () => { if (TF) { if (!focusField(a, TF)) { approxFocus(a, 'f', TF); toast('Brak ramki pola – pokazuję orientacyjny fragment'); } } else if (TQ) approxFocus(a, 'q', TQ); };
-  $('tPrev').onclick = () => { tgo(a, FS, -1); rerender(); }; $('tNext').onclick = () => { tgo(a, FS, 1); rerender(); };
+  $('tPrev').onclick = () => { tgo(a, FS, -1); rerender(); }; $('tNext').onclick = () => { tgo(a, FS, 1); rerender(); }; $('tMenu').onclick = () => $('bMenu').click();
   if ($('qv')) { const q = qAll.find(q => q.key === TQ); const apply = v => { setTxt(a, t.slice(0,q.s) + v + t.slice(q.e)); tafter(a, FS, q.s, true); rerender(); };
     $('qOk').onclick = () => apply(qClean(q.txt)); $('qSave').onclick = () => { const v = $('qv').value.trim(); if (!v) { toast('Wpisz odczyt'); return; } apply(v); };
     $('qSkip').onclick = () => { const s2 = st(a.id); (s2.qs = s2.qs || {})[q.key] = 'skip'; save(); tafter(a, FS, q.s, false); rerender(); }; }
@@ -543,7 +546,7 @@ function renderText(a){ const m = $('main'), s = st(a.id), FS = fieldsOf(a), md 
 }
 $('bText').onclick = () => { W.on = false; document.body.classList.remove('wz'); S.tmode = S.tmode ? '' : 'pola'; save(); if (S.tmode && !curAct()?.tekst) toast('Ta pozycja nie ma pełnego tekstu – wybierz akt z listy (np. 43/26)'); renderAct(); window.scrollTo(0,0); };
 $('mTxt').onclick = () => { const L = ['# Teksty aktów zmarłych (Haiku AI v1, z poprawkami z narzędzia)', '']; D.acts.filter(a => a.tekst).forEach(a => { const ch = S.acts[a.id]?.text != null; L.push(`## ${a.id}${ch ? ' · POPRAWIONY' : ''}`, '> ' + txtOf(a), ''); if (ch) L.push('Oryginał Haiku:', '> ' + a.tekst, ''); }); dl('ZGONY_teksty_poprawione.md', L.join('\n'), 'text/markdown'); };
-document.addEventListener('click', e => { if (!e.target.closest('#menu') && !e.target.closest('#bMenu') && !e.target.closest('#zMenu')) $('menu').style.display = 'none'; });
+document.addEventListener('click', e => { if (!e.target.closest('#menu') && !e.target.closest('#bMenu') && !e.target.closest('#bMenu2') && !e.target.closest('#fab') && !e.target.closest('#tMenu') && !e.target.closest('#zMenu')) $('menu').style.display = 'none'; });
 function init(){ HS = histSnap(S.acts); $('zRf').classList.toggle('on', !!S.noroi); renderTabs(); renderList(); if (!S.cur || !AM[S.cur]) S.cur = (D.acts.find(a => a.ai) || D.acts[0])?.id; renderList(); renderAct(); showScan(); }
 loadExtra().then(init);
 </script></body></html>
