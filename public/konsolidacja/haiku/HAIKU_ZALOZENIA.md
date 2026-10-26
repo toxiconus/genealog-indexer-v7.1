@@ -36,5 +36,8 @@ Skan: <plik>, ROI: x..y..
 Uwagi odczytu: …
 ```
 
+## 5a. Nazwy miejscowości
+W polach CSV i w nagłówkach: mianownik „Moczydła” (nie „Mocydła”). W cytowanym tekście aktu: forma z aktu (np. „z Moczydeł”).
+
 ## 6. Czego nie wolno
 Nie łączyć ani nie scalać z bazą; nie zmieniać istniejących rekordów; nie uzupełniać z wiedzy ogólnej; nie pomijać aktów (puste/skreślone też zanotuj).
