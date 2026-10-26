@@ -334,6 +334,15 @@ function hlHtml(a, t, FS, withHl){ const qs = qList(t), sk = S.acts[a.id]?.qs ||
 function setTxt(a, v){ const s2 = st(a.id); if (v === (a.tekst||'')) delete s2.text; else s2.text = v; save(); }
 function qNext(a, pos){ const sk = S.acts[a.id]?.qs || {}, L = qList(txtOf(a)).filter(q => !sk[q.key]); const n = L.find(q => q.s >= pos) || L[0]; return n ? n.key : null; }
 function nextTF(a, FS){ const s = st(a.id); const ids = FS.map(f => f.id); const order = TF_ORDER.filter(f => ids.includes(f)).concat(ids.filter(f => !TF_ORDER.includes(f))); const k = Math.max(0, order.indexOf(TF)); for (let n = 1; n <= order.length; n++) { const f = order[(k+n) % order.length]; const x = s.f[f]; if (!(x?.ok || x?.skip) && (clean(getv(a,f)) || (a.alts?.[f]||[]).length) && appl(a,f)) return f; } return null; }
+
+// przybliżone ustawienie skanu, gdy pole nie ma ramki: pozycja w tekście → pozycja w ROI aktu
+function approxFocus(a, kind, key){ clearFb(); const r = roiOf(a); if (!r || !img.naturalWidth) return false; const t = txtOf(a); if (!t) return false; let pos = -1;
+  if (kind === 'q') { const q = qList(t).find(q => q.key === key); if (q) pos = q.s; }
+  else { const it = seqOf(a, fieldsOf(a), t).find(x => x.t === 'f' && x.k === key && x.pos < 1e9); if (it) pos = it.pos;
+    else { const idx = re => { const m = t.search(re); return m; }; const A = {act_date:0, death_date:idx(/oświadczy|umar|zmar/i), death_time:idx(/godzin[^.]*umar|o godzinie [^.]*umar/i), deceased_sex:idx(/umar|zmar/i), age:idx(/lat |mając|miesi/i), notes:t.length-1}; pos = A[key] ?? -1; if (pos < 0 && A[key] === undefined) pos = Math.floor(t.length / 2); } }
+  if (pos < 0) pos = Math.floor(t.length / 2); const fr = Math.min(1, Math.max(0, pos / t.length)), band = Math.max(.07, r.h * .24), cy = r.y + r.h * fr, y0 = Math.max(0, Math.min(1 - band, cy - band / 2));
+  fit({x:r.x, y:y0, w:r.w, h:band}); const e = document.createElement('div'); e.className = 'fb'; Object.assign(e.style, {position:'absolute', left:r.x*V.iw+'px', top:y0*V.ih+'px', width:r.w*V.iw+'px', height:band*V.ih+'px', border:(3/V.s)+'px dashed #06b6d4', pointerEvents:'none'}); layer.appendChild(e); return true; }
+function focusTxt(a){ if (TF) { if (!focusField(a, TF)) approxFocus(a, 'f', TF); } else if (TQ) approxFocus(a, 'q', TQ); }
 let TA = null;
 function seqOf(a, FS, t){ const toks = assignTok(a, t, FS), qs = qList(t), sk = S.acts[a.id]?.qs || {}, F = S.acts[a.id]?.f || {};
   toks.forEach(x => { if (x.f && qs.some(q => x.i < q.e && x.e > q.s)) x.f = null; });
@@ -374,7 +383,7 @@ function renderText(a){ const m = $('main'), s = st(a.id), FS = fieldsOf(a), md 
   let sh = $('tsheet'); if (!sh) { sh = document.createElement('div'); sh.id = 'tsheet'; document.body.appendChild(sh); }
   sh.style.display = md === 'popraw' ? 'none' : 'block';
   sh.innerHTML = `<div class="tnav"><button id="tPrev">◀</button><span>${curI >= 0 ? (curI+1)+'/'+SQ.length : '—'} · do zrobienia: <b>${pendN}</b></span><button id="tNext">▶</button></div>` + (qedit() || edit() || `<div class="muted" style="padding:6px">${pendN ? 'Dotknij podświetlony fragment albo ▶.' : '✓ Wszystko w tym akcie rozpatrzone.'}</div>`);
-  const rerender = (sc) => { renderAct(); renderList(); if (sc !== false) { selScroll(); if (TF) focusField(a, TF); } };
+  const rerender = (sc) => { renderAct(); renderList(); if (sc !== false) { selScroll(); focusTxt(a); } };
   m.querySelectorAll('[data-tm]').forEach(b => b.onclick = () => { S.tmode = b.dataset.tm; save(); renderAct(); window.scrollTo(0,0); });
   m.querySelectorAll('.hl[data-f]').forEach(b => b.onclick = () => { TF = b.dataset.f; TQ = null; rerender(); });
   m.querySelectorAll('.qm[data-q]').forEach(b => b.onclick = () => { TQ = b.dataset.q; TF = null; rerender(); });
@@ -389,9 +398,9 @@ function renderText(a){ const m = $('main'), s = st(a.id), FS = fieldsOf(a), md 
     $('tfOk').onclick = () => { const v = $('tfv').value.trim(), c = sh.querySelector('.chip.sel[data-f]'); commit(a, f, v, c && clean(c.dataset.v) === clean(v) ? c.dataset.s : (st(a.id).f[f]?.src || 'edit')); adv(); };
     $('tfSkip').onclick = () => { commit(a, f, getv(a,f), 'ai', {skip:true, ok:false}); adv(); };
     $('tfUnc').onclick = () => { const x = st(a.id).f[f] || {v:getv(a,f), src:(a.ai?.[f]?'ai':'lub'), ok:false}; x.unc = !isUnc(a,f); st(a.id).f[f] = x; save(); rerender(false); };
-    $('tfScan').onclick = () => { if (!focusField(a, f)) toast('Brak ramki tego pola na skanie'); };
+    $('tfScan').onclick = () => { if (!focusField(a, f)) { approxFocus(a, 'f', f); toast('Brak ramki pola – pokazuję orientacyjny fragment'); } };
     if ($('tfNote')) $('tfNote').onchange = () => { const x = st(a.id).f[f]; if (x) { x.note = $('tfNote').value.trim(); save(); } }; }
-  setTimeout(() => { selScroll(); if (TF) focusField(a, TF); }, 30);
+  setTimeout(() => { selScroll(); focusTxt(a); }, 30);
   if ($('tfMinus')) { $('tfMinus').onclick = () => { S.tfs = Math.max(13, fs-2); save(); renderAct(); }; $('tfPlus').onclick = () => { S.tfs = Math.min(30, fs+2); save(); renderAct(); }; }
   if ($('tfCopy')) $('tfCopy').onclick = async () => { try { await navigator.clipboard.writeText(t); toast('Skopiowano'); } catch(e) { toast('Nie można skopiować'); } };
   if ($('tfArea')) { const sv = () => { const v = $('tfArea').value; const s2 = st(a.id); if (v === (a.tekst||'')) delete s2.text; else s2.text = v; save(); }; $('tfArea').onchange = sv; $('tfSave').onclick = () => { sv(); toast('Zapisano tekst'); renderAct(); }; $('tfRest').onclick = () => { delete st(a.id).text; save(); toast('Przywrócono oryginał'); renderAct(); }; }
