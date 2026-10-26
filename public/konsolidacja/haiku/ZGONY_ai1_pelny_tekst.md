@@ -232,8 +232,9 @@ Niepewne: data, godzina
 
 ## ai1-1943-063 · Akt 63 · margines: „Brzozówka, Marian Dobrzyński”
 Skan: zestaw 2 · ROI w ZGONY_ai1_roi.json
-> Działo się we wsi Blinów dnia dwudziestego grudnia tysiąc dziewięćset czterdziestego trzeciego roku o godzinie dziewiątej. Stawili się: Józef Dobrzyński i Józef Sobutka, obaj rolnicy pełnoletni w Brzozówce zamieszkali i oświadczyli, że dnia osiemnastego grudnia roku bieżącego o godzinie dziewiątej umarł w Brzozówce tamże urodzony Marian Dobrzyński, sześć tygodni [?] mający, syn Agnieszki Dobrzyńskiej, niezamężnej. Po przekonaniu się naocznie o śmierci Mariana Dobrzyńskiego; Akt ten stawającym niepiśmiennym przeczytany, przez czas podpisany został. — Ks. K. Wojtan U.H.C.
-Niepewne: data, wiek, świadek 1
+> Działo się we wsi Blinów dnia dwudziestego grudnia tysiąc dziewięćset czterdziestego trzeciego roku o godzinie [..]. Stawili się: Józef Dobrzyński i Józef Sobutka, obaj rolnicy pełnoletni w Brzozówce zamieszkali i oświadczyli, że dnia osiemnastego grudnia roku bieżącego o godzinie dziewiętnastej [?] umarł w Brzozówce tamże urodzony Marian Dobrzyński, trzy [?] tygodnie mający, syn Agnieszki Dobrzyńskiej, niezamężnej. Po przekonaniu się naocznie o śmierci Mariana Dobrzyńskiego; Akt ten stawającym niepiśmiennym przeczytany, przez czas podpisany został. — Ks. K. Wojtan U.H.C.
+Niepewne: godzina (19:00), wiek (3 tygodnie), świadek 1
+(Poprawka po powiększeniu pól w teście pozycji: data zgonu 18.12 — wcześniej błędnie 20.12 w CSV; godzina i wiek poprawione.)
 **Porównanie z Lubgens:** Indeks: Dobrzyński Marian 63/1943, M: Agnieszka zd. Dobrzyńska, Brzozówka — zgodne (matka niezamężna, brak ojca).
 
 ## ai1-1943-064 · Akt 64 · margines: „Blinów, Tekla Pizoń”

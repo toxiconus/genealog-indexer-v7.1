@@ -157,7 +157,7 @@ function renderAct(){ const a = AM[S.cur]; const m = $('main'); if (!a){ m.inner
   m.querySelectorAll('[data-skip]').forEach(b => b.onclick = () => { commit(a, b.dataset.skip, getv(a,b.dataset.skip), 'ai', {skip:true, ok:false}); keepScroll(true); });
   m.querySelectorAll('[data-unc]').forEach(b => b.onclick = () => { const f = b.dataset.unc, x = st(a.id).f[f] || {v:getv(a,f), src:(a.ai?.[f]?'ai':'lub'), ok:false}; x.unc = !isUnc(a,f); st(a.id).f[f] = x; save(); keepScroll(); });
   m.querySelectorAll('[data-note]').forEach(i => i.onchange = () => { const x = st(a.id).f[i.dataset.note]; if (x) { x.note = i.value.trim(); save(); } });
-  m.querySelectorAll('input[data-f],textarea[data-f]').forEach(i => i.onchange = () => setf(a, i.dataset.f, i.value.trim(), 'edit'));
+  m.querySelectorAll('input[data-f],textarea[data-f]').forEach(i => { i.onchange = () => setf(a, i.dataset.f, i.value.trim(), 'edit'); i.onfocus = () => focusField(a, i.dataset.f); });
   $('tHideOk').onclick = () => { S.hideOk = !S.hideOk; save(); renderAct(); };
   $('selScan').onchange = e => { st(a.id).scan = e.target.value; save(); showScan(); }; }
 function commit(a,f,v,src,extra){ const o = st(a.id).f[f] || {}; st(a.id).f[f] = Object.assign({v: (src==='edit' ? v : clean(v) || v), src, ok:true, unc:o.unc, note:o.note}, extra||{}); save(); }
@@ -195,9 +195,10 @@ function renderWiz(){ const a = curAct(), m = $('main'); if (!a) return; const F
     $('wUnc').onclick = () => { W.val = $('wIn').value; W.note = $('wNote')?.value ?? W.note; W.unc = !W.unc; renderWiz(); if (W.unc) $('wNote').focus(); };
     const okh = () => { const val = $('wIn').value.trim(); W.note = $('wNote')?.value ?? W.note; const c = [...m.querySelectorAll('.chip[data-f]')].find(b => clean(b.dataset.v) === clean(val)); wizSave(val, c ? c.dataset.s : 'edit'); };
     $('wOk').onclick = okh; $('wIn').onkeydown = e => { if (e.key === 'Enter' && !e.shiftKey && e.target.tagName === 'INPUT') { e.preventDefault(); okh(); } }; }
-  $('wX').onclick = () => wizToggle(false); }
+  $('wX').onclick = () => wizToggle(false); setTimeout(wizFocus, 30); }
+function wizFocus(){ if (!W.on) return; const a = curAct(), f = a && fieldsOf(a)[W.i]; if (f) focusField(a, f.id); }
 function wizAdvance(){ const before = S.cur; step(1); if (S.cur === before) { toast('To ostatnia pozycja'); wizToggle(false); } }
-function wizToggle(on){ W.on = on; document.body.classList.toggle('wz', on); if (on) { wizStart(); toast('Kreator: wybierz podpowiedź lub wpisz własne'); } renderAct(); window.scrollTo({top:0}); setTimeout(() => fit(roiOf(curAct()||{})), 40); }
+function wizToggle(on){ W.on = on; document.body.classList.toggle('wz', on); if (on) { wizStart(); toast('Kreator: wybierz podpowiedź lub wpisz własne'); } renderAct(); window.scrollTo({top:0}); setTimeout(() => { fit(roiOf(curAct()||{})); wizFocus(); }, 40); }
 $('bWiz').onclick = () => wizToggle(true);
 function curAct(){ return AM[S.cur]; }
 function step(d){ const v = visible(); const i = v.findIndex(a => a.id === S.cur); const n = v[Math.max(0, Math.min(v.length-1, (i<0?0:i+d)))]; if (n) { open(n.id); window.scrollTo({top:0}); } }
@@ -212,9 +213,13 @@ const V = {s:1, x:0, y:0, iw:1, ih:1, edit:false, pts:new Map(), mode:0};
 const img = $('img'), layer = $('layer'), view = $('view'), roiEl = $('roi');
 const apply = () => layer.style.transform = `translate(${V.x}px,${V.y}px) scale(${V.s})`;
 function drawRoi(r){ if (!r || S.noroi) { roiEl.style.display = 'none'; return; } roiEl.style.display = 'block'; Object.assign(roiEl.style, {left:r.x*V.iw+'px', top:r.y*V.ih+'px', width:r.w*V.iw+'px', height:r.h*V.ih+'px', borderWidth:(2/V.s)+'px'}); }
-function fit(r){ const W = view.clientWidth, H = view.clientHeight; if (r) { const rw = r.w*V.iw, rh = r.h*V.ih; V.s = Math.min(W/rw, H/rh)*0.96; V.x = W/2 - (r.x*V.iw + rw/2)*V.s; V.y = H/2 - (r.y*V.ih + rh/2)*V.s; } else { V.s = Math.min(W/V.iw, H/V.ih); V.x = (W - V.iw*V.s)/2; V.y = (H - V.ih*V.s)/2; } apply(); drawRoi(roiOf(curAct()||{})); }
+function clearFb(){ layer.querySelectorAll('.fb').forEach(e => e.remove()); }
+function focusField(a,f){ clearFb(); const rs = a?.pola?.[f]; if (!rs || !rs.length || !img.naturalWidth) return false;
+  const x1 = Math.min(...rs.map(r => r[0])), y1 = Math.min(...rs.map(r => r[1])), x2 = Math.max(...rs.map(r => r[0]+r[2])), y2 = Math.max(...rs.map(r => r[1]+r[3])), w = x2-x1, h = y2-y1, mx = Math.max(.03, w*.2), my = Math.max(.03, h*1.2);
+  fit({x:x1-mx, y:y1-my, w:w+2*mx, h:h+2*my}); rs.forEach(r => { const e = document.createElement('div'); e.className = 'fb'; Object.assign(e.style, {position:'absolute', left:r[0]*V.iw+'px', top:(r[1]+r[3])*V.ih+'px', width:r[2]*V.iw+'px', height:(3/V.s)+'px', background:'#06b6d4', pointerEvents:'none'}); layer.appendChild(e); }); return true; }
+function fit(r){ clearFb(); const W = view.clientWidth, H = view.clientHeight; if (r) { const rw = r.w*V.iw, rh = r.h*V.ih; V.s = Math.min(W/rw, H/rh)*0.96; V.x = W/2 - (r.x*V.iw + rw/2)*V.s; V.y = H/2 - (r.y*V.ih + rh/2)*V.s; } else { V.s = Math.min(W/V.iw, H/V.ih); V.x = (W - V.iw*V.s)/2; V.y = (H - V.ih*V.s)/2; } apply(); drawRoi(roiOf(curAct()||{})); }
 function showScan(){ const a = curAct(); if (!a) return; const k = scanOf(a), src = allScans()[k]; $('noimg').style.display = src ? 'none' : 'flex'; img.style.display = src ? 'block' : 'none'; roiEl.style.display = 'none'; if (!src) return;
-  img.onload = () => { V.iw = img.naturalWidth; V.ih = img.naturalHeight; fit(roiOf(a)); }; img.src = src; if (img.complete && img.naturalWidth) img.onload(); }
+  img.onload = () => { V.iw = img.naturalWidth; V.ih = img.naturalHeight; fit(roiOf(a)); wizFocus(); }; img.src = src; if (img.complete && img.naturalWidth) img.onload(); }
 const pos = e => { const b = view.getBoundingClientRect(); return {x: e.clientX - b.left, y: e.clientY - b.top}; };
 view.addEventListener('pointerdown', e => { if (e.target.closest('#vbar')) return; view.setPointerCapture(e.pointerId); V.pts.set(e.pointerId, pos(e)); V.last = null;
   if (V.edit && V.pts.size === 1) { const p = pos(e); V.rs = {x:(p.x-V.x)/V.s/V.iw, y:(p.y-V.y)/V.s/V.ih}; } });

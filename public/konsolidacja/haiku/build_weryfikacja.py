@@ -122,6 +122,9 @@ for k in keys:
         a["lub"] = best[0]; a["lubRaw"] = best[1]; a["lubName"] = f'{best[0]["deceased_last_name"]} {best[0]["deceased_first_name"]}'
     else: a["lub"] = None; a["lubRaw"] = ""; a["lubName"] = ""
     acts.append(a)
+POLA = json.load(open(os.path.join(here, "ZGONY_ai1_pola.json"), encoding="utf-8")).get("akty", {}) if os.path.exists(os.path.join(here, "ZGONY_ai1_pola.json")) else {}
+for a in acts:
+    if a["id"] in POLA: a["pola"] = POLA[a["id"]]["pola"]
 acts += items
 FIELDS_PROT = [{"id": i, "label": l} for i, l in REJ["fields_prot"]]
 FIELDS_REJ = [{"id": "deceased_last_name", "label": "Nazwisko (jak w rejestrze)"}, {"id": "deceased_first_name", "label": "Imię"}, {"id": "death_act_number", "label": "Nr aktu"}]
@@ -129,4 +132,4 @@ data = {"fieldsProt": FIELDS_PROT, "fieldsRej": FIELDS_REJ, "fields": [{"id": i,
 html = open(os.path.join(here, "weryfikacja_szablon.html"), encoding="utf-8").read()
 html = html.replace("/*DATA*/null", json.dumps(data, ensure_ascii=False))
 open(out, "w", encoding="utf-8").write(html)
-print("akty:", len(acts), "w tym rejestr/protokoły:", len(items), "z AI:", sum(1 for a in acts if a["ai"]), "z Lubgens-szczegółami:", sum(1 for a in acts if a["lubRaw"]), "skany:", len(scans), "MB:", round(len(html)/1e6,1))
+print("akty:", len(acts), "z polami:", sum(1 for a in acts if a.get("pola")), "w tym rejestr/protokoły:", len(items), "z AI:", sum(1 for a in acts if a["ai"]), "z Lubgens-szczegółami:", sum(1 for a in acts if a["lubRaw"]), "skany:", len(scans), "MB:", round(len(html)/1e6,1))

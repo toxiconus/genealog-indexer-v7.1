@@ -41,3 +41,11 @@ W polach CSV i w nagłówkach: mianownik „Moczydła” (nie „Mocydła”). W
 
 ## 6. Czego nie wolno
 Nie łączyć ani nie scalać z bazą; nie zmieniać istniejących rekordów; nie uzupełniać z wiedzy ogólnej; nie pomijać aktów (puste/skreślone też zanotuj).
+
+## 5b. Pozycje pól (czwarty rosnący plik: `ZGONY_ai1_pola.json`)
+Dla każdego aktu, oprócz tekstu, CSV i ROI aktu, podaj położenie pól na skanie, żeby weryfikator mógł od razu przybliżyć obraz na dane słowo (z kontekstem wokół).
+- Format: `{"akty": {"ai1-1943-062": {"plik": "...jpg", "pola": {"death_date": [[x,y,w,h]], "age": [[...],[...]]}}}}`; współrzędne to **ułamki całego skanu** (0–1), jak w ROI; pole łamane na wiersze = kilka prostokątów.
+- Obowiązkowo: pola niepewne (`uncertain_fields`) oraz nazwiska, imiona, data i godzina zgonu, wiek, rodzice, świadkowie. Reszta opcjonalnie.
+- Prostokąt ma obejmować tylko to słowo/frazę (ciasno). Narzędzie samo doda margines. Błąd rzędu 1–2% skanu jest dopuszczalny, ale sprawdzaj położenie na siatce lub przy małym wycinku, nie „na oko”.
+- Nazwa pola = nazwa kolumny CSV. Dopisuj nowe akty na końcu (bez duplikatów).
+- Test v0: akty 62–63 (wykonał Sonnet z siatką współrzędnych) — trafność dobra; zadanie dla Haiku to zweryfikować tę trafność na kilku aktach.
