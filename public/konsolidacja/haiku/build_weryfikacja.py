@@ -65,11 +65,39 @@ scan("blinow_akty.csv", ["dziecko_nazwisko","ojciec_nazwisko","matka_nazwisko"],
 scan("zgony.csv", ["nazwisko","matka_nazwisko","rodowe"], ["imie","ojciec_imie","matka_imie"])
 scan("malzenstwa_mal.csv", ["pan_nazwisko","panna_nazwisko","pan_ojciec_nazwisko","pan_matka_nazwisko","panna_ojciec_nazwisko","panna_matka_nazwisko","swiadek1_nazwisko","swiadek2_nazwisko"], ["pan_imie","panna_imie","pan_ojciec_imie","pan_matka_imie","panna_ojciec_imie","panna_matka_imie","swiadek1_imie","swiadek2_imie"])
 for k in json.load(open(os.path.join(os.path.dirname(kons),"..","data","nazwiska_wszystkie.json"),encoding="utf-8")) if os.path.exists(os.path.join(os.path.dirname(kons),"..","data","nazwiska_wszystkie.json")) else []: S.setdefault(k, 1)
+# --- rejestr alfabetyczny i protokoły (elementy do weryfikacji)
+import unicodedata
+REJ = json.load(open(os.path.join(here, "ZGONY_ai1_rejestr.json"), encoding="utf-8"))
+REJ_FILES = {i["plik"] for i in REJ["items"] + REJ["prot"]}
+fold = lambda t: "".join(c for c in unicodedata.normalize("NFD", (t or "").lower()) if not unicodedata.combining(c)).replace("ł", "l")
+items = []
+for it in REJ["items"]:
+    k = (1943, it["act"]); cand = lub.get(k, [])
+    pick = next((c for c in cand if fold(c[0]["deceased_last_name"])[:3] == fold(it["last"])[:3]), cand[0] if cand else None)
+    a = {"id": it["id"], "kind": "rej", "year": 1943, "act": it["lp"], "file": it["plik"], "roi": it["roi"], "unc": it["unc"],
+         "title": f'Rejestr Lp {it["lp"]} · akt {it["act"]}', "lubRaw": "", "lubName": "",
+         "ai": {"deceased_last_name": it["last"], "deceased_first_name": it["first"], "death_act_number": str(it["act"])}, "lub": None, "alts": {}}
+    cmp_ = []
+    if pick:
+        a["lub"] = {"deceased_last_name": pick[0]["deceased_last_name"], "deceased_first_name": pick[0]["deceased_first_name"].split()[0] if pick[0]["deceased_first_name"] else "", "death_act_number": str(it["act"])}
+        cmp_.append(f'Lubgens akt {it["act"]}/1943: {pick[0]["deceased_last_name"]} {pick[0]["deceased_first_name"]}')
+        a["lubRaw"] = pick[1]; a["lubName"] = f'{pick[0]["deceased_last_name"]} {pick[0]["deceased_first_name"]}'
+    if k in ai:
+        r = ai[k]; a["alts"] = {"deceased_last_name": [["akt", "AKT", r.get("deceased_last_name", "")]], "deceased_first_name": [["akt", "AKT", r.get("deceased_first_name", "")]]}
+        cmp_.append(f'odczyt aktu {it["act"]}: {r.get("deceased_last_name","")} {r.get("deceased_first_name","")}')
+    else: cmp_.append("akt poza skanami (brak odczytu aktu)")
+    if it["uwaga"]: cmp_.append(it["uwaga"])
+    a["cmp"] = " · ".join(cmp_)
+    items.append(a)
+nlub = len({n for (y, n) in lub if y == 1943})
+for p in REJ["prot"]:
+    items.append({"id": p["id"], "kind": "prot", "year": 1943 if p["id"].endswith("43") else 1944, "act": p["lp"], "file": p["plik"], "roi": p["roi"], "unc": p["unc"],
+                  "title": p["title"], "ai": p["ai"], "lub": p.get("lub"), "alts": {}, "lubRaw": "", "lubName": "", "cmp": p["cmp"].replace("64 akty", f"{nlub} akty") if False else p["cmp"]})
 # --- skany
 scans = {}
 for f in sorted(glob.glob(os.path.join(scans_dir, "*-image.jpg"))):
     nm = os.path.basename(f)
-    if not any(o["plik"] == nm for o in roi.values()): continue
+    if not any(o["plik"] == nm for o in roi.values()) and nm not in REJ_FILES: continue
     im = Image.open(f).convert("RGB"); im.thumbnail((1700, 1700)); b = io.BytesIO(); im.save(b, "JPEG", quality=76, optimize=True)
     scans[nm] = "data:image/jpeg;base64," + base64.b64encode(b.getvalue()).decode()
 # --- akty
@@ -94,8 +122,11 @@ for k in keys:
         a["lub"] = best[0]; a["lubRaw"] = best[1]; a["lubName"] = f'{best[0]["deceased_last_name"]} {best[0]["deceased_first_name"]}'
     else: a["lub"] = None; a["lubRaw"] = ""; a["lubName"] = ""
     acts.append(a)
-data = {"fields": [{"id": i, "label": l} for i, l in FIELDS], "acts": acts, "counts": {"s": S, "n": N}, "scans": scans, "cols": cols}
+acts += items
+FIELDS_PROT = [{"id": i, "label": l} for i, l in REJ["fields_prot"]]
+FIELDS_REJ = [{"id": "deceased_last_name", "label": "Nazwisko (jak w rejestrze)"}, {"id": "deceased_first_name", "label": "Imię"}, {"id": "death_act_number", "label": "Nr aktu"}]
+data = {"fieldsProt": FIELDS_PROT, "fieldsRej": FIELDS_REJ, "fields": [{"id": i, "label": l} for i, l in FIELDS], "acts": acts, "counts": {"s": S, "n": N}, "scans": scans, "cols": cols}
 html = open(os.path.join(here, "weryfikacja_szablon.html"), encoding="utf-8").read()
 html = html.replace("/*DATA*/null", json.dumps(data, ensure_ascii=False))
 open(out, "w", encoding="utf-8").write(html)
-print("akty:", len(acts), "z AI:", sum(1 for a in acts if a["ai"]), "z Lubgens-szczegółami:", sum(1 for a in acts if a["lubRaw"]), "skany:", len(scans), "MB:", round(len(html)/1e6,1))
+print("akty:", len(acts), "w tym rejestr/protokoły:", len(items), "z AI:", sum(1 for a in acts if a["ai"]), "z Lubgens-szczegółami:", sum(1 for a in acts if a["lubRaw"]), "skany:", len(scans), "MB:", round(len(html)/1e6,1))

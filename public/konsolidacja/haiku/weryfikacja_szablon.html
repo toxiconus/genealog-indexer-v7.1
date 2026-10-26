@@ -6,7 +6,7 @@
 :root{--bg:#f4f1ea;--card:#fff;--ink:#1f2937;--mut:#6b7280;--line:#d9d4c7;--ai:#1d4ed8;--aib:#dbeafe;--lub:#15803d;--lubb:#dcfce7;--bz:#b45309;--bzb:#ffedd5;--bad:#b91c1c;--badb:#fee2e2;--ok:#15803d;--acc:#7c2d12}
 @media(prefers-color-scheme:dark){:root{--bg:#161412;--card:#201d1a;--ink:#ece7dd;--mut:#9a9488;--line:#3a352f;--aib:#1e3a8a;--lubb:#14532d;--bzb:#78350f;--badb:#7f1d1d;--ai:#93c5fd;--lub:#86efac;--bz:#fdba74;--bad:#fca5a5}}
 *{box-sizing:border-box}html,body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.35 system-ui,sans-serif;-webkit-text-size-adjust:100%}
-header{position:sticky;top:0;z-index:20;background:var(--card);border-bottom:1px solid var(--line);padding:6px 10px;display:flex;gap:8px;align-items:center;flex-wrap:nowrap}
+header{background:var(--card);border-bottom:1px solid var(--line);padding:6px 10px;display:flex;gap:8px;align-items:center;flex-wrap:nowrap}
 header h1{font-size:15px;margin:0;flex:1 1 auto;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 button,select,input,textarea{font:inherit;color:inherit}
 button{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:9px 12px;min-height:42px}
@@ -21,11 +21,12 @@ button.sm{min-height:34px;padding:5px 9px;font-size:14px}
 #list button.noai{opacity:.55}
 .tabs{display:flex;gap:6px;padding:6px 10px;flex-wrap:nowrap;overflow-x:auto;background:var(--card)}.tabs button{flex:0 0 auto}
 .tabs button.on{background:var(--acc);color:#fff}
-#view{position:relative;height:42vh;background:#222;overflow:hidden;touch-action:none}
-#view.l{height:68vh}#view.xl{position:fixed;inset:0;z-index:50;height:100vh}
+#view{position:sticky;top:0;z-index:25;height:42vh;background:#222;overflow:hidden;touch-action:none}
+#view.l{height:68vh}#view.s{height:28vh}#view.xl{position:fixed;inset:0;z-index:50;height:100vh}
+body.wz header,body.wz .tabs,body.wz #list,body.wz #bar{display:none}body.wz #view{height:40vh}body.wz #view.l{height:60vh}body.wz #view.s{height:26vh}
 #layer{position:absolute;left:0;top:0;transform-origin:0 0}
 #layer img{display:block;max-width:none;user-select:none;-webkit-user-drag:none}
-#roi{position:absolute;border:3px solid #f59e0b;background:rgba(245,158,11,.08);pointer-events:none}
+#roi{position:absolute;border:2px dashed #f59e0b;background:none;pointer-events:none}
 #vbar{position:absolute;right:6px;top:6px;display:flex;gap:6px;flex-direction:column;z-index:3}
 #vbar button{background:rgba(255,255,255,.9);color:#111;min-height:40px;min-width:40px;padding:4px 8px}
 #vbar button.on{background:#f59e0b}
@@ -53,6 +54,14 @@ main{padding:10px;max-width:760px;margin:0 auto 90px}
 details{margin-top:6px}details pre{white-space:pre-wrap;font-size:13px;background:var(--bg);padding:8px;border-radius:8px}
 #menu{display:none;position:fixed;right:8px;top:54px;z-index:60;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:8px;box-shadow:0 8px 24px rgba(0,0,0,.25);width:260px}
 #menu button{display:block;width:100%;margin:4px 0;text-align:left}
+#wbar{display:none;position:fixed;left:0;right:0;bottom:0;z-index:30;background:var(--card);border-top:1px solid var(--line);padding:8px 10px calc(8px + env(safe-area-inset-bottom));gap:6px}
+body.wz #wbar{display:flex}#wbar button{flex:1;padding:9px 4px}
+.wz-card .big{font-size:22px;font-weight:600;margin:4px 0}.wz-card .chip{font-size:18px;min-height:48px;padding:9px 16px}
+.wz-card input,.wz-card textarea{width:100%;padding:12px;border:1px solid var(--line);border-radius:10px;background:var(--bg);font-size:19px}
+.mini{display:flex;justify-content:space-between;align-items:center;gap:8px;padding:6px 4px;border-top:1px solid var(--line);font-size:14px;color:var(--mut)}
+.mini b{color:var(--ink);font-weight:500}.mini button{min-height:30px;padding:2px 10px;font-size:13px}
+.chip.akt{background:#ede9fe;border-color:#6d28d9;color:#6d28d9}.chip.uncb{background:var(--bzb);border-color:var(--bz);color:var(--bz)}.chip.uncb.sel{box-shadow:0 0 0 3px var(--bz)}
+.nt{margin-top:5px}.nt input{padding:7px;font-size:15px}
 #toast{position:fixed;left:50%;bottom:78px;transform:translateX(-50%);background:#111;color:#fff;padding:8px 14px;border-radius:10px;z-index:70;display:none;max-width:90%}
 </style></head><body>
 <header><h1>Weryfikacja zgonów · AI v1</h1><span id="prog"></span><button id="bMenu" class="sm">⋯ Menu</button></header>
@@ -64,22 +73,25 @@ details{margin-top:6px}details pre{white-space:pre-wrap;font-size:13px;backgroun
  <button id="mLoad">⬆ Wczytaj kopię roboczą</button>
  <button id="mAi">⬆ Dołącz CSV z odczytem AI</button>
  <button id="mScan">🖼 Dodaj skany z telefonu</button>
+ <button id="mRej">⬇ Eksport rejestru i protokołów (CSV)</button>
  <button id="mReset">🗑 Wyczyść moje wybory</button>
 </div>
 <input type="file" id="fScan" accept="image/*" multiple hidden><input type="file" id="fAi" accept=".csv,text/csv" hidden><input type="file" id="fLoad" accept=".json" hidden>
 <div class="tabs" id="tabs"></div>
 <div id="list"></div>
 <div id="view"><div id="layer"><img id="img" alt=""><div id="roi"></div></div><div id="noimg">Brak skanu dla tego aktu.<br>Wybierz skan poniżej albo dodaj z telefonu.</div>
- <div id="vbar"><button id="zIn">＋</button><button id="zOut">－</button><button id="zFit">◎</button><button id="zH">⇕</button><button id="zRoi">✎</button></div></div>
+ <div id="vbar"><button id="zIn">＋</button><button id="zOut">－</button><button id="zFit">◎</button><button id="zH">⇕</button><button id="zRoi">✎</button><button id="zRf" title="Ukryj/pokaż ramkę">▭</button></div></div>
 <main id="main"></main>
-<div id="bar"><button id="bPrev">◀</button><button id="bAll">Przyjmij zgodne</button><button id="bDone" class="pri">Zatwierdź ✓</button><button id="bNext">▶</button></div>
+<div id="bar"><button id="bPrev">◀</button><button id="bWiz">🧭 Kreator</button><button id="bAll">Zgodne ✓</button><button id="bDone" class="pri">Zatwierdź ✓</button><button id="bNext">▶</button></div>
+<div id="wbar"></div>
 <div id="toast"></div>
 <datalist id="dlS"></datalist><datalist id="dlN"></datalist>
 <script>
 const D = /*DATA*/null;
 const $ = id => document.getElementById(id);
 const FIELDS = D.fields, AM = {}; D.acts.forEach(a => AM[a.id] = a);
-let S = {acts:{}, cur:null, year:'all', flt:'all'};
+let S = {acts:{}, cur:null, year:'all', flt:'all', hideOk:true, hideDoneActs:true, noroi:false, wiz:false};
+const fieldsOf = a => a.kind==='prot' ? D.fieldsProt : a.kind==='rej' ? D.fieldsRej : FIELDS;
 try { const r = localStorage.getItem('wz1'); if (r) S = Object.assign(S, JSON.parse(r)); } catch(e){}
 const save = () => { try { localStorage.setItem('wz1', JSON.stringify(S)); } catch(e){} };
 const toast = (t) => { const e = $('toast'); e.textContent = t; e.style.display = 'block'; clearTimeout(toast.t); toast.t = setTimeout(() => e.style.display = 'none', 2200); };
@@ -99,46 +111,98 @@ function near(f, v){ const t = FT[f]; const w = fold(clean(v)); if (!t || w.leng
   const out = []; for (const [n,c] of Object.entries(D.counts[t])) { if (c < 3) continue; const d = lev(w, fold(n)); if (d <= 2 && n !== clean(v)) out.push([n,c,d]); }
   out.sort((x,y) => x[2]-y[2] || y[1]-x[1]); return fuzzCache[k] = out.slice(0,3); }
 function diffState(a,f){ const x = a.ai?.[f], y = a.lub?.[f]; if (!x || !y) return ''; if (exact(x,y)) return 'eq'; if (loose(x,y)) return 'ap'; return 'ne'; }
-function hasDiff(a){ return FIELDS.some(f => diffState(a,f.id) === 'ne'); }
-function isUnc(a,f){ return !!a.ai && (a.unc.includes(f) || /\?/.test(a.ai[f]||'')); }
+function hasDiff(a){ return fieldsOf(a).some(f => diffState(a,f.id) === 'ne'); }
+function isUnc(a,f){ const x = S.acts[a.id]?.f?.[f]; if (x && x.unc !== undefined) return !!x.unc; return !!a.ai && (a.unc.includes(f) || /\?/.test(a.ai[f]||'')); }
 // ---- lista
-function visible(){ return D.acts.filter(a => (S.year==='all' || String(a.year)===S.year) && (S.flt==='all' || (S.flt==='ai' && a.ai) || (S.flt==='todo' && a.ai && !S.acts[a.id]?.done) || (S.flt==='diff' && a.ai && hasDiff(a)) || (S.flt==='done' && S.acts[a.id]?.done) || (S.flt==='lub' && !a.ai))); }
-function renderTabs(){ const ys = ['all',...new Set(D.acts.map(a => String(a.year)))]; const fl = [['all','Wszystkie'],['ai','Z odczytem AI'],['todo','Do weryfikacji'],['diff','Różnice'],['done','Zatwierdzone'],['lub','Tylko Lubgens']];
-  $('tabs').innerHTML = ys.map(y => `<button class="sm ${S.year===y?'on':''}" data-y="${y}">${y==='all'?'Lata: wszystkie':y}</button>`).join('') + fl.map(([k,l]) => `<button class="sm ${S.flt===k?'on':''}" data-f="${k}">${l}</button>`).join('');
-  $('tabs').querySelectorAll('button').forEach(b => b.onclick = () => { if (b.dataset.y) S.year = b.dataset.y; else S.flt = b.dataset.f; save(); renderTabs(); renderList(); }); }
-function renderList(){ const v = visible(); $('list').innerHTML = v.map(a => `<button data-id="${a.id}" class="${a.id===S.cur?'cur':''} ${S.acts[a.id]?.done?'done':''} ${a.ai&&hasDiff(a)?'diff':''} ${a.ai?'':'noai'}" title="${a.year}">${S.year==='all'?String(a.year).slice(2)+'/':''}${a.act}</button>`).join('') || '<span class="muted">Brak aktów w tym filtrze</span>';
+function visible(){ return D.acts.filter(a => (S.flt==='rej' ? a.kind : !a.kind) && (S.flt==='rej' || S.year==='all' || String(a.year)===S.year) && (a.id===S.cur || !S.hideDoneActs || S.flt==='done' || S.flt==='rej' || !S.acts[a.id]?.done) && (S.flt==='all' || S.flt==='rej' || (S.flt==='ai' && a.ai) || (S.flt==='todo' && a.ai && !S.acts[a.id]?.done) || (S.flt==='diff' && a.ai && hasDiff(a)) || (S.flt==='done' && S.acts[a.id]?.done) || (S.flt==='lub' && !a.ai))); }
+function renderTabs(){ const ys = ['all',...new Set(D.acts.filter(a => !a.kind).map(a => String(a.year)))]; const fl = [['rej','Rejestr + protokoły'],['all','Wszystkie'],['ai','Z odczytem AI'],['todo','Do weryfikacji'],['diff','Różnice'],['done','Zatwierdzone'],['lub','Tylko Lubgens']];
+  $('tabs').innerHTML = ys.map(y => `<button class="sm ${S.year===y?'on':''}" data-y="${y}">${y==='all'?'Lata: wszystkie':y}</button>`).join('') + fl.map(([k,l]) => `<button class="sm ${S.flt===k?'on':''}" data-f="${k}">${l}</button>`).join('') + `<button class="sm ${S.hideDoneActs?'on':''}" id="tHide">Ukryj ✓ zatwierdzone</button>`;
+  $('tHide').onclick = () => { S.hideDoneActs = !S.hideDoneActs; save(); renderTabs(); renderList(); };
+  $('tabs').querySelectorAll('button[data-y],button[data-f]').forEach(b => b.onclick = () => { if (b.dataset.y) S.year = b.dataset.y; else S.flt = b.dataset.f; save(); renderTabs(); renderList(); }); }
+function renderList(){ const v = visible(); $('list').innerHTML = v.map(a => `<button data-id="${a.id}" class="${a.id===S.cur?'cur':''} ${S.acts[a.id]?.done?'done':''} ${a.ai&&hasDiff(a)?'diff':''} ${a.ai?'':'noai'}" title="${a.year}">${a.kind==='rej'?'Lp'+a.act:a.kind==='prot'?'Prot '+a.year:(S.year==='all'?String(a.year).slice(2)+'/':'')+a.act}</button>`).join('') || '<span class="muted">Brak aktów w tym filtrze</span>';
   $('list').querySelectorAll('button').forEach(b => b.onclick = () => open(b.dataset.id));
-  const done = D.acts.filter(a => S.acts[a.id]?.done).length, ai = D.acts.filter(a => a.ai).length; $('prog').textContent = `${done}/${ai} zatwierdz.`;
+  const done = D.acts.filter(a => !a.kind && S.acts[a.id]?.done).length, ai = D.acts.filter(a => !a.kind && a.ai).length; $('prog').textContent = `${done}/${ai} zatwierdz.`;
   const c = $('list').querySelector('.cur'); if (c) c.scrollIntoView({inline:'center', block:'nearest'}); }
 // ---- akt
-function open(id){ S.cur = id; save(); renderList(); renderAct(); showScan(); }
+function open(id){ S.cur = id; save(); renderList(); if (W.on) wizStart(); renderAct(); showScan(); }
 function chipsFor(a,f){ const cur = getv(a,f); const out = []; const seen = new Set(); const add = (cls,lbl,val,extra='') => { if (!val) return; const key = cls+val; if (seen.has(key)) return; seen.add(key); out.push(`<button class="chip ${cls} ${clean(cur)===clean(val)?'sel':''}" data-f="${f}" data-v="${val.replace(/"/g,'&quot;')}" data-s="${cls}"><small>${lbl}</small>${val}${extra}</button>`); };
   const cnt = v => { const c = countOf(f,v); return c === null ? '' : ` <small>×${c}</small>`; };
-  if (a.ai?.[f]) add('ai','AI',a.ai[f],cnt(a.ai[f])); if (a.lub?.[f]) add('lub','LUB',a.lub[f],cnt(a.lub[f]));
+  if (a.ai?.[f]) add('ai','AI',a.ai[f],cnt(a.ai[f])); if (a.lub?.[f]) add('lub','LUB',a.lub[f],cnt(a.lub[f])); (a.alts?.[f]||[]).forEach(([c,l,v]) => add(c,l,v,cnt(v)));
   if (FT[f]) { [a.ai?.[f], a.lub?.[f]].filter(Boolean).forEach(v => { if (countOf(f,v) === 0) near(f,v).forEach(([n,c]) => add('bz','BAZA ≈',n,` <small>×${c}</small>`)); }); }
   return out.join(''); }
-function renderAct(){ const a = AM[S.cur]; const m = $('main'); if (!a){ m.innerHTML = '<div class="card muted">Wybierz akt z listy powyżej.</div>'; return; }
-  const s = st(a.id); const nm = (a.ai ? `${a.ai.deceased_last_name} ${a.ai.deceased_first_name}` : `${a.lubName||''}`);
-  const unc = a.ai ? FIELDS.filter(f => isUnc(a,f.id) && !s.f[f.id]?.ok).length : 0;
-  let h = `<div class="card"><div class="hd"><b>${a.year} · akt ${a.act} · ${nm}</b><span class="muted">${s.done?'✓ zatwierdzony':'do weryfikacji'}${a.ai?` · niepewnych pól: ${unc}`:' · tylko indeks Lubgens'}</span></div>
-   <div class="chips"><label class="muted">Skan:&nbsp;<select id="selScan">${Object.keys(allScans()).map(k => `<option ${k===scanOf(a)?'selected':''}>${k}</option>`).join('')}<option value="">— brak —</option></select></label></div>
-   ${a.lubRaw?`<details><summary class="muted">Indeks Lubgens (surowo)</summary><pre>${a.lubName} · akt ${a.act}/${a.year}\n${a.lubRaw}</pre></details>`:'<div class="muted">Lubgens: brak szczegółów w uwagach.</div>'}</div><div class="card">`;
-  FIELDS.forEach(f => { const v = getv(a,f.id), x = s.f[f.id]; const ds = diffState(a,f.id); const c = FT[f.id] ? countOf(f.id,v) : null;
-    const tags = (ds?`<span class="tag ${ds}">${ds==='eq'?'AI=LUB':ds==='ap'?'AI≈LUB':'AI≠LUB'}</span>`:'') + (isUnc(a,f.id)&&!x?.ok?'<span class="tag q">AI: niepewne</span>':'') + (c===0&&clean(v)?'<span class="tag ne">brak w bazie</span>':(c?`<span class="tag eq">baza ×${c}</span>`:''));
-    const long = f.id === 'notes'; h += `<div class="row ${x?.ok?'ok':''}"><div class="lab"><span>${f.label} ${tags}</span><span>${x?.ok?'✓ '+({ai:'AI',lub:'LUB',bz:'BAZA',edit:'własne'}[x.src]||''):''}</span></div>
-     ${long?`<textarea rows="2" data-f="${f.id}">${v}</textarea>`:`<input data-f="${f.id}" value="${String(v).replace(/"/g,'&quot;')}" ${FT[f.id]?`list="${FT[f.id]==='s'?'dlS':'dlN'}"`:''} autocomplete="off">`}
-     <div class="chips">${chipsFor(a,f.id)}${clean(v)&&!x?.ok?`<button class="chip" data-ok="${f.id}">✓ zatwierdź</button>`:''}${x?`<button class="chip" data-undo="${f.id}">↺ cofnij</button>`:''}</div></div>`; });
+const SRCN = {ai:'AI', lub:'LUB', bz:'BAZA', akt:'AKT', edit:'własne'};
+const esc = v => String(v ?? '').replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;');
+function tagsFor(a,f,v,x){ const ds = diffState(a,f); const c = FT[f] ? countOf(f,v) : null;
+  return (ds?`<span class="tag ${ds}">${ds==='eq'?'AI=LUB':ds==='ap'?'AI≈LUB':'AI≠LUB'}</span>`:'') + (isUnc(a,f)&&!x?.ok?'<span class="tag q">niepewne</span>':'') + (c===0&&clean(v)?'<span class="tag ne">brak w bazie</span>':(c?`<span class="tag eq">baza ×${c}</span>`:'')); }
+function renderAct(){ const a = AM[S.cur]; const m = $('main'); if (!a){ m.innerHTML = '<div class="card muted">Wybierz pozycję z listy powyżej.</div>'; return; }
+  if (W.on) return renderWiz();
+  const s = st(a.id), FS = fieldsOf(a); const nm = a.kind ? a.title : (a.ai ? `${a.ai.deceased_last_name} ${a.ai.deceased_first_name}` : `${a.lubName||''}`);
+  const unc = a.ai ? FS.filter(f => isUnc(a,f.id) && !s.f[f.id]?.ok && !s.f[f.id]?.skip).length : 0;
+  let h = `<div class="card"><div class="hd"><b>${a.kind?'':a.year+' · akt '+a.act+' · '}${nm}</b><span class="muted">${s.done?'✓ zatwierdzony':'do weryfikacji'}${a.ai?` · niepewnych pól: ${unc}`:' · tylko indeks Lubgens'}</span></div>
+   ${a.cmp?`<div class="muted" style="margin-top:4px">Porównanie: ${esc(a.cmp)}</div>`:''}
+   <div class="chips"><label class="muted">Skan:&nbsp;<select id="selScan">${Object.keys(allScans()).map(k => `<option ${k===scanOf(a)?'selected':''}>${k}</option>`).join('')}<option value="">— brak —</option></select></label>
+   <button class="sm chip ${S.hideOk?'sel':''}" id="tHideOk">👁 Ukryj zatwierdzone pola</button></div>
+   ${a.lubRaw?`<details><summary class="muted">Indeks Lubgens (surowo)</summary><pre>${a.lubName} · akt ${a.act}/${a.year}\n${a.lubRaw}</pre></details>`:(a.kind?'':'<div class="muted">Lubgens: brak szczegółów w uwagach.</div>')}</div><div class="card">`;
+  FS.forEach(f => { const v = getv(a,f.id), x = s.f[f.id];
+    if (S.hideOk && (x?.ok || x?.skip)) { h += `<div class="mini"><span>${f.label}: <b>${x.skip?'— pominięte —':esc(v)}</b> ${x.unc?'<span class="tag q">? niepewne</span>':''} ${x.ok?'✓ '+(SRCN[x.src]||''):''}</span><button class="sm" data-undo="${f.id}">zmień</button></div>`; return; }
+    const long = f.id === 'notes' || f.id === 'p_note', uncOn = isUnc(a,f.id);
+    h += `<div class="row ${x?.ok?'ok':''}"><div class="lab"><span>${f.label} ${tagsFor(a,f.id,v,x)}</span><span>${x?.ok?'✓ '+(SRCN[x.src]||''):x?.skip?'pominięte':''}</span></div>
+     ${long?`<textarea rows="2" data-f="${f.id}">${esc(v)}</textarea>`:`<input data-f="${f.id}" value="${esc(v)}" ${FT[f.id]?`list="${FT[f.id]==='s'?'dlS':'dlN'}"`:''} autocomplete="off">`}
+     <div class="chips">${chipsFor(a,f.id)}${clean(v)&&!x?.ok?`<button class="chip" data-ok="${f.id}">✓ zatwierdź</button>`:''}<button class="chip uncb ${x?.unc?'sel':''}" data-unc="${f.id}">? niepewne</button>${!x?.skip&&!x?.ok?`<button class="chip" data-skip="${f.id}">pomiń</button>`:''}${x?`<button class="chip" data-undo="${f.id}">↺ cofnij</button>`:''}</div>
+     ${x?.unc?`<div class="nt"><input data-note="${f.id}" placeholder="Opis niepewności (np. nieczytelne, dwa warianty)" value="${esc(x.note||'')}"></div>`:''}</div>`; });
   m.innerHTML = h + '</div>';
   m.querySelectorAll('.chip[data-f]').forEach(b => b.onclick = () => setf(a, b.dataset.f, b.dataset.v, b.dataset.s));
   m.querySelectorAll('[data-ok]').forEach(b => b.onclick = () => setf(a, b.dataset.ok, clean(getv(a,b.dataset.ok)), (S.acts[a.id].f[b.dataset.ok]?.src) || (a.ai?.[b.dataset.ok] ? 'ai' : 'lub')));
-  m.querySelectorAll('[data-undo]').forEach(b => b.onclick = () => { delete st(a.id).f[b.dataset.undo]; save(); renderAct(); });
+  m.querySelectorAll('[data-undo]').forEach(b => b.onclick = () => { delete st(a.id).f[b.dataset.undo]; save(); keepScroll(); });
+  m.querySelectorAll('[data-skip]').forEach(b => b.onclick = () => { commit(a, b.dataset.skip, getv(a,b.dataset.skip), 'ai', {skip:true, ok:false}); keepScroll(true); });
+  m.querySelectorAll('[data-unc]').forEach(b => b.onclick = () => { const f = b.dataset.unc, x = st(a.id).f[f] || {v:getv(a,f), src:(a.ai?.[f]?'ai':'lub'), ok:false}; x.unc = !isUnc(a,f); st(a.id).f[f] = x; save(); keepScroll(); });
+  m.querySelectorAll('[data-note]').forEach(i => i.onchange = () => { const x = st(a.id).f[i.dataset.note]; if (x) { x.note = i.value.trim(); save(); } });
   m.querySelectorAll('input[data-f],textarea[data-f]').forEach(i => i.onchange = () => setf(a, i.dataset.f, i.value.trim(), 'edit'));
+  $('tHideOk').onclick = () => { S.hideOk = !S.hideOk; save(); renderAct(); };
   $('selScan').onchange = e => { st(a.id).scan = e.target.value; save(); showScan(); }; }
-function setf(a,f,v,src){ const s = st(a.id); s.f[f] = {v: (src==='edit' ? v : clean(v) || v), src, ok:true}; save(); const y = window.scrollY; renderAct(); renderList(); window.scrollTo(0,y); }
+function commit(a,f,v,src,extra){ const o = st(a.id).f[f] || {}; st(a.id).f[f] = Object.assign({v: (src==='edit' ? v : clean(v) || v), src, ok:true, unc:o.unc, note:o.note}, extra||{}); save(); }
+function setf(a,f,v,src){ commit(a,f,v,src); keepScroll(true); }
+function keepScroll(next){ const y = window.scrollY; renderAct(); renderList(); window.scrollTo(0,y);
+  if (next && S.hideOk) { const r = $('main').querySelector('.row'); if (r) window.scrollTo({top: r.getBoundingClientRect().top + window.scrollY - $('view').offsetHeight - 8}); } }
+// ---- kreator (po jednym polu)
+const W = {on:false, i:0, unc:false, note:'', val:null};
+const emptyF = (a,f) => !(a.ai?.[f] || a.lub?.[f] || (a.alts?.[f]||[]).length);
+function wizSeek(a, from, d){ const FS = fieldsOf(a); let i = from; while (i >= 0 && i < FS.length && emptyF(a, FS[i].id) && !st(a.id).f[FS[i].id]) i += d; return i; }
+function wizStart(){ const a = curAct(); if (!a) return; const FS = fieldsOf(a); let i = 0; while (i < FS.length && (st(a.id).f[FS[i].id] || emptyF(a, FS[i].id))) i++; W.i = i; wizLoad(); }
+function wizLoad(){ const a = curAct(), FS = fieldsOf(a), f = FS[W.i], x = f && st(a.id).f[f.id]; W.unc = f ? isUnc(a,f.id) : false; W.note = x?.note || ''; W.val = null; }
+function wizGo(d){ const a = curAct(), FS = fieldsOf(a); let i = W.i + d; i = wizSeek(a, i, d); if (i < 0) i = wizSeek(a, 0, 1); W.i = Math.max(0, Math.min(FS.length, i)); wizLoad(); renderWiz(); }
+function wizSave(v, src){ const a = curAct(), f = fieldsOf(a)[W.i]; if (!f) return; commit(a, f.id, v, src, {unc:W.unc, note:W.note, ok:true, skip:false}); renderList(); wizGo(1); }
+function wizSkip(){ const a = curAct(), f = fieldsOf(a)[W.i]; if (!f) return; commit(a, f.id, getv(a,f.id), 'ai', {skip:true, ok:false, unc:W.unc, note:W.note}); renderList(); wizGo(1); }
+function wizBar(btns){ $('wbar').innerHTML = btns.map(([id,l,c]) => `<button id="${id}" class="${c||''}">${l}</button>`).join(''); }
+function renderWiz(){ const a = curAct(), m = $('main'); if (!a) return; const FS = fieldsOf(a), s = st(a.id);
+  const head = `<div class="hd"><b>${a.kind?a.title:a.year+' · akt '+a.act+' · '+(a.ai?a.ai.deceased_last_name+' '+a.ai.deceased_first_name:a.lubName)}</b><button class="sm" id="wX">✕ Zakończ kreator</button></div>`;
+  if (W.i >= FS.length) { const sk = FS.filter(f => s.f[f.id]?.skip).length, ok = FS.filter(f => s.f[f.id]?.ok).length, un = FS.filter(f => s.f[f.id]?.unc).length;
+    m.innerHTML = `<div class="card wz-card">${head}<div class="big">Koniec pól</div><div class="muted">Zapisane: ${ok} · pominięte: ${sk} · niepewne: ${un}${a.cmp?'<br>'+esc(a.cmp):''}</div></div>`;
+    wizBar([['wBack','◀ Wstecz'],['wSk',`Pominięte (${sk})`],['wFin','Zatwierdź akt ✓ i dalej','pri']]);
+    $('wBack').onclick = () => { W.i = wizSeek(a, FS.length-1, -1); wizLoad(); renderWiz(); };
+    $('wSk').onclick = () => { const i = FS.findIndex(f => s.f[f.id]?.skip); if (i < 0) return toast('Brak pominiętych'); W.i = i; wizLoad(); renderWiz(); };
+    $('wFin').onclick = () => { s.done = true; save(); renderList(); wizAdvance(); };
+  } else { const f = FS[W.i], x = s.f[f.id], v = W.val ?? getv(a,f.id), long = f.id === 'notes' || f.id === 'p_note';
+    m.innerHTML = `<div class="card wz-card">${head}<div class="muted">Pole ${W.i+1} / ${FS.length}</div><div class="big">${f.label}</div>
+      <div>${tagsFor(a,f.id,v,x)} ${x?.ok?'<span class="tag eq">zapisane</span>':''}${x?.skip?'<span class="tag q">pominięte</span>':''}</div>
+      <div class="chips">${chipsFor(a,f.id)}</div>
+      <div style="margin-top:8px">${long?`<textarea rows="3" id="wIn">${esc(v)}</textarea>`:`<input id="wIn" value="${esc(v)}" ${FT[f.id]?`list="${FT[f.id]==='s'?'dlS':'dlN'}"`:''} autocomplete="off">`}</div>
+      ${W.unc?`<div class="nt"><input id="wNote" placeholder="Opis niepewności (np. nieczytelne, dwa warianty)" value="${esc(W.note)}"></div>`:''}</div>`;
+    m.querySelectorAll('.chip[data-f]').forEach(b => b.onclick = () => { W.note = $('wNote')?.value ?? W.note; wizSave(clean(b.dataset.v) || b.dataset.v, b.dataset.s); });
+    wizBar([['wBack','◀'],['wSk','Pomiń'],['wUnc','? Niepewne', W.unc?'on':''],['wOk','Zapisz ▶','pri']]);
+    $('wUnc').style.outline = W.unc ? '3px solid var(--bz)' : '';
+    $('wBack').onclick = () => wizGo(-1); $('wSk').onclick = () => { W.note = $('wNote')?.value ?? W.note; wizSkip(); };
+    $('wUnc').onclick = () => { W.val = $('wIn').value; W.note = $('wNote')?.value ?? W.note; W.unc = !W.unc; renderWiz(); if (W.unc) $('wNote').focus(); };
+    const okh = () => { const val = $('wIn').value.trim(); W.note = $('wNote')?.value ?? W.note; const c = [...m.querySelectorAll('.chip[data-f]')].find(b => clean(b.dataset.v) === clean(val)); wizSave(val, c ? c.dataset.s : 'edit'); };
+    $('wOk').onclick = okh; $('wIn').onkeydown = e => { if (e.key === 'Enter' && !e.shiftKey && e.target.tagName === 'INPUT') { e.preventDefault(); okh(); } }; }
+  $('wX').onclick = () => wizToggle(false); }
+function wizAdvance(){ const before = S.cur; step(1); if (S.cur === before) { toast('To ostatnia pozycja'); wizToggle(false); } }
+function wizToggle(on){ W.on = on; document.body.classList.toggle('wz', on); if (on) { wizStart(); toast('Kreator: wybierz podpowiedź lub wpisz własne'); } renderAct(); window.scrollTo({top:0}); setTimeout(() => fit(roiOf(curAct()||{})), 40); }
+$('bWiz').onclick = () => wizToggle(true);
 function curAct(){ return AM[S.cur]; }
 function step(d){ const v = visible(); const i = v.findIndex(a => a.id === S.cur); const n = v[Math.max(0, Math.min(v.length-1, (i<0?0:i+d)))]; if (n) { open(n.id); window.scrollTo({top:0}); } }
 $('bPrev').onclick = () => step(-1); $('bNext').onclick = () => step(1);
-$('bAll').onclick = () => { const a = curAct(); if (!a || !a.ai) return toast('Brak odczytu AI do porównania'); let n = 0; FIELDS.forEach(f => { if (diffState(a,f.id) === 'eq' && !st(a.id).f[f.id]) { st(a.id).f[f.id] = {v: clean(a.ai[f.id]), src:'ai', ok:true}; n++; } }); save(); renderAct(); toast(`Przyjęto zgodne pola: ${n}`); };
+$('bAll').onclick = () => { const a = curAct(); if (!a || !a.ai) return toast('Brak odczytu AI do porównania'); let n = 0; fieldsOf(a).forEach(f => { if (diffState(a,f.id) === 'eq' && !st(a.id).f[f.id]) { st(a.id).f[f.id] = {v: clean(a.ai[f.id]), src:'ai', ok:true, unc:st(a.id).f[f.id]?.unc}; n++; } }); save(); renderAct(); toast(`Przyjęto zgodne pola: ${n}`); };
 $('bDone').onclick = () => { const a = curAct(); if (!a) return; const s = st(a.id); s.done = !s.done; save(); renderList(); renderAct(); toast(s.done ? 'Akt zatwierdzony ✓' : 'Cofnięto zatwierdzenie'); if (s.done) step(1); };
 // ---- skany i widok
 let extra = {}; const allScans = () => Object.assign({}, D.scans, extra);
@@ -147,7 +211,7 @@ const roiOf = a => S.acts[a.id]?.roi || a.roi;
 const V = {s:1, x:0, y:0, iw:1, ih:1, edit:false, pts:new Map(), mode:0};
 const img = $('img'), layer = $('layer'), view = $('view'), roiEl = $('roi');
 const apply = () => layer.style.transform = `translate(${V.x}px,${V.y}px) scale(${V.s})`;
-function drawRoi(r){ if (!r) { roiEl.style.display = 'none'; return; } roiEl.style.display = 'block'; Object.assign(roiEl.style, {left:r.x*V.iw+'px', top:r.y*V.ih+'px', width:r.w*V.iw+'px', height:r.h*V.ih+'px', borderWidth:(3/V.s)+'px'}); }
+function drawRoi(r){ if (!r || S.noroi) { roiEl.style.display = 'none'; return; } roiEl.style.display = 'block'; Object.assign(roiEl.style, {left:r.x*V.iw+'px', top:r.y*V.ih+'px', width:r.w*V.iw+'px', height:r.h*V.ih+'px', borderWidth:(2/V.s)+'px'}); }
 function fit(r){ const W = view.clientWidth, H = view.clientHeight; if (r) { const rw = r.w*V.iw, rh = r.h*V.ih; V.s = Math.min(W/rw, H/rh)*0.96; V.x = W/2 - (r.x*V.iw + rw/2)*V.s; V.y = H/2 - (r.y*V.ih + rh/2)*V.s; } else { V.s = Math.min(W/V.iw, H/V.ih); V.x = (W - V.iw*V.s)/2; V.y = (H - V.ih*V.s)/2; } apply(); drawRoi(roiOf(curAct()||{})); }
 function showScan(){ const a = curAct(); if (!a) return; const k = scanOf(a), src = allScans()[k]; $('noimg').style.display = src ? 'none' : 'flex'; img.style.display = src ? 'block' : 'none'; roiEl.style.display = 'none'; if (!src) return;
   img.onload = () => { V.iw = img.naturalWidth; V.ih = img.naturalHeight; fit(roiOf(a)); }; img.src = src; if (img.complete && img.naturalWidth) img.onload(); }
@@ -164,19 +228,21 @@ view.addEventListener('pointerup', up); view.addEventListener('pointercancel', u
 view.addEventListener('wheel', e => { e.preventDefault(); const p = pos(e), f = e.deltaY < 0 ? 1.15 : 1/1.15; V.x = p.x - (p.x-V.x)*f; V.y = p.y - (p.y-V.y)*f; V.s *= f; apply(); }, {passive:false});
 const zoom = f => { const W = view.clientWidth/2, H = view.clientHeight/2; V.x = W - (W-V.x)*f; V.y = H - (H-V.y)*f; V.s *= f; apply(); };
 $('zIn').onclick = () => zoom(1.3); $('zOut').onclick = () => zoom(1/1.3); $('zFit').onclick = () => fit(roiOf(curAct()||{}));
-$('zH').onclick = () => { V.mode = (V.mode+1)%3; view.className = ['','l','xl'][V.mode]; setTimeout(() => fit(roiOf(curAct()||{})), 30); };
+$('zH').onclick = () => { V.mode = (V.mode+1)%4; view.className = ['','l','xl','s'][V.mode]; setTimeout(() => fit(roiOf(curAct()||{})), 30); };
+$('zRf').onclick = e => { S.noroi = !S.noroi; save(); e.currentTarget.classList.toggle('on', S.noroi); drawRoi(roiOf(curAct()||{})); toast(S.noroi ? 'Ramka ukryta' : 'Ramka widoczna'); };
 $('zRoi').onclick = e => { V.edit = !V.edit; e.currentTarget.classList.toggle('on', V.edit); toast(V.edit ? 'Tryb obszaru: przeciągnij prostokąt wokół aktu' : 'Tryb obszaru wyłączony'); };
 // ---- eksport / import
 const dl = (name, text, type='text/csv') => { const b = new Blob(['﻿', text], {type: type+';charset=utf-8'}), u = URL.createObjectURL(b), l = document.createElement('a'); l.href = u; l.download = name; document.body.appendChild(l); l.click(); l.remove(); setTimeout(() => URL.revokeObjectURL(u), 4000); };
 const q = v => { v = (v ?? '').toString(); return /[;"\n\r]/.test(v) ? '"' + v.replace(/"/g,'""') + '"' : v; };
-const COLS = D.cols;
-function rows(){ return D.acts.filter(a => a.ai).map(a => { const s = S.acts[a.id] || {f:{}}; const r = {id:a.id, death_year:a.year, death_act_number:a.act}; COLS.forEach(c => { if (!(c in r)) r[c] = a.ai[c] ?? ''; });
+const COLS = D.cols.concat(['verification_notes']);
+function rows(){ return D.acts.filter(a => a.ai && !a.kind).map(a => { const s = S.acts[a.id] || {f:{}}; const r = {id:a.id, death_year:a.year, death_act_number:a.act}; COLS.forEach(c => { if (!(c in r)) r[c] = a.ai[c] ?? ''; });
   FIELDS.forEach(f => { if (s.f?.[f.id]) r[f.id] = s.f[f.id].v; });
-  const unc = FIELDS.filter(f => isUnc(a,f.id) && !s.f?.[f.id]?.ok).map(f => f.id); r.uncertain_fields = unc.join(';');
+  const unc = FIELDS.filter(f => (isUnc(a,f.id) && !s.f?.[f.id]?.ok) || (s.f?.[f.id]?.unc)).map(f => f.id); r.uncertain_fields = unc.join(';'); r.verification_notes = FIELDS.filter(f => s.f?.[f.id]?.note).map(f => f.id + ': ' + s.f[f.id].note).join(' | ');
   const ed = Object.keys(s.f||{}).length; r.verification_status = s.done ? 'ok' : (ed ? 'ai_v1_w_trakcie' : 'ai_v1'); return r; }); }
 $('mCsv').onclick = () => { const rs = rows(); dl('ZGONY_zweryfikowane.csv', COLS.join(';') + '\r\n' + rs.map(r => COLS.map(c => q(r[c])).join(';')).join('\r\n') + '\r\n'); toast(`Eksport: ${rs.length} aktów`); };
 $('mLog').onclick = () => { const L = ['akt;pole;ai;lubgens;wybrane;zrodlo']; D.acts.forEach(a => { const s = S.acts[a.id]; if (!s) return; Object.entries(s.f).forEach(([f,x]) => L.push([a.id, f, a.ai?.[f]||'', a.lub?.[f]||'', x.v, x.src].map(q).join(';'))); }); dl('ZGONY_log_wyborow.csv', L.join('\r\n') + '\r\n'); };
 $('mRoi').onclick = () => dl('ZGONY_ai1_roi_poprawione.json', JSON.stringify(D.acts.filter(a => a.ai).map(a => ({id:a.id, plik:scanOf(a), strona:1, roi:roiOf(a)})), null, 1), 'application/json');
+$('mRej').onclick = () => { const L = ['id;pole;wartosc;zrodlo;niepewne;opis;pominiete;zatwierdzone']; D.acts.filter(a => a.kind).forEach(a => fieldsOf(a).forEach(f => { const x = S.acts[a.id]?.f?.[f.id]; L.push([a.id, f.id, x ? x.v : (a.ai?.[f.id]||''), x?.src||'ai_v1', x?.unc?'1':'', x?.note||'', x?.skip?'1':'', x?.ok?'1':''].map(q).join(';')); })); dl('ZGONY_rejestr_protokoly_zweryfikowane.csv', L.join('\r\n') + '\r\n'); toast('Eksport rejestru'); };
 $('mSave').onclick = () => dl('weryfikacja_kopia.json', JSON.stringify(S), 'application/json');
 $('mLoad').onclick = () => $('fLoad').click(); $('fLoad').onchange = async e => { try { S = Object.assign(S, JSON.parse(await e.target.files[0].text())); save(); init(); toast('Wczytano kopię'); } catch(x){ toast('Błędny plik'); } };
 $('mReset').onclick = () => { if ($('mReset').dataset.arm) { S.acts = {}; save(); delete $('mReset').dataset.arm; $('mReset').textContent = '🗑 Wyczyść moje wybory'; init(); toast('Wyczyszczono'); } else { $('mReset').dataset.arm = 1; $('mReset').textContent = '⚠ Dotknij ponownie, by wyczyścić'; } };
@@ -190,6 +256,6 @@ $('fScan').onchange = async e => { for (const f of e.target.files) { extra[f.nam
 const idb = () => new Promise((ok,no) => { const r = indexedDB.open('wz1', 1); r.onupgradeneeded = () => r.result.createObjectStore('s'); r.onsuccess = () => ok(r.result); r.onerror = no; });
 async function loadExtra(){ try { const db = await idb(), os = db.transaction('s').objectStore('s'); const ks = await new Promise(ok => { const q = os.getAllKeys(); q.onsuccess = () => ok(q.result); }); for (const k of ks) { const b = await new Promise(ok => { const g = os.get(k); g.onsuccess = () => ok(g.result); }); extra[k] = URL.createObjectURL(b); } } catch(e){} }
 document.addEventListener('click', e => { if (!e.target.closest('#menu') && !e.target.closest('#bMenu')) $('menu').style.display = 'none'; });
-function init(){ renderTabs(); renderList(); if (!S.cur || !AM[S.cur]) S.cur = (D.acts.find(a => a.ai) || D.acts[0])?.id; renderList(); renderAct(); showScan(); }
+function init(){ $('zRf').classList.toggle('on', !!S.noroi); renderTabs(); renderList(); if (!S.cur || !AM[S.cur]) S.cur = (D.acts.find(a => a.ai) || D.acts[0])?.id; renderList(); renderAct(); showScan(); }
 loadExtra().then(init);
 </script></body></html>

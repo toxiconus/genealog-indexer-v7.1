@@ -1,0 +1,1182 @@
+{
+ "items": [
+  {
+   "id": "rej-1943-01",
+   "kind": "rej",
+   "lp": 1,
+   "last": "Andrejczak",
+   "first": "Anna",
+   "act": 48,
+   "plik": "38451dde-image.jpg",
+   "roi": {
+    "x": 0.48,
+    "y": 0.198,
+    "w": 0.23,
+    "h": 0.085
+   },
+   "unc": [],
+   "uwaga": ""
+  },
+  {
+   "id": "rej-1943-02",
+   "kind": "rej",
+   "lp": 2,
+   "last": "Barbarak",
+   "first": "Andrzej",
+   "act": 10,
+   "plik": "38451dde-image.jpg",
+   "roi": {
+    "x": 0.48,
+    "y": 0.224,
+    "w": 0.23,
+    "h": 0.085
+   },
+   "unc": [],
+   "uwaga": ""
+  },
+  {
+   "id": "rej-1943-03",
+   "kind": "rej",
+   "lp": 3,
+   "last": "Baldas",
+   "first": "Janina",
+   "act": 11,
+   "plik": "38451dde-image.jpg",
+   "roi": {
+    "x": 0.48,
+    "y": 0.25,
+    "w": 0.23,
+    "h": 0.085
+   },
+   "unc": [],
+   "uwaga": ""
+  },
+  {
+   "id": "rej-1943-04",
+   "kind": "rej",
+   "lp": 4,
+   "last": "Bogun",
+   "first": "Władysław-Kazimierz",
+   "act": 12,
+   "plik": "38451dde-image.jpg",
+   "roi": {
+    "x": 0.48,
+    "y": 0.276,
+    "w": 0.23,
+    "h": 0.085
+   },
+   "unc": [],
+   "uwaga": ""
+  },
+  {
+   "id": "rej-1943-05",
+   "kind": "rej",
+   "lp": 5,
+   "last": "Bucoń",
+   "first": "Aleksandra",
+   "act": 14,
+   "plik": "38451dde-image.jpg",
+   "roi": {
+    "x": 0.48,
+    "y": 0.302,
+    "w": 0.23,
+    "h": 0.085
+   },
+   "unc": [],
+   "uwaga": ""
+  },
+  {
+   "id": "rej-1943-06",
+   "kind": "rej",
+   "lp": 6,
+   "last": "Bigos",
+   "first": "Anna",
+   "act": 17,
+   "plik": "38451dde-image.jpg",
+   "roi": {
+    "x": 0.48,
+    "y": 0.328,
+    "w": 0.23,
+    "h": 0.085
+   },
+   "unc": [],
+   "uwaga": ""
+  },
+  {
+   "id": "rej-1943-07",
+   "kind": "rej",
+   "lp": 7,
+   "last": "Brzezina",
+   "first": "Ignacy",
+   "act": 19,
+   "plik": "38451dde-image.jpg",
+   "roi": {
+    "x": 0.48,
+    "y": 0.354,
+    "w": 0.23,
+    "h": 0.085
+   },
+   "unc": [],
+   "uwaga": ""
+  },
+  {
+   "id": "rej-1943-08",
+   "kind": "rej",
+   "lp": 8,
+   "last": "Baran",
+   "first": "Bolesław",
+   "act": 23,
+   "plik": "38451dde-image.jpg",
+   "roi": {
+    "x": 0.48,
+    "y": 0.38,
+    "w": 0.23,
+    "h": 0.085
+   },
+   "unc": [],
+   "uwaga": ""
+  },
+  {
+   "id": "rej-1943-09",
+   "kind": "rej",
+   "lp": 9,
+   "last": "Borowski",
+   "first": "Stanisław",
+   "act": 24,
+   "plik": "38451dde-image.jpg",
+   "roi": {
+    "x": 0.48,
+    "y": 0.406,
+    "w": 0.23,
+    "h": 0.085
+   },
+   "unc": [],
+   "uwaga": ""
+  },
+  {
+   "id": "rej-1943-10",
+   "kind": "rej",
+   "lp": 10,
+   "last": "Brzeskiewicz",
+   "first": "Józef",
+   "act": 26,
+   "plik": "38451dde-image.jpg",
+   "roi": {
+    "x": 0.48,
+    "y": 0.432,
+    "w": 0.23,
+    "h": 0.085
+   },
+   "unc": [],
+   "uwaga": ""
+  },
+  {
+   "id": "rej-1943-11",
+   "kind": "rej",
+   "lp": 11,
+   "last": "Barbarak",
+   "first": "Franciszek",
+   "act": 31,
+   "plik": "38451dde-image.jpg",
+   "roi": {
+    "x": 0.48,
+    "y": 0.458,
+    "w": 0.23,
+    "h": 0.085
+   },
+   "unc": [],
+   "uwaga": ""
+  },
+  {
+   "id": "rej-1943-12",
+   "kind": "rej",
+   "lp": 12,
+   "last": "Bogdański",
+   "first": "Henryk-Wiktor",
+   "act": 49,
+   "plik": "38451dde-image.jpg",
+   "roi": {
+    "x": 0.48,
+    "y": 0.483,
+    "w": 0.23,
+    "h": 0.085
+   },
+   "unc": [],
+   "uwaga": ""
+  },
+  {
+   "id": "rej-1943-13",
+   "kind": "rej",
+   "lp": 13,
+   "last": "Dziura",
+   "first": "Katarzyna",
+   "act": 36,
+   "plik": "38451dde-image.jpg",
+   "roi": {
+    "x": 0.48,
+    "y": 0.509,
+    "w": 0.23,
+    "h": 0.085
+   },
+   "unc": [],
+   "uwaga": ""
+  },
+  {
+   "id": "rej-1943-14",
+   "kind": "rej",
+   "lp": 14,
+   "last": "Dobrzyńska",
+   "first": "Kazimiera",
+   "act": 1,
+   "plik": "38451dde-image.jpg",
+   "roi": {
+    "x": 0.48,
+    "y": 0.535,
+    "w": 0.23,
+    "h": 0.085
+   },
+   "unc": [],
+   "uwaga": ""
+  },
+  {
+   "id": "rej-1943-15",
+   "kind": "rej",
+   "lp": 15,
+   "last": "Dąbrowska",
+   "first": "Stefania-Maria",
+   "act": 53,
+   "plik": "38451dde-image.jpg",
+   "roi": {
+    "x": 0.48,
+    "y": 0.561,
+    "w": 0.23,
+    "h": 0.085
+   },
+   "unc": [],
+   "uwaga": ""
+  },
+  {
+   "id": "rej-1943-16",
+   "kind": "rej",
+   "lp": 16,
+   "last": "Dobrzyński",
+   "first": "Marian",
+   "act": 63,
+   "plik": "38451dde-image.jpg",
+   "roi": {
+    "x": 0.48,
+    "y": 0.587,
+    "w": 0.23,
+    "h": 0.085
+   },
+   "unc": [],
+   "uwaga": ""
+  },
+  {
+   "id": "rej-1943-17",
+   "kind": "rej",
+   "lp": 17,
+   "last": "Felek",
+   "first": "Eugeniusz",
+   "act": 37,
+   "plik": "38451dde-image.jpg",
+   "roi": {
+    "x": 0.48,
+    "y": 0.613,
+    "w": 0.23,
+    "h": 0.085
+   },
+   "unc": [],
+   "uwaga": ""
+  },
+  {
+   "id": "rej-1943-18",
+   "kind": "rej",
+   "lp": 18,
+   "last": "Flis",
+   "first": "Józefa",
+   "act": 46,
+   "plik": "38451dde-image.jpg",
+   "roi": {
+    "x": 0.48,
+    "y": 0.639,
+    "w": 0.23,
+    "h": 0.085
+   },
+   "unc": [],
+   "uwaga": ""
+  },
+  {
+   "id": "rej-1943-19",
+   "kind": "rej",
+   "lp": 19,
+   "last": "Felek",
+   "first": "Katarzyna",
+   "act": 50,
+   "plik": "38451dde-image.jpg",
+   "roi": {
+    "x": 0.48,
+    "y": 0.665,
+    "w": 0.23,
+    "h": 0.085
+   },
+   "unc": [],
+   "uwaga": ""
+  },
+  {
+   "id": "rej-1943-20",
+   "kind": "rej",
+   "lp": 20,
+   "last": "Gancarz",
+   "first": "Franciszek",
+   "act": 9,
+   "plik": "38451dde-image.jpg",
+   "roi": {
+    "x": 0.48,
+    "y": 0.691,
+    "w": 0.23,
+    "h": 0.085
+   },
+   "unc": [],
+   "uwaga": ""
+  },
+  {
+   "id": "rej-1943-21",
+   "kind": "rej",
+   "lp": 21,
+   "last": "Gorzyński",
+   "first": "Włodzimierz",
+   "act": 52,
+   "plik": "38451dde-image.jpg",
+   "roi": {
+    "x": 0.48,
+    "y": 0.717,
+    "w": 0.23,
+    "h": 0.085
+   },
+   "unc": [],
+   "uwaga": ""
+  },
+  {
+   "id": "rej-1943-22",
+   "kind": "rej",
+   "lp": 22,
+   "last": "Chmiel",
+   "first": "Agnieszka",
+   "act": 30,
+   "plik": "38451dde-image.jpg",
+   "roi": {
+    "x": 0.48,
+    "y": 0.743,
+    "w": 0.23,
+    "h": 0.085
+   },
+   "unc": [],
+   "uwaga": ""
+  },
+  {
+   "id": "rej-1943-23",
+   "kind": "rej",
+   "lp": 23,
+   "last": "Janik",
+   "first": "Andrzej",
+   "act": 29,
+   "plik": "38451dde-image.jpg",
+   "roi": {
+    "x": 0.48,
+    "y": 0.768,
+    "w": 0.23,
+    "h": 0.085
+   },
+   "unc": [],
+   "uwaga": ""
+  },
+  {
+   "id": "rej-1943-24",
+   "kind": "rej",
+   "lp": 24,
+   "last": "Jachura",
+   "first": "Michał",
+   "act": 42,
+   "plik": "38451dde-image.jpg",
+   "roi": {
+    "x": 0.48,
+    "y": 0.794,
+    "w": 0.23,
+    "h": 0.085
+   },
+   "unc": [],
+   "uwaga": ""
+  },
+  {
+   "id": "rej-1943-25",
+   "kind": "rej",
+   "lp": 25,
+   "last": "Kosidło",
+   "first": "Jan",
+   "act": 2,
+   "plik": "38451dde-image.jpg",
+   "roi": {
+    "x": 0.48,
+    "y": 0.82,
+    "w": 0.23,
+    "h": 0.085
+   },
+   "unc": [],
+   "uwaga": ""
+  },
+  {
+   "id": "rej-1943-26",
+   "kind": "rej",
+   "lp": 26,
+   "last": "Kamiński",
+   "first": "Jan",
+   "act": 16,
+   "plik": "38451dde-image.jpg",
+   "roi": {
+    "x": 0.48,
+    "y": 0.846,
+    "w": 0.23,
+    "h": 0.085
+   },
+   "unc": [],
+   "uwaga": ""
+  },
+  {
+   "id": "rej-1943-27",
+   "kind": "rej",
+   "lp": 27,
+   "last": "Kamiński",
+   "first": "Jan",
+   "act": 20,
+   "plik": "38451dde-image.jpg",
+   "roi": {
+    "x": 0.48,
+    "y": 0.872,
+    "w": 0.23,
+    "h": 0.085
+   },
+   "unc": [],
+   "uwaga": ""
+  },
+  {
+   "id": "rej-1943-28",
+   "kind": "rej",
+   "lp": 28,
+   "last": "Kędziora",
+   "first": "Kazimierz",
+   "act": 21,
+   "plik": "38451dde-image.jpg",
+   "roi": {
+    "x": 0.7,
+    "y": 0.205,
+    "w": 0.23,
+    "h": 0.085
+   },
+   "unc": [],
+   "uwaga": ""
+  },
+  {
+   "id": "rej-1943-29",
+   "kind": "rej",
+   "lp": 29,
+   "last": "Kołasa",
+   "first": "Franciszka",
+   "act": 32,
+   "plik": "38451dde-image.jpg",
+   "roi": {
+    "x": 0.7,
+    "y": 0.231,
+    "w": 0.23,
+    "h": 0.085
+   },
+   "unc": [],
+   "uwaga": ""
+  },
+  {
+   "id": "rej-1943-30",
+   "kind": "rej",
+   "lp": 30,
+   "last": "Kudrelek",
+   "first": "Józefa",
+   "act": 33,
+   "plik": "38451dde-image.jpg",
+   "roi": {
+    "x": 0.7,
+    "y": 0.256,
+    "w": 0.23,
+    "h": 0.085
+   },
+   "unc": [],
+   "uwaga": ""
+  },
+  {
+   "id": "rej-1943-31",
+   "kind": "rej",
+   "lp": 31,
+   "last": "Kędziora",
+   "first": "Marianna",
+   "act": 34,
+   "plik": "38451dde-image.jpg",
+   "roi": {
+    "x": 0.7,
+    "y": 0.282,
+    "w": 0.23,
+    "h": 0.085
+   },
+   "unc": [],
+   "uwaga": ""
+  },
+  {
+   "id": "rej-1943-32",
+   "kind": "rej",
+   "lp": 32,
+   "last": "Kędziora",
+   "first": "Jerzy",
+   "act": 38,
+   "plik": "38451dde-image.jpg",
+   "roi": {
+    "x": 0.7,
+    "y": 0.308,
+    "w": 0.23,
+    "h": 0.085
+   },
+   "unc": [],
+   "uwaga": "przy nazwisku dopisek „trojaczek” (odczyt niepewny)"
+  },
+  {
+   "id": "rej-1943-33",
+   "kind": "rej",
+   "lp": 33,
+   "last": "Kosidło",
+   "first": "Stefan",
+   "act": 44,
+   "plik": "38451dde-image.jpg",
+   "roi": {
+    "x": 0.7,
+    "y": 0.333,
+    "w": 0.23,
+    "h": 0.085
+   },
+   "unc": [],
+   "uwaga": ""
+  },
+  {
+   "id": "rej-1943-34",
+   "kind": "rej",
+   "lp": 34,
+   "last": "Kacyńska",
+   "first": "Józefa",
+   "act": 55,
+   "plik": "38451dde-image.jpg",
+   "roi": {
+    "x": 0.7,
+    "y": 0.359,
+    "w": 0.23,
+    "h": 0.085
+   },
+   "unc": [],
+   "uwaga": ""
+  },
+  {
+   "id": "rej-1943-35",
+   "kind": "rej",
+   "lp": 35,
+   "last": "Kędziora",
+   "first": "Maciej",
+   "act": 57,
+   "plik": "38451dde-image.jpg",
+   "roi": {
+    "x": 0.7,
+    "y": 0.384,
+    "w": 0.23,
+    "h": 0.085
+   },
+   "unc": [],
+   "uwaga": ""
+  },
+  {
+   "id": "rej-1943-36",
+   "kind": "rej",
+   "lp": 36,
+   "last": "Kudrelek",
+   "first": "Janina",
+   "act": 59,
+   "plik": "38451dde-image.jpg",
+   "roi": {
+    "x": 0.7,
+    "y": 0.41,
+    "w": 0.23,
+    "h": 0.085
+   },
+   "unc": [],
+   "uwaga": ""
+  },
+  {
+   "id": "rej-1943-37",
+   "kind": "rej",
+   "lp": 37,
+   "last": "Lach",
+   "first": "Marian",
+   "act": 40,
+   "plik": "38451dde-image.jpg",
+   "roi": {
+    "x": 0.7,
+    "y": 0.436,
+    "w": 0.23,
+    "h": 0.085
+   },
+   "unc": [],
+   "uwaga": ""
+  },
+  {
+   "id": "rej-1943-38",
+   "kind": "rej",
+   "lp": 38,
+   "last": "Marchewka",
+   "first": "Józef",
+   "act": 1,
+   "plik": "38451dde-image.jpg",
+   "roi": {
+    "x": 0.7,
+    "y": 0.461,
+    "w": 0.23,
+    "h": 0.085
+   },
+   "unc": [
+    "death_act_number"
+   ],
+   "uwaga": "numer aktu odczytany jako „1”; w rejestrze brak numeru 51, a Kazimiera Dobrzyńska (Lp 14) ma też „1” – prawdopodobnie 51 lub 18? sprawdzić"
+  },
+  {
+   "id": "rej-1943-39",
+   "kind": "rej",
+   "lp": 39,
+   "last": "Machulak",
+   "first": "Jan",
+   "act": 5,
+   "plik": "38451dde-image.jpg",
+   "roi": {
+    "x": 0.7,
+    "y": 0.487,
+    "w": 0.23,
+    "h": 0.085
+   },
+   "unc": [],
+   "uwaga": ""
+  },
+  {
+   "id": "rej-1943-40",
+   "kind": "rej",
+   "lp": 40,
+   "last": "Mróz",
+   "first": "Edward",
+   "act": 54,
+   "plik": "38451dde-image.jpg",
+   "roi": {
+    "x": 0.7,
+    "y": 0.513,
+    "w": 0.23,
+    "h": 0.085
+   },
+   "unc": [],
+   "uwaga": ""
+  },
+  {
+   "id": "rej-1943-41",
+   "kind": "rej",
+   "lp": 41,
+   "last": "Mróz",
+   "first": "Dominik",
+   "act": 61,
+   "plik": "38451dde-image.jpg",
+   "roi": {
+    "x": 0.7,
+    "y": 0.538,
+    "w": 0.23,
+    "h": 0.085
+   },
+   "unc": [],
+   "uwaga": ""
+  },
+  {
+   "id": "rej-1943-42",
+   "kind": "rej",
+   "lp": 42,
+   "last": "Niziński",
+   "first": "Ignacy",
+   "act": 22,
+   "plik": "38451dde-image.jpg",
+   "roi": {
+    "x": 0.7,
+    "y": 0.564,
+    "w": 0.23,
+    "h": 0.085
+   },
+   "unc": [],
+   "uwaga": ""
+  },
+  {
+   "id": "rej-1943-43",
+   "kind": "rej",
+   "lp": 43,
+   "last": "Olejdi",
+   "first": "Stanisław",
+   "act": 7,
+   "plik": "38451dde-image.jpg",
+   "roi": {
+    "x": 0.7,
+    "y": 0.59,
+    "w": 0.23,
+    "h": 0.085
+   },
+   "unc": [],
+   "uwaga": ""
+  },
+  {
+   "id": "rej-1943-44",
+   "kind": "rej",
+   "lp": 44,
+   "last": "Ogoń",
+   "first": "Walenty",
+   "act": 58,
+   "plik": "38451dde-image.jpg",
+   "roi": {
+    "x": 0.7,
+    "y": 0.615,
+    "w": 0.23,
+    "h": 0.085
+   },
+   "unc": [],
+   "uwaga": ""
+  },
+  {
+   "id": "rej-1943-45",
+   "kind": "rej",
+   "lp": 45,
+   "last": "Olejdi",
+   "first": "Janina",
+   "act": 60,
+   "plik": "38451dde-image.jpg",
+   "roi": {
+    "x": 0.7,
+    "y": 0.641,
+    "w": 0.23,
+    "h": 0.085
+   },
+   "unc": [],
+   "uwaga": ""
+  },
+  {
+   "id": "rej-1943-46",
+   "kind": "rej",
+   "lp": 46,
+   "last": "Pasternak",
+   "first": "Henryk-Stanisław",
+   "act": 3,
+   "plik": "38451dde-image.jpg",
+   "roi": {
+    "x": 0.7,
+    "y": 0.667,
+    "w": 0.23,
+    "h": 0.085
+   },
+   "unc": [],
+   "uwaga": ""
+  },
+  {
+   "id": "rej-1943-47",
+   "kind": "rej",
+   "lp": 47,
+   "last": "Pasternak",
+   "first": "Marianna",
+   "act": 25,
+   "plik": "38451dde-image.jpg",
+   "roi": {
+    "x": 0.7,
+    "y": 0.692,
+    "w": 0.23,
+    "h": 0.085
+   },
+   "unc": [],
+   "uwaga": ""
+  },
+  {
+   "id": "rej-1943-48",
+   "kind": "rej",
+   "lp": 48,
+   "last": "Paśnasek",
+   "first": "Dominik",
+   "act": 35,
+   "plik": "38451dde-image.jpg",
+   "roi": {
+    "x": 0.7,
+    "y": 0.718,
+    "w": 0.23,
+    "h": 0.085
+   },
+   "unc": [],
+   "uwaga": ""
+  },
+  {
+   "id": "rej-1943-49",
+   "kind": "rej",
+   "lp": 49,
+   "last": "Pasucha",
+   "first": "Stanisław",
+   "act": 43,
+   "plik": "38451dde-image.jpg",
+   "roi": {
+    "x": 0.7,
+    "y": 0.744,
+    "w": 0.23,
+    "h": 0.085
+   },
+   "unc": [],
+   "uwaga": ""
+  },
+  {
+   "id": "rej-1943-50",
+   "kind": "rej",
+   "lp": 50,
+   "last": "Pizoń",
+   "first": "Tekla",
+   "act": 64,
+   "plik": "38451dde-image.jpg",
+   "roi": {
+    "x": 0.7,
+    "y": 0.769,
+    "w": 0.23,
+    "h": 0.085
+   },
+   "unc": [],
+   "uwaga": ""
+  },
+  {
+   "id": "rej-1943-51",
+   "kind": "rej",
+   "lp": 51,
+   "last": "Rębecki",
+   "first": "Tadeusz",
+   "act": 6,
+   "plik": "38451dde-image.jpg",
+   "roi": {
+    "x": 0.7,
+    "y": 0.795,
+    "w": 0.23,
+    "h": 0.085
+   },
+   "unc": [],
+   "uwaga": ""
+  },
+  {
+   "id": "rej-1943-52",
+   "kind": "rej",
+   "lp": 52,
+   "last": "Rębecka",
+   "first": "Petronela",
+   "act": 15,
+   "plik": "38451dde-image.jpg",
+   "roi": {
+    "x": 0.7,
+    "y": 0.821,
+    "w": 0.23,
+    "h": 0.085
+   },
+   "unc": [],
+   "uwaga": ""
+  },
+  {
+   "id": "rej-1943-53",
+   "kind": "rej",
+   "lp": 53,
+   "last": "Sobótka",
+   "first": "Wawrzyniec",
+   "act": 4,
+   "plik": "38451dde-image.jpg",
+   "roi": {
+    "x": 0.7,
+    "y": 0.846,
+    "w": 0.23,
+    "h": 0.085
+   },
+   "unc": [],
+   "uwaga": ""
+  },
+  {
+   "id": "rej-1943-54",
+   "kind": "rej",
+   "lp": 54,
+   "last": "Sobutka",
+   "first": "Józef",
+   "act": 13,
+   "plik": "38451dde-image.jpg",
+   "roi": {
+    "x": 0.7,
+    "y": 0.872,
+    "w": 0.23,
+    "h": 0.085
+   },
+   "unc": [],
+   "uwaga": ""
+  },
+  {
+   "id": "rej-1943-55",
+   "kind": "rej",
+   "lp": 55,
+   "last": "Szabat",
+   "first": "Stefan",
+   "act": 18,
+   "plik": "a213c362-image.jpg",
+   "roi": {
+    "x": 0.05,
+    "y": 0.128,
+    "w": 0.22,
+    "h": 0.085
+   },
+   "unc": [],
+   "uwaga": ""
+  },
+  {
+   "id": "rej-1943-56",
+   "kind": "rej",
+   "lp": 56,
+   "last": "Solan",
+   "first": "Antoni",
+   "act": 27,
+   "plik": "a213c362-image.jpg",
+   "roi": {
+    "x": 0.05,
+    "y": 0.154,
+    "w": 0.22,
+    "h": 0.085
+   },
+   "unc": [],
+   "uwaga": ""
+  },
+  {
+   "id": "rej-1943-57",
+   "kind": "rej",
+   "lp": 57,
+   "last": "Sokół",
+   "first": "Czesława",
+   "act": 28,
+   "plik": "a213c362-image.jpg",
+   "roi": {
+    "x": 0.05,
+    "y": 0.18,
+    "w": 0.22,
+    "h": 0.085
+   },
+   "unc": [],
+   "uwaga": ""
+  },
+  {
+   "id": "rej-1943-58",
+   "kind": "rej",
+   "lp": 58,
+   "last": "Stanowska",
+   "first": "Władysława",
+   "act": 39,
+   "plik": "a213c362-image.jpg",
+   "roi": {
+    "x": 0.05,
+    "y": 0.206,
+    "w": 0.22,
+    "h": 0.085
+   },
+   "unc": [],
+   "uwaga": ""
+  },
+  {
+   "id": "rej-1943-59",
+   "kind": "rej",
+   "lp": 59,
+   "last": "Sikora",
+   "first": "Jan",
+   "act": 47,
+   "plik": "a213c362-image.jpg",
+   "roi": {
+    "x": 0.05,
+    "y": 0.232,
+    "w": 0.22,
+    "h": 0.085
+   },
+   "unc": [],
+   "uwaga": ""
+  },
+  {
+   "id": "rej-1943-60",
+   "kind": "rej",
+   "lp": 60,
+   "last": "Wasiło",
+   "first": "Wojciech",
+   "act": 8,
+   "plik": "a213c362-image.jpg",
+   "roi": {
+    "x": 0.255,
+    "y": 0.128,
+    "w": 0.22,
+    "h": 0.085
+   },
+   "unc": [],
+   "uwaga": ""
+  },
+  {
+   "id": "rej-1943-61",
+   "kind": "rej",
+   "lp": 61,
+   "last": "Widomski",
+   "first": "Czesław",
+   "act": 56,
+   "plik": "a213c362-image.jpg",
+   "roi": {
+    "x": 0.255,
+    "y": 0.154,
+    "w": 0.22,
+    "h": 0.085
+   },
+   "unc": [],
+   "uwaga": ""
+  },
+  {
+   "id": "rej-1943-62",
+   "kind": "rej",
+   "lp": 62,
+   "last": "Wimarczyk",
+   "first": "Jan",
+   "act": 62,
+   "plik": "a213c362-image.jpg",
+   "roi": {
+    "x": 0.255,
+    "y": 0.18,
+    "w": 0.22,
+    "h": 0.085
+   },
+   "unc": [],
+   "uwaga": ""
+  },
+  {
+   "id": "rej-1943-63",
+   "kind": "rej",
+   "lp": 63,
+   "last": "Zyguła",
+   "first": "Jan",
+   "act": 41,
+   "plik": "a213c362-image.jpg",
+   "roi": {
+    "x": 0.255,
+    "y": 0.206,
+    "w": 0.22,
+    "h": 0.085
+   },
+   "unc": [],
+   "uwaga": ""
+  },
+  {
+   "id": "rej-1943-64",
+   "kind": "rej",
+   "lp": 64,
+   "last": "Zyguła",
+   "first": "Feliksa",
+   "act": 45,
+   "plik": "a213c362-image.jpg",
+   "roi": {
+    "x": 0.255,
+    "y": 0.232,
+    "w": 0.22,
+    "h": 0.085
+   },
+   "unc": [],
+   "uwaga": ""
+  }
+ ],
+ "prot": [
+  {
+   "id": "prot-1943",
+   "kind": "prot",
+   "lp": 100,
+   "plik": "38451dde-image.jpg",
+   "roi": {
+    "x": 0.12,
+    "y": 0.44,
+    "w": 0.37,
+    "h": 0.45
+   },
+   "title": "Protokół zamknięcia ksiąg zmarłych 1943 (str. 11)",
+   "ai": {
+    "p_date": "1943-12-31",
+    "p_time": "22:00",
+    "p_count": "64",
+    "p_signer": "ks. K. Wojtan, U.S.C.",
+    "p_note": "proboszcz parafii Blinów, art. 74 Kodeksu Cywilnego; po protokole nie wolno wpisywać aktów"
+   },
+   "unc": [
+    "p_time"
+   ],
+   "lub": {
+    "p_count": "64"
+   },
+   "cmp": "Indeks Lubgens: 64 akty zgonów 1943 (nr 1–64) – liczba zgodna."
+  },
+  {
+   "id": "prot-1944",
+   "kind": "prot",
+   "lp": 101,
+   "plik": "a213c362-image.jpg",
+   "roi": {
+    "x": 0.05,
+    "y": 0.32,
+    "w": 0.43,
+    "h": 0.63
+   },
+   "title": "Protokół rewizji ksiąg za 1943, 5.01.1944 (str. 12)",
+   "ai": {
+    "p_date": "1944-01-05",
+    "p_born": "92",
+    "p_married": "32",
+    "p_count": "64",
+    "p_signer": "Dziekan Dekanatu Janowskiego, M. J. Dąbro… (podpis niepewny)",
+    "p_note": "akta prowadził ks. Kazimierz Wojtan, Urzędnik Stanu Cywilnego; w obu egzemplarzach jednakowa liczba; duplikat do archiwum hipotecznego w Janowie; pieczęć Dziekan Dekanatu Janów Lubelski"
+   },
+   "unc": [
+    "p_date",
+    "p_signer"
+   ],
+   "lub": {
+    "p_count": "64"
+   },
+   "cmp": "Zgony: 64 = liczba aktów 1943 w indeksie Lubgens. Urodzenia 92 i małżeństwa 32 – do porównania z indeksami urodzeń i małżeństw."
+  }
+ ],
+ "fields_prot": [
+  [
+   "p_date",
+   "Data protokołu"
+  ],
+  [
+   "p_time",
+   "Godzina"
+  ],
+  [
+   "p_born",
+   "Urodzonych"
+  ],
+  [
+   "p_married",
+   "Zaślubionych"
+  ],
+  [
+   "p_count",
+   "Zmarłych"
+  ],
+  [
+   "p_signer",
+   "Podpis / urząd"
+  ],
+  [
+   "p_note",
+   "Treść / uwagi"
+  ]
+ ]
+}
