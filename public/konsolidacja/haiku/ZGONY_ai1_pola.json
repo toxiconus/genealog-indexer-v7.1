@@ -1,5 +1,5 @@
 {
- "_opis": "Pola: prostokąty [x,y,w,h] w ułamkach całego skanu; wiele prostokątów = pole łamane na wiersze. Test v0 (Sonnet), akty 62–63.",
+ "_opis": "Pola: prostokąty [x,y,w,h] w ułamkach całego skanu; wiele prostokątów = pole łamane na wiersze. Test: akty 62-63 (wszystkie pola), reszta: tylko nazwisko zmarłego (ramka wspólna dla nazwiska i imienia, do dopracowania). Wykonał Haiku 5.5 na podstawie siatki współrzędnych.",
  "akty": {
   "ai1-1943-062": {
    "plik": "d57620bf-image.jpg",
@@ -195,6 +195,897 @@
       0.7736,
       0.1483,
       0.0304
+     ]
+    ]
+   }
+  },
+  "ai1-1943-026": {
+   "plik": "5cc8b77f-image.jpg",
+   "pola": {
+    "deceased_last_name": [
+     [
+      0.7344,
+      0.2576,
+      0.0635,
+      0.0215
+     ],
+     [
+      0.49,
+      0.2821,
+      0.0447,
+      0.0153
+     ]
+    ],
+    "deceased_first_name": [
+     [
+      0.7344,
+      0.2576,
+      0.0635,
+      0.0215
+     ],
+     [
+      0.49,
+      0.2821,
+      0.0447,
+      0.0153
+     ]
+    ]
+   }
+  },
+  "ai1-1943-027": {
+   "plik": "5cc8b77f-image.jpg",
+   "pola": {
+    "deceased_last_name": [
+     [
+      0.6639,
+      0.666,
+      0.1316,
+      0.0245
+     ]
+    ],
+    "deceased_first_name": [
+     [
+      0.6639,
+      0.666,
+      0.1316,
+      0.0245
+     ]
+    ]
+   }
+  },
+  "ai1-1943-028": {
+   "plik": "3bbd47ee-image.jpg",
+   "pola": {
+    "deceased_last_name": [
+     [
+      0.0737,
+      0.2211,
+      0.1472,
+      0.024
+     ]
+    ],
+    "deceased_first_name": [
+     [
+      0.0737,
+      0.2211,
+      0.1472,
+      0.024
+     ]
+    ]
+   }
+  },
+  "ai1-1943-029": {
+   "plik": "3bbd47ee-image.jpg",
+   "pola": {
+    "deceased_last_name": [
+     [
+      0.2784,
+      0.6341,
+      0.1334,
+      0.036
+     ]
+    ],
+    "deceased_first_name": [
+     [
+      0.2784,
+      0.6341,
+      0.1334,
+      0.036
+     ]
+    ]
+   }
+  },
+  "ai1-1943-030": {
+   "plik": "3bbd47ee-image.jpg",
+   "pola": {
+    "deceased_last_name": [
+     [
+      0.5286,
+      0.2224,
+      0.1617,
+      0.0287
+     ]
+    ],
+    "deceased_first_name": [
+     [
+      0.5286,
+      0.2224,
+      0.1617,
+      0.0287
+     ]
+    ]
+   }
+  },
+  "ai1-1943-031": {
+   "plik": "3bbd47ee-image.jpg",
+   "pola": {
+    "deceased_last_name": [
+     [
+      0.8471,
+      0.5666,
+      0.0735,
+      0.0287
+     ]
+    ],
+    "deceased_first_name": [
+     [
+      0.8471,
+      0.5666,
+      0.0735,
+      0.0287
+     ]
+    ]
+   }
+  },
+  "ai1-1943-044": {
+   "plik": "9e1e2337-image.jpg",
+   "pola": {
+    "deceased_last_name": [
+     [
+      0.1243,
+      0.2271,
+      0.1357,
+      0.024
+     ]
+    ],
+    "deceased_first_name": [
+     [
+      0.1243,
+      0.2271,
+      0.1357,
+      0.024
+     ]
+    ]
+   }
+  },
+  "ai1-1943-045": {
+   "plik": "9e1e2337-image.jpg",
+   "pola": {
+    "deceased_last_name": [
+     [
+      0.2623,
+      0.6311,
+      0.1357,
+      0.033
+     ]
+    ],
+    "deceased_first_name": [
+     [
+      0.2623,
+      0.6311,
+      0.1357,
+      0.033
+     ]
+    ]
+   }
+  },
+  "ai1-1943-046": {
+   "plik": "9e1e2337-image.jpg",
+   "pola": {
+    "deceased_last_name": [
+     [
+      0.678,
+      0.2256,
+      0.098,
+      0.0287
+     ]
+    ],
+    "deceased_first_name": [
+     [
+      0.678,
+      0.2256,
+      0.098,
+      0.0287
+     ]
+    ]
+   }
+  },
+  "ai1-1943-047": {
+   "plik": "9e1e2337-image.jpg",
+   "pola": {
+    "deceased_last_name": [
+     [
+      0.5555,
+      0.6931,
+      0.1004,
+      0.0217
+     ]
+    ],
+    "deceased_first_name": [
+     [
+      0.5555,
+      0.6931,
+      0.1004,
+      0.0217
+     ]
+    ]
+   }
+  },
+  "ai1-1943-048": {
+   "plik": "5b08e11a-image.jpg",
+   "pola": {
+    "deceased_last_name": [
+     [
+      0.1887,
+      0.2481,
+      0.1725,
+      0.027
+     ]
+    ],
+    "deceased_first_name": [
+     [
+      0.1887,
+      0.2481,
+      0.1725,
+      0.027
+     ]
+    ]
+   }
+  },
+  "ai1-1943-049": {
+   "plik": "5b08e11a-image.jpg",
+   "pola": {
+    "deceased_last_name": [
+     [
+      0.3129,
+      0.6611,
+      0.1334,
+      0.024
+     ],
+     [
+      0.1243,
+      0.6809,
+      0.1035,
+      0.0222
+     ]
+    ],
+    "deceased_first_name": [
+     [
+      0.3129,
+      0.6611,
+      0.1334,
+      0.024
+     ],
+     [
+      0.1243,
+      0.6809,
+      0.1035,
+      0.0222
+     ]
+    ]
+   }
+  },
+  "ai1-1943-050": {
+   "plik": "5b08e11a-image.jpg",
+   "pola": {
+    "deceased_last_name": [
+     [
+      0.4845,
+      0.2211,
+      0.1519,
+      0.0268
+     ]
+    ],
+    "deceased_first_name": [
+     [
+      0.4845,
+      0.2211,
+      0.1519,
+      0.0268
+     ]
+    ]
+   }
+  },
+  "ai1-1943-051": {
+   "plik": "5b08e11a-image.jpg",
+   "pola": {
+    "deceased_last_name": [
+     [
+      0.607,
+      0.6592,
+      0.1715,
+      0.0287
+     ]
+    ],
+    "deceased_first_name": [
+     [
+      0.607,
+      0.6592,
+      0.1715,
+      0.0287
+     ]
+    ]
+   }
+  },
+  "ai1-1943-052": {
+   "plik": "d0442207-image.jpg",
+   "pola": {
+    "deceased_last_name": [
+     [
+      0.1542,
+      0.2271,
+      0.3312,
+      0.03
+     ]
+    ],
+    "deceased_first_name": [
+     [
+      0.1542,
+      0.2271,
+      0.3312,
+      0.03
+     ]
+    ]
+   }
+  },
+  "ai1-1943-053": {
+   "plik": "d0442207-image.jpg",
+   "pola": {
+    "deceased_last_name": [
+     [
+      0.2807,
+      0.6881,
+      0.1081,
+      0.024
+     ]
+    ],
+    "deceased_first_name": [
+     [
+      0.2807,
+      0.6881,
+      0.1081,
+      0.024
+     ]
+    ]
+   }
+  },
+  "ai1-1943-054": {
+   "plik": "d0442207-image.jpg",
+   "pola": {
+    "deceased_last_name": [
+     [
+      0.7442,
+      0.232,
+      0.1421,
+      0.0224
+     ]
+    ],
+    "deceased_first_name": [
+     [
+      0.7442,
+      0.232,
+      0.1421,
+      0.0224
+     ]
+    ]
+   }
+  },
+  "ai1-1943-055": {
+   "plik": "d0442207-image.jpg",
+   "pola": {
+    "deceased_last_name": [
+     [
+      0.705,
+      0.6401,
+      0.1323,
+      0.0255
+     ]
+    ],
+    "deceased_first_name": [
+     [
+      0.705,
+      0.6401,
+      0.1323,
+      0.0255
+     ]
+    ]
+   }
+  },
+  "ai1-1943-056": {
+   "plik": "53d47fae-image.jpg",
+   "pola": {
+    "deceased_last_name": [
+     [
+      0.1243,
+      0.2541,
+      0.1265,
+      0.027
+     ]
+    ],
+    "deceased_first_name": [
+     [
+      0.1243,
+      0.2541,
+      0.1265,
+      0.027
+     ]
+    ]
+   }
+  },
+  "ai1-1943-057": {
+   "plik": "53d47fae-image.jpg",
+   "pola": {
+    "deceased_last_name": [
+     [
+      0.3704,
+      0.6431,
+      0.1012,
+      0.027
+     ],
+     [
+      0.1243,
+      0.6671,
+      0.0805,
+      0.024
+     ]
+    ],
+    "deceased_first_name": [
+     [
+      0.3704,
+      0.6431,
+      0.1012,
+      0.027
+     ],
+     [
+      0.1243,
+      0.6671,
+      0.0805,
+      0.024
+     ]
+    ]
+   }
+  },
+  "ai1-1943-058": {
+   "plik": "53d47fae-image.jpg",
+   "pola": {
+    "deceased_last_name": [
+     [
+      0.5702,
+      0.216,
+      0.125,
+      0.0287
+     ]
+    ],
+    "deceased_first_name": [
+     [
+      0.5702,
+      0.216,
+      0.125,
+      0.0287
+     ]
+    ]
+   }
+  },
+  "ai1-1943-059": {
+   "plik": "53d47fae-image.jpg",
+   "pola": {
+    "deceased_last_name": [
+     [
+      0.4894,
+      0.6401,
+      0.1666,
+      0.0255
+     ]
+    ],
+    "deceased_first_name": [
+     [
+      0.4894,
+      0.6401,
+      0.1666,
+      0.0255
+     ]
+    ]
+   }
+  },
+  "ai1-1943-060": {
+   "plik": "d57620bf-image.jpg",
+   "pola": {
+    "deceased_last_name": [
+     [
+      0.398,
+      0.2211,
+      0.0782,
+      0.027
+     ],
+     [
+      0.122,
+      0.2601,
+      0.0598,
+      0.0168
+     ]
+    ],
+    "deceased_first_name": [
+     [
+      0.398,
+      0.2211,
+      0.0782,
+      0.027
+     ],
+     [
+      0.122,
+      0.2601,
+      0.0598,
+      0.0168
+     ]
+    ]
+   }
+  },
+  "ai1-1943-061": {
+   "plik": "d57620bf-image.jpg",
+   "pola": {
+    "deceased_last_name": [
+     [
+      0.2876,
+      0.6401,
+      0.0989,
+      0.024
+     ]
+    ],
+    "deceased_first_name": [
+     [
+      0.2876,
+      0.6401,
+      0.0989,
+      0.024
+     ]
+    ]
+   }
+  },
+  "ai1-1943-064": {
+   "plik": "38451dde-image.jpg",
+   "pola": {
+    "deceased_last_name": [
+     [
+      0.3382,
+      0.2241,
+      0.0506,
+      0.024
+     ],
+     [
+      0.2692,
+      0.2511,
+      0.0322,
+      0.021
+     ]
+    ],
+    "deceased_first_name": [
+     [
+      0.3382,
+      0.2241,
+      0.0506,
+      0.024
+     ],
+     [
+      0.2692,
+      0.2511,
+      0.0322,
+      0.021
+     ]
+    ]
+   }
+  },
+  "ai1-1943-032": {
+   "plik": "afa8c781-image.jpg",
+   "pola": {
+    "deceased_last_name": [
+     [
+      0.2807,
+      0.2181,
+      0.1817,
+      0.027
+     ]
+    ],
+    "deceased_first_name": [
+     [
+      0.2807,
+      0.2181,
+      0.1817,
+      0.027
+     ]
+    ]
+   }
+  },
+  "ai1-1943-033": {
+   "plik": "afa8c781-image.jpg",
+   "pola": {
+    "deceased_last_name": [
+     [
+      0.214,
+      0.6611,
+      0.0736,
+      0.03
+     ]
+    ],
+    "deceased_first_name": [
+     [
+      0.214,
+      0.6611,
+      0.0736,
+      0.03
+     ]
+    ]
+   }
+  },
+  "ai1-1943-034": {
+   "plik": "afa8c781-image.jpg",
+   "pola": {
+    "deceased_last_name": [
+     [
+      0.7001,
+      0.216,
+      0.0784,
+      0.0287
+     ]
+    ],
+    "deceased_first_name": [
+     [
+      0.7001,
+      0.216,
+      0.0784,
+      0.0287
+     ]
+    ]
+   }
+  },
+  "ai1-1943-035": {
+   "plik": "afa8c781-image.jpg",
+   "pola": {
+    "deceased_last_name": [
+     [
+      0.6952,
+      0.6624,
+      0.147,
+      0.0287
+     ]
+    ],
+    "deceased_first_name": [
+     [
+      0.6952,
+      0.6624,
+      0.147,
+      0.0287
+     ]
+    ]
+   }
+  },
+  "ai1-1943-036": {
+   "plik": "3015eba3-image.jpg",
+   "pola": {
+    "deceased_last_name": [
+     [
+      0.1588,
+      0.2241,
+      0.1702,
+      0.024
+     ]
+    ],
+    "deceased_first_name": [
+     [
+      0.1588,
+      0.2241,
+      0.1702,
+      0.024
+     ]
+    ]
+   }
+  },
+  "ai1-1943-037": {
+   "plik": "3015eba3-image.jpg",
+   "pola": {
+    "deceased_last_name": [
+     [
+      0.2186,
+      0.6581,
+      0.138,
+      0.024
+     ]
+    ],
+    "deceased_first_name": [
+     [
+      0.2186,
+      0.6581,
+      0.138,
+      0.024
+     ]
+    ]
+   }
+  },
+  "ai1-1943-038": {
+   "plik": "3015eba3-image.jpg",
+   "pola": {
+    "deceased_last_name": [
+     [
+      0.4869,
+      0.248,
+      0.1642,
+      0.0287
+     ]
+    ],
+    "deceased_first_name": [
+     [
+      0.4869,
+      0.248,
+      0.1642,
+      0.0287
+     ]
+    ]
+   }
+  },
+  "ai1-1943-039": {
+   "plik": "3015eba3-image.jpg",
+   "pola": {
+    "deceased_last_name": [
+     [
+      0.5825,
+      0.656,
+      0.2205,
+      0.0287
+     ]
+    ],
+    "deceased_first_name": [
+     [
+      0.5825,
+      0.656,
+      0.2205,
+      0.0287
+     ]
+    ]
+   }
+  },
+  "ai1-1943-040": {
+   "plik": "25b5b43d-image.jpg",
+   "pola": {
+    "deceased_last_name": [
+     [
+      0.283,
+      0.2211,
+      0.1242,
+      0.027
+     ]
+    ],
+    "deceased_first_name": [
+     [
+      0.283,
+      0.2211,
+      0.1242,
+      0.027
+     ]
+    ]
+   }
+  },
+  "ai1-1943-041": {
+   "plik": "25b5b43d-image.jpg",
+   "pola": {
+    "deceased_last_name": [
+     [
+      0.3796,
+      0.6371,
+      0.0966,
+      0.027
+     ]
+    ],
+    "deceased_first_name": [
+     [
+      0.3796,
+      0.6371,
+      0.0966,
+      0.027
+     ]
+    ]
+   }
+  },
+  "ai1-1943-042": {
+   "plik": "25b5b43d-image.jpg",
+   "pola": {
+    "deceased_last_name": [
+     [
+      0.4869,
+      0.2192,
+      0.1593,
+      0.0255
+     ]
+    ],
+    "deceased_first_name": [
+     [
+      0.4869,
+      0.2192,
+      0.1593,
+      0.0255
+     ]
+    ]
+   }
+  },
+  "ai1-1943-043": {
+   "plik": "25b5b43d-image.jpg",
+   "pola": {
+    "deceased_last_name": [
+     [
+      0.4869,
+      0.6573,
+      0.1739,
+      0.0255
+     ]
+    ],
+    "deceased_first_name": [
+     [
+      0.4869,
+      0.6573,
+      0.1739,
+      0.0255
+     ]
+    ]
+   }
+  },
+  "ai1-1944-001": {
+   "plik": "a213c362-image.jpg",
+   "pola": {
+    "deceased_last_name": [
+     [
+      0.7584,
+      0.2871,
+      0.092,
+      0.024
+     ]
+    ],
+    "deceased_first_name": [
+     [
+      0.7584,
+      0.2871,
+      0.092,
+      0.024
+     ]
+    ]
+   }
+  },
+  "ai1-1944-002": {
+   "plik": "a213c362-image.jpg",
+   "pola": {
+    "deceased_last_name": [
+     [
+      0.74,
+      0.6911,
+      0.092,
+      0.024
+     ],
+     [
+      0.51,
+      0.7169,
+      0.0828,
+      0.0222
+     ]
+    ],
+    "deceased_first_name": [
+     [
+      0.74,
+      0.6911,
+      0.092,
+      0.024
+     ],
+     [
+      0.51,
+      0.7169,
+      0.0828,
+      0.0222
      ]
     ]
    }
