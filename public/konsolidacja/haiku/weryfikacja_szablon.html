@@ -52,7 +52,7 @@ main{padding:10px;max-width:760px;margin:0 auto 90px}
 #bar{position:fixed;left:0;right:0;bottom:0;z-index:30;background:var(--card);border-top:1px solid var(--line);padding:8px 10px calc(8px + env(safe-area-inset-bottom));display:flex;gap:8px}
 #bar button{flex:1}#bar #bOk{flex:2.2}#bar #bPrev,#bar #bNext,#bar #bWiz{flex:.7}.row.act{outline:3px solid var(--acc);border-radius:10px;padding-left:6px;padding-right:6px}
 details{margin-top:6px}details pre{white-space:pre-wrap;font-size:13px;background:var(--bg);padding:8px;border-radius:8px}
-#menu{display:none;position:fixed;right:8px;top:54px;z-index:60;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:8px;box-shadow:0 8px 24px rgba(0,0,0,.25);width:260px}
+#menu{display:none;position:fixed;right:8px;top:8px;max-height:92vh;overflow:auto;z-index:60;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:8px;box-shadow:0 8px 24px rgba(0,0,0,.25);width:260px}
 #menu button{display:block;width:100%;margin:4px 0;text-align:left}
 #wbar{display:none;position:fixed;left:0;right:0;bottom:0;z-index:30;background:var(--card);border-top:1px solid var(--line);padding:8px 10px calc(8px + env(safe-area-inset-bottom));gap:6px}
 body.wz #wbar{display:flex}#wbar button{flex:1;padding:9px 4px}
@@ -92,6 +92,8 @@ body.textmode main{margin-bottom:330px}body.textmode #view{height:30vh}body.text
  <button id="mCsv">⬇ Eksport CSV (zweryfikowane)</button>
  <button id="mLog">⬇ Eksport logu zmian</button>
  <button id="mRoi">⬇ Eksport ROI (JSON)</button>
+ <button id="mTop">↑ Lista aktów i filtry (do góry)</button>
+ <button id="mOff">✕ Zamknij tryb tekstu / kreator</button>
  <button id="mTxt">⬇ Eksport tekstów aktów (MD, z poprawkami)</button>
  <button id="mSave">⬇ Kopia robocza (JSON)</button>
  <button id="mLoad">⬆ Wczytaj kopię roboczą</button>
@@ -104,7 +106,7 @@ body.textmode main{margin-bottom:330px}body.textmode #view{height:30vh}body.text
 <div class="tabs" id="tabs"></div>
 <div id="list"></div>
 <div id="view"><div id="layer"><img id="img" alt=""><div id="roi"></div></div><div id="noimg">Brak skanu dla tego aktu.<br>Wybierz skan poniżej albo dodaj z telefonu.</div>
- <div id="vbar"><button id="zIn">＋</button><button id="zOut">－</button><button id="zFit">◎</button><button id="zH">⇕</button><button id="zRoi">✎</button><button id="zRf" title="Ukryj/pokaż ramkę">▭</button></div></div>
+ <div id="vbar"><button id="zMenu" title="Menu">☰</button><button id="zIn">＋</button><button id="zOut">－</button><button id="zFit">◎</button><button id="zH">⇕</button><button id="zRoi">✎</button><button id="zRf" title="Ukryj/pokaż zaznaczenia na skanie">▭</button></div></div>
 <main id="main"></main>
 <div id="bar"><button id="bPrev">◀</button><button id="bWiz">🧭</button><button id="bSkip" class="btn-skip">Pomiń</button><button id="bOk" class="btn-ok">✓ Zatwierdź pole</button><button id="bNext">▶</button></div>
 <div id="wbar"></div>
@@ -258,11 +260,11 @@ const roiOf = a => S.acts[a.id]?.roi || a.roi;
 const V = {s:1, x:0, y:0, iw:1, ih:1, edit:false, pts:new Map(), mode:0};
 const img = $('img'), layer = $('layer'), view = $('view'), roiEl = $('roi');
 const apply = () => layer.style.transform = `translate(${V.x}px,${V.y}px) scale(${V.s})`;
-function drawRoi(r){ if (!r || S.noroi) { roiEl.style.display = 'none'; return; } roiEl.style.display = 'block'; Object.assign(roiEl.style, {left:r.x*V.iw+'px', top:r.y*V.ih+'px', width:r.w*V.iw+'px', height:r.h*V.ih+'px', borderWidth:(2/V.s)+'px'}); }
+function drawRoi(r){ if (!r || S.noroi || (S.tmode && curAct()?.tekst)) { roiEl.style.display = 'none'; return; } roiEl.style.display = 'block'; Object.assign(roiEl.style, {left:r.x*V.iw+'px', top:r.y*V.ih+'px', width:r.w*V.iw+'px', height:r.h*V.ih+'px', borderWidth:(2/V.s)+'px'}); }
 function clearFb(){ layer.querySelectorAll('.fb').forEach(e => e.remove()); }
 function focusField(a,f){ clearFb(); const rs = a?.pola?.[f]; if (!rs || !rs.length || !img.naturalWidth) return false;
   const x1 = Math.min(...rs.map(r => r[0])), y1 = Math.min(...rs.map(r => r[1])), x2 = Math.max(...rs.map(r => r[0]+r[2])), y2 = Math.max(...rs.map(r => r[1]+r[3])), w = x2-x1, h = y2-y1, mx = Math.max(.03, w*.2), my = Math.max(.03, h*1.2);
-  fit({x:x1-mx, y:y1-my, w:w+2*mx, h:h+2*my}); rs.forEach(r => { const e = document.createElement('div'); e.className = 'fb'; Object.assign(e.style, {position:'absolute', left:r[0]*V.iw+'px', top:(r[1]+r[3])*V.ih+'px', width:r[2]*V.iw+'px', height:(3/V.s)+'px', background:'#06b6d4', pointerEvents:'none'}); layer.appendChild(e); }); return true; }
+  fit({x:x1-mx, y:y1-my, w:w+2*mx, h:h+2*my}); if (!S.noroi) rs.forEach(r => { const e = document.createElement('div'); e.className = 'fb'; Object.assign(e.style, {position:'absolute', left:r[0]*V.iw+'px', top:(r[1]+r[3])*V.ih+'px', width:r[2]*V.iw+'px', height:(3/V.s)+'px', background:'#06b6d4', pointerEvents:'none'}); layer.appendChild(e); }); return true; }
 function fit(r){ clearFb(); const W = view.clientWidth, H = view.clientHeight; if (r) { const rw = r.w*V.iw, rh = r.h*V.ih; V.s = Math.min(W/rw, H/rh)*0.96; V.x = W/2 - (r.x*V.iw + rw/2)*V.s; V.y = H/2 - (r.y*V.ih + rh/2)*V.s; } else { V.s = Math.min(W/V.iw, H/V.ih); V.x = (W - V.iw*V.s)/2; V.y = (H - V.ih*V.s)/2; } apply(); drawRoi(roiOf(curAct()||{})); }
 function showScan(){ const a = curAct(); if (!a) return; const k = scanOf(a), src = allScans()[k]; $('noimg').style.display = src ? 'none' : 'flex'; img.style.display = src ? 'block' : 'none'; roiEl.style.display = 'none'; if (!src) return;
   img.onload = () => { V.iw = img.naturalWidth; V.ih = img.naturalHeight; fit(roiOf(a)); wizFocus(); }; img.src = src; if (img.complete && img.naturalWidth) img.onload(); }
@@ -280,7 +282,7 @@ view.addEventListener('wheel', e => { e.preventDefault(); const p = pos(e), f = 
 const zoom = f => { const W = view.clientWidth/2, H = view.clientHeight/2; V.x = W - (W-V.x)*f; V.y = H - (H-V.y)*f; V.s *= f; apply(); };
 $('zIn').onclick = () => zoom(1.3); $('zOut').onclick = () => zoom(1/1.3); $('zFit').onclick = () => fit(roiOf(curAct()||{}));
 $('zH').onclick = () => { V.mode = (V.mode+1)%4; view.className = ['','l','xl','s'][V.mode]; setTimeout(() => fit(roiOf(curAct()||{})), 30); };
-$('zRf').onclick = e => { S.noroi = !S.noroi; save(); e.currentTarget.classList.toggle('on', S.noroi); drawRoi(roiOf(curAct()||{})); toast(S.noroi ? 'Ramka ukryta' : 'Ramka widoczna'); };
+$('zRf').onclick = e => { S.noroi = !S.noroi; save(); e.currentTarget.classList.toggle('on', S.noroi); const a = curAct(); drawRoi(roiOf(a||{})); if (S.noroi) clearFb(); else if (a && S.tmode && a.tekst) focusTxt(a); else if (W.on) wizFocus(); toast(S.noroi ? 'Zaznaczenia na skanie ukryte' : 'Zaznaczenia na skanie widoczne'); };
 $('zRoi').onclick = e => { V.edit = !V.edit; e.currentTarget.classList.toggle('on', V.edit); toast(V.edit ? 'Tryb obszaru: przeciągnij prostokąt wokół aktu' : 'Tryb obszaru wyłączony'); };
 // ---- eksport / import
 const dl = (name, text, type='text/csv') => { const b = new Blob(['﻿', text], {type: type+';charset=utf-8'}), u = URL.createObjectURL(b), l = document.createElement('a'); l.href = u; l.download = name; document.body.appendChild(l); l.click(); l.remove(); setTimeout(() => URL.revokeObjectURL(u), 4000); };
@@ -297,6 +299,9 @@ $('mRej').onclick = () => { const L = ['id;pole;wartosc;zrodlo;niepewne;opis;pom
 $('mSave').onclick = () => dl('weryfikacja_kopia.json', JSON.stringify(S), 'application/json');
 $('mLoad').onclick = () => $('fLoad').click(); $('fLoad').onchange = async e => { try { S = Object.assign(S, JSON.parse(await e.target.files[0].text())); save(); init(); toast('Wczytano kopię'); } catch(x){ toast('Błędny plik'); } };
 $('mReset').onclick = () => { if ($('mReset').dataset.arm) { S.acts = {}; save(); delete $('mReset').dataset.arm; $('mReset').textContent = '🗑 Wyczyść moje wybory'; init(); toast('Wyczyszczono'); } else { $('mReset').dataset.arm = 1; $('mReset').textContent = '⚠ Dotknij ponownie, by wyczyścić'; } };
+$('zMenu').onclick = () => { const m = $('menu'); m.style.display = m.style.display === 'block' ? 'none' : 'block'; };
+$('mTop').onclick = () => { $('menu').style.display = 'none'; window.scrollTo({top:0}); };
+$('mOff').onclick = () => { $('menu').style.display = 'none'; if (W.on) wizToggle(false); S.tmode = ''; save(); renderAct(); };
 $('bMenu').onclick = () => { const m = $('menu'); m.style.display = m.style.display === 'block' ? 'none' : 'block'; };
 $('mAi').onclick = () => $('fAi').click();
 $('fAi').onchange = async e => { const t = (await e.target.files[0].text()).replace(/^﻿/,''); const L = t.split(/\r?\n/).filter(Boolean), H = L[0].split(';'); let n = 0;
@@ -342,7 +347,7 @@ function approxFocus(a, kind, key){ clearFb(); const r = roiOf(a); if (!r || !im
   else { const it = seqOf(a, fieldsOf(a), t).find(x => x.t === 'f' && x.k === key && x.pos < 1e9); if (it) pos = it.pos;
     else { const idx = re => { const m = t.search(re); return m; }; const A = {act_date:0, death_date:idx(/oświadczy|umar|zmar/i), death_time:idx(/godzin[^.]*umar|o godzinie [^.]*umar/i), deceased_sex:idx(/umar|zmar/i), age:idx(/lat |mając|miesi/i), notes:t.length-1}; pos = A[key] ?? -1; if (pos < 0 && A[key] === undefined) pos = Math.floor(t.length / 2); } }
   if (pos < 0) pos = Math.floor(t.length / 2); const fr = Math.min(1, Math.max(0, pos / t.length)), band = Math.max(.07, r.h * .24), cy = r.y + r.h * fr, y0 = Math.max(0, Math.min(1 - band, cy - band / 2));
-  fit({x:r.x, y:y0, w:r.w, h:band}); const e = document.createElement('div'); e.className = 'fb'; Object.assign(e.style, {position:'absolute', left:r.x*V.iw+'px', top:y0*V.ih+'px', width:r.w*V.iw+'px', height:band*V.ih+'px', border:(3/V.s)+'px dashed #06b6d4', pointerEvents:'none'}); layer.appendChild(e); return true; }
+  fit({x:r.x, y:y0, w:r.w, h:band}); if (S.noroi) return true; const e = document.createElement('div'); e.className = 'fb'; Object.assign(e.style, {position:'absolute', left:r.x*V.iw+'px', top:y0*V.ih+'px', width:r.w*V.iw+'px', height:band*V.ih+'px', background:'rgba(255,255,255,.16)', pointerEvents:'none'}); layer.appendChild(e); return true; }
 function focusTxt(a){ if (TF) { if (!focusField(a, TF)) approxFocus(a, 'f', TF); } else if (TQ) approxFocus(a, 'q', TQ); }
 let TA = null;
 function seqOf(a, FS, t){ const toks = assignTok(a, t, FS), qs = qList(t), sk = S.acts[a.id]?.qs || {}, F = S.acts[a.id]?.f || {};
@@ -412,7 +417,7 @@ function renderText(a){ const m = $('main'), s = st(a.id), FS = fieldsOf(a), md 
 }
 $('bText').onclick = () => { W.on = false; document.body.classList.remove('wz'); S.tmode = S.tmode ? '' : 'pola'; save(); if (S.tmode && !curAct()?.tekst) toast('Ta pozycja nie ma pełnego tekstu – wybierz akt z listy (np. 43/26)'); renderAct(); window.scrollTo(0,0); };
 $('mTxt').onclick = () => { const L = ['# Teksty aktów zmarłych (Haiku AI v1, z poprawkami z narzędzia)', '']; D.acts.filter(a => a.tekst).forEach(a => { const ch = S.acts[a.id]?.text != null; L.push(`## ${a.id}${ch ? ' · POPRAWIONY' : ''}`, '> ' + txtOf(a), ''); if (ch) L.push('Oryginał Haiku:', '> ' + a.tekst, ''); }); dl('ZGONY_teksty_poprawione.md', L.join('\n'), 'text/markdown'); };
-document.addEventListener('click', e => { if (!e.target.closest('#menu') && !e.target.closest('#bMenu')) $('menu').style.display = 'none'; });
+document.addEventListener('click', e => { if (!e.target.closest('#menu') && !e.target.closest('#bMenu') && !e.target.closest('#zMenu')) $('menu').style.display = 'none'; });
 function init(){ $('zRf').classList.toggle('on', !!S.noroi); renderTabs(); renderList(); if (!S.cur || !AM[S.cur]) S.cur = (D.acts.find(a => a.ai) || D.acts[0])?.id; renderList(); renderAct(); showScan(); }
 loadExtra().then(init);
 </script></body></html>
