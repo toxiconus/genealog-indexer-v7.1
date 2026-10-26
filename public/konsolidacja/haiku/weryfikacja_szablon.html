@@ -413,9 +413,12 @@ $('zRoi').onclick = e => { V.edit = !V.edit; e.currentTarget.classList.toggle('o
 // ---- eksport / import
 const q = csvCell;
 const COLS = D.cols.concat(['act_date','verification_notes']);
+const normTime = v => { const m = String(v ?? '').trim().match(/^(\d{1,2})(?::(\d{2}))?(?::\d{2})?$/); return m ? (m[2] && m[2] !== '00' ? (+m[1]) + ':' + m[2] : String(+m[1])) : String(v ?? '').trim(); };
+const normDate = v => { v = String(v ?? '').trim(); const m = v.match(/^(\d{1,2})\.(\d{1,2})\.(\d{4})$/); return m ? m[3] + '-' + m[2].padStart(2, '0') + '-' + m[1].padStart(2, '0') : v; };
 function rows(){ return D.acts.filter(a => a.ai && !a.kind).map(a => { const s = S.acts[a.id] || {f:{}}; const r = {id:a.id, death_year:a.year, death_act_number:a.act}; COLS.forEach(c => { if (!(c in r)) r[c] = a.ai[c] ?? ''; });
   FIELDS.forEach(f => { if (s.f?.[f.id]) r[f.id] = s.f[f.id].v; });
-  const unc = FIELDS.filter(f => (isUnc(a,f.id) && !s.f?.[f.id]?.ok) || (s.f?.[f.id]?.unc)).map(f => f.id); r.uncertain_fields = unc.join(';'); r.verification_notes = FIELDS.filter(f => s.f?.[f.id]?.note).map(f => f.id + ': ' + s.f[f.id].note).join(' | ');
+  const unc = FIELDS.filter(f => (isUnc(a,f.id) && !s.f?.[f.id]?.ok) || (s.f?.[f.id]?.unc)).map(f => f.id); r.uncertain_fields = unc.join(','); r.verification_notes = FIELDS.filter(f => s.f?.[f.id]?.note).map(f => f.id + ': ' + s.f[f.id].note).join(' | ');
+  r.death_time = normTime(r.death_time); r.death_date = normDate(r.death_date); r.act_date = normDate(r.act_date); r.deceased_status = String(r.deceased_status || '').trim().toLowerCase(); r.profession = String(r.profession || '').trim().toLowerCase();
   const ed = Object.keys(s.f||{}).length; r.verification_status = s.done ? 'ok' : (ed ? 'ai_v1_w_trakcie' : 'ai_v1'); return r; }); }
 $('mCsv').onclick = () => { const rs = rows(); dl('ZGONY_zweryfikowane.csv', COLS.join(';') + '\r\n' + rs.map(r => COLS.map(c => q(r[c])).join(';')).join('\r\n') + '\r\n'); toast(`Eksport: ${rs.length} aktów`); };
 $('mLog').onclick = () => { const L = ['akt;pole;ai;lubgens;wybrane;zrodlo']; D.acts.forEach(a => { const s = S.acts[a.id]; if (!s) return; Object.entries(s.f).forEach(([f,x]) => L.push([a.id, f, a.ai?.[f]||'', a.lub?.[f]||'', x.v, x.src].map(q).join(';'))); }); dl('ZGONY_log_wyborow.csv', L.join('\r\n') + '\r\n'); };
@@ -426,7 +429,7 @@ function parseCsv(txt){ txt = txt.replace(/^\uFEFF/, ''); const rows = []; let r
 $('mKid').onclick = () => { $('menu').style.display = 'none'; let n = 0, ch = []; D.acts.forEach(a => { if (a.kind || !(a.ai || a.lub) || !minor(a)) return; const cur = clean(getv(a, 'deceased_status')); if (cur === 'dziecko') return; st(a.id).f.deceased_status = {v:'dziecko', src:'edit', ok:true}; n++; if (cur) ch.push(actName(a.id) + ': „' + cur + '” → dziecko'); }); save(); renderAct(); renderList(); toast(`Ustawiono „dziecko”: ${n}` + (ch.length ? ' (zmieniono: ' + ch.join('; ') + ')' : '')); };
 $('mVer').onclick = () => { $('menu').style.display = 'none'; $('fVer').click(); };
 $('fVer').onchange = async e => { try { const R = parseCsv(await e.target.files[0].text()), H = R[0], ix = {}; H.forEach((h, i) => ix[h] = i); let nA = 0, nF = 0, nSkip = 0;
-  R.slice(1).forEach(r => { const a = AM[r[ix.id]]; if (!a || a.kind) return; const s2 = st(a.id); const ok = (r[ix.verification_status] || '') === 'ok'; const unc = new Set((r[ix.uncertain_fields] || '').split(';').filter(Boolean)); let n = 0;
+  R.slice(1).forEach(r => { const a = AM[r[ix.id]]; if (!a || a.kind) return; const s2 = st(a.id); const ok = (r[ix.verification_status] || '') === 'ok'; const unc = new Set((r[ix.uncertain_fields] || '').split(/[;,]/).filter(Boolean)); let n = 0;
     FIELDS.forEach(f => { const v = ix[f.id] != null ? (r[ix[f.id]] || '').trim() : ''; if (!v) return; if (s2.f[f.id]?.ok) { nSkip++; return; } s2.f[f.id] = {v, src:'csv', ok:ok, unc:unc.has(f.id)}; n++; });
     if (n) { nA++; nF += n; if (ok && !s2.done) s2.done = true; } });
   save(); init(); toast(`Wczytano z CSV: ${nF} pól w ${nA} aktach (pominięto już zatwierdzone: ${nSkip})`); } catch(x) { toast('Błędny plik CSV'); } e.target.value = ''; };
@@ -529,7 +532,7 @@ function textSugs(a, FS, t){ const s = st(a.id), out = [], toks = assignTok(a, t
   toks.forEach(x => { const fx = s.f[x.f]; if (x.vr && fx?.ok && !fx.skip && !inSpan(x)) out.push({i:x.i, e:x.e, from:x.w, to:inflTo(x.w, x.fw), f:x.f}); });
   spans.forEach(q => out.push(q));
   const gm = t.match(/godzinie\s+(\[nieczytelne\])/i), tm = okf('death_time').match(/^(\d{1,2})(?::(\d\d))?$/);
-  if (gm && tm) { const i = gm.index + gm[0].length - gm[1].length; out.push({i, e:i + gm[1].length, from:gm[1], to:tm[1].padStart(2, '0') + ':' + (tm[2] || '00'), f:'death_time'}); }
+  if (gm && tm) { const i = gm.index + gm[0].length - gm[1].length; out.push({i, e:i + gm[1].length, from:gm[1], to:normTime(tm[1] + (tm[2] ? ':' + tm[2] : '')), f:'death_time'}); }
   return out.sort((x, y) => x.i - y.i); }
 const sugHtml = (a, FS, t) => { const L = textSugs(a, FS, t); if (!L.length) return ''; return `<details open class="tsug" style="margin:6px 0;padding:6px 8px;border:1px solid var(--bz);border-radius:10px;background:var(--bzb)"><summary><b>Podpowiedzi do tekstu</b> z zatwierdzonych pól · ${L.length}</summary>${L.map(x => `<div style="display:flex;gap:8px;align-items:center;justify-content:space-between;margin:4px 0"><span>„${esc(x.from)}” → <b>${esc(x.to)}</b> <small class="muted">(${esc((FS.find(f => f.id === x.f) || {}).label || x.f)})</small></span><button class="sm" data-vrt="${x.i}|${x.e}|${esc(x.to)}">Zastosuj</button></div>`).join('')}${L.length > 1 ? `<button class="sm btn-ok" data-sugall="1" style="width:100%;min-height:44px;margin-top:4px">Zastosuj wszystkie (${L.length})</button>` : ''}<div class="muted">Zmienia tylko tekst, wg zatwierdzonych pól. Jeśli to inna osoba/pisownia – wybierz „Obie poprawne” przy polu.</div></details>`; };
 const lubOnly = (a, FS) => a.ai && a.lub ? FS.filter(f => { const x = st(a.id).f[f.id]; return !clean(a.ai[f.id]) && clean(a.lub[f.id]) && !(x?.ok || x?.skip); }) : [];
