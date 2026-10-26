@@ -61,7 +61,7 @@ button:focus-visible,input:focus-visible,select:focus-visible,.mi:focus-visible{
 </style></head><body>
 <header><h1>🧬 <b>Dopasowanie osób</b> · Blinów · v7</h1><button id="bBack" disabled>◀ wstecz</button><span id="crumb" style="color:var(--mu);font-size:12.5px"></span><span class="sp"></span>
 <button id="zm">🔍−</button><button id="zp">🔍+</button><span id="stat" style="color:var(--mu)"></span>
-<button id="bNetwork">Sieć powiązań</button><button id="bFamilies">Rodziny i gałęzie</button><button id="bBridges">Śluby rodziców</button><button id="bPersonIndex">Indeks osób</button><button id="bFam" title="Rodziny z drzewa: dzieci do dopisania i duble (wymaga wczytanego drzewa)">👪 Rodziny</button><button id="bTree" title="Wczytaj lokalny plik drzewa (JSON) – zostaje tylko w przeglądarce">🌳 Drzewo</button><input type="file" id="fTree" accept=".json" hidden><button id="bCsv">⬇ CSV</button><button id="bJson">⬇ JSON</button><button id="bLoad">⬆ JSON</button><input type="file" id="fLoad" accept=".json" hidden></header>
+<button id="bRep" title="Raport spójności indeksu zgonów">⚠ Raport zgonów</button><button id="bNetwork">Sieć powiązań</button><button id="bFamilies">Rodziny i gałęzie</button><button id="bBridges">Śluby rodziców</button><button id="bPersonIndex">Indeks osób</button><button id="bFam" title="Rodziny z drzewa: dzieci do dopisania i duble (wymaga wczytanego drzewa)">👪 Rodziny</button><button id="bTree" title="Wczytaj lokalny plik drzewa (JSON) – zostaje tylko w przeglądarce">🌳 Drzewo</button><input type="file" id="fTree" accept=".json" hidden><button id="bCsv">⬇ CSV</button><button id="bJson">⬇ JSON</button><button id="bLoad">⬆ JSON</button><input type="file" id="fLoad" accept=".json" hidden></header>
 <main>
 <aside id="list"><div class="tabs"><button data-md="M">Małżeństwa</button><button data-md="B">Urodzenia</button><button data-md="D">Zgony</button></div><input id="q" placeholder="szukaj: nazwisko, imię, rok…"><div id="lst"></div></aside>
 <section id="mid"><h2 id="ttl"></h2><div id="sub"></div><svg id="map" viewBox="0 0 960 500"></svg><div id="cen"></div><div id="tl"></div><div id="treeBox"></div>
@@ -99,6 +99,41 @@ function csvCell(v){ v = String(v ?? ''); return /[;"\n\r]/.test(v) ? '"' + v.re
 /* wspolne/plik.js – pobieranie pliku z przeglądarki (BOM UTF-8 domyślnie, oprócz .ged) */
 function dl(name, text, type, bom){ type = type || 'text/csv'; if (bom === undefined) bom = !name.endsWith('.ged');
   const b = new Blob([bom ? '﻿' : '', text], {type: type + ';charset=utf-8'}), u = URL.createObjectURL(b), l = document.createElement('a'); l.href = u; l.download = name; document.body.appendChild(l); l.click(); l.remove(); setTimeout(() => URL.revokeObjectURL(u), 4000); }
+
+/* wspolne/raport.js – raport spójności aktów zgonu (czyste funkcje, bez DOM).
+   Wiersz: {id, year, num, last, first, sex('M'|'K'|''), death('RRRR-MM-DD'), act('RRRR-MM-DD'), ageText, status, spouse, job, father, mother, maiden, resid}
+   Zwraca listę {id, sev:'err'|'warn'|'info', code, msg, rel:[id,...]}. Brak pola = test pomijany. */
+const RAP_NUM = {jeden:1,jedna:1,dwa:2,dwie:2,trzy:3,cztery:4,piec:5,szesc:6,siedem:7,osiem:8,dziewiec:9,dziesiec:10,jedenascie:11,dwanascie:12,trzynascie:13,czternascie:14,pietnascie:15,szesnascie:16,siedemnascie:17,osiemnascie:18,dziewietnascie:19,dwadziescia:20,trzydziesci:30,czterdziesci:40,piecdziesiat:50,szescdziesiat:60,siedemdziesiat:70,osiemdziesiat:80,dziewiecdziesiat:90,sto:100};
+// wiek w latach z zapisu ("78", "osiemdziesiąt", "dwa lata", "1 miesiąc"); null gdy nie da się ustalić
+function wiekLat(t){ t = fold(t || ''); if (!t.trim()) return null; let n = null; const d = t.match(/\d+/); if (d) n = +d[0]; else { let s = 0, ok = false; t.split(/[^a-z]+/).forEach(w => { if (RAP_NUM[w]) { s += RAP_NUM[w]; ok = true; } }); if (ok) n = s; }
+  if (n === null) return null; if (/miesi/.test(t)) return n / 12; if (/tydz/.test(t)) return n / 52; if (/(^|[^a-z])(dni|dzien|doba|godz)/.test(t)) return n / 365; return n; }
+function dzien(s){ const m = /^(\d{4})-(\d{2})-(\d{2})$/.exec(s || ''); return m ? Date.UTC(+m[1], +m[2]-1, +m[3]) / 864e5 : null; }
+const RAP_M_A = /^(kuba|barnaba|bonawentura|jarema|kosma|mykoła|miko[lł]a|saba|zawisza)$/i;
+function raportSpojnosci(rows, opt){ opt = opt || {}; const out = []; const add = (r, sev, code, msg, rel) => out.push({id:r.id, sev, code, msg, rel:rel || []});
+  rows.forEach(r => { const last = (r.last || '').trim(), first = (r.first || '').trim(), age = wiekLat(r.ageText), st = fold(r.status || ''), dd = dzien(r.death), ad = dzien(r.act);
+    if (r.death && dd === null) add(r, 'warn', 'data-zla', 'Data zgonu „' + r.death + '” nie jest w formacie RRRR-MM-DD.');
+    if (dd !== null && ad !== null) { if (dd > ad) add(r, 'err', 'zgon-po-akcie', 'Data zgonu (' + r.death + ') jest późniejsza niż data aktu (' + r.act + ').'); else if (ad - dd > 10) add(r, 'warn', 'zgon-dawno', 'Akt spisany ' + (ad - dd) + ' dni po zgonie (' + r.death + ' → ' + r.act + ') – sprawdź daty.'); }
+    if (dd !== null && r.year) { const y = new Date(dd * 864e5).getUTCFullYear(); if (y < +r.year - 1 || y > +r.year) add(r, 'warn', 'rok-zgonu', 'Rok zgonu (' + y + ') nie pasuje do roku księgi (' + r.year + ').'); }
+    if (age !== null && age > 110) add(r, 'warn', 'wiek-duzy', 'Wiek „' + r.ageText + '” wygląda na zbyt duży.');
+    if (age !== null && age < 15 && /zonat|zamezn|wdow/.test(st)) add(r, 'err', 'wiek-stan', 'Wiek „' + r.ageText + '” i stan „' + r.status + '” się wykluczają.');
+    if (age !== null && age < 18 && /wdow/.test(st)) add(r, 'warn', 'wiek-wdowiec', 'Wdowa/wdowiec w wieku „' + r.ageText + '”.');
+    if (age !== null && age < 15) { if (fold(r.job || '').trim()) add(r, 'warn', 'dziecko-zawod', 'Dziecko (wiek „' + r.ageText + '”) ma wpisany zawód: ' + r.job + '.'); if (r.spouse) add(r, 'warn', 'dziecko-malzonek', 'Dziecko ma wpisanego małżonka.'); if (!r.father && !r.mother) add(r, 'info', 'dziecko-rodzice', 'Dziecko bez wpisanych rodziców.'); }
+    if (/panna|kawaler/.test(st) && r.spouse) add(r, 'warn', 'stan-malzonek', 'Stan „' + r.status + '” ale wpisany małżonek: ' + r.spouse + '.');
+    if (r.sex === 'M' && r.maiden) add(r, 'warn', 'mezczyzna-rodowe', 'Mężczyzna z nazwiskiem rodowym („' + r.maiden + '”) – nazwisko powinno być rodowe, chyba że wyjątek.');
+    if (first && r.sex) { const f = fold(first.split(/\s+/)[0]); if (r.sex === 'M' && /a$/.test(f) && !RAP_M_A.test(first.split(/\s+/)[0])) add(r, 'warn', 'plec-imie', 'Płeć M, ale imię „' + first + '” brzmi żeńsko.'); if (r.sex === 'K' && !/a$/.test(f)) add(r, 'warn', 'plec-imie', 'Płeć K, ale imię „' + first + '” brzmi męsko.'); }
+    if (last && r.sex) { const l = fold(last); if (r.sex === 'K' && /(sk|ck|dzk)i$/.test(l)) add(r, 'warn', 'plec-nazwisko', 'Płeć K, ale nazwisko „' + last + '” ma formę męską.'); if (r.sex === 'M' && /(sk|ck|dzk)a$/.test(l)) add(r, 'warn', 'plec-nazwisko', 'Płeć M, ale nazwisko „' + last + '” ma formę żeńską.'); }
+    if (opt.brak !== false) ['last','first','sex','death'].forEach(k => { if (!r[k]) add(r, 'warn', 'brak-' + k, 'Brak: ' + ({last:'nazwisko', first:'imię', sex:'płeć', death:'data zgonu'})[k] + '.'); });
+  });
+  // chronologia dat aktów w obrębie roku (numer rośnie → data nie maleje)
+  const by = {}; rows.forEach(r => { if (r.year && r.num && dzien(r.act) !== null) (by[r.year] = by[r.year] || []).push(r); });
+  Object.values(by).forEach(L => { L.sort((a, b) => a.num - b.num); let mx = null; L.forEach(r => { const d = dzien(r.act); if (mx && d < mx.d) add(r, 'warn', 'chronologia', 'Data aktu ' + r.act + ' jest wcześniejsza niż w akcie ' + mx.r.num + ' (' + mx.r.act + ') – sprawdź daty lub numer.', [mx.r.id]); if (!mx || d >= mx.d) mx = {d, r}; }); });
+  // duplikaty: ta sama osoba i ta sama data zgonu w dwóch aktach
+  const key = {}; rows.forEach(r => { if (r.last && r.first && r.death) (key[fold(r.last) + '|' + fold(r.first) + '|' + r.death] = key[fold(r.last) + '|' + fold(r.first) + '|' + r.death] || []).push(r); });
+  Object.values(key).forEach(L => { if (L.length > 1) L.forEach(r => add(r, 'err', 'duplikat', 'Ta sama osoba i data zgonu w aktach: ' + L.filter(x => x !== r).map(x => x.num + '/' + x.year).join(', ') + '.', L.filter(x => x !== r).map(x => x.id))); });
+  if (opt.dupRok) { const g = {}; rows.forEach(r => { if (r.last && r.first && r.ageText && !r.death) { const k = [fold(r.last), fold(r.first), r.year, fold(r.ageText), fold(r.resid || '')].join('|'); (g[k] = g[k] || []).push(r); } });
+    Object.values(g).forEach(L => { if (L.length > 1) L.forEach(r => add(r, 'warn', 'duplikat-rok', 'Możliwy duplikat (to samo nazwisko, imię, wiek, rok i miejsce): ' + L.filter(x => x !== r).map(x => x.id).join(', ') + '.', L.filter(x => x !== r).map(x => x.id))); }); }
+  return out; }
+function raportCsv(items, label){ return ['id;waga;kod;opis;powiazane'].concat(items.map(i => [i.id, i.sev, i.code, i.msg, (i.rel || []).join(' ')].map(csvCell).join(';'))).join('\r\n') + '\r\n'; }
 
 const strip=s=>(s||'').toLowerCase().replace(/ł/g,'l').normalize('NFD').replace(/[̀-ͯ]/g,'');
 const known=s=>/[a-zA-ZąćęłńóśźżĄĆĘŁŃÓŚŹŻ]{3,}/.test(s||'');
@@ -556,6 +591,16 @@ function renderPersonIndex(){
  q.oninput=draw;sort.onchange=draw;draw();
  document.getElementById('bPersonIndexCsv').onclick=()=>{const out=[['imię','nazwisko','rola','rok ur. szacowany','rodzic 1','rodzic 2','akt ślubu','urodzenie id','urodzenie rok','urodzenie zgodność','zgon id','zgon rok','zgon zgodność','ostrzeżenia']];rows.forEach(p=>p.marriages.forEach(m=>out.push([p.fn,p.sn,p.side,p.by||'',p.fa||'',p.mo||'',m[0],p.birth?.r?.[0]||'',p.birth?.r?.[1]||'',p.birth?.score||'',p.death?.r?.[0]||'',p.death?.r?.[1]||'',p.death?.score||'',p.flags.join('; ')])));dl('indeks_osob_kandydaci.csv',out.map(r=>r.map(x=>'"'+String(x).replace(/"/g,'""')+'"').join(';')).join('\r\n'),'text/csv')};
 }
+
+// ---- raport spójności indeksu zgonów (moduł wspolne/raport.js)
+function repRowsD(){ return D.map(r => ({id:r[0], year:r[1], num:r[15], last:r[2], first:r[3], sex:({m:'M',k:'K'})[(r[4]||'').toLowerCase()]||'', death:'', act:'', ageText:r[6] ? r[6] + ' ' + ({lat:'lat',mies:'miesięcy',tyg:'tygodni'})[r[7]||'lat'] : '', status:r[8], spouse:'', job:'', father:r[9], mother:(r[10]+' '+r[11]).trim(), maiden:r[12], resid:r[5]})); }
+function renderRepD(){ let m = document.getElementById('repModal'); if (!m) { m = document.createElement('div'); m.id = 'repModal'; m.className = 'net-modal'; document.body.appendChild(m); } m.hidden = false;
+  const L = raportSpojnosci(repRowsD(), {brak:false, dupRok:true}), c = {}; L.forEach(i => c[i.code] = (c[i.code]||0) + 1); const byId = {}; D.forEach(r => byId[r[0]] = r);
+  const nm = id => { const r = byId[id]; return r ? `${r[2]} ${r[3]} · ${r[1]}${r[5] ? ' · ' + r[5] : ''}` : id; };
+  m.innerHTML = `<div class="net-sheet"><div class="net-head"><b>Raport spójności indeksu zgonów</b> <span style="color:var(--mu)">${D.length} wpisów · ${L.length} uwag</span> <button id="repCsv">⬇ CSV</button> <button id="repClose">✕</button></div><div style="color:var(--mu);margin:6px 0">${Object.entries(c).map(([k,v]) => k + ': ' + v).join(' · ') || 'brak uwag'}</div>${L.map(i => `<div class="ri" style="border:1px solid var(--bd);border-radius:8px;padding:6px 9px;margin:4px 0"><a href="#" data-d="${esc(i.id)}"><b>${esc(nm(i.id))}</b></a><br>${i.sev === 'err' ? '⛔' : i.sev === 'info' ? 'ℹ' : '⚠'} ${esc(i.msg)}</div>`).join('')}</div>`;
+  document.getElementById('repClose').onclick = () => m.hidden = true; document.getElementById('repCsv').onclick = () => dl('indeks_zgonow_raport.csv', raportCsv(L));
+  m.querySelectorAll('[data-d]').forEach(a => a.onclick = e => { e.preventDefault(); m.hidden = true; go('D', a.dataset.d); }); }
+document.getElementById('bRep').onclick = renderRepD;
 document.getElementById('bPersonIndex').onclick=renderPersonIndex;
 document.getElementById('bPersonIndexClose').onclick=()=>document.getElementById('personIndexModal').hidden=true;
 document.getElementById('personIndexModal').addEventListener('click',e=>{if(e.target.id==='personIndexModal')e.currentTarget.hidden=true});

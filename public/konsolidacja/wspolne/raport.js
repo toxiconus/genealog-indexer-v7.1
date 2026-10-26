@@ -7,7 +7,7 @@ function wiekLat(t){ t = fold(t || ''); if (!t.trim()) return null; let n = null
   if (n === null) return null; if (/miesi/.test(t)) return n / 12; if (/tydz/.test(t)) return n / 52; if (/(^|[^a-z])(dni|dzien|doba|godz)/.test(t)) return n / 365; return n; }
 function dzien(s){ const m = /^(\d{4})-(\d{2})-(\d{2})$/.exec(s || ''); return m ? Date.UTC(+m[1], +m[2]-1, +m[3]) / 864e5 : null; }
 const RAP_M_A = /^(kuba|barnaba|bonawentura|jarema|kosma|mykoła|miko[lł]a|saba|zawisza)$/i;
-function raportSpojnosci(rows){ const out = []; const add = (r, sev, code, msg, rel) => out.push({id:r.id, sev, code, msg, rel:rel || []});
+function raportSpojnosci(rows, opt){ opt = opt || {}; const out = []; const add = (r, sev, code, msg, rel) => out.push({id:r.id, sev, code, msg, rel:rel || []});
   rows.forEach(r => { const last = (r.last || '').trim(), first = (r.first || '').trim(), age = wiekLat(r.ageText), st = fold(r.status || ''), dd = dzien(r.death), ad = dzien(r.act);
     if (r.death && dd === null) add(r, 'warn', 'data-zla', 'Data zgonu „' + r.death + '” nie jest w formacie RRRR-MM-DD.');
     if (dd !== null && ad !== null) { if (dd > ad) add(r, 'err', 'zgon-po-akcie', 'Data zgonu (' + r.death + ') jest późniejsza niż data aktu (' + r.act + ').'); else if (ad - dd > 10) add(r, 'warn', 'zgon-dawno', 'Akt spisany ' + (ad - dd) + ' dni po zgonie (' + r.death + ' → ' + r.act + ') – sprawdź daty.'); }
@@ -20,7 +20,7 @@ function raportSpojnosci(rows){ const out = []; const add = (r, sev, code, msg, 
     if (r.sex === 'M' && r.maiden) add(r, 'warn', 'mezczyzna-rodowe', 'Mężczyzna z nazwiskiem rodowym („' + r.maiden + '”) – nazwisko powinno być rodowe, chyba że wyjątek.');
     if (first && r.sex) { const f = fold(first.split(/\s+/)[0]); if (r.sex === 'M' && /a$/.test(f) && !RAP_M_A.test(first.split(/\s+/)[0])) add(r, 'warn', 'plec-imie', 'Płeć M, ale imię „' + first + '” brzmi żeńsko.'); if (r.sex === 'K' && !/a$/.test(f)) add(r, 'warn', 'plec-imie', 'Płeć K, ale imię „' + first + '” brzmi męsko.'); }
     if (last && r.sex) { const l = fold(last); if (r.sex === 'K' && /(sk|ck|dzk)i$/.test(l)) add(r, 'warn', 'plec-nazwisko', 'Płeć K, ale nazwisko „' + last + '” ma formę męską.'); if (r.sex === 'M' && /(sk|ck|dzk)a$/.test(l)) add(r, 'warn', 'plec-nazwisko', 'Płeć M, ale nazwisko „' + last + '” ma formę żeńską.'); }
-    ['last','first','sex','death'].forEach(k => { if (!r[k]) add(r, 'warn', 'brak-' + k, 'Brak: ' + ({last:'nazwisko', first:'imię', sex:'płeć', death:'data zgonu'})[k] + '.'); });
+    if (opt.brak !== false) ['last','first','sex','death'].forEach(k => { if (!r[k]) add(r, 'warn', 'brak-' + k, 'Brak: ' + ({last:'nazwisko', first:'imię', sex:'płeć', death:'data zgonu'})[k] + '.'); });
   });
   // chronologia dat aktów w obrębie roku (numer rośnie → data nie maleje)
   const by = {}; rows.forEach(r => { if (r.year && r.num && dzien(r.act) !== null) (by[r.year] = by[r.year] || []).push(r); });
@@ -28,5 +28,7 @@ function raportSpojnosci(rows){ const out = []; const add = (r, sev, code, msg, 
   // duplikaty: ta sama osoba i ta sama data zgonu w dwóch aktach
   const key = {}; rows.forEach(r => { if (r.last && r.first && r.death) (key[fold(r.last) + '|' + fold(r.first) + '|' + r.death] = key[fold(r.last) + '|' + fold(r.first) + '|' + r.death] || []).push(r); });
   Object.values(key).forEach(L => { if (L.length > 1) L.forEach(r => add(r, 'err', 'duplikat', 'Ta sama osoba i data zgonu w aktach: ' + L.filter(x => x !== r).map(x => x.num + '/' + x.year).join(', ') + '.', L.filter(x => x !== r).map(x => x.id))); });
+  if (opt.dupRok) { const g = {}; rows.forEach(r => { if (r.last && r.first && r.ageText && !r.death) { const k = [fold(r.last), fold(r.first), r.year, fold(r.ageText), fold(r.resid || '')].join('|'); (g[k] = g[k] || []).push(r); } });
+    Object.values(g).forEach(L => { if (L.length > 1) L.forEach(r => add(r, 'warn', 'duplikat-rok', 'Możliwy duplikat (to samo nazwisko, imię, wiek, rok i miejsce): ' + L.filter(x => x !== r).map(x => x.id).join(', ') + '.', L.filter(x => x !== r).map(x => x.id))); }); }
   return out; }
 function raportCsv(items, label){ return ['id;waga;kod;opis;powiazane'].concat(items.map(i => [i.id, i.sev, i.code, i.msg, (i.rel || []).join(' ')].map(csvCell).join(';'))).join('\r\n') + '\r\n'; }

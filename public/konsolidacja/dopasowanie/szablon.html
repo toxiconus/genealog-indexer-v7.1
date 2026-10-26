@@ -61,7 +61,7 @@ button:focus-visible,input:focus-visible,select:focus-visible,.mi:focus-visible{
 </style></head><body>
 <header><h1>🧬 <b>Dopasowanie osób</b> · Blinów · v7</h1><button id="bBack" disabled>◀ wstecz</button><span id="crumb" style="color:var(--mu);font-size:12.5px"></span><span class="sp"></span>
 <button id="zm">🔍−</button><button id="zp">🔍+</button><span id="stat" style="color:var(--mu)"></span>
-<button id="bNetwork">Sieć powiązań</button><button id="bFamilies">Rodziny i gałęzie</button><button id="bBridges">Śluby rodziców</button><button id="bPersonIndex">Indeks osób</button><button id="bFam" title="Rodziny z drzewa: dzieci do dopisania i duble (wymaga wczytanego drzewa)">👪 Rodziny</button><button id="bTree" title="Wczytaj lokalny plik drzewa (JSON) – zostaje tylko w przeglądarce">🌳 Drzewo</button><input type="file" id="fTree" accept=".json" hidden><button id="bCsv">⬇ CSV</button><button id="bJson">⬇ JSON</button><button id="bLoad">⬆ JSON</button><input type="file" id="fLoad" accept=".json" hidden></header>
+<button id="bRep" title="Raport spójności indeksu zgonów">⚠ Raport zgonów</button><button id="bNetwork">Sieć powiązań</button><button id="bFamilies">Rodziny i gałęzie</button><button id="bBridges">Śluby rodziców</button><button id="bPersonIndex">Indeks osób</button><button id="bFam" title="Rodziny z drzewa: dzieci do dopisania i duble (wymaga wczytanego drzewa)">👪 Rodziny</button><button id="bTree" title="Wczytaj lokalny plik drzewa (JSON) – zostaje tylko w przeglądarce">🌳 Drzewo</button><input type="file" id="fTree" accept=".json" hidden><button id="bCsv">⬇ CSV</button><button id="bJson">⬇ JSON</button><button id="bLoad">⬆ JSON</button><input type="file" id="fLoad" accept=".json" hidden></header>
 <main>
 <aside id="list"><div class="tabs"><button data-md="M">Małżeństwa</button><button data-md="B">Urodzenia</button><button data-md="D">Zgony</button></div><input id="q" placeholder="szukaj: nazwisko, imię, rok…"><div id="lst"></div></aside>
 <section id="mid"><h2 id="ttl"></h2><div id="sub"></div><svg id="map" viewBox="0 0 960 500"></svg><div id="cen"></div><div id="tl"></div><div id="treeBox"></div>
@@ -90,6 +90,7 @@ button:focus-visible,input:focus-visible,select:focus-visible,.mi:focus-visible{
 /*DATA*/
 /*MODULE:tekst*/
 /*MODULE:plik*/
+/*MODULE:raport*/
 const strip=s=>(s||'').toLowerCase().replace(/ł/g,'l').normalize('NFD').replace(/[̀-ͯ]/g,'');
 const known=s=>/[a-zA-ZąćęłńóśźżĄĆĘŁŃÓŚŹŻ]{3,}/.test(s||'');
 function snm(s){return strip(s).replace(/[^a-z]/g,'').replace(/y/g,'i').replace(/rz/g,'z').replace(/ch/g,'h').replace(/(owna|owa)$/,'').replace(/ska$/,'ski').replace(/cka$/,'cki').replace(/dzka$/,'dzki')}
@@ -546,6 +547,16 @@ function renderPersonIndex(){
  q.oninput=draw;sort.onchange=draw;draw();
  document.getElementById('bPersonIndexCsv').onclick=()=>{const out=[['imię','nazwisko','rola','rok ur. szacowany','rodzic 1','rodzic 2','akt ślubu','urodzenie id','urodzenie rok','urodzenie zgodność','zgon id','zgon rok','zgon zgodność','ostrzeżenia']];rows.forEach(p=>p.marriages.forEach(m=>out.push([p.fn,p.sn,p.side,p.by||'',p.fa||'',p.mo||'',m[0],p.birth?.r?.[0]||'',p.birth?.r?.[1]||'',p.birth?.score||'',p.death?.r?.[0]||'',p.death?.r?.[1]||'',p.death?.score||'',p.flags.join('; ')])));dl('indeks_osob_kandydaci.csv',out.map(r=>r.map(x=>'"'+String(x).replace(/"/g,'""')+'"').join(';')).join('\r\n'),'text/csv')};
 }
+
+// ---- raport spójności indeksu zgonów (moduł wspolne/raport.js)
+function repRowsD(){ return D.map(r => ({id:r[0], year:r[1], num:r[15], last:r[2], first:r[3], sex:({m:'M',k:'K'})[(r[4]||'').toLowerCase()]||'', death:'', act:'', ageText:r[6] ? r[6] + ' ' + ({lat:'lat',mies:'miesięcy',tyg:'tygodni'})[r[7]||'lat'] : '', status:r[8], spouse:'', job:'', father:r[9], mother:(r[10]+' '+r[11]).trim(), maiden:r[12], resid:r[5]})); }
+function renderRepD(){ let m = document.getElementById('repModal'); if (!m) { m = document.createElement('div'); m.id = 'repModal'; m.className = 'net-modal'; document.body.appendChild(m); } m.hidden = false;
+  const L = raportSpojnosci(repRowsD(), {brak:false, dupRok:true}), c = {}; L.forEach(i => c[i.code] = (c[i.code]||0) + 1); const byId = {}; D.forEach(r => byId[r[0]] = r);
+  const nm = id => { const r = byId[id]; return r ? `${r[2]} ${r[3]} · ${r[1]}${r[5] ? ' · ' + r[5] : ''}` : id; };
+  m.innerHTML = `<div class="net-sheet"><div class="net-head"><b>Raport spójności indeksu zgonów</b> <span style="color:var(--mu)">${D.length} wpisów · ${L.length} uwag</span> <button id="repCsv">⬇ CSV</button> <button id="repClose">✕</button></div><div style="color:var(--mu);margin:6px 0">${Object.entries(c).map(([k,v]) => k + ': ' + v).join(' · ') || 'brak uwag'}</div>${L.map(i => `<div class="ri" style="border:1px solid var(--bd);border-radius:8px;padding:6px 9px;margin:4px 0"><a href="#" data-d="${esc(i.id)}"><b>${esc(nm(i.id))}</b></a><br>${i.sev === 'err' ? '⛔' : i.sev === 'info' ? 'ℹ' : '⚠'} ${esc(i.msg)}</div>`).join('')}</div>`;
+  document.getElementById('repClose').onclick = () => m.hidden = true; document.getElementById('repCsv').onclick = () => dl('indeks_zgonow_raport.csv', raportCsv(L));
+  m.querySelectorAll('[data-d]').forEach(a => a.onclick = e => { e.preventDefault(); m.hidden = true; go('D', a.dataset.d); }); }
+document.getElementById('bRep').onclick = renderRepD;
 document.getElementById('bPersonIndex').onclick=renderPersonIndex;
 document.getElementById('bPersonIndexClose').onclick=()=>document.getElementById('personIndexModal').hidden=true;
 document.getElementById('personIndexModal').addEventListener('click',e=>{if(e.target.id==='personIndexModal')e.currentTarget.hidden=true});
