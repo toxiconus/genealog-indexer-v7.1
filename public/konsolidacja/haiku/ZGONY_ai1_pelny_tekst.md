@@ -50,9 +50,9 @@ Skan: zestaw 2 · ROI w ZGONY_ai1_roi.json
 Niepewne: nazwisko rodowe, wiek
 **Porównanie z Lubgens:** Indeks: Kolasa Franciszka 32/1943, O: Jan, M: Anastazja zd. Abramek, Moczydła, zd. Nieściur, l. 68 — RÓŻNICA: rodowe 'Nieściur' (indeks) vs odczyt 'Kieścirów' (akt, niepewny).
 
-## ai1-1943-033 · Akt 33 · margines: „Kacyniec, Józefa Kudrelek”
+## ai1-1943-033 · Akt 33 · margines: „Kaczyniec, Józefa Kudrelek”
 Skan: zestaw 2 · ROI w ZGONY_ai1_roi.json
-> Działo się we wsi Blinów dnia trzynastego? kwietnia tysiąc dziewięćset czterdziestego trzeciego roku o godzinie ósmej. Stawili się: Andrzej Matkuch i Marcin Kimiarczyk, obaj rolnicy pełnoletni z Kacyńca zamieszkali i oświadczyli, że dnia czternastego kwietnia roku bieżącego o godzinie trzeciej umarła w Kacyńcu tamże zamieszkała Józefa Kudrelek, rolniczka, wdowa, lat sześćdziesiąt dwa mająca, urodzona w Sułkowicach?, córka Andrzeja i Stanisławy z Zarębów małżonków Pasternaków. Po przekonaniu się naocznie o śmierci Józefy Kudrelek; Akt ten stawającym niepiśmiennym przeczytany, przez czas podpisany został. — Ks. K. Wojtan U.H.C.
+> Działo się we wsi Blinów dnia trzynastego? kwietnia tysiąc dziewięćset czterdziestego trzeciego roku o godzinie ósmej. Stawili się: Andrzej Matkuch i Marcin Kimiarczyk, obaj rolnicy pełnoletni z Kaczyńca zamieszkali i oświadczyli, że dnia czternastego kwietnia roku bieżącego o godzinie trzeciej umarła w Kaczyńcu tamże zamieszkała Józefa Kudrelek, rolniczka, wdowa, lat sześćdziesiąt dwa mająca, urodzona w Sułkowicach?, córka Andrzeja i Stanisławy z Zarębów małżonków Pasternaków. Po przekonaniu się naocznie o śmierci Józefy Kudrelek; Akt ten stawającym niepiśmiennym przeczytany, przez czas podpisany został. — Ks. K. Wojtan U.H.C.
 Niepewne: data, miejsce urodzenia, wiek
 **Porównanie z Lubgens:** Indeks: Kudrelek Józefa 33/1943, O: Andrzej, M: Marianna zd. Zaręba, Kaczyniec, zd. Pasternak, l. 62 — RÓŻNICA: matka 'Stanisława' (akt) vs 'Marianna' (indeks).
 
@@ -104,9 +104,9 @@ Skan: zestaw 2 · ROI w ZGONY_ai1_roi.json
 Niepewne: data (dwa dni)
 **Porównanie z Lubgens:** Indeks: Żyguła Jan 41/1943, O: Jan, M: Feliksa zd. Wojtan, Moczydła — RÓŻNICA: 'Hojtan' (akt, odczyt niepewny) vs 'Wojtan' (indeks).
 
-## ai1-1943-042 · Akt 42 · margines: „Kacyniec, Michał Jachura”
+## ai1-1943-042 · Akt 42 · margines: „Kaczyniec, Michał Jachura”
 Skan: zestaw 2 · ROI w ZGONY_ai1_roi.json
-> Działo się we wsi Blinów dnia dwudziestego trzeciego czerwca tysiąc dziewięćset czterdziestego trzeciego roku o godzinie dziewiątej. Stawili się: Jan Cuba i Stanisław Sudłowski?, obaj rolnicy pełnoletni z Kacyńca zamieszkali i oświadczyli, że dnia wczorajszego o godzinie drugiej umarł w Kacyńcu tamże urodzony i zamieszkały Michał Jachura, rolnik, żonaty, lat sześćdziesiąt [?] mający, syn Antoniego i Katarzyny z Śrubów małżonków Jachurów, pozostawiwszy po sobie owdowiałą żonę Mariannę z Żabów. Po przekonaniu się naocznie o śmierci Michała Jachury; Akt ten stawającym niepiśmiennym przeczytany, przez czas podpisany został. — Ks. K. Wojtan U.H.C.
+> Działo się we wsi Blinów dnia dwudziestego trzeciego czerwca tysiąc dziewięćset czterdziestego trzeciego roku o godzinie dziewiątej. Stawili się: Jan Cuba i Stanisław Sudłowski?, obaj rolnicy pełnoletni z Kaczyńca zamieszkali i oświadczyli, że dnia wczorajszego o godzinie drugiej umarł w Kaczyńcu tamże urodzony i zamieszkały Michał Jachura, rolnik, żonaty, lat sześćdziesiąt [?] mający, syn Antoniego i Katarzyny z Śrubów małżonków Jachurów, pozostawiwszy po sobie owdowiałą żonę Mariannę z Żabów. Po przekonaniu się naocznie o śmierci Michała Jachury; Akt ten stawającym niepiśmiennym przeczytany, przez czas podpisany został. — Ks. K. Wojtan U.H.C.
 Niepewne: wiek, data, świadek 2
 **Porównanie z Lubgens:** Indeks: Jachura Michał 42/1943, O: Antoni, M: Katarzyna zd. Szuba, Kaczyniec, l. 68, ż. Marianna Żaba — RÓŻNICA: rodowe 'Szuba' (indeks) vs 'Śrub' (akt); wiek 68 (indeks) vs odczyt niepewny (akt).
 
@@ -188,9 +188,9 @@ Skan: zestaw 2 · ROI w ZGONY_ai1_roi.json
 Niepewne: data (dzień), godzina
 **Porównanie z Lubgens:** Indeks: Kaczyńska Józefa 55/1943, O: Jakub, M: Rozalia zd. Kosidło, szpital Janów Lub., zd. Kurczak, l. 38, zm. 26.10.1943, mąż Franciszek — RÓŻNICA: data 26.10 (indeks) vs 2.10 (akt); nazwisko 'Kaczyńska' vs 'Kacyńska'.
 
-## ai1-1943-056 · Akt 56 · margines: „Kacyniec, Czesław Widomski”
+## ai1-1943-056 · Akt 56 · margines: „Kaczyniec, Czesław Widomski”
 Skan: zestaw 2 · ROI w ZGONY_ai1_roi.json
-> Działo się we wsi Blinów dnia trzydziestego października tysiąc dziewięćset czterdziestego trzeciego roku o godzinie ósmej. Stawili się: Antoni Macheluk i Jan Mazur, obaj rolnicy pełnoletni z Kacyńca zamieszkali i oświadczyli, że dnia dwudziestego ósmego października roku bieżącego o godzinie drugiej umarł w Kacyńcu tamże urodzony i zamieszkały Czesław Widomski, rzemieślnik, kawaler, lat [?] mający, syn Józefa i Katarzyny z Ożarów małżonków Widomskich. Po przekonaniu się naocznie o śmierci Czesława Widomskiego; Akt ten stawającym niepiśmiennym przeczytany, przez czas podpisany został. — Ks. K. Wojtan U.H.C.
+> Działo się we wsi Blinów dnia trzydziestego października tysiąc dziewięćset czterdziestego trzeciego roku o godzinie ósmej. Stawili się: Antoni Macheluk i Jan Mazur, obaj rolnicy pełnoletni z Kaczyńca zamieszkali i oświadczyli, że dnia dwudziestego ósmego października roku bieżącego o godzinie drugiej umarł w Kaczyńcu tamże urodzony i zamieszkały Czesław Widomski, rzemieślnik, kawaler, lat [?] mający, syn Józefa i Katarzyny z Ożarów małżonków Widomskich. Po przekonaniu się naocznie o śmierci Czesława Widomskiego; Akt ten stawającym niepiśmiennym przeczytany, przez czas podpisany został. — Ks. K. Wojtan U.H.C.
 Niepewne: wiek, nazwisko matki, data
 **Porównanie z Lubgens:** Indeks: Widomski Czesław 56/1943, O: Józef, M: Katarzyna zd. Mazur, Kaczyniec, l. 18, zm. 28.10.1943 — data zgodna; RÓŻNICA: matka rodowe 'Mazur' (indeks) vs 'Ożar' (akt).
 

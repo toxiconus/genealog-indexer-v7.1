@@ -55,4 +55,5 @@ Dla każdego aktu, oprócz tekstu, CSV i ROI aktu, podaj położenie pól na ska
 - **Miejsce urodzenia i zamieszkania bierz z tekstu** („tamże urodzony i zamieszkały”, „urodzona w …”), nie z marginesu. Margines bywa miejscem zgonu albo zamieszkania; „tamże” = miejsce zgonu z początku zdania. Gdy w tekście jest tylko „urodzony”, zamieszkanie oznacz jako niepewne.
 - **Miejsce zgonu** wypełniaj zawsze (nie zostawiaj pustego); szpital: `Szpital Janów Lubelski` jako miejsce zgonu, a zamieszkanie osobno.
 - **Reguły:** panna/kawaler – bez małżonka; mężczyzna – nazwisko rodowe puste (nazwisko jest rodowe); dziecko – bez zawodu, chyba że wymieniony.
-- **Pisownia przyimków:** „umarł w Blinowie / w kolonii X / w Kacyńcu / w Brzozówce” (nie „z Blinowa”).
+- **Pisownia przyimków:** „umarł w Blinowie / w kolonii X / w Kaczyńcu / w Brzozówce” (nie „z Blinowa”).
+- **Kaczyniec:** w polach zawsze mianownik `Kaczyniec`; w cytowanym tekście zostaje forma z aktu (`w Kaczyńcu`, `z Kaczyńca`).
