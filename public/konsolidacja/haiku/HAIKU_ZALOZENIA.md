@@ -4,10 +4,11 @@ Parafia Blinów, księgi zgonów. Wynik to **propozycje do oceny człowieka**, n
 
 ## 1. Co dostajesz / co oddajesz
 Wejście: skan rozkładówki (+ opcjonalnie surowy indeks Lubgens: NAZWISKO, IMIĘ, AKT, ROK, UWAGI).
-Wyjście – zawsze **3 pliki** o wspólnej nazwie bazowej `<rok>_zgony_<skan>_ai1`:
-1. `*_pelny_tekst.md` – dosłowna transkrypcja każdego aktu, numerowana, z ID.
-2. `*_import.csv` – pola szablonu „zgon” (UTF-8 BOM, `;`, CRLF) do Importu w indeksatorze.
-3. `*_roi.json` – obszar każdego aktu na skanie.
+Wyjście – **trzy pliki rosnące, jedne na wszystkie skany** (nie tworzyć nowych na każdą stronę; dopisywać na końcu, nigdy nie zmieniać ani nie usuwać wcześniejszych wpisów):
+1. `ZGONY_ai1_pelny_tekst.md` – dosłowna transkrypcja każdego aktu, numerowana, z ID; każdy skan zaczyna sekcja `## Skan: <plik>`.
+2. `ZGONY_ai1_import.csv` – pola szablonu „zgon” (UTF-8 BOM, `;`, CRLF) do Importu w indeksatorze; nowe wiersze na końcu.
+3. `ZGONY_ai1_roi.json` – tablica obszarów aktów; nowe obiekty na końcu.
+Przed dopisaniem sprawdź, czy ID już nie istnieje (duplikatu nie dodawaj; nowa próba = `ai2-…`).
 
 ## 2. ID
 `ai1-<rok>-<nr aktu>` (np. `ai1-1943-026`). Kolejna próba tej samej strony = `ai2-…`. Nigdy nie nadpisuj ID z bazy ręcznej. Pole `verification_status` = `ai_v1` (po ocenie człowieka: `ok`).

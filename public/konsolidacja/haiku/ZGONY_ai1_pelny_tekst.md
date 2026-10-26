@@ -1,4 +1,7 @@
-# Zgony 1943 – „Dalszy ciąg aktów zmarłych za 1943 rok” – skan 1 (AI v1)
+# Zgony Blinów – pełny tekst odczytów AI (plik rosnący, dopisywać na końcu)
+
+---
+## Skan: 5cc8b77f-image.jpg · „Dalszy ciąg aktów zmarłych za 1943 rok” (AI v1)
 Pieczęć: DECANUS JANOVIENSIS. Lewa połowa rozkładówki pusta. Lewy brzeg tekstu obcięty na skanie – początki wierszy odtworzone z kontekstu `[...]`.
 
 ## ai1-1943-026 · Akt 26 · margines: „Moczydła, Józef Brzuszkiewicz”
