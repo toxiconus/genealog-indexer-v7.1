@@ -86,7 +86,7 @@ body.textmode #bar{display:none}body.textmode main{max-width:1000px;margin-botto
 body.textmode main{margin-bottom:330px}body.textmode #view{height:30vh}body.textmode #view.l{height:48vh}body.textmode #view.s{height:20vh}
 .rep{margin-bottom:10px}.ri{display:flex;justify-content:space-between;align-items:flex-start;gap:8px;border-radius:10px;padding:7px 9px;margin-bottom:5px;font-size:14px;border:1px solid var(--line);background:var(--card)}
 .ri.err{border-color:var(--bad);background:var(--badb)}.ri.warn{border-color:var(--bz);background:var(--bzb)}.ri.ig{opacity:.5}.ri a{color:var(--acc);text-decoration:underline;cursor:pointer}.ri button{flex:0 0 auto;min-height:30px;padding:2px 9px;font-size:12px}
-#repov{display:none;position:fixed;inset:0;z-index:80;background:var(--bg);overflow:auto}.rep-hd{display:flex;gap:10px;align-items:center;justify-content:space-between;padding:10px;background:var(--card);border-bottom:1px solid var(--line);position:sticky;top:0}.rep-body{padding:8px 10px 40px;max-width:760px;margin:0 auto}
+#repov,#histov{display:none;position:fixed;inset:0;z-index:80;background:var(--bg);overflow:auto}.ovl{display:none;position:fixed;inset:0;z-index:80;background:var(--bg);overflow:auto}.rep-hd{display:flex;gap:10px;align-items:center;justify-content:space-between;padding:10px;background:var(--card);border-bottom:1px solid var(--line);position:sticky;top:0}.rep-body{padding:8px 10px 40px;max-width:760px;margin:0 auto}
 #list button.rp-err::after,#list button.rp-warn::after{content:'!';color:#fff;border-radius:8px;font-size:10px;padding:0 4px;margin-left:3px}#list button.rp-err::after{background:var(--bad)}#list button.rp-warn::after{background:#d97706}
 .dw{margin:6px 0}.dwr{display:flex;flex-wrap:wrap;gap:8px}.dwg{display:inline-flex;align-items:stretch}.dwg button{min-height:44px;min-width:40px;padding:0 8px;font-size:20px;border-radius:0}.dwg button:first-child{border-radius:10px 0 0 10px}.dwg button:last-child{border-radius:0 10px 10px 0}
 .dwi{border:1px solid var(--line);background:var(--bg);text-align:center;padding:6px 4px;font-size:17px;min-height:44px;border-radius:0}input.dwi[data-p=d]{width:52px}input.dwi[data-p=y]{width:68px}select.dwi{width:118px}.dwj.on{background:var(--acc);color:#fff;border-color:var(--acc)}.dwj{margin-top:4px;min-height:34px}
@@ -100,6 +100,8 @@ body.textmode main{margin-bottom:330px}body.textmode #view{height:30vh}body.text
  <button id="mCsv">⬇ Eksport CSV (zweryfikowane)</button>
  <button id="mLog">⬇ Eksport logu zmian</button>
  <button id="mRoi">⬇ Eksport ROI (JSON)</button>
+ <button id="mHist">🕘 Historia zmian (cofanie)</button>
+ <button id="mModel">⬇ Eksport modelu (osoby, zdarzenia, relacje – JSON)</button>
  <button id="mRep">⚠ Raport spójności</button>
  <button id="mTop">↑ Lista aktów i filtry (do góry)</button>
  <button id="mOff">✕ Zamknij tryb tekstu / kreator</button>
@@ -140,11 +142,15 @@ const warnHtml = a => { const w = warnsOf(a); return w.length ? `<div class="war
 let S = {acts:{}, cur:null, year:'all', flt:'all', hideOk:true, hideDoneActs:true, noroi:false, wiz:false};
 const fieldsOf = a => a.kind==='prot' ? D.fieldsProt : a.kind==='rej' ? D.fieldsRej : ORDF;
 try { const r = localStorage.getItem('wz1'); if (r) S = Object.assign(S, JSON.parse(r)); } catch(e){}
-const save = () => { try { localStorage.setItem('wz1', JSON.stringify(S)); } catch(e){} };
+let HS = null, HIST_WHY = null;
+function histCommit(){ if (!HS) return; const cur = histSnap(S.acts), d = histDiff(HS, cur); if (!d.length) return; S.hist = S.hist || []; const t = new Date().toISOString(); d.forEach(e => { e.n = (S.histN = (S.histN || 0) + 1); e.t = t; if (HIST_WHY) e.why = HIST_WHY; S.hist.push(e); }); if (S.hist.length > 3000) S.hist.splice(0, S.hist.length - 3000); HS = cur; }
+const save = () => { try { histCommit(); localStorage.setItem('wz1', JSON.stringify(S)); } catch(e){} };
 const toast = (t) => { const e = $('toast'); e.textContent = t; e.style.display = 'block'; clearTimeout(toast.t); toast.t = setTimeout(() => e.style.display = 'none', 2200); };
 /*MODULE:tekst*/
 /*MODULE:plik*/
 /*MODULE:raport*/
+/*MODULE:historia*/
+/*MODULE:model*/
 const clean = s => (s||'').toString().replace(/\?/g,'').trim();
 const exact = (a,b) => clean(a).toLowerCase() === clean(b).toLowerCase() && clean(a) !== '';
 const loose = (a,b) => fold(clean(a)) === fold(clean(b)) && clean(a) !== '';
@@ -208,6 +214,18 @@ function dwApply(w, step){ const g = p => +w.querySelector(`[data-p=${p}]`).valu
   const t = w.closest('.row, .wz-card, .ted')?.querySelector('input:not(.dwi)'); if (t) { t.value = isoYMD(gr); t.dispatchEvent(new Event('input', {bubbles:true})); } }
 document.addEventListener('click', e => { const b = e.target.closest('[data-dw]'); if (!b) return; const w = b.closest('.dw'); if (b.dataset.dw === 'jul') { w.dataset.jul = w.dataset.jul === '1' ? '0' : '1'; b.classList.toggle('on', w.dataset.jul === '1'); b.textContent = w.dataset.jul === '1' ? '⇄ stary styl: WŁ.' : '⇄ stary styl'; dwApply(w); return; } dwApply(w, b.dataset.dw); });
 document.addEventListener('change', e => { if (e.target.classList?.contains('dwi')) dwApply(e.target.closest('.dw')); });
+
+// ---- historia zmian (moduł wspolne/historia.js) i eksport modelu (wspolne/model.js)
+let histAll = false;
+function histShow(e){ if (e.k === 'f') { const j = x => { if (x == null) return '—'; const o = JSON.parse(x); return (o.skip ? '(pominięte)' : esc(o.v)) + (o.ok ? ' ✓' : '') + (o.unc ? ' ?' : ''); }; return `${j(e.before)} → ${j(e.after)}`; }
+  if (e.k === 'text') return `tekst aktu zmieniony (${(e.before||'').length} → ${(e.after||'').length} zn.)`; if (e.k === 'done') return e.after ? 'akt zatwierdzony' : 'cofnięto zatwierdzenie aktu'; return e.after ? 'niepewne [?] pominięte' : 'niepewne [?] przywrócone'; }
+function histLabel(e){ if (e.k !== 'f') return ({text:'Tekst', done:'Akt', q:'Niepewne w tekście'})[e.k]; const a = AM[e.id]; return (a && fieldsOf(a).find(f => f.id === e.f)?.label) || e.f; }
+function renderHist(){ let el = $('histov'); if (!el) { el = document.createElement('div'); el.id = 'histov'; el.className = 'ovl'; document.body.appendChild(el); } el.style.display = 'block'; const all = (S.hist || []).slice().reverse(), cur = S.cur;
+  const L = all.filter(e => histAll || e.id === cur).slice(0, 300);
+  el.innerHTML = `<div class="rep-hd"><b>Historia zmian</b><span class="muted">${all.length} wpisów</span><button class="sm" id="hClose">✕ Zamknij</button></div><div class="chips" style="padding:6px 10px"><button class="sm chip ${histAll?'':'sel'}" id="hCur">Ten akt</button><button class="sm chip ${histAll?'sel':''}" id="hAllB">Wszystkie</button><button class="sm" id="hCsv">⬇ CSV</button></div><div class="rep-body">${L.length ? L.map(e => `<div class="ri"><span><b>${esc(actName(e.id))}</b> · ${esc(histLabel(e))}<br>${histShow(e)}<br><small class="muted">#${e.n} · ${new Date(e.t).toLocaleString('pl-PL')}${e.why ? ' · ' + esc(e.why) : ''}</small></span><button class="sm" data-hu="${e.n}">cofnij</button></div>`).join('') : '<div class="muted" style="padding:14px">Brak zmian do pokazania.</div>'}</div>`;
+  $('hClose').onclick = () => el.style.display = 'none'; $('hCur').onclick = () => { histAll = false; renderHist(); }; $('hAllB').onclick = () => { histAll = true; renderHist(); }; $('hCsv').onclick = () => dl('ZGONY_historia_zmian.csv', histCsv(S.hist || []));
+  el.querySelectorAll('[data-hu]').forEach(b => b.onclick = () => { const e = (S.hist || []).find(x => x.n === +b.dataset.hu); if (!e) return; histApply(S.acts, e); HIST_WHY = 'cofnięcie #' + e.n; save(); HIST_WHY = null; renderList(); renderAct(); renderHist(); toast('Cofnięto zmianę #' + e.n); }); }
+function modelAll(){ const out = {wersja:1, osoby:[], zdarzenia:[], zrodla:[], relacje:[]}; D.acts.filter(a => !a.kind && a.ai).forEach(a => { const F = S.acts[a.id]?.f || {}, m = modelZZgonu(f => clean(getv(a,f)), f => !!F[f]?.ok, {id:a.id, year:a.year, num:a.act, scan:scanOf(a), hasText:!!a.tekst}); ['osoby','zdarzenia','zrodla','relacje'].forEach(k => out[k].push(...m[k])); }); return out; }
 // ---- lista
 function visible(){ return D.acts.filter(a => (S.flt==='rej' ? a.kind : !a.kind) && (S.flt==='rej' || S.year==='all' || String(a.year)===S.year) && (a.id===S.cur || !S.hideDoneActs || S.flt==='done' || S.flt==='rej' || !S.acts[a.id]?.done) && (S.flt==='all' || S.flt==='rej' || (S.flt==='ai' && a.ai) || (S.flt==='todo' && a.ai && !S.acts[a.id]?.done) || (S.flt==='diff' && a.ai && hasDiff(a)) || (S.flt==='done' && S.acts[a.id]?.done) || (S.flt==='lub' && !a.ai))); }
 function renderTabs(){ const ys = ['all',...new Set(D.acts.filter(a => !a.kind).map(a => String(a.year)))]; const fl = [['rej','Rejestr + protokoły'],['all','Wszystkie'],['ai','Z odczytem AI'],['todo','Do weryfikacji'],['diff','Różnice'],['done','Zatwierdzone'],['lub','Tylko Lubgens']];
@@ -355,6 +373,8 @@ $('mSave').onclick = () => dl('weryfikacja_kopia.json', JSON.stringify(S), 'appl
 $('mLoad').onclick = () => $('fLoad').click(); $('fLoad').onchange = async e => { try { S = Object.assign(S, JSON.parse(await e.target.files[0].text())); save(); init(); toast('Wczytano kopię'); } catch(x){ toast('Błędny plik'); } };
 $('mReset').onclick = () => { if ($('mReset').dataset.arm) { S.acts = {}; save(); delete $('mReset').dataset.arm; $('mReset').textContent = '🗑 Wyczyść moje wybory'; init(); toast('Wyczyszczono'); } else { $('mReset').dataset.arm = 1; $('mReset').textContent = '⚠ Dotknij ponownie, by wyczyścić'; } };
 $('zMenu').onclick = () => { const m = $('menu'); m.style.display = m.style.display === 'block' ? 'none' : 'block'; };
+$('mHist').onclick = () => { $('menu').style.display = 'none'; renderHist(); };
+$('mModel').onclick = () => { const o = modelAll(); dl('ZGONY_model.json', JSON.stringify(o, null, 1), 'application/json'); toast(`Model: ${o.osoby.length} osób, ${o.zdarzenia.length} zdarzeń, ${o.relacje.length} relacji`); };
 $('mRep').onclick = () => { $('menu').style.display = 'none'; renderRep(); };
 $('mTop').onclick = () => { $('menu').style.display = 'none'; window.scrollTo({top:0}); };
 $('mOff').onclick = () => { $('menu').style.display = 'none'; if (W.on) wizToggle(false); S.tmode = ''; save(); renderAct(); };
@@ -490,6 +510,6 @@ function renderText(a){ const m = $('main'), s = st(a.id), FS = fieldsOf(a), md 
 $('bText').onclick = () => { W.on = false; document.body.classList.remove('wz'); S.tmode = S.tmode ? '' : 'pola'; save(); if (S.tmode && !curAct()?.tekst) toast('Ta pozycja nie ma pełnego tekstu – wybierz akt z listy (np. 43/26)'); renderAct(); window.scrollTo(0,0); };
 $('mTxt').onclick = () => { const L = ['# Teksty aktów zmarłych (Haiku AI v1, z poprawkami z narzędzia)', '']; D.acts.filter(a => a.tekst).forEach(a => { const ch = S.acts[a.id]?.text != null; L.push(`## ${a.id}${ch ? ' · POPRAWIONY' : ''}`, '> ' + txtOf(a), ''); if (ch) L.push('Oryginał Haiku:', '> ' + a.tekst, ''); }); dl('ZGONY_teksty_poprawione.md', L.join('\n'), 'text/markdown'); };
 document.addEventListener('click', e => { if (!e.target.closest('#menu') && !e.target.closest('#bMenu') && !e.target.closest('#zMenu')) $('menu').style.display = 'none'; });
-function init(){ $('zRf').classList.toggle('on', !!S.noroi); renderTabs(); renderList(); if (!S.cur || !AM[S.cur]) S.cur = (D.acts.find(a => a.ai) || D.acts[0])?.id; renderList(); renderAct(); showScan(); }
+function init(){ HS = histSnap(S.acts); $('zRf').classList.toggle('on', !!S.noroi); renderTabs(); renderList(); if (!S.cur || !AM[S.cur]) S.cur = (D.acts.find(a => a.ai) || D.acts[0])?.id; renderList(); renderAct(); showScan(); }
 loadExtra().then(init);
 </script></body></html>

@@ -8,6 +8,9 @@ w miejsce znacznika `/*MODULE:nazwa*/` (patrz `zbuduj.py`). Nie edytuj kodu wsp�
 |---|---|
 | `tekst.js` | `fold`, `esc`, `lev(a,b[,max])`, `csvCell` |
 | `plik.js` | `dl(nazwa, tekst[, typ, bom])` – pobieranie pliku (BOM UTF-8 oprócz `.ged`) |
+| `raport.js` | `raportSpojnosci(wiersze[, opcje])`, `wiekLat`, `raportCsv` – raport spójności aktów zgonu |
+| `historia.js` | `histSnap`, `histDiff`, `histApply`, `histCsv` – wspólna historia zmian z cofaniem |
+| `model.js` | `modelZZgonu` + `MODEL_STATUS` – wspólny model: osoba, zdarzenie, źródło, relacja (status dowodowy) |
 
-Planowane: `skan.js` (przybliżanie i zaznaczenia), `raport.js` (raport spójności), `szukaj.js`, `wykresy.js`, `rodzina.js`.
+Planowane: `skan.js` (przybliżanie i zaznaczenia), `szukaj.js`, `wykresy.js`, `rodzina.js` – szczegóły w `../PLAN_ROZWOJU_GENEALOGA.md`.
 Zasada: po każdej zmianie modułu przebudować wszystkie narzędzia i porównać wyniki z poprzednią wersją.
