@@ -51,10 +51,17 @@ button:focus-visible,input:focus-visible,select:focus-visible,.mi:focus-visible{
 .net-table-wrap{overflow:auto;max-height:65vh;border:1px solid var(--bd);border-radius:8px}.net-table{width:100%;border-collapse:collapse;font-size:13px}.net-table th,.net-table td{text-align:left;padding:8px;border-bottom:1px solid var(--bd);vertical-align:top}.net-table th{position:sticky;top:0;background:var(--panel);z-index:1}.net-table button{padding:4px 7px}.net-warn{color:var(--warn,var(--md))}.net-muted{color:var(--mu)}
 @media(max-width:700px){.net-modal{padding:0}.net-sheet{border-radius:0;min-height:100vh;padding:12px}.net-head{position:sticky;top:0;background:var(--bg);z-index:2}.net-table{min-width:780px}}
 @media(prefers-reduced-motion:reduce){.net-modal *{scroll-behavior:auto!important}}
+
+#famModal{position:fixed;inset:0;z-index:1100;background:rgba(5,10,16,.8);padding:2vh 2vw;overflow:auto}#famModal[hidden]{display:none}
+.fm-sheet{max-width:1200px;margin:0 auto;background:var(--bg);border:1px solid var(--ln);border-radius:14px;padding:14px 16px}
+.fm-h{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-bottom:8px}.fm-h h2{margin:0;font-size:17px;margin-right:auto}
+.fm-f{border:1px solid var(--ln);border-radius:10px;background:var(--p1);padding:8px 10px;margin-bottom:8px}.fm-f h4{margin:0 0 4px;font-size:14px}.fm-f h4 small{color:var(--mu);font-weight:400}
+.fm-r{display:flex;gap:8px;align-items:center;padding:3px 0;border-top:1px solid #182635;font-size:13px}.fm-r .t{flex:1}.fm-r .t span{color:var(--mu);font-size:12px}.fm-r.ok{background:#10281d}.fm-r.no{opacity:.5}
+.fm-tools{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-bottom:8px;color:var(--mu);font-size:12.5px}.fm-tools input[type=text]{background:var(--p2);border:1px solid var(--ln);color:var(--tx);border-radius:6px;padding:4px 8px}
 </style></head><body>
 <header><h1>🧬 <b>Dopasowanie osób</b> · Blinów · v7</h1><button id="bBack" disabled>◀ wstecz</button><span id="crumb" style="color:var(--mu);font-size:12.5px"></span><span class="sp"></span>
 <button id="zm">🔍−</button><button id="zp">🔍+</button><span id="stat" style="color:var(--mu)"></span>
-<button id="bNetwork">Sieć powiązań</button><button id="bFamilies">Rodziny i gałęzie</button><button id="bBridges">Śluby rodziców</button><button id="bPersonIndex">Indeks osób</button><button id="bTree" title="Wczytaj lokalny plik drzewa (JSON) – zostaje tylko w przeglądarce">🌳 Drzewo</button><input type="file" id="fTree" accept=".json" hidden><button id="bCsv">⬇ CSV</button><button id="bJson">⬇ JSON</button><button id="bLoad">⬆ JSON</button><input type="file" id="fLoad" accept=".json" hidden></header>
+<button id="bNetwork">Sieć powiązań</button><button id="bFamilies">Rodziny i gałęzie</button><button id="bBridges">Śluby rodziców</button><button id="bPersonIndex">Indeks osób</button><button id="bFam" title="Rodziny z drzewa: dzieci do dopisania i duble (wymaga wczytanego drzewa)">👪 Rodziny</button><button id="bTree" title="Wczytaj lokalny plik drzewa (JSON) – zostaje tylko w przeglądarce">🌳 Drzewo</button><input type="file" id="fTree" accept=".json" hidden><button id="bCsv">⬇ CSV</button><button id="bJson">⬇ JSON</button><button id="bLoad">⬆ JSON</button><input type="file" id="fLoad" accept=".json" hidden></header>
 <main>
 <aside id="list"><div class="tabs"><button data-md="M">Małżeństwa</button><button data-md="B">Urodzenia</button><button data-md="D">Zgony</button></div><input id="q" placeholder="szukaj: nazwisko, imię, rok…"><div id="lst"></div></aside>
 <section id="mid"><h2 id="ttl"></h2><div id="sub"></div><svg id="map" viewBox="0 0 960 500"></svg><div id="cen"></div><div id="tl"></div><div id="treeBox"></div>
@@ -78,6 +85,7 @@ button:focus-visible,input:focus-visible,select:focus-visible,.mi:focus-visible{
  <div class="net-sheet"><div class="net-head"><div><h2 id="personIndexTitle">Indeks osób — kandydaci do połączenia</h2><p>Porównuję osoby z aktów małżeństw z aktami urodzeń i zgonów. To lista tropów, nie automatycznie scalone osoby.</p></div><button id="bPersonIndexClose" aria-label="Zamknij indeks osób">Zamknij ×</button></div>
  <div id="personIndexStats" class="net-stats"></div><div class="net-tools"><input id="personIndexQ" placeholder="Szukaj osoby, nazwiska, roku, miejscowości…"><button id="bPersonIndexCsv">Eksportuj indeks CSV</button><select id="personIndexSort" aria-label="Sortowanie indeksu osób"><option value="quality">Najmocniejsze połączenia</option><option value="year">Najstarsze osoby</option><option value="unlinked">Brak odnalezionego urodzenia lub zgonu</option></select></div><div id="personIndexBody"></div></div>
 </div>
+<div id="famModal" hidden role="dialog" aria-modal="true"><div class="fm-sheet"><div class="fm-h"><h2>👪 Rodziny z drzewa MyHeritage</h2><button id="fmKids" class="b">Dzieci do dopisania</button><button id="fmDup" class="b">Duble w drzewie</button><button id="fmClose">✕ zamknij</button></div><div id="fmBody"></div></div></div>
 <script>
 /*DATA*/
 const esc=s=>String(s==null?'':s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
@@ -347,7 +355,7 @@ let ZM=+(localStorage.getItem('dop.zm')||1);
 function zoom(v){ZM=Math.max(.7,Math.min(2.2,v));document.getElementById('mid').style.setProperty('--z',ZM);try{localStorage.setItem('dop.zm',ZM)}catch(e){}}
 zoom(ZM);document.getElementById('zp').onclick=()=>zoom(ZM+.15);document.getElementById('zm').onclick=()=>zoom(ZM-.15);
 document.getElementById('mid').addEventListener('wheel',e=>{if(e.ctrlKey||e.metaKey){e.preventDefault();zoom(ZM+(e.deltaY<0?.1:-.1))}},{passive:false});
-function dl(name,txt,type){const a=document.createElement('a');a.href=URL.createObjectURL(new Blob(['﻿'+txt],{type}));a.download=name;a.click()}
+function dl(name,txt,type){const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([(name.endsWith('.ged')?'':'\ufeff')+txt],{type}));a.download=name;a.click()}
 function netSource(k){if(k.includes(':')){const i=k.indexOf(':');return{t:k.slice(0,i),id:k.slice(i+1)}}return{t:'M',id:k}}
 function netLabel(t,id){const r=rec(t,id);if(!r)return `${t}:${id} (rekord niedostępny)`;
  if(t==='M')return `${r[5]||''} ${r[4]||''} + ${r[15]||''} ${r[14]||''} · ${r[1]} nr ${r[2]}`;
@@ -564,7 +572,7 @@ document.addEventListener('keydown',e=>{if(/INPUT|TEXTAREA|SELECT/.test(e.target
 /* ---- warstwa: drzewo MyHeritage (plik wczytywany lokalnie, nie jest częścią strony) ---- */
 let TREE=null;
 const tyr=s=>{const m=(s||'').match(/\d{4}/);return m?+m[0]:0};
-function treeLoad(j){TREE={P:j.p,F:j.f,par:{},sp:{}};for(const fid in j.f){const f=j.f[fid];(f.k||[]).forEach(c=>TREE.par[c]=[f.h,f.w,fid]);[f.h,f.w].forEach(i=>{if(i)(TREE.sp[i]=TREE.sp[i]||[]).push(fid)})}}
+function treeLoad(j){TREE={P:j.p,F:j.f,par:{},sp:{},miss:j.miss||[],dups:j.dups||{}};for(const fid in j.f){const f=j.f[fid];(f.k||[]).forEach(c=>TREE.par[c]=[f.h,f.w,fid]);[f.h,f.w].forEach(i=>{if(i)(TREE.sp[i]=TREE.sp[i]||[]).push(fid)})}}
 const tnm=p=>p?`${p.fn||''} ${p.sn||''}`.trim():'?';
 function treeFind(){if(!TREE)return[];const r=cur.r,out=[],mode=cur.mode;
  if(mode==='M'){for(const fid in TREE.F){const f=TREE.F[fid],h=TREE.P[f.h],w=TREE.P[f.w];if(!h||!w)continue;
@@ -590,6 +598,67 @@ function treeBox(){const el=document.getElementById('treeBox');if(!el)return;
   return`<div class="cd"><div class="h"><span style="color:var(--mu)">id ${esc(x.id)}</span><span style="color:${x.pct>=80?'var(--ok)':'var(--md)'}">${x.pct}%</span></div><div class="d">${h}</div><div class="chips">${x.why.map(w=>`<span class="chip ${w[1]}">${w[1]==='y'?'✓':w[1]==='p'?'≈':'✗'} ${esc(w[0])}</span>`).join('')}</div></div>`}).join(''):'<div class="want">Nikogo pasującego w wczytanym drzewie (próg 60%) – może to nowa osoba do dopisania.</div>')+'</div>'}
 document.getElementById('bTree').onclick=()=>document.getElementById('fTree').click();
 document.getElementById('fTree').onchange=e=>{const f=e.target.files[0];if(!f)return;f.text().then(x=>{try{treeLoad(JSON.parse(x.replace(/^﻿/,'')));treeBox()}catch(err){alert('Nieprawidłowy plik drzewa')}})};
+
+/* ---- rodziny z drzewa: dzieci do dopisania + duble; eksport do drzewa ---- */
+let TD={kids:{},dups:{}},FMV='kids',FMQ='',FMMIN=85,FMOPEN=true;
+try{const x=JSON.parse(localStorage.getItem('dop.tree.v1')||'null');if(x&&x.kids&&x.dups)TD=x}catch(e){}
+const tdSave=()=>{try{localStorage.setItem('dop.tree.v1',JSON.stringify(TD))}catch(e){}};
+const bAct=id=>B.find(r=>r[0]===id);
+function fmKidsHtml(){
+ const by={};(TREE.miss||[]).forEach(([fid,act,sc,other])=>{(by[fid]=by[fid]||[]).push({act,sc,other})});
+ const q=strip(FMQ);let fams=Object.keys(by).filter(f=>TREE.F[f]).map(f=>({f,items:by[f].filter(x=>x.sc>=FMMIN&&bAct(x.act))})).filter(x=>x.items.length);
+ fams=fams.filter(x=>{if(!q)return true;const F=TREE.F[x.f];return strip(tnm(TREE.P[F.h])+' '+tnm(TREE.P[F.w])+' '+x.items.map(i=>bAct(i.act).join(' ')).join(' ')).includes(q)});
+ if(FMOPEN)fams=fams.filter(x=>x.items.some(i=>TD.kids[x.f+'|'+i.act]==null));
+ fams.sort((a,b)=>b.items.length-a.items.length);
+ const accN=Object.values(TD.kids).filter(v=>v===1).length;
+ let h=`<div class="fm-tools"><input type="text" id="fmQ" placeholder="szukaj rodziny/dziecka…" value="${esc(FMQ)}"> min <input type="range" id="fmMin" min="70" max="100" value="${FMMIN}"><b>${FMMIN}%</b><label><input type="checkbox" id="fmOpen"${FMOPEN?' checked':''}> tylko niezdecydowane</label><span>przyjęte: <b>${accN}</b></span><button class="b sm" id="fmCsv">⬇ CSV do dopisania</button><button class="b sm" id="fmGed">⬇ GEDCOM</button><button class="b sm" id="fmSave">⬇ kopia decyzji</button><button class="b sm" id="fmLoad">⬆ wczytaj</button><input type="file" id="fmFile" accept=".json" hidden></div><div class="want">Akty urodzeń, w których rodzicami są pary z Twojego drzewa, a dziecka nie ma w tej rodzinie. Wiersz z żółtą uwagą pasuje też do kogoś innego w drzewie – sprawdź, zanim przyjmiesz. ${fams.length} rodzin.</div>`;
+ h+=fams.slice(0,60).map(({f,items})=>{const F=TREE.F[f],hh=TREE.P[F.h],ww=TREE.P[F.w];
+  return`<div class="fm-f" data-f="${f}"><h4>${esc(tnm(hh))} + ${esc(tnm(ww))} <small>${F.m?'ślub '+esc(F.m)+' · ':''}dzieci w drzewie: ${(F.k||[]).length} · propozycji: ${items.length}</small></h4>`+
+  items.sort((a,b)=>bAct(a.act)[1]-bAct(b.act)[1]).map(i=>{const r=bAct(i.act),st=TD.kids[f+'|'+i.act];
+   return`<div class="fm-r ${st===1?'ok':st===-1?'no':''}" data-f="${f}" data-a="${esc(i.act)}"><div class="t"><b>${esc(r[4])} ${esc(r[3])}</b> · ur. ${r[1]} nr ${esc(r[2])} ${esc(r[5])}<br><span>ojciec: ${esc(r[6]||'?')} ${esc(r[7])} · matka: ${esc(r[9]||'?')} ${esc(r[10])}${r[12]?' · '+esc(r[12]):''}</span>${i.other?`<br><span class="warn">⚠ ${esc(i.other)}</span>`:''}</div><span style="color:${i.sc>=90?'var(--ok)':'var(--md)'}">${i.sc}%</span><button class="ok sm" data-v="1">${st===1?'✓ przyjęte':'✓'}</button><button class="bad sm" data-v="-1">${st===-1?'✗ odrzucone':'✗'}</button></div>`}).join('')+
+  `<div class="act"><button class="sm ok" data-all="1">przyjmij wszystkie ≥${FMMIN}% bez uwag</button><button class="sm bad" data-all="-1">odrzuć wszystkie niezdecydowane</button></div></div>`}).join('');
+ return h}
+function fmDupHtml(){
+ const L=Object.entries(TREE.dups||{}).filter(([a,p])=>bAct(a)&&p.every(i=>TREE.P[i]));
+ let h=`<div class="fm-tools"><span>decyzji: <b>${Object.keys(TD.dups).length}/${L.length}</b></span><button class="b sm" id="fmCsv2">⬇ CSV duble do scalenia</button><button class="b sm" id="fmSave">⬇ kopia decyzji</button><button class="b sm" id="fmLoad">⬆ wczytaj</button><input type="file" id="fmFile" accept=".json" hidden></div><div class="want">Jeden akt urodzenia pasuje do kilku osób w drzewie – zwykle ta sama osoba wpisana dwa razy. Wskaż, którą zostawić (pozostałe do scalenia), albo „to różne osoby”.</div>`;
+ h+=L.slice(0,80).map(([a,ps])=>{const r=bAct(a),d=TD.dups[a];
+  return`<div class="fm-f" data-a="${esc(a)}"><h4>Akt: ${esc(r[4])} ${esc(r[3])} · ur. ${r[1]} nr ${esc(r[2])} <small>ojciec ${esc(r[6]||'?')}, matka ${esc(r[9]||'?')} ${esc(r[10])}</small></h4>`+ps.map(p=>`<div class="fm-r ${d&&d.keep==p?'ok':''}"><div class="t">${treePerson(p)}</div><button class="sm ok" data-keep="${p}">${d&&d.keep==p?'✓ zostaje':'zostaw tę'}</button></div>`).join('')+`<div class="act"><button class="sm" data-diff="1">${d&&d.diff?'✓ to różne osoby':'to różne osoby'}</button></div></div>`}).join('');
+ return h}
+function fmRender(){const b=document.getElementById('fmBody');b.innerHTML=FMV==='kids'?fmKidsHtml():fmDupHtml();
+ const g=id=>document.getElementById(id);
+ if(g('fmQ'))g('fmQ').oninput=e=>{FMQ=e.target.value;fmRender();const i=g('fmQ');i.focus();i.setSelectionRange(FMQ.length,FMQ.length)};
+ if(g('fmMin'))g('fmMin').oninput=e=>{FMMIN=+e.target.value;fmRender()};if(g('fmOpen'))g('fmOpen').onchange=e=>{FMOPEN=e.target.checked;fmRender()};
+ if(g('fmCsv'))g('fmCsv').onclick=fmCsv;if(g('fmGed'))g('fmGed').onclick=fmGed;if(g('fmCsv2'))g('fmCsv2').onclick=fmCsvDup;
+ if(g('fmSave'))g('fmSave').onclick=()=>dl('decyzje_drzewa.json',JSON.stringify(TD,null,1),'application/json');
+ if(g('fmLoad'))g('fmLoad').onclick=()=>g('fmFile').click();
+ if(g('fmFile'))g('fmFile').onchange=e=>{const f=e.target.files[0];if(!f)return;f.text().then(t=>{try{const x=JSON.parse(t.replace(/^﻿/,''));if(!x.kids||!x.dups)throw 0;TD=x;tdSave();fmRender()}catch(err){alert('To nie jest plik decyzji drzewa')}})};
+ b.querySelectorAll('.fm-r[data-a] [data-v]').forEach(btn=>btn.onclick=()=>{const row=btn.closest('.fm-r'),k=row.dataset.f+'|'+row.dataset.a,v=+btn.dataset.v;if(TD.kids[k]===v)delete TD.kids[k];else TD.kids[k]=v;tdSave();fmRender()});
+ b.querySelectorAll('[data-all]').forEach(btn=>btn.onclick=()=>{const card=btn.closest('.fm-f'),f=card.dataset.f,v=+btn.dataset.all;card.querySelectorAll('.fm-r[data-a]').forEach(row=>{const a=row.dataset.a,k=f+'|'+a;if(TD.kids[k]!=null)return;const it=TREE.miss.find(x=>String(x[0])===f&&x[1]===a);if(v===1&&(!it||it[2]<FMMIN||it[3]))return;TD.kids[k]=v});tdSave();fmRender()});
+ b.querySelectorAll('[data-keep]').forEach(btn=>btn.onclick=()=>{const a=btn.closest('.fm-f').dataset.a;TD.dups[a]={keep:btn.dataset.keep};tdSave();fmRender()});
+ b.querySelectorAll('[data-diff]').forEach(btn=>btn.onclick=()=>{const a=btn.closest('.fm-f').dataset.a;TD.dups[a]={diff:true};tdSave();fmRender()});}
+function acceptedKids(){const out=[];for(const k in TD.kids){if(TD.kids[k]!==1)continue;const [f,a]=k.split('|'),F=TREE.F[f],r=bAct(a);if(F&&r)out.push({f,F,r,a})}return out.sort((x,y)=>x.f-y.f||x.r[1]-y.r[1])}
+const cite=r=>`Parafia Blinów, księga urodzeń/chrztów, rok ${r[1]}, akt nr ${r[2]} (id ${r[0]})`;
+function fmCsv(){const rows=[['id_rodziny_w_drzewie','ojciec','matka','slub','imie_nazwisko_dziecka','rok_ur','nr_aktu','miejscowosc','ojciec_z_aktu','matka_z_aktu','id_aktu','zrodlo','uwagi_z_aktu']];
+ acceptedKids().forEach(({f,F,r})=>rows.push([f,tnm(TREE.P[F.h]),tnm(TREE.P[F.w]),F.m||'',`${r[4]} ${r[3]}`.trim(),r[1],r[2],r[5],`${r[6]} ${r[7]}`.trim(),`${r[9]} ${r[10]}`.trim(),r[0],cite(r),r[12]]));
+ dl('dzieci_do_dopisania.csv',rows.map(r=>r.map(x=>'"'+String(x==null?'':x).replace(/"/g,'""')+'"').join(';')).join('\r\n'),'text/csv')}
+function fmCsvDup(){const rows=[['id_aktu','akt','zostaw_id_drzewa','zostaw_osoba','scal_z_id','scal_z_osoby','decyzja']];
+ for(const a in TD.dups){const d=TD.dups[a],ps=TREE.dups[a]||[],r=bAct(a);if(!r)continue;
+  if(d.diff)rows.push([a,`${r[4]} ${r[3]} ${r[1]}/${r[2]}`,'','','','','to różne osoby']);
+  else{const rest=ps.filter(p=>String(p)!==String(d.keep));rows.push([a,`${r[4]} ${r[3]} ${r[1]}/${r[2]}`,d.keep,tnm(TREE.P[d.keep]),rest.join(','),rest.map(p=>tnm(TREE.P[p])).join(', '),'scal'])}}
+ dl('duble_do_scalenia.csv',rows.map(r=>r.map(x=>'"'+String(x==null?'':x).replace(/"/g,'""')+'"').join(';')).join('\r\n'),'text/csv')}
+function fmGed(){const L=acceptedKids();const fams={};L.forEach(x=>(fams[x.f]=fams[x.f]||[]).push(x));
+ const g=s=>String(s||'').replace(/[\r\n]+/g,' ');let o='0 HEAD\n1 SOUR Dopasowanie osob\n1 GEDC\n2 VERS 5.5.1\n2 FORM LINEAGE-LINKED\n1 CHAR UTF-8\n';let n=0,srcs='';const used=new Set();
+ const indi=(x,p,id)=>{const P=TREE.P[p];if(!P||used.has(id))return'';used.add(id);return`0 @${id}@ INDI\n1 NAME ${g(P.fn)} /${g(P.sn)}/\n1 SEX ${P.sex||'U'}\n1 NOTE Osoba z istniejącego drzewa MyHeritage (id ${p}) – wpis pomocniczy do powiązania, nie dodawać drugi raz\n`};
+ let ind='',fam='';
+ for(const f in fams){const F=fams[f][0].F;ind+=indi(null,F.h,'I'+F.h)+indi(null,F.w,'I'+F.w);
+  let fr=`0 @F${f}@ FAM\n1 HUSB @I${F.h}@\n1 WIFE @I${F.w}@\n`;
+  fams[f].forEach(({r})=>{n++;const c='C'+n,s='S'+n;
+   ind+=`0 @${c}@ INDI\n1 NAME ${g(r[4])} /${g(r[3])}/\n1 BIRT\n2 DATE ${r[1]}\n2 PLAC ${g(r[5])}\n2 SOUR @${s}@\n3 PAGE akt nr ${g(r[2])}\n1 FAMC @F${f}@\n`+(r[12]?`1 NOTE ${g(r[12])}\n`:'');
+   srcs+=`0 @${s}@ SOUR\n1 TITL ${g(cite(r))}\n`;fr+=`1 CHIL @${c}@\n`});fam+=fr}
+ o+=ind+fam+srcs+'0 TRLR\n';dl('dzieci_do_drzewa.ged',o,'text/plain')}
+function fmOpenM(v){if(!TREE){alert('Najpierw wczytaj drzewo (przycisk 🌳 Drzewo) – plik drzewo_ftb.json.');return}FMV=v||FMV;document.getElementById('famModal').hidden=false;fmRender()}
+document.getElementById('bFam').onclick=()=>fmOpenM();document.getElementById('fmClose').onclick=()=>document.getElementById('famModal').hidden=true;
+document.getElementById('fmKids').onclick=()=>{FMV='kids';fmRender()};document.getElementById('fmDup').onclick=()=>{FMV='dups';fmRender()};
 (function(){let h=decodeURIComponent(location.hash.slice(1)),m='M',id=null;
  const mm=h.match(/^([MBD]):(.*)$/);if(mm){m=mm[1];id=mm[2]}else if(h){id=h}
  if(!id||!rec(m,id)){m='M';id=(M.find(x=>x[0]==='1864/15')||M[0])[0]}
