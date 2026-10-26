@@ -84,6 +84,10 @@ body.textmode #bar{display:none}body.textmode main{max-width:1000px;margin-botto
 #tsheet .act3{display:flex;gap:8px;margin-top:8px}#tsheet .act3 button{min-height:54px;flex:1;font-size:16px;font-weight:600}#tsheet .act3 .btn-ok{flex:2.2}#tsheet .act3 .uncb{background:var(--bzb);border-color:var(--bz);color:var(--bz);font-weight:500}
 #tsheet .ted input{margin:4px 0;padding:9px;font-size:17px}#tsheet .chip{min-height:44px}
 body.textmode main{margin-bottom:330px}body.textmode #view{height:30vh}body.textmode #view.l{height:48vh}body.textmode #view.s{height:20vh}
+.rep{margin-bottom:10px}.ri{display:flex;justify-content:space-between;align-items:flex-start;gap:8px;border-radius:10px;padding:7px 9px;margin-bottom:5px;font-size:14px;border:1px solid var(--line);background:var(--card)}
+.ri.err{border-color:var(--bad);background:var(--badb)}.ri.warn{border-color:var(--bz);background:var(--bzb)}.ri.ig{opacity:.5}.ri a{color:var(--acc);text-decoration:underline;cursor:pointer}.ri button{flex:0 0 auto;min-height:30px;padding:2px 9px;font-size:12px}
+#repov{display:none;position:fixed;inset:0;z-index:80;background:var(--bg);overflow:auto}.rep-hd{display:flex;gap:10px;align-items:center;justify-content:space-between;padding:10px;background:var(--card);border-bottom:1px solid var(--line);position:sticky;top:0}.rep-body{padding:8px 10px 40px;max-width:760px;margin:0 auto}
+#list button.rp-err::after,#list button.rp-warn::after{content:'!';color:#fff;border-radius:8px;font-size:10px;padding:0 4px;margin-left:3px}#list button.rp-err::after{background:var(--bad)}#list button.rp-warn::after{background:#d97706}
 .tnot{font-size:13px;color:var(--mut);margin-top:8px;white-space:pre-wrap}
 .tarea{width:100%;min-height:42vh;border:1px solid var(--line);border-radius:10px;background:var(--bg);color:var(--ink);padding:11px;font:17px/1.6 system-ui,sans-serif}
 </style></head><body>
@@ -92,6 +96,7 @@ body.textmode main{margin-bottom:330px}body.textmode #view{height:30vh}body.text
  <button id="mCsv">⬇ Eksport CSV (zweryfikowane)</button>
  <button id="mLog">⬇ Eksport logu zmian</button>
  <button id="mRoi">⬇ Eksport ROI (JSON)</button>
+ <button id="mRep">⚠ Raport spójności</button>
  <button id="mTop">↑ Lista aktów i filtry (do góry)</button>
  <button id="mOff">✕ Zamknij tryb tekstu / kreator</button>
  <button id="mTxt">⬇ Eksport tekstów aktów (MD, z poprawkami)</button>
@@ -135,6 +140,7 @@ const save = () => { try { localStorage.setItem('wz1', JSON.stringify(S)); } cat
 const toast = (t) => { const e = $('toast'); e.textContent = t; e.style.display = 'block'; clearTimeout(toast.t); toast.t = setTimeout(() => e.style.display = 'none', 2200); };
 /*MODULE:tekst*/
 /*MODULE:plik*/
+/*MODULE:raport*/
 const clean = s => (s||'').toString().replace(/\?/g,'').trim();
 const exact = (a,b) => clean(a).toLowerCase() === clean(b).toLowerCase() && clean(a) !== '';
 const loose = (a,b) => fold(clean(a)) === fold(clean(b)) && clean(a) !== '';
@@ -151,13 +157,29 @@ function near(f, v){ const t = FT[f]; const w = fold(clean(v)); if (!t || w.leng
 function diffState(a,f){ const x = a.ai?.[f], y = a.lub?.[f]; if (!x || !y) return ''; if (exact(x,y)) return 'eq'; if (loose(x,y)) return 'ap'; return 'ne'; }
 function hasDiff(a){ return fieldsOf(a).some(f => diffState(a,f.id) === 'ne'); }
 function isUnc(a,f){ const x = S.acts[a.id]?.f?.[f]; if (x && x.unc !== undefined) return !!x.unc; return !!a.ai && (a.unc.includes(f) || /\?/.test(a.ai[f]||'')); }
+
+// ---- raport spójności (moduł wspolne/raport.js)
+const repRows = () => D.acts.filter(a => !a.kind && a.ai).map(a => { const g = f => clean(getv(a,f)); return {id:a.id, year:a.year, num:a.act, last:g('deceased_last_name'), first:g('deceased_first_name'), sex:g('deceased_sex'), death:g('death_date'), act:g('act_date'), ageText:g('age'), status:g('deceased_status'), spouse:g('deceased_spouse'), job:g('profession'), father:(g('father_first_name')+' '+g('father_last_name')).trim(), mother:(g('mother_first_name')+' '+g('mother_last_name')).trim(), maiden:g('deceased_maiden_name')}; });
+const repAll = (ign) => raportSpojnosci(repRows()).filter(i => ign || !(S.repIgn || {})[i.id + '|' + i.code]);
+const SEVI = {err:'⛔', warn:'⚠', info:'ℹ'}, SEVN = {err:'Błędy', warn:'Ostrzeżenia', info:'Uwagi'};
+const actName = id => { const a = AM[id]; return a ? `${a.year} · akt ${a.act} · ${a.ai ? a.ai.deceased_last_name + ' ' + a.ai.deceased_first_name : ''}` : id; };
+function repHtml(a){ if (a.kind) return ''; const L = repAll().filter(i => i.id === a.id); if (!L.length) return ''; return `<div class="rep">${L.map(i => `<div class="ri ${i.sev}"><span>${SEVI[i.sev]} ${esc(i.msg)}${i.rel.map(r => ` <a data-go="${esc(r)}">→ ${esc(actName(r))}</a>`).join('')}</span><button class="sm" data-ign="${esc(i.id + '|' + i.code)}">ignoruj</button></div>`).join('')}</div>`; }
+function repMarks(){ const m = {}; repAll().forEach(i => { if (i.sev === 'info') return; if (i.sev === 'err' || !m[i.id]) m[i.id] = i.sev; }); return m; }
+let repF = {err:true, warn:true, info:false, ign:false};
+function renderRep(){ let el = $('repov'); if (!el) { el = document.createElement('div'); el.id = 'repov'; document.body.appendChild(el); } el.style.display = 'block'; const all = repAll(true), ig = S.repIgn || {}; const L = all.filter(i => repF[i.sev] && (repF.ign || !ig[i.id + '|' + i.code]));
+  const cnt = k => all.filter(i => i.sev === k && !ig[i.id + '|' + i.code]).length;
+  el.innerHTML = `<div class="rep-hd"><b>Raport spójności</b><span class="muted">${repRows().length} aktów</span><button class="sm" id="rClose">✕ Zamknij</button></div><div class="chips" style="padding:6px 10px">${['err','warn','info'].map(k => `<button class="sm chip ${repF[k]?'sel':''}" data-rf="${k}">${SEVN[k]} (${cnt(k)})</button>`).join('')}<button class="sm chip ${repF.ign?'sel':''}" data-rf="ign">Ignorowane (${Object.keys(ig).length})</button><button class="sm" id="rCsv">⬇ CSV</button></div><div class="rep-body">${L.length ? L.map(i => `<div class="ri ${i.sev} ${ig[i.id+'|'+i.code]?'ig':''}"><span><a data-go="${esc(i.id)}"><b>${esc(actName(i.id))}</b></a><br>${SEVI[i.sev]} ${esc(i.msg)}${i.rel.map(r => ` <a data-go="${esc(r)}">→ ${esc(actName(r))}</a>`).join('')}</span><button class="sm" data-ign="${esc(i.id + '|' + i.code)}">${ig[i.id+'|'+i.code] ? 'przywróć' : 'ignoruj'}</button></div>`).join('') : '<div class="muted" style="padding:14px">✓ Brak pozycji w wybranych filtrach.</div>'}</div>`;
+  el.querySelectorAll('[data-rf]').forEach(b => b.onclick = () => { repF[b.dataset.rf] = !repF[b.dataset.rf]; renderRep(); });
+  $('rClose').onclick = () => el.style.display = 'none'; $('rCsv').onclick = () => dl('ZGONY_raport_spojnosci.csv', raportCsv(L)); }
+document.addEventListener('click', e => { const g = e.target.closest('[data-go]'), n = e.target.closest('[data-ign]'); if (g) { const el = $('repov'); if (el) el.style.display = 'none'; if (AM[g.dataset.go]) { S.flt = 'all'; open(g.dataset.go); window.scrollTo(0,0); } }
+  if (n) { const k = n.dataset.ign; S.repIgn = S.repIgn || {}; if (S.repIgn[k]) delete S.repIgn[k]; else S.repIgn[k] = 1; save(); if ($('repov') && $('repov').style.display === 'block') renderRep(); renderList(); renderAct(); } });
 // ---- lista
 function visible(){ return D.acts.filter(a => (S.flt==='rej' ? a.kind : !a.kind) && (S.flt==='rej' || S.year==='all' || String(a.year)===S.year) && (a.id===S.cur || !S.hideDoneActs || S.flt==='done' || S.flt==='rej' || !S.acts[a.id]?.done) && (S.flt==='all' || S.flt==='rej' || (S.flt==='ai' && a.ai) || (S.flt==='todo' && a.ai && !S.acts[a.id]?.done) || (S.flt==='diff' && a.ai && hasDiff(a)) || (S.flt==='done' && S.acts[a.id]?.done) || (S.flt==='lub' && !a.ai))); }
 function renderTabs(){ const ys = ['all',...new Set(D.acts.filter(a => !a.kind).map(a => String(a.year)))]; const fl = [['rej','Rejestr + protokoły'],['all','Wszystkie'],['ai','Z odczytem AI'],['todo','Do weryfikacji'],['diff','Różnice'],['done','Zatwierdzone'],['lub','Tylko Lubgens']];
   $('tabs').innerHTML = ys.map(y => `<button class="sm ${S.year===y?'on':''}" data-y="${y}">${y==='all'?'Lata: wszystkie':y}</button>`).join('') + fl.map(([k,l]) => `<button class="sm ${S.flt===k?'on':''}" data-f="${k}">${l}</button>`).join('') + `<button class="sm ${S.hideDoneActs?'on':''}" id="tHide">Ukryj ✓ zatwierdzone</button>`;
   $('tHide').onclick = () => { S.hideDoneActs = !S.hideDoneActs; save(); renderTabs(); renderList(); };
   $('tabs').querySelectorAll('button[data-y],button[data-f]').forEach(b => b.onclick = () => { if (b.dataset.y) S.year = b.dataset.y; else S.flt = b.dataset.f; save(); renderTabs(); renderList(); }); }
-function renderList(){ const v = visible(); $('list').innerHTML = v.map(a => `<button data-id="${a.id}" class="${a.id===S.cur?'cur':''} ${S.acts[a.id]?.done?'done':''} ${a.ai&&hasDiff(a)?'diff':''} ${a.ai?'':'noai'}" title="${a.year}">${a.kind==='rej'?'Lp'+a.act:a.kind==='prot'?'Prot '+a.year:(S.year==='all'?String(a.year).slice(2)+'/':'')+a.act}</button>`).join('') || '<span class="muted">Brak aktów w tym filtrze</span>';
+function renderList(){ const v = visible(), rmk = repMarks(); $('list').innerHTML = v.map(a => `<button data-id="${a.id}" class="${rmk[a.id]?'rp-'+rmk[a.id]:''} ${a.id===S.cur?'cur':''} ${S.acts[a.id]?.done?'done':''} ${a.ai&&hasDiff(a)?'diff':''} ${a.ai?'':'noai'}" title="${a.year}">${a.kind==='rej'?'Lp'+a.act:a.kind==='prot'?'Prot '+a.year:(S.year==='all'?String(a.year).slice(2)+'/':'')+a.act}</button>`).join('') || '<span class="muted">Brak aktów w tym filtrze</span>';
   $('list').querySelectorAll('button').forEach(b => b.onclick = () => open(b.dataset.id));
   const done = D.acts.filter(a => !a.kind && S.acts[a.id]?.done).length, ai = D.acts.filter(a => !a.kind && a.ai).length; $('prog').textContent = `${done}/${ai} zatwierdz.`;
   const c = $('list').querySelector('.cur'); if (c) c.scrollIntoView({inline:'center', block:'nearest'}); }
@@ -192,7 +214,7 @@ function renderAct(){ const a = AM[S.cur]; const m = $('main'); if (!a){ m.inner
      ${long?`<textarea rows="2" data-f="${f.id}">${esc(v)}</textarea>`:`<input data-f="${f.id}" value="${esc(v)}" ${FT[f.id]?`list="${FT[f.id]==='s'?'dlS':'dlN'}"`:''} autocomplete="off">`}
      <div class="chips">${chipsFor(a,f.id)}${clean(v)&&!x?.ok?`<button class="chip btn-ok" data-ok="${f.id}">✓ zatwierdź</button>`:''}<button class="chip uncb ${x?.unc?'sel':''}" data-unc="${f.id}">? niepewne</button>${!x?.skip&&!x?.ok?`<button class="chip btn-skip" data-skip="${f.id}">pomiń</button>`:''}${x?`<button class="chip" data-undo="${f.id}">↺ cofnij</button>`:''}</div>
      ${x?.unc?`<div class="nt"><input data-note="${f.id}" placeholder="Opis niepewności (np. nieczytelne, dwa warianty)" value="${esc(x.note||'')}"></div>`:''}</div>`; });
-  m.innerHTML = warnHtml(a) + h + '</div>';
+  m.innerHTML = warnHtml(a) + repHtml(a) + h + '</div>';
   m.querySelectorAll('.chip[data-f]').forEach(b => b.onclick = () => setf(a, b.dataset.f, b.dataset.v, b.dataset.s));
   m.querySelectorAll('[data-ok]').forEach(b => b.onclick = () => setf(a, b.dataset.ok, clean(getv(a,b.dataset.ok)), (S.acts[a.id].f[b.dataset.ok]?.src) || (a.ai?.[b.dataset.ok] ? 'ai' : 'lub')));
   m.querySelectorAll('[data-undo]').forEach(b => b.onclick = () => { delete st(a.id).f[b.dataset.undo]; save(); keepScroll(); });
@@ -228,7 +250,7 @@ function renderWiz(){ const a = curAct(), m = $('main'); if (!a) return; const F
     $('wSk').onclick = () => { const i = FS.findIndex(f => s.f[f.id]?.skip); if (i < 0) return toast('Brak pominiętych'); W.i = i; wizLoad(); renderWiz(); };
     $('wFin').onclick = () => { s.done = true; save(); renderList(); wizAdvance(); };
   } else { const f = FS[W.i], x = s.f[f.id], v = W.val ?? getv(a,f.id), long = f.id === 'notes' || f.id === 'p_note';
-    m.innerHTML = warnHtml(a) + `<div class="card wz-card">${head}<div class="muted">Pole ${W.i+1} / ${FS.length}</div><div class="big">${f.label}</div>
+    m.innerHTML = warnHtml(a) + repHtml(a) + `<div class="card wz-card">${head}<div class="muted">Pole ${W.i+1} / ${FS.length}</div><div class="big">${f.label}</div>
       <div>${tagsFor(a,f.id,v,x)} ${x?.ok?'<span class="tag eq">zapisane</span>':''}${x?.skip?'<span class="tag q">pominięte</span>':''}</div>
       <div class="chips">${chipsFor(a,f.id)}</div>
       <div style="margin-top:8px">${long?`<textarea rows="3" id="wIn">${esc(v)}</textarea>`:`<input id="wIn" value="${esc(v)}" ${FT[f.id]?`list="${FT[f.id]==='s'?'dlS':'dlN'}"`:''} autocomplete="off">`}</div>
@@ -298,6 +320,7 @@ $('mSave').onclick = () => dl('weryfikacja_kopia.json', JSON.stringify(S), 'appl
 $('mLoad').onclick = () => $('fLoad').click(); $('fLoad').onchange = async e => { try { S = Object.assign(S, JSON.parse(await e.target.files[0].text())); save(); init(); toast('Wczytano kopię'); } catch(x){ toast('Błędny plik'); } };
 $('mReset').onclick = () => { if ($('mReset').dataset.arm) { S.acts = {}; save(); delete $('mReset').dataset.arm; $('mReset').textContent = '🗑 Wyczyść moje wybory'; init(); toast('Wyczyszczono'); } else { $('mReset').dataset.arm = 1; $('mReset').textContent = '⚠ Dotknij ponownie, by wyczyścić'; } };
 $('zMenu').onclick = () => { const m = $('menu'); m.style.display = m.style.display === 'block' ? 'none' : 'block'; };
+$('mRep').onclick = () => { $('menu').style.display = 'none'; renderRep(); };
 $('mTop').onclick = () => { $('menu').style.display = 'none'; window.scrollTo({top:0}); };
 $('mOff').onclick = () => { $('menu').style.display = 'none'; if (W.on) wizToggle(false); S.tmode = ''; save(); renderAct(); };
 $('bMenu').onclick = () => { const m = $('menu'); m.style.display = m.style.display === 'block' ? 'none' : 'block'; };
@@ -399,7 +422,7 @@ function renderText(a){ const m = $('main'), s = st(a.id), FS = fieldsOf(a), md 
     h += `${qbar}<div class="ttext" style="font-size:${fs}px">${r.html}</div><div class="tleg"><span style="background:var(--lubb)">zatwierdzone</span><span style="background:var(--bzb)">niepewne</span><span style="background:var(--badb)">AI≠Lubgens</span><span style="background:var(--aib)">do sprawdzenia</span><span class="mq">[?]</span></div>
       ${miss.length ? `<div class="muted">Pola bez miejsca w tekście (daty, wiek, godzina…):</div><div class="chips">${miss.map(f => `<button class="chip hl ${hlCls(a,f.id)} ${TF===f.id?'sel':''}" data-f="${f.id}"><small>${esc(f.label)}:</small> ${esc(clean(getv(a,f.id)))}</button>`).join('')}</div>` : ''}${notes}</div>`;
   }
-  m.innerHTML = warnHtml(a) + h;
+  m.innerHTML = warnHtml(a) + repHtml(a) + h;
   let sh = $('tsheet'); if (!sh) { sh = document.createElement('div'); sh.id = 'tsheet'; document.body.appendChild(sh); }
   sh.style.display = md === 'popraw' ? 'none' : 'block';
   const Fs = S.acts[a.id]?.f || {}, nEq = a.ai ? FS.filter(f => diffState(a,f.id) === 'eq' && !Fs[f.id] && !isUnc(a,f.id)).length : 0, isDone = !!S.acts[a.id]?.done;
