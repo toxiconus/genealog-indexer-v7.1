@@ -2,6 +2,9 @@
 """Buduje weryfikacja_zgonow.html (jeden plik, offline) z: ZGONY_ai1_import.csv, ZGONY_ai1_roi.json,
 indeksu Lubgens (txt: NAZWISKO IMIE AKT ROK UWAGI), liczników nazwisk/imion z CSV w konsolidacji i skanów.
 Użycie: build_weryfikacja.py LUBGENS.txt KATALOG_SKANOW OUT.html [--bez-skanow]"""
+import sys as _sys, os as _os
+_sys.path.insert(0, _os.path.join(_os.path.dirname(_os.path.abspath(__file__)), '..', 'wspolne'))
+from zbuduj import inline
 import csv, json, re, sys, os, base64, io, glob
 from PIL import Image
 here = os.path.dirname(os.path.abspath(__file__)); kons = os.path.dirname(here)
@@ -154,5 +157,6 @@ FIELDS_REJ = [{"id": "deceased_last_name", "label": "Nazwisko (jak w rejestrze)"
 data = {"fieldsProt": FIELDS_PROT, "fieldsRej": FIELDS_REJ, "fields": [{"id": i, "label": l} for i, l in FIELDS], "acts": acts, "counts": {"s": S, "n": N}, "scans": scans, "cols": cols}
 html = open(os.path.join(here, "weryfikacja_szablon.html"), encoding="utf-8").read()
 html = html.replace("/*DATA*/null", json.dumps(data, ensure_ascii=False))
+html = inline(html)
 open(out, "w", encoding="utf-8").write(html)
 print("akty:", len(acts), "z polami:", sum(1 for a in acts if a.get("pola")), "w tym rejestr/protokoły:", len(items), "z AI:", sum(1 for a in acts if a["ai"]), "z Lubgens-szczegółami:", sum(1 for a in acts if a["lubRaw"]), "skany:", len(scans), "MB:", round(len(html)/1e6,1))

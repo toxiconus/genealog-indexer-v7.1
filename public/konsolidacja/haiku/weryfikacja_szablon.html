@@ -133,7 +133,8 @@ const fieldsOf = a => a.kind==='prot' ? D.fieldsProt : a.kind==='rej' ? D.fields
 try { const r = localStorage.getItem('wz1'); if (r) S = Object.assign(S, JSON.parse(r)); } catch(e){}
 const save = () => { try { localStorage.setItem('wz1', JSON.stringify(S)); } catch(e){} };
 const toast = (t) => { const e = $('toast'); e.textContent = t; e.style.display = 'block'; clearTimeout(toast.t); toast.t = setTimeout(() => e.style.display = 'none', 2200); };
-const fold = s => (s||'').toString().toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,'').replace(/ł/g,'l');
+/*MODULE:tekst*/
+/*MODULE:plik*/
 const clean = s => (s||'').toString().replace(/\?/g,'').trim();
 const exact = (a,b) => clean(a).toLowerCase() === clean(b).toLowerCase() && clean(a) !== '';
 const loose = (a,b) => fold(clean(a)) === fold(clean(b)) && clean(a) !== '';
@@ -143,10 +144,9 @@ const countOf = (f, v) => { const t = FT[f]; if (!t) return null; const c = D.co
 const FT = {deceased_last_name:'s', deceased_maiden_name:'s', father_last_name:'s', mother_last_name:'s', deceased_first_name:'n', father_first_name:'n', mother_first_name:'n'};
 $('dlS').innerHTML = Object.keys(D.counts.s).filter(k => D.counts.s[k] >= 2).sort().map(k => `<option value="${k}">`).join('');
 $('dlN').innerHTML = Object.keys(D.counts.n).filter(k => D.counts.n[k] >= 2).sort().map(k => `<option value="${k}">`).join('');
-function lev(a,b){ if (Math.abs(a.length-b.length) > 2) return 9; const m=[...Array(b.length+1).keys()]; for (let i=1;i<=a.length;i++){ let p=m[0]; m[0]=i; for (let j=1;j<=b.length;j++){ const t=m[j]; m[j]=Math.min(m[j]+1,m[j-1]+1,p+(a[i-1]===b[j-1]?0:1)); p=t; } } return m[b.length]; }
 const fuzzCache = {};
 function near(f, v){ const t = FT[f]; const w = fold(clean(v)); if (!t || w.length < 3) return []; const k = t+w; if (fuzzCache[k]) return fuzzCache[k];
-  const out = []; for (const [n,c] of Object.entries(D.counts[t])) { if (c < 3) continue; const d = lev(w, fold(n)); if (d <= 2 && n !== clean(v)) out.push([n,c,d]); }
+  const out = []; for (const [n,c] of Object.entries(D.counts[t])) { if (c < 3) continue; const d = lev(w, fold(n), 2); if (d <= 2 && n !== clean(v)) out.push([n,c,d]); }
   out.sort((x,y) => x[2]-y[2] || y[1]-x[1]); return fuzzCache[k] = out.slice(0,3); }
 function diffState(a,f){ const x = a.ai?.[f], y = a.lub?.[f]; if (!x || !y) return ''; if (exact(x,y)) return 'eq'; if (loose(x,y)) return 'ap'; return 'ne'; }
 function hasDiff(a){ return fieldsOf(a).some(f => diffState(a,f.id) === 'ne'); }
@@ -169,7 +169,6 @@ function chipsFor(a,f){ const cur = getv(a,f); const out = []; const seen = new 
   if (FT[f]) { [a.ai?.[f], a.lub?.[f]].filter(Boolean).forEach(v => { if (countOf(f,v) === 0) near(f,v).forEach(([n,c]) => add('bz','BAZA ≈',n,` <small>×${c}</small>`)); }); }
   return out.join(''); }
 const SRCN = {txt:'z tekstu', ai:'AI', lub:'LUB', bz:'BAZA', akt:'AKT', edit:'własne'};
-const esc = v => String(v ?? '').replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;');
 function tagsFor(a,f,v,x){ const ds = diffState(a,f); const c = FT[f] ? countOf(f,v) : null;
   return (ds?`<span class="tag ${ds}">${ds==='eq'?'AI=LUB':ds==='ap'?'AI≈LUB':'AI≠LUB'}</span>`:'') + (isUnc(a,f)&&!x?.ok?'<span class="tag q">niepewne</span>':'') + (c===0&&clean(v)?'<span class="tag ne">brak w bazie</span>':(c?`<span class="tag eq">baza ×${c}</span>`:'')); }
 function renderAct(){ const a = AM[S.cur]; const m = $('main'); if (!a){ m.innerHTML = '<div class="card muted">Wybierz pozycję z listy powyżej.</div>'; return; }
@@ -285,8 +284,7 @@ $('zH').onclick = () => { V.mode = (V.mode+1)%4; view.className = ['','l','xl','
 $('zRf').onclick = e => { S.noroi = !S.noroi; save(); e.currentTarget.classList.toggle('on', S.noroi); const a = curAct(); drawRoi(roiOf(a||{})); if (S.noroi) clearFb(); else if (a && S.tmode && a.tekst) focusTxt(a); else if (W.on) wizFocus(); toast(S.noroi ? 'Zaznaczenia na skanie ukryte' : 'Zaznaczenia na skanie widoczne'); };
 $('zRoi').onclick = e => { V.edit = !V.edit; e.currentTarget.classList.toggle('on', V.edit); toast(V.edit ? 'Tryb obszaru: przeciągnij prostokąt wokół aktu' : 'Tryb obszaru wyłączony'); };
 // ---- eksport / import
-const dl = (name, text, type='text/csv') => { const b = new Blob(['﻿', text], {type: type+';charset=utf-8'}), u = URL.createObjectURL(b), l = document.createElement('a'); l.href = u; l.download = name; document.body.appendChild(l); l.click(); l.remove(); setTimeout(() => URL.revokeObjectURL(u), 4000); };
-const q = v => { v = (v ?? '').toString(); return /[;"\n\r]/.test(v) ? '"' + v.replace(/"/g,'""') + '"' : v; };
+const q = csvCell;
 const COLS = D.cols.concat(['act_date','verification_notes']);
 function rows(){ return D.acts.filter(a => a.ai && !a.kind).map(a => { const s = S.acts[a.id] || {f:{}}; const r = {id:a.id, death_year:a.year, death_act_number:a.act}; COLS.forEach(c => { if (!(c in r)) r[c] = a.ai[c] ?? ''; });
   FIELDS.forEach(f => { if (s.f?.[f.id]) r[f.id] = s.f[f.id].v; });
@@ -319,7 +317,7 @@ const txtOf = a => { const s = S.acts[a.id]; return s && s.text != null ? s.text
 const ENDS = ['owie','ami','ach','ich','ych','ego','emu','ow','om','em','ie','owi','a','e','y','i','u','o'].sort((x,y) => y.length-x.length);
 function stemOf(w){ w = fold(w); for (const e of ENDS) if (w.length - e.length >= 4 && w.endsWith(e)) return w.slice(0, -e.length); return w; }
 const sameStem = (w, v) => fold(w) === fold(v) || stemOf(w) === stemOf(v);
-function stemOk(w, v){ const a = fold(w), b = fold(v); if (a.length < 3 || b.length < 3) return false; if (a === b) return true; const x = stemOf(w), y = stemOf(v); if (x === y) return true; if (Math.min(x.length, y.length) >= 5 && lev(x, y) <= 1) return true;
+function stemOk(w, v){ const a = fold(w), b = fold(v); if (a.length < 3 || b.length < 3) return false; if (a === b) return true; const x = stemOf(w), y = stemOf(v); if (x === y) return true; if (Math.min(x.length, y.length) >= 5 && lev(x, y, 1) <= 1) return true;
   if (Math.abs(a.length-b.length) > 3) return false; let k = 0; while (k < a.length && k < b.length && a[k] === b[k]) k++; return k >= Math.max(3, Math.min(a.length, b.length) - 2); }
 // kandydaci formy podstawowej dla odmienionego słowa z tekstu – słownik z bazy (najczęstsze nazwiska/imiona)
 function baseCands(word, f, a){ const t = FT[f]; if (!t || !D.counts[t]) return []; const x = stemOf(word), sex = getv(a,'deceased_sex'), fem = f === 'mother_last_name' || f === 'deceased_maiden_name' || (f === 'deceased_last_name' && sex === 'K') || (f === 'deceased_spouse');

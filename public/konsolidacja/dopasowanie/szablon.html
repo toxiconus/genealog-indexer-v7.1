@@ -88,12 +88,12 @@ button:focus-visible,input:focus-visible,select:focus-visible,.mi:focus-visible{
 <div id="famModal" hidden role="dialog" aria-modal="true"><div class="fm-sheet"><div class="fm-h"><h2>👪 Rodziny z drzewa MyHeritage</h2><button id="fmKids" class="b">Dzieci do dopisania</button><button id="fmDup" class="b">Duble w drzewie</button><button id="fmClose">✕ zamknij</button></div><div id="fmBody"></div></div></div>
 <script>
 /*DATA*/
-const esc=s=>String(s==null?'':s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+/*MODULE:tekst*/
+/*MODULE:plik*/
 const strip=s=>(s||'').toLowerCase().replace(/ł/g,'l').normalize('NFD').replace(/[̀-ͯ]/g,'');
 const known=s=>/[a-zA-ZąćęłńóśźżĄĆĘŁŃÓŚŹŻ]{3,}/.test(s||'');
 function snm(s){return strip(s).replace(/[^a-z]/g,'').replace(/y/g,'i').replace(/rz/g,'z').replace(/ch/g,'h').replace(/(owna|owa)$/,'').replace(/ska$/,'ski').replace(/cka$/,'cki').replace(/dzka$/,'dzki')}
 function fnm(s){return strip(s).split(/[\s,.-]+/).map(t=>t.replace(/[^a-z]/g,'').replace(/y/g,'i').replace(/[aei]$/,'')).filter(t=>t.length>1)}
-function lev(a,b){const m=a.length,n=b.length;if(!m)return n;if(!n)return m;let p=[...Array(n+1).keys()];for(let i=1;i<=m;i++){const c=[i];for(let j=1;j<=n;j++)c[j]=Math.min(p[j]+1,c[j-1]+1,p[j-1]+(a[i-1]===b[j-1]?0:1));p=c}return p[n]}
 const sim=(a,b)=>a&&b?1-lev(a,b)/Math.max(a.length,b.length):0;
 const lv=x=>x>=.999?1:x>=.8?.85:x>=.7?.6:x>=.6?.3:0;
 const sSn=(a,b)=>(!known(a)||!known(b))?null:lv(sim(snm(a),snm(b)));
@@ -355,7 +355,6 @@ let ZM=+(localStorage.getItem('dop.zm')||1);
 function zoom(v){ZM=Math.max(.7,Math.min(2.2,v));document.getElementById('mid').style.setProperty('--z',ZM);try{localStorage.setItem('dop.zm',ZM)}catch(e){}}
 zoom(ZM);document.getElementById('zp').onclick=()=>zoom(ZM+.15);document.getElementById('zm').onclick=()=>zoom(ZM-.15);
 document.getElementById('mid').addEventListener('wheel',e=>{if(e.ctrlKey||e.metaKey){e.preventDefault();zoom(ZM+(e.deltaY<0?.1:-.1))}},{passive:false});
-function dl(name,txt,type){const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([(name.endsWith('.ged')?'':'\ufeff')+txt],{type}));a.download=name;a.click()}
 function netSource(k){if(k.includes(':')){const i=k.indexOf(':');return{t:k.slice(0,i),id:k.slice(i+1)}}return{t:'M',id:k}}
 function netLabel(t,id){const r=rec(t,id);if(!r)return `${t}:${id} (rekord niedostępny)`;
  if(t==='M')return `${r[5]||''} ${r[4]||''} + ${r[15]||''} ${r[14]||''} · ${r[1]} nr ${r[2]}`;

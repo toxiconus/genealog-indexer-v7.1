@@ -1,5 +1,8 @@
 #!/usr/bin/env python3
 """Buduje dopasowanie_osob.html z CSV w katalogu nadrzędnym (urodzenia, małżeństwa, zgony)."""
+import sys as _sys, os as _os
+_sys.path.insert(0, _os.path.join(_os.path.dirname(_os.path.abspath(__file__)), '..', 'wspolne'))
+from zbuduj import inline
 import csv, json, os, re
 here = os.path.dirname(os.path.abspath(__file__)); up = os.path.dirname(here)
 def rd(f): return list(csv.DictReader(open(os.path.join(up, f), encoding='utf-8-sig'), delimiter=';'))
@@ -19,5 +22,6 @@ for r in M:
 tpl = open(os.path.join(here, 'szablon.html'), encoding='utf-8').read()
 data = 'const B=' + json.dumps(B, ensure_ascii=False, separators=(',', ':')) + ';const D=' + json.dumps(D, ensure_ascii=False, separators=(',', ':')) + ';const M=' + json.dumps(M, ensure_ascii=False, separators=(',', ':')) + ';'
 out = tpl.replace('/*DATA*/', data)
+out = inline(out)
 open(os.path.join(here, 'dopasowanie_osob.html'), 'w', encoding='utf-8').write(out)
 print(len(B), len(D), len(M), round(len(out) / 1024), 'KB')

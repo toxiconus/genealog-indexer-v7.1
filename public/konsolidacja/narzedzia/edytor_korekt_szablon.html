@@ -249,7 +249,8 @@ let SCANS = new Map();
 let DRAG = null;
 let RECS = [], BYKEY = {}, CUR = null, ACTIVE = null, GROUPS = {}, NCOUNT = null;
 const $ = s => document.querySelector(s);
-const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+/*MODULE:tekst*/
+/*MODULE:plik*/
 const cap = s => s ? s[0].toUpperCase() + s.slice(1) : s;
 const isGen = v => /(ów|owa|owna|ówna|ego|ową)$/i.test(v);
 
@@ -278,7 +279,6 @@ function translit(s){
   let out=''; for(const c of t){ out += (TR[c]!==undefined ? TR[c] : c); }
   return cap(out);
 }
-function csvCell(v){ v = String(v ?? ''); return /[;"\n\r]/.test(v) ? '"' + v.replace(/"/g,'""') + '"' : v; }
 function parseCSV(text){
   const rows=[]; let row=[], cell='', q=false;
   for(let i=0;i<text.length;i++){
@@ -292,11 +292,7 @@ function parseCSV(text){
   if(cell.length||row.length){ row.push(cell); rows.push(row); }
   return rows.filter(r=>r.length>1 || (r[0]||'').trim()!=='');
 }
-function download(name, text){
-  const blob = new Blob(['﻿'+text], {type:'text/csv;charset=utf-8'});
-  const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = name; a.click();
-  setTimeout(()=>URL.revokeObjectURL(a.href), 1000);
-}
+const download = (name, text) => dl(name, text, 'text/csv');
 
 function save(){ try{ localStorage.setItem(KEY, JSON.stringify(ST)); }catch(e){} }
 

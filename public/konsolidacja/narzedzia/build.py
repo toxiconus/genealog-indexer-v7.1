@@ -1,3 +1,6 @@
+import sys as _sys, os as _os
+_sys.path.insert(0, _os.path.join(_os.path.dirname(_os.path.abspath(__file__)), '..', 'wspolne'))
+from zbuduj import inline
 import csv, glob, json, sys
 K='/home/claude/genealog-indexer-v7.1/public/konsolidacja'
 S='/home/claude/genealog-indexer-v7.1/public/konsolidacja/narzedzia'
@@ -39,6 +42,7 @@ def js(o): return json.dumps(o,ensure_ascii=False).replace('</','<\\/')
 tpl=open(f'{S}/edytor_korekt_szablon.html',encoding='utf-8').read()
 assert tpl.count('/*DATA*/null')==1 and tpl.count('/*DICT*/[]')==1
 out=tpl.replace('/*DATA*/null', js(DATA)).replace('/*DICT*/[]', js(DICT))
+out=inline(out)
 dst=sys.argv[1]
 open(dst,'w',encoding='utf-8').write(out)
 print('ok', dst, len(out)//1024,'KB', 'rows', {k:len(v) for k,v in DATA.items()}, 'dict', len(DICT))
