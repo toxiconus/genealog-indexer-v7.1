@@ -1,0 +1,297 @@
+[
+ {
+  "lp": 1,
+  "nazwisko_imie": "Andrzejczak Stanisław",
+  "akt": 46
+ },
+ {
+  "lp": 2,
+  "nazwisko_imie": "Barbarzak Bolesław",
+  "akt": 2
+ },
+ {
+  "lp": 3,
+  "nazwisko_imie": "Boczek Tadeusz",
+  "akt": 4
+ },
+ {
+  "lp": 4,
+  "nazwisko_imie": "Breś Stanisław",
+  "akt": 23
+ },
+ {
+  "lp": 5,
+  "nazwisko_imie": "Basan Czesław",
+  "akt": 37
+ },
+ {
+  "lp": 6,
+  "nazwisko_imie": "Bucoń Franciszka",
+  "akt": 54
+ },
+ {
+  "lp": 7,
+  "nazwisko_imie": "Dobrzyńska Katarzyna",
+  "akt": 48
+ },
+ {
+  "lp": 8,
+  "nazwisko_imie": "Dobrzyńska Józefa",
+  "akt": 52
+ },
+ {
+  "lp": 9,
+  "nazwisko_imie": "Hasz Klemens",
+  "akt": 11
+ },
+ {
+  "lp": 10,
+  "nazwisko_imie": "Chajzer Bronisław",
+  "akt": 13
+ },
+ {
+  "lp": 11,
+  "nazwisko_imie": "Chmielewski Szczepan",
+  "akt": 33
+ },
+ {
+  "lp": 12,
+  "nazwisko_imie": "Chudy Tadeusz",
+  "akt": 38
+ },
+ {
+  "lp": 13,
+  "nazwisko_imie": "Jakubanek Janina",
+  "akt": 12
+ },
+ {
+  "lp": 14,
+  "nazwisko_imie": "Janik Antoni",
+  "akt": 35
+ },
+ {
+  "lp": 15,
+  "nazwisko_imie": "Janik Marian",
+  "akt": 39
+ },
+ {
+  "lp": 16,
+  "nazwisko_imie": "Janik Katarzyna",
+  "akt": 58
+ },
+ {
+  "lp": 17,
+  "nazwisko_imie": "Krawczyk Katarzyna",
+  "akt": 3
+ },
+ {
+  "lp": 18,
+  "nazwisko_imie": "Krawczyk Czesław",
+  "akt": 14
+ },
+ {
+  "lp": 19,
+  "nazwisko_imie": "Kudrelek Janina",
+  "akt": 17
+ },
+ {
+  "lp": 20,
+  "nazwisko_imie": "Krawczyk Marianna",
+  "akt": 19
+ },
+ {
+  "lp": 21,
+  "nazwisko_imie": "Kordra Zofia",
+  "akt": 22
+ },
+ {
+  "lp": 22,
+  "nazwisko_imie": "Karnecka Elżbieta-Maria",
+  "akt": 25
+ },
+ {
+  "lp": 23,
+  "nazwisko_imie": "Kopiwoda Stanisław",
+  "akt": 26
+ },
+ {
+  "lp": 24,
+  "nazwisko_imie": "Kosidło Barbara",
+  "akt": 31
+ },
+ {
+  "lp": 25,
+  "nazwisko_imie": "Kasperek Teresa",
+  "akt": 45
+ },
+ {
+  "lp": 26,
+  "nazwisko_imie": "Kopiwoda Bolesław",
+  "akt": 53
+ },
+ {
+  "lp": 27,
+  "nazwisko_imie": "Kamińska Katarzyna",
+  "akt": 59
+ },
+ {
+  "lp": 28,
+  "nazwisko_imie": "Łach Bronisław",
+  "akt": 20
+ },
+ {
+  "lp": 29,
+  "nazwisko_imie": "Łach Stanisław",
+  "akt": 24
+ },
+ {
+  "lp": 30,
+  "nazwisko_imie": "Mazur Zofia",
+  "akt": 28
+ },
+ {
+  "lp": 31,
+  "nazwisko_imie": "Michałek Antoni",
+  "akt": 57
+ },
+ {
+  "lp": 32,
+  "nazwisko_imie": "Pawłasek Bronisław",
+  "akt": 9
+ },
+ {
+  "lp": 33,
+  "nazwisko_imie": "Pazdrak Agnieszka",
+  "akt": 18
+ },
+ {
+  "lp": 34,
+  "nazwisko_imie": "Pawłasek Antoni",
+  "akt": 47
+ },
+ {
+  "lp": 35,
+  "nazwisko_imie": "Rębecki Ireneusz",
+  "akt": 1
+ },
+ {
+  "lp": 36,
+  "nazwisko_imie": "Sprynak Barbara",
+  "akt": 5
+ },
+ {
+  "lp": 37,
+  "nazwisko_imie": "Samol Marianna",
+  "akt": 6
+ },
+ {
+  "lp": 38,
+  "nazwisko_imie": "Sułowski Walenty",
+  "akt": 8
+ },
+ {
+  "lp": 39,
+  "nazwisko_imie": "Samol Janina",
+  "akt": 10
+ },
+ {
+  "lp": 40,
+  "nazwisko_imie": "Sułowski Józef",
+  "akt": 15
+ },
+ {
+  "lp": 41,
+  "nazwisko_imie": "Sobutka Wojciech",
+  "akt": 16
+ },
+ {
+  "lp": 42,
+  "nazwisko_imie": "Sułowska Anastazja",
+  "akt": 27
+ },
+ {
+  "lp": 43,
+  "nazwisko_imie": "Struski Edward",
+  "akt": 36
+ },
+ {
+  "lp": 44,
+  "nazwisko_imie": "Staszowska Anna",
+  "akt": 40
+ },
+ {
+  "lp": 45,
+  "nazwisko_imie": "Szabat Jan",
+  "akt": 41
+ },
+ {
+  "lp": 46,
+  "nazwisko_imie": "Szostek Kazimierz",
+  "akt": 43
+ },
+ {
+  "lp": 47,
+  "nazwisko_imie": "Sobutka Marianna",
+  "akt": 49
+ },
+ {
+  "lp": 48,
+  "nazwisko_imie": "Samol Andrzej",
+  "akt": 50
+ },
+ {
+  "lp": 49,
+  "nazwisko_imie": "Sobutka Józefa",
+  "akt": 51
+ },
+ {
+  "lp": 50,
+  "nazwisko_imie": "Sobutka Tomasz",
+  "akt": 55
+ },
+ {
+  "lp": 51,
+  "nazwisko_imie": "Sułowski Jan",
+  "akt": 56
+ },
+ {
+  "lp": 52,
+  "nazwisko_imie": "Tylus Antoni",
+  "akt": 7
+ },
+ {
+  "lp": 53,
+  "nazwisko_imie": "Todorowska Anna",
+  "akt": 21
+ },
+ {
+  "lp": 54,
+  "nazwisko_imie": "Tęś Agnieszka",
+  "akt": 29
+ },
+ {
+  "lp": 55,
+  "nazwisko_imie": "Tęś Władysława",
+  "akt": 30
+ },
+ {
+  "lp": 56,
+  "nazwisko_imie": "Wielgus Władysława",
+  "akt": 32
+ },
+ {
+  "lp": 57,
+  "nazwisko_imie": "Wielgus Czesław-Władysław",
+  "akt": 34
+ },
+ {
+  "lp": 58,
+  "nazwisko_imie": "Wnuk Marianna",
+  "akt": 42
+ },
+ {
+  "lp": 59,
+  "nazwisko_imie": "Widomska Danuta",
+  "akt": 44
+ }
+]

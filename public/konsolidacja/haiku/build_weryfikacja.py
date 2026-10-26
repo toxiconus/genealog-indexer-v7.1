@@ -11,8 +11,16 @@ here = os.path.dirname(os.path.abspath(__file__)); kons = os.path.dirname(here)
 lub_txt, scans_dir, out = sys.argv[1:4]
 NO_SCANS = "--bez-skanow" in sys.argv[4:]
 PATHS = "--sciezki" in sys.argv[4:]
+def _argv(name):
+    a = sys.argv
+    return a[a.index(name) + 1] if name in a and a.index(name) + 1 < len(a) else None
+ROK = int(_argv("--rok") or 1943)
+def PLIK(n):  # 1943: ZGONY_ai1_*, inne roczniki: ZGONY_<rok>_ai1_*
+    return n if ROK == 1943 else n.replace("ZGONY_ai1_", f"ZGONY_{ROK}_ai1_")
 SCAN_BASE = "file:///J:/Genealog/Blin%C3%B3w%2C%20%C5%9Bw.%20Jana%20Chrzciciela/Blin%C3%B3w%20-%20lubgens/BLIN/ZG/"
 SCAN_FILES = {"5cc8b77f-image.jpg": "Z 1943/Z1943_01_akty_26-27.jpg", "3bbd47ee-image.jpg": "Z 1943/Z1943_02_akty_28-31.jpg", "afa8c781-image.jpg": "Z 1943/Z1943_03_akty_32-35.jpg", "3015eba3-image.jpg": "Z 1943/Z1943_04_akty_36-39.jpg", "25b5b43d-image.jpg": "Z 1943/Z1943_05_akty_40-43.jpg", "9e1e2337-image.jpg": "Z 1943/Z1943_06_akty_44-47.jpg", "5b08e11a-image.jpg": "Z 1943/Z1943_07_akty_48-51.jpg", "d0442207-image.jpg": "Z 1943/Z1943_08_akty_52-55.jpg", "53d47fae-image.jpg": "Z 1943/Z1943_09_akty_56-59.jpg", "d57620bf-image.jpg": "Z 1943/Z1943_10_akty_60-63.jpg", "38451dde-image.jpg": "Z 1943/Z1943_11_akty_64_i_rejestr.jpg", "a213c362-image.jpg": "Z 1943/Z1943_12_rejestr_55-64_i_protokol_1944_akty_1944-1-2.jpg"}
+SCAN_FILES_1944 = {"3c6c8fd4-image.jpg": "Z 1944/Z1944_00_protokol_rew_1943_akty_1944-1-2.jpg", "c0627cd5-image.jpg": "Z 1944/Z1944_01_akty_3-6.jpg", "1763c719-image.jpg": "Z 1944/Z1944_02_akty_7-10.jpg", "b45acd19-image.jpg": "Z 1944/Z1944_03_akty_11-14.jpg", "31014979-image.jpg": "Z 1944/Z1944_04_akty_15-18.jpg", "3dd628ed-image.jpg": "Z 1944/Z1944_05_akty_19-22.jpg", "d127a549-image.jpg": "Z 1944/Z1944_06_akty_23-26.jpg", "eb975f71-image.jpg": "Z 1944/Z1944_07_akty_27-30.jpg", "b1ae65f7-image.jpg": "Z 1944/Z1944_08_akty_31-34.jpg", "cca77861-image.jpg": "Z 1944/Z1944_09_akty_35-38.jpg", "06e0c571-image.jpg": "Z 1944/Z1944_10_akty_39-42.jpg", "5323df7a-image.jpg": "Z 1944/Z1944_11_akty_43-46.jpg", "5d1d50eb-image.jpg": "Z 1944/Z1944_12_akty_47-50.jpg", "23efaa5f-image.jpg": "Z 1944/Z1944_13_akty_51-54.jpg", "32315861-image.jpg": "Z 1944/Z1944_14_akty_55-58.jpg", "1152635c-image.jpg": "Z 1944/Z1944_15_akt_59_protokol_rejestr.jpg", "f3c9d370-image.jpg": "Z 1944/Z1944_16_protokol_rew_1945_akty_1945-1-2.jpg"}
+if ROK == 1944: SCAN_FILES = SCAN_FILES_1944
 FIELDS = [("deceased_last_name","Nazwisko"),("deceased_first_name","Imię"),("deceased_maiden_name","Nazwisko rodowe"),("deceased_sex","Płeć (M/K)"),
  ("death_date","Data zgonu (RRRR-MM-DD)"),("death_time","Godzina zgonu"),("age","Wiek"),("deceased_status","Stan"),("deceased_spouse","Małżonek"),
  ("death_place","Miejsce zgonu"),("deceased_birth_place","Miejsce urodzenia"),("deceased_residence","Zamieszkanie"),("profession","Zawód"),
@@ -23,10 +31,10 @@ UNC = {"first_name":["deceased_first_name"],"date":["death_date"],"time":["death
  "father":["father_first_name","father_last_name"],"mo":["mother_first_name","mother_last_name"],"informant1":["informant1"],"informant2":["informant2"],
  "spouse":["deceased_spouse"],"residence":["deceased_residence"],"spouse_maiden":["deceased_spouse"],"mother_first":["mother_first_name"],"fa_last":["father_last_name"]}
 # --- AI
-rd = csv.DictReader(open(os.path.join(here,"ZGONY_ai1_import.csv"),encoding="utf-8-sig"), delimiter=";"); cols = rd.fieldnames
+rd = csv.DictReader(open(os.path.join(here,PLIK("ZGONY_ai1_import.csv")),encoding="utf-8-sig"), delimiter=";"); cols = rd.fieldnames
 ai = {}
 for r in rd: ai[(int(r["death_year"]), int(r["death_act_number"]))] = r
-roi = {o["id"]: o for o in json.load(open(os.path.join(here,"ZGONY_ai1_roi.json"),encoding="utf-8"))}
+roi = {o["id"]: o for o in json.load(open(os.path.join(here,PLIK("ZGONY_ai1_roi.json")),encoding="utf-8"))}
 # --- Lubgens
 def iso(d):
     m = re.match(r"(\d{1,2})\.(\d{1,2})\.(\d{4})", d); return f"{m[3]}-{int(m[2]):02d}-{int(m[1]):02d}" if m else ""
@@ -55,6 +63,7 @@ lub = {}
 for l in open(lub_txt, encoding="utf-8").read().split("\n"):
     p = l.split("\t")
     if len(p) >= 4 and p[2].strip().isdigit() and p[3].strip().isdigit():
+        if int(p[3]) != ROK: continue
         k = (int(p[3]), int(p[2])); o = parse(p[4]) if len(p) > 4 and p[4].strip() else {}
         o["deceased_last_name"], o["deceased_first_name"] = p[0].strip(), p[1].strip()
         lub.setdefault(k, []).append((o, (p[4].strip() if len(p) > 4 else "")))
@@ -80,7 +89,7 @@ FIX = {}
 _ver = _arg("--zweryfikowane")
 if _ver and os.path.exists(_ver):
     _SN = ["deceased_last_name","deceased_maiden_name","father_last_name","mother_last_name"]; _NM = ["deceased_first_name","father_first_name","mother_first_name"]
-    _ai0 = {r["id"]: r for r in csv.DictReader(open(os.path.join(here, "ZGONY_ai1_import.csv"), encoding="utf-8-sig"), delimiter=";")}
+    _ai0 = {r["id"]: r for r in csv.DictReader(open(os.path.join(here, PLIK("ZGONY_ai1_import.csv")), encoding="utf-8-sig"), delimiter=";")}
     _fx = lambda s: re.sub(r"[^a-ząćęłńóśźż ]", "", (s or "").lower())
     for r in csv.DictReader(open(_ver, encoding="utf-8-sig"), delimiter=";"):
         if r.get("verification_status") != "ok": continue
@@ -109,7 +118,8 @@ if _kor and os.path.exists(_kor):
 print("słownik: nazwisk", len(S), "imion", len(N), "poprawek AI→potwierdzone:", len(FIX))
 # --- rejestr alfabetyczny i protokoły (elementy do weryfikacji)
 import unicodedata
-REJ = json.load(open(os.path.join(here, "ZGONY_ai1_rejestr.json"), encoding="utf-8"))
+REJ = json.load(open(os.path.join(here, PLIK("ZGONY_ai1_rejestr.json")), encoding="utf-8"))
+if ROK != 1943 or isinstance(REJ, list): REJ = {"items": [], "prot": [], "fields_prot": []}
 REJ_FILES = {i["plik"] for i in REJ["items"] + REJ["prot"]}
 fold = lambda t: "".join(c for c in unicodedata.normalize("NFD", (t or "").lower()) if not unicodedata.combining(c)).replace("ł", "l")
 items = []
@@ -140,7 +150,7 @@ import datetime
 _ORD = {"pierwszego":1,"drugiego":2,"trzeciego":3,"czwartego":4,"piątego":5,"szóstego":6,"siódmego":7,"ósmego":8,"dziewiątego":9,"dziesiątego":10,"jedenastego":11,"dwunastego":12,"trzynastego":13,"czternastego":14,"piętnastego":15,"szesnastego":16,"siedemnastego":17,"osiemnastego":18,"dziewiętnastego":19,"dwudziestego":20,"trzydziestego":30}
 _MON = {"stycznia":1,"lutego":2,"marca":3,"kwietnia":4,"maja":5,"czerwca":6,"lipca":7,"sierpnia":8,"września":9,"października":10,"listopada":11,"grudnia":12}
 ACTDATE = {}
-_md = open(os.path.join(here, "ZGONY_ai1_pelny_tekst.md"), encoding="utf-8").read()
+_md = open(os.path.join(here, PLIK("ZGONY_ai1_pelny_tekst.md")), encoding="utf-8").read()
 for _m in re.finditer(r"^## (ai1-(\d{4})-\d{3}) .*?^> Działo się we wsi \S+ dnia ([^\n]*?) (" + "|".join(_MON) + r") tysiąc", _md, re.S | re.M):
     _d = sum(_ORD.get(w, 0) for w in _m.group(3).split())
     if _d: ACTDATE[_m.group(1)] = datetime.date(int(_m.group(2)), _MON[_m.group(4)], _d)
@@ -176,7 +186,7 @@ for k in keys:
         a["lub"] = best[0]; a["lubRaw"] = best[1]; a["lubName"] = f'{best[0]["deceased_last_name"]} {best[0]["deceased_first_name"]}'
     else: a["lub"] = None; a["lubRaw"] = ""; a["lubName"] = ""
     acts.append(a)
-POLA = json.load(open(os.path.join(here, "ZGONY_ai1_pola.json"), encoding="utf-8")).get("akty", {}) if os.path.exists(os.path.join(here, "ZGONY_ai1_pola.json")) else {}
+POLA = json.load(open(os.path.join(here, PLIK("ZGONY_ai1_pola.json")), encoding="utf-8")).get("akty", {}) if os.path.exists(os.path.join(here, PLIK("ZGONY_ai1_pola.json"))) else {}
 for a in acts:
     if a["id"] in POLA: a["pola"] = POLA[a["id"]]["pola"]
 acts += items
