@@ -16,7 +16,7 @@ button.sm{min-height:34px;padding:5px 9px;font-size:14px}
 #list{display:flex;gap:6px;overflow-x:auto;padding:8px 10px;background:var(--card);border-bottom:1px solid var(--line)}
 #list button{min-width:48px;padding:6px 8px;min-height:38px;flex:0 0 auto}
 #list button.cur{outline:3px solid var(--acc)}
-#list button.done{background:var(--lubb);border-color:var(--lub)}
+#list button.done{background:var(--lubb);border-color:var(--lub);font-weight:600}#list button.part{background:linear-gradient(to top,var(--bzb) calc(var(--p)*1%),var(--card) calc(var(--p)*1%));border-color:var(--bz)}
 #list button.diff{border-color:var(--bad);border-width:2px}
 #list button.noai{opacity:.55}
 .tabs{display:flex;gap:6px;padding:6px 10px;flex-wrap:nowrap;overflow-x:auto;background:var(--card)}.tabs button{flex:0 0 auto}
@@ -26,9 +26,9 @@ button.sm{min-height:34px;padding:5px 9px;font-size:14px}
 body.wz header,body.wz .tabs,body.wz #list,body.wz #bar{display:none}body.wz #view{height:40vh}body.wz #view.l{height:60vh}body.wz #view.s{height:26vh}
 #layer{position:absolute;left:0;top:0;transform-origin:0 0}
 #layer img{display:block;max-width:none;user-select:none;-webkit-user-drag:none}
-#roi{position:absolute;border:2px dashed #f59e0b;background:none;pointer-events:none}
-#vbar{position:absolute;right:6px;top:6px;display:flex;gap:6px;flex-direction:column;z-index:3}
-#vbar button{background:rgba(255,255,255,.9);color:#111;min-height:40px;min-width:40px;padding:4px 8px}
+#roi{position:absolute;border:1px solid rgba(245,158,11,.65);background:none;pointer-events:none}
+#vbar{position:absolute;right:6px;top:6px;display:flex;gap:5px;flex-direction:row;flex-wrap:wrap;justify-content:flex-end;max-width:calc(100% - 12px);z-index:3}
+#vbar button{background:rgba(255,255,255,.9);color:#111;min-height:38px;min-width:38px;padding:3px 7px}
 #vbar button.on{background:#f59e0b}
 #noimg{position:absolute;inset:0;display:none;align-items:center;justify-content:center;color:#ddd;text-align:center;padding:20px}
 main{padding:10px;max-width:760px;margin:0 auto 90px}
@@ -103,6 +103,7 @@ body.textmode main{margin-bottom:330px}body.textmode #view{height:30vh}body.text
  <button id="mHist">🕘 Historia zmian (cofanie)</button>
  <button id="mModel">⬇ Eksport modelu (osoby, zdarzenia, relacje – JSON)</button>
  <button id="mRep">⚠ Raport spójności</button>
+ <button id="mFr">▭ Pokaż / ukryj zaznaczenia na skanie</button>
  <button id="mTop">↑ Lista aktów i filtry (do góry)</button>
  <button id="mOff">✕ Zamknij tryb tekstu / kreator</button>
  <button id="mTxt">⬇ Eksport tekstów aktów (MD, z poprawkami)</button>
@@ -142,6 +143,7 @@ const warnHtml = a => { const w = warnsOf(a); return w.length ? `<div class="war
 let S = {acts:{}, cur:null, year:'all', flt:'all', hideOk:true, hideDoneActs:true, noroi:false, wiz:false};
 const fieldsOf = a => a.kind==='prot' ? D.fieldsProt : a.kind==='rej' ? D.fieldsRej : ORDF;
 try { const r = localStorage.getItem('wz1'); if (r) S = Object.assign(S, JSON.parse(r)); } catch(e){}
+if (!S.v3) { S.v3 = 1; S.hideDoneActs = false; }
 let HS = null, HIST_WHY = null;
 function histCommit(){ if (!HS) return; const cur = histSnap(S.acts), d = histDiff(HS, cur); if (!d.length) return; S.hist = S.hist || []; const t = new Date().toISOString(); d.forEach(e => { e.n = (S.histN = (S.histN || 0) + 1); e.t = t; if (HIST_WHY) e.why = HIST_WHY; S.hist.push(e); }); if (S.hist.length > 3000) S.hist.splice(0, S.hist.length - 3000); HS = cur; }
 const save = () => { try { histCommit(); localStorage.setItem('wz1', JSON.stringify(S)); } catch(e){} };
@@ -232,7 +234,8 @@ function renderTabs(){ const ys = ['all',...new Set(D.acts.filter(a => !a.kind).
   $('tabs').innerHTML = ys.map(y => `<button class="sm ${S.year===y?'on':''}" data-y="${y}">${y==='all'?'Lata: wszystkie':y}</button>`).join('') + fl.map(([k,l]) => `<button class="sm ${S.flt===k?'on':''}" data-f="${k}">${l}</button>`).join('') + `<button class="sm ${S.hideDoneActs?'on':''}" id="tHide">Ukryj ✓ zatwierdzone</button>`;
   $('tHide').onclick = () => { S.hideDoneActs = !S.hideDoneActs; save(); renderTabs(); renderList(); };
   $('tabs').querySelectorAll('button[data-y],button[data-f]').forEach(b => b.onclick = () => { if (b.dataset.y) S.year = b.dataset.y; else S.flt = b.dataset.f; save(); renderTabs(); renderList(); }); }
-function renderList(){ const v = visible(), rmk = repMarks(); $('list').innerHTML = v.map(a => `<button data-id="${a.id}" class="${rmk[a.id]?'rp-'+rmk[a.id]:''} ${a.id===S.cur?'cur':''} ${S.acts[a.id]?.done?'done':''} ${a.ai&&hasDiff(a)?'diff':''} ${a.ai?'':'noai'}" title="${a.year}">${a.kind==='rej'?'Lp'+a.act:a.kind==='prot'?'Prot '+a.year:(S.year==='all'?String(a.year).slice(2)+'/':'')+a.act}</button>`).join('') || '<span class="muted">Brak aktów w tym filtrze</span>';
+function progOf(a){ const s = S.acts[a.id]; if (!s) return 0; let n = 0, d = 0; fieldsOf(a).forEach(f => { if (!appl(a,f.id) && !clean(getv(a,f.id))) return; if (!(a.ai?.[f.id] || a.lub?.[f.id] || (a.alts?.[f.id]||[]).length || s.f[f.id])) return; n++; if (s.f[f.id]?.ok || s.f[f.id]?.skip) d++; }); return n ? Math.round(100 * d / n) : 0; }
+function renderList(){ const v = visible(), rmk = repMarks(); $('list').innerHTML = v.map(a => { const pr = a.kind ? 0 : progOf(a); return `<button data-id="${a.id}" style="--p:${pr}" class="${rmk[a.id]?'rp-'+rmk[a.id]:''} ${pr>0&&!S.acts[a.id]?.done?'part':''} ${a.id===S.cur?'cur':''} ${S.acts[a.id]?.done?'done':''} ${a.ai&&hasDiff(a)?'diff':''} ${a.ai?'':'noai'}" title="${a.year}">${S.acts[a.id]?.done?'✓ ':''}${a.kind==='rej'?'Lp'+a.act:a.kind==='prot'?'Prot '+a.year:(S.year==='all'?String(a.year).slice(2)+'/':'')+a.act}</button>`; }).join('') || '<span class="muted">Brak aktów w tym filtrze</span>';
   $('list').querySelectorAll('button').forEach(b => b.onclick = () => open(b.dataset.id));
   const done = D.acts.filter(a => !a.kind && S.acts[a.id]?.done).length, ai = D.acts.filter(a => !a.kind && a.ai).length; $('prog').textContent = `${done}/${ai} zatwierdz.`;
   const c = $('list').querySelector('.cur'); if (c) c.scrollIntoView({inline:'center', block:'nearest'}); }
@@ -376,6 +379,7 @@ $('zMenu').onclick = () => { const m = $('menu'); m.style.display = m.style.disp
 $('mHist').onclick = () => { $('menu').style.display = 'none'; renderHist(); };
 $('mModel').onclick = () => { const o = modelAll(); dl('ZGONY_model.json', JSON.stringify(o, null, 1), 'application/json'); toast(`Model: ${o.osoby.length} osób, ${o.zdarzenia.length} zdarzeń, ${o.relacje.length} relacji`); };
 $('mRep').onclick = () => { $('menu').style.display = 'none'; renderRep(); };
+$('mFr').onclick = () => { $('menu').style.display = 'none'; $('zRf').click(); };
 $('mTop').onclick = () => { $('menu').style.display = 'none'; window.scrollTo({top:0}); };
 $('mOff').onclick = () => { $('menu').style.display = 'none'; if (W.on) wizToggle(false); S.tmode = ''; save(); renderAct(); };
 $('bMenu').onclick = () => { const m = $('menu'); m.style.display = m.style.display === 'block' ? 'none' : 'block'; };
