@@ -139,6 +139,16 @@ POLA = json.load(open(os.path.join(here, "ZGONY_ai1_pola.json"), encoding="utf-8
 for a in acts:
     if a["id"] in POLA: a["pola"] = POLA[a["id"]]["pola"]
 acts += items
+# --- pełny tekst Haiku (tryby tekstowe w narzędziu)
+_TX = {}
+for _blk in re.split(r"^## ", _md, flags=re.M)[1:]:
+    _ls = _blk.split("\n"); _id = _ls[0].split(" ")[0]
+    if not (_id.startswith("ai1-") or _id.startswith("prot-")): continue
+    _t = " ".join(l[2:].strip() for l in _ls[1:] if l.startswith("> "))
+    _n = [l.replace("**", "").strip() for l in _ls[1:] if l.strip() and not l.startswith("> ") and not l.startswith("Skan:") and l.strip() != "---"]
+    if _t: _TX[_id] = (_t, _n)
+for a in acts:
+    if a["id"] in _TX: a["tekst"], a["tnotes"] = _TX[a["id"]]
 FIELDS_PROT = [{"id": i, "label": l} for i, l in REJ["fields_prot"]]
 FIELDS_REJ = [{"id": "deceased_last_name", "label": "Nazwisko (jak w rejestrze)"}, {"id": "deceased_first_name", "label": "Imię"}, {"id": "death_act_number", "label": "Nr aktu"}]
 data = {"fieldsProt": FIELDS_PROT, "fieldsRej": FIELDS_REJ, "fields": [{"id": i, "label": l} for i, l in FIELDS], "acts": acts, "counts": {"s": S, "n": N}, "scans": scans, "cols": cols}
