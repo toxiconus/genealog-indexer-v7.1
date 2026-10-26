@@ -94,7 +94,8 @@ const D = /*DATA*/null;
 const $ = id => document.getElementById(id);
 const FIELDS = D.fields, AM = {}; D.acts.forEach(a => AM[a.id] = a);
 // kolejność wg tekstu aktu: margines (nazwisko, miejsce) → data → godzina → świadkowie → reszta z treści
-const ORD = ['deceased_last_name','deceased_first_name','deceased_residence','death_date','death_time','informant1','informant2','deceased_sex','deceased_status','age','deceased_birth_place','death_place','deceased_spouse','deceased_maiden_name','profession','father_first_name','father_last_name','mother_first_name','mother_last_name','officiant','notes'];
+// margines: nazwisko i imię (miejsce na marginesie bywa zgonu lub zamieszkania – nie traktujemy go jako zamieszkania); tekst: data, godzina, świadkowie, urodzony i zamieszkały, miejsce zgonu, reszta
+const ORD = ['deceased_last_name','deceased_first_name','death_date','death_time','informant1','informant2','deceased_birth_place','deceased_residence','death_place','deceased_sex','deceased_status','age','deceased_spouse','deceased_maiden_name','profession','father_first_name','father_last_name','mother_first_name','mother_last_name','officiant','notes'];
 const ORDF = [...ORD.map(id => FIELDS.find(f => f.id === id)).filter(Boolean), ...FIELDS.filter(f => !ORD.includes(f.id))];
 const NUMW = {'jeden':1,'dwa':2,'trzy':3,'cztery':4,'pięć':5,'sześć':6,'siedem':7,'osiem':8,'dziewięć':9,'dziesięć':10,'jedenaście':11,'dwanaście':12,'trzynaście':13,'czternaście':14};
 const sLow = a => (getv(a,'deceased_status') || '').toString().toLowerCase();
