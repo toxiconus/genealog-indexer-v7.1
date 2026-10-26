@@ -2527,7 +2527,7 @@ akt;ORG;2526;CH.LUB.BLIN.1856.006;1856;6;Machulak;Józefa;Moczydła;Jan;;;Anna;D
 akt;ORG;2527;CH.LUB.BLIN.1856.008;1856;8;Mazurek;Marianna;Brzozówka;Kazimierz;;;Anna;Pudło;;;;20:Kazimierz | 21:Anna | 22:Mazurek | 23:Marianna | 24:Brzozówka;;;
 akt;ORG;2528;CH.LUB.BLIN.1856.027;1856;27;Mróz;Katarzyna;Blinów;Bartłomiej;;;Anna;Rębecka;;;;20:Bartłomiey | 21:Anna | 22:Mróz | 23:Katarzyna | 24:Blinów;;;
 akt;ORG;2529;CH.LUB.BLIN.1856.022;1856;22;Mydziowna?/Madej;Paulina;Brzozówka;Florjan?;;;Katarzyna;Kasperowska?;;;;20:Floryan? | 21:Katarzyna | 22:Mydziowna?/Madej | 23:Paulina | 24:Brzozówka;;;
-akt;ORG;2530;CH.LUB.BLIN.1856.004;1856;4;Paciorek;Józefa;Blinów;;;;Anna?;Paciorek z Łapińskich;;;;21:A...? | 22:Paciorek | 23:Jozefa | 24:Blinów;;;
+akt;ORG;2530;CH.LUB.BLIN.1856.004;1856;4;Paciorek;Józefa;Blinów;;;;Anna?;Łapińska;;;;21:A...? | 22:Paciorek | 23:Jozefa | 24:Blinów;;;
 akt;ORG;2531;CH.LUB.BLIN.1856.021;1856;21;Pazdrak;Jadwiga;Blinów;Józef;;;Agnieszka;Zaręba;;;;20:Józef | 21:Agnieszka | 22:Pazdrak | 23:Jadwiga | 24:Blinów;;;
 akt;ORG;2532;CH.LUB.BLIN.1856.001;1856;1;Pscionek;Agnieszka;Blinów;Wawrzyniec;;;Zofia;Pasternak;;;;20:Wawrzyniec | 21:Zofia | 22:Pscionek | 23:Agnieszka | 24:Blinów;;;
 akt;ORG;2533;CH.LUB.BLIN.1856.012;1856;12;Pytlak;Paulina Jozefa;Blinów;Szymon;;;Seweryna;Miszkowska?;;;;20:Szymon | 21:Seweryna | 22:Pytlak | 23:Paulina Jozefa | 24:Blinów;;;
@@ -2854,7 +2854,7 @@ akt;ORG;2853;CH.LUB.BLIN.1862.015;1862;15;Mazurowna;Franciszka;Brzozówka;Jan;;2
 akt;ORG;2854;CH.LUB.BLIN.1862.026;1862;26;Mróz;Wojciech;Moczydła;Adam;;38;Katarzyna;Koguc;38;;;20:Adam | 21:Katarzyna | 22:Mróz | 23:Wojciech | 24:Moczydła;;;
 akt;ORG;2855;CH.LUB.BLIN.1862.004;1862;4;Nieściór;Agnieszka;Moczydła;Tomasz;;26;Katarzyna;Babiarz;25;;;20:Tomasz | 21:Katarzyna | 22:Nieściór | 23:Agnieszka | 24:Moczydła;;;
 akt;ORG;2856;CH.LUB.BLIN.1862.014;1862;14;Nikolas;Józef;Moczydła;Franciszek;;33;Katarzyna;Mazur;30;;;20:Franciszek | 21:Katarzyna | 22:Nikolas | 23:Józef | 24:Moczydła;;;
-akt;ORG;2857;CH.LUB.BLIN.1862.049;1862;49;Paciorek;Barbara;Blinów;;;;Anna;Paciorek z Łapinskich;40;;;21:Anna | 22:Paciorek | 23:Barbara | 24:Blinów;;;
+akt;ORG;2857;CH.LUB.BLIN.1862.049;1862;49;Paciorek;Barbara;Blinów;;;;Anna;Łapińska;40;;;21:Anna | 22:Paciorek | 23:Barbara | 24:Blinów;;;
 akt;ORG;2858;CH.LUB.BLIN.1862.021;1862;21;Pawłasek;Józef;Blinów;Adam;;29;Magdalena;Dąbroska;33;;;20:Adam | 21:Magdalena | 22:Pawłasek | 23:Józef | 24:Blinów;;;
 akt;ORG;2859;CH.LUB.BLIN.1862.008;1862;8;Pawłasek;Paweł;Blinów;Tomasz;;23;Katarzyna;Dobrzyńska;20;;;20:Tomasz | 21:Katarzyna | 22:Pawłasek | 23:Paweł | 24:Blinów;;;
 akt;ORG;2860;CH.LUB.BLIN.1862.039;1862;39;Pawłasek;Rozalia;Blinów;Józef;;56;Katarzyna;Jędrzejczak;27;;;20:Józef | 21:Katarzyna | 22:Pawłasek | 23:Rozalia | 24:Blinów;;;
@@ -2934,7 +2934,7 @@ akt;ORG;2933;CH.LUB.BLIN.1863.016;1863;16;Szabat;Wojciech;Brzozówka;Józef;;24;
 akt;ORG;2934;CH.LUB.BLIN.1863.040;1863;40;Szabat;Dominik;Moczydła;Józef;;30;Franciszka;Obydź;28;;;20:Józef | 21:Franciszka | 22:Szabat | 23:Dominik | 24:Moczydła;;;
 akt;ORG;2935;CH.LUB.BLIN.1863.052;1863;52;Wcisło;Mateusz;Brzozówka;Paweł;;27;Marianna;Machulak;28;;;20:Paweł | 21:Marianna | 22:Wcisło | 23:Mateusz | 24:Brzozówka;;;
 akt;ORG;2936;CH.LUB.BLIN.1863.035;1863;35;Woś;Piotr;Brzozówka;Jan;;29;Zofia;Brzeska;28;;;20:Jan | 21:Zofia | 22:Woś | 23:Piotr | 24:Brzozówka;;;
-akt;ORG;2937;CH.LUB.BLIN.1863.021;1863;21;Wójtowicz;Wojciech;Blinów;Mateusz;;25;Agnieszka;z Pcionków;28;;;20:Mateusz | 21:Agnieszka | 22:Wójtowicz | 23:Wojciech | 24:Blinów;;;
+akt;ORG;2937;CH.LUB.BLIN.1863.021;1863;21;Wójtowicz;Wojciech;Blinów;Mateusz;;25;Agnieszka;Pcionek;28;;;20:Mateusz | 21:Agnieszka | 22:Wójtowicz | 23:Wojciech | 24:Blinów;;;
 akt;ORG;2938;CH.LUB.BLIN.1863.013;1863;13;Wyngowna;Józefa;Blinów;Wiktor;;29;Petronella;Rzupko;21;ekonom folwarku;;20:Wiktor | 21:Pertoneli | 22:Wyngowna | 23:Józefa | 24:Blinów;;;
 akt;ORG;2939;CH.LUB.BLIN.1863.054;1863;54;Zieliński;Szymon;Brzozówka;Maciej;;37;Katarzyna;Szuba;33;;;20:Maciej | 21:Katarzyna | 22:Zieliński | 23:Szymon | 24:Brzozówka;;;
 akt;ORG;2940;CH.LUB.BLIN.1863.020;1863;20;Zuń;Wojciech;Moczydła;Stanisław;;25;Zofia;Zarzeczna;23;;;20:Stanisław | 21:Zofia | 22:Zuń | 23:Wojciech | 24:Moczydła;;;
@@ -2968,7 +2968,7 @@ akt;ORG;2967;CH.LUB.BLIN.1864.058;1864;58;Kosidło;Katarzyna;Blinów;Marcin;;45;
 akt;ORG;2968;CH.LUB.BLIN.1864.033;1864;33;Kosidło;Antonina;Blinów;Paweł;;29;Zofia;Solarz;31;;;20:Paweł | 21:Zofia | 22:Kosidło | 23:Antonina | 24:Blinów;;;
 akt;ORG;2969;CH.LUB.BLIN.1864.057;1864;57;Kosidło;Jadwiga;Blinów;Wawrzyniec;;;Helena;Kurczak;40;zmarły IX/1864;;20:Wawrzyniec | 21:Helena | 22:Kosidło | 23:Jadwiga | 24:Blinów;;;
 akt;ORG;2970;CH.LUB.BLIN.1864.045;1864;45;Kosidło;Marianna;Blinów;Wincenty;;21;Katarzyna;Szabat;29;;;20:Wincenty | 21:Katarzyna | 22:Kosidło | 23:Marianna | 24:Blinów;;;
-akt;ORG;2971;CH.LUB.BLIN.1864.009;1864;9;Kosidło;Józefa;Blinów;Wojciech;;22;Zofia;z Pasternaków;19;;;20:Wojciech | 21:Zofia | 22:Kosidło | 23:Józefa | 24:Blinów;;;
+akt;ORG;2971;CH.LUB.BLIN.1864.009;1864;9;Kosidło;Józefa;Blinów;Wojciech;;22;Zofia;Pasternak;19;;;20:Wojciech | 21:Zofia | 22:Kosidło | 23:Józefa | 24:Blinów;;;
 akt;ORG;2972;CH.LUB.BLIN.1864.071;1864;71;Kosidło;Marianna;Blinów;Wojciech;;30;Zofia;Pawłąsek;34;;;20:Wojciech | 21:Zofia | 22:Kosidło | 23:Marianna | 24:Blinów;;;
 akt;ORG;2973;CH.LUB.BLIN.1864.021;1864;21;Kozaczek;Wojciech;Blinów;;;;Agnieszka;Kozaczkowna;30;;;21:Agnieszka | 22:Kozaczek | 23:Wojciech | 24:Blinów;;;
 akt;ORG;2974;CH.LUB.BLIN.1864.056;1864;56;Kozyra;Jadwiga;Blinów;Piotr;;31;Anna;Zych;34;;;20:Piotr | 21:Anna | 22:Kozyra | 23:Jadwiga | 24:Blinów;;;
@@ -2982,14 +2982,14 @@ akt;ORG;2981;CH.LUB.BLIN.1864.023;1864;23;Kurczak;Stanisław;Blinów;Walenty;;34
 akt;ORG;2982;CH.LUB.BLIN.1864.052;1864;52;Machulek;Mateusz;Blinów;;;;Marianna;Machulkowna;22;;;21:Marianna | 22:Machulek | 23:Mateusz | 24:Blinów;;;
 akt;ORG;2983;CH.LUB.BLIN.1864.044;1864;44;Matraszkowna;Magdalena;Blinów;Stanisław;;31;Emilia;Dziarzkoska;30;organista w Blinowie świadkiwie: Jan Zajączkowski l.32 szynkarz z Blinowa i Konstanty Juroski l.34 szynkarz ze Struży;;20:Stanisław | 21:Emilia | 22:Matraszkowna | 23:Magdalena | 24:Blinów;;;
 akt;ORG;2984;CH.LUB.BLIN.1864.002;1864;2;Mazurek;Walenty;Brzozówka;Kazimierz;;44;Anna;Pudło;32;;;20:Kazimierz | 21:Anna | 22:Mazurek | 23:Walenty | 24:Brzozówka;;;
-akt;ORG;2985;CH.LUB.BLIN.1864.043;1864;43;Mazurowna;Anna;Brzozówka;Jan;;32;Józefa;z Buconiów;27;;;20:Jan | 21:Józefa | 22:Mazurowna | 23:Anna | 24:Brzozówka;;;
+akt;ORG;2985;CH.LUB.BLIN.1864.043;1864;43;Mazurowna;Anna;Brzozówka;Jan;;32;Józefa;Bucoń;27;;;20:Jan | 21:Józefa | 22:Mazurowna | 23:Anna | 24:Brzozówka;;;
 akt;ORG;2986;CH.LUB.BLIN.1864.051;1864;51;Michalakowna;Franciszka;Blinów;Andrzej;;23;Marianna;Kosidło;23;;;20:Andrzej | 21:Marianna | 22:Michalakowna | 23:Franciszka | 24:Blinów;;;
 akt;ORG;2987;CH.LUB.BLIN.1864.048;1864;48;Michalski;Bartłomiej;Blinów;Franciszek;;38;Marianna;Piasecka;34;;;20:Franciszek | 21:Marianna | 22:Michalski | 23:Bartłomiej | 24:Blinów;;;
 akt;ORG;2988;CH.LUB.BLIN.1864.007;1864;7;Mróz;Józefa;Blinów;Bartłomiej;;49;Anna;Rębecka;44;;;20:Bartłomiej | 21:Anna | 22:Mróz | 23:Józefa | 24:Blinów;;;
 akt;ORG;2989;CH.LUB.BLIN.1864.059;1864;59;Mróz;Szymon;Moczydła;Adam;;40;Katarzyna;Koguc;41;;;20:Adam | 21:Katarzyna | 22:Mróz | 23:Szymon | 24:Moczydła;;;
 akt;ORG;2990;CH.LUB.BLIN.1864.036;1864;36;Pawłasek;Antoni;Moczydła;Jan;;36;Marianna;Wcisło;35;;;20:Jan | 21:Marianna | 22:Pawłasek | 23:Antoni | 24:Moczydła;;;
 akt;ORG;2991;CH.LUB.BLIN.1864.030;1864;30;Pawłasek;Marianna;Blinów;Adam;;29;Magdalena;Dąbroska;33;;;20:Adam | 21:Magdalena | 22:Pawłasek | 23:Marianna | 24:Blinów;;;
-akt;ORG;2992;CH.LUB.BLIN.1864.022;1864;22;Pawłasek;Marianna;Blinów;;;;Zofia;Pawłaskowa z Kurczaków;40;;;21:Zofia | 22:Pawłasek | 23:Marianna | 24:Blinów;;;
+akt;ORG;2992;CH.LUB.BLIN.1864.022;1864;22;Pawłasek;Marianna;Blinów;;;;Zofia;Kurczak;40;;;21:Zofia | 22:Pawłasek | 23:Marianna | 24:Blinów;;;
 akt;ORG;2993;CH.LUB.BLIN.1864.035;1864;35;Pazdrak;Małgorzata;Blinów;Józef;;32;Agnieszka;Zaręba;28;;;20:Józef | 21:Agnieszka | 22:Pazdrak | 23:Małgorzata | 24:Blinów;;;
 akt;ORG;2994;CH.LUB.BLIN.1864.042;1864;42;Pcionek;Ignacy;Blinów;Mikołaj;;27;Aniela;Mróz;23;;;20:Mikołaj | 21:Aniela | 22:Pcionek | 23:Ignacy | 24:Blinów;;;
 akt;ORG;2995;CH.LUB.BLIN.1864.054;1864;54;Pcionkowna;Aniela;Blinów;Michał;;31;Katarzyna;Baran;30;;;20:Michał | 21:Katarzyna | 22:Pcionkowna | 23:Aniela | 24:Blinów;;;
@@ -3044,7 +3044,7 @@ akt;ORG;3043;CH.LUB.BLIN.1865.031;1865;31;Kosidło;Piotr;Moczydła;Wojciech;;41;
 akt;ORG;3044;CH.LUB.BLIN.1865.030;1865;30;Kosidło;Magdalena;Blinów;Józef;;29;Marianna;Dobrzynska;26;;;20:Józef | 21:Marianna | 22:Kosidło | 23:Magdalena | 24:Blinów;;;
 akt;ORG;3045;CH.LUB.BLIN.1865.022;1865;22;Krawczyk;Zofia;Moczydła;Szymon;;36;Anna;Król;33;;;20:Szymon | 21:Anna | 22:Krawczyk | 23:Zofia | 24:Moczydła;;;
 akt;ORG;3046;CH.LUB.BLIN.1865.046;1865;46;Kudrelek;Marcin;Blinów;Michał;;24;Anastazja;Gnat;25;;;20:Michał | 21:Anastazji | 22:Kudrelek | 23:Marcin | 24:Blinów;;;
-akt;ORG;3047;CH.LUB.BLIN.1865.052;1865;52;Kurczak;Katarzyna;Blinów;Paweł;;39;Dorota;z Sobótków;28;;;20:Paweł | 21:Dorota | 22:Kurczak | 23:Katarzyna | 24:Blinów;;;
+akt;ORG;3047;CH.LUB.BLIN.1865.052;1865;52;Kurczak;Katarzyna;Blinów;Paweł;;39;Dorota;Sobótka;28;;;20:Paweł | 21:Dorota | 22:Kurczak | 23:Katarzyna | 24:Blinów;;;
 akt;ORG;3048;CH.LUB.BLIN.1865.026;1865;26;Ładziak;Antoni;Moczydła;Wawrzyniec;;55;Katarzyna;Pastucha;46;;;20:Wawrzyniec | 21:Katarzyna | 22:Ładziak | 23:Antoni | 24:Moczydła;;;
 akt;ORG;3049;CH.LUB.BLIN.1865.053;1865;53;Machulak;Tomasz;Blinów;Jan;;30;Zofia;Ogon;27;;;20:Jan | 21:Zofia | 22:Machulak | 23:Tomasz | 24:Blinów;;;
 akt;ORG;3050;CH.LUB.BLIN.1865.015;1865;15;Machulak;Wojciech;Brzozówka;Jan;;25;Julianna;Goch;26;;;20:Jan | 21:Julianna | 22:Machulak | 23:Wojciech | 24:Brzozówka;;;
@@ -3127,7 +3127,7 @@ akt;ORG;3126;CH.LUB.BLIN.1866.013;1866;13;Raciborska;Helena Eleonora;Blinów;Hen
 akt;ORG;3127;CH.LUB.BLIN.1866.037;1866;37;Samuel;Michał;Blinów;Wincenty;;22;Marianna;Pawłasek;23;;;20:Wincenty | 21:Marianna | 22:Samuel | 23:Michał | 24:Blinów;;;
 akt;ORG;3128;CH.LUB.BLIN.1866.026;1866;26;Sikora;Piotr;Moczydła;Józef;;46;Katarzyna;Szydłoska;26;;;20:Józef | 21:Katarzyna | 22:Sikora | 23:Piotr | 24:Moczydła;;;
 akt;ORG;3129;CH.LUB.BLIN.1866.040;1866;40;Sobutka;Michał;Blinów;Andrzej;;22;Aniela;Ganczarz;20;;;20:Andrzej | 21:Aniela | 22:Sobutka | 23:Michał | 24:Blinów;;;
-akt;ORG;3130;CH.LUB.BLIN.1866.047;1866;47;Sokołowna;Marianna;Blinów;Jakub;Sokuł;22;Agnieszka;z Chałabisów;25;parobek folwarku;;20:Jakub Sokuł | 21:Agnieszka | 22:Sokołowna | 23:Marianna | 24:Blinów;;;
+akt;ORG;3130;CH.LUB.BLIN.1866.047;1866;47;Sokołowna;Marianna;Blinów;Jakub;Sokuł;22;Agnieszka;Chałabis?;25;parobek folwarku;;20:Jakub Sokuł | 21:Agnieszka | 22:Sokołowna | 23:Marianna | 24:Blinów;;;
 akt;ORG;3131;CH.LUB.BLIN.1866.022;1866;22;Sokół;Jan;Moczydła;Józef;;25;Marianna;Paciorek;24;;;20:Józef | 21:Marianna | 22:Sokół | 23:Jan | 24:Moczydła;;;
 akt;ORG;3132;CH.LUB.BLIN.1866.048;1866;48;Stępniowna;Jadwiga;Blinów;Bartłomiej;;33;Marianna;Dąbroska;35;;;20:Bartłomiej | 21:Marianna | 22:Stępniowna | 23:Jadwiga | 24:Blinów;;;
 akt;ORG;3133;CH.LUB.BLIN.1866.015;1866;15;Suloski;Wojciech;Blinów;Tomasz;;33;Antonina;Lewek;38;;;20:Tomasz | 21:Antonina | 22:Suloski | 23:Wojciech | 24:Blinów;;;
@@ -3151,7 +3151,7 @@ akt;ORG;3150;CH.LUB.BLIN.1867.053;1867;53;Dąbroski;Marcin;Moczydła;Maciej;;30;
 akt;ORG;3151;CH.LUB.BLIN.1867.037;1867;37;Dobrzynski;Franciszek;Blinów;Szczepan;;30;Katarzyna;Kudrelek;35;;;20:Szczepan | 21:Katarzyna | 22:Dobrzynski | 23:Franciszek | 24:Blinów;;;
 akt;ORG;3152;CH.LUB.BLIN.1867.025;1867;25;Drozd;Piotr;Blinów;Szymon;;25;Marianna;Kudrelek;25;;;20:Szymon | 21:Marianna | 22:Drozd | 23:Piotr | 24:Blinów;;;
 akt;ORG;3153;CH.LUB.BLIN.1867.045;1867;45;Dziura;Tekla;Blinów;Jakub;;29;Jadwiga;Mróz(?);28;;;20:Jakub | 21:Jadwiga | 22:Dziura | 23:Tekla | 24:Blinów;;;
-akt;ORG;3154;CH.LUB.BLIN.1867.013;1867;13;Janik;Wojciech;Brzozówka;;;;Marianna;Janikowej z Pudłów;38;;;21:Marianna | 22:Janik | 23:Woyciech | 24:Brzozówka;;;
+akt;ORG;3154;CH.LUB.BLIN.1867.013;1867;13;Janik;Wojciech;Brzozówka;;;;Marianna;Pudło;38;;;21:Marianna | 22:Janik | 23:Woyciech | 24:Brzozówka;;;
 akt;ORG;3155;CH.LUB.BLIN.1867.036;1867;36;Jaskowiak;Tekla;Brzozówka;Maciej;;42;Marianna;Igras;23;szynkarz w Brzozówce;;20:Maciej | 21:Marianna | 22:Jaskowiak | 23:Tekla | 24:Brzozówka;;;
 akt;ORG;3156;CH.LUB.BLIN.1867.059;1867;59;Jaskuła;Walenty;Blinów;Wojciech;;50;Zofia;Nieściur;32;;;20:Wojciech | 21:Zofia | 22:Jaskuła | 23:Walenty | 24:Blinów;;;
 akt;ORG;3157;CH.LUB.BLIN.1867.033;1867;33;Jędrzejczak;Marianna;Blinów;Antoni;;24;Agnieszka;Gnat;27;;;20:Antoni | 21:Agnieszki | 22:Jędrzejczak | 23:Marianna | 24:Blinów;;;
@@ -3188,7 +3188,7 @@ akt;ORG;3187;CH.LUB.BLIN.1867.029;1867;29;Raciborska;Kamila Wanda;Blinów;Henryk
 akt;ORG;3188;CH.LUB.BLIN.1867.002;1867;2;Rębacz;Marianna;Brzozówka;Jan;;34;Anna;Bucoń;32;;;20:Jan | 21:Anna | 22:Rębacz | 23:Marianna | 24:Brzozówka;;;
 akt;ORG;3189;CH.LUB.BLIN.1867.027;1867;27;Sobutka;Anna;Blinów;Antoni;;33;Zofia;Kosidło;34;;;20:Antoni | 21:Zofia | 22:Sobutka | 23:Anna | 24:Blinów;;;
 akt;ORG;3190;CH.LUB.BLIN.1867.043;1867;43;Sprysak;Franciszek;Brzozówka;Michał;;30;Katarzyna;Koguc;24;;;20:Michał | 21:Katarzyna | 22:Sprysak | 23:Franciszek | 24:Brzozówka;;;
-akt;ORG;3191;CH.LUB.BLIN.1867.039;1867;39;Suloski;Mateusz;Blinów;;;;Marianna;Suloska z Machulków;45;wdowa;;21:Marianna | 22:Suloski | 23:Mateusz | 24:Blinów;;;
+akt;ORG;3191;CH.LUB.BLIN.1867.039;1867;39;Suloski;Mateusz;Blinów;;;;Marianna;Machulek;45;wdowa;;21:Marianna | 22:Suloski | 23:Mateusz | 24:Blinów;;;
 akt;ORG;3192;CH.LUB.BLIN.1867.015;1867;15;Surma;Wojciech;Blinów;;;;;;;;;22:Surma | 23:Wojciech | 24:Blinów;;;
 akt;ORG;3193;CH.LUB.BLIN.1867.044;1867;44;Szabat;Tekla;Brzozówka;Józef;;28;Marianna;Chmiel;26;;;20:Józef | 21:Marianna | 22:Szabat | 23:Tekla | 24:Brzozówka;;;
 akt;ORG;3194;CH.LUB.BLIN.1867.021;1867;21;Szabat;Antonina;Moczydła;Józef;;34;Franciszka;Obydź;32;;;20:Józef | 21:Franciszka | 22:Szabat | 23:Antonina | 24:Moczydła;;;
@@ -3263,7 +3263,7 @@ akt;ORG;3262;CH.LUB.BLIN.1869.039;1869;39;Dobrzyńska;Marianna;Moczydła;Andrzej
 akt;ORG;3263;CH.LUB.BLIN.1869.025;1869;25;Dziewa;Antonina;Blinów;Paweł;;;Jadwiga;Kosidło;;;;20:Paweł | 21:Jadwiga | 22:Dziewa | 23:Antonina | 24:Blinów;;;
 akt;ORG;3264;CH.LUB.BLIN.1869.002;1869;2;Goch;Walenty;Brzozówka;Jan;;28;Katarzyna;Białkoska;31;;;20:Jan | 21:Katarzyna | 22:Goch | 23:Walenty | 24:Brzozówka;;;
 akt;ORG;3265;CH.LUB.BLIN.1869.068;1869;68;Goch;Józef;Brzozówka;Walenty;;;Anastazja;Szydłoska;;;;20:Walenty | 21:Anastazja | 22:Goch | 23:Józef | 24:Brzozówka;;;
-akt;ORG;3266;CH.LUB.BLIN.1869.008;1869;8;Górski;Jan Józef;Blinów;;;;Marianna;Górska z Michałków;;;;21:Marianna | 22:Górski | 23:Jan Józef | 24:Blinów;;;
+akt;ORG;3266;CH.LUB.BLIN.1869.008;1869;8;Górski;Jan Józef;Blinów;;;;Marianna;Michałek?;;;;21:Marianna | 22:Górski | 23:Jan Józef | 24:Blinów;;;
 akt;ORG;3267;CH.LUB.BLIN.1869.023;1869;23;Jaskowiak;Antonina;Brzozówka;Maciej;;;Marianna;Igras;;;;20:Maciej | 21:Marianna | 22:Jaskowiak | 23:Antonina | 24:Brzozówka;;;
 akt;ORG;3268;CH.LUB.BLIN.1869.005;1869;5;Jaskuła;Agata;Blinów;Wojciech;;45;Zofia;Nieściur;36;;;20:Wojciech | 21:Zofia | 22:Jaskuła | 23:Agata | 24:Blinów;;;
 akt;ORG;3269;CH.LUB.BLIN.1869.060;1869;60;Jędrzejczak;Mikołaj;Blinów;Andrzej;;;Ewa;Dobrzyńska;;;;20:Andrzej | 21:Ewa | 22:Jędrzejczak | 23:Mikołaj | 24:Blinów;;;
@@ -3359,8 +3359,8 @@ akt;ORG;3358;CH.LUB.BLIN.1870.042;1870;42;Pcionek;Barbara;Moczydła;Antoni;;40;A
 akt;ORG;3359;CH.LUB.BLIN.1870.010;1870;10;Rębacz;Józef;Brzozówka;Jan;;37;Anna;Bucoń;;;;20:Jan | 21:Anna | 22:Rębacz | 23:Józef | 24:Brzozówka;;;
 akt;ORG;3360;CH.LUB.BLIN.1870.034;1870;34;Sobutka;Franciszek;Blinów;Antoni;;;Zofia;Kosidło;;;;20:Antoni | 21:Zofia | 22:Sobutka | 23:Franciszek | 24:Blinów;;;
 akt;ORG;3361;CH.LUB.BLIN.1870.004;1870;4;Surma;Paweł;Blinów;;;;Anastazja;Surmowa;25;;;21:Anastazja | 22:Surma | 23:Paweł | 24:Blinów;;;
-akt;ORG;3362;CH.LUB.BLIN.1870.014;1870;14;Szydłowska;Antonina;Blinów;;;;Marianna;Szydłoska z Sulowskich;28;wdowa;;21:Marianna | 22:Szydłowska | 23:Antonina | 24:Blinów;;;
-akt;ORG;3363;CH.LUB.BLIN.1870.013;1870;13;Szydłowski;Wojciech;Blinów;;;;Marianna;Szydłoska z Sulowskich;28;wdowa;;21:Marianna | 22:Szydłowski | 23:Wojciech | 24:Blinów;;;
+akt;ORG;3362;CH.LUB.BLIN.1870.014;1870;14;Szydłowska;Antonina;Blinów;;;;Marianna;Sulowska;28;wdowa;;21:Marianna | 22:Szydłowska | 23:Antonina | 24:Blinów;;;
+akt;ORG;3363;CH.LUB.BLIN.1870.013;1870;13;Szydłowski;Wojciech;Blinów;;;;Marianna;Sulowska;28;wdowa;;21:Marianna | 22:Szydłowski | 23:Wojciech | 24:Blinów;;;
 akt;ORG;3364;CH.LUB.BLIN.1870.028;1870;28;Wcisło;Anna;Brzozówka;Paweł;;;Marianna;Machulak;;;;20:Paweł | 21:Marianna | 22:Wcisło | 23:Anna | 24:Brzozówka;;;
 akt;ORG;3365;CH.LUB.BLIN.1870.027;1870;27;Zuń;Magdalena;Moczydła;Stanisław;;34;Anna;Wcisło;;;;20:Stanisław | 21:Anna | 22:Zuń | 23:Magdalena | 24:Moczydła;;;
 akt;ORG;3366;CH.LUB.BLIN.1870.026;1870;26;Zygyła;Dominik;Moczydła;Jan;;36;Zofia;Wieleba;;;;20:Jan | 21:Zofia | 22:Zygyła | 23:Dominik | 24:Moczydła;;;
@@ -3477,7 +3477,7 @@ akt;ORG;3476;CH.LUB.BLIN.1873.048;1873;48;Pudło;Katarzyna;Brzozówka;Wawrzyniec
 akt;ORG;3477;CH.LUB.BLIN.1873.002;1873;2;Pudło;Maciej;Brzozówka;Wawrzyniec;Pudło;;Franciszka;Bucoń;;brak akt;;20:Wawrzyniec | 21:Franciszka | 22:Pudło | 23:Maciej | 24:Brzozówka | 26:Pudło;;;
 akt;ORG;3478;CH.LUB.BLIN.1873.053;1873;53;Rębacz;Tomasz;Brzozówka;Tomasz;;;Marianna;Goch;24;;;20:Tomasz | 21:Marianna | 22:Rębacz | 23:Tomasz | 24:Brzozówka;;;
 akt;ORG;3479;CH.LUB.BLIN.1873.035;1873;35;Samuel;Bartłomiej;Blinów;Wincenty;;;Marianna;Pawłasek;;;;20:Wincenty | 21:Marianna | 22:Samuel | 23:Bartłomiej | 24:Blinów;;;
-akt;ORG;3480;CH.LUB.BLIN.1873.057;1873;57;Serafinowicz;Jan Józef;Blinów;;;;Bronisława;Serafinowicz z Majewskich;;;;21:Bronisława | 22:Serafinowicz | 23:Jan Józef | 24:Blinów;;;
+akt;ORG;3480;CH.LUB.BLIN.1873.057;1873;57;Serafinowicz;Jan Józef;Blinów;;;;Bronisława;Majewska;;;;21:Bronisława | 22:Serafinowicz | 23:Jan Józef | 24:Blinów;;;
 akt;ORG;3481;CH.LUB.BLIN.1873.026;1873;26;Sikora;Marianna;Moczydła;Walenty;;;Katarzyna;Panek;;;;20:Walenty | 21:Katarzyna | 22:Sikora | 23:Marianna | 24:Moczydła;;;
 akt;ORG;3482;CH.LUB.BLIN.1873.052;1873;52;Sobótka;Walenty;Blinów;Andrzej;;;nieczytelne;;;;;20:Andrzej | 21:nieczytelne | 22:Sobótka | 23:Walenty | 24:Blinów;;;
 akt;ORG;3483;CH.LUB.BLIN.1873.055;1873;55;Stępień;Marianna;Blinów;Bartłomiej;;;nieczytelne;;;;;20:Bartłomiej | 21:nieczytelne | 22:Stępień | 23:Marianna | 24:Blinów;;;
@@ -3493,7 +3493,7 @@ akt;ORG;3492;CH.LUB.BLIN.1873.019;1873;19;Wieleba;Zofia;Moczydła;Feliks;;;Maria
 akt;ORG;3493;CH.LUB.BLIN.1873.054;1873;54;Wieleba;Mikołaj;Moczydła;Franciszek;;;Ewa;Babiarz;;;;20:Franciszek | 21:Ewa | 22:Wieleba | 23:Mikołaj | 24:Moczydła;;;
 akt;ORG;3494;CH.LUB.BLIN.1873.056;1873;56;Woś;Tomasz;Brzozówka;Jan;;;Zofia;;;;;20:Jan | 21:Zofia | 22:Woś | 23:Tomasz | 24:Brzozówka;;;
 akt;ORG;3495;CH.LUB.BLIN.1873.010;1873;10;Wójtowicz;Józefa;Moczydła;Józef;;;Anastazja;Wieleba;;;;20:Józef | 21:Anastazja | 22:Wójtowicz | 23:Józefa | 24:Moczydła;;;
-akt;ORG;3496;CH.LUB.BLIN.1873.004;1873;4;Zieliński;Walenty;Brzozówka;;;;Marianna;Zielińska z Michałków;;;;21:Marianna | 22:Zieliński | 23:Walenty | 24:Brzozówka;;;
+akt;ORG;3496;CH.LUB.BLIN.1873.004;1873;4;Zieliński;Walenty;Brzozówka;;;;Marianna;Michałek?;;;;21:Marianna | 22:Zieliński | 23:Walenty | 24:Brzozówka;;;
 akt;ORG;3497;CH.LUB.BLIN.1877.032;1877;32;Baran;Franciszka;Blinów;Wojciech;;29;Anna;Brzeska;28;;;20:Wojciech | 21:Anna | 22:Baran | 23:Franciszka | 24:Blinów;;;
 akt;ORG;3498;CH.LUB.BLIN.1877.012;1877;12;Barbarzak;Franciszka;Blinów;Michał;;;Zofia;Kudrelek;;;;20:Michał | 21:Zofia | 22:Barbarzak | 23:Franciszka | 24:Blinów;;;
 akt;ORG;3499;CH.LUB.BLIN.1877.065;1877;65;Bigos;Ewa;Blinów;Dominik;Bigos;;Marianna;Ciećko;;;;20:Dominik | 21:Marianna | 22:Bigos | 23:Ewa | 24:Blinów | 26:Bigos;;;
@@ -3551,7 +3551,7 @@ akt;ORG;3550;CH.LUB.BLIN.1877.002;1877;2;Solarz;Agnieszka;Moczydła;Marcin;;38;J
 akt;ORG;3551;CH.LUB.BLIN.1877.052;1877;52;Spryszak;Katarzyna;Brzozówka;Michał;;42;Katarzyna;Koguc;;;;20:Michał | 21:Katarzyna | 22:Spryszak | 23:Katarzyna | 24:Brzozówka;;;
 akt;ORG;3552;CH.LUB.BLIN.1877.050;1877;50;Stańczyk;Katarzyna;Blinów;Stanisław;;49;Zofia;Rękas;40;;;20:Stanisław | 21:Zofia | 22:Stańczyk | 23:Katarzyna | 24:Blinów;;;
 akt;ORG;3553;CH.LUB.BLIN.1877.053;1877;53;Stępień;Katarzyna;Blinów;Wawrzyniec;;52;Regina;Murzyn;43;;;20:Wawrzyniec | 21:Regina | 22:Stępień | 23:Katarzyna | 24:Blinów;;;
-akt;ORG;3554;CH.LUB.BLIN.1877.033;1877;33;Sulowski / Szydłoski;Wincenty;Blinów;;;;Marianna;Sulowska z Szydłoskich;;;;21:Marianna | 22:Sulowski / Szydłoski | 23:Wincenty | 24:Blinów;;;
+akt;ORG;3554;CH.LUB.BLIN.1877.033;1877;33;Sulowski / Szydłoski;Wincenty;Blinów;;;;Marianna;Szydłoska;;;;21:Marianna | 22:Sulowski / Szydłoski | 23:Wincenty | 24:Blinów;;;
 akt;ORG;3555;CH.LUB.BLIN.1877.006;1877;6;Szabat;Maciej;Brzozówka;Józef;;38;Marianna;Chmiel;30;;;20:Józef | 21:Marianna | 22:Szabat | 23:Maciej | 24:Brzozówka;;;
 akt;ORG;3556;CH.LUB.BLIN.1877.049;1877;49;Szubstarska;Katarzyna;Blinów;Marcin;;28;Antonina;Jachura;27;;;20:Marcin | 21:Antonina | 22:Szubstarska | 23:Katarzyna | 24:Blinów;;;
 akt;ORG;3557;CH.LUB.BLIN.1877.016;1877;16;Wcisło;Marianna;Blinów;Marcin;;;Aniela;Solarz;;;;20:Marcin | 21:Aniela | 22:Wcisło | 23:Marianna | 24:Blinów;;;
@@ -3630,7 +3630,7 @@ akt;ORG;3629;CH.LUB.BLIN.1879.028;1879;28;Chmiel;Anna;Moczydła;;;;Zofia;Chmiel�
 akt;ORG;3630;CH.LUB.BLIN.1879.049;1879;49;Ciećko;Marcin;Blinów;Józef;;20;Anna;Machulak;25;;;20:Józef | 21:Anna | 22:Ciećko | 23:Marcin | 24:Blinów;;;
 akt;ORG;3631;CH.LUB.BLIN.1879.054;1879;54;Dobrzyńska;Ewa;Blinów;Andrzej;;36;Franciszka;Chmiel;27;;;20:Andrzej | 21:Franciszka | 22:Dobrzyńska | 23:Ewa | 24:Blinów;;;
 akt;ORG;3632;CH.LUB.BLIN.1879.038;1879;38;Dobrzyński;Bartłomiej;Moczydła;Andrzej;;;Anna;Jank;;;;20:Andrzej | 21:Anna | 22:Dobrzyński | 23:Bartłomiej | 24:Moczydła;;;
-akt;ORG;3633;CH.LUB.BLIN.1879.022;1879;22;Drozd;Katarzyna;Blinów;;;;Marianna;Drozdowa z Kudrelków;39;;;21:Marianna | 22:Drozd | 23:Katarzyna | 24:Blinów;;;
+akt;ORG;3633;CH.LUB.BLIN.1879.022;1879;22;Drozd;Katarzyna;Blinów;;;;Marianna;Kudrelek;39;;;21:Marianna | 22:Drozd | 23:Katarzyna | 24:Blinów;;;
 akt;ORG;3634;CH.LUB.BLIN.1879.029;1879;29;Dudek;Paulina;Brzozówka;Jan;;;Agnieszka;;;;;20:Jan | 21:Agnieszka | 22:Dudek | 23:Paulina | 24:Brzozówka;;;
 akt;ORG;3635;CH.LUB.BLIN.1879.036;1879;36;Janik;Tekla;Moczydła;Andrzej;;;Dorota;Wieleba;;;;20:Andrzej | 21:Dorota | 22:Janik | 23:Tekla | 24:Moczydła;;;
 akt;ORG;3636;CH.LUB.BLIN.1879.035;1879;35;Janik;Franciszka;Moczydła;Jan;;;Marianna;Sokół;;;;20:Jan | 21:Marianna | 22:Janik | 23:Franciszka | 24:Moczydła;;;
@@ -3712,12 +3712,12 @@ akt;ORG;3711;CH.LUB.BLIN.1880.045;1880;45;Nieściór;Szymon;Moczydła;Jan;;;Anas
 akt;ORG;3712;CH.LUB.BLIN.1880.026;1880;26;Obydź;Jan;Blinów;Wojciech;;;Anna;Ogon;;;;20:Wojciech | 21:Anna | 22:Obydź | 23:Jan | 24:Blinów;;;
 akt;ORG;3713;CH.LUB.BLIN.1880.036;1880;36;Ogon;Katarzyna;Brzozówka;Jan;;;Katarzyna;Dobrzyńska;;;;20:Jan | 21:Katarzyna | 22:Ogon | 23:Katarzyna | 24:Brzozówka;;;
 akt;ORG;3714;CH.LUB.BLIN.1880.017;1880;17;Paciorek;Józefa;Blinów;Filip;;;Katarzyna;Ciećko;;;;20:Filip | 21:Katarzyna | 22:Paciorek | 23:Józefa | 24:Blinów;;;
-akt;ORG;3715;CH.LUB.BLIN.1880.033;1880;33;Pasternak;Katarzyna;Blinów;Ignacy;;;Marianna;z Szwedów;;;;20:Ignacy | 21:Marianna | 22:Pasternak | 23:Katarzyna | 24:Blinów;;;
+akt;ORG;3715;CH.LUB.BLIN.1880.033;1880;33;Pasternak;Katarzyna;Blinów;Ignacy;;;Marianna;Szwed?;;;;20:Ignacy | 21:Marianna | 22:Pasternak | 23:Katarzyna | 24:Blinów;;;
 akt;ORG;3716;CH.LUB.BLIN.1880.006;1880;6;Paszkowski;Paweł;Moczydła;Andrzej;;;Marianna;Marchewka;;;;20:Andrzej | 21:Marianna | 22:Paszkowski | 23:Paweł | 24:Moczydła;;;
 akt;ORG;3717;CH.LUB.BLIN.1880.007;1880;7;Pawłasek;Walenty;Blinów;Marcin;;;Marianna;Obydź;;;;20:Marcin | 21:Marianna | 22:Pawłasek | 23:Walenty | 24:Blinów;;;
 akt;ORG;3718;CH.LUB.BLIN.1880.009;1880;9;Pcionek;Marianna;Blinów;Wojciech;;;Katarzyna;Pawłasek;;;;20:Wojciech | 21:Katarzyna | 22:Pcionek | 23:Marianna | 24:Blinów;;;
 akt;ORG;3719;CH.LUB.BLIN.1880.004;1880;4;Pcionek;Paweł;Moczydła;Franciszek;;;Marianna;Jachura;;;;20:Franciszek | 21:Marianna | 22:Pcionek | 23:Paweł | 24:Moczydła;;;
-akt;ORG;3720;CH.LUB.BLIN.1880.022;1880;22;Pcionek;Stanisław;Blinów;;;;Anna;Pcionek z Mrozów;;wdowa;;21:Anna | 22:Pcionek | 23:Stanisław | 24:Blinów;;;
+akt;ORG;3720;CH.LUB.BLIN.1880.022;1880;22;Pcionek;Stanisław;Blinów;;;;Anna;Mróz;;wdowa;;21:Anna | 22:Pcionek | 23:Stanisław | 24:Blinów;;;
 akt;ORG;3721;CH.LUB.BLIN.1880.056;1880;56;Pcionka;Tomasz;Blinów;Michał;;;Jadwiga;Wcisło;;;;20:Michał | 21:Jadwiga | 22:Pcionka | 23:Tomasz | 24:Blinów;;;
 akt;ORG;3722;CH.LUB.BLIN.1880.043;1880;43;Rębacz;Andrzej;Brzozówka;Franciszek;;;Agnieszka;Woś;;;;20:Franciszek | 21:Agnieszka | 22:Rębacz | 23:Andrzej | 24:Brzozówka;;;
 akt;ORG;3723;CH.LUB.BLIN.1880.040;1880;40;Sagan;Aleksander;Blinów;Aleksander;;;Petronela;Lisoska;;;;20:Aleksander | 21:Petronela | 22:Sagan | 23:Aleksander | 24:Blinów;;;
@@ -3777,7 +3777,7 @@ akt;ORG;3776;CH.LUB.BLIN.1881.003;1881;3;Sikora;Franciszka;Blinów;;;;Marianna;S
 akt;ORG;3777;CH.LUB.BLIN.1881.005;1881;5;Sobutka;Józef;Blinów;Marcin;;;Jadwiga;Kosidło;;;;20:Marcin | 21:Jadwiga | 22:Sobutka | 23:Józef | 24:Blinów;;;
 akt;ORG;3778;CH.LUB.BLIN.1881.040;1881;40;Spryszak;Jan;Brzozówka;Andrzej;;;Marianna;Machulak;;;;20:Andrzej | 21:Marianna | 22:Spryszak | 23:Jan | 24:Brzozówka;;;
 akt;ORG;3779;CH.LUB.BLIN.1881.016;1881;16;Stępień;Antonina;Blinów;Bartłomiej;;;Agnieszka;Baran;;;;20:Bartłomiej | 21:Agnieszka | 22:Stępień | 23:Antonina | 24:Blinów;;;
-akt;ORG;3780;CH.LUB.BLIN.1881.013;1881;13;Sulowski;Wojciech;Blinów;;;;Antonina;Sulowska z Lewków;;wdowa;;21:Antonina | 22:Sulowski | 23:Wojciech | 24:Blinów;;;
+akt;ORG;3780;CH.LUB.BLIN.1881.013;1881;13;Sulowski;Wojciech;Blinów;;;;Antonina;Lewek?;;wdowa;;21:Antonina | 22:Sulowski | 23:Wojciech | 24:Blinów;;;
 akt;ORG;3781;CH.LUB.BLIN.1881.030;1881;30;Szabat;Marianna;Blinów;Dominik;;;Agnieszka;Kosidło;;;;20:Dominik | 21:Agnieszka | 22:Szabat | 23:Marianna | 24:Blinów;;;
 akt;ORG;3782;CH.LUB.BLIN.1881.052;1881;52;Szabat;Tomasz;Brzozówka;Józef;;;Marianna;Chmiel;;;;20:Józef | 21:Marianna | 22:Szabat | 23:Tomasz | 24:Brzozówka;;;
 akt;ORG;3783;CH.LUB.BLIN.1881.004;1881;4;Szubstarski;Maciej;Blinów;Marcin;;;Antonina;Jachura;;;;20:Marcin | 21:Antonina | 22:Szubstarski | 23:Maciej | 24:Blinów;;;
@@ -3841,7 +3841,7 @@ akt;ORG;3840;CH.LUB.BLIN.1882.035;1882;35;Ogon;Antoni;Brzozówka;Józef;;;Józef
 akt;ORG;3841;CH.LUB.BLIN.1882.041;1882;41;Ogon;Marianna;Brzozówka;Maciej;;;Barbara;Obydź;;;;20:Maciej | 21:Barbara | 22:Ogon | 23:Marianna | 24:Brzozówka;;;
 akt;ORG;3842;CH.LUB.BLIN.1882.063;1882;63;Paciorek;Katarzyna;Moczydła;Andrzej;;;Katarzyna;Janik;;;;20:Andrzej | 21:Katarzyna | 22:Paciorek | 23:Katarzyna | 24:Moczydła;;;
 akt;ORG;3843;CH.LUB.BLIN.1882.002;1882;2;Pasternak;Paweł;Blinów;Piotr;;;Marianna;Pawłasek;;;;20:Piotr | 21:Marianna | 22:Pasternak | 23:Paweł | 24:Blinów;;;
-akt;ORG;3844;CH.LUB.BLIN.1882.052;1882;52;Pasternak;Michał;Blinów;Ignacy;;;Marianna;ze Szwedów;;;;20:Ignacy | 21:Marianna | 22:Pasternak | 23:Michał | 24:Blinów;;;
+akt;ORG;3844;CH.LUB.BLIN.1882.052;1882;52;Pasternak;Michał;Blinów;Ignacy;;;Marianna;Szwed?;;;;20:Ignacy | 21:Marianna | 22:Pasternak | 23:Michał | 24:Blinów;;;
 akt;ORG;3845;CH.LUB.BLIN.1882.016;1882;16;Paszkowski;Wojciech;Moczydła;Andrzej;;;Marianna;Marchewka;;;;20:Andrzej | 21:Marianna | 22:Paszkowski | 23:Wojciech | 24:Moczydła;;;
 akt;ORG;3846;CH.LUB.BLIN.1882.048;1882;48;Pawłasek;Rozalia;Blinów;Antoni;;;Katarzyna;Szubstarska;;;;20:Antoni | 21:Katarzyna | 22:Pawłasek | 23:Rozalia | 24:Blinów;;;
 akt;ORG;3847;CH.LUB.BLIN.1882.049;1882;49;Pawłasek;Marianna;Blinów;Marcin;;;Marianna;Obydź;;;;20:Marcin | 21:Marianna | 22:Pawłasek | 23:Marianna | 24:Blinów;;;
@@ -4129,7 +4129,7 @@ akt;ORG;4128;CH.LUB.BLIN.1887.006;1887;6;Boczek;Agnieszka;Blinów;Andrzej;;;Kata
 akt;ORG;4129;CH.LUB.BLIN.1887.037;1887;37;Boczkowski;Stanisław;Blinów;Wojciech;;;Katarzyna;Wójcik;;;;20:Wojciech | 21:Katarzyna | 22:Boczkowski | 23:Stanisław | 24:Blinów;;;
 akt;ORG;4130;CH.LUB.BLIN.1887.002;1887;2;Breś;Józefa;Blinów;Tomasz;;;Jadwiga;Bucoń;;;;20:Tomasz | 21:Jadwiga | 22:Breś | 23:Józefa | 24:Blinów;;;
 akt;ORG;4131;CH.LUB.BLIN.1887.018;1887;18;Bryndza;Walenty;Blinów;Kacper;;;Anna;Resztak;;;;20:Kacper | 21:Anna | 22:Bryndza | 23:Walenty | 24:Blinów;;;
-akt;ORG;4132;CH.LUB.BLIN.1887.008;1887;8;Brzuszkiewicz;Władysław;Brzozówka;Jan;;;Franciszka;z Orzypiów;;;;20:Jan | 21:Franciszka | 22:Brzuszkiewicz | 23:Władysław | 24:Brzozówka;;;
+akt;ORG;4132;CH.LUB.BLIN.1887.008;1887;8;Brzuszkiewicz;Władysław;Brzozówka;Jan;;;Franciszka;Orzypi?;;;;20:Jan | 21:Franciszka | 22:Brzuszkiewicz | 23:Władysław | 24:Brzozówka;;;
 akt;ORG;4133;CH.LUB.BLIN.1887.003;1887;3;Bucoń;Jan;Brzozówka;Michał;;;Anna;Wach;;;;20:Michał | 21:Anna | 22:Bucoń | 23:Jan | 24:Brzozówka;;;
 akt;ORG;4134;CH.LUB.BLIN.1887.032;1887;32;Chmiel;Stanisław;Moczydła;Wojciech;;;Wiktoria;Żaba;;;;20:Wojciech | 21:Wiktoria | 22:Chmiel | 23:Stanisław | 24:Moczydła;;;
 akt;ORG;4135;CH.LUB.BLIN.1887.033;1887;33;Chmiel;Jan;Moczydła;Wojciech;;;Wiktoria;Żaba;;;;20:Wojciech | 21:Wiktoria | 22:Chmiel | 23:Jan | 24:Moczydła;;;
@@ -5411,7 +5411,7 @@ akt;ORG;5410;CH.LUB.BLIN.1902.030;1902;30;Ożóg;Władysława;Moczydła;Jan;;31;
 akt;ORG;5411;CH.LUB.BLIN.1902.073;1902;73;Pasternak;Katarzyna;Blinów;Andrzej;;42;Marianna;Zaręba;40;;;20:Andrzej | 21:Marianna | 22:Pasternak | 23:Katarzyna | 24:Blinów;;;
 akt;ORG;5412;CH.LUB.BLIN.1902.085;1902;85;Pawęzka;Marcin;Brzozówka;Jan;;25;Agnieszka;Jachura;33;;;20:Jan | 21:Agnieszka | 22:Pawęzka | 23:Marcin | 24:Brzozówka;;;
 akt;ORG;5413;CH.LUB.BLIN.1902.034;1902;34;Pawłasek;Stanisław;Blinów;Bartłomiej;;40;Józefa;Dobrzyńska;38;;;20:Bartłomiej | 21:Józefa | 22:Pawłasek | 23:Stanisław | 24:Blinów;;;
-akt;ORG;5414;CH.LUB.BLIN.1902.053;1902;53;Pawłasek;Aniela;Blinów;;;;Marianna;Pawłasek z Pcionków;45;wdowa;;21:Marianna | 22:Pawłasek | 23:Aniela | 24:Blinów;;;
+akt;ORG;5414;CH.LUB.BLIN.1902.053;1902;53;Pawłasek;Aniela;Blinów;;;;Marianna;Pcionek;45;wdowa;;21:Marianna | 22:Pawłasek | 23:Aniela | 24:Blinów;;;
 akt;ORG;5415;CH.LUB.BLIN.1902.017;1902;17;Pcionek;Józefa;Blinów;Bartłomiej;;40;Katarzyna;Pcionek;38;;;20:Bartłomiej | 21:Katarzyna | 22:Pcionek | 23:Józefa | 24:Blinów;;;
 akt;ORG;5416;CH.LUB.BLIN.1902.032;1902;32;Pcionek;Stanisław;Blinów;Piotr;;30;Wiktoria;Wcisło;28;;;20:Piotr | 21:Wiktoria | 22:Pcionek | 23:Stanisław | 24:Blinów;;;
 akt;ORG;5417;CH.LUB.BLIN.1902.027;1902;27;Pcionek;Helena;Blinów;Tomasz;;22;Józefa;Wcisło;19;;;20:Tomasz | 21:Józefa | 22:Pcionek | 23:Helena | 24:Blinów;;;
@@ -5436,7 +5436,7 @@ akt;ORG;5435;CH.LUB.BLIN.1902.064;1902;64;Sulowska;Agnieszka;Blinów;Franciszek;
 akt;ORG;5436;CH.LUB.BLIN.1902.050;1902;50;Sulowska;Anna;Blinów;Andrzej;;30;Katarzyna;Tenczyk;22;;;20:Andrzej | 21:Katarzyna | 22:Sulowska | 23:Anna | 24:Blinów;;;
 akt;ORG;5437;CH.LUB.BLIN.1902.002;1902;2;Szabat;Józefa;Blinów;Franciszek;;40;Tekla;Wcisło;30;;;20:Franciszek | 21:Tekla | 22:Szabat | 23:Józefa | 24:Blinów;;;
 akt;ORG;5438;CH.LUB.BLIN.1902.022;1902;22;Szabat;Józef;Brzozówka;Augustyn;;28;Marianna;Igras;20;;;20:Augustyn | 21:Marianna | 22:Szabat | 23:Józef | 24:Brzozówka;;;
-akt;ORG;5439;CH.LUB.BLIN.1902.039;1902;39;Szot;Anna;Blinów;;;;Katarzyna;Szot z Pikulów;35;;;21:Katarzyna | 22:Szot | 23:Anna | 24:Blinów;;;
+akt;ORG;5439;CH.LUB.BLIN.1902.039;1902;39;Szot;Anna;Blinów;;;;Katarzyna;Pikuła;35;;;21:Katarzyna | 22:Szot | 23:Anna | 24:Blinów;;;
 akt;ORG;5440;CH.LUB.BLIN.1902.063;1902;63;Szuba;Kazimierz;Blinów;Franciszek;;42;Zofia;Wójcik;35;;;20:Franciszek | 21:Zofia | 22:Szuba | 23:Kazimierz | 24:Blinów;;;
 akt;ORG;5441;CH.LUB.BLIN.1902.026;1902;26;Wcisło;Antoni;Blinów;Jan;;48;Franciszka;Solarz;30;;;20:Jan | 21:Franciszka | 22:Wcisło | 23:Antoni | 24:Blinów;;;
 akt;ORG;5442;CH.LUB.BLIN.1902.028;1902;28;Wcisło;Zofia;Brzozówka;Mateusz;;39;Tekla;Szabat;35;;;20:Mateusz | 21:Tekla | 22:Wcisło | 23:Zofia | 24:Brzozówka;;;
@@ -5482,12 +5482,12 @@ akt;ORG;5481;CH.LUB.BLIN.1903.012;1903;12;Kosidło;Józef;Moczydła;Józef;;42;J
 akt;ORG;5482;CH.LUB.BLIN.1903.028;1903;28;Kosidło;Jan;Blinów;Marcin;;30;Zofia;Szabat;26;;;20:Marcin | 21:Zofia | 22:Kosidło | 23:Jan | 24:Blinów;;;
 akt;ORG;5483;CH.LUB.BLIN.1903.071;1903;71;Kosidło;Andrzej;Blinów;Franciszek;;27;Anastazja;Kurczak;22;;;20:Franciszek | 21:Anastazja | 22:Kosidło | 23:Andrzej | 24:Blinów;;;
 akt;ORG;5484;CH.LUB.BLIN.1903.070;1903;70;Kosidło;Feliksa;Blinów;Walenty;;27;Katarzyna;Kaczyńska;20;;;20:Walenty | 21:Katarzyna | 22:Kosidło | 23:Feliksa | 24:Blinów;;;
-akt;ORG;5485;CH.LUB.BLIN.1903.075;1903;75;Kosidło (Mazurek skr.);Andrzej;Blinów;;;;Marianna;Kosidło z Mazurków;30;wdowa;;21:Marianna | 22:Kosidło (Mazurek skr.) | 23:Andrzej | 24:Blinów;;;
+akt;ORG;5485;CH.LUB.BLIN.1903.075;1903;75;Kosidło (Mazurek skr.);Andrzej;Blinów;;;;Marianna;Mazurek;30;wdowa;;21:Marianna | 22:Kosidło (Mazurek skr.) | 23:Andrzej | 24:Blinów;;;
 akt;ORG;5486;CH.LUB.BLIN.1903.057;1903;57;Kozyra;Feliksa;Blinów;Paweł;;53;Katarzyna;Wnuk;43;;;20:Paweł | 21:Katarzyna | 22:Kozyra | 23:Feliksa | 24:Blinów;;;
 akt;ORG;5487;CH.LUB.BLIN.1903.003;1903;3;Krawczyk;Marianna;Blinów;Franciszek;;21;Anna;Kosidło;24;;;20:Franciszek | 21:Anna | 22:Krawczyk | 23:Marianna | 24:Blinów;;;
 akt;ORG;5488;CH.LUB.BLIN.1903.050;1903;50;Krawczyk;Adam;Moczydła;Paweł;;50;Katarzyna;Ogon;45;;;20:Paweł | 21:Katarzyna | 22:Krawczyk | 23:Adam | 24:Moczydła;;;
 akt;ORG;5489;CH.LUB.BLIN.1903.079;1903;79;Krawczyk;Agnieszka;Moczydła;;;;Tekla;Krawczyk;20;;;21:Tekla | 22:Krawczyk | 23:Agnieszka | 24:Moczydła;;;
-akt;ORG;5490;CH.LUB.BLIN.1903.038;1903;38;Kudej;Jan;Brzozówka;;;;Antonina;Nowakowska z Kudejów;30;;;21:Antonina | 22:Kudej | 23:Jan | 24:Brzozówka;;;
+akt;ORG;5490;CH.LUB.BLIN.1903.038;1903;38;Kudej;Jan;Brzozówka;;;;Antonina;Kudej;30;;;21:Antonina | 22:Kudej | 23:Jan | 24:Brzozówka;;;
 akt;ORG;5491;CH.LUB.BLIN.1903.014;1903;14;Kudrelek;Wojciech;Blinów;Józef;;34;Marianna;Bucoń;29;;;20:Józef | 21:Marianna | 22:Kudrelek | 23:Wojciech | 24:Blinów;;;
 akt;ORG;5492;CH.LUB.BLIN.1903.046;1903;46;Kudrelek;Marianna;Blinów;Tomasz;;35;Marianna;Krasowska;30;;;20:Tomasz | 21:Marianna | 22:Kudrelek | 23:Marianna | 24:Blinów;;;
 akt;ORG;5493;CH.LUB.BLIN.1903.048;1903;48;Kurczak;Katarzyna;Blinów;Dominik;;30;Marianna;Pasternak;30;;;20:Dominik | 21:Marianna | 22:Kurczak | 23:Katarzyna | 24:Blinów;;;
@@ -5641,7 +5641,7 @@ akt;ORG;5640;CH.LUB.BLIN.1905.018;1905;18;Kędziora;Kazimierz;Blinów;Wojciech;;
 akt;ORG;5641;CH.LUB.BLIN.1905.052;1905;52;Kosidlak;Marianna;Brzozówka;Michał;;27;Marianna;Woś;23;;;20:Michał | 21:Marianna | 22:Kosidlak | 23:Marianna | 24:Brzozówka;;;
 akt;ORG;5642;CH.LUB.BLIN.1905.035;1905;35;Kosidło;Stanisław;Moczydła;Józef;;48;Józefa;Nieściur;30;;;20:Józef | 21:Józefa | 22:Kosidło | 23:Stanisław | 24:Moczydła;;;
 akt;ORG;5643;CH.LUB.BLIN.1905.044;1905;44;Kosidło;Antoni;Blinów;Marcin;;31;Zofia;Szabat;28;;;20:Marcin | 21:Zofia | 22:Kosidło | 23:Antoni | 24:Blinów;;;
-akt;ORG;5644;CH.LUB.BLIN.1905.046;1905;46;Kosidło;Stefan;Blinów;;;;Antonina Anna;Kosidło z Baranów;25;;;21:Antonina Anna | 22:Kosidło | 23:Stefan | 24:Blinów;;;
+akt;ORG;5644;CH.LUB.BLIN.1905.046;1905;46;Kosidło;Stefan;Blinów;;;;Antonina Anna;Baran;25;;;21:Antonina Anna | 22:Kosidło | 23:Stefan | 24:Blinów;;;
 akt;ORG;5645;CH.LUB.BLIN.1905.073;1905;73;Kosidło;Marianna;Brzozówka;Franciszek;;30;Agata;Pudło;27;;;20:Franciszek | 21:Agata | 22:Kosidło | 23:Marianna | 24:Brzozówka;;;
 akt;ORG;5646;CH.LUB.BLIN.1905.079;1905;79;Kosidło;Barbara;Blinów;Walenty;;28;Katarzyna;Kaczyńska;20;;;20:Walenty | 21:Katarzyna | 22:Kosidło | 23:Barbara | 24:Blinów;;;
 akt;ORG;5647;CH.LUB.BLIN.1905.066;1905;66;Krawczyk;Franciszka;Moczydła;Michał;;60;Agnieszka;Pcionek;45;;;20:Michał | 21:Agnieszka | 22:Krawczyk | 23:Franciszka | 24:Moczydła;;;
@@ -5699,7 +5699,7 @@ akt;ORG;5698;CH.LUB.BLIN.1905.027;1905;27;Woś;Antonina;Brzozówka;Wincenty;;35;
 akt;ORG;5699;CH.LUB.BLIN.1905.058;1905;58;Wtykło;Władysław;Blinów;Józef;;23;Anna;Baldas;20;;;20:Józef | 21:Anna | 22:Wtykło | 23:Władysław | 24:Blinów;;;
 akt;ORG;5700;CH.LUB.BLIN.1905.012;1905;12;Zając;Wojciech;Blinów;Jan;;35;Anna;Machulak;28;;;20:Jan | 21:Anna | 22:Zając | 23:Wojciech | 24:Blinów;;;
 akt;ORG;5701;CH.LUB.BLIN.1905.059;1905;59;Zarzutko;Michał;Blinów;Michał;;42;Tekla;Kaczyńska;30;;;20:Michał | 21:Tekla | 22:Zarzutko | 23:Michał | 24:Blinów;;;
-akt;ORG;5702;CH.LUB.BLIN.1905.047;1905;47;Zuń / Pawłasek;Jan;Blinów;;;;Antonina;Zuń z Pizoniów;28;;;21:Antonina | 22:Zuń / Pawłasek | 23:Jan | 24:Blinów;;;
+akt;ORG;5702;CH.LUB.BLIN.1905.047;1905;47;Zuń / Pawłasek;Jan;Blinów;;;;Antonina;Pizoń;28;;;21:Antonina | 22:Zuń / Pawłasek | 23:Jan | 24:Blinów;;;
 akt;ORG;5703;CH.LUB.BLIN.1905.082;1905;82;Zyguła;Józef;Moczydła;Dominik;;;Karolina;Kosidło;30;;;20:Dominik | 21:Karolina | 22:Zyguła | 23:Józef | 24:Moczydła;;;
 akt;ORG;5704;CH.LUB.BLIN.1906.014;1906;14;Andrzejczak;Władysław;Blinów;Mateusz;;40;Agata;Łata;40;;;20:Mateusz | 21:Agata | 22:Andrzejczak | 23:Władysław | 24:Blinów;;;
 akt;ORG;5705;CH.LUB.BLIN.1906.021;1906;21;Andrzejczak;Józefa;Blinów;Antoni;;38;Zofia;Kosidlak;36;;;20:Antoni | 21:Zofia | 22:Andrzejczak | 23:Józefa | 24:Blinów;;;
@@ -5885,8 +5885,8 @@ akt;ORG;5884;CH.LUB.BLIN.1907.077;1907;77;Sobótka;Katarzyna;Blinów;Franciszek;
 akt;ORG;5885;CH.LUB.BLIN.1907.078;1907;78;Pawłasek;Bronisław;Blinów;Jan;Pawłasek;29;Antonina;Pizoń;28;;;20:Jan | 21:Antonina | 22:Pawłasek | 23:Bronisław | 24:Blinów | 26:Pawłasek;;;
 akt;ORG;5886;CH.LUB.BLIN.1907.079;1907;79;Pcionek;Marcin;Blinów;Ignacy;Pcionek;49;Marianna;Kaczyńska;37;;;20:Ignacy | 21:Marianna | 22:Pcionek | 23:Marcin | 24:Blinów | 26:Pcionek;;;
 akt;ORG;5887;CH.LUB.BLIN.1907.080;1907;80;Wieleba;Katarzyna;Moczydła;Wojciech;Wieleba;49;Marianna;Chmiel;40;;;20:Wojciech | 21:Marianna | 22:Wieleba | 23:Katarzyna | 24:Moczydła | 26:Wieleba;;;
-akt;ORG;5888;CH.LUB.BLIN.1907.081;1907;81;Machulak;Katarzyna;Blinów;Adam (†);Machulak;26;Marianna;Machulak z Tylusów;26;;;20:Adam (†), M: Marianna Machulak z Tylusów | 21:Marianna | 22:Machulak | 23:Katarzyna | 24:Blinów | 26:Machulak;;;
-akt;ORG;5889;CH.LUB.BLIN.1907.082;1907;82;Breś;Andrzej;Moczydła;;;;Magdalena;Breś z Zuniów;27;;;21:Magdalena | 22:Breś | 23:Andrzej | 24:Moczydła;;;
+akt;ORG;5888;CH.LUB.BLIN.1907.081;1907;81;Machulak;Katarzyna;Blinów;Adam (†);Machulak;26;Marianna;Tylus;26;;;20:Adam (†), M: Marianna Machulak z Tylusów | 21:Marianna | 22:Machulak | 23:Katarzyna | 24:Blinów | 26:Machulak;;;
+akt;ORG;5889;CH.LUB.BLIN.1907.082;1907;82;Breś;Andrzej;Moczydła;;;;Magdalena;Zuń;27;;;21:Magdalena | 22:Breś | 23:Andrzej | 24:Moczydła;;;
 akt;ORG;5890;CH.LUB.BLIN.1907.083;1907;83;Tabaka;Cecylia;Brzozówka;Wojciech;Tabaka;26;Józefa;Dołęga;19;;;20:Wojciech | 21:Józefa | 22:Tabaka | 23:Cecylia | 24:Brzozówka | 26:Tabaka;;;
 akt;ORG;5891;CH.LUB.BLIN.1907.084;1907;84;Janik;Andrzej;Moczydła;Antoni;Janik;31;Anna;Kaczyńska;28;;;20:Antoni | 21:Anna | 22:Janik | 23:Andrzej | 24:Moczydła | 26:Janik;;;
 akt;ORG;5892;CH.LUB.BLIN.1908.001a;1908;1a;Sobótka;Józefa;Blinów;Walenty;Sobótka;35;Katarzyna;Bartysiak;23;;Blinów, O: Walenty l.35, M: Katarzyna Bartysiak l.23;20:Walenty | 21:Katarzyna | 22:Sobótka | 23:Józefa | 24:Blinów | 26:Sobótka;;;
@@ -5935,7 +5935,7 @@ akt;ORG;5934;CH.LUB.BLIN.1908.043;1908;43;Szarpiński;Jan;Blinów folwark;_;_;20
 akt;ORG;5935;CH.LUB.BLIN.1908.044;1908;44;Kurczak;Antoni;Blinów;Józef;Kurczak;45;Marianna;Obydź;25;;Blinów, O: Józef l.45, M: Marianna Obydź l.25;20:Józef | 21:Marianna | 22:Kurczak | 23:Antoni | 24:Blinów | 26:Kurczak;U000006871;;ID powtórzone (2x w oryginale)
 akt;ORG;5936;CH.LUB.BLIN.1908.045;1908;45;Rębacz;Antoni;Brzozówka;Tomasz;Rębacz;35;Ludwika;Komsa;30;;Brzozówka, O: Tomasz l.35, M: Ludwika Komsa l.30;20:Tomasz | 21:Ludwika | 22:Rębacz | 23:Antoni | 24:Brzozówka | 26:Rębacz;;U000006882;"ID powtórzone (2x w oryginale); archiwalne ID z ODS podejrzane (powtórzone z nr 1-50)"
 akt;ORG;5937;CH.LUB.BLIN.1908.046;1908;46;Wójtowicz;Antoni;Blinów;Tomasz;Wójtowicz;46;Antonina;Pazdrak;46;;Blinów, O: Tomasz l.46, M: Antonina Pazdrak l.46;20:Tomasz | 21:Antonina | 22:Wójtowicz | 23:Antoni | 24:Blinów | 26:Wójtowicz;U000006901;;ID powtórzone (2x w oryginale)
-akt;ORG;5938;CH.LUB.BLIN.1908.047;1908;47;Flis;Jan;Blinów;_;_;24;Marianna;Flis z Kozyrów;24;[ mąż Flis Józef ];Blinów, M: Marianna Flis z Kozyrów l.24;20:_ | 21:Marianna | 22:Flis | 23:Jan | 24:Blinów | 26:_;U000006855;;ID powtórzone (2x w oryginale)
+akt;ORG;5938;CH.LUB.BLIN.1908.047;1908;47;Flis;Jan;Blinów;_;_;24;Marianna;Kozyra;24;[ mąż Flis Józef ];Blinów, M: Marianna Flis z Kozyrów l.24;20:_ | 21:Marianna | 22:Flis | 23:Jan | 24:Blinów | 26:_;U000006855;;ID powtórzone (2x w oryginale)
 akt;ORG;5939;CH.LUB.BLIN.1908.048;1908;48;Solarz;Julianna;Blinów;Paweł;Solarz;38;Ewa;Gancarz;39;;Blinów, O: Paweł l.38, M: Ewa Gancarz l.39;20:Paweł | 21:Ewa | 22:Solarz | 23:Julianna | 24:Blinów | 26:Solarz;U000006889;;ID powtórzone (2x w oryginale)
 akt;ORG;5940;CH.LUB.BLIN.1908.049;1908;49;Pawłasek;Elżbieta;Moczydła;Antoni;Pawłasek;44;Marianna;Michałek;35;[ †1990 Moczydła ];Moczydła, O: Antoni l.44, M: Marianna Michałek l.35;20:Antoni | 21:Marianna | 22:Pawłasek | 23:Elżbieta | 24:Moczydła | 26:Pawłasek;;U000006879;"ID powtórzone (2x w oryginale); archiwalne ID z ODS podejrzane (powtórzone z nr 1-50)"
 akt;ORG;5941;CH.LUB.BLIN.1908.050;1908;50;Paciorek;Antoni;Blinów;Piotr;Paciorek;28;Antonina;Sobótka;21;[ †1994 Janów L.  ];Blinów, O: Piotr l.28, M: Antonina Sobótka l.21;20:Piotr | 21:Antonina | 22:Paciorek | 23:Antoni | 24:Blinów | 26:Paciorek;;U000006878;"ID powtórzone (2x w oryginale); archiwalne ID z ODS podejrzane (powtórzone z nr 1-50)"
@@ -6136,7 +6136,7 @@ wariant_TXT;TXT;6036;CH.LUB.BLIN.1908.043;1908;43;Szarpiński;Jan;Blinów folwar
 wariant_TXT;TXT;6037;CH.LUB.BLIN.1908.044;1908;44;Kurczak;Antoni;Blinów;Józef;Kurczak;45;Marianna;Obydź;25;;Blinów, O: Józef l.45, M: Marianna Obydź l.25;20:Józef | 21:Marianna | 22:Kurczak | 23:Antoni | 24:Blinów | 26:Kurczak;;;"wiersz z TXT różny od oryginału; kopia bloku 5900-5987 (drugie wystąpienie tej samej treści)"
 wariant_TXT;TXT;6038;CH.LUB.BLIN.1908.045;1908;45;Rębacz;Antoni;Brzozówka;Tomasz;Rębacz;35;Ludwika;Komsa;30;;Brzozówka, O: Tomasz l.35, M: Ludwika Komsa l.30;20:Tomasz | 21:Ludwika | 22:Rębacz | 23:Antoni | 24:Brzozówka | 26:Rębacz;;;"wiersz z TXT różny od oryginału; kopia bloku 5900-5987 (drugie wystąpienie tej samej treści)"
 wariant_TXT;TXT;6039;CH.LUB.BLIN.1908.046;1908;46;Wójtowicz;Antoni;Blinów;Tomasz;Wójtowicz;46;Antonina;Pazdrak;46;;Blinów, O: Tomasz l.46, M: Antonina Pazdrak l.46;20:Tomasz | 21:Antonina | 22:Wójtowicz | 23:Antoni | 24:Blinów | 26:Wójtowicz;;;"wiersz z TXT różny od oryginału; kopia bloku 5900-5987 (drugie wystąpienie tej samej treści)"
-wariant_TXT;TXT;6040;CH.LUB.BLIN.1908.047;1908;47;Flis;Jan;Blinów;_;_;24;Marianna;Flis z Kozyrów;24;[ mąż Flis Józef ];Blinów, M: Marianna Flis z Kozyrów l.24;20:_ | 21:Marianna | 22:Flis | 23:Jan | 24:Blinów | 26:_;;;"wiersz z TXT różny od oryginału; kopia bloku 5900-5987 (drugie wystąpienie tej samej treści)"
+wariant_TXT;TXT;6040;CH.LUB.BLIN.1908.047;1908;47;Flis;Jan;Blinów;_;_;24;Marianna;Kozyra;24;[ mąż Flis Józef ];Blinów, M: Marianna Flis z Kozyrów l.24;20:_ | 21:Marianna | 22:Flis | 23:Jan | 24:Blinów | 26:_;;;"wiersz z TXT różny od oryginału; kopia bloku 5900-5987 (drugie wystąpienie tej samej treści)"
 wariant_TXT;TXT;6041;CH.LUB.BLIN.1908.048;1908;48;Solarz;Julianna;Blinów;Paweł;Solarz;38;Ewa;Gancarz;39;;Blinów, O: Paweł l.38, M: Ewa Gancarz l.39;20:Paweł | 21:Ewa | 22:Solarz | 23:Julianna | 24:Blinów | 26:Solarz;;;"wiersz z TXT różny od oryginału; kopia bloku 5900-5987 (drugie wystąpienie tej samej treści)"
 wariant_TXT;TXT;6042;CH.LUB.BLIN.1908.049;1908;49;Pawłasek;Elżbieta;Moczydła;Antoni;Pawłasek;44;Marianna;Michałek;35;[ †1990 Moczydła ];Moczydła, O: Antoni l.44, M: Marianna Michałek l.35;20:Antoni | 21:Marianna | 22:Pawłasek | 23:Elżbieta | 24:Moczydła | 26:Pawłasek;;;"wiersz z TXT różny od oryginału; kopia bloku 5900-5987 (drugie wystąpienie tej samej treści)"
 wariant_TXT;TXT;6043;CH.LUB.BLIN.1908.050;1908;50;Paciorek;Antoni;Blinów;Piotr;Paciorek;28;Antonina;Sobótka;21;[ †1994 Janów L.  ];Blinów, O: Piotr l.28, M: Antonina Sobótka l.21;20:Piotr | 21:Antonina | 22:Paciorek | 23:Antoni | 24:Blinów | 26:Paciorek;;;"wiersz z TXT różny od oryginału; kopia bloku 5900-5987 (drugie wystąpienie tej samej treści)"
