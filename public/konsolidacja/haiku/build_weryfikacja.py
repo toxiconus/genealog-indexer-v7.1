@@ -10,6 +10,9 @@ from PIL import Image
 here = os.path.dirname(os.path.abspath(__file__)); kons = os.path.dirname(here)
 lub_txt, scans_dir, out = sys.argv[1:4]
 NO_SCANS = "--bez-skanow" in sys.argv[4:]
+PATHS = "--sciezki" in sys.argv[4:]
+SCAN_BASE = "file:///J:/Genealog/Blin%C3%B3w%2C%20%C5%9Bw.%20Jana%20Chrzciciela/Blin%C3%B3w%20-%20lubgens/BLIN/ZG/"
+SCAN_FILES = {"5cc8b77f-image.jpg": "Z 1943/Z1943_01_akty_26-27.jpg", "3bbd47ee-image.jpg": "Z 1943/Z1943_02_akty_28-31.jpg", "afa8c781-image.jpg": "Z 1943/Z1943_03_akty_32-35.jpg", "3015eba3-image.jpg": "Z 1943/Z1943_04_akty_36-39.jpg", "25b5b43d-image.jpg": "Z 1943/Z1943_05_akty_40-43.jpg", "9e1e2337-image.jpg": "Z 1943/Z1943_06_akty_44-47.jpg", "5b08e11a-image.jpg": "Z 1943/Z1943_07_akty_48-51.jpg", "d0442207-image.jpg": "Z 1943/Z1943_08_akty_52-55.jpg", "53d47fae-image.jpg": "Z 1943/Z1943_09_akty_56-59.jpg", "d57620bf-image.jpg": "Z 1943/Z1943_10_akty_60-63.jpg", "38451dde-image.jpg": "Z 1943/Z1943_11_akty_64_i_rejestr.jpg", "a213c362-image.jpg": "Z 1943/Z1943_12_rejestr_55-64_i_protokol_1944_akty_1944-1-2.jpg"}
 FIELDS = [("deceased_last_name","Nazwisko"),("deceased_first_name","Imię"),("deceased_maiden_name","Nazwisko rodowe"),("deceased_sex","Płeć (M/K)"),
  ("death_date","Data zgonu (RRRR-MM-DD)"),("death_time","Godzina zgonu"),("age","Wiek"),("deceased_status","Stan"),("deceased_spouse","Małżonek"),
  ("death_place","Miejsce zgonu"),("deceased_birth_place","Miejsce urodzenia"),("deceased_residence","Zamieszkanie"),("profession","Zawód"),
@@ -155,6 +158,7 @@ for a in acts:
 FIELDS_PROT = [{"id": i, "label": l} for i, l in REJ["fields_prot"]]
 FIELDS_REJ = [{"id": "deceased_last_name", "label": "Nazwisko (jak w rejestrze)"}, {"id": "deceased_first_name", "label": "Imię"}, {"id": "death_act_number", "label": "Nr aktu"}]
 data = {"fieldsProt": FIELDS_PROT, "fieldsRej": FIELDS_REJ, "fields": [{"id": i, "label": l} for i, l in FIELDS], "acts": acts, "counts": {"s": S, "n": N}, "scans": scans, "cols": cols}
+data["scanFiles"] = SCAN_FILES; data["scanBase"] = SCAN_BASE
 html = open(os.path.join(here, "weryfikacja_szablon.html"), encoding="utf-8").read()
 html = html.replace("/*DATA*/null", json.dumps(data, ensure_ascii=False))
 html = inline(html)
