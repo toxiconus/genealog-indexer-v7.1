@@ -2,7 +2,7 @@
 """Buduje weryfikacja_zgonow.html (jeden plik, offline) z: ZGONY_ai1_import.csv, ZGONY_ai1_roi.json,
 indeksu Lubgens (txt: NAZWISKO IMIE AKT ROK UWAGI), liczników nazwisk/imion z CSV w konsolidacji i skanów.
 Użycie: build_weryfikacja.py LUBGENS.txt KATALOG_SKANOW OUT.html [--bez-skanow]"""
-import sys as _sys, os as _os
+import difflib, sys as _sys, os as _os
 _sys.path.insert(0, _os.path.join(_os.path.dirname(_os.path.abspath(__file__)), '..', 'wspolne'))
 from zbuduj import inline
 import csv, json, re, sys, os, base64, io, glob
@@ -72,6 +72,41 @@ scan("blinow_akty.csv", ["dziecko_nazwisko","ojciec_nazwisko","matka_nazwisko"],
 scan("zgony.csv", ["nazwisko","matka_nazwisko","rodowe"], ["imie","ojciec_imie","matka_imie"])
 scan("malzenstwa_mal.csv", ["pan_nazwisko","panna_nazwisko","pan_ojciec_nazwisko","pan_matka_nazwisko","panna_ojciec_nazwisko","panna_matka_nazwisko","swiadek1_nazwisko","swiadek2_nazwisko"], ["pan_imie","panna_imie","pan_ojciec_imie","pan_matka_imie","panna_ojciec_imie","panna_matka_imie","swiadek1_imie","swiadek2_imie"])
 for k in json.load(open(os.path.join(os.path.dirname(kons),"..","data","nazwiska_wszystkie.json"),encoding="utf-8")) if os.path.exists(os.path.join(os.path.dirname(kons),"..","data","nazwiska_wszystkie.json")) else []: S.setdefault(k, 1)
+# --- słownik z zatwierdzonych CSV (--zweryfikowane PLIK, bez danych w repo) i pamięć poprawek AI→potwierdzone (--korekty PLIK.json)
+def _arg(name):
+    a = sys.argv
+    return a[a.index(name) + 1] if name in a and a.index(name) + 1 < len(a) else None
+FIX = {}
+_ver = _arg("--zweryfikowane")
+if _ver and os.path.exists(_ver):
+    _SN = ["deceased_last_name","deceased_maiden_name","father_last_name","mother_last_name"]; _NM = ["deceased_first_name","father_first_name","mother_first_name"]
+    _ai0 = {r["id"]: r for r in csv.DictReader(open(os.path.join(here, "ZGONY_ai1_import.csv"), encoding="utf-8-sig"), delimiter=";")}
+    _fx = lambda s: re.sub(r"[^a-ząćęłńóśźż ]", "", (s or "").lower())
+    for r in csv.DictReader(open(_ver, encoding="utf-8-sig"), delimiter=";"):
+        if r.get("verification_status") != "ok": continue
+        for c in _SN:
+            v = (r.get(c) or "").strip()
+            if v and not re.search(r"[?\d(]", v) and len(v) > 1: S[v] = S.get(v, 0) + 5
+        for c in _NM:
+            for w in (r.get(c) or "").split()[:2]:
+                if len(w) > 1 and "?" not in w: N[w] = N.get(w, 0) + 5
+        for c in ("informant1", "informant2"):
+            w = (r.get(c) or "").split(",")[0].split()
+            if len(w) >= 2 and "?" not in " ".join(w): N[w[0]] = N.get(w[0], 0) + 5; S[w[-1]] = S.get(w[-1], 0) + 5
+        o = _ai0.get(r["id"])
+        if o:
+            for c in _SN + _NM + ["informant1", "informant2", "deceased_residence", "deceased_birth_place"]:
+                x = ((o.get(c) or "").split(",")[0]).split(); y = ((r.get(c) or "").split(",")[0]).split()
+                if len(x) == len(y):
+                    for p, q in zip(x, y):
+                        p0 = p.rstrip("?"); 
+                        if p0 and q and _fx(p0) != _fx(q) and len(p0) > 2 and "?" not in q and difflib.SequenceMatcher(None, _fx(p0), _fx(q)).ratio() >= 0.6:
+                            k = _fx(p0); FIX.setdefault(k, {}); FIX[k][q] = FIX[k].get(q, 0) + 1
+_kor = _arg("--korekty")
+if _kor and os.path.exists(_kor):
+    for k, d in json.load(open(_kor, encoding="utf-8")).items():
+        for q, n in d.items(): FIX.setdefault(k, {}); FIX[k][q] = FIX[k].get(q, 0) + n
+print("słownik: nazwisk", len(S), "imion", len(N), "poprawek AI→potwierdzone:", len(FIX))
 # --- rejestr alfabetyczny i protokoły (elementy do weryfikacji)
 import unicodedata
 REJ = json.load(open(os.path.join(here, "ZGONY_ai1_rejestr.json"), encoding="utf-8"))
@@ -157,7 +192,7 @@ for a in acts:
     if a["id"] in _TX: a["tekst"], a["tnotes"] = _TX[a["id"]]
 FIELDS_PROT = [{"id": i, "label": l} for i, l in REJ["fields_prot"]]
 FIELDS_REJ = [{"id": "deceased_last_name", "label": "Nazwisko (jak w rejestrze)"}, {"id": "deceased_first_name", "label": "Imię"}, {"id": "death_act_number", "label": "Nr aktu"}]
-data = {"fieldsProt": FIELDS_PROT, "fieldsRej": FIELDS_REJ, "fields": [{"id": i, "label": l} for i, l in FIELDS], "acts": acts, "counts": {"s": S, "n": N}, "scans": scans, "cols": cols}
+data = {"fieldsProt": FIELDS_PROT, "fieldsRej": FIELDS_REJ, "fields": [{"id": i, "label": l} for i, l in FIELDS], "acts": acts, "counts": {"s": S, "n": N}, "scans": scans, "cols": cols, "fix": {k: max(d, key=d.get) for k, d in FIX.items()}}
 data["scanFiles"] = SCAN_FILES; data["scanBase"] = SCAN_BASE
 html = open(os.path.join(here, "weryfikacja_szablon.html"), encoding="utf-8").read()
 html = html.replace("/*DATA*/null", json.dumps(data, ensure_ascii=False))
