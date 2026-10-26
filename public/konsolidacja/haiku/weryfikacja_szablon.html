@@ -62,6 +62,9 @@ body.wz #wbar{display:flex}#wbar button{flex:1;padding:9px 4px}
 .mini b{color:var(--ink);font-weight:500}.mini button{min-height:30px;padding:2px 10px;font-size:13px}
 .chip.akt{background:#ede9fe;border-color:#6d28d9;color:#6d28d9}.chip.uncb{background:var(--bzb);border-color:var(--bz);color:var(--bz)}.chip.uncb.sel{box-shadow:0 0 0 3px var(--bz)}
 .nt{margin-top:5px}.nt input{padding:7px;font-size:15px}
+button.btn-ok,.chip.btn-ok,#bDone{background:#15803d!important;color:#fff!important;border-color:#15803d!important}
+button.btn-skip,.chip.btn-skip{background:#ea580c!important;color:#fff!important;border-color:#ea580c!important}
+.warn{border:2px solid var(--bad);background:var(--badb);border-radius:12px;padding:8px 10px;margin-bottom:10px;font-size:14px}
 #toast{position:fixed;left:50%;bottom:78px;transform:translateX(-50%);background:#111;color:#fff;padding:8px 14px;border-radius:10px;z-index:70;display:none;max-width:90%}
 </style></head><body>
 <header><h1>Weryfikacja zgonów · AI v1</h1><span id="prog"></span><button id="bMenu" class="sm">⋯ Menu</button></header>
@@ -82,7 +85,7 @@ body.wz #wbar{display:flex}#wbar button{flex:1;padding:9px 4px}
 <div id="view"><div id="layer"><img id="img" alt=""><div id="roi"></div></div><div id="noimg">Brak skanu dla tego aktu.<br>Wybierz skan poniżej albo dodaj z telefonu.</div>
  <div id="vbar"><button id="zIn">＋</button><button id="zOut">－</button><button id="zFit">◎</button><button id="zH">⇕</button><button id="zRoi">✎</button><button id="zRf" title="Ukryj/pokaż ramkę">▭</button></div></div>
 <main id="main"></main>
-<div id="bar"><button id="bPrev">◀</button><button id="bWiz">🧭 Kreator</button><button id="bAll">Zgodne ✓</button><button id="bDone" class="pri">Zatwierdź ✓</button><button id="bNext">▶</button></div>
+<div id="bar"><button id="bPrev">◀</button><button id="bWiz">🧭 Kreator</button><button id="bAll">Zgodne ✓</button><button id="bDone" class="pri btn-ok">Zatwierdź ✓</button><button id="bNext">▶</button></div>
 <div id="wbar"></div>
 <div id="toast"></div>
 <datalist id="dlS"></datalist><datalist id="dlN"></datalist>
@@ -90,8 +93,19 @@ body.wz #wbar{display:flex}#wbar button{flex:1;padding:9px 4px}
 const D = /*DATA*/null;
 const $ = id => document.getElementById(id);
 const FIELDS = D.fields, AM = {}; D.acts.forEach(a => AM[a.id] = a);
+// kolejność wg tekstu aktu: margines (nazwisko, miejsce) → data → godzina → świadkowie → reszta z treści
+const ORD = ['deceased_last_name','deceased_first_name','deceased_residence','death_date','death_time','informant1','informant2','deceased_sex','deceased_status','age','deceased_birth_place','death_place','deceased_spouse','deceased_maiden_name','profession','father_first_name','father_last_name','mother_first_name','mother_last_name','officiant','notes'];
+const ORDF = [...ORD.map(id => FIELDS.find(f => f.id === id)).filter(Boolean), ...FIELDS.filter(f => !ORD.includes(f.id))];
+const NUMW = {'jeden':1,'dwa':2,'trzy':3,'cztery':4,'pięć':5,'sześć':6,'siedem':7,'osiem':8,'dziewięć':9,'dziesięć':10,'jedenaście':11,'dwanaście':12,'trzynaście':13,'czternaście':14};
+const sLow = a => (getv(a,'deceased_status') || '').toString().toLowerCase();
+const isSingle = a => /panna|kawaler/.test(sLow(a));
+const isChild = a => { const t = (getv(a,'age') || '').toString().toLowerCase(); if (!t) return false; if (/miesi|tygod|dzie|dni|godz|tydz/.test(t)) return true; const m = t.match(/\d+/); if (m) return +m[0] < 15; const w = t.split(/\s+/).find(x => NUMW[x] !== undefined); return w ? NUMW[w] < 15 : false; };
+// reguły: panna – bez męża; mężczyzna – nazwisko rodowe puste (nazwisko jest rodowe); dziecko – bez zawodu, chyba że wymieniony
+const appl = (a,f) => { if (f === 'deceased_maiden_name') return getv(a,'deceased_sex') === 'K'; if (f === 'deceased_spouse') return !isSingle(a) && !isChild(a); if (f === 'profession') return !isChild(a) || !!clean(getv(a,f)); return true; };
+const warnsOf = a => { if (!a.ai && !a.lub) return []; const w = []; if (getv(a,'deceased_sex') === 'M' && clean(getv(a,'deceased_maiden_name'))) w.push('Mężczyzna: nazwisko rodowe powinno być puste (nazwisko jest rodowe) — chyba że wyjątek.'); if (isSingle(a) && clean(getv(a,'deceased_spouse'))) w.push('Panna/kawaler: nie powinno być małżonka.'); if (isChild(a) && clean(getv(a,'profession'))) w.push('Dziecko z zawodem — potwierdź, że zawód jest wymieniony w akcie.'); return w; };
+const warnHtml = a => { const w = warnsOf(a); return w.length ? `<div class="warn">${w.map(t => '⚠ ' + t).join('<br>')}</div>` : ''; };
 let S = {acts:{}, cur:null, year:'all', flt:'all', hideOk:true, hideDoneActs:true, noroi:false, wiz:false};
-const fieldsOf = a => a.kind==='prot' ? D.fieldsProt : a.kind==='rej' ? D.fieldsRej : FIELDS;
+const fieldsOf = a => a.kind==='prot' ? D.fieldsProt : a.kind==='rej' ? D.fieldsRej : ORDF;
 try { const r = localStorage.getItem('wz1'); if (r) S = Object.assign(S, JSON.parse(r)); } catch(e){}
 const save = () => { try { localStorage.setItem('wz1', JSON.stringify(S)); } catch(e){} };
 const toast = (t) => { const e = $('toast'); e.textContent = t; e.style.display = 'block'; clearTimeout(toast.t); toast.t = setTimeout(() => e.style.display = 'none', 2200); };
@@ -143,14 +157,14 @@ function renderAct(){ const a = AM[S.cur]; const m = $('main'); if (!a){ m.inner
    <div class="chips"><label class="muted">Skan:&nbsp;<select id="selScan">${Object.keys(allScans()).map(k => `<option ${k===scanOf(a)?'selected':''}>${k}</option>`).join('')}<option value="">— brak —</option></select></label>
    <button class="sm chip ${S.hideOk?'sel':''}" id="tHideOk">👁 Ukryj zatwierdzone pola</button></div>
    ${a.lubRaw?`<details><summary class="muted">Indeks Lubgens (surowo)</summary><pre>${a.lubName} · akt ${a.act}/${a.year}\n${a.lubRaw}</pre></details>`:(a.kind?'':'<div class="muted">Lubgens: brak szczegółów w uwagach.</div>')}</div><div class="card">`;
-  FS.forEach(f => { const v = getv(a,f.id), x = s.f[f.id];
+  FS.forEach(f => { const v = getv(a,f.id), x = s.f[f.id]; if (!appl(a,f.id) && !clean(v)) return;
     if (S.hideOk && (x?.ok || x?.skip)) { h += `<div class="mini"><span>${f.label}: <b>${x.skip?'— pominięte —':esc(v)}</b> ${x.unc?'<span class="tag q">? niepewne</span>':''} ${x.ok?'✓ '+(SRCN[x.src]||''):''}</span><button class="sm" data-undo="${f.id}">zmień</button></div>`; return; }
     const long = f.id === 'notes' || f.id === 'p_note', uncOn = isUnc(a,f.id);
     h += `<div class="row ${x?.ok?'ok':''}"><div class="lab"><span>${f.label} ${tagsFor(a,f.id,v,x)}</span><span>${x?.ok?'✓ '+(SRCN[x.src]||''):x?.skip?'pominięte':''}</span></div>
      ${long?`<textarea rows="2" data-f="${f.id}">${esc(v)}</textarea>`:`<input data-f="${f.id}" value="${esc(v)}" ${FT[f.id]?`list="${FT[f.id]==='s'?'dlS':'dlN'}"`:''} autocomplete="off">`}
-     <div class="chips">${chipsFor(a,f.id)}${clean(v)&&!x?.ok?`<button class="chip" data-ok="${f.id}">✓ zatwierdź</button>`:''}<button class="chip uncb ${x?.unc?'sel':''}" data-unc="${f.id}">? niepewne</button>${!x?.skip&&!x?.ok?`<button class="chip" data-skip="${f.id}">pomiń</button>`:''}${x?`<button class="chip" data-undo="${f.id}">↺ cofnij</button>`:''}</div>
+     <div class="chips">${chipsFor(a,f.id)}${clean(v)&&!x?.ok?`<button class="chip btn-ok" data-ok="${f.id}">✓ zatwierdź</button>`:''}<button class="chip uncb ${x?.unc?'sel':''}" data-unc="${f.id}">? niepewne</button>${!x?.skip&&!x?.ok?`<button class="chip btn-skip" data-skip="${f.id}">pomiń</button>`:''}${x?`<button class="chip" data-undo="${f.id}">↺ cofnij</button>`:''}</div>
      ${x?.unc?`<div class="nt"><input data-note="${f.id}" placeholder="Opis niepewności (np. nieczytelne, dwa warianty)" value="${esc(x.note||'')}"></div>`:''}</div>`; });
-  m.innerHTML = h + '</div>';
+  m.innerHTML = warnHtml(a) + h + '</div>';
   m.querySelectorAll('.chip[data-f]').forEach(b => b.onclick = () => setf(a, b.dataset.f, b.dataset.v, b.dataset.s));
   m.querySelectorAll('[data-ok]').forEach(b => b.onclick = () => setf(a, b.dataset.ok, clean(getv(a,b.dataset.ok)), (S.acts[a.id].f[b.dataset.ok]?.src) || (a.ai?.[b.dataset.ok] ? 'ai' : 'lub')));
   m.querySelectorAll('[data-undo]').forEach(b => b.onclick = () => { delete st(a.id).f[b.dataset.undo]; save(); keepScroll(); });
@@ -166,7 +180,7 @@ function keepScroll(next){ const y = window.scrollY; renderAct(); renderList(); 
   if (next && S.hideOk) { const r = $('main').querySelector('.row'); if (r) window.scrollTo({top: r.getBoundingClientRect().top + window.scrollY - $('view').offsetHeight - 8}); } }
 // ---- kreator (po jednym polu)
 const W = {on:false, i:0, unc:false, note:'', val:null};
-const emptyF = (a,f) => !(a.ai?.[f] || a.lub?.[f] || (a.alts?.[f]||[]).length);
+const emptyF = (a,f) => (!appl(a,f) && !clean(getv(a,f))) || !(a.ai?.[f] || a.lub?.[f] || (a.alts?.[f]||[]).length);
 function wizSeek(a, from, d){ const FS = fieldsOf(a); let i = from; while (i >= 0 && i < FS.length && emptyF(a, FS[i].id) && !st(a.id).f[FS[i].id]) i += d; return i; }
 function wizStart(){ const a = curAct(); if (!a) return; const FS = fieldsOf(a); let i = 0; while (i < FS.length && (st(a.id).f[FS[i].id] || emptyF(a, FS[i].id))) i++; W.i = i; wizLoad(); }
 function wizLoad(){ const a = curAct(), FS = fieldsOf(a), f = FS[W.i], x = f && st(a.id).f[f.id]; W.unc = f ? isUnc(a,f.id) : false; W.note = x?.note || ''; W.val = null; }
@@ -178,18 +192,18 @@ function renderWiz(){ const a = curAct(), m = $('main'); if (!a) return; const F
   const head = `<div class="hd"><b>${a.kind?a.title:a.year+' · akt '+a.act+' · '+(a.ai?a.ai.deceased_last_name+' '+a.ai.deceased_first_name:a.lubName)}</b><button class="sm" id="wX">✕ Zakończ kreator</button></div>`;
   if (W.i >= FS.length) { const sk = FS.filter(f => s.f[f.id]?.skip).length, ok = FS.filter(f => s.f[f.id]?.ok).length, un = FS.filter(f => s.f[f.id]?.unc).length;
     m.innerHTML = `<div class="card wz-card">${head}<div class="big">Koniec pól</div><div class="muted">Zapisane: ${ok} · pominięte: ${sk} · niepewne: ${un}${a.cmp?'<br>'+esc(a.cmp):''}</div></div>`;
-    wizBar([['wBack','◀ Wstecz'],['wSk',`Pominięte (${sk})`],['wFin','Zatwierdź akt ✓ i dalej','pri']]);
+    wizBar([['wBack','◀ Wstecz'],['wSk',`Pominięte (${sk})`,'btn-skip'],['wFin','Zatwierdź akt ✓ i dalej','btn-ok']]);
     $('wBack').onclick = () => { W.i = wizSeek(a, FS.length-1, -1); wizLoad(); renderWiz(); };
     $('wSk').onclick = () => { const i = FS.findIndex(f => s.f[f.id]?.skip); if (i < 0) return toast('Brak pominiętych'); W.i = i; wizLoad(); renderWiz(); };
     $('wFin').onclick = () => { s.done = true; save(); renderList(); wizAdvance(); };
   } else { const f = FS[W.i], x = s.f[f.id], v = W.val ?? getv(a,f.id), long = f.id === 'notes' || f.id === 'p_note';
-    m.innerHTML = `<div class="card wz-card">${head}<div class="muted">Pole ${W.i+1} / ${FS.length}</div><div class="big">${f.label}</div>
+    m.innerHTML = warnHtml(a) + `<div class="card wz-card">${head}<div class="muted">Pole ${W.i+1} / ${FS.length}</div><div class="big">${f.label}</div>
       <div>${tagsFor(a,f.id,v,x)} ${x?.ok?'<span class="tag eq">zapisane</span>':''}${x?.skip?'<span class="tag q">pominięte</span>':''}</div>
       <div class="chips">${chipsFor(a,f.id)}</div>
       <div style="margin-top:8px">${long?`<textarea rows="3" id="wIn">${esc(v)}</textarea>`:`<input id="wIn" value="${esc(v)}" ${FT[f.id]?`list="${FT[f.id]==='s'?'dlS':'dlN'}"`:''} autocomplete="off">`}</div>
       ${W.unc?`<div class="nt"><input id="wNote" placeholder="Opis niepewności (np. nieczytelne, dwa warianty)" value="${esc(W.note)}"></div>`:''}</div>`;
     m.querySelectorAll('.chip[data-f]').forEach(b => b.onclick = () => { W.note = $('wNote')?.value ?? W.note; wizSave(clean(b.dataset.v) || b.dataset.v, b.dataset.s); });
-    wizBar([['wBack','◀'],['wSk','Pomiń'],['wUnc','? Niepewne', W.unc?'on':''],['wOk','Zapisz ▶','pri']]);
+    wizBar([['wBack','◀'],['wSk','Pomiń','btn-skip'],['wUnc','? Niepewne', W.unc?'on':''],['wOk','Zapisz ▶','btn-ok']]);
     $('wUnc').style.outline = W.unc ? '3px solid var(--bz)' : '';
     $('wBack').onclick = () => wizGo(-1); $('wSk').onclick = () => { W.note = $('wNote')?.value ?? W.note; wizSkip(); };
     $('wUnc').onclick = () => { W.val = $('wIn').value; W.note = $('wNote')?.value ?? W.note; W.unc = !W.unc; renderWiz(); if (W.unc) $('wNote').focus(); };
