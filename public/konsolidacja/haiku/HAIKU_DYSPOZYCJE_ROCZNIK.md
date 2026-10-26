@@ -2,6 +2,12 @@
 
 Najpierw przeczytaj `HAIKU_ZALOZENIA.md` (zasady odczytu, ID, ROI, formaty) – obowiązuje bez zmian. Poniżej tylko to, co dochodzi przy dużej liczbie stron.
 
+## 0. Oszczędzanie tokenów (obowiązkowe)
+- Każdą stronę oglądasz RAZ. Odczyt zapisz do plików wynikowych od razu po stronie (dopisywanie, jak w poprzednim roczniku), potem nie wracaj do niej i nie odczytuj plików wynikowych z powrotem.
+- Nie powtarzaj w odpowiedziach treści aktów – wynik idzie do plików, w czacie tylko jedno zdanie na stronę (np. „str. 3: akty 12–15 zapisane, skan zapisany”).
+- Skany kopiuj poleceniem plikowym (cp/copy), nie przez ponowne wczytywanie obrazu. Nie czytaj ponownie zapisanych skanów.
+- Wątpliwe miejsca tylko oznacz (`?`, `[nieczytelne]`, pole uwag) – nie rozwiązuj ich drugim podejściem; sprawdzi je człowiek/Sonnet na samym fragmencie (ROI), nie na całej stronie.
+
 ## A. Kolejność pracy (strona po stronie)
 1. Zrób listę wszystkich stron w paczce (nazwa pliku wejściowego, kolejność). Nie pomijaj żadnej – także stron z indeksem, pustych, z przekreśleniami.
 2. Dla KAŻDEJ strony po obejrzeniu ustal: rok, zakres numerów aktów (od–do), czy to strona aktów, indeksu (skorowidz), protokołu/rejestru, czy początek następnego roku.
