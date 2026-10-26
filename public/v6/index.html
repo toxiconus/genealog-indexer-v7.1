@@ -2070,6 +2070,10 @@ function issuesOf(rec, ctx){
     const x = String(v[fid] ?? '').trim(); if (!x) return;
     if (x.length < 2) add(fid, `„${x}” – za krótkie`);
     else if (!NAME_OK.test(x)) add(fid, `„${x}” – nietypowe znaki`);
+    else if (/last_name$/.test(fid)){
+      const zf = x.match(/^(?:\S+\s+)?ze?\s+(\S+)$/), w = zf ? zf[1] : x;
+      if ((zf || /(ów|skich|ckich|dzkich)$/.test(x)) && isGenSurn(w)){ const e = surnKnown().get(sKey(x)); if (zf || !e || e.c < 5){ const [nm, sure] = maidenNom(w); add(fid, `„${x}” to dopełniacz („z …”) – wpisz mianownik: ${nm}${sure ? '' : '?'}`); } }
+    }
   });
   if (t === 'chrzest'){
     const y = parseInt(v.christening_year);
@@ -2285,6 +2289,30 @@ function splitTop(str){ const out = []; let d = 0, cur = ''; for (const ch of st
 const CAPW = /^[A-ZĄĆĘŁŃÓŚŹŻ][A-Za-ząćęłńóśźż'\-]+(\/[A-ZĄĆĘŁŃÓŚŹŻ][A-Za-ząćęłńóśźż'\-]+)?$/;
 const NONAME = /^(wdowa|wdowiec|nieczytelne|nieznany|nieznana|nieślubny|nieslubny|brak|zm|zmarły|zmarla)\.?$/i;
 function capRun(words){ const ok = []; for (const w of words){ if (CAPW.test(w) && !NONAME.test(w)) ok.push(w); else break; } return {ok, rest: words.slice(ok.length)}; }
+/* ===== Nazwisko panieńskie z zapisu „z <dopełniacz>” → mianownik (Zofia z Panków = Zofia Panek; z Brzeskich = Brzeska) ===== */
+const SURN_BASE = [["Kosidło",695],["Pawłasek",415],["Kurczak",304],["Jachura",226],["Machulak",198],["Wcisło",167],["Bucoń",164],["Pudło",153],["Krawczyk",152],["Baran",148],["Kędziora",148],["Bigos",145],["Jędrzejczak",142],["Pcionek",135],["Wieleba",126],["Kaczyński",115],["Kudrelek",112],["Mróz",111],["Szabat",108],["Janik",102],["Sobótka",101],["Pasternak",99],["Gnat",97],["Nieściór",95],["Ogon",94],["Dobrzyński",90],["Kopiwoda",87],["Kaczyńska",86],["Chmiel",84],["Pscionek",84],["Wnuk",83],["Woś",80],["Kozaczek",79],["Pazdrak",79],["Barbarzak",78],["Dziewa",78],["Mazurek",74],["Obydź",74],["Paciorek",74],["Dobrzyńska",72],["Samuel",69],["Stępień",69],["Michałek",69],["Sobutka",67],["Rębacz",67],["Sikora",65],["Goch",63],["Koguc",63],["Szyszka",63],["Kozyra",63],["Kolasa",62],["Machulek",59],["Kosidlak",58],["Łatka",57],["Wscisło",56],["Gancarz",55],["Sokół",54],["Tylus",54],["Boczek",52],["Szuba",51],["Solarz",49],["Spryszak",49],["Czuba",48],["Wójtowicz",46],["Ciećko",45],["Mazur",45],["Suloski",43],["Sulowski",43],["Samol",42],["Zieliński",40],["Felek",40],["Łach",39],["Andrzejczak",39],["Nieściur",38],["Kania",37],["Krzysztoń",36],["Igras",35],["Mcionek",35],["Rębecki",35],["Babiarz",33],["Ładziak",33],["Sulowska",32],["Kopyt",31],["Brzeska",30],["Kamieniak",30],["Dziura",28],["Zielińska",28],["Białkowski",27],["Brzuszkiewicz",27],["Drozd",26],["Pcion",25],["Sprysak",24],["Chudy",24],["Brzeski",23],["Dąbrowski",23],["Pikuła",23],["Szydłoska",22],["Zuń",22],["Kosidłowna",22],["Nikolas",21],["Król",21],["Szydłoski",21],["Wscisłowna",21],["Komsa",21],["Marchewka",21],["Jakubaszek",20],["Głaz",20],["Sagan",19],["Dąbrowska",19],["Zaręba",19],["Piech",19],["Szot",19],["Krupa",18],["Białkowska",18],["Kozik",18],["Woytowicz",18],["Zyśko",18],["Michałko",18],["Bosak",17],["Szubstarski",17],["Breś",17],["Karczmarczyk",17],["Kamiński",16],["Dąbroski",16],["Suloska",16],["Paszkowski",16],["Machul",16],["Borowski",16],["Pęk",15],["Dobrzański",15],["Szubstarska",15],["Jaskuła",15],["Pyć",14],["Zyguła",14],["Bogoń",13],["Rzeszutko",13],["Jędrzeyczak",13],["Ćwiek",13],["Szumlański",13],["Szczuka",13],["Pizoń",13],["Żaba",13],["Kozdra",13],["Rataj",12],["Mścisło",12],["Kozak",12],["Pawłaszek",12],["Wielebionka",12],["Kowal",12],["Bajdas",12],["Panek",12],["Sosnówka",12],["Głowacki",11],["Pcionkowna",11],["Paszkowska",11],["Zarzeczny",11],["Kamińska",11],["Machulakowna",11],["Sobudka",11],["Bzdyrak",10],["Biały",10],["Rębecka",10],["Stępniowna",10],["Dębicki",10],["Wróbel",10],["Wójcik",10]];
+const sKey = s => String(s || '').toLowerCase().replace(/ł/g, 'l').normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+function surnKnown(){
+  const m = new Map(), put = (n, c) => { const k = sKey(n); if (!k) return; const o = m.get(k); if (o){ o.c += c; if (c > o.top){ o.top = c; o.n = n; } } else m.set(k, {n, c, top: c}); };
+  SURN_BASE.forEach(([n, c]) => put(n, c));
+  try { S.records.forEach(r => ['child_last_name','father_last_name','groom_last_name','bride_last_name','deceased_last_name'].forEach(f => { const v = String(r.v[f] || '').trim(); if (/^[A-ZĄĆĘŁŃÓŚŹŻ][\wąćęłńóśźż-]+$/.test(v) && !/(ów|ich|ych)$/.test(v)) put(v, 1); })); } catch(e){}
+  return m;
+}
+const isGenSurn = w => /^[A-ZĄĆĘŁŃÓŚŹŻ][\wąćęłńóśźż-]+$/.test(w) && /(ów|ych|ich)$/.test(w);
+function maidenNom(g){
+  g = String(g || '').trim().replace(/[,.;]+$/, ''); const K = surnKnown(), look = cs => { const out = []; cs.forEach(c => { const e = K.get(sKey(c)); if (e && e.c >= 5 && !out.includes(e)) out.push(e); }); return out.sort((a, b) => b.c - a.c); };
+  let m = g.match(/^(.*?)(skich|ckich|dzkich|zkich)$/);
+  if (m){ const male = m[1] + m[2].slice(0, -3) + 'i', e = K.get(sKey(male)), mm = (e ? e.n : male); return [mm.replace(/(ski|cki|dzki|zki)$/, x => x.slice(0, -1) + 'a'), true]; }
+  if (/(ych|ich)$/.test(g)) return [g.slice(0, -3) + 'a', false];
+  const base = g.slice(0, -2), t1 = [base, base + 'a', base + 'o', base + 'e'], t2 = [];
+  if (g.endsWith('ków')){ t1.push(g.slice(0, -3) + 'ek', g.slice(0, -3) + 'ka'); t2.push(g.slice(0, -3) + 'ak', g.slice(0, -3) + 'ik', g.slice(0, -3) + 'yk'); }
+  if (g.endsWith('iów')) t1.push(g.slice(0, -3), g.slice(0, -3) + 'ń', g.slice(0, -3) + 'ź');
+  if (g.endsWith('ów') && base.endsWith('i')) t1.push(base.slice(0, -1));
+  const f1 = look(t1);
+  if (f1.length) return [f1[0].n, f1.length === 1 || f1[0].c >= 10 * f1[1].c];
+  const f2 = look(t2); if (f2.length) return [f2[0].n, false];
+  return [(g.endsWith('ków') ? (/[in]$/.test(g.slice(0, -3)) ? base : g.slice(0, -3) + 'ek') : base), false];
+}
 function parsePerson(txt, mother){
   let s = String(txt || '').trim(), occ = '', extra = '', unc = false; const left = [];
   s = s.replace(/\(([^)]*)\)/g, (m, a) => { a = a.trim(); if (/^z(e)?\s/i.test(a)) extra += (extra ? '; ' : '') + a; else occ += (occ ? ', ' : '') + a; return ' '; });
@@ -2296,7 +2324,9 @@ function parsePerson(txt, mother){
   if (zi > 0 || (mother && /^ze?$/i.test(words[0] || ''))){
     const before = capRun(words.slice(0, Math.max(zi, 0))), after = capRun(words.slice((zi >= 0 ? zi : 0) + 1));
     first = before.ok[0] || ''; if (before.ok.length > 1) left.push('nazwisko po mężu: ' + before.ok.slice(1).join(' '));
-    last = after.ok.join(' '); const rest = [...before.rest, ...after.rest]; if (rest.length) left.push(rest.join(' '));
+    last = after.ok.join(' ');
+    if (after.ok.length === 1 && isGenSurn(last)){ const [nm, sure] = maidenNom(last); last = nm; if (!sure) unc = true; }
+    const rest = [...before.rest, ...after.rest]; if (rest.length) left.push(rest.join(' '));
   } else {
     const r = capRun(words); first = r.ok[0] || ''; last = r.ok.slice(1).join(' ');
     if (r.rest.length) left.push(r.rest.join(' '));
