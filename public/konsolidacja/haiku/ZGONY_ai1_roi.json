@@ -4,24 +4,24 @@
   "plik": "5cc8b77f-image.jpg",
   "strona": 1,
   "roi": {
-   "x": 0.01,
-   "y": 0.1,
-   "w": 0.8,
-   "h": 0.3
+   "x": 0.5,
+   "y": 0.05,
+   "w": 0.45,
+   "h": 0.33
   },
-  "uwaga": "przybliżone, prawa połowa rozkładówki (x względem prawej połowy 0–1)"
+  "uwaga": "przybliżone, współrzędne względem całego obrazu"
  },
  {
   "id": "ai1-1943-027",
   "plik": "5cc8b77f-image.jpg",
   "strona": 1,
   "roi": {
-   "x": 0.01,
-   "y": 0.55,
-   "w": 0.8,
-   "h": 0.33
+   "x": 0.5,
+   "y": 0.52,
+   "w": 0.45,
+   "h": 0.35
   },
-  "uwaga": "przybliżone, prawa połowa rozkładówki"
+  "uwaga": "przybliżone, współrzędne względem całego obrazu"
  },
  {
   "id": "ai1-1943-032",

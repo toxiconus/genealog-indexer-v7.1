@@ -1,0 +1,195 @@
+<!doctype html>
+<html lang="pl"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Weryfikacja zgonów AI</title>
+<style>
+:root{--bg:#f4f1ea;--card:#fff;--ink:#1f2937;--mut:#6b7280;--line:#d9d4c7;--ai:#1d4ed8;--aib:#dbeafe;--lub:#15803d;--lubb:#dcfce7;--bz:#b45309;--bzb:#ffedd5;--bad:#b91c1c;--badb:#fee2e2;--ok:#15803d;--acc:#7c2d12}
+@media(prefers-color-scheme:dark){:root{--bg:#161412;--card:#201d1a;--ink:#ece7dd;--mut:#9a9488;--line:#3a352f;--aib:#1e3a8a;--lubb:#14532d;--bzb:#78350f;--badb:#7f1d1d;--ai:#93c5fd;--lub:#86efac;--bz:#fdba74;--bad:#fca5a5}}
+*{box-sizing:border-box}html,body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.35 system-ui,sans-serif;-webkit-text-size-adjust:100%}
+header{position:sticky;top:0;z-index:20;background:var(--card);border-bottom:1px solid var(--line);padding:6px 10px;display:flex;gap:8px;align-items:center;flex-wrap:nowrap}
+header h1{font-size:15px;margin:0;flex:1 1 auto;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+button,select,input,textarea{font:inherit;color:inherit}
+button{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:9px 12px;min-height:42px}
+button.pri{background:var(--acc);color:#fff;border-color:var(--acc)}
+button.sm{min-height:34px;padding:5px 9px;font-size:14px}
+#prog{font-size:13px;color:var(--mut)}
+#list{display:flex;gap:6px;overflow-x:auto;padding:8px 10px;background:var(--card);border-bottom:1px solid var(--line)}
+#list button{min-width:48px;padding:6px 8px;min-height:38px;flex:0 0 auto}
+#list button.cur{outline:3px solid var(--acc)}
+#list button.done{background:var(--lubb);border-color:var(--lub)}
+#list button.diff{border-color:var(--bad);border-width:2px}
+#list button.noai{opacity:.55}
+.tabs{display:flex;gap:6px;padding:6px 10px;flex-wrap:nowrap;overflow-x:auto;background:var(--card)}.tabs button{flex:0 0 auto}
+.tabs button.on{background:var(--acc);color:#fff}
+#view{position:relative;height:42vh;background:#222;overflow:hidden;touch-action:none}
+#view.l{height:68vh}#view.xl{position:fixed;inset:0;z-index:50;height:100vh}
+#layer{position:absolute;left:0;top:0;transform-origin:0 0}
+#layer img{display:block;max-width:none;user-select:none;-webkit-user-drag:none}
+#roi{position:absolute;border:3px solid #f59e0b;background:rgba(245,158,11,.08);pointer-events:none}
+#vbar{position:absolute;right:6px;top:6px;display:flex;gap:6px;flex-direction:column;z-index:3}
+#vbar button{background:rgba(255,255,255,.9);color:#111;min-height:40px;min-width:40px;padding:4px 8px}
+#vbar button.on{background:#f59e0b}
+#noimg{position:absolute;inset:0;display:none;align-items:center;justify-content:center;color:#ddd;text-align:center;padding:20px}
+main{padding:10px;max-width:760px;margin:0 auto 90px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:10px;margin-bottom:10px}
+.hd{display:flex;justify-content:space-between;gap:8px;align-items:baseline;flex-wrap:wrap}
+.hd b{font-size:18px}.muted{color:var(--mut);font-size:13px}
+.row{border-top:1px solid var(--line);padding:8px 0}
+.row:first-of-type{border-top:0}
+.lab{display:flex;justify-content:space-between;font-size:13px;color:var(--mut);margin-bottom:3px}
+.row input,.row textarea{width:100%;padding:10px;border:1px solid var(--line);border-radius:10px;background:var(--bg);font-size:17px}
+.row.ok input{border-color:var(--ok);background:var(--lubb)}
+.chips{display:flex;gap:6px;flex-wrap:wrap;margin-top:5px}
+.chip{border-radius:999px;padding:7px 12px;min-height:38px;font-size:15px;border:1px solid;display:inline-flex;gap:6px;align-items:center;max-width:100%;text-align:left}
+.chip small{opacity:.75;font-size:11px}
+.chip.ai{background:var(--aib);border-color:var(--ai);color:var(--ai)}
+.chip.lub{background:var(--lubb);border-color:var(--lub);color:var(--lub)}
+.chip.bz{background:var(--bzb);border-color:var(--bz);color:var(--bz)}
+.chip.sel{box-shadow:0 0 0 3px var(--acc)}
+.tag{font-size:11px;border-radius:6px;padding:1px 6px;margin-left:4px}
+.tag.eq{background:var(--lubb);color:var(--lub)}.tag.ne{background:var(--badb);color:var(--bad)}.tag.ap{background:var(--bzb);color:var(--bz)}.tag.q{background:var(--bzb);color:var(--bz)}
+#bar{position:fixed;left:0;right:0;bottom:0;z-index:30;background:var(--card);border-top:1px solid var(--line);padding:8px 10px calc(8px + env(safe-area-inset-bottom));display:flex;gap:8px}
+#bar button{flex:1}
+details{margin-top:6px}details pre{white-space:pre-wrap;font-size:13px;background:var(--bg);padding:8px;border-radius:8px}
+#menu{display:none;position:fixed;right:8px;top:54px;z-index:60;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:8px;box-shadow:0 8px 24px rgba(0,0,0,.25);width:260px}
+#menu button{display:block;width:100%;margin:4px 0;text-align:left}
+#toast{position:fixed;left:50%;bottom:78px;transform:translateX(-50%);background:#111;color:#fff;padding:8px 14px;border-radius:10px;z-index:70;display:none;max-width:90%}
+</style></head><body>
+<header><h1>Weryfikacja zgonów · AI v1</h1><span id="prog"></span><button id="bMenu" class="sm">⋯ Menu</button></header>
+<div id="menu">
+ <button id="mCsv">⬇ Eksport CSV (zweryfikowane)</button>
+ <button id="mLog">⬇ Eksport logu zmian</button>
+ <button id="mRoi">⬇ Eksport ROI (JSON)</button>
+ <button id="mSave">⬇ Kopia robocza (JSON)</button>
+ <button id="mLoad">⬆ Wczytaj kopię roboczą</button>
+ <button id="mAi">⬆ Dołącz CSV z odczytem AI</button>
+ <button id="mScan">🖼 Dodaj skany z telefonu</button>
+ <button id="mReset">🗑 Wyczyść moje wybory</button>
+</div>
+<input type="file" id="fScan" accept="image/*" multiple hidden><input type="file" id="fAi" accept=".csv,text/csv" hidden><input type="file" id="fLoad" accept=".json" hidden>
+<div class="tabs" id="tabs"></div>
+<div id="list"></div>
+<div id="view"><div id="layer"><img id="img" alt=""><div id="roi"></div></div><div id="noimg">Brak skanu dla tego aktu.<br>Wybierz skan poniżej albo dodaj z telefonu.</div>
+ <div id="vbar"><button id="zIn">＋</button><button id="zOut">－</button><button id="zFit">◎</button><button id="zH">⇕</button><button id="zRoi">✎</button></div></div>
+<main id="main"></main>
+<div id="bar"><button id="bPrev">◀</button><button id="bAll">Przyjmij zgodne</button><button id="bDone" class="pri">Zatwierdź ✓</button><button id="bNext">▶</button></div>
+<div id="toast"></div>
+<datalist id="dlS"></datalist><datalist id="dlN"></datalist>
+<script>
+const D = /*DATA*/null;
+const $ = id => document.getElementById(id);
+const FIELDS = D.fields, AM = {}; D.acts.forEach(a => AM[a.id] = a);
+let S = {acts:{}, cur:null, year:'all', flt:'all'};
+try { const r = localStorage.getItem('wz1'); if (r) S = Object.assign(S, JSON.parse(r)); } catch(e){}
+const save = () => { try { localStorage.setItem('wz1', JSON.stringify(S)); } catch(e){} };
+const toast = (t) => { const e = $('toast'); e.textContent = t; e.style.display = 'block'; clearTimeout(toast.t); toast.t = setTimeout(() => e.style.display = 'none', 2200); };
+const fold = s => (s||'').toString().toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,'').replace(/ł/g,'l');
+const clean = s => (s||'').toString().replace(/\?/g,'').trim();
+const exact = (a,b) => clean(a).toLowerCase() === clean(b).toLowerCase() && clean(a) !== '';
+const loose = (a,b) => fold(clean(a)) === fold(clean(b)) && clean(a) !== '';
+const st = id => S.acts[id] || (S.acts[id] = {f:{}, done:false});
+const getv = (a,f) => { const x = S.acts[a.id]?.f?.[f]; return x ? x.v : (a.ai?.[f] ?? a.lub?.[f] ?? ''); };
+const countOf = (f, v) => { const t = FT[f]; if (!t) return null; const c = D.counts[t][clean(v)]; return c || 0; };
+const FT = {deceased_last_name:'s', deceased_maiden_name:'s', father_last_name:'s', mother_last_name:'s', deceased_first_name:'n', father_first_name:'n', mother_first_name:'n'};
+$('dlS').innerHTML = Object.keys(D.counts.s).filter(k => D.counts.s[k] >= 2).sort().map(k => `<option value="${k}">`).join('');
+$('dlN').innerHTML = Object.keys(D.counts.n).filter(k => D.counts.n[k] >= 2).sort().map(k => `<option value="${k}">`).join('');
+function lev(a,b){ if (Math.abs(a.length-b.length) > 2) return 9; const m=[...Array(b.length+1).keys()]; for (let i=1;i<=a.length;i++){ let p=m[0]; m[0]=i; for (let j=1;j<=b.length;j++){ const t=m[j]; m[j]=Math.min(m[j]+1,m[j-1]+1,p+(a[i-1]===b[j-1]?0:1)); p=t; } } return m[b.length]; }
+const fuzzCache = {};
+function near(f, v){ const t = FT[f]; const w = fold(clean(v)); if (!t || w.length < 3) return []; const k = t+w; if (fuzzCache[k]) return fuzzCache[k];
+  const out = []; for (const [n,c] of Object.entries(D.counts[t])) { if (c < 3) continue; const d = lev(w, fold(n)); if (d <= 2 && n !== clean(v)) out.push([n,c,d]); }
+  out.sort((x,y) => x[2]-y[2] || y[1]-x[1]); return fuzzCache[k] = out.slice(0,3); }
+function diffState(a,f){ const x = a.ai?.[f], y = a.lub?.[f]; if (!x || !y) return ''; if (exact(x,y)) return 'eq'; if (loose(x,y)) return 'ap'; return 'ne'; }
+function hasDiff(a){ return FIELDS.some(f => diffState(a,f.id) === 'ne'); }
+function isUnc(a,f){ return !!a.ai && (a.unc.includes(f) || /\?/.test(a.ai[f]||'')); }
+// ---- lista
+function visible(){ return D.acts.filter(a => (S.year==='all' || String(a.year)===S.year) && (S.flt==='all' || (S.flt==='ai' && a.ai) || (S.flt==='todo' && a.ai && !S.acts[a.id]?.done) || (S.flt==='diff' && a.ai && hasDiff(a)) || (S.flt==='done' && S.acts[a.id]?.done) || (S.flt==='lub' && !a.ai))); }
+function renderTabs(){ const ys = ['all',...new Set(D.acts.map(a => String(a.year)))]; const fl = [['all','Wszystkie'],['ai','Z odczytem AI'],['todo','Do weryfikacji'],['diff','Różnice'],['done','Zatwierdzone'],['lub','Tylko Lubgens']];
+  $('tabs').innerHTML = ys.map(y => `<button class="sm ${S.year===y?'on':''}" data-y="${y}">${y==='all'?'Lata: wszystkie':y}</button>`).join('') + fl.map(([k,l]) => `<button class="sm ${S.flt===k?'on':''}" data-f="${k}">${l}</button>`).join('');
+  $('tabs').querySelectorAll('button').forEach(b => b.onclick = () => { if (b.dataset.y) S.year = b.dataset.y; else S.flt = b.dataset.f; save(); renderTabs(); renderList(); }); }
+function renderList(){ const v = visible(); $('list').innerHTML = v.map(a => `<button data-id="${a.id}" class="${a.id===S.cur?'cur':''} ${S.acts[a.id]?.done?'done':''} ${a.ai&&hasDiff(a)?'diff':''} ${a.ai?'':'noai'}" title="${a.year}">${S.year==='all'?String(a.year).slice(2)+'/':''}${a.act}</button>`).join('') || '<span class="muted">Brak aktów w tym filtrze</span>';
+  $('list').querySelectorAll('button').forEach(b => b.onclick = () => open(b.dataset.id));
+  const done = D.acts.filter(a => S.acts[a.id]?.done).length, ai = D.acts.filter(a => a.ai).length; $('prog').textContent = `${done}/${ai} zatwierdz.`;
+  const c = $('list').querySelector('.cur'); if (c) c.scrollIntoView({inline:'center', block:'nearest'}); }
+// ---- akt
+function open(id){ S.cur = id; save(); renderList(); renderAct(); showScan(); }
+function chipsFor(a,f){ const cur = getv(a,f); const out = []; const seen = new Set(); const add = (cls,lbl,val,extra='') => { if (!val) return; const key = cls+val; if (seen.has(key)) return; seen.add(key); out.push(`<button class="chip ${cls} ${clean(cur)===clean(val)?'sel':''}" data-f="${f}" data-v="${val.replace(/"/g,'&quot;')}" data-s="${cls}"><small>${lbl}</small>${val}${extra}</button>`); };
+  const cnt = v => { const c = countOf(f,v); return c === null ? '' : ` <small>×${c}</small>`; };
+  if (a.ai?.[f]) add('ai','AI',a.ai[f],cnt(a.ai[f])); if (a.lub?.[f]) add('lub','LUB',a.lub[f],cnt(a.lub[f]));
+  if (FT[f]) { [a.ai?.[f], a.lub?.[f]].filter(Boolean).forEach(v => { if (countOf(f,v) === 0) near(f,v).forEach(([n,c]) => add('bz','BAZA ≈',n,` <small>×${c}</small>`)); }); }
+  return out.join(''); }
+function renderAct(){ const a = AM[S.cur]; const m = $('main'); if (!a){ m.innerHTML = '<div class="card muted">Wybierz akt z listy powyżej.</div>'; return; }
+  const s = st(a.id); const nm = (a.ai ? `${a.ai.deceased_last_name} ${a.ai.deceased_first_name}` : `${a.lubName||''}`);
+  const unc = a.ai ? FIELDS.filter(f => isUnc(a,f.id) && !s.f[f.id]?.ok).length : 0;
+  let h = `<div class="card"><div class="hd"><b>${a.year} · akt ${a.act} · ${nm}</b><span class="muted">${s.done?'✓ zatwierdzony':'do weryfikacji'}${a.ai?` · niepewnych pól: ${unc}`:' · tylko indeks Lubgens'}</span></div>
+   <div class="chips"><label class="muted">Skan:&nbsp;<select id="selScan">${Object.keys(allScans()).map(k => `<option ${k===scanOf(a)?'selected':''}>${k}</option>`).join('')}<option value="">— brak —</option></select></label></div>
+   ${a.lubRaw?`<details><summary class="muted">Indeks Lubgens (surowo)</summary><pre>${a.lubName} · akt ${a.act}/${a.year}\n${a.lubRaw}</pre></details>`:'<div class="muted">Lubgens: brak szczegółów w uwagach.</div>'}</div><div class="card">`;
+  FIELDS.forEach(f => { const v = getv(a,f.id), x = s.f[f.id]; const ds = diffState(a,f.id); const c = FT[f.id] ? countOf(f.id,v) : null;
+    const tags = (ds?`<span class="tag ${ds}">${ds==='eq'?'AI=LUB':ds==='ap'?'AI≈LUB':'AI≠LUB'}</span>`:'') + (isUnc(a,f.id)&&!x?.ok?'<span class="tag q">AI: niepewne</span>':'') + (c===0&&clean(v)?'<span class="tag ne">brak w bazie</span>':(c?`<span class="tag eq">baza ×${c}</span>`:''));
+    const long = f.id === 'notes'; h += `<div class="row ${x?.ok?'ok':''}"><div class="lab"><span>${f.label} ${tags}</span><span>${x?.ok?'✓ '+({ai:'AI',lub:'LUB',bz:'BAZA',edit:'własne'}[x.src]||''):''}</span></div>
+     ${long?`<textarea rows="2" data-f="${f.id}">${v}</textarea>`:`<input data-f="${f.id}" value="${String(v).replace(/"/g,'&quot;')}" ${FT[f.id]?`list="${FT[f.id]==='s'?'dlS':'dlN'}"`:''} autocomplete="off">`}
+     <div class="chips">${chipsFor(a,f.id)}${clean(v)&&!x?.ok?`<button class="chip" data-ok="${f.id}">✓ zatwierdź</button>`:''}${x?`<button class="chip" data-undo="${f.id}">↺ cofnij</button>`:''}</div></div>`; });
+  m.innerHTML = h + '</div>';
+  m.querySelectorAll('.chip[data-f]').forEach(b => b.onclick = () => setf(a, b.dataset.f, b.dataset.v, b.dataset.s));
+  m.querySelectorAll('[data-ok]').forEach(b => b.onclick = () => setf(a, b.dataset.ok, clean(getv(a,b.dataset.ok)), (S.acts[a.id].f[b.dataset.ok]?.src) || (a.ai?.[b.dataset.ok] ? 'ai' : 'lub')));
+  m.querySelectorAll('[data-undo]').forEach(b => b.onclick = () => { delete st(a.id).f[b.dataset.undo]; save(); renderAct(); });
+  m.querySelectorAll('input[data-f],textarea[data-f]').forEach(i => i.onchange = () => setf(a, i.dataset.f, i.value.trim(), 'edit'));
+  $('selScan').onchange = e => { st(a.id).scan = e.target.value; save(); showScan(); }; }
+function setf(a,f,v,src){ const s = st(a.id); s.f[f] = {v: (src==='edit' ? v : clean(v) || v), src, ok:true}; save(); const y = window.scrollY; renderAct(); renderList(); window.scrollTo(0,y); }
+function curAct(){ return AM[S.cur]; }
+function step(d){ const v = visible(); const i = v.findIndex(a => a.id === S.cur); const n = v[Math.max(0, Math.min(v.length-1, (i<0?0:i+d)))]; if (n) { open(n.id); window.scrollTo({top:0}); } }
+$('bPrev').onclick = () => step(-1); $('bNext').onclick = () => step(1);
+$('bAll').onclick = () => { const a = curAct(); if (!a || !a.ai) return toast('Brak odczytu AI do porównania'); let n = 0; FIELDS.forEach(f => { if (diffState(a,f.id) === 'eq' && !st(a.id).f[f.id]) { st(a.id).f[f.id] = {v: clean(a.ai[f.id]), src:'ai', ok:true}; n++; } }); save(); renderAct(); toast(`Przyjęto zgodne pola: ${n}`); };
+$('bDone').onclick = () => { const a = curAct(); if (!a) return; const s = st(a.id); s.done = !s.done; save(); renderList(); renderAct(); toast(s.done ? 'Akt zatwierdzony ✓' : 'Cofnięto zatwierdzenie'); if (s.done) step(1); };
+// ---- skany i widok
+let extra = {}; const allScans = () => Object.assign({}, D.scans, extra);
+const scanOf = a => (S.acts[a.id]?.scan !== undefined ? S.acts[a.id].scan : a.file) || '';
+const roiOf = a => S.acts[a.id]?.roi || a.roi;
+const V = {s:1, x:0, y:0, iw:1, ih:1, edit:false, pts:new Map(), mode:0};
+const img = $('img'), layer = $('layer'), view = $('view'), roiEl = $('roi');
+const apply = () => layer.style.transform = `translate(${V.x}px,${V.y}px) scale(${V.s})`;
+function drawRoi(r){ if (!r) { roiEl.style.display = 'none'; return; } roiEl.style.display = 'block'; Object.assign(roiEl.style, {left:r.x*V.iw+'px', top:r.y*V.ih+'px', width:r.w*V.iw+'px', height:r.h*V.ih+'px', borderWidth:(3/V.s)+'px'}); }
+function fit(r){ const W = view.clientWidth, H = view.clientHeight; if (r) { const rw = r.w*V.iw, rh = r.h*V.ih; V.s = Math.min(W/rw, H/rh)*0.96; V.x = W/2 - (r.x*V.iw + rw/2)*V.s; V.y = H/2 - (r.y*V.ih + rh/2)*V.s; } else { V.s = Math.min(W/V.iw, H/V.ih); V.x = (W - V.iw*V.s)/2; V.y = (H - V.ih*V.s)/2; } apply(); drawRoi(roiOf(curAct()||{})); }
+function showScan(){ const a = curAct(); if (!a) return; const k = scanOf(a), src = allScans()[k]; $('noimg').style.display = src ? 'none' : 'flex'; img.style.display = src ? 'block' : 'none'; roiEl.style.display = 'none'; if (!src) return;
+  img.onload = () => { V.iw = img.naturalWidth; V.ih = img.naturalHeight; fit(roiOf(a)); }; img.src = src; if (img.complete && img.naturalWidth) img.onload(); }
+const pos = e => { const b = view.getBoundingClientRect(); return {x: e.clientX - b.left, y: e.clientY - b.top}; };
+view.addEventListener('pointerdown', e => { if (e.target.closest('#vbar')) return; view.setPointerCapture(e.pointerId); V.pts.set(e.pointerId, pos(e)); V.last = null;
+  if (V.edit && V.pts.size === 1) { const p = pos(e); V.rs = {x:(p.x-V.x)/V.s/V.iw, y:(p.y-V.y)/V.s/V.ih}; } });
+view.addEventListener('pointermove', e => { if (!V.pts.has(e.pointerId)) return; const p = pos(e), o = V.pts.get(e.pointerId);
+  if (V.edit && V.rs && V.pts.size === 1) { const q = {x:(p.x-V.x)/V.s/V.iw, y:(p.y-V.y)/V.s/V.ih}; V.rn = {x:Math.min(V.rs.x,q.x), y:Math.min(V.rs.y,q.y), w:Math.abs(q.x-V.rs.x), h:Math.abs(q.y-V.rs.y)}; drawRoi(V.rn); V.pts.set(e.pointerId, p); return; }
+  if (V.pts.size === 1) { V.x += p.x - o.x; V.y += p.y - o.y; apply(); }
+  else if (V.pts.size === 2) { const ids = [...V.pts.keys()], other = V.pts.get(ids[0] === e.pointerId ? ids[1] : ids[0]); const d0 = Math.hypot(o.x-other.x, o.y-other.y), d1 = Math.hypot(p.x-other.x, p.y-other.y); if (d0 > 0) { const f = d1/d0, cx = (p.x+other.x)/2, cy = (p.y+other.y)/2; V.x = cx - (cx-V.x)*f; V.y = cy - (cy-V.y)*f; V.s *= f; apply(); } }
+  V.pts.set(e.pointerId, p); });
+const up = e => { V.pts.delete(e.pointerId); if (V.edit && V.rn && V.rn.w > .01 && V.rn.h > .01 && !V.pts.size) { const a = curAct(); st(a.id).roi = V.rn; save(); toast('Zapisano nowy obszar aktu'); V.rn = null; V.rs = null; } V.rs = null; };
+view.addEventListener('pointerup', up); view.addEventListener('pointercancel', up);
+view.addEventListener('wheel', e => { e.preventDefault(); const p = pos(e), f = e.deltaY < 0 ? 1.15 : 1/1.15; V.x = p.x - (p.x-V.x)*f; V.y = p.y - (p.y-V.y)*f; V.s *= f; apply(); }, {passive:false});
+const zoom = f => { const W = view.clientWidth/2, H = view.clientHeight/2; V.x = W - (W-V.x)*f; V.y = H - (H-V.y)*f; V.s *= f; apply(); };
+$('zIn').onclick = () => zoom(1.3); $('zOut').onclick = () => zoom(1/1.3); $('zFit').onclick = () => fit(roiOf(curAct()||{}));
+$('zH').onclick = () => { V.mode = (V.mode+1)%3; view.className = ['','l','xl'][V.mode]; setTimeout(() => fit(roiOf(curAct()||{})), 30); };
+$('zRoi').onclick = e => { V.edit = !V.edit; e.currentTarget.classList.toggle('on', V.edit); toast(V.edit ? 'Tryb obszaru: przeciągnij prostokąt wokół aktu' : 'Tryb obszaru wyłączony'); };
+// ---- eksport / import
+const dl = (name, text, type='text/csv') => { const b = new Blob(['﻿', text], {type: type+';charset=utf-8'}), u = URL.createObjectURL(b), l = document.createElement('a'); l.href = u; l.download = name; document.body.appendChild(l); l.click(); l.remove(); setTimeout(() => URL.revokeObjectURL(u), 4000); };
+const q = v => { v = (v ?? '').toString(); return /[;"\n\r]/.test(v) ? '"' + v.replace(/"/g,'""') + '"' : v; };
+const COLS = D.cols;
+function rows(){ return D.acts.filter(a => a.ai).map(a => { const s = S.acts[a.id] || {f:{}}; const r = {id:a.id, death_year:a.year, death_act_number:a.act}; COLS.forEach(c => { if (!(c in r)) r[c] = a.ai[c] ?? ''; });
+  FIELDS.forEach(f => { if (s.f?.[f.id]) r[f.id] = s.f[f.id].v; });
+  const unc = FIELDS.filter(f => isUnc(a,f.id) && !s.f?.[f.id]?.ok).map(f => f.id); r.uncertain_fields = unc.join(';');
+  const ed = Object.keys(s.f||{}).length; r.verification_status = s.done ? 'ok' : (ed ? 'ai_v1_w_trakcie' : 'ai_v1'); return r; }); }
+$('mCsv').onclick = () => { const rs = rows(); dl('ZGONY_zweryfikowane.csv', COLS.join(';') + '\r\n' + rs.map(r => COLS.map(c => q(r[c])).join(';')).join('\r\n') + '\r\n'); toast(`Eksport: ${rs.length} aktów`); };
+$('mLog').onclick = () => { const L = ['akt;pole;ai;lubgens;wybrane;zrodlo']; D.acts.forEach(a => { const s = S.acts[a.id]; if (!s) return; Object.entries(s.f).forEach(([f,x]) => L.push([a.id, f, a.ai?.[f]||'', a.lub?.[f]||'', x.v, x.src].map(q).join(';'))); }); dl('ZGONY_log_wyborow.csv', L.join('\r\n') + '\r\n'); };
+$('mRoi').onclick = () => dl('ZGONY_ai1_roi_poprawione.json', JSON.stringify(D.acts.filter(a => a.ai).map(a => ({id:a.id, plik:scanOf(a), strona:1, roi:roiOf(a)})), null, 1), 'application/json');
+$('mSave').onclick = () => dl('weryfikacja_kopia.json', JSON.stringify(S), 'application/json');
+$('mLoad').onclick = () => $('fLoad').click(); $('fLoad').onchange = async e => { try { S = Object.assign(S, JSON.parse(await e.target.files[0].text())); save(); init(); toast('Wczytano kopię'); } catch(x){ toast('Błędny plik'); } };
+$('mReset').onclick = () => { if ($('mReset').dataset.arm) { S.acts = {}; save(); delete $('mReset').dataset.arm; $('mReset').textContent = '🗑 Wyczyść moje wybory'; init(); toast('Wyczyszczono'); } else { $('mReset').dataset.arm = 1; $('mReset').textContent = '⚠ Dotknij ponownie, by wyczyścić'; } };
+$('bMenu').onclick = () => { const m = $('menu'); m.style.display = m.style.display === 'block' ? 'none' : 'block'; };
+$('mAi').onclick = () => $('fAi').click();
+$('fAi').onchange = async e => { const t = (await e.target.files[0].text()).replace(/^﻿/,''); const L = t.split(/\r?\n/).filter(Boolean), H = L[0].split(';'); let n = 0;
+  L.slice(1).forEach(l => { const c = l.split(';'), o = {}; H.forEach((h,i) => o[h] = c[i]||''); const id = o.id; if (!id) return; if (AM[id]) { AM[id].ai = o; n++; } else { const [,y,k] = id.match(/-(\d{4})-(\d+)/)||[]; if (!y) return; const a = {id, year:+y, act:+k, ai:o, unc:(o.uncertain_fields||'').split(';').filter(Boolean), file:'', roi:null}; D.acts.push(a); AM[id] = a; n++; } });
+  D.acts.sort((x,y) => x.year-y.year || x.act-y.act); toast(`Dołączono rekordów AI: ${n}`); init(); };
+$('mScan').onclick = () => $('fScan').click();
+$('fScan').onchange = async e => { for (const f of e.target.files) { extra[f.name] = URL.createObjectURL(f); try { const db = await idb(); db.transaction('s','readwrite').objectStore('s').put(f, f.name); } catch(x){} } toast(`Dodano skanów: ${e.target.files.length}`); renderAct(); };
+const idb = () => new Promise((ok,no) => { const r = indexedDB.open('wz1', 1); r.onupgradeneeded = () => r.result.createObjectStore('s'); r.onsuccess = () => ok(r.result); r.onerror = no; });
+async function loadExtra(){ try { const db = await idb(), os = db.transaction('s').objectStore('s'); const ks = await new Promise(ok => { const q = os.getAllKeys(); q.onsuccess = () => ok(q.result); }); for (const k of ks) { const b = await new Promise(ok => { const g = os.get(k); g.onsuccess = () => ok(g.result); }); extra[k] = URL.createObjectURL(b); } } catch(e){} }
+document.addEventListener('click', e => { if (!e.target.closest('#menu') && !e.target.closest('#bMenu')) $('menu').style.display = 'none'; });
+function init(){ renderTabs(); renderList(); if (!S.cur || !AM[S.cur]) S.cur = (D.acts.find(a => a.ai) || D.acts[0])?.id; renderList(); renderAct(); showScan(); }
+loadExtra().then(init);
+</script></body></html>
