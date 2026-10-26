@@ -16,7 +16,7 @@ button.sm{min-height:34px;padding:5px 9px;font-size:14px}
 #list{display:flex;gap:6px;overflow-x:auto;padding:8px 10px;background:var(--card);border-bottom:1px solid var(--line)}
 #list button{min-width:48px;padding:6px 8px;min-height:38px;flex:0 0 auto}
 #list button.cur{outline:3px solid var(--acc)}
-#list button.done{background:var(--lubb);border-color:var(--lub);font-weight:600}#list button.part{background:linear-gradient(to top,var(--bzb) calc(var(--p)*1%),var(--card) calc(var(--p)*1%));border-color:var(--bz)}
+#list button.ready{background:var(--lubb);border:2px solid var(--lub)}#list button.done{background:var(--lubb);border-color:var(--lub);font-weight:600}#list button.part{background:linear-gradient(to top,var(--bzb) calc(var(--p)*1%),var(--card) calc(var(--p)*1%));border-color:var(--bz)}
 #list button.diff{border-color:var(--bad);border-width:2px}
 #list button.noai{opacity:.55}
 .tabs{display:flex;gap:6px;padding:6px 10px;flex-wrap:nowrap;overflow-x:auto;background:var(--card)}.tabs button{flex:0 0 auto}
@@ -50,7 +50,8 @@ main{padding:10px;max-width:760px;margin:0 auto 90px}
 .tag{font-size:11px;border-radius:6px;padding:1px 6px;margin-left:4px}
 .tag.eq{background:var(--lubb);color:var(--lub)}.tag.ne{background:var(--badb);color:var(--bad)}.tag.ap{background:var(--bzb);color:var(--bz)}.tag.q{background:var(--bzb);color:var(--bz)}
 #bar{position:fixed;left:0;right:0;bottom:0;z-index:30;background:var(--card);border-top:1px solid var(--line);padding:8px 10px calc(8px + env(safe-area-inset-bottom));display:flex;gap:8px}
-#bar{gap:5px}#bar button{flex:1;min-width:0;min-height:52px;padding:4px 2px}#bar #bOk{flex:2.4;font-size:16px;font-weight:700}#bar #bPrev,#bar #bNext,#bar #bWiz,#bar #bMenu2,#bar #bText2{flex:.62}#bar #bSkip{flex:1.2}
+#bar{gap:5px}#bar button{flex:1;min-width:0;min-height:52px;padding:4px 2px}#bar #bOk{flex:2.6;font-size:16px;font-weight:700}#bar #bPrev,#bar #bNext,#bar #bWiz,#bar #bMenu2,#bar #bText2{flex:.62}#bar #bSkip{flex:1.2}
+#bar #bOk.rdy{background:var(--lub);color:#fff;border-color:var(--lub)}
 #fab{display:none;position:fixed;right:12px;bottom:calc(14px + env(safe-area-inset-bottom));z-index:45;width:56px;height:56px;border-radius:50%;font-size:24px;box-shadow:0 4px 14px rgba(0,0,0,.35);background:var(--acc);color:#fff;border:0}body.textmode #fab{display:block}body:has(#tsheet) #fab{display:none}#tsheet .tnav #tMenu{min-width:48px}.row.act{outline:3px solid var(--acc);border-radius:10px;padding-left:6px;padding-right:6px}
 details{margin-top:6px}details pre{white-space:pre-wrap;font-size:13px;background:var(--bg);padding:8px;border-radius:8px}
 #menu{display:none;position:fixed;right:8px;bottom:calc(70px + env(safe-area-inset-bottom));top:auto;max-height:78vh;overflow:auto;z-index:60;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:8px;box-shadow:0 8px 24px rgba(0,0,0,.25);width:260px}
@@ -266,9 +267,9 @@ function renderTabs(){ const ys = ['all',...new Set(D.acts.filter(a => !a.kind).
   $('tHide').onclick = () => { S.hideDoneActs = !S.hideDoneActs; save(); renderTabs(); renderList(); };
   $('tabs').querySelectorAll('button[data-y],button[data-f]').forEach(b => b.onclick = () => { if (b.dataset.y) S.year = b.dataset.y; else S.flt = b.dataset.f; save(); renderTabs(); renderList(); }); }
 function progOf(a){ const s = S.acts[a.id]; if (!s) return 0; let n = 0, d = 0; fieldsOf(a).forEach(f => { if (!appl(a,f.id) && !clean(getv(a,f.id))) return; if (!(a.ai?.[f.id] || a.lub?.[f.id] || (a.alts?.[f.id]||[]).length || s.f[f.id])) return; n++; if (s.f[f.id]?.ok || s.f[f.id]?.skip) d++; }); return n ? Math.round(100 * d / n) : 0; }
-function renderList(){ const v = visible(), rmk = repMarks(); $('list').innerHTML = v.map(a => { const pr = a.kind ? 0 : progOf(a); return `<button data-id="${a.id}" style="--p:${pr}" class="${rmk[a.id]?'rp-'+rmk[a.id]:''} ${pr>0&&!S.acts[a.id]?.done?'part':''} ${a.id===S.cur?'cur':''} ${S.acts[a.id]?.done?'done':''} ${a.ai&&hasDiff(a)?'diff':''} ${a.ai?'':'noai'}" title="${a.year}">${S.acts[a.id]?.done?'✓ ':''}${a.kind==='rej'?'Lp'+a.act:a.kind==='prot'?'Prot '+a.year:(S.year==='all'?String(a.year).slice(2)+'/':'')+a.act}</button>`; }).join('') || '<span class="muted">Brak aktów w tym filtrze</span>';
+function renderList(){ const v = visible(), rmk = repMarks(); $('list').innerHTML = v.map(a => { const pr = a.kind ? 0 : progOf(a); return `<button data-id="${a.id}" style="--p:${pr}" class="${rmk[a.id]?'rp-'+rmk[a.id]:''} ${pr>0&&pr<100&&!S.acts[a.id]?.done?'part':''} ${pr===100&&!S.acts[a.id]?.done?'ready':''} ${a.id===S.cur?'cur':''} ${S.acts[a.id]?.done?'done':''} ${a.ai&&hasDiff(a)?'diff':''} ${a.ai?'':'noai'}" title="${a.year}">${S.acts[a.id]?.done?'✓ ':(pr===100&&!a.kind?'● ':'')}${a.kind==='rej'?'Lp'+a.act:a.kind==='prot'?'Prot '+a.year:(S.year==='all'?String(a.year).slice(2)+'/':'')+a.act}</button>`; }).join('') || '<span class="muted">Brak aktów w tym filtrze</span>';
   $('list').querySelectorAll('button').forEach(b => b.onclick = () => open(b.dataset.id));
-  const done = D.acts.filter(a => !a.kind && S.acts[a.id]?.done).length, ai = D.acts.filter(a => !a.kind && a.ai).length; $('prog').textContent = `${done}/${ai} zatwierdz.`;
+  const done = D.acts.filter(a => !a.kind && S.acts[a.id]?.done).length, ai = D.acts.filter(a => !a.kind && a.ai).length; $('prog').textContent = `${done}/${ai} zatwierdz.`; bOkLabel();
   const c = $('list').querySelector('.cur'); if (c) c.scrollIntoView({inline:'center', block:'nearest'}); }
 // ---- akt
 function open(id){ S.cur = id; save(); renderList(); if (W.on) wizStart(); renderAct(); showScan(); }
@@ -285,6 +286,7 @@ function renderAct(){ const a = AM[S.cur]; const m = $('main'); if (!a){ m.inner
   if (W.on) return renderWiz();
   document.body.classList.toggle('textmode', !!(S.tmode && a.tekst)); $('bText').classList.toggle('on', !!S.tmode); $('bText2').classList.toggle('on', !!S.tmode);
   if (S.tmode && a.tekst) return renderText(a);
+  bOkLabel();
   const s = st(a.id), FS = fieldsOf(a); const nm = a.kind ? a.title : (a.ai ? `${a.ai.deceased_last_name} ${a.ai.deceased_first_name}` : `${a.lubName||''}`);
   const unc = a.ai ? FS.filter(f => isUnc(a,f.id) && !s.f[f.id]?.ok && !s.f[f.id]?.skip).length : 0;
   let h = `<div class="card"><div class="hd"><b>${a.kind?'':a.year+' · akt '+a.act+' · '}${nm}</b><span class="muted">${s.done?'✓ zatwierdzony':'do weryfikacji'}${a.ai?` · niepewnych pól: ${unc}`:' · tylko indeks Lubgens'}</span></div>
@@ -355,12 +357,19 @@ function wizAdvance(){ const before = S.cur; step(1); if (S.cur === before) { to
 function wizToggle(on){ W.on = on; document.body.classList.toggle('wz', on); if (on) { wizStart(); toast('Kreator: wybierz podpowiedź lub wpisz własne'); } renderAct(); window.scrollTo({top:0}); setTimeout(() => { fit(roiOf(curAct()||{})); wizFocus(); }, 40); }
 $('bWiz').onclick = () => wizToggle(true);
 function curAct(){ return AM[S.cur]; }
+function bOkLabel(){ const a = curAct(), b = $('bOk'); if (!a || !b) return; const rdy = !a.kind && progOf(a) === 100 && !S.acts[a.id]?.done; b.textContent = rdy ? '✓ Zatwierdź akt ▶' : (S.acts[a.id]?.done && !a.kind ? '▶▶ Następny akt' : '✓ OK'); b.classList.toggle('rdy', rdy); }
+function nextTodo(){ const v = visible(), i = v.findIndex(a => a.id === S.cur); let n = null; for (let k = 1; k <= v.length; k++) { const c = v[(i + k) % v.length]; if (c && !c.kind && c.ai && !S.acts[c.id]?.done) { n = c; break; } } if (!n) { toast('Wszystkie akty z odczytem zatwierdzone ✓'); step(1); return; } open(n.id); window.scrollTo({top:0}); }
+document.addEventListener('click', e => { const b = e.target.closest('[data-vrt],[data-vrp],[data-vro]'); if (!b) return; const a = curAct(); if (!a) return;
+  if (b.dataset.vrt) { const [i, en, fw] = b.dataset.vrt.split('|'), t = txtOf(a); setTxt(a, t.slice(0, +i) + fw + t.slice(+en)); toast('Poprawiono w tekście: ' + fw); }
+  else if (b.dataset.vrp) { const f = TF, val = guessBase(b.dataset.vrp, f, a); approveAll(a, fieldsOf(a), f, val, 'txt'); toast('Wpisano w polu: ' + val); }
+  else { const s2 = st(a.id); (s2.vrOk = s2.vrOk || {})[b.dataset.vro] = 1; save(); toast('Obie pisownie uznane'); }
+  renderAct(); renderList(); });
 function step(d){ const v = visible(); const i = v.findIndex(a => a.id === S.cur); const n = v[Math.max(0, Math.min(v.length-1, (i<0?0:i+d)))]; if (n) { open(n.id); window.scrollTo({top:0}); } }
 $('bPrev').onclick = () => step(-1); $('bNext').onclick = () => step(1);
-$('bOk').onclick = () => { const a = curAct(), r = $('main').querySelector('.row.act'); if (!a) return; if (!r) return toast('Wszystkie pola zdecydowane — zatwierdź akt'); const inp = r.querySelector('input[data-f],textarea[data-f]'), f = inp.dataset.f, val = inp.value.trim(); const c = [...r.querySelectorAll('.chip[data-f]')].find(b => clean(b.dataset.v) === clean(val)); commit(a, f, val, c ? c.dataset.s : 'edit'); keepScroll(true); };
+$('bOk').onclick = () => { const a = curAct(), r = $('main').querySelector('.row.act'); if (!a) return; if (!a.kind && (!r || (progOf(a) === 100 && !st(a.id).done)) || (r && st(a.id).done)) { if (!st(a.id).done) doDone(); else nextTodo(); return; } if (!r) return; const inp = r.querySelector('input[data-f],textarea[data-f]'), f = inp.dataset.f, val = inp.value.trim(); const c = [...r.querySelectorAll('.chip[data-f]')].find(b => clean(b.dataset.v) === clean(val)); commit(a, f, val, c ? c.dataset.s : 'edit'); keepScroll(true); };
 $('bSkip').onclick = () => { const a = curAct(), r = $('main').querySelector('.row.act'); if (!a || !r) return; const f = r.querySelector('input[data-f],textarea[data-f]').dataset.f; commit(a, f, getv(a,f), 'ai', {skip:true, ok:false}); keepScroll(true); };
 const doAll = () => { const a = curAct(); if (!a || !a.ai) return toast('Brak odczytu AI do porównania'); let n = 0; fieldsOf(a).forEach(f => { if (diffState(a,f.id) === 'eq' && !st(a.id).f[f.id]) { st(a.id).f[f.id] = {v: clean(a.ai[f.id]), src:'ai', ok:true, unc:st(a.id).f[f.id]?.unc}; n++; } }); save(); renderAct(); toast(`Przyjęto zgodne pola: ${n}`); };
-const doDone = () => { const a = curAct(); if (!a) return; const s = st(a.id); s.done = !s.done; save(); renderList(); renderAct(); toast(s.done ? 'Akt zatwierdzony ✓' : 'Cofnięto zatwierdzenie'); if (s.done) step(1); };
+const doDone = () => { const a = curAct(); if (!a) return; const s = st(a.id); s.done = !s.done; save(); renderList(); renderAct(); toast(s.done ? 'Akt zatwierdzony ✓' : 'Cofnięto zatwierdzenie'); if (s.done) nextTodo(); };
 // ---- skany i widok
 let extra = {}; const allScans = () => Object.assign({}, D.scans, extra);
 const scanOf = a => (S.acts[a.id]?.scan !== undefined ? S.acts[a.id].scan : a.file) || '';
@@ -431,6 +440,10 @@ let TF = null;
 const txtOf = a => { const s = S.acts[a.id]; return s && s.text != null ? s.text : (a.tekst || ''); };
 const ENDS = ['owie','ami','ach','ich','ych','ego','emu','ow','om','em','ie','owi','a','e','y','i','u','o'].sort((x,y) => y.length-x.length);
 function stemOf(w){ w = fold(w); for (const e of ENDS) if (w.length - e.length >= 4 && w.endsWith(e)) return w.slice(0, -e.length); return w; }
+const MIESG = new Set(['stycznia','lutego','marca','kwietnia','maja','czerwca','lipca','sierpnia','wrzesnia','pazdziernika','listopada','grudnia']);
+const SLOWA = new Set(['owdowiala','owdowialy','owdowialego','owdowialej','zona','zone','zony','maz','meza','domu','zmarlej','zmarlego','zamezna','zonaty']);
+const TAIL = /^(|a|e|i|y|u|o|m|ie|em|ow|owa|owi|ego|emu|iej|ej|ami|ach|om|ka|ek|ec|iec|ca|ce|cu|ku|ki|kow|la|el|le|ela|ia|iem|ia|ow|iow|ska|skiego|skiej|skim|ski|ia|ii|ią|ą|ę|ą|ach|ach|ow)$/;
+function lenient(w, v){ const a = fold(w), b = fold(v); if (a === b) return true; if (b === 'kol' && /^kolon/.test(a)) return true; if (sameStem(w, v)) return true; let k = 0; while (k < a.length && k < b.length && a[k] === b[k]) k++; if (k < 3) return false; const ta = a.slice(k), tb = b.slice(k); if (!TAIL.test(ta) || !TAIL.test(tb)) return false; return k >= Math.min(a.length, b.length) - 3 && k >= Math.max(a.length, b.length) - 5; }
 const sameStem = (w, v) => fold(w) === fold(v) || stemOf(w) === stemOf(v);
 function stemOk(w, v){ const a = fold(w), b = fold(v); if (a.length < 3 || b.length < 3) return false; if (a === b) return true; const x = stemOf(w), y = stemOf(v); if (x === y) return true; if (Math.min(x.length, y.length) >= 5 && lev(x, y, 1) <= 1) return true;
   if (Math.abs(a.length-b.length) > 3) return false; let k = 0; while (k < a.length && k < b.length && a[k] === b[k]) k++; return k >= Math.max(3, Math.min(a.length, b.length) - 2); }
@@ -440,9 +453,9 @@ function baseCands(word, f, a){ const t = FT[f]; if (!t || !D.counts[t]) return 
   const seen = new Set(); return out.sort((p,q) => q[2]-p[2]).filter(r => { const k = fold(r[0]); if (seen.has(k)) return false; seen.add(k); return true; }).slice(0,3); }
 function assignTok(a, t, FS){ const toks = []; const re = /[\p{L}]+/gu; let m; while ((m = re.exec(t))) toks.push({w:m[0], i:m.index, e:m.index+m[0].length, f:null});
   const ids = new Set(FS.map(f => f.id)); let cur = 0; const um = toks.findIndex(x => /^(umar|zmar)/i.test(x.w));
-  for (const f of TF_ORDER) { if (!ids.has(f)) continue; const ws = (f.startsWith('informant') ? clean(getv(a,f)).split(',')[0] : clean(getv(a,f))).split(/[\s\-,]+/).filter(w => w.length >= 3); if (!ws.length) continue;
+  for (const f of TF_ORDER) { if (!ids.has(f)) continue; const ws = (f.startsWith('informant') ? clean(getv(a,f)).split(',')[0] : clean(getv(a,f))).split(/[\s\-,]+/).map(w => w.replace(/[^\p{L}]/gu, '')).filter(w => w.length >= 3 && !SLOWA.has(fold(w))); if (!ws.length) continue;
     if (um >= 0 && ['death_place','deceased_first_name','deceased_last_name'].includes(f) && cur < um) cur = um;
-    let from = cur; for (const w of ws) { let j = toks.findIndex((x,k) => k >= from && !x.f && stemOk(x.w, w)); if (j < 0) j = toks.findIndex(x => !x.f && stemOk(x.w, w)); if (j >= 0) { toks[j].f = f; toks[j].vr = !sameStem(toks[j].w, w); from = j; if (w === ws[0]) cur = j; } } }
+    let from = cur; for (const w of ws) { let j = toks.findIndex((x,k) => k >= from && !x.f && !MIESG.has(fold(x.w)) && stemOk(x.w, w)); if (j < 0) j = toks.findIndex(x => !x.f && !MIESG.has(fold(x.w)) && stemOk(x.w, w)); if (j >= 0) { toks[j].f = f; toks[j].fw = w; toks[j].vr = f !== 'profession' && !lenient(toks[j].w, w) && !((S.acts[a.id]?.vrOk || {})[fold(toks[j].w)+'|'+fold(w)]); from = j; if (w === ws[0]) cur = j; } } }
   return toks; }
 const hlCls = (a, f) => { const x = S.acts[a.id]?.f?.[f]; return x?.skip ? 'sk' : x?.ok ? (x.unc ? 'un' : 'ok') : isUnc(a,f) ? 'un' : diffState(a,f) === 'ne' ? 'cf' : ''; };
 function marks(h){ return h.replace(/\[[^\]]*\]/g, q => /\?/.test(q) ? `<span class="mq">${q}</span>` : /nieczytel/i.test(q) ? `<span class="mr">${q}</span>` : `<span class="mg">${q}</span>`); }
@@ -488,7 +501,7 @@ function selScroll(){ const e = document.querySelector('#main .qm.sel, #main .hl
 function guessBase(w, f, a){ const sex = getv(a,'deceased_sex'), fem = f === 'mother_last_name' || f === 'deceased_maiden_name' || (f === 'deceased_last_name' && sex === 'K'); let g = w; if (/(sk|ck|dzk)ich$/i.test(w)) g = w.replace(/ich$/i, fem ? 'a' : 'i'); else if (/(sk|ck|dzk)iej$/i.test(w)) g = w.replace(/iej$/i, 'a'); else if (/(sk|ck|dzk)iego$/i.test(w)) g = w.replace(/iego$/i, 'i'); else if (/ów$/i.test(w)) g = w.slice(0, -2); return g; }
 function txtChips(a, f, FS, t){ if (FT[f] !== 's') return ''; const cur = clean(getv(a,f)), seen = new Set(), out = []; assignTok(a, t, FS).filter(x => x.f === f).forEach(x => { const add = (n, lbl) => { if (fold(n) === fold(cur) || seen.has(n)) return; seen.add(n); out.push(`<button class="chip akt" data-f="${f}" data-v="${esc(n)}" data-s="txt">TEKST: ${esc(n)} <small>${lbl} (z „${esc(x.w)}”)</small></button>`); };
     if (!x.vr && stemOf(x.w) === stemOf(cur)) return; baseCands(x.w, f, a).slice(0,2).forEach(([n,c]) => add(n, '×'+c)); if (x.vr) add(guessBase(x.w, f, a), 'odgadnięte'); }); return out.join(''); }
-const vrWarn = (a, f, FS, t) => { const v = assignTok(a, t, FS).filter(x => x.f === f && x.vr); return v.length ? `<div class="warn" style="margin:6px 0">⚠ W tekście: <b>${esc(v.map(x => x.w).join(', '))}</b> — inna pisownia niż w polu: <b>${esc(clean(getv(a,f)))}</b>. To mogą być różne nazwiska – sprawdź na skanie.</div>` : ''; };
+const vrWarn = (a, f, FS, t) => { const v = assignTok(a, t, FS).filter(x => x.f === f && x.vr); return v.length ? `<div class="warn" style="margin:6px 0">⚠ W tekście: <b>${esc(v.map(x => x.w).join(', '))}</b> — inna pisownia niż w polu: <b>${esc(clean(getv(a,f)))}</b>. To mogą być różne nazwiska – sprawdź na skanie.<div class="chips" style="margin-top:6px">${v.slice(0,1).map(x => `<button class="sm" data-vrt="${x.i}|${x.e}|${esc(x.fw)}">Tekst ← pole: „${esc(x.fw)}”</button><button class="sm" data-vrp="${esc(x.w)}">Pole ← tekst: „${esc(guessBase(x.w, f, a))}”</button><button class="sm" data-vro="${esc(fold(x.w))}|${esc(fold(x.fw))}">Obie poprawne</button>`).join('')}</div></div>` : ''; };
 function renderText(a){ const m = $('main'), s = st(a.id), FS = fieldsOf(a), md = S.tmode, t = txtOf(a); const fs = S.tfs || 18;
   if (TA !== a.id) { TA = a.id; TQ = null; TF = null; } if (!TQ && !TF && md !== 'popraw') { const f0 = seqOf(a, FS, t).find(x => x.pend); if (f0) pickIt(f0); }
   const SQ = seqOf(a, FS, t), curI = SQ.findIndex(x => x.t === 'q' ? x.k === TQ : (!TQ && x.k === TF)), cpos = curI >= 0 ? SQ[curI].pos : 0, pendN = SQ.filter(x => x.pend).length;
@@ -518,7 +531,7 @@ function renderText(a){ const m = $('main'), s = st(a.id), FS = fieldsOf(a), md 
   let sh = $('tsheet'); if (!sh) { sh = document.createElement('div'); sh.id = 'tsheet'; document.body.appendChild(sh); }
   sh.style.display = md === 'popraw' ? 'none' : 'block';
   const Fs = S.acts[a.id]?.f || {}, nEq = a.ai ? FS.filter(f => diffState(a,f.id) === 'eq' && !Fs[f.id] && !isUnc(a,f.id)).length : 0, isDone = !!S.acts[a.id]?.done;
-  const tools = (nEq ? `<button class="sm" id="tAll">Przyjmij zgodne (${nEq})</button>` : '') + (!pendN || isDone ? `<button class="sm ${isDone?'':'btn-ok'}" id="tDone" style="flex:1">${isDone ? '↺ Cofnij zatwierdzenie aktu' : '✓ Zatwierdź akt i dalej'}</button>` : '');
+  const tools = (nEq ? `<button class="sm" id="tAll">Przyjmij zgodne (${nEq})</button>` : '') + (!pendN || isDone ? `<button class="sm ${isDone?'':'btn-ok'}" id="tDone" style="flex:1;min-height:48px">${isDone ? '↺ Cofnij zatwierdzenie aktu' : '✓ Zatwierdź akt i dalej'}</button>` : '') + `<button class="sm" id="tNextAct" style="min-height:48px">⏭ Następny akt</button>`;
   sh.innerHTML = `<div class="tnav"><button id="tPrev">◀</button><span>${isDone ? '✓ akt zatwierdzony' : (curI >= 0 ? (curI+1)+'/'+SQ.length : '—') + ' · zostało: <b>' + pendN + '</b>'}</span><button id="tScan" title="Pokaż na skanie">🔍</button><button id="tNext">▶</button><button id="tMenu" title="Menu">⋯</button></div>${tools ? `<div class="chips" style="margin-top:6px">${tools}</div>` : ''}` + (qedit() || edit() || `<div class="muted" style="padding:8px">${pendN ? 'Dotknij podświetlony fragment albo ▶.' : '✓ Wszystko rozpatrzone – zatwierdź akt.'}</div>`);
   const rerender = (sc) => { renderAct(); renderList(); if (sc !== false) { selScroll(); focusTxt(a); } };
   m.querySelectorAll('[data-tm]').forEach(b => b.onclick = () => { S.tmode = b.dataset.tm; save(); renderAct(); window.scrollTo(0,0); });
@@ -526,7 +539,7 @@ function renderText(a){ const m = $('main'), s = st(a.id), FS = fieldsOf(a), md 
   m.querySelectorAll('.qm[data-q]').forEach(b => b.onclick = () => { TQ = b.dataset.q; TF = null; rerender(); });
   if ($('qFirst')) $('qFirst').onclick = () => { TQ = qOpen[0].key; TF = null; rerender(); };
   if ($('tAll')) $('tAll').onclick = () => { let n = 0; FS.forEach(f => { if (diffState(a,f.id) === 'eq' && !st(a.id).f[f.id] && !isUnc(a,f.id)) { st(a.id).f[f.id] = {v: clean(a.ai[f.id]), src:'ai', ok:true}; n++; } }); save(); const nq0 = resolveLinked(a, FS, FS.filter(f => st(a.id).f[f.id]?.ok).map(f => f.id)); toast(`Przyjęto zgodne: ${n}${nq0 ? ', w tekście: ' + nq0 : ''}`); tafter(a, FS, 0, true); rerender(); };
-  if ($('tDone')) $('tDone').onclick = () => { doDone(); };
+  if ($('tDone')) $('tDone').onclick = () => { doDone(); }; $('tNextAct').onclick = () => nextTodo();
   $('tScan').onclick = () => { if (TF) { if (!focusField(a, TF)) { approxFocus(a, 'f', TF); toast('Brak ramki pola – pokazuję orientacyjny fragment'); } } else if (TQ) approxFocus(a, 'q', TQ); };
   $('tPrev').onclick = () => { tgo(a, FS, -1); rerender(); }; $('tNext').onclick = () => { tgo(a, FS, 1); rerender(); }; $('tMenu').onclick = () => $('bMenu').click();
   if ($('qv')) { const q = qAll.find(q => q.key === TQ); const apply = v => { setTxt(a, t.slice(0,q.s) + v + t.slice(q.e)); tafter(a, FS, q.s, true); rerender(); };
