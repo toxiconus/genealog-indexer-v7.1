@@ -49,3 +49,10 @@ Dla każdego aktu, oprócz tekstu, CSV i ROI aktu, podaj położenie pól na ska
 - Prostokąt ma obejmować tylko to słowo/frazę (ciasno). Narzędzie samo doda margines. Błąd rzędu 1–2% skanu jest dopuszczalny, ale sprawdzaj położenie na siatce lub przy małym wycinku, nie „na oko”.
 - Nazwa pola = nazwa kolumny CSV. Dopisuj nowe akty na końcu (bez duplikatów).
 - Test v0: akty 62–63 (wykonał Sonnet z siatką współrzędnych) — trafność dobra; zadanie dla Haiku to zweryfikować tę trafność na kilku aktach.
+
+## 5c. Poprawki po teście (daty, miejsca, reguły)
+- **Data zgonu ≠ data aktu.** Akt zaczyna się datą spisania („Działo się … dnia …”), a data zgonu jest w zdaniu „oświadczyli, że dnia … umarł”. „Dnia wczorajszego” = data aktu minus 1 dzień, „dzisiejszego” = data aktu. Zawsze sprawdzaj to z numerem aktu w sąsiednich aktach (daty rosną z numerem) i z datą w Lubgens.
+- **Miejsce urodzenia i zamieszkania bierz z tekstu** („tamże urodzony i zamieszkały”, „urodzona w …”), nie z marginesu. Margines bywa miejscem zgonu albo zamieszkania; „tamże” = miejsce zgonu z początku zdania. Gdy w tekście jest tylko „urodzony”, zamieszkanie oznacz jako niepewne.
+- **Miejsce zgonu** wypełniaj zawsze (nie zostawiaj pustego); szpital: `Szpital Janów Lubelski` jako miejsce zgonu, a zamieszkanie osobno.
+- **Reguły:** panna/kawaler – bez małżonka; mężczyzna – nazwisko rodowe puste (nazwisko jest rodowe); dziecko – bez zawodu, chyba że wymieniony.
+- **Pisownia przyimków:** „umarł w Blinowie / w kolonii X / w Kacyńcu / w Brzozówce” (nie „z Blinowa”).

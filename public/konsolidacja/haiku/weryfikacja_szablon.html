@@ -100,7 +100,7 @@ const ORDF = [...ORD.map(id => FIELDS.find(f => f.id === id)).filter(Boolean), .
 const NUMW = {'jeden':1,'dwa':2,'trzy':3,'cztery':4,'pięć':5,'sześć':6,'siedem':7,'osiem':8,'dziewięć':9,'dziesięć':10,'jedenaście':11,'dwanaście':12,'trzynaście':13,'czternaście':14};
 const sLow = a => (getv(a,'deceased_status') || '').toString().toLowerCase();
 const isSingle = a => /panna|kawaler/.test(sLow(a));
-const isChild = a => { const t = (getv(a,'age') || '').toString().toLowerCase(); if (!t) return false; if (/miesi|tygod|dzie|dni|godz|tydz/.test(t)) return true; const m = t.match(/\d+/); if (m) return +m[0] < 15; const w = t.split(/\s+/).find(x => NUMW[x] !== undefined); return w ? NUMW[w] < 15 : false; };
+const isChild = a => { const t = (getv(a,'age') || '').toString().toLowerCase(); if (!t) return false; if (/miesi|tygod|(^|\s)dni(\s|$)|(^|\s)dzie[ńn](\s|$)|(^|\s)godz/.test(t)) return true; const m = t.match(/\d+/); if (m) return +m[0] < 15; const w = t.split(/\s+/).find(x => NUMW[x] !== undefined); return w ? NUMW[w] < 15 : false; };
 // reguły: panna – bez męża; mężczyzna – nazwisko rodowe puste (nazwisko jest rodowe); dziecko – bez zawodu, chyba że wymieniony
 const appl = (a,f) => { if (f === 'deceased_maiden_name') return getv(a,'deceased_sex') === 'K'; if (f === 'deceased_spouse') return !isSingle(a) && !isChild(a); if (f === 'profession') return !isChild(a) || !!clean(getv(a,f)); return true; };
 const warnsOf = a => { if (!a.ai && !a.lub) return []; const w = []; if (getv(a,'deceased_sex') === 'M' && clean(getv(a,'deceased_maiden_name'))) w.push('Mężczyzna: nazwisko rodowe powinno być puste (nazwisko jest rodowe) — chyba że wyjątek.'); if (isSingle(a) && clean(getv(a,'deceased_spouse'))) w.push('Panna/kawaler: nie powinno być małżonka.'); if (isChild(a) && clean(getv(a,'profession'))) w.push('Dziecko z zawodem — potwierdź, że zawód jest wymieniony w akcie.'); return w; };
@@ -190,7 +190,8 @@ function wizSave(v, src){ const a = curAct(), f = fieldsOf(a)[W.i]; if (!f) retu
 function wizSkip(){ const a = curAct(), f = fieldsOf(a)[W.i]; if (!f) return; commit(a, f.id, getv(a,f.id), 'ai', {skip:true, ok:false, unc:W.unc, note:W.note}); renderList(); wizGo(1); }
 function wizBar(btns){ $('wbar').innerHTML = btns.map(([id,l,c]) => `<button id="${id}" class="${c||''}">${l}</button>`).join(''); }
 function renderWiz(){ const a = curAct(), m = $('main'); if (!a) return; const FS = fieldsOf(a), s = st(a.id);
-  const head = `<div class="hd"><b>${a.kind?a.title:a.year+' · akt '+a.act+' · '+(a.ai?a.ai.deceased_last_name+' '+a.ai.deceased_first_name:a.lubName)}</b><button class="sm" id="wX">✕ Zakończ kreator</button></div>`;
+  const nEq = a.ai && a.lub ? FS.filter(f => diffState(a,f.id) === 'eq' && !s.f[f.id] && appl(a,f.id)).length : 0;
+  const head = `<div class="hd"><b>${a.kind?a.title:a.year+' · akt '+a.act+' · '+(a.ai?a.ai.deceased_last_name+' '+a.ai.deceased_first_name:a.lubName)}</b><span>${nEq?`<button class="sm btn-ok" id="wAcc">Przyjmij zgodne (${nEq})</button> `:''}<button class="sm" id="wX">✕ Zakończ</button></span></div>`;
   if (W.i >= FS.length) { const sk = FS.filter(f => s.f[f.id]?.skip).length, ok = FS.filter(f => s.f[f.id]?.ok).length, un = FS.filter(f => s.f[f.id]?.unc).length;
     m.innerHTML = `<div class="card wz-card">${head}<div class="big">Koniec pól</div><div class="muted">Zapisane: ${ok} · pominięte: ${sk} · niepewne: ${un}${a.cmp?'<br>'+esc(a.cmp):''}</div></div>`;
     wizBar([['wBack','◀ Wstecz'],['wSk',`Pominięte (${sk})`,'btn-skip'],['wFin','Zatwierdź akt ✓ i dalej','btn-ok']]);
@@ -210,7 +211,7 @@ function renderWiz(){ const a = curAct(), m = $('main'); if (!a) return; const F
     $('wUnc').onclick = () => { W.val = $('wIn').value; W.note = $('wNote')?.value ?? W.note; W.unc = !W.unc; renderWiz(); if (W.unc) $('wNote').focus(); };
     const okh = () => { const val = $('wIn').value.trim(); W.note = $('wNote')?.value ?? W.note; const c = [...m.querySelectorAll('.chip[data-f]')].find(b => clean(b.dataset.v) === clean(val)); wizSave(val, c ? c.dataset.s : 'edit'); };
     $('wOk').onclick = okh; $('wIn').onkeydown = e => { if (e.key === 'Enter' && !e.shiftKey && e.target.tagName === 'INPUT') { e.preventDefault(); okh(); } }; }
-  $('wX').onclick = () => wizToggle(false); setTimeout(wizFocus, 30); }
+  $('wX').onclick = () => wizToggle(false); if ($('wAcc')) $('wAcc').onclick = () => { FS.forEach(f => { if (diffState(a,f.id) === 'eq' && !s.f[f.id] && appl(a,f.id)) s.f[f.id] = {v: clean(a.ai[f.id]), src:'ai', ok:true}; }); save(); renderList(); wizStart(); renderWiz(); toast('Przyjęto zgodne pola'); }; setTimeout(wizFocus, 30); }
 function wizFocus(){ if (!W.on) return; const a = curAct(), f = a && fieldsOf(a)[W.i]; if (f) focusField(a, f.id); }
 function wizAdvance(){ const before = S.cur; step(1); if (S.cur === before) { toast('To ostatnia pozycja'); wizToggle(false); } }
 function wizToggle(on){ W.on = on; document.body.classList.toggle('wz', on); if (on) { wizStart(); toast('Kreator: wybierz podpowiedź lub wpisz własne'); } renderAct(); window.scrollTo({top:0}); setTimeout(() => { fit(roiOf(curAct()||{})); wizFocus(); }, 40); }

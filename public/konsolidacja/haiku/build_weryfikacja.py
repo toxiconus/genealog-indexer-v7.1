@@ -14,7 +14,7 @@ FIELDS = [("deceased_last_name","Nazwisko"),("deceased_first_name","Imię"),("de
 UNC = {"first_name":["deceased_first_name"],"date":["death_date"],"time":["death_time"],"age":["age"],"maiden":["deceased_maiden_name"],"birth":["deceased_birth_place"],
  "mother_last":["mother_last_name"],"father_last":["father_last_name"],"fa_last":["father_last_name"],"father_first":["father_first_name"],"father_first_name":["father_first_name"],
  "father":["father_first_name","father_last_name"],"mo":["mother_first_name","mother_last_name"],"informant1":["informant1"],"informant2":["informant2"],
- "spouse":["deceased_spouse"],"spouse_maiden":["deceased_spouse"],"mother_first":["mother_first_name"],"fa_last":["father_last_name"]}
+ "spouse":["deceased_spouse"],"residence":["deceased_residence"],"spouse_maiden":["deceased_spouse"],"mother_first":["mother_first_name"],"fa_last":["father_last_name"]}
 # --- AI
 rd = csv.DictReader(open(os.path.join(here,"ZGONY_ai1_import.csv"),encoding="utf-8-sig"), delimiter=";"); cols = rd.fieldnames
 ai = {}
