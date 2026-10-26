@@ -81,6 +81,7 @@ body.textmode #bar{display:none}body.textmode main{max-width:1000px;margin-botto
 .qm{background:var(--bzb);border-bottom:3px solid var(--bz);border-radius:4px;padding:1px 3px;font-weight:600;cursor:pointer;color:var(--ink)}.qm.r{background:var(--badb);border-bottom-color:var(--bad)}.qm.sk{background:transparent;border-bottom:3px dotted var(--mut);font-weight:400}.qm.sel{outline:3px solid var(--acc)}
 #tsheet{position:fixed;left:0;right:0;bottom:0;z-index:40;background:var(--card);border-top:2px solid var(--acc);box-shadow:0 -4px 14px rgba(0,0,0,.25);max-height:46vh;overflow:auto;padding:6px 10px calc(8px + env(safe-area-inset-bottom))}
 #tsheet .ted{margin:0;border:0;padding:4px 0}#tsheet .tnav{display:flex;align-items:center;justify-content:space-between;gap:8px;font-size:13px;color:var(--mut)}#tsheet .tnav button{min-height:36px;padding:2px 16px}
+#tsheet .act3{display:flex;gap:8px;margin-top:8px}#tsheet .act3 button{min-height:54px;flex:1;font-size:16px;font-weight:600}#tsheet .act3 .btn-ok{flex:2.2}#tsheet .act3 .uncb{background:var(--bzb);border-color:var(--bz);color:var(--bz);font-weight:500}
 #tsheet .ted input{margin:4px 0;padding:9px;font-size:17px}#tsheet .chip{min-height:44px}
 body.textmode main{margin-bottom:330px}body.textmode #view{height:30vh}body.textmode #view.l{height:48vh}body.textmode #view.s{height:20vh}
 .tnot{font-size:13px;color:var(--mut);margin-top:8px;white-space:pre-wrap}
@@ -361,10 +362,10 @@ function renderText(a){ const m = $('main'), s = st(a.id), FS = fieldsOf(a), md 
   const modes = [['pola','Pola w tekście'],['czysty','Czysty tekst'],['popraw','Popraw tekst'],['lista','Lista pól']];
   let h = `<div class="card"><div class="hd"><b>${esc(nm)}</b><span class="muted">${s.done?'✓ zatwierdzony':'do weryfikacji'}${s.text!=null?' · tekst poprawiony':''}</span></div><div class="tm" style="margin-top:8px">${modes.map(([k,l]) => `<button class="sm ${md===k?'on':''}" data-tm="${k}">${l}</button>`).join('')}<button class="sm" data-tm="">✕ Pola</button></div>`;
   const edit = () => { if (!TF || !FS.some(f => f.id === TF)) return ''; const f = FS.find(f => f.id === TF), v = getv(a,TF), x = s.f[TF];
-    return `<div class="ted"><b>${esc(f.label)}</b> ${tagsFor(a,TF,v,x)} <span class="muted">${x?.ok?'✓ '+(SRCN[x.src]||''):x?.skip?'pominięte':''}</span><input id="tfv" value="${esc(v)}" ${FT[TF]?`list="${FT[TF]==='s'?'dlS':'dlN'}"`:''} autocomplete="off"><div class="chips">${chipsFor(a,TF)}</div><div class="chips"><button class="chip btn-skip" id="tfSkip">Pomiń</button><button class="chip uncb ${x?.unc?'sel':''}" id="tfUnc">? niepewne</button><button class="chip" id="tfScan">🔍 na skanie</button><button class="chip btn-ok" id="tfOk">✓ Zatwierdź i dalej</button></div>${x?.unc?`<div class="nt"><input id="tfNote" placeholder="Opis niepewności" value="${esc(x.note||'')}"></div>`:''}</div>`; };
+    return `<div class="ted"><b>${esc(f.label)}</b> ${tagsFor(a,TF,v,x)} <span class="muted">${x?.ok?'✓ '+(SRCN[x.src]||''):x?.skip?'pominięte':''}</span><input id="tfv" value="${esc(v)}" ${FT[TF]?`list="${FT[TF]==='s'?'dlS':'dlN'}"`:''} autocomplete="off"><div class="chips">${chipsFor(a,TF)}</div><div class="act3"><button class="btn-skip" id="tfSkip">Pomiń</button><button class="uncb ${x?.unc?'sel':''}" id="tfUnc">? niepewne</button><button class="btn-ok" id="tfOk">✓ Zatwierdź</button></div>${x?.unc?`<div class="nt"><input id="tfNote" placeholder="Opis niepewności" value="${esc(x.note||'')}"></div>`:''}</div>`; };
   const qAll = qList(t), qOpen = qAll.filter(q => !(s.qs||{})[q.key]);
   const qedit = () => { const q = qAll.find(q => q.key === TQ); if (!q) return ''; const cl = qClean(q.txt); const ctx = esc(t.slice(Math.max(0,q.s-60), q.s)) + '<span class="qm sel">' + esc(q.txt) + '</span>' + esc(t.slice(q.e, q.e+60));
-    return `<div class="ted"><b>Niepewny odczyt</b><div class="muted" style="margin:4px 0">…${ctx}…</div><input id="qv" value="${esc(cl)}" autocomplete="off"><div class="chips"><button class="chip btn-skip" id="qSkip">Pomiń</button><button class="chip" id="qSave">✎ Zapisz zmianę</button><button class="chip btn-ok" id="qOk" ${cl?'':'disabled'}>✓ OK: „${esc(cl)}”</button></div></div>`; };
+    return `<div class="ted"><b>Niepewny odczyt</b><div class="muted" style="margin:4px 0">…${ctx}…</div><input id="qv" value="${esc(cl)}" autocomplete="off"><div class="act3"><button class="btn-skip" id="qSkip">Pomiń</button><button id="qSave">✎ Zapisz</button><button class="btn-ok" id="qOk" ${cl?'':'disabled'}>✓ OK: „${esc(cl)}”</button></div></div>`; };
   const qbar = qAll.length ? `<div class="chips" style="margin-bottom:6px"><span class="muted">Niepewne w tekście: <b>${qOpen.length}</b> z ${qAll.length}</span>${qOpen.length?'<button class="sm" id="qFirst">▶ Pierwsze niepewne</button>':''}</div>` : '';
   const notes = (a.tnotes||[]).length ? `<div class="tnot">${esc(a.tnotes.join('\n'))}</div>` : '';
   if (md === 'czysty') {
@@ -382,12 +383,17 @@ function renderText(a){ const m = $('main'), s = st(a.id), FS = fieldsOf(a), md 
   m.innerHTML = warnHtml(a) + h;
   let sh = $('tsheet'); if (!sh) { sh = document.createElement('div'); sh.id = 'tsheet'; document.body.appendChild(sh); }
   sh.style.display = md === 'popraw' ? 'none' : 'block';
-  sh.innerHTML = `<div class="tnav"><button id="tPrev">◀</button><span>${curI >= 0 ? (curI+1)+'/'+SQ.length : '—'} · do zrobienia: <b>${pendN}</b></span><button id="tNext">▶</button></div>` + (qedit() || edit() || `<div class="muted" style="padding:6px">${pendN ? 'Dotknij podświetlony fragment albo ▶.' : '✓ Wszystko w tym akcie rozpatrzone.'}</div>`);
+  const Fs = S.acts[a.id]?.f || {}, nEq = a.ai ? FS.filter(f => diffState(a,f.id) === 'eq' && !Fs[f.id] && !isUnc(a,f.id)).length : 0, isDone = !!S.acts[a.id]?.done;
+  const tools = (nEq ? `<button class="sm" id="tAll">Przyjmij zgodne (${nEq})</button>` : '') + (!pendN || isDone ? `<button class="sm ${isDone?'':'btn-ok'}" id="tDone" style="flex:1">${isDone ? '↺ Cofnij zatwierdzenie aktu' : '✓ Zatwierdź akt i dalej'}</button>` : '');
+  sh.innerHTML = `<div class="tnav"><button id="tPrev">◀</button><span>${isDone ? '✓ akt zatwierdzony' : (curI >= 0 ? (curI+1)+'/'+SQ.length : '—') + ' · zostało: <b>' + pendN + '</b>'}</span><button id="tScan" title="Pokaż na skanie">🔍</button><button id="tNext">▶</button></div>${tools ? `<div class="chips" style="margin-top:6px">${tools}</div>` : ''}` + (qedit() || edit() || `<div class="muted" style="padding:8px">${pendN ? 'Dotknij podświetlony fragment albo ▶.' : '✓ Wszystko rozpatrzone – zatwierdź akt.'}</div>`);
   const rerender = (sc) => { renderAct(); renderList(); if (sc !== false) { selScroll(); focusTxt(a); } };
   m.querySelectorAll('[data-tm]').forEach(b => b.onclick = () => { S.tmode = b.dataset.tm; save(); renderAct(); window.scrollTo(0,0); });
   m.querySelectorAll('.hl[data-f]').forEach(b => b.onclick = () => { TF = b.dataset.f; TQ = null; rerender(); });
   m.querySelectorAll('.qm[data-q]').forEach(b => b.onclick = () => { TQ = b.dataset.q; TF = null; rerender(); });
   if ($('qFirst')) $('qFirst').onclick = () => { TQ = qOpen[0].key; TF = null; rerender(); };
+  if ($('tAll')) $('tAll').onclick = () => { let n = 0; FS.forEach(f => { if (diffState(a,f.id) === 'eq' && !st(a.id).f[f.id] && !isUnc(a,f.id)) { st(a.id).f[f.id] = {v: clean(a.ai[f.id]), src:'ai', ok:true}; n++; } }); save(); toast(`Przyjęto zgodne: ${n}`); tafter(a, FS, 0, true); rerender(); };
+  if ($('tDone')) $('tDone').onclick = () => { doDone(); };
+  $('tScan').onclick = () => { if (TF) { if (!focusField(a, TF)) { approxFocus(a, 'f', TF); toast('Brak ramki pola – pokazuję orientacyjny fragment'); } } else if (TQ) approxFocus(a, 'q', TQ); };
   $('tPrev').onclick = () => { tgo(a, FS, -1); rerender(); }; $('tNext').onclick = () => { tgo(a, FS, 1); rerender(); };
   if ($('qv')) { const q = qAll.find(q => q.key === TQ); const apply = v => { setTxt(a, t.slice(0,q.s) + v + t.slice(q.e)); tafter(a, FS, q.s, true); rerender(); };
     $('qOk').onclick = () => apply(qClean(q.txt)); $('qSave').onclick = () => { const v = $('qv').value.trim(); if (!v) { toast('Wpisz odczyt'); return; } apply(v); };
@@ -398,7 +404,6 @@ function renderText(a){ const m = $('main'), s = st(a.id), FS = fieldsOf(a), md 
     $('tfOk').onclick = () => { const v = $('tfv').value.trim(), c = sh.querySelector('.chip.sel[data-f]'); commit(a, f, v, c && clean(c.dataset.v) === clean(v) ? c.dataset.s : (st(a.id).f[f]?.src || 'edit')); adv(); };
     $('tfSkip').onclick = () => { commit(a, f, getv(a,f), 'ai', {skip:true, ok:false}); adv(); };
     $('tfUnc').onclick = () => { const x = st(a.id).f[f] || {v:getv(a,f), src:(a.ai?.[f]?'ai':'lub'), ok:false}; x.unc = !isUnc(a,f); st(a.id).f[f] = x; save(); rerender(false); };
-    $('tfScan').onclick = () => { if (!focusField(a, f)) { approxFocus(a, 'f', f); toast('Brak ramki pola – pokazuję orientacyjny fragment'); } };
     if ($('tfNote')) $('tfNote').onchange = () => { const x = st(a.id).f[f]; if (x) { x.note = $('tfNote').value.trim(); save(); } }; }
   setTimeout(() => { selScroll(); focusTxt(a); }, 30);
   if ($('tfMinus')) { $('tfMinus').onclick = () => { S.tfs = Math.max(13, fs-2); save(); renderAct(); }; $('tfPlus').onclick = () => { S.tfs = Math.min(30, fs+2); save(); renderAct(); }; }
