@@ -11,6 +11,6 @@ function modelZZgonu(get, ok, meta){ const A = f => mAttr(get(f), ok(f)), id = m
   zdarzenia.push({id:'zd:' + id, typ:'zgon', osoba:zm.id, data:A('death_date'), godzina:A('death_time'), miejsce:A('death_place'), data_aktu:A('act_date'), zrodlo:'zr:' + id});
   const par = (rola, fn, ln) => { if (!get(fn) && !get(ln)) return null; const o = os(rola, {imie:A(fn), nazwisko:A(ln)}); relacje.push({typ:'rodzic-dziecko', a:o.id, b:zm.id, status: ok(fn) && ok(ln) ? 'dokument' : 'hipoteza', zrodlo:'zr:' + id}); return o; };
   par('ojciec', 'father_first_name', 'father_last_name'); par('matka', 'mother_first_name', 'mother_last_name');
-  if (get('deceased_spouse')) { const o = os('malzonek', {imie_nazwisko:A('deceased_spouse')}); relacje.push({typ:'malzenstwo', a:zm.id, b:o.id, status: ok('deceased_spouse') ? 'dokument' : 'hipoteza', zrodlo:'zr:' + id}); }
+  if (get('deceased_spouse')) { const o = os('malzonek', {imie_nazwisko:A('deceased_spouse')}); relacje.push({typ:'malzenstwo', a:zm.id, b:o.id, status: ok('deceased_spouse') ? 'dokument' : 'hipoteza', malzonek_zyje: ({'żonaty':'tak','zamężna':'tak','wdowiec':'nie','wdowa':'nie'})[String(get('deceased_status') || '').toLowerCase()] || '', zrodlo:'zr:' + id}); }
   ['informant1', 'informant2'].forEach((f, i) => { if (get(f)) { const o = os('swiadek' + (i + 1), {imie_nazwisko:A(f)}); relacje.push({typ:'swiadek', a:o.id, b:zm.id, status: ok(f) ? 'wskazowka' : 'hipoteza', zrodlo:'zr:' + id}); } });
   return {osoby, zdarzenia, zrodla, relacje}; }

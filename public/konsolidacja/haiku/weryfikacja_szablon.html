@@ -153,6 +153,7 @@ body.textmode main{margin-bottom:330px}body.textmode #view{height:30vh}body.text
 <datalist id="dlS"></datalist><datalist id="dlN"></datalist>
 <script>
 const D = /*DATA*/null;
+if (D.cols && D.cols.includes('deceased_spouse') && !D.cols.includes('spouse_alive')) D.cols.splice(D.cols.indexOf('deceased_spouse') + 1, 0, 'spouse_alive');   // czy małżonek żyje: wyliczane ze stanu cywilnego przy eksporcie
 const $ = id => document.getElementById(id);
 const FIELDS = D.fields.filter(f => f.id !== 'death_time'), AM = {}; D.acts.forEach(a => AM[a.id] = a);
 // kolejność wg tekstu aktu: margines (nazwisko, miejsce) → data → godzina → świadkowie → reszta z treści
@@ -458,7 +459,7 @@ function rows(){ return D.acts.filter(a => a.ai && !a.kind).map(a => { const s =
   const unc = FIELDS.filter(f => (isUnc(a,f.id) && !s.f?.[f.id]?.ok) || (s.f?.[f.id]?.unc)).map(f => f.id); r.uncertain_fields = unc.join(','); r.verification_notes = FIELDS.filter(f => s.f?.[f.id]?.note).map(f => f.id + ': ' + s.f[f.id].note).join(' | ');
   r.scan_path = (D.scanFiles || {})[scanOf(a)] || '';
   if (!s.done) r.death_time = '';
-  r.death_time = normTime(r.death_time); r.death_date = normDate(r.death_date); r.act_date = normDate(r.act_date); r.deceased_status = minor(a) ? 'dziecko' : String(r.deceased_status || '').trim().toLowerCase(); r.profession = String(r.profession || '').trim().toLowerCase();
+  r.death_time = normTime(r.death_time); r.death_date = normDate(r.death_date); r.act_date = normDate(r.act_date); r.deceased_status = minor(a) ? 'dziecko' : String(r.deceased_status || '').trim().toLowerCase(); { const st0 = r.deceased_status; r.spouse_alive = /^(żonaty|zamężna)\??$/.test(st0) ? 'tak' : /^(wdowiec|wdowa)\??$/.test(st0) ? 'nie' : ''; if (r.spouse_alive && /\?/.test(st0)) r.spouse_alive += '?'; } r.profession = String(r.profession || '').trim().toLowerCase(); if (r.deceased_spouse) r.deceased_spouse = normFieldVal(a,'deceased_spouse',r.deceased_spouse).replace(/(?<=\S)y(\??)$/,(m0,q0)=>/^[^ ]*a /.test(r.deceased_spouse)?'a'+q0:m0);
   const ed = Object.keys(s.f||{}).length; r.verification_status = s.done ? 'ok' : (ed ? 'ai_v1_w_trakcie' : 'ai_v1'); return r; }); }
 $('mCsv').onclick = () => { const rs = rows(); dl('ZGONY_zweryfikowane.csv', COLS.join(';') + '\r\n' + rs.map(r => COLS.map(c => q(r[c])).join(';')).join('\r\n') + '\r\n'); toast(`Eksport: ${rs.length} aktów`); };
 $('mLog').onclick = () => { const L = ['akt;pole;ai;lubgens;wybrane;zrodlo']; D.acts.forEach(a => { const s = S.acts[a.id]; if (!s) return; Object.entries(s.f).forEach(([f,x]) => L.push([a.id, f, a.ai?.[f]||'', a.lub?.[f]||'', x.v, x.src].map(q).join(';'))); }); dl('ZGONY_log_wyborow.csv', L.join('\r\n') + '\r\n'); };
@@ -719,8 +720,11 @@ function spBase(w){ const root = fold(w.replace(/(ów|ych|ich|ach|ami|om)$/i, ''
 function normFieldVal(a, f, v){ if (!v) return v;
   if (f === 'death_place' && /^Szpital Janów/i.test(v)) return 'Szpital Janów Lubelski';   // zmarli w szpitalu: bez dopisku miejsca zamieszkania („…(zm.), Moczydła”)
   if (PLF.has(f)) return v.replace(/[\p{L}]+/gu, w => { for (const [re, c] of PLC) if (re.test(w)) return c; return w; });
-  if (f === 'deceased_spouse') { const m = v.match(/^(\S+(?:\s+\S+)?)\s+z(?:e)?\s+(\S+?)(\?)?(\s*\((?:żona|mąż)\))?\s*$/u); if (!m) return v; const w = m[2]; let base = SPB[w] || spBase(w), q = m[3] || '';
-    if (!base) { base = guessBase(w, 'mother_last_name', a); q = '?'; } return `${m[1]} ${base}${q}${m[4] ? ' ' + m[4].trim() : ''}`; }
+  if (f === 'deceased_spouse') { let t = v.trim();
+    if (/\((?:I|II|III)\s*(?:mąż|żona)\)/.test(t)) { const ps = [...t.matchAll(/([^,;()]+?)\s*\((?:I|II|III)\s*(?:mąż|żona)\)/g)].map(m => m[1].trim()); if (ps.length) return ps.join('; '); }
+    t = t.replace(/^(?:żona|mąż)\s+/i, '').replace(/\s*\((?:owdowiał[aey]\s*)?(?:żona|mąż)?\)\s*$/i, '').replace(/\sz domu\s+/i, ' z ').trim();
+    const m = t.match(/^(\S+(?:\s+\S+)?)\s+ze?\s+(\S+?)(\?)?$/u); if (!m) return t || v; const w = m[2]; let base = SPB[w] || spBase(w), q = m[3] || '';
+    if (!base) { base = guessBase(w, 'mother_last_name', a); q = '?'; } if (/a$/i.test(m[1].split(' ')[0])) base = base.replace(/(sk|ck|dzk)i$/i,'$1a').replace(/(?<=[^aeiouy])y$/i,'a'); return `${m[1]} ${base}${q}`; }
   if (['mother_last_name','father_last_name','deceased_maiden_name','deceased_last_name'].includes(f)) { const t = v.replace(/\s*\((?:ze?)\s[^)]*\)/u, '').trim(); return t || v; }
   return v; }
 function normActs(){ D.acts.forEach(a => { ['ai','lub'].forEach(k => { const o = a[k]; if (!o) return; Object.keys(o).forEach(f => { if (typeof o[f] === 'string') o[f] = normFieldVal(a, f, o[f]); }); }); }); }

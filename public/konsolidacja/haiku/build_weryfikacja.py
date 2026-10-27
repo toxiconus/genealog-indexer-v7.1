@@ -51,7 +51,7 @@ def parse(u):
             p = t[2:].strip().split(" zd. ", 1); o["mother_first_name"] = p[0].strip()
             if len(p) > 1: o["mother_last_name"] = p[1].strip()
         elif t.startswith("zm."): o["death_date"] = iso(t[3:].strip())
-        elif re.match(r"^(ż\.|mąż)", t): o["deceased_spouse"] = re.sub(r"^(ż\.|mąż)\s*", "", t) + (" (żona)" if t.startswith("ż.") else " (mąż)")
+        elif re.match(r"^(ż\.|mąż)", t): o["deceased_spouse"] = re.sub(r"^(ż\.|mąż)\s*", "", t).strip()
         elif t.startswith("ur. i zam."): o["deceased_birth_place"] = o["deceased_residence"] = t[10:].strip()
         elif t.startswith("ur."): o["deceased_birth_place"] = t[3:].strip()
         elif re.search(r"(^|\s)[lk]\.\s*\d+", t):
