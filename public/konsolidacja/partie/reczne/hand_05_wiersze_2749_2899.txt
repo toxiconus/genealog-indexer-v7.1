@@ -5,7 +5,7 @@
 2753 | miejsc=Brzozówka | ojc=Wojciech | ojcw=24 | mat=Józefa | nazw=Pudłów
 2754 | miejsc=Blinów | ojc=Marcin | ojcw=40 | mat=Zofia | nazw=Kosidłów
 2755 | miejsc=Brzozówka | ojc=Paweł | ojcw=23 | mat=Marianna | nazw=Machulków
-2756 | miejsc=Moczydła | ojc=Franciszka | ojcw=36 | mat=Awy | nazw=Babiarzów | matw=36
+2756 | miejsc=Moczydła | ojc=Franciszka | ojcw=36 | mat=Ewa | nazw=Babiarzów | matw=36
 2757 | miejsc=Brzozówka | ojc=Maciej | ojcw=50 | mat=Anastazja | nazw=Dobrzyńskich | matw=38
 2758 | miejsc=Blinów | ojc=Mateusz | ojcw=25 | mat=Agnieszka | nazw=Paciorków | matw=25 | fl=pisownia 'Mateusz' bez dopełniacza (jak w G)
 2759 | miejsc=Blinów | ojc=Jan | ojcw=27 | mat=Zofia | nazw=Czubów | matw=27
@@ -73,7 +73,7 @@
 2822 | miejsc=Moczydła | ojc=Maciej | ojcw=25 | mat=Anna | nazw=Spryszaków | matw=26
 2823 | miejsc=Blinów | ojc=Jakub | ojcw=26 | mat=Jadwiga | nazw=Wcisłów | matw=22
 2824 | miejsc=Blinów | ojc=Franciszka | ojcw=42 | mat=Zofia | nazw=Wcisłów | matw=26
-2825 | miejsc=Blinów | ojc=Piotr | ojcw=26 | mat=Awy | nazw=Kotułów | matw=22
+2825 | miejsc=Blinów | ojc=Piotr | ojcw=26 | mat=Ewa | nazw=Kotułów | matw=22
 2826 | miejsc=Blinów | ojc=Szymon | ojcw=40 | mat=Franciszka | nazw=Klapców | matw=33 | fl=w nawiasie zawód ojca: kowal
 2827 | miejsc=Moczydła | ojc=Wawrzyniec | ojcw=21 | mat=Anastazja | nazw=Małków | matw=25
 2828 | miejsc=Moczydła | ojc=Stanisława | ojcw=36 | mat=Ewa | nazw=Wielebów | matw=30

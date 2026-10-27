@@ -1,7 +1,7 @@
 ﻿id_archiwalne;wiersz_zrodlo;typ_wpisu;rok;nr;nazwisko_dziecka;imie_dziecka;data_tekst;data_iso;ojciec_imie;ojciec_nazwisko;ojciec_wiek;ojciec_rok_ur_przyb;miejscowosc;matka_imie;matka_nazwisko;matka_wiek;matka_rok_ur_przyb;karta_nr;uwagi_surowe;flagi
-U004342;4292;akt;1889;51;Bajdas;Marcin;;;Józef;;;;Blinów;Maryanna;Pasternak;;;;"kol.G: Blinów - Józef i Maryanna Pasternak; kol.J: około 1889; kol.O: około 1889";"J/O: około 1889; brak nazwiska ojca (kol. H pusta)"
+U004342;4292;akt;1889;51;Bajdas;Marcin;;;Józef;;;;Blinów;Marianna;Pasternak;;;;"kol.G: Blinów - Józef i Maryanna Pasternak; kol.J: około 1889; kol.O: około 1889";"J/O: około 1889; brak nazwiska ojca (kol. H pusta)"
 U004343;4293;akt;1889;60;Baran;Jan;;;Łukasz;;;;Blinów;Katarzyna;Dziewa;;;;"kol.G: Blinów - Łukasz i Katarzyna Dziewa; kol.J: około 1889; kol.O: około 1889";"J/O: około 1889; brak nazwiska ojca (kol. H pusta)"
-U004344;4294;akt;1889;56;Barbarzak;Tomasz;;;Franciszek;;;;Blinów;Maryanna;Kosidło;;;;"kol.G: Blinów - Franciszek i Maryanna Kosidło; kol.J: około 1889; kol.O: około 1889";"J/O: około 1889; brak nazwiska ojca (kol. H pusta)"
+U004344;4294;akt;1889;56;Barbarzak;Tomasz;;;Franciszek;;;;Blinów;Marianna;Kosidło;;;;"kol.G: Blinów - Franciszek i Maryanna Kosidło; kol.J: około 1889; kol.O: około 1889";"J/O: około 1889; brak nazwiska ojca (kol. H pusta)"
 U004348;4298;akt;1889;22;Bucoń;Wojciech;;;Michał;;;;Brzozówka;Anna;Wach;;;;kol.G: Brzozówka - Michał i Anna Wach;brak nazwiska ojca (kol. H pusta)
 U004349;4299;akt;1889;26;Bucoń;Wojciech;;;Marcin;;;;Brzozówka;Katarzyna;Spryszak;;;;kol.G: Brzozówka - Marcin i Katarzyna Spryszak;brak nazwiska ojca (kol. H pusta)
 U004350;4300;akt;1889;4;Chmiel;Anna;;;Jan;;;;Moczydła;Agnieszka;Nikolas;;;;kol.G: Moczydła - Jan i Agnieszka Nikolas;brak nazwiska ojca (kol. H pusta)
@@ -10,57 +10,57 @@ U004352;4302;akt;1889;41;Drozd;Tomasz;;;Józef;;;;Blinów;Anna;Pawłasek;;;;kol.
 U004353;4303;akt;1889;6;Dziewa;Walenty;;;;;;;Blinów;Józefa;Dziewa;;;;kol.G: Blinów - Józefa Dziewa;jedna osoba w G (matka), ojciec nie podany
 U004354;4304;akt;1889;15;Jachura;Józef;;;Andrzej;;;;Moczydła;Franciszka;Dobrzyńska;;;;kol.G: Moczydła - Andrzej i Franciszka Dobrzyńska;brak nazwiska ojca (kol. H pusta)
 U004355;4305;akt;1889;34;Jachura;Katarzyna;;;Antoni;;;;Blinów;Katarzyna;Szuba;;;;kol.G: Blinów - Antoni i Katarzyna Szuba;brak nazwiska ojca (kol. H pusta)
-U004356;4306;akt;1889;48;Jachura;Marianna;;;Tomasz;;;;Blinów;Maryanna;Pcion;;;;kol.G: Blinów - Tomasz i Maryanna Pcion;brak nazwiska ojca (kol. H pusta)
+U004356;4306;akt;1889;48;Jachura;Marianna;;;Tomasz;;;;Blinów;Marianna;Pcion;;;;kol.G: Blinów - Tomasz i Maryanna Pcion;brak nazwiska ojca (kol. H pusta)
 U004357;4307;akt;1889;63;Janik;Tomasz;;;Wojciech;;;;Moczydła;Katarzyna;Bucoń;;;;kol.G: Moczydła - Wojciech i Katarzyna Bucoń;brak nazwiska ojca (kol. H pusta)
-U004358;4308;akt;1889;16;Kaczyńska;Antonina;;;Tomasz;;;;Blinów;Maryanna;Kiełbia?;;;;kol.G: Blinów - Tomasz i Maryanna Kiełbia?;"nazwisko matki z '?' w G; brak nazwiska ojca (kol. H pusta); znak '?' w imieniu/nazwisku rodzica"
+U004358;4308;akt;1889;16;Kaczyńska;Antonina;;;Tomasz;;;;Blinów;Marianna;Kiełbia?;;;;kol.G: Blinów - Tomasz i Maryanna Kiełbia?;"nazwisko matki z '?' w G; brak nazwiska ojca (kol. H pusta); znak '?' w imieniu/nazwisku rodzica"
 U004359;4309;akt;1889;30;Kaczyński;Antoni;;;Maciej;;;;Blinów;Katarzyna;Stępień;;;;kol.G: Blinów - Maciej i Katarzyna Stępień;brak nazwiska ojca (kol. H pusta)
 U004360;4310;akt;1889;59;Koguc;Barbara;;;Michał;;;;Brzozówka;Antonina;Krzysztoń;;;;"kol.G: Brzozówka - Michał i Antonina Krzysztoń; kol.J: około 1889; kol.O: około 1889";"J/O: około 1889; brak nazwiska ojca (kol. H pusta)"
 U004361;4311;akt;1889;2;Kolasa;Marianna;;;Ignacy;;;;Blinów;Rozalia;Pcionek;;;;kol.G: Blinów - Ignacy i Rozalia Pcionek;brak nazwiska ojca (kol. H pusta)
-U004362;4312;akt;1889;25;Kosidlak;Wojciech;;;Piotr;;;;Blinów;Maryanna;Dziewa;;;;kol.G: Blinów - Piotr i Maryanna Dziewa;brak nazwiska ojca (kol. H pusta)
+U004362;4312;akt;1889;25;Kosidlak;Wojciech;;;Piotr;;;;Blinów;Marianna;Dziewa;;;;kol.G: Blinów - Piotr i Maryanna Dziewa;brak nazwiska ojca (kol. H pusta)
 U004366;4313;akt;1889;53;Kosidło;Andrzej;;;Andrzej;;;;Blinów;Franciszka;Gąska;;;;"kol.G: Blinów - Andrzej i Franciszka Gąska; kol.J: około 1889; kol.O: około 1889";"J/O: około 1889; brak nazwiska ojca (kol. H pusta)"
 U004365;4314;akt;1889;43;Kosidło;Franciszek;;;Wojciech;;;;Blinów;Józefa;Chmiel;;;;"kol.G: Blinów - Wojciech i Józefa Chmiel; kol.J: około 1889; kol.O: około 1889";"J/O: około 1889; brak nazwiska ojca (kol. H pusta)"
 U004363;4315;akt;1889;13;Kosidło;Jan;;;Wawrzeniec;;;;Brzozówka;Aniela;Igras;;;;"kol.G: Brzozówka - Wawrzeniec i Aniela Igras; kol.J: około 1889; kol.O: około 1889";"J/O: około 1889; brak nazwiska ojca (kol. H pusta)"
-U004364;4316;akt;1889;35;Kosidło;Marianna;;;Kazimierz;;;;Blinów;Maryanna;Karczmarczyk;;;;"kol.G: Blinów - Kazimierz i Maryanna Karczmarczyk; kol.J: około 1889; kol.O: około 1889";"J/O: około 1889; brak nazwiska ojca (kol. H pusta)"
+U004364;4316;akt;1889;35;Kosidło;Marianna;;;Kazimierz;;;;Blinów;Marianna;Karczmarczyk;;;;"kol.G: Blinów - Kazimierz i Maryanna Karczmarczyk; kol.J: około 1889; kol.O: około 1889";"J/O: około 1889; brak nazwiska ojca (kol. H pusta)"
 U004367;4317;akt;1889;33;Krawczyk;Anna;;;Antoni;;;;Moczydła;Zofia;Jachura;;;;kol.G: Moczydła - Antoni i Zofia Jachura;brak nazwiska ojca (kol. H pusta)
-U004368;4318;akt;1889;55;Krawczyk;Jan;;;Wawrzeniec;;;;Moczydła;Maryanna;Sokół;;;;kol.G: Moczydła - Wawrzeniec i Maryanna Sokół;brak nazwiska ojca (kol. H pusta)
+U004368;4318;akt;1889;55;Krawczyk;Jan;;;Wawrzeniec;;;;Moczydła;Marianna;Sokół;;;;kol.G: Moczydła - Wawrzeniec i Maryanna Sokół;brak nazwiska ojca (kol. H pusta)
 U004369;4319;akt;1889;7;Krzysztoń;Walenty;;;Wojciech;;;;Brzozówka;Jadwiga;Machulak;;;;kol.G: Brzozówka - Wojciech i Jadwiga Machulak;brak nazwiska ojca (kol. H pusta)
 U004370;4320;akt;1889;31;Kudej;Anna;;;Mikołaj;;;;Brzozówka;Justyna;Brześkiewicz;;;;kol.G: Brzozówka - Mikołaj i Justyna Brześkiewicz;brak nazwiska ojca (kol. H pusta)
-U004371;4321;akt;1889;49;Kurczak;Andrzej;;;Maciej;;;;Blinów;Maryanna;Stępień;;;;kol.G: Blinów - Maciej i Maryanna Stępień;brak nazwiska ojca (kol. H pusta)
+U004371;4321;akt;1889;49;Kurczak;Andrzej;;;Maciej;;;;Blinów;Marianna;Stępień;;;;kol.G: Blinów - Maciej i Maryanna Stępień;brak nazwiska ojca (kol. H pusta)
 U004372;4322;akt;1889;62;Lodowski;Józef;;;Tomasz;;;;Blinów;Józefa;Olech;;;;kol.G: Blinów - Tomasz i Józefa Olech;brak nazwiska ojca (kol. H pusta)
 U004373;4323;akt;1889;50;Markiewicz;Karolina;;;Józef;;;;Blinów;Józefa;Łakom...?;;;;kol.G: Blinów - Józef i Józefa Łakom...?;"nazwisko matki urwane w G ('Łakom...?'); brak nazwiska ojca (kol. H pusta); znak '?' w imieniu/nazwisku rodzica"
-U004374;4324;akt;1889;39;Mazurek;Rozalia;;;Jan;;;;Brzozówka;Wiktorya;Brzyska;;;;kol.G: Brzozówka - Jan i Wiktorya Brzyska;brak nazwiska ojca (kol. H pusta)
-U004375;4325;akt;1889;29;Michałek;Antoni;;;Stanisław;;;;Blinów;Maryanna;Baran;;;;kol.G: Blinów - Stanisław i Maryanna Baran;brak nazwiska ojca (kol. H pusta)
+U004374;4324;akt;1889;39;Mazurek;Rozalia;;;Jan;;;;Brzozówka;Wiktoria;Brzyska;;;;kol.G: Brzozówka - Jan i Wiktorya Brzyska;brak nazwiska ojca (kol. H pusta)
+U004375;4325;akt;1889;29;Michałek;Antoni;;;Stanisław;;;;Blinów;Marianna;Baran;;;;kol.G: Blinów - Stanisław i Maryanna Baran;brak nazwiska ojca (kol. H pusta)
 U004376;4326;akt;1889;5;Mróz;Agata;;;Antoni;;;;Moczydła;Zofia;Łukasik?;;;;kol.G: Moczydła - Antoni i Zofia Łukasik?;"nazwisko matki z '?' w G; brak nazwiska ojca (kol. H pusta); znak '?' w imieniu/nazwisku rodzica"
 U004377;4327;akt;1889;27;Mróz;Antoni;;;Franciszek;;;;Blinów;Katarzyna;Obydź;;;;kol.G: Blinów - Franciszek i Katarzyna Obydź;brak nazwiska ojca (kol. H pusta)
 U004379;4328;akt;1889;14;Nieściór;Antoni;;;Jan;;;;Moczydła;Katarzyna;Dąbrowska;;;;kol.G: Moczydła - Jan i Katarzyna Dąbrowska;brak nazwiska ojca (kol. H pusta)
 U004378;4329;akt;1889;11;Nieściór;Małgorzata;;;Marcin;;;;Blinów;Katarzyna;Dziewa;;;;kol.G: Blinów - Marcin i Katarzyna Dziewa;brak nazwiska ojca (kol. H pusta)
 U004380;4330;akt;1889;57;Obydź;Marianna;;;Wojciech;;;;Blinów;Anna;Ogon;;;;kol.G: Blinów - Wojciech i Anna Ogon;brak nazwiska ojca (kol. H pusta)
 U004381;4331;akt;1889;9;Ogon;Walenty;;;;;;;Blinów;Anna;Ogon;;;;kol.G: Blinów - Anna Ogon;jedna osoba w G (matka), ojciec nie podany
-U004382;4332;akt;1889;12;Panek;Anna;;;Jan;;;;Blinów;Maryanna;Brzeszkiewicz;;;;kol.G: Blinów - Jan i Maryanna Brzeszkiewicz;brak nazwiska ojca (kol. H pusta)
-U004383;4333;akt;1889;23;Pawłasek;Stanisław;;;Wawrzeniec;;;;Moczydła;Maryanna;Dziura;;;;kol.G: Moczydła - Wawrzeniec i Maryanna Dziura;brak nazwiska ojca (kol. H pusta)
+U004382;4332;akt;1889;12;Panek;Anna;;;Jan;;;;Blinów;Marianna;Brzeszkiewicz;;;;kol.G: Blinów - Jan i Maryanna Brzeszkiewicz;brak nazwiska ojca (kol. H pusta)
+U004383;4333;akt;1889;23;Pawłasek;Stanisław;;;Wawrzeniec;;;;Moczydła;Marianna;Dziura;;;;kol.G: Moczydła - Wawrzeniec i Maryanna Dziura;brak nazwiska ojca (kol. H pusta)
 U004384;4334;akt;1889;18;Pizoń;Wojciech;;;Paweł;;;;Blinów;Jadwiga;Ciećko?;;;;kol.G: Blinów - Paweł i Jadwiga Ciećko?;"nazwisko matki z '?' w G; brak nazwiska ojca (kol. H pusta); znak '?' w imieniu/nazwisku rodzica"
 U004385;4335;akt;1889;40;Popiołek;Marianna;;;Wincenty;;;;Blinów;Petronella;Kokoszka;;;;kol.G: Blinów - Wincenty i Petronella Kokoszka;brak nazwiska ojca (kol. H pusta)
 U004386;4336;akt;1889;10;Poteńska;Józefa;;;Jan;;;;Brzozówka;Zofia;Kobylarz;;;;kol.G: Brzozówka - Jan i Zofia Kobylarz;brak nazwiska ojca (kol. H pusta)
 U004389;4339;akt;1889;52;Rębacz;Katarzyna;;;Jan;;;;Brzozówka;Barbara;Wcisło;;;;kol.G: Brzozówka - Jan i Barbara Wcisło;brak nazwiska ojca (kol. H pusta)
-U004390;4340;akt;1889;47;Rudnicka;Michalina;;;Jan;;;;Blinów;Maryanna;Pawłasek;;;;kol.G: Blinów - Jan i Maryanna Pawłasek;brak nazwiska ojca (kol. H pusta)
+U004390;4340;akt;1889;47;Rudnicka;Michalina;;;Jan;;;;Blinów;Marianna;Pawłasek;;;;kol.G: Blinów - Jan i Maryanna Pawłasek;brak nazwiska ojca (kol. H pusta)
 U004391;4341;akt;1889;19;Rymarczyk;Wojciech;;;Walenty;;;;Blinów;Felixa;Wojtak;;;;kol.G: Blinów - Walenty i Felixa Wojtak;"imię matki w G 'Felixa' zapisane jako w G; brak nazwiska ojca (kol. H pusta)"
-U004392;4342;akt;1889;20;Sambor;Wojciech;;;Piotr;;;;Blinów;Maryanna;Szantyk;;;;kol.G: Blinów - Piotr i Maryanna Szantyk;brak nazwiska ojca (kol. H pusta)
+U004392;4342;akt;1889;20;Sambor;Wojciech;;;Piotr;;;;Blinów;Marianna;Szantyk;;;;kol.G: Blinów - Piotr i Maryanna Szantyk;brak nazwiska ojca (kol. H pusta)
 U004393;4343;akt;1889;42;Sokół;Jan;;;Tomasz;;;;Moczydła;Katarzyna;Kamińska;;;;kol.G: Moczydła - Tomasz i Katarzyna Kamińska;brak nazwiska ojca (kol. H pusta)
-U004394;4344;akt;1889;44;Spryszak;Michał;;;Andrzej;;;;Brzozówka;Maryanna;Machulak;;;;kol.G: Brzozówka - Andrzej i Maryanna Machulak;brak nazwiska ojca (kol. H pusta)
+U004394;4344;akt;1889;44;Spryszak;Michał;;;Andrzej;;;;Brzozówka;Marianna;Machulak;;;;kol.G: Brzozówka - Andrzej i Maryanna Machulak;brak nazwiska ojca (kol. H pusta)
 U004395;4345;akt;1889;58;Staszowska;Marianna;;;Józef;;;;Blinów;Anna;Boczek;;;;kol.G: Blinów - Józef i Anna Boczek;brak nazwiska ojca (kol. H pusta)
-U004397;4346;akt;1889;45;Sulowski;Michał;;;Walenty;;;;Blinów;Maryanna;Komsa;;;;kol.G: Blinów - Walenty i Maryanna Komsa;brak nazwiska ojca (kol. H pusta)
-U004396;4347;akt;1889;1;Sulowski;Stanisław;;;Szymon;;;;Blinów;Maryanna;Suloska;;;;kol.G: Blinów - Szymon i Maryanna Suloska;brak nazwiska ojca (kol. H pusta)
-U004398;4348;akt;1889;24;Szabat;Stanisław;;;Wawrzeniec;;;;Blinów;Maryanna;Butkowska;;;;kol.G: Blinów - Wawrzeniec i Maryanna Butkowska;brak nazwiska ojca (kol. H pusta)
+U004397;4346;akt;1889;45;Sulowski;Michał;;;Walenty;;;;Blinów;Marianna;Komsa;;;;kol.G: Blinów - Walenty i Maryanna Komsa;brak nazwiska ojca (kol. H pusta)
+U004396;4347;akt;1889;1;Sulowski;Stanisław;;;Szymon;;;;Blinów;Marianna;Suloska;;;;kol.G: Blinów - Szymon i Maryanna Suloska;brak nazwiska ojca (kol. H pusta)
+U004398;4348;akt;1889;24;Szabat;Stanisław;;;Wawrzeniec;;;;Blinów;Marianna;Butkowska;;;;kol.G: Blinów - Wawrzeniec i Maryanna Butkowska;brak nazwiska ojca (kol. H pusta)
 U004399;4349;akt;1889;32;Szuba;Jan;;;Jan;;;;Blinów;Zofia;Wujcik / Wójcik?;;;;kol.G: Blinów - Jan i Zofia Wujcik - Wójcik?;"w G dwie pisownie nazwiska matki; brak nazwiska ojca (kol. H pusta); znak '?' w imieniu/nazwisku rodzica"
 U004400;4350;akt;1889;36;Szubstarski;Michał;;;Marcin;;;;Blinów;Antonina;Jachura;;;;kol.G: Blinów - Marcin i Antonina Jachura;brak nazwiska ojca (kol. H pusta)
 U004401;4351;akt;1889;37;Szyszka;Marcin;;;Tomasz;;;;Brzozówka;Katarzyna;Mazur;;;;kol.G: Brzozówka - Tomasz i Katarzyna Mazur;brak nazwiska ojca (kol. H pusta)
-U004402;4352;akt;1889;54;Wcisło;Andrzej;;;Mateusz;;;;Brzozówka;Maryanna;Pudło;;;;kol.G: Brzozówka - Mateusz i Maryanna Pudło;brak nazwiska ojca (kol. H pusta)
+U004402;4352;akt;1889;54;Wcisło;Andrzej;;;Mateusz;;;;Brzozówka;Marianna;Pudło;;;;kol.G: Brzozówka - Mateusz i Maryanna Pudło;brak nazwiska ojca (kol. H pusta)
 U004403;4353;akt;1889;46;Wnuk;Szymon;;;Franciszek;;;;Blinów;Anna;Stępień;;;;kol.G: Blinów - Franciszek i Anna Stępień;brak nazwiska ojca (kol. H pusta)
 U004404;4354;akt;1889;61;Wójtowicz;Agnieszka;;;Tomasz;;;;Blinów;Antonina;Pazdrak;;;;kol.G: Blinów - Tomasz i Antonina Pazdrak;brak nazwiska ojca (kol. H pusta)
 U004406;4355;akt;1890;74;Andrzejczak;Józef;;;Antoni;;;;Blinów;Zofia;Kosidlak;;;;kol.G: Blinów, Antoni i Zofia Kosidlak;brak nazwiska ojca (kol. H pusta)
 U004407;4356;akt;1890;2;Baran;Paweł;;;Wojciech;;;;Blinów;Anna;Brzyska;;;;kol.G: Blinów, Wojciech i Anna Brzyska;brak nazwiska ojca (kol. H pusta)
-U004408;4357;akt;1890;21;Baran;Stanisław;;;Józef;;;;Blinów;Maryanna;Boczek;;;;kol.G: Blinów, Józef i Maryanna Boczek;brak nazwiska ojca (kol. H pusta)
-U004409;4358;akt;1890;12;Białkowski;Józef;;;Antoni;;;;Blinów;Maryanna;Bucoń;;;;kol.G: Blinów, Antoni i Maryanna Bucoń;brak nazwiska ojca (kol. H pusta)
+U004408;4357;akt;1890;21;Baran;Stanisław;;;Józef;;;;Blinów;Marianna;Boczek;;;;kol.G: Blinów, Józef i Maryanna Boczek;brak nazwiska ojca (kol. H pusta)
+U004409;4358;akt;1890;12;Białkowski;Józef;;;Antoni;;;;Blinów;Marianna;Bucoń;;;;kol.G: Blinów, Antoni i Maryanna Bucoń;brak nazwiska ojca (kol. H pusta)
 U004410;4359;akt;1890;29;Boczek;Antoni;;;Andrzej;;;;Blinów;Katarzyna;Lenart;;;;kol.G: Blinów, Andrzej i Katarzyna Lenart;brak nazwiska ojca (kol. H pusta)
 U004411;4360;akt;1890;14;Breś;Stanisław;;;Tomasz;;;;Blinów;Jadwiga;Bucoń;;;;kol.G: Blinów, Tomasz i Jadwiga Bucoń;brak nazwiska ojca (kol. H pusta)
 U004413;4361;akt;1890;13;Bucoń;Franciszka;;;Maciej;;;;Brzozówka;Ewa;Dobrzyńska;;;;kol.G: Brzozówka, Maciej i Ewa Dobrzyńska;brak nazwiska ojca (kol. H pusta)
@@ -68,19 +68,19 @@ U004412;4362;akt;1890;15;Bucoń;Marianna;;;Franciszek;;;;Blinów;Zofia;Szubstars
 U004414;4363;akt;1890;20;Chmiel;Marianna;;;Wojciech;;;;Moczydła;Katarzyna;Żaba;;;;kol.G: Moczydła, Wojciech i Katarzyna Żaba;brak nazwiska ojca (kol. H pusta)
 U004415;4364;akt;1890;34;Chudy;Franciszek;;;Paweł;;;;Moczydła;Franciszka;Wieleba;;;;kol.G: Moczydła, Paweł i Franciszka Wieleba;brak nazwiska ojca (kol. H pusta)
 U004416;4365;akt;1890;56;Czuba;Tomasz;;;Józef;;;;Blinów;Anastazja;Grzela;;;;kol.G: Blinów, Józef i Anastazja Grzela;brak nazwiska ojca (kol. H pusta)
-U004419;4366;akt;1890;71;Dziewa;Agnieszka;;;Maciej;;;;Blinów;Maryanna;Omiotek;;;;kol.G: Blinów, Maciej i Maryanna Omiotek;brak nazwiska ojca (kol. H pusta)
+U004419;4366;akt;1890;71;Dziewa;Agnieszka;;;Maciej;;;;Blinów;Marianna;Omiotek;;;;kol.G: Blinów, Maciej i Maryanna Omiotek;brak nazwiska ojca (kol. H pusta)
 U004418;4367;akt;1890;37;Dziewa;Jadwiga;;;Dominik;;;;Blinów;Katarzyna;Sobutka;;;;kol.G: Blinów, Dominik i Katarzyna Sobutka;brak nazwiska ojca (kol. H pusta)
 U004417;4368;akt;1890;5;Dziewa;Marianna;;;Antoni;;;;Moczydła;Anna;Pcionek;;;;kol.G: Moczydła, Antoni i Anna Pcionek;brak nazwiska ojca (kol. H pusta)
-U004421;4369;akt;1890;41;Jachura;Franciszek;;;Józef;;;;Blinów;Maryanna;Kosidło;;;;kol.G: Blinów, Józef i Maryanna Kosidło;brak nazwiska ojca (kol. H pusta)
+U004421;4369;akt;1890;41;Jachura;Franciszek;;;Józef;;;;Blinów;Marianna;Kosidło;;;;kol.G: Blinów, Józef i Maryanna Kosidło;brak nazwiska ojca (kol. H pusta)
 U004420;4370;akt;1890;6;Jachura;Józefa;;;Walenty;;;;Moczydła;Agnieszka;Nieściur;;;;kol.G: Moczydła, Walenty i Agnieszka Nieściur;brak nazwiska ojca (kol. H pusta)
-U004422;4371;akt;1890;73;Kaczmarczyk;Marianna;;;Jakób;;;;Blinów;Maryanna;Rębecka;;;;kol.G: Blinów, Jakób i Maryanna Rębecka;brak nazwiska ojca (kol. H pusta)
+U004422;4371;akt;1890;73;Kaczmarczyk;Marianna;;;Jakób;;;;Blinów;Marianna;Rębecka;;;;kol.G: Blinów, Jakób i Maryanna Rębecka;brak nazwiska ojca (kol. H pusta)
 U004423;4372;akt;1890;30;Kaczyńska;Anna;;;Kazimierz;;;;Moczydła;Katarzyna;Janik;;;;kol.G: Moczydła, Kazimierz i Katarzyna Janik;brak nazwiska ojca (kol. H pusta)
 U004424;4373;akt;1890;58;Kaczyński;Andrzej;;;Józef;;;;Blinów;Ewa;Kurczak;;;;kol.G: Blinów, Józef i Ewa Kurczak;brak nazwiska ojca (kol. H pusta)
-U004425;4374;akt;1890;8;Kaczyński;Jan;;;;;;;Blinów;Maryanna;Kaczyńska;;;;kol.G: Blinów, Maryanna Kaczyńska;jedna osoba w G (matka), ojciec nie podany
+U004425;4374;akt;1890;8;Kaczyński;Jan;;;;;;;Blinów;Marianna;Kaczyńska;;;;kol.G: Blinów, Maryanna Kaczyńska;jedna osoba w G (matka), ojciec nie podany
 U004426;4375;akt;1890;36;Kamińska;Anna;;;Tomasz;;;;Brzozówka;Józefa;Bucoń;;;;kol.G: Brzozówka, Tomasz i Józefa Bucoń;brak nazwiska ojca (kol. H pusta)
-U004428;4376;akt;1890;43;Kędziora;Franciszek;;;Tomasz;;;;Brzozówka;Maryanna;Krzysztoń;;;;kol.G: Brzozówka, Tomasz i Maryanna Krzysztoń;brak nazwiska ojca (kol. H pusta)
+U004428;4376;akt;1890;43;Kędziora;Franciszek;;;Tomasz;;;;Brzozówka;Marianna;Krzysztoń;;;;kol.G: Brzozówka, Tomasz i Maryanna Krzysztoń;brak nazwiska ojca (kol. H pusta)
 U004427;4377;akt;1890;31;Kędziora;Magdalena;;;Stanisław;;;;Blinów;Paulina;Kosidło;;;;kol.G: Blinów, Stanisław i Paulina Kosidło;brak nazwiska ojca (kol. H pusta)
-U004429;4378;akt;1890;66;Kolasa;Agnieszka;;;Łukasz;;;;Moczydła;Maryanna;Kosidło;;;;kol.G: Moczydła, Łukasz i Maryanna Kosidło;brak nazwiska ojca (kol. H pusta)
+U004429;4378;akt;1890;66;Kolasa;Agnieszka;;;Łukasz;;;;Moczydła;Marianna;Kosidło;;;;kol.G: Moczydła, Łukasz i Maryanna Kosidło;brak nazwiska ojca (kol. H pusta)
 U004430;4379;akt;1890;60;Komsa;Jan;;;Franciszek;;;;Brzozówka;Franciszka;Mazur;;;;kol.G: Brzozówka, Franciszek i Franciszka Mazur;brak nazwiska ojca (kol. H pusta)
 U004432;4380;akt;1890;39;Kosidło;Aniela;;;Józef;;;;Brzozówka;Franciszka;Machulak;;;;"kol.G: Brzozówka, Józef i Franciszka Machulak; kol.J: około 1890; kol.O: około 1890";"J/O: około 1890; brak nazwiska ojca (kol. H pusta)"
 U004431;4381;akt;1890;22;Kosidło;Marianna;;;Andrzej;;;;Blinów;Antonina;Błaszczyk;;;;"kol.G: Blinów, Andrzej i Antonina Błaszczyk; kol.J: około 1890; kol.O: około 1890";"J/O: około 1890; brak nazwiska ojca (kol. H pusta)"
@@ -94,14 +94,14 @@ U004439;4388;akt;1890;27;Łatka;Antonina;;;Walenty;;;;Blinów;Antonina;Dobrzyńs
 U004441;4389;akt;1890;10;Machulak;Jan;;;Stanisław;;;;Blinów;Anna;Spryszak;;;;kol.G: Blinów, Stanisław i Anna Spryszak;brak nazwiska ojca (kol. H pusta)
 U004442;4390;akt;1890;11;Machulak;Józef;;;Piotr;;;;Moczydła;Agnieszka;Kania?;;;;kol.G: Moczydła, Piotr i Agnieszka Kania?;"nazwisko matki z '?' w G; brak nazwiska ojca (kol. H pusta); znak '?' w imieniu/nazwisku rodzica"
 U004440;4391;akt;1890;18;Machulak;Wojciech;;;Walenty;;;;Brzozówka;Józefa;Spryszak;;;;kol.G: Brzozówka, Walenty i Józefa Spryszak;brak nazwiska ojca (kol. H pusta)
-U004444;4392;akt;1890;48;Marchewka;Michał;;;Jan;;;;Blinów;Maryanna;Goch;;;;kol.G: Blinów, Jan i Maryanna Goch;brak nazwiska ojca (kol. H pusta)
+U004444;4392;akt;1890;48;Marchewka;Michał;;;Jan;;;;Blinów;Marianna;Goch;;;;kol.G: Blinów, Jan i Maryanna Goch;brak nazwiska ojca (kol. H pusta)
 U004443;4393;akt;1890;19;Marchewka;Stanisław;;;Antoni;;;;Blinów;Katarzyna;Jaskuła?;;;;kol.G: Blinów, Antoni i Katarzyna Jaskuła?;"nazwisko matki z '?' w G; brak nazwiska ojca (kol. H pusta); znak '?' w imieniu/nazwisku rodzica"
-U004445;4394;akt;1890;3;Mazurek;Agnieszka;;;Stanisław;;;;Brzozówka;Maryanna;Ogon;;;;kol.G: Brzozówka, Stanisław i Maryanna Ogon;brak nazwiska ojca (kol. H pusta)
-U004446;4395;akt;1890;55;Michałek;Andrzej;;;Stanisław;;;;Blinów;Maryanna;Baran;;;;kol.G: Blinów, Stanisław i Maryanna Baran;brak nazwiska ojca (kol. H pusta)
+U004445;4394;akt;1890;3;Mazurek;Agnieszka;;;Stanisław;;;;Brzozówka;Marianna;Ogon;;;;kol.G: Brzozówka, Stanisław i Maryanna Ogon;brak nazwiska ojca (kol. H pusta)
+U004446;4395;akt;1890;55;Michałek;Andrzej;;;Stanisław;;;;Blinów;Marianna;Baran;;;;kol.G: Blinów, Stanisław i Maryanna Baran;brak nazwiska ojca (kol. H pusta)
 U004449;4396;akt;1890;67;Mróz;Agnieszka;;;Paweł;;;;Blinów;Katarzyna;Kosidło;;;;kol.G: Blinów, Paweł i Katarzyna Kosidło;brak nazwiska ojca (kol. H pusta)
 U004448;4397;akt;1890;38;Mróz;Rozalia;;;Antoni;;;;Moczydła;Zofia;Łukasik;;;;kol.G: Moczydła, Antoni i Zofia Łukasik;brak nazwiska ojca (kol. H pusta)
 U004447;4398;akt;1890;16;Mróz;Wojciech;;;Tomasz;;;;Blinów;Józefa;Kosidło;;;;kol.G: Blinów, Tomasz i Józefa Kosidło;brak nazwiska ojca (kol. H pusta)
-U004450;4399;akt;1890;42;Nieściór;Franciszek;;;Andrzej;;;;Moczydła;Maryanna;Koguc;;;;kol.G: Moczydła, Andrzej i Maryanna Koguc;brak nazwiska ojca (kol. H pusta)
+U004450;4399;akt;1890;42;Nieściór;Franciszek;;;Andrzej;;;;Moczydła;Marianna;Koguc;;;;kol.G: Moczydła, Andrzej i Maryanna Koguc;brak nazwiska ojca (kol. H pusta)
 U004451;4400;akt;1890;23;Nowicka;Marianna Aniela;;;Apoloniusz;;;;Brzozówka;Helena;Dyak?;;;;kol.G: Brzozówka, Apoloniusz i Helena Dyak?;"nazwisko matki z '?' w G; brak nazwiska ojca (kol. H pusta); znak '?' w imieniu/nazwisku rodzica"
 U004452;4401;akt;1890;51;Obydź;Tomasz;;;Walenty;;;;Blinów;Ewa;Kosidlak;;;;kol.G: Blinów, Walenty i Ewa Kosidlak;brak nazwiska ojca (kol. H pusta)
 U004453;4402;akt;1890;62;Ogon;Marcin;;;Maciej;;;;Brzozówka;Barbara;Obydź;;;;kol.G: Brzozówka, Maciej i Barbara Obydź;brak nazwiska ojca (kol. H pusta)
@@ -112,37 +112,37 @@ U004457;4406;akt;1890;49;Pawłasek;Marianna;;;Wincenty;;;;Blinów;Katarzyna;Ganc
 U004458;4407;akt;1890;57;Pawłasek;Marianna;;;Walenty;;;;Brzozówka;Weronika;Białkoska;;;;kol.G: Brzozówka, Walenty i Weronika Białkoska;brak nazwiska ojca (kol. H pusta)
 U004459;4408;akt;1890;64;Pcionek;Marianna;;;Bartłomiej;;;;Blinów;Katarzyna;Pcionek;;;;kol.G: Blinów, Bartłomiej i Katarzyna Pcionek;brak nazwiska ojca (kol. H pusta)
 U004460;4409;akt;1890;7;Pcionek;Rozalia;;;Michał;;;;Blinów;Jadwiga;Wcisło;;;;kol.G: Blinów, Michał i Jadwiga Wcisło;brak nazwiska ojca (kol. H pusta)
-U004461;4410;akt;1890;40;Polak;Jadwiga;;;Andrzej;;;;Blinów;Maryanna;Janczarek;;;;kol.G: Blinów, Andrzej i Maryanna Janczarek;brak nazwiska ojca (kol. H pusta)
-U004464;4413;akt;1890;54;Rzeczycka;Katarzyna;;;Antoni;;;;Blinów;Maryanna;Szot;;;;kol.G: Blinów, Antoni i Maryanna Szot;brak nazwiska ojca (kol. H pusta)
+U004461;4410;akt;1890;40;Polak;Jadwiga;;;Andrzej;;;;Blinów;Marianna;Janczarek;;;;kol.G: Blinów, Andrzej i Maryanna Janczarek;brak nazwiska ojca (kol. H pusta)
+U004464;4413;akt;1890;54;Rzeczycka;Katarzyna;;;Antoni;;;;Blinów;Marianna;Szot;;;;kol.G: Blinów, Antoni i Maryanna Szot;brak nazwiska ojca (kol. H pusta)
 U004466;4414;akt;1890;28;Sikora;Jan;;;Paweł;;;;Moczydła;Katarzyna;Żaba;;;;kol.G: Moczydła, Paweł i Katarzyna Żaba;brak nazwiska ojca (kol. H pusta)
 U004465;4415;akt;1890;17;Sikora;Wojciech;;;Walenty;;;;Moczydła;Katarzyna;Panek;;;;kol.G: Moczydła, Walenty i Katarzyna Panek;brak nazwiska ojca (kol. H pusta)
 U004467;4416;akt;1890;1;Sobótka;Agnieszka;;;Marcin;;;;Blinów;Zofia;;;;;kol.G: Blinów, Marcin i Zofia? ?;"nazwisko matki nieczytelne ('Zofia ? ?') w G; brak nazwiska ojca (kol. H pusta)"
 U004468;4417;akt;1890;35;Sobótka;Marianna;;;Ignacy;;;;Blinów;Franciszka;Jachura;;;;kol.G: Blinów, Ignacy i Franciszka Jachura;brak nazwiska ojca (kol. H pusta)
 U004470;4418;akt;1890;75;Sobótka;Marianna;;;Wojciech;;;;Blinów;Jadwiga;Jachura;;;;kol.G: Blinów, Wojciech i Jadwiga Jachura;brak nazwiska ojca (kol. H pusta)
 U004469;4419;akt;1890;59;Sobótka;Szymon;;;Wojciech;;;;Blinów;Agata;Jaskuła?;;;;kol.G: Blinów, Wojciech i Agata Jaskuła?;"nazwisko matki z '?' w G; brak nazwiska ojca (kol. H pusta); znak '?' w imieniu/nazwisku rodzica"
-U004471;4420;akt;1890;72;Sokół;Marianna;;;Józef;;;;Moczydła;Maryanna;Baran;;;;kol.G: Moczydła, Józef i Maryanna Baran;brak nazwiska ojca (kol. H pusta)
+U004471;4420;akt;1890;72;Sokół;Marianna;;;Józef;;;;Moczydła;Marianna;Baran;;;;kol.G: Moczydła, Józef i Maryanna Baran;brak nazwiska ojca (kol. H pusta)
 U004472;4421;akt;1890;68;Stępień;Weronika;;;Wojciech;;;;Blinów;Jadwiga;Kosidlak;;;;kol.G: Blinów, Wojciech i Jadwiga Kosidlak;brak nazwiska ojca (kol. H pusta)
-U004473;4422;akt;1890;50;Sulowska;Rozalia;;;Franciszek;;;;Blinów;Maryanna;Kowal;;;;kol.G: Blinów, Franciszek i Maryanna Kowal;brak nazwiska ojca (kol. H pusta)
+U004473;4422;akt;1890;50;Sulowska;Rozalia;;;Franciszek;;;;Blinów;Marianna;Kowal;;;;kol.G: Blinów, Franciszek i Maryanna Kowal;brak nazwiska ojca (kol. H pusta)
 U004474;4423;akt;1890;26;Szabat;Antonina;;;Dominik;;;;Blinów;Agnieszka;Kosidło;;;;kol.G: Blinów, Dominik i Agnieszka Kosidło;brak nazwiska ojca (kol. H pusta)
 U004475;4424;akt;1890;24;Szyszka;Aniela;;;Stanisław;;;;Brzozówka;Ewa;Jachura;;;;kol.G: Brzozówka, Stanisław i Ewa Jachura;brak nazwiska ojca (kol. H pusta)
 U004476;4425;akt;1890;76;Tracz;Józef;;;Antoni;;;;Brzozówka;Magdalena;Szyszka;;;;kol.G: Brzozówka, Antoni i Magdalena Szyszka;brak nazwiska ojca (kol. H pusta)
 U004477;4426;akt;1890;44;Wcisło;Bartłomiej;;;Jan;;;;Blinów;Katarzyna;Kędziora;;;;kol.G: Blinów, Jan i Katarzyna Kędziora;brak nazwiska ojca (kol. H pusta)
 U004478;4427;akt;1890;9;Wcisło;Katarzyna;;;Jan;;;;Moczydła;Anna;Surma;;;;kol.G: Moczydła, Jan i Anna Surma;brak nazwiska ojca (kol. H pusta)
 U004479;4428;akt;1890;52;Wnuk;Michał;;;Jan;;;;Blinów;Aniela;Pawełczak;;;;kol.G: Blinów, Jan i Aniela Pawełczak;brak nazwiska ojca (kol. H pusta)
-U004480;4429;akt;1890;65;Woś;Jan;;;Piotr;;;;Brzozówka;Maryanna;Ogon;;;;kol.G: Brzozówka, Piotr i Maryanna Ogon;brak nazwiska ojca (kol. H pusta)
+U004480;4429;akt;1890;65;Woś;Jan;;;Piotr;;;;Brzozówka;Marianna;Ogon;;;;kol.G: Brzozówka, Piotr i Maryanna Ogon;brak nazwiska ojca (kol. H pusta)
 U004481;4430;akt;1890;32;Wójcik;Marianna;;;Józef;;;;Blinów;Anna;Kaczyńska;;;;kol.G: Blinów, Józef i Anna Kaczyńska;brak nazwiska ojca (kol. H pusta)
 U004485;4431;akt;1891;9;Andrzejczak;Franciszek;;;Mateusz;;;;Blinów;Agata;Łata;;;;kol.G: Blinów, Mateusz i Agata Łata;brak nazwiska ojca (kol. H pusta)
-U004483;4432;akt;1891;5;Andrzejczak;Marianna;;;Kazimierz;;;;Blinów;Wiktorya;Baran;;;;kol.G: Blinów, Kazimierz i Wiktorya Baran;brak nazwiska ojca (kol. H pusta)
-U004484;4433;akt;1891;8;Andrzejczak;Walenty;;;;;;;Blinów;Maryanna;Andrzejczak;;;;kol.G: Blinów, Maryanna Andrzejczak;jedna osoba w G (matka), ojciec nie podany
+U004483;4432;akt;1891;5;Andrzejczak;Marianna;;;Kazimierz;;;;Blinów;Wiktoria;Baran;;;;kol.G: Blinów, Kazimierz i Wiktorya Baran;brak nazwiska ojca (kol. H pusta)
+U004484;4433;akt;1891;8;Andrzejczak;Walenty;;;;;;;Blinów;Marianna;Andrzejczak;;;;kol.G: Blinów, Maryanna Andrzejczak;jedna osoba w G (matka), ojciec nie podany
 U004486;4434;akt;1891;44;Białkowska;Marianna;;;Wojciech;;;;Blinów;Tekla;Więcławek?;;;;kol.G: Blinów, Wojciech i Tekla Więcławek?;"nazwisko matki z '?' w G; brak nazwiska ojca (kol. H pusta); znak '?' w imieniu/nazwisku rodzica"
-U004487;4435;akt;1891;40;Białkowski;Jan;;;Stanisław;;;;Brzozówka;Maryanna;Machulak;;;;kol.G: Brzozówka, Stanisław i Maryanna Machulak;brak nazwiska ojca (kol. H pusta)
+U004487;4435;akt;1891;40;Białkowski;Jan;;;Stanisław;;;;Brzozówka;Marianna;Machulak;;;;kol.G: Brzozówka, Stanisław i Maryanna Machulak;brak nazwiska ojca (kol. H pusta)
 U004490;4438;akt;1891;6;Breś;Marianna;;;Stanisław;;;;Blinów;Zofia;Kaczyńska;;;;kol.G: Blinów, Stanisław i Zofia Kaczyńska;brak nazwiska ojca (kol. H pusta)
-U004491;4439;akt;1891;54;Brzyski;Jan;;;Antoni;;;;Brzozówka;Maryanna;Mazurek;;;;kol.G: Brzozówka, Antoni i Maryanna Mazurek;brak nazwiska ojca (kol. H pusta)
+U004491;4439;akt;1891;54;Brzyski;Jan;;;Antoni;;;;Brzozówka;Marianna;Mazurek;;;;kol.G: Brzozówka, Antoni i Maryanna Mazurek;brak nazwiska ojca (kol. H pusta)
 U004494;4440;akt;1891;39;Bucoń;Dominik;;;Antoni;;;;Blinów;Agnieszka;Sobutka;;;;kol.G: Blinów, Antoni i Agnieszka Sobutka;brak nazwiska ojca (kol. H pusta)
 U004493;4441;akt;1891;33;Bucoń;Jan;;;Marcin;;;;Brzozówka;Katarzyna;Spryszak;;;;kol.G: Brzozówka, Marcin i Katarzyna Spryszak;brak nazwiska ojca (kol. H pusta)
 U004492;4442;akt;1891;2;Bucoń;Józef;;;Jan;;;;Brzozówka;Jadwiga;Ogon;;;;kol.G: Brzozówka, Jan i Jadwiga Ogon;brak nazwiska ojca (kol. H pusta)
-U004495;4443;akt;1891;41;Bucoń;Mateusz;;;Wojciech;;;;Brzozówka;Maryanna;Kopiwoda;;;;kol.G: Brzozówka, Wojciech i Maryanna Kopiwoda;brak nazwiska ojca (kol. H pusta)
-U004496;4444;akt;1891;38;Chmiel;Franciszek;;;Franciszek;;;;Blinów;Maryanna;Sobutka;;;;kol.G: Blinów, Franciszek i Maryanna Sobutka;brak nazwiska ojca (kol. H pusta)
+U004495;4443;akt;1891;41;Bucoń;Mateusz;;;Wojciech;;;;Brzozówka;Marianna;Kopiwoda;;;;kol.G: Brzozówka, Wojciech i Maryanna Kopiwoda;brak nazwiska ojca (kol. H pusta)
+U004496;4444;akt;1891;38;Chmiel;Franciszek;;;Franciszek;;;;Blinów;Marianna;Sobutka;;;;kol.G: Blinów, Franciszek i Maryanna Sobutka;brak nazwiska ojca (kol. H pusta)
 U004497;4445;akt;1891;24;Chudy;Józef;;;Walenty;;;;Moczydła;Rozalia;Pęk;;;;kol.G: Moczydła, Walenty i Rozalia Pęk;brak nazwiska ojca (kol. H pusta)
 U004498;4446;akt;1891;29;Ciećko;Stanisław;;;Józef;;;;Blinów;Anna;Machulak;;;;kol.G: Blinów, Józef i Anna Machulak;brak nazwiska ojca (kol. H pusta)
 U004499;4447;akt;1891;1;Dobrzyńska;Franciszka;;;Andrzej;;;;Moczydła;Antonina;Janik?;;;;"kol.G: Moczydła, Andrzej i Antonina ? Janik?; kol.J: około 1891; kol.O: około 1891";"J/O: około 1891; w G '? Janik?' - nazwisko matki z '?'; brak nazwiska ojca (kol. H pusta); znak '?' w imieniu/nazwisku rodzica"

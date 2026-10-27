@@ -1,5 +1,5 @@
 ﻿id_archiwalne;wiersz_zrodlo;typ_wpisu;rok;nr;nazwisko_dziecka;imie_dziecka;data_tekst;data_iso;ojciec_imie;ojciec_nazwisko;ojciec_wiek;ojciec_rok_ur_przyb;miejscowosc;matka_imie;matka_nazwisko;matka_wiek;matka_rok_ur_przyb;karta_nr;uwagi_surowe;flagi
-U000761;741;akt;1826;20;Baran;Woyciech;-26925;;Paweł;Baran;35;~1791;Blinów;Chrzysztofora;Przychodniak;30;~1796;;;data nieprawidłowa lub nietekstowa: '-26925'
+U000761;741;akt;1826;20;Baran;Wojciech;-26925;;Paweł;Baran;35;~1791;Blinów;Chrzysztofora;Przychodniak;30;~1796;;;data nieprawidłowa lub nietekstowa: '-26925'
 U000750;742;akt;1826;9;Barbarzak;Józefa;-26972;;Wojciech;Barbarzak;40;~1786;Brzozówka;Marianna;Machulak;30;~1796;;;data nieprawidłowa lub nietekstowa: '-26972'
 U000746;743;akt;1826;5;Bigos;Zofia;05.02.1826;1826-02-05;Jędrzej;Bigos;30;~1796;Brzozówka;Katarzyna;Spryszak;24;~1802;;"kol.J: około 1796; kol.O: około 1802";
 U000747;744;akt;1826;6;Bucoń;Marianna;-26987;;Piotr;Bucon;40;~1786;Brzozówka;Barbara;Murawska;30;~1796;;;data nieprawidłowa lub nietekstowa: '-26987'
@@ -20,8 +20,8 @@ U000745;758;akt;1826;4;Mazurek;Marianna;-26993;;Józef;Mazurek;30;~1796;Brzozów
 U000764;759;akt;1826;23;Nikolas;Stanisław;-26913;;Michał;Nikolas;40;~1786;Brzozówka;Magdalena;Kolasa;36;~1790;;;data nieprawidłowa lub nietekstowa: '-26913'
 U000748;760;akt;1826;7;Obydż;Józef;-27016;;Jakub;Obydż;28;~1798;Blinów;Anna;Głaz;22;~1804;;;data nieprawidłowa lub nietekstowa: '-27016'
 U000775;761;akt;1826;34;Ogon;Marianna;-26876;;Jan;Ogon;45;~1781;Brzozówka;Marianna;Czuba;40;~1786;;;data nieprawidłowa lub nietekstowa: '-26876'
-U000756;762;akt;1826;15;Paciorek;Woyciech;-26946;;Józef;Paciorek;30;~1796;Blinów;Jadwiga;Wcisło;25;~1801;;;data nieprawidłowa lub nietekstowa: '-26946'
-U000765;763;akt;1826;24;Pasternak;Katarzyna;-26914;;Maciey;Pasternak;32;~1794;Blinów;Marianna;Kosidło;32;~1794;;;data nieprawidłowa lub nietekstowa: '-26914'
+U000756;762;akt;1826;15;Paciorek;Wojciech;-26946;;Józef;Paciorek;30;~1796;Blinów;Jadwiga;Wcisło;25;~1801;;;data nieprawidłowa lub nietekstowa: '-26946'
+U000765;763;akt;1826;24;Pasternak;Katarzyna;-26914;;Maciej;Pasternak;32;~1794;Blinów;Marianna;Kosidło;32;~1794;;;data nieprawidłowa lub nietekstowa: '-26914'
 U000763;764;akt;1826;22;Pawłasek;Jakób;-26915;;Jakób;Pawłasek;32;~1794;Blinów;Marianna;Pazdrak;24;~1802;;;data nieprawidłowa lub nietekstowa: '-26915'
 U000766;765;akt;1826;25;Pawłasek;Marianna;-26903;;Tomasz;Pawłasek;30;~1796;Blinów;Marianna;Machulek;30;~1796;;;data nieprawidłowa lub nietekstowa: '-26903'
 U000778;766;akt;1826;37;Pawłasek;Marianna;-26848;;Jakub;Pawłasek;28;~1798;Blinów;Tekla;Zdybel;24;~1802;;;data nieprawidłowa lub nietekstowa: '-26848'
@@ -40,43 +40,43 @@ U000816;778;akt;1827;37;Baran;Adam Szczepan;-26305;;Tomasz;Baran;22;~1805;Blinó
 U000809;779;akt;1827;30;Baran;Marcin;-26355;;;;;;Blinów;Jadwiga;Baran;30;~1797;;;data nieprawidłowa lub nietekstowa: '-26355'
 U000782;780;akt;1827;3;Białkowski;Paweł;-26638;;Marcin;Białkoski;24;~1803;Brzozówka;Tekla;Kubisz;22;~1805;;;data nieprawidłowa lub nietekstowa: '-26638'
 U000802;781;akt;1827;23;Bzdyrak;Michał;-26402;;Franciszek;Bzdyrak;40;~1787;Moczydła;Magdalena;Czarna;36;~1791;;;data nieprawidłowa lub nietekstowa: '-26402'
-U000791;782;akt;1827;12;Czuba;Stanisław;-26543;;Woyciech;Czuba;30;~1797;Brzozówka;Marianna;Sprysak;30;~1797;;;data nieprawidłowa lub nietekstowa: '-26543'
+U000791;782;akt;1827;12;Czuba;Stanisław;-26543;;Wojciech;Czuba;30;~1797;Brzozówka;Marianna;Sprysak;30;~1797;;;data nieprawidłowa lub nietekstowa: '-26543'
 U000800;783;akt;1827;21;Gnat;Marianna;-26418;;Jakub;Gnat;30;~1797;Blinów;Zofia;Kupconek?;28;~1799;;;data nieprawidłowa lub nietekstowa: '-26418'
 U000814;784;akt;1827;35;Gnat;Marianna;-26340;;Kasper;Gnat;35;~1792;Blinów;Antonina;;30;~1797;;;data nieprawidłowa lub nietekstowa: '-26340'
 U000804;785;akt;1827;25;Gnat;Tomasz;-26402;;Jakub;Gnat;28;~1799;Blinów;Zofia;Kuproń?/Kupiec?;26;~1801;;;data nieprawidłowa lub nietekstowa: '-26402'
 U000787;786;akt;1827;8;Gnat;Zofia;-26576;;Marcin;Gnat;32;~1795;Blinów;Dorota;Krupa;30;~1797;;;data nieprawidłowa lub nietekstowa: '-26576'
 U000784;787;akt;1827;5;Jamacho , Tomacho?;Maciej;-26614;;;;;;Moczydła;Agnieszka;Jomacho/Tomacho;30;~1797;;;data nieprawidłowa lub nietekstowa: '-26614'
-U000788;788;akt;1827;9;Janik;Stanisław;-26574;;Sebastyan;Janik;50;~1777;Brzozówka;Agnieszka;Babiarz;40;~1787;;;data nieprawidłowa lub nietekstowa: '-26574'
+U000788;788;akt;1827;9;Janik;Stanisław;-26574;;Sebastian;Janik;50;~1777;Brzozówka;Agnieszka;Babiarz;40;~1787;;;data nieprawidłowa lub nietekstowa: '-26574'
 U000785;789;akt;1827;6;Jędrzejczak;Agnieszka;-26592;;Wawrzyniec;Jędrzeyczak;40;~1787;Blinów;Marianna;Woytalas;24;~1803;;;data nieprawidłowa lub nietekstowa: '-26592'
 U000786;790;akt;1827;7;Kamienska , Kamińska;Zofia;-26588;;Ignacy;Kamienski/Kamiński;40;~1787;Brzozówka;Agata;Chmiel;35;~1792;;;data nieprawidłowa lub nietekstowa: '-26588'
 U000793;791;akt;1827;14;Kosidło;Antoni;-26515;;Jan;Kosidło;26;~1801;Blinów;Marianna;Kaczynska;22;~1805;;;data nieprawidłowa lub nietekstowa: '-26515'
 U000812;792;akt;1827;33;Kosidło;Jędrzej;?;;Jakub;Kosidło;28;~1799;Blinów;Zofia;Woytalas;27;~1800;;;data nieprawidłowa lub nietekstowa: '?'
-U000803;793;akt;1827;24;Kosidło;Jędrzey;-26363;;Jan;Kosidło;50;~1777;Blinów;Tekla;Trzmiel;40;~1787;;;data nieprawidłowa lub nietekstowa: '-26363'
+U000803;793;akt;1827;24;Kosidło;Jędrzej;-26363;;Jan;Kosidło;50;~1777;Blinów;Tekla;Trzmiel;40;~1787;;;data nieprawidłowa lub nietekstowa: '-26363'
 U000811;794;akt;1827;32;Kosidło;Marcin;-26353;;?;Kosidło;;;Blinów;Katarzyna;Pawłaszek;26;~1801;;;"data nieprawidłowa lub nietekstowa: '-26353'; wiek ojca nieliczbowy: '?'"
-U000798;795;akt;1827;19;Kosidło;Marianna;-26423;;Maciey;Kosidło;32;~1795;Blinów;Marianna;Wscisło;28;~1799;;;data nieprawidłowa lub nietekstowa: '-26423'
+U000798;795;akt;1827;19;Kosidło;Marianna;-26423;;Maciej;Kosidło;32;~1795;Blinów;Marianna;Wscisło;28;~1799;;;data nieprawidłowa lub nietekstowa: '-26423'
 U000789;796;akt;1827;10;Kosidło;Zofia;-26567;;Stanisław;Kosidło;19;~1808;Blinów;Katarzyna;Kozaczek;18;~1809;;;data nieprawidłowa lub nietekstowa: '-26567'
 U000801;797;akt;1827;22;Kozyra;Michał;-26413;;Szczepan;Kozyra;37;~1790;Blinów;Małgorzata;Bosak;24;~1803;;;data nieprawidłowa lub nietekstowa: '-26413'
-U000805;798;akt;1827;26;Kurczak;Katarzyna;-26360;;Jędrzey;Kurczak;45;~1782;Blinów;Zofia;Pawłaszek?;32;~1795;;;data nieprawidłowa lub nietekstowa: '-26360'
+U000805;798;akt;1827;26;Kurczak;Katarzyna;-26360;;Jędrzej;Kurczak;45;~1782;Blinów;Zofia;Pawłaszek?;32;~1795;;;data nieprawidłowa lub nietekstowa: '-26360'
 U000795;799;akt;1827;16;Kurczak;Marianna;-26478;;;Kurczak;30;~1797;Blinów;Tekla;Pudło;38;~1789;;;data nieprawidłowa lub nietekstowa: '-26478'
-U000797;800;akt;1827;18;Lewek;Marianna;-26446;;Jędrzey;Lewek;33;~1794;Cieślanki;Jadwiga;Debel;25;~1802;;;data nieprawidłowa lub nietekstowa: '-26446'
+U000797;800;akt;1827;18;Lewek;Marianna;-26446;;Jędrzej;Lewek;33;~1794;Cieślanki;Jadwiga;Debel;25;~1802;;;data nieprawidłowa lub nietekstowa: '-26446'
 U000807;801;akt;1827;28;Nieściór;Katarzyna;-26357;;Stanisław;Niescior/Nieścór;45;~1782;Moczydła;Franciszka;Szmala?;40;~1787;;;data nieprawidłowa lub nietekstowa: '-26357'
 U000808;802;akt;1827;29;Nieściór;Marianna;-26357;;Stanisław;Niescior/Nieścór;46;~1781;Moczydła;Franciszka;Szmala?;40;~1787;;;data nieprawidłowa lub nietekstowa: '-26357'
-U000818;803;akt;1827;39;Obydź;Marianna;-26302;;Woyciech;Obydź;40;~1787;Blinów;Agnieszka;Baran;35;~1792;;;data nieprawidłowa lub nietekstowa: '-26302'
+U000818;803;akt;1827;39;Obydź;Marianna;-26302;;Wojciech;Obydź;40;~1787;Blinów;Agnieszka;Baran;35;~1792;;;data nieprawidłowa lub nietekstowa: '-26302'
 U000817;804;akt;1827;38;Pawłasek;Kacper;-26302;;Antoni;Pawłasek;38;~1789;Blinów;Marianna;?;;;;;"data nieprawidłowa lub nietekstowa: '-26302'; brak wieku matki (~RRRR nie policzono)"
-U000820;805;akt;1827;41;Pawłasek;Zofia;-26302;;Woyciech;Pawłasek;35;~1792;Blinów;Marianna;Pankiewicz;30;~1797;;;data nieprawidłowa lub nietekstowa: '-26302'
+U000820;805;akt;1827;41;Pawłasek;Zofia;-26302;;Wojciech;Pawłasek;35;~1792;Blinów;Marianna;Pankiewicz;30;~1797;;;data nieprawidłowa lub nietekstowa: '-26302'
 U000780;806;akt;1827;1;Pcionek;Agnieszka;-26661;;Wojciech;Pcionek;33;~1794;Blinów;Katarzyna;Paciorek;30;~1797;;;data nieprawidłowa lub nietekstowa: '-26661'
 U000815;807;akt;1827;36;Pcionek;Marianna;-26340;;;;;;Blinów;Agata;Pcionek;30;~1797;;;data nieprawidłowa lub nietekstowa: '-26340'
 U000790;808;akt;1827;11;Pcionek;Wojciech;-26562;;Jacek;Pcionek;50;~1777;Blinów;Franciszka;Pawłaszek;30;~1797;;;data nieprawidłowa lub nietekstowa: '-26562'
 U000796;809;akt;1827;17;Sagan;Agnieszka;-26446;;Stanisław;Sagan;36;~1791;Brzozówka;Marianna;Badyrak?;30;~1797;;;data nieprawidłowa lub nietekstowa: '-26446'
-U000819;810;akt;1827;40;Samal;Jan;-26302;;Woyciech;Samal;40;~1787;Blinów;Marianna;Jachura;30;~1797;;;data nieprawidłowa lub nietekstowa: '-26302'
+U000819;810;akt;1827;40;Samal;Jan;-26302;;Wojciech;Samal;40;~1787;Blinów;Marianna;Jachura;30;~1797;;;data nieprawidłowa lub nietekstowa: '-26302'
 U000792;811;akt;1827;13;Suloski;Antoni;-26534;;Franciszek;Suloski;40;~1787;Blinów;Marianna;Kopyt;30;~1797;;;data nieprawidłowa lub nietekstowa: '-26534'
-U000810;812;akt;1827;31;Suloski;Marcin;-26354;;Jędrzey;Suloski;45;~1782;Blinów;Agnieszka;Kudrelek;38;~1789;;;data nieprawidłowa lub nietekstowa: '-26354'
+U000810;812;akt;1827;31;Suloski;Marcin;-26354;;Jędrzej;Suloski;45;~1782;Blinów;Agnieszka;Kudrelek;38;~1789;;;data nieprawidłowa lub nietekstowa: '-26354'
 U000794;813;akt;1827;15;Szarpieńska , Szarpińska;Małgorzata;-26507;;Antoni;Szarpieński/Szarpiński;48;~1779;Blinów;Marianna;Maciorczyk;40;~1787;;;data nieprawidłowa lub nietekstowa: '-26507'
 U000806;814;akt;1827;27;Szuba;Katarzyna;31.40.1827;;Wincenty;Szuba;40;~1787;Blinów;Franciszka;;;;;;"data nieprawidłowa (dzień/miesiąc); brak wieku matki (~RRRR nie policzono)"
 U000783;815;akt;1827;4;Szyszka;Józefa;-26620;;Jozef;Szyszka;27;~1800;Brzozówka;Katarzyna;Cwiek;24;~1803;;;data nieprawidłowa lub nietekstowa: '-26620'
 U000799;816;akt;1827;20;Wieleba;Mateusz;-26453;;Tomasz;Wieleba;25;~1802;Moczydła;Franciszka;Kędziora;24;~1803;;;data nieprawidłowa lub nietekstowa: '-26453'
 U000781;817;akt;1827;2;Więcek;Walenty;-26642;;Karol;Więcek;32;~1795;Brzozówka;Marianna;Woycik;19;~1808;;kol.J: około 1795;data nieprawidłowa lub nietekstowa: '-26642'
-U000813;818;akt;1827;34;Zieleńska , Zielińska;Katarzyna;-26342;;Woyciech;Zieleński/Zieliński;32;~1795;Brzozówka;Katarzyna;Król?;30;~1797;;kol.J: około 1795;data nieprawidłowa lub nietekstowa: '-26342'
+U000813;818;akt;1827;34;Zieleńska , Zielińska;Katarzyna;-26342;;Wojciech;Zieleński/Zieliński;32;~1795;Brzozówka;Katarzyna;Król?;30;~1797;;kol.J: około 1795;data nieprawidłowa lub nietekstowa: '-26342'
 U000822;819;akt;1828;48;Babiarz;Ewa;20.12.1828;1828-12-20;Jan;Babiarz;33;~1795;Brzozówka;Jadwiga;Tupaj;24;~1804;;"kol.J: około 1795; kol.O: około 1804";
 U000823;820;akt;1828;41;Baran;Michał;01.10.1828;1828-10-01;Jakub;Baran;30;~1798;Blinów;Agnieszka;Kaczeńska;30;~1798;;"kol.J: około 1798; kol.O: około 1798";
 U000824;821;akt;1828;36;Barbarzak;Mikołaj;06.09.1828;1828-09-06;Wojciech;Barbarzak;40;~1788;Brzozówka;Marianna;Machulak;36;~1792;;"kol.J: około 1788; kol.O: około 1792";
@@ -95,7 +95,7 @@ U000836;833;akt;1828;11;Kawecka;Marianna;;;;;;;;;;;;;"kol.G: Walenty i Rozalia K
 U000837;834;akt;1828;8;Kolasa;Walenty;07.02.1828;1828-02-07;Wojciech;Kolasa;33;~1795;Brzozówka;Marianna;Pudło;30;~1798;;"kol.J: około 1795; kol.O: około 1798";
 U000838;835;akt;1828;27;Kopyt;Anna;;;;;;;;;;;;;"kol.G: Jakób i Jadwiga Pasternak; kol.H: Kopyt; kol.J: około 1828; kol.O: około 1828";"brak daty w kol. F; rodzice w jednym polu (do ręcznego rozdzielenia); przesunięty układ: brak F, rodzice w G"
 U000841;836;akt;1828;14;Kosidło;Franciszka;;;;;;;;;;;;;"kol.G: Michał i Anna Samel; kol.H: Kosidło; kol.J: około 1828; kol.O: około 1828";"brak daty w kol. F; rodzice w jednym polu (do ręcznego rozdzielenia); przesunięty układ: brak F, rodzice w G"
-U000842;837;akt;1828;16;Kosidło;Woyciech;;;;;;;;;;;;;"kol.G: Paweł i Maryanna Kozaczek; kol.H: Kosidło; kol.J: około 1828; kol.O: około 1828";"brak daty w kol. F; rodzice w jednym polu (do ręcznego rozdzielenia); przesunięty układ: brak F, rodzice w G"
+U000842;837;akt;1828;16;Kosidło;Wojciech;;;;;;;;;;;;;"kol.G: Paweł i Maryanna Kozaczek; kol.H: Kosidło; kol.J: około 1828; kol.O: około 1828";"brak daty w kol. F; rodzice w jednym polu (do ręcznego rozdzielenia); przesunięty układ: brak F, rodzice w G"
 U000840;838;akt;1828;19;Kosidło;Stanisław;;;;;;;;;;;;;"kol.G: Maciey i Maryanna Gnat; kol.H: Kosidło; kol.J: około 1828; kol.O: około 1828";"brak daty w kol. F; rodzice w jednym polu (do ręcznego rozdzielenia); przesunięty układ: brak F, rodzice w G"
 U000839;839;akt;1828;22;Kosidło;Stanisław;;;;;;;;;;;;;"kol.G: Bartłomiey i Katarzyna Bosak; kol.H: Kosidło; kol.J: około 1828; kol.O: około 1828";"brak daty w kol. F; rodzice w jednym polu (do ręcznego rozdzielenia); przesunięty układ: brak F, rodzice w G"
 U000844;840;akt;1828;9;Kozaczek;Walenty;fot niepełne;;Tomasz;Kozaczek;36;~1792;Blinów;Marianna;Machul;34;~1794;;"kol.J: około 1792; kol.O: około 1794";data nieprawidłowa lub nietekstowa: 'fot niepełne'
@@ -148,4 +148,4 @@ U000890;886;akt;1829;54;Jakubaszek;Katarzyna;;;;;;;;;;;;;kol.G: Andrzey i Maryan
 U000891;887;akt;1829;25;Kamieniak;Małgorzata;;;;;;;;;;;;;kol.G: Ignacy i Agata Chmiel;"brak daty w kol. F; rodzice w jednym polu (do ręcznego rozdzielenia); przesunięty układ: brak F, rodzice w G"
 U000892;888;akt;1829;17;Kania;Marianna;;;;;;;;;;;;;kol.G: Franciszek i Maryanna Tupai;"brak daty w kol. F; rodzice w jednym polu (do ręcznego rozdzielenia); przesunięty układ: brak F, rodzice w G"
 U000893;889;akt;1829;49;Kawecka;Katarzyna;;;;;;;;;;;;;kol.G: Walenty i Rozalia Koguc;"brak daty w kol. F; rodzice w jednym polu (do ręcznego rozdzielenia); przesunięty układ: brak F, rodzice w G"
-U000894;890;akt;1829;41;Koguc;Bartłomiey;;;;;;;;;;;;;kol.G: Kazimierz i Zofia Czuba;"brak daty w kol. F; rodzice w jednym polu (do ręcznego rozdzielenia); przesunięty układ: brak F, rodzice w G"
+U000894;890;akt;1829;41;Koguc;Bartłomiej;;;;;;;;;;;;;kol.G: Kazimierz i Zofia Czuba;"brak daty w kol. F; rodzice w jednym polu (do ręcznego rozdzielenia); przesunięty układ: brak F, rodzice w G"

@@ -42,7 +42,7 @@
 2638 | miejsc=Blinów | ojc=Jan | mat=Barbara | nazw=Kowalczyków
 2639 | miejsc=Blinów | ojc=Marcin | mat=Zofia | nazw=Kosidłów
 2640 | miejsc=Blinów | ojc=Tomasz | mat=Anna | nazw=Czubów
-2641 | miejsc=Moczydła | ojc=Franciszka | mat=Awy | nazw=Babiarzów | fl=imię matki 'Awy' zachowane
+2641 | miejsc=Moczydła | ojc=Franciszka | mat=Ewa | nazw=Babiarzów | fl=imię matki 'Awy' zachowane
 2642 | miejsc=Brzozówka | ojc=Jan | mat=Zofia | nazw=Brzeskich
 2643 | miejsc=Blinów | ojc=Marcin | mat=Antonina | nazw=Pawłasków | matw=25
 2644 | miejsc=Moczydła | ojc=Jan | ojcw=25 | mat=Zofia | nazw=Wielebów
@@ -110,7 +110,7 @@
 2708 | miejsc=Blinów | ojc=Franciszka | ojcw=39 | mat=Zofia | nazw=Wcisłow | matw=24
 2709 | miejsc=Brzozówka | ojc=Antoni | ojcw=35 | mat=Marianna | nazw=Pre? | fl=w nawiasie zawód ojca: parobek folwarku; nazwisko matki niepełne
 2710 | miejsc=Moczydła | ojc=Wojciech | ojcw=36 | mat=Katarzyna | nazw=Krolów | matw=30
-2711 | miejsc=Brzozówka | ojc=Jan | ojcw=21 | mat=Katzryny | nazw=Białkoskich | matw=22 | fl=pisownia 'Katzryny' zachowana
+2711 | miejsc=Brzozówka | ojc=Jan | ojcw=21 | mat=Katarzyna | nazw=Białkoskich | matw=22 | fl=pisownia 'Katzryny' zachowana
 2712 | miejsc=Moczydła | ojc=Jan | ojcw=47 | mat=Franciszka | nazw=Stępniów
 2713 | miejsc=Blinów | ojc=Piotr | ojcnazw=Jachura | mat=Marianna | nazw=Jędrzejczaków | fl=w nawiasie zawód ojca: żołnierz
 2714 | miejsc=Blinów | ojc=Łukasz | ojcw=21 | mat=Katarzyna | nazw=Baranowskich | matw=17 | fl=w nawiasie zawód ojca: organista

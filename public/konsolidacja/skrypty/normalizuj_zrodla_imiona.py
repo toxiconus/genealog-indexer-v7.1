@@ -5,13 +5,15 @@ Wstrzymane: ojciec Franciszka/Stanisława. Użycie: python3 normalizuj_zrodla_im
 import csv, glob, os, re, sys
 here = os.path.dirname(os.path.abspath(__file__)); up = os.path.dirname(here)
 sys.path.insert(0, here)
-from normalizuj_imiona_rodzicow import mianownik
+from normalizuj_imiona_rodzicow import mianownik, pisownia
 n = 0
 def fix(col, v):
     global n
-    new, why = mianownik(col, v)
-    if why and why != 'WSTRZYMANE': n += 1; return new
-    return v
+    new, why = mianownik(col, v) if col in ('ojciec_imie', 'matka_imie') else (v, None)
+    if why == 'WSTRZYMANE': return v
+    if not why: new = pisownia(v)
+    if new != v: n += 1
+    return new
 for f in sorted(glob.glob(os.path.join(up, 'partie/reczne/hand_*.txt'))):
     s = open(f, encoding='utf-8', newline='').read()
     def sub(m):
@@ -26,10 +28,24 @@ for f in sorted(glob.glob(os.path.join(up, 'partie/akty_*.csv'))):
     ix = {c: i for i, c in enumerate(rows[0])}
     ch = False
     for r in rows[1:]:
-        for col in ('ojciec_imie', 'matka_imie'):
+        for col in ('imie_dziecka', 'ojciec_imie', 'matka_imie'):
             if col in ix and len(r) > ix[col]:
                 v = fix(col, r[ix[col]])
                 if v != r[ix[col]]: r[ix[col]] = v; ch = True
+    if ch and '--zapisz' in sys.argv:
+        with open(f, 'w', encoding='utf-8-sig', newline='') as o: csv.writer(o, delimiter=';', lineterminator='\r\n' if crlf else '\n').writerows(rows)
+# pliki wynikowe: starsza pisownia w kolumnach imion (nazwiska i wiek pomijane)
+for fn in ('zgony.csv', 'blinow_akty.csv', 'blinow_scalone.csv', 'malzenstwa_mal.csv'):
+    f = os.path.join(up, fn)
+    raw = open(f, encoding='utf-8-sig', newline='').read(); crlf = '\r\n' in raw
+    rows = list(csv.reader(raw.splitlines(), delimiter=';'))
+    cols = [i for i, c in enumerate(rows[0]) if ('imie' in c or 'imiona' in c) and 'nazw' not in c and 'wiek' not in c]
+    ch = False
+    for r in rows[1:]:
+        for i in cols:
+            if i < len(r):
+                v = pisownia(r[i])
+                if v != r[i]: r[i] = v; ch = True; n += 1
     if ch and '--zapisz' in sys.argv:
         with open(f, 'w', encoding='utf-8-sig', newline='') as o: csv.writer(o, delimiter=';', lineterminator='\r\n' if crlf else '\n').writerows(rows)
 print('zmian:', n, '(zapisano)' if '--zapisz' in sys.argv else '(próba)')

@@ -80,7 +80,7 @@
 3594 | miejsc=Moczydła | ojc=Antoni | mat=Zofia | nazw=Łukasik
 3595 | miejsc=Moczydła | ojc=Andrzej | mat=Marianna | nazw=Koguc
 3596 | miejsc=Blinów | ojc=Jacek | mat=Katarzyna | nazw=Pasternak
-3597 | miejsc=Blinów | ojc=Woyciech | mat=Anna | nazw=Ogon | fl=imię ojca zapisane 'Woyciech' w G (możliwa literówka Wojciech)
+3597 | miejsc=Blinów | ojc=Wojciech | mat=Anna | nazw=Ogon | fl=imię ojca zapisane 'Woyciech' w G (możliwa literówka Wojciech)
 3598 | miejsc=Blinów | ojc=Antoni | mat=Anna | nazw=Wcisło
 3599 | miejsc=Blinów | ojc=Jan | mat=Marianna | nazw=Brzoskiewicz / Brzuszkiewicz (?) | fl=w G dwie pisownie nazwiska matki
 3600 | miejsc=Blinów | ojc=Piotr | mat=Marianna | nazw=Pawłasek

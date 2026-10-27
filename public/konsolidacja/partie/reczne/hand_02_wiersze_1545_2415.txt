@@ -80,7 +80,7 @@
 2046 | fl=w G 'brak karty'
 2156 | fl=w G 'nazw. ?'
 2159 | fl=w G 'nazw. ?'
-2348 | miejsc=Blinów | ojc=Paweł | mat=Maryanna | nazw=Kosidło
+2348 | miejsc=Blinów | ojc=Paweł | mat=Marianna | nazw=Kosidło
 2349 | miejsc=Blinów | ojc=Dominik | mat=Ewa | nazw=Dobrzynska
 2350 | miejsc=Brzozówka | ojc=Franciszek | mat=Jadwiga | nazw=Czuba
 2351 | miejsc=Brzozówka | ojc=Szczepan | mat=Tekla | nazw=Chmiel
@@ -88,63 +88,63 @@
 2353 | miejsc=Brzozówka | ojc=Walenty | mat=Jadwiga | nazw=Łapinska
 2354 | miejsc=Blinów | ojc=Jan | mat=Katarzyna | nazw=Baran
 2355 | miejsc=Brzozówka | ojc=Adam | mat=Anna | nazw=Czyżoska?
-2356 | miejsc=Blinów | ojc=Andrzey | mat=Jadwiga | nazw=Kosidlak
+2356 | miejsc=Blinów | ojc=Andrzej | mat=Jadwiga | nazw=Kosidlak
 2357 | miejsc=Brzozówka | ojc=Antoni | mat=Zofia | nazw=G... ? | fl=nazwisko matki niepełne
 2358 | miejsc=Blinów | ojc=Paweł | mat=Jadwiga | nazw=Kosidło
 2359 | miejsc=Moczydła | ojc=Tomasz | mat=Zofia | nazw=Zuń?
 2360 | miejsc=Blinów | ojc=Franciszek | mat=Marianna | nazw=Solarz
-2361 | miejsc=Blinów | ojc=Woyciech | mat=Katarzyna | nazw=Krol
+2361 | miejsc=Blinów | ojc=Wojciech | mat=Katarzyna | nazw=Krol
 2362 | miejsc=Blinów | ojc=Michał | mat=Katarzyna | nazw=Gieło?
 2363 | miejsc=Moczydła | ojc=Grzegorz | mat=Agnieszka | nazw=Machulak
-2364 | miejsc=Blinów | ojc=Piotr | mat=Maryanna | nazw=Jędrzeyczak
+2364 | miejsc=Blinów | ojc=Piotr | mat=Marianna | nazw=Jędrzeyczak
 2365 | miejsc=Blinów | ojc=Tomasz | mat=Franciszka | nazw=Jagieło
 2366 | miejsc=Moczydła | ojc=Jan | mat=Franciszka | nazw=Stępień
 2367 | miejsc=Blinów | ojc=Jakob | mat=Katarzyna | nazw=Olech | fl=brak 'i' między rodzicami w G
-2368 | miejsc=Moczydła | ojc=Andrzey | mat=Anna | nazw=Szyszka
-2369 | miejsc=Moczydła | ojc=Andrzey | mat=Maryanna | nazw=... | fl=nazwisko matki niepełne (...)
+2368 | miejsc=Moczydła | ojc=Andrzej | mat=Anna | nazw=Szyszka
+2369 | miejsc=Moczydła | ojc=Andrzej | mat=Marianna | nazw=... | fl=nazwisko matki niepełne (...)
 2370 | miejsc=Brzozówka | ojc=Michał | mat=Magdalena | nazw=Saia?
-2371 | miejsc=Blinów | ojc=Maciey | mat=Jadwiga | nazw=Jakubaszek
+2371 | miejsc=Blinów | ojc=Maciej | mat=Jadwiga | nazw=Jakubaszek
 2372 | miejsc=Blinów | mat=Teresa | nazw=Jędrzeyczak | fl=jedna osoba w G, rola niejasna (matka?)
-2373 | miejsc=Blinów | ojc=Jakob | mat=Maryanna | nazw=Szuba
+2373 | miejsc=Blinów | ojc=Jakob | mat=Marianna | nazw=Szuba
 2374 | miejsc=Blinów | ojc=Marcin | mat=Zofia | nazw=Jachura
 2375 | miejsc=Moczydła | ojc=Krzysztof | mat=J.. | nazw=Dalroska?
 2376 | miejsc=Moczydła | ojc=Jan | mat=Zofia | nazw=Nieściur?
 2377 | miejsc=Brzozówka | ojc=Jan | mat=Katarzyna | nazw=Głowacka
-2378 | miejsc=Blinów | ojc=Woyciech | mat=.. | nazw=Jachura | fl=imię matki nieczytelne (..)
+2378 | miejsc=Blinów | ojc=Wojciech | mat=.. | nazw=Jachura | fl=imię matki nieczytelne (..)
 2379 | miejsc=Blinów | ojc=Marcin | mat=Katarzyna | nazw=Kurczak
-2380 | miejsc=Moczydła | ojc=Tomasz | mat=Maryanna | nazw=Pawłasek
-2381 | miejsc=Blinów | ojc=Andrzey | mat=Agata | nazw=Jędrzeyczak
+2380 | miejsc=Moczydła | ojc=Tomasz | mat=Marianna | nazw=Pawłasek
+2381 | miejsc=Blinów | ojc=Andrzej | mat=Agata | nazw=Jędrzeyczak
 2382 | miejsc=Blinów | ojc=Tomasz | mat=Małgorzata | nazw=Praczyk
-2383 | miejsc=Moczydła | ojc=Szymon | mat=Maryanna | nazw=Wieleba
+2383 | miejsc=Moczydła | ojc=Szymon | mat=Marianna | nazw=Wieleba
 2384 | miejsc=Blinów | ojc=Tomasz | mat=Tekla | nazw=Gnat
 2385 | miejsc=Moczydła | ojc=Wawrzyniec | mat=Magdalena | nazw=Pscionek
-2386 | miejsc=Blinów | ojc=Jan | mat=Maryanna | nazw=Dzibro?
+2386 | miejsc=Blinów | ojc=Jan | mat=Marianna | nazw=Dzibro?
 2387 | miejsc=Blinów | ojc=Franciszek | mat=Anna | nazw=Kurczak
 2388 | miejsc=Blinów | ojc=Łukasz | mat=Katarzyna | nazw=Kurczak
 2389 | miejsc=Blinów | ojc=Paweł | mat=Katarzyna | nazw=Pakuła,Pikuła?
-2390 | miejsc=Blinów | ojc=Kazimierz | mat=Maryanna | nazw=Pawłasek
+2390 | miejsc=Blinów | ojc=Kazimierz | mat=Marianna | nazw=Pawłasek
 2391 | miejsc=Brzozówka | ojc=Jan | mat=Katarzyna | nazw=Pudło
 2392 | miejsc=Moczydła | ojc=Jan | mat=Anna | nazw=Dąbroska
-2393 | miejsc=Brzozówka | ojc=Maciey | mat=Tekla | nazw=Sagan
+2393 | miejsc=Brzozówka | ojc=Maciej | mat=Tekla | nazw=Sagan
 2394 | miejsc=Moczydła | ojc=Paweł | mat=Katarzyna | nazw=Krol
 2395 | miejsc=Brzozówka | ojc=Kazimierz | mat=Anna | nazw=Pudło
 2396 | miejsc=Moczydła | ojc=Kazimierz | mat=Anna | nazw=Jagieło
-2397 | miejsc=Blinów | ojc=Bartłomiey | mat=Anna | nazw=Rębecka
+2397 | miejsc=Blinów | ojc=Bartłomiej | mat=Anna | nazw=Rębecka
 2398 | miejsc=Blinów | ojc=Dominik | mat=Katarzyna | nazw=Krawczyk
 2399 | miejsc=Blinów | ojc=Ludwik | mat=Zofia | nazw=Kurczak
 2400 | miejsc=Blinów | ojc=Krzysztof | mat=Zofia | nazw=Widomska
 2401 | miejsc=Blinów | ojc=Tomasz | mat=Zofia | nazw=Wnuk
 2402 | miejsc=Blinów | ojc=Antoni | mat=Agnieszka | nazw=Kurczak
-2403 | miejsc=Brzozówka | mat=Maryanna | nazw=Pietras | fl=jedna osoba w G, rola niejasna (matka?)
+2403 | miejsc=Brzozówka | mat=Marianna | nazw=Pietras | fl=jedna osoba w G, rola niejasna (matka?)
 2404 | miejsc=Blinów | ojc=Wawrzyniec | mat=Zofa | nazw=Pasternak | fl=pisownia imienia matki 'Zofa' zachowana
 2405 | miejsc=Brzozówka | ojc=Paweł | mat=Katarzyna | nazw=Sagan
 2406 | miejsc=Blinów | ojc=Jakob | mat=Zofia | nazw=Obydz
 2407 | miejsc=Moczydła | ojc=Michał | mat=Tekla | nazw=Surma
-2408 | miejsc=Moczydła | ojc=Józef | mat=Maryanna | nazw=Suloska
+2408 | miejsc=Moczydła | ojc=Józef | mat=Marianna | nazw=Suloska
 2409 | miejsc=Blinów | ojc=Jakob | mat=Zofia | nazw=Cisak?
 2410 | miejsc=Moczydła | ojc=Walenty | mat=Agnieszka | nazw=Drozd?
 2411 | miejsc=Blinów | ojc=Jan | mat=Zofia | nazw=Offierska?
-2412 | miejsc=Blinów | ojc=Bartłomiey | mat=Maryanna | nazw=Dąbroska
-2413 | miejsc=Brzozówka | ojc=Andrzey | mat=Agnieszka | nazw=Sagan
-2414 | miejsc=Blinów | ojc=Mateusz | mat=Maryanna | nazw=Machulek
+2412 | miejsc=Blinów | ojc=Bartłomiej | mat=Marianna | nazw=Dąbroska
+2413 | miejsc=Brzozówka | ojc=Andrzej | mat=Agnieszka | nazw=Sagan
+2414 | miejsc=Blinów | ojc=Mateusz | mat=Marianna | nazw=Machulek
 2415 | miejsc=Blinów | ojc=Antoni | mat=Zofia | nazw=Kosidło

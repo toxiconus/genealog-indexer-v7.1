@@ -31,7 +31,7 @@
 2931 | miejsc=Brzozówka | ojc=Paweł | ojcw=27 | mat=Marianna | nazw=Machulak | matw=28
 2932 | miejsc=Brzozówka | ojc=Jan | ojcw=29 | mat=Zofia | nazw=Brzeska | matw=28
 2933 | miejsc=Blinów | ojc=Mateusz | ojcw=25 | mat=Agnieszka | nazw=Pcionków | matw=28 | fl=w G 'z Pcionków' (nazwisko panieńskie)
-2934 | miejsc=Blinów | ojc=Wiktor | ojcw=29 | mat=Pertoneli | nazw=Rzupko | matw=21 | fl=w nawiasie zawód ojca: ekonom folwarku
+2934 | miejsc=Blinów | ojc=Wiktor | ojcw=29 | mat=Petronela | nazw=Rzupko | matw=21 | fl=w nawiasie zawód ojca: ekonom folwarku
 2935 | miejsc=Brzozówka | ojc=Maciej | ojcw=37 | mat=Katarzyna | nazw=Szuba | matw=33
 2936 | miejsc=Moczydła | ojc=Stanisław | ojcw=25 | mat=Zofia | nazw=Zarzeczna | matw=23
 2937 | miejsc=Moczydła | ojc=Jan | ojcw=30 | mat=Zofia | nazw=Wieleba | matw=27

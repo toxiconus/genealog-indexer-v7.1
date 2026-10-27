@@ -21,7 +21,18 @@ MA = {'Marianny':'Marianna','Katarzyny':'Katarzyna','Zofii':'Zofia','Agnieszki':
  'Petroneli':'Petronela','Teresy':'Teresa','Małgorzaty':'Małgorzata','Józefy':'Józefa','Barbary':'Barbara','Reginy':'Regina','Doroty':'Dorota',
  'Anieli':'Aniela','Łucji':'Łucja','Cecylii':'Cecylia','Elżbiety':'Elżbieta','Henryki':'Henryka','Salomei':'Salomea','Zuzanny':'Zuzanna','Heleny':'Helena','Seweryny':'Seweryna','Emilii':'Emilia','Walerii':'Waleria','Leoni':'Leonia','Leonii':'Leonia',
  'Scholastyki':'Scholastyka','Julianny':'Julianna','Marii':'Maria','Emilianny':'Emilianna'}
-MA_PISOWNIA = {'Zofi':'Zofia','Maryanny':'Marianna','Marjanny':'Marianna','Zofji':'Zofia'}
+MA_PISOWNIA = {'Awy':'Ewa','Katzryny':'Katarzyna','Pertoneli':'Petronela','Zofi':'Zofia','Maryanny':'Marianna','Marjanny':'Marianna','Zofji':'Zofia'}
+
+# Starsza pisownia imion (dowolne pole imienia, po słowach; końcowe „?” zostaje)
+SPELL = {'Maryanna':'Marianna','Maryana':'Marianna','Maryjanna':'Marianna','Marjanna':'Marianna','Woyciech':'Wojciech','Andrzey':'Andrzej',
+ 'Maciey':'Maciej','Zofija':'Zofia','Zofja':'Zofia','Bartłomiey':'Bartłomiej','Anastazya':'Anastazja','Wiktorya':'Wiktoria','Sebestyan':'Sebastian',
+ 'Sebastyan':'Sebastian','Sebastjan':'Sebastian','Rozalya':'Rozalia','Walerya':'Waleria','Konstancya':'Konstancja','Florjan':'Florian',
+ 'Stanisłąw':'Stanisław','Woyciecha':'Wojciech','Jędrzey':'Jędrzej','Tomasz':'Tomasz','Kaspra':'Kasper'}
+def pisownia(v):
+    """Poprawia starszą pisownię imion słowo po słowie; zwraca nową wartość."""
+    import re
+    return re.sub(r'[^\W\d_]+', lambda m: SPELL.get(m.group(0), m.group(0)), v) if v else v
+
 def mianownik(col, v):
     """-> (nowa_wartosc, powod) | (v, None) bez zmiany | (v, 'WSTRZYMANE') gdy wymaga kontekstu."""
     g, sp = (OJ, OJ_PISOWNIA) if col == 'ojciec_imie' else (MA, MA_PISOWNIA)
