@@ -277,11 +277,19 @@ function renderList(){ const v = visible(), rmk = repMarks(); $('list').innerHTM
   const done = D.acts.filter(a => !a.kind && S.acts[a.id]?.done).length, ai = D.acts.filter(a => !a.kind && a.ai).length; $('prog').textContent = `${done}/${ai} zatwierdz.`; bOkLabel();
   const c = $('list').querySelector('.cur'); if (c) c.scrollIntoView({inline:'center', block:'nearest'}); }
 // ---- akt
-function open(id){ S.cur = id; save(); renderList(); if (W.on) wizStart(); renderAct(); showScan(); }
+function lubMissing(a){ if (!a || a.kind || !a.lub) return []; return fieldsOf(a).filter(f => { const lv = clean(a.lub[f.id]); if (!lv || !appl(a, f.id)) return false; const x = st(a.id).f[f.id]; if (x?.skip) return false; return !clean(getv(a, f.id)); }); }
+function lubGuard(toId){ const p = AM[S.cur]; if (!p || p.id === toId || S.acts[p.id]?.lubAck) return true; const L = lubMissing(p); if (!L.length) return true;
+  if (confirm('W Lubgens są dane, a u nas puste (' + actName(p.id) + '):\n\n' + L.map(f => '• ' + f.label + ': ' + clean(p.lub[f.id])).join('\n') + '\n\nOK = przejdź dalej mimo to, Anuluj = zostań i uzupełnij')) { st(p.id).lubAck = 1; save(); return true; } return false; }
+function open(id){ if (!lubGuard(id)) return; S.cur = id; save(); renderList(); if (W.on) wizStart(); renderAct(); showScan(); }
 function chipsFor(a,f){ const cur = getv(a,f); const out = []; const seen = new Set(); const add = (cls,lbl,val,extra='') => { if (!val) return; const key = cls+val; if (seen.has(key)) return; seen.add(key); out.push(`<button class="chip ${cls} ${clean(cur)===clean(val)?'sel':''}" data-f="${f}" data-v="${val.replace(/"/g,'&quot;')}" data-s="${cls}"><small>${lbl}</small>${val}${extra}</button>`); }; if (f === 'deceased_status' && minor(a)) add('edit','nieletni','dziecko');
   const cnt = v => { const c = countOf(f,v); return c === null ? '' : ` <small>×${c}</small>`; };
   if (a.ai?.[f]) add('ai','AI',a.ai[f],cnt(a.ai[f])); if (a.lub?.[f]) add('lub','LUB',a.lub[f],cnt(a.lub[f])); (a.alts?.[f]||[]).forEach(([c,l,v]) => add(c,l,v,cnt(v)));
   if (FT[f]) { [a.ai?.[f], a.lub?.[f]].filter(Boolean).forEach(v => { if (countOf(f,v) === 0) near(f,v).forEach(([n,c]) => add('bz','BAZA ≈',n,` <small>×${c}</small>`)); }); }
+  if (f === 'deceased_last_name' && (isChild(a) || minor(a))) { const sx = getv(a,'deceased_sex'), q = x => { const m = clean(x).match(/\?$/); return m ? '?' : ''; };
+    const infl = (n, fem) => { const w = clean(n).replace(/\?$/, '').trim(); if (!w) return ''; return fem ? w.replace(/(sk|ck|dzk)i$/i, '$1a') : w.replace(/(sk|ck|dzk)a$/i, '$1i'); };
+    const fa = clean(getv(a,'father_last_name')), mo = clean(getv(a,'mother_last_name'));
+    if (fa && (sx === 'K' || sx === 'M')) add('akt','z OJCA' + (sx === 'K' ? ' (żeńska)' : ''), infl(fa, sx === 'K') + q(fa));
+    else if (!fa && mo && (sx === 'K' || sx === 'M')) add('akt','z MATKI – nieślubne' + (sx === 'M' ? ' (męska)' : ''), infl(mo, sx === 'K') + q(mo)); }
   return out.join(''); }
 const SRCN = {csv:'z CSV', txt:'z tekstu', ai:'AI', lub:'LUB', bz:'BAZA', akt:'AKT', edit:'własne'};
 function tagsFor(a,f,v,x){ const ds = diffState(a,f); const c = FT[f] ? countOf(f,v) : null;
@@ -321,7 +329,7 @@ function renderAct(){ const a = AM[S.cur]; const m = $('main'); if (!a){ m.inner
   if ($('hAll')) { $('hAll').onclick = doAll; $('hDone').onclick = doDone; }
   $('selScan').onchange = e => { st(a.id).scan = e.target.value; save(); showScan(); }; }
 function learnFix(a, f, v, src){ if (src !== 'edit' || !a.ai || !/name|informant|residence|birth_place|death_place/.test(f)) return; const x = (clean(a.ai[f]) || '').split(',')[0].split(/\s+/), y = (clean(v) || '').split(',')[0].split(/\s+/); if (x.length !== y.length) return; x.forEach((p, i) => { p = p.replace(/\?$/, ''); const q = y[i]; if (p.length > 2 && q && fold(p) !== fold(q) && lev(fold(p), fold(q), 4) <= Math.max(2, Math.floor(p.length / 2))) { S.fixes = S.fixes || {}; const d = (S.fixes[fold(p)] = S.fixes[fold(p)] || {}); d[q] = (d[q] || 0) + 1; } }); }
-function commit(a,f,v,src,extra){ learnFix(a, f, v, src); const o = st(a.id).f[f] || {}; st(a.id).f[f] = Object.assign({v: (src==='edit' ? v : clean(v) || v), src, ok:true, unc:o.unc, note:o.note}, extra||{}); save(); }
+function commit(a,f,v,src,extra){ learnFix(a, f, v, src); const o = st(a.id).f[f] || {}; st(a.id).f[f] = Object.assign({v: (src==='edit' ? v : clean(v) || v), src, ok:true, unc:o.unc, note:o.note}, extra||{}); save(); if (/^informant/.test(f) && src !== 'txt' && !(extra && extra.skip)) applyWitText(a, f); }
 function setf(a,f,v,src){ commit(a,f,v,src); keepScroll(true); }
 function keepScroll(next){ const y = window.scrollY; renderAct(); renderList(); window.scrollTo(0,y);
   if (next && S.hideOk) { const r = $('main').querySelector('.row.act') || $('main').querySelector('.row'); if (r) window.scrollTo({top: r.getBoundingClientRect().top + window.scrollY - $('view').offsetHeight - 8}); } }
@@ -382,7 +390,7 @@ $('bPrev').onclick = () => step(-1); $('bNext').onclick = () => step(1);
 $('bOk').onclick = () => { const a = curAct(), r = $('main').querySelector('.row.act'); if (!a) return; if (!a.kind && (!r || (progOf(a) === 100 && !st(a.id).done)) || (r && st(a.id).done)) { if (!st(a.id).done) doDone(); else nextTodo(); return; } if (!r) return; const inp = r.querySelector('input[data-f],textarea[data-f]'), f = inp.dataset.f, val = inp.value.trim(); const c = [...r.querySelectorAll('.chip[data-f]')].find(b => clean(b.dataset.v) === clean(val)); commit(a, f, val, c ? c.dataset.s : 'edit'); keepScroll(true); };
 $('bSkip').onclick = () => { const a = curAct(), r = $('main').querySelector('.row.act'); if (!a || !r) return; const f = r.querySelector('input[data-f],textarea[data-f]').dataset.f; commit(a, f, getv(a,f), 'ai', {skip:true, ok:false}); keepScroll(true); };
 const doAll = () => { const a = curAct(); if (!a || !a.ai) return toast('Brak odczytu AI do porównania'); let n = 0; fieldsOf(a).forEach(f => { if (diffState(a,f.id) === 'eq' && !st(a.id).f[f.id]) { st(a.id).f[f.id] = {v: clean(a.ai[f.id]), src:'ai', ok:true, unc:st(a.id).f[f.id]?.unc}; n++; } }); save(); renderAct(); toast(`Przyjęto zgodne pola: ${n}`); };
-const doDone = () => { const a = curAct(); if (!a) return; const s = st(a.id); s.done = !s.done; save(); renderList(); renderAct(); toast(s.done ? 'Akt zatwierdzony ✓' : 'Cofnięto zatwierdzenie'); if (s.done) nextTodo(); };
+const doDone = () => { const a = curAct(); if (!a) return; if (!st(a.id).done && !lubGuard('__next__')) return; const s = st(a.id); s.done = !s.done; save(); renderList(); renderAct(); toast(s.done ? 'Akt zatwierdzony ✓' : 'Cofnięto zatwierdzenie'); if (s.done) nextTodo(); };
 // ---- skany i widok
 let extra = {};
 const scanUrls = () => { const base = S.scanBase || D.scanBase || '', o = {}; Object.entries(D.scanFiles || {}).forEach(([k, f]) => { o[k] = base + f.split('/').map(encodeURIComponent).join('/'); }); return o; };
@@ -503,7 +511,16 @@ function hlHtml(a, t, FS, withHl){ const qs = qList(t), sk = S.acts[a.id]?.qs ||
   for (const it of items) { if (it.s < p) continue; out += marks(esc(t.slice(p, it.s)));
     out += it.q ? `<span class="qm ${/nieczytel/i.test(it.q.txt)?'r':''} ${sk[it.q.key]?'sk':''} ${TQ===it.q.key?'sel':''}" data-q="${esc(it.q.key)}" title="Niepewny odczyt – dotknij">${esc(it.q.txt)}</span>` : `<span class="hl ${it.vr?'cf vr':hlCls(a,it.f)} ${TF===it.f?'sel':''}" data-f="${it.f}" title="${it.vr?'INNA PISOWNIA niż w polu – sprawdź · ':''}${esc(FS.find(f=>f.id===it.f)?.label||it.f)}">${esc(t.slice(it.s, it.e))}</span>`; p = it.e; }
   return {html: out + marks(esc(t.slice(p))), used: new Set(toks.filter(x => x.f).map(x => x.f))}; }
-function setTxt(a, v){ const s2 = st(a.id); if (v === (a.tekst||'')) delete s2.text; else s2.text = v; save(); }
+function witParts(t){ const mm = (t||'').match(/Staw(?:ili|ił)\s+się:?\s+/i); if (!mm) return null; const st0 = mm.index + mm[0].length, cm = t.indexOf(',', st0); if (cm <= st0) return null; const parts = []; let pos = 0; t.slice(st0, cm).split(/(\s+i\s+)/).forEach(pt => { if (!/^\s+i\s+$/.test(pt)) parts.push({s:st0 + pos, e:st0 + pos + pt.length, txt:pt}); pos += pt.length; }); return parts; }
+// Wpisanie świadków w tekście zapisuje je od razu do pól (bez drugiego wpisywania); zatwierdzone pole nadpisuje tekst w commit()
+function syncWitnesses(a, oldT, newT){ if (a.kind) return; const po = witParts(oldT), pn = witParts(newT); if (!pn || pn.length > 2) return; const s2 = st(a.id), done = [];
+  ['informant1','informant2'].forEach((f, k) => { const n = pn[k]; if (!n || (pn.length === 1 && k)) return; const o = po && po[k] ? po[k].txt : null; if (o !== null && o === n.txt) return;
+    const name = n.txt.replace(/\s+/g, ' ').trim(); if (/[\[\]?]/.test(name) || name.split(' ').filter(w => w.length > 1).length < 2) return;
+    const x = s2.f[f]; if (x && (x.ok || x.skip)) return; const cur = clean(getv(a, f)).replace(/\?$/, '').trim(); if (fold(cur) === fold(name)) return;
+    s2.f[f] = {v:name, src:'txt', ok:true, unc:false, note:x?.note}; done.push(f); });
+  if (done.length) { save(); toast('Świadkowie z tekstu zapisani do pól: ' + done.map(f => f.slice(-1)).join(', ')); } }
+function applyWitText(a, f){ const t = txtOf(a); if (!t) return; const L = textSugs(a, fieldsOf(a), t).filter(x => x.f === f).sort((x, y) => y.i - x.i); if (!L.length) return; let r = t; L.forEach(x => { r = r.slice(0, x.i) + x.to + r.slice(x.e); }); st(a.id).text = r === (a.tekst||'') ? undefined : r; if (r === (a.tekst||'')) delete st(a.id).text; save(); }
+function setTxt(a, v){ const old = txtOf(a), s2 = st(a.id); if (v === (a.tekst||'')) delete s2.text; else s2.text = v; save(); syncWitnesses(a, old, v); }
 function qNext(a, pos){ const sk = S.acts[a.id]?.qs || {}, L = qList(txtOf(a)).filter(q => !sk[q.key]); const n = L.find(q => q.s >= pos) || L[0]; return n ? n.key : null; }
 function nextTF(a, FS){ const s = st(a.id); const ids = FS.map(f => f.id); const order = TF_ORDER.filter(f => ids.includes(f)).concat(ids.filter(f => !TF_ORDER.includes(f))); const k = Math.max(0, order.indexOf(TF)); for (let n = 1; n <= order.length; n++) { const f = order[(k+n) % order.length]; const x = s.f[f]; if (!(x?.ok || x?.skip) && (clean(getv(a,f)) || (a.alts?.[f]||[]).length) && appl(a,f)) return f; } return null; }
 
