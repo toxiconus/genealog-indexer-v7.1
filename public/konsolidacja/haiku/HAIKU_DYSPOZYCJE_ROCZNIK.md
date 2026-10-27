@@ -53,3 +53,8 @@ Liczba stron, liczba aktów, lista braków/podejrzeń (numery aktów), lista zap
 - Godziny zgonu (death_time) nie są już wymagane ani weryfikowane (pole wyłączone w narzędziu).
 - Miejscowości zapisywać w mianowniku (Kaczyniec, Blinów, Brzozówka, Moczydła, Słodków), żonę/męża jako „Imię Nazwisko (żona)” (np. Marianna Pudło), bez „z Pudłów”.
 - Nazwisko rodowe kobiety = nazwisko ojca w formie żeńskiej (także dla dzieci); dla chłopców i mężczyzn brak.
+
+## Formaty (obowiązują też Haiku)
+- **Wiek:** cyfra + pełna jednostka w poprawnej odmianie: `1 dzień`, `2 dni`, `3 miesiące`, `5 miesięcy`, `2 lata`, `5 lat`, `1 rok 5 miesięcy`; same lata = sama liczba (`73`). Bez skrótów (`mies.`, `m-ce`) i bez liczebników słownych (`dwa dni` → `2 dni`). Niepewne: `?` na końcu.
+- **Małżonek:** `Imię Nazwisko` (nazwisko rodowe, forma żeńska dla żon) + znacznik `(owd.)` gdy żyje w chwili zgonu albo `(†)` gdy zmarł wcześniej; kilku: `; `.
+- **Daty:** `RRRR-MM-DD`.

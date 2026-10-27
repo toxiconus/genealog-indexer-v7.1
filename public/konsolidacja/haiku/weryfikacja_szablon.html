@@ -337,6 +337,7 @@ function renderAct(){ const a = AM[S.cur]; const m = $('main'); if (!a){ m.inner
     const long = f.id === 'notes' || f.id === 'p_note', uncOn = isUnc(a,f.id); const pend = !(x?.ok || x?.skip); const isAct = pend && !actDone; if (isAct) actDone = true;
     h += `<div class="row ${x?.ok?'ok':''} ${isAct?'act':''}"><div class="lab"><span>${f.label} ${tagsFor(a,f.id,v,x)}</span><span>${x?.ok?'✓ '+(SRCN[x.src]||''):x?.skip?'pominięte':''}</span></div>
      ${long?`<textarea rows="2" data-f="${f.id}">${esc(v)}</textarea>`:`<input data-f="${f.id}" value="${esc(v)}" ${FT[f.id]?`list="${FT[f.id]==='s'?'dlS':'dlN'}"`:''} autocomplete="off">`}${dwHtml(a,f.id)}
+     ${agePick(a,f.id)}
      <div class="chips">${chipsFor(a,f.id)}${clean(v)&&!x?.ok?`<button class="chip btn-ok" data-ok="${f.id}">✓ zatwierdź</button>`:''}<button class="chip uncb ${x?.unc?'sel':''}" data-unc="${f.id}">? niepewne</button>${!x?.skip&&!x?.ok?`<button class="chip btn-skip" data-skip="${f.id}">pomiń</button>`:''}${x?`<button class="chip" data-undo="${f.id}">↺ cofnij</button>`:''}${long&&clean(v)?`<button class="chip" data-nclr="${f.id}">🗑 usuń uwagę</button>`:''}</div>
      ${x?.unc?`<div class="nt"><input data-note="${f.id}" placeholder="Opis niepewności (np. nieczytelne, dwa warianty)" value="${esc(x.note||'')}"><button class="chip" data-ncl="${f.id}">🗑 usuń opis i niepewność</button></div>`:''}</div>`; });
   m.innerHTML = warnHtml(a) + repHtml(a) + missingHtml(a, FS) + lubPanel(a, FS) + relHtml(a) + h + '</div>';
@@ -346,13 +347,24 @@ function renderAct(){ const a = AM[S.cur]; const m = $('main'); if (!a){ m.inner
   m.querySelectorAll('[data-skip]').forEach(b => b.onclick = () => { commit(a, b.dataset.skip, getv(a,b.dataset.skip), 'ai', {skip:true, ok:false}); keepScroll(true); });
   m.querySelectorAll('[data-unc]').forEach(b => b.onclick = () => { const f = b.dataset.unc, x = st(a.id).f[f] || {v:getv(a,f), src:(a.ai?.[f]?'ai':'lub'), ok:false}; x.unc = !isUnc(a,f); st(a.id).f[f] = x; save(); keepScroll(); });
   m.querySelectorAll('[data-note]').forEach(i => i.onchange = () => { const x = st(a.id).f[i.dataset.note]; if (x) { x.note = i.value.trim(); save(); } });
+  bindAgePick(m, a);
   m.querySelectorAll('input[data-f],textarea[data-f]').forEach(i => { i.onchange = () => setf(a, i.dataset.f, i.value.trim(), 'edit'); i.onfocus = () => focusField(a, i.dataset.f); });
   if ($('cText')) $('cText').onclick = () => { S.tmode = 'pola'; save(); renderAct(); window.scrollTo(0,0); };
   $('tHideOk').onclick = () => { S.hideOk = !S.hideOk; save(); renderAct(); };
   if ($('hAll')) { $('hAll').onclick = doAll; $('hDone').onclick = doDone; }
   $('selScan').onchange = e => { st(a.id).scan = e.target.value; save(); showScan(); }; }
 function learnFix(a, f, v, src){ if (src !== 'edit' || !a.ai || !/name|informant|residence|birth_place|death_place/.test(f)) return; const x = (clean(a.ai[f]) || '').split(',')[0].split(/\s+/), y = (clean(v) || '').split(',')[0].split(/\s+/); if (x.length !== y.length) return; x.forEach((p, i) => { p = p.replace(/\?$/, ''); const q = y[i]; if (p.length > 2 && q && fold(p) !== fold(q) && lev(fold(p), fold(q), 4) <= Math.max(2, Math.floor(p.length / 2))) { S.fixes = S.fixes || {}; const d = (S.fixes[fold(p)] = S.fixes[fold(p)] || {}); d[q] = (d[q] || 0) + 1; } }); }
-function commit(a,f,v,src,extra){ learnFix(a, f, v, src); const o = st(a.id).f[f] || {}; st(a.id).f[f] = Object.assign({v: (src==='edit' ? v : clean(v) || v), src, ok:true, unc:o.unc, note:o.note}, extra||{}); save(); if (/^informant/.test(f) && src !== 'txt' && !(extra && extra.skip)) applyWitText(a, f); }
+// data wpisana skrótem: „22 maj”, „22 maja”, „22.5”, „22 V”, „22 maj 1943” → RRRR-MM-DD (rok z aktu; zgon późniejszym miesiącem niż akt = rok wcześniej)
+const ROM = ['i','ii','iii','iv','v','vi','vii','viii','ix','x','xi','xii'];
+function dateShort(a, f, v){ const t = String(v ?? '').trim().toLowerCase(); if (!t || /^\d{4}-\d{2}-\d{2}$/.test(t)) return v;
+  const m0 = t.match(/^(\d{1,2})\.(\d{1,2})\.(\d{4})$/); if (m0) return normDate(t);
+  const m = t.match(/^(\d{1,2})[\s.\/-]+([a-ząćęłńóśźż]+|\d{1,2})\.?(?:[\s.\/-]+(\d{2,4}))?\.?$/i); if (!m) return v;
+  let mo = 0; if (/^\d+$/.test(m[2])) mo = +m[2]; else { const w = m[2], ri = ROM.indexOf(w); if (ri >= 0) mo = ri + 1; else if (w.length >= 3) mo = MIES.findIndex((n, i) => n.startsWith(w) || MIESD[i].startsWith(w) || n.slice(0,3) === w.slice(0,3)) + 1; }
+  const d = +m[1]; if (!(mo >= 1 && mo <= 12 && d >= 1 && d <= 31)) return v;
+  let y = m[3] ? (m[3].length === 2 ? 1900 + +m[3] : +m[3]) : 0;
+  if (!y) { const ad = f === 'death_date' ? dwParse(getv(a,'act_date')) : null; y = (ad && ad.y) || a.year || 1943; if (f === 'death_date' && ad && mo > ad.m) y -= 1; }
+  if (d > dim(y, mo)) return v; return y + '-' + String(mo).padStart(2,'0') + '-' + String(d).padStart(2,'0'); }
+function commit(a,f,v,src,extra){ if (src === 'edit' && (f === 'death_date' || f === 'act_date')) v = dateShort(a, f, v); learnFix(a, f, v, src); const o = st(a.id).f[f] || {}; st(a.id).f[f] = Object.assign({v: (src==='edit' ? v : clean(v) || v), src, ok:true, unc:o.unc, note:o.note}, extra||{}); save(); if (/^informant/.test(f) && src !== 'txt' && !(extra && extra.skip)) applyWitText(a, f); }
 function setf(a,f,v,src){ commit(a,f,v,src); keepScroll(true); }
 function keepScroll(next){ const y = window.scrollY; renderAct(); renderList(); window.scrollTo(0,y);
   if (next && S.hideOk) { const r = $('main').querySelector('.row.act') || $('main').querySelector('.row'); if (r) window.scrollTo({top: r.getBoundingClientRect().top + window.scrollY - $('view').offsetHeight - 8}); } }
@@ -378,9 +390,11 @@ function renderWiz(){ const a = curAct(), m = $('main'); if (!a) return; const F
   } else { const f = FS[W.i], x = s.f[f.id], v = W.val ?? getv(a,f.id), long = f.id === 'notes' || f.id === 'p_note';
     m.innerHTML = warnHtml(a) + repHtml(a) + missingHtml(a, FS) + `<div class="card wz-card">${head}<div class="muted">Pole ${W.i+1} / ${FS.length}</div><div class="big">${f.label}</div>
       <div>${tagsFor(a,f.id,v,x)} ${x?.ok?'<span class="tag eq">zapisane</span>':''}${x?.skip?'<span class="tag q">pominięte</span>':''}</div>
+      ${agePick(a,f.id)}
       <div class="chips">${chipsFor(a,f.id)}</div>
       <div style="margin-top:8px">${long?`<textarea rows="3" id="wIn">${esc(v)}</textarea>`:`<input id="wIn" value="${esc(v)}" ${FT[f.id]?`list="${FT[f.id]==='s'?'dlS':'dlN'}"`:''} autocomplete="off">`}${dwHtml(a,f.id)}</div>
       ${W.unc?`<div class="nt"><input id="wNote" placeholder="Opis niepewności (np. nieczytelne, dwa warianty)" value="${esc(W.note)}"></div>`:''}</div>`;
+    bindAgePick(m, a);
     m.querySelectorAll('.chip[data-f]').forEach(b => b.onclick = () => { W.note = $('wNote')?.value ?? W.note; wizSave(clean(b.dataset.v) || b.dataset.v, b.dataset.s); });
     wizBar([['wBack','◀'],['wSk','Pomiń','btn-skip'],['wUnc','? Niepewne', W.unc?'on':''],['wOk','Zapisz ▶','btn-ok']]);
     $('wUnc').style.outline = W.unc ? '3px solid var(--bz)' : '';
@@ -737,6 +751,11 @@ function normAge(v){ let t = String(v).trim(); if (!t || /^\d+$/.test(t)) return
   while ((m = re.exec(rest))) { let n = m[1]; if (n !== '?') { if (!/^\d+$/.test(n)) { const w = AGE_W[n.toLowerCase()]; if (w == null) return v; n = w; } n = +n; }
     const u = ageUnit(m[2]); if (!u) return v; parts.push(n === '?' ? '? ' + AGE_U[u][2] : n + ' ' + agePl(n, u)); }
   return parts.length ? pre + parts.join(' ') + q : v; }
+// wybór wieku jak w kalendarzu: liczba (do 3 cyfr) + kliknięcie jednostki; „dodaj” dopisuje kolejną część (np. 1 rok + 5 miesięcy)
+const AGE_UB = [['g','godz.'],['d','dni'],['t','tyg.'],['m','mies.'],['r','lat']];
+const agePick = (a, f) => f !== 'age' ? '' : `<div class="chips agp" style="align-items:center"><span class="muted">Wybierz:</span><input type="number" class="agn" min="0" max="999" inputmode="numeric" placeholder="liczba" style="width:76px"> ${AGE_UB.map(([u,l]) => `<button class="chip" data-agu="${u}">${l}</button>`).join('')}<label class="muted"><input type="checkbox" class="agadd"> dodaj do obecnego</label></div>`;
+function bindAgePick(root, a){ root.querySelectorAll('.agp').forEach(bar => { const inp = bar.querySelector('.agn'), add = bar.querySelector('.agadd');
+  bar.querySelectorAll('[data-agu]').forEach(b => b.onclick = () => { const n = parseInt(inp.value, 10); if (isNaN(n) || n < 0) { inp.focus(); return; } let v = n + ' ' + agePl(n, b.dataset.agu); const cur = clean(getv(a,'age')); if (add.checked && cur && !/\?|^\d+$/.test(cur)) v = cur + ' ' + v; else if (add.checked && /^\d+$/.test(cur)) v = cur + ' ' + agePl(+cur, 'r') + ' ' + v; setf(a, 'age', normAge(v), 'edit'); }); }); }
 function normFieldVal(a, f, v){ if (!v) return v;
   if (f === 'age') return normAge(v);
   if (f === 'death_place' && /^Szpital Janów/i.test(v)) return 'Szpital Janów Lubelski';   // zmarli w szpitalu: bez dopisku miejsca zamieszkania („…(zm.), Moczydła”)
