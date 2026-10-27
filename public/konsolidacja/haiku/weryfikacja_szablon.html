@@ -96,8 +96,26 @@ body.textmode main{margin-bottom:330px}body.textmode #view{height:30vh}body.text
 #tsheet .dwg button{min-height:40px}#tsheet .dwi{min-height:40px}
 .tnot{font-size:13px;color:var(--mut);margin-top:8px;white-space:pre-wrap}
 .tarea{width:100%;min-height:42vh;border:1px solid var(--line);border-radius:10px;background:var(--bg);color:var(--ink);padding:11px;font:17px/1.6 system-ui,sans-serif}
+
+/* ===== układ na komputer (szeroki ekran): skan po lewej na całą wysokość, pola/audyt po prawej; telefon bez zmian ===== */
+@media (min-width:1000px){
+ :root{--vw:57vw}
+ #top{position:sticky;top:0;z-index:40;background:var(--card);box-shadow:0 1px 0 var(--line)}
+ #view:not(.xl){position:fixed;left:0;top:var(--tt,130px);width:var(--vw);height:auto!important;bottom:0;z-index:20}
+ main{margin:0 0 0 var(--vw);max-width:none!important;padding:14px 18px 110px}
+ body.textmode main{margin-bottom:0;padding-bottom:340px}
+ #bar,#wbar,#tsheet{left:var(--vw);right:0}
+ #bar{padding-left:14px;padding-right:14px}
+ body.wz #view:not(.xl){top:0}
+ body.wz main{padding-top:14px}
+ .card{padding:14px 16px}
+ .row input,.row textarea{font-size:16px;padding:8px 10px}
+ .chip{min-height:34px;padding:5px 11px;font-size:14px}
+ button{min-height:36px}
+ #bar button{min-height:46px}
+ #toast{left:calc(var(--vw) + (100vw - var(--vw))/2)}
+}
 </style></head><body>
-<header><h1>Weryfikacja zgonów · AI v1</h1><span id="prog"></span><button id="bText" class="sm" title="Pełny tekst aktu od Haiku: kilka trybów">Aa Tekst</button><button id="bMenu" class="sm">⋯ Menu</button></header>
 <div id="menu">
  <button id="mCsv">⬇ Eksport CSV (zweryfikowane)</button>
  <button id="mLog">⬇ Eksport logu zmian</button>
@@ -122,8 +140,9 @@ body.textmode main{margin-bottom:330px}body.textmode #view{height:30vh}body.text
  <button id="mReset">🗑 Wyczyść moje wybory</button>
 </div>
 <input type="file" id="fScan" accept="image/*" multiple hidden><input type="file" id="fAi" accept=".csv,text/csv" hidden><input type="file" id="fLoad" accept=".json" hidden><input type="file" id="fVer" accept=".csv,text/csv" hidden>
+<div id="top"><header><h1>Weryfikacja zgonów · AI v1</h1><span id="prog"></span><button id="bText" class="sm" title="Pełny tekst aktu od Haiku: kilka trybów">Aa Tekst</button><button id="bMenu" class="sm">⋯ Menu</button></header>
 <div class="tabs" id="tabs"></div>
-<div id="list"></div>
+<div id="list"></div></div>
 <div id="view"><div id="layer"><img id="img" alt=""><div id="roi"></div></div><div id="noimg">Brak skanu dla tego aktu.<br>Wybierz skan poniżej albo dodaj z telefonu.</div>
  <div id="vbar"><button id="zMenu" title="Menu">☰</button><button id="zIn">＋</button><button id="zOut">－</button><button id="zFit">◎</button><button id="zH">⇕</button><button id="zRoi">✎</button><button id="zRf" title="Ukryj/pokaż zaznaczenia na skanie">▭</button></div></div>
 <main id="main"></main>
@@ -704,6 +723,8 @@ function normFieldVal(a, f, v){ if (!v) return v;
   if (['mother_last_name','father_last_name','deceased_maiden_name','deceased_last_name'].includes(f)) { const t = v.replace(/\s*\((?:ze?)\s[^)]*\)/u, '').trim(); return t || v; }
   return v; }
 function normActs(){ D.acts.forEach(a => { ['ai','lub'].forEach(k => { const o = a[k]; if (!o) return; Object.keys(o).forEach(f => { if (typeof o[f] === 'string') o[f] = normFieldVal(a, f, o[f]); }); }); }); }
+// układ komputerowy: wysokość górnego paska → pozycja skanu; po zmianie rozmiaru dopasuj skan
+try { const tp = $('top'), setTT = () => document.documentElement.style.setProperty('--tt', tp.offsetHeight + 'px'); setTT(); if (window.ResizeObserver) { new ResizeObserver(setTT).observe(tp); let ft; new ResizeObserver(() => { clearTimeout(ft); ft = setTimeout(() => { try { if (img.naturalWidth && !$('view').classList.contains('xl')) fit(roiOf(curAct() || {})); } catch(e){} }, 150); }).observe($('view')); } window.addEventListener('resize', setTT); } catch(e) {}
 normActs();
 loadExtra().then(init);
 </script></body></html>
