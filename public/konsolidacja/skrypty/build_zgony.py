@@ -1,4 +1,6 @@
 import sys, re, csv
+sys.path.insert(0, __import__('os').path.dirname(__import__('os').path.abspath(__file__)))
+from normalizuj_imiona_rodzicow import mianownik
 sys.path.insert(0, '/tmp/claude-0/-home-claude/3e7ce577-16ba-54bc-8dbe-e2ba98a801b3/scratchpad/ods_in')
 from dump_sheet import load
 W = '/tmp/claude-0/-home-claude/3e7ce577-16ba-54bc-8dbe-e2ba98a801b3/scratchpad/zg'
@@ -102,6 +104,10 @@ for rn in sorted(hand):
              matka_nazwisko=h.get('matn',''), rodowe=h.get('rodowe',''),
              zyjacy_malzonek=h.get('zyjacy_malzonek',''), uwagi=h.get('uw',''),
              rok_ur_wyliczony=rok_ur, flagi='; '.join(fl))
+    for _c in ('ojciec_imie', 'matka_imie'):   # s./c. <dopełniacz> -> mianownik (surowy zapis zostaje w surowe_kol_6)
+        _n, _why = mianownik(_c, r[_c])
+        if _why and _why != 'WSTRZYMANE':
+            log.append((r['wiersz_zrodlo'], _c, r[_c], _n, _why)); r[_c] = _n
     out.append(r)
 
 out.sort(key=lambda r: int(r['wiersz_zrodlo']))

@@ -20,28 +20,39 @@ MA = {'Marianny':'Marianna','Katarzyny':'Katarzyna','Zofii':'Zofia','Agnieszki':
  'Petroneli':'Petronela','Teresy':'Teresa','Małgorzaty':'Małgorzata','Józefy':'Józefa','Barbary':'Barbara','Reginy':'Regina','Doroty':'Dorota',
  'Anieli':'Aniela','Łucji':'Łucja','Cecylii':'Cecylia','Elżbiety':'Elżbieta','Henryki':'Henryka','Salomei':'Salomea','Zuzanny':'Zuzanna'}
 MA_PISOWNIA = {'Maryanny':'Marianna','Marjanny':'Marianna','Zofji':'Zofia'}
-raw = open(F, encoding='utf-8-sig', newline='').read()
-rows = list(csv.reader(raw.splitlines(), delimiter=';'))
-h = rows[0]; ix = {c: i for i, c in enumerate(h)}
-log, review, unk = [], [], []
-for r in rows[1:]:
-    for col, g, sp in (('ojciec_imie', OJ, OJ_PISOWNIA), ('matka_imie', MA, MA_PISOWNIA)):
-        v = r[ix[col]]
-        if not v: continue
-        if col == 'ojciec_imie' and v in OJ_WSTRZYMANE:
-            review.append(r); continue
-        n, why = (g[v], 'dopełniacz -> mianownik') if v in g else ((sp[v], 'starsza pisownia + dopełniacz -> mianownik') if v in sp else (None, None))
-        if n is None:
-            if v not in set(g.values()) | set(sp.values()): unk.append((col, v))
-            continue
-        log.append((r[ix['wiersz_zrodlo']], col, v, n, why)); r[ix[col]] = n
-print('zmian:', len(log), '| wstrzymane do sprawdzenia:', len(review), '| nieznane formy:', sorted(set(unk)))
-if '--zapisz' in sys.argv:
-    with open(F, 'w', encoding='utf-8-sig', newline='') as f: csv.writer(f, delimiter=';', lineterminator='\r\n').writerows(rows)
-    with open(os.path.join(up, 'zgony_log_imiona_rodzicow.csv'), 'w', encoding='utf-8-sig', newline='') as f:
-        w = csv.writer(f, delimiter=';', lineterminator='\r\n'); w.writerow(['wiersz', 'pole', 'przed', 'po', 'powod']); w.writerows(log)
-    with open(os.path.join(up, 'zgony_do_sprawdzenia_imiona.csv'), 'w', encoding='utf-8-sig', newline='') as f:
-        w = csv.writer(f, delimiter=';', lineterminator='\r\n')
-        w.writerow(['id_archiwalne', 'rok', 'nr_wpisu', 'nazwisko', 'imie', 'ojciec_imie', 'matka_imie', 'matka_nazwisko', 'uwagi', 'surowe_kol_6', 'surowe_pozostale'])
-        for r in review: w.writerow([r[ix[c]] for c in ('id_archiwalne', 'rok', 'nr_wpisu', 'nazwisko', 'imie', 'ojciec_imie', 'matka_imie', 'matka_nazwisko', 'uwagi', 'surowe_kol_6', 'surowe_pozostale')])
-    print('zapisano')
+def mianownik(col, v):
+    """-> (nowa_wartosc, powod) | (v, None) bez zmiany | (v, 'WSTRZYMANE') gdy wymaga kontekstu."""
+    g, sp = (OJ, OJ_PISOWNIA) if col == 'ojciec_imie' else (MA, MA_PISOWNIA)
+    if not v: return v, None
+    if col == 'ojciec_imie' and v in OJ_WSTRZYMANE: return v, 'WSTRZYMANE'
+    if v in g: return g[v], 'dopełniacz -> mianownik'
+    if v in sp: return sp[v], 'starsza pisownia + dopełniacz -> mianownik'
+    return v, None
+
+
+if __name__ == '__main__':
+    raw = open(F, encoding='utf-8-sig', newline='').read()
+    rows = list(csv.reader(raw.splitlines(), delimiter=';'))
+    h = rows[0]; ix = {c: i for i, c in enumerate(h)}
+    log, review, unk = [], [], []
+    for r in rows[1:]:
+        for col, g, sp in (('ojciec_imie', OJ, OJ_PISOWNIA), ('matka_imie', MA, MA_PISOWNIA)):
+            v = r[ix[col]]
+            if not v: continue
+            if col == 'ojciec_imie' and v in OJ_WSTRZYMANE:
+                review.append(r); continue
+            n, why = (g[v], 'dopełniacz -> mianownik') if v in g else ((sp[v], 'starsza pisownia + dopełniacz -> mianownik') if v in sp else (None, None))
+            if n is None:
+                if v not in set(g.values()) | set(sp.values()): unk.append((col, v))
+                continue
+            log.append((r[ix['wiersz_zrodlo']], col, v, n, why)); r[ix[col]] = n
+    print('zmian:', len(log), '| wstrzymane do sprawdzenia:', len(review), '| nieznane formy:', sorted(set(unk)))
+    if '--zapisz' in sys.argv:
+        with open(F, 'w', encoding='utf-8-sig', newline='') as f: csv.writer(f, delimiter=';', lineterminator='\r\n').writerows(rows)
+        with open(os.path.join(up, 'zgony_log_imiona_rodzicow.csv'), 'w', encoding='utf-8-sig', newline='') as f:
+            w = csv.writer(f, delimiter=';', lineterminator='\r\n'); w.writerow(['wiersz', 'pole', 'przed', 'po', 'powod']); w.writerows(log)
+        with open(os.path.join(up, 'zgony_do_sprawdzenia_imiona.csv'), 'w', encoding='utf-8-sig', newline='') as f:
+            w = csv.writer(f, delimiter=';', lineterminator='\r\n')
+            w.writerow(['id_archiwalne', 'rok', 'nr_wpisu', 'nazwisko', 'imie', 'ojciec_imie', 'matka_imie', 'matka_nazwisko', 'uwagi', 'surowe_kol_6', 'surowe_pozostale'])
+            for r in review: w.writerow([r[ix[c]] for c in ('id_archiwalne', 'rok', 'nr_wpisu', 'nazwisko', 'imie', 'ojciec_imie', 'matka_imie', 'matka_nazwisko', 'uwagi', 'surowe_kol_6', 'surowe_pozostale')])
+        print('zapisano')
