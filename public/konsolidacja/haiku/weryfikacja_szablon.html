@@ -435,10 +435,10 @@ const normTime = v => { const m = String(v ?? '').trim().match(/^(\d{1,2})(?::(\
 const normDate = v => { v = String(v ?? '').trim(); const m = v.match(/^(\d{1,2})\.(\d{1,2})\.(\d{4})$/); return m ? m[3] + '-' + m[2].padStart(2, '0') + '-' + m[1].padStart(2, '0') : v; };
 function rows(){ return D.acts.filter(a => a.ai && !a.kind).map(a => { const s = S.acts[a.id] || {f:{}}; const r = {id:a.id, death_year:a.year, death_act_number:a.act}; COLS.forEach(c => { if (!(c in r)) r[c] = a.ai[c] ?? ''; });
   FIELDS.forEach(f => { if (s.f?.[f.id]) r[f.id] = s.f[f.id].v; });
-  if (s.hid && s.hid.death_time != null) r.death_time = s.hid.death_time;   // godzina zgonu: ukryta w narzędziu, ale zachowana w danych i eksporcie
-  const unc = FIELDS.filter(f => (isUnc(a,f.id) && !s.f?.[f.id]?.ok) || (s.f?.[f.id]?.unc)).map(f => f.id); if (s.done && !(s.hid && s.hid.death_time != null) && (a.unc || []).includes('death_time')) unc.push('death_time'); r.uncertain_fields = unc.join(','); r.verification_notes = FIELDS.filter(f => s.f?.[f.id]?.note).map(f => f.id + ': ' + s.f[f.id].note).join(' | ');
+  r.death_time = (s.hid && s.hid.death_time) || '';   // godzina zgonu: ukryta w narzędziu; w eksporcie tylko wartość potwierdzona wcześniej przez użytkownika (nigdy odczyt AI)
+  const unc = FIELDS.filter(f => (isUnc(a,f.id) && !s.f?.[f.id]?.ok) || (s.f?.[f.id]?.unc)).map(f => f.id); r.uncertain_fields = unc.join(','); r.verification_notes = FIELDS.filter(f => s.f?.[f.id]?.note).map(f => f.id + ': ' + s.f[f.id].note).join(' | ');
   r.scan_path = (D.scanFiles || {})[scanOf(a)] || '';
-  if (!s.done) r.death_time = '';   // godzina tylko w zatwierdzonych aktach; w niezatwierdzonych pusta
+  if (!s.done) r.death_time = '';
   r.death_time = normTime(r.death_time); r.death_date = normDate(r.death_date); r.act_date = normDate(r.act_date); r.deceased_status = minor(a) ? 'dziecko' : String(r.deceased_status || '').trim().toLowerCase(); r.profession = String(r.profession || '').trim().toLowerCase();
   const ed = Object.keys(s.f||{}).length; r.verification_status = s.done ? 'ok' : (ed ? 'ai_v1_w_trakcie' : 'ai_v1'); return r; }); }
 $('mCsv').onclick = () => { const rs = rows(); dl('ZGONY_zweryfikowane.csv', COLS.join(';') + '\r\n' + rs.map(r => COLS.map(c => q(r[c])).join(';')).join('\r\n') + '\r\n'); toast(`Eksport: ${rs.length} aktów`); };
@@ -453,7 +453,7 @@ $('mFix').onclick = () => { $('menu').style.display = 'none'; const o = {}; Obje
 $('mVer').onclick = () => { $('menu').style.display = 'none'; $('fVer').click(); };
 $('fVer').onchange = async e => { try { const R = parseCsv(await e.target.files[0].text()), H = R[0], ix = {}; H.forEach((h, i) => ix[h] = i); let nA = 0, nF = 0, nSkip = 0;
   R.slice(1).forEach(r => { const a = AM[r[ix.id]]; if (!a || a.kind) return; const s2 = st(a.id); if (ix.scan_path != null && r[ix.scan_path]) { D.scanFiles = D.scanFiles || {}; const pth = r[ix.scan_path], key = Object.keys(D.scanFiles).find(k => D.scanFiles[k] === pth) || pth; D.scanFiles[key] = pth; s2.scan = key; } const ok = (r[ix.verification_status] || '') === 'ok'; const unc = new Set((r[ix.uncertain_fields] || '').split(/[;,]/).filter(Boolean)); let n = 0;
-    if (ix.death_time != null && (r[ix.death_time] || '').trim()) { s2.hid = s2.hid || {}; s2.hid.death_time = r[ix.death_time].trim(); }
+    if (ix.death_time != null && (r[ix.death_time] || '').trim() && !/\?/.test(r[ix.death_time]) && !new Set((r[ix.uncertain_fields] || '').split(/[;,]/)).has('death_time')) { s2.hid = s2.hid || {}; s2.hid.death_time = r[ix.death_time].trim(); }
     FIELDS.forEach(f => { let v = ix[f.id] != null ? (r[ix[f.id]] || '').trim() : ''; if (!v) return; v = normFieldVal(a, f.id, v); if (s2.f[f.id]?.ok) { nSkip++; return; } s2.f[f.id] = {v, src:'csv', ok:ok, unc:unc.has(f.id)}; n++; });
     if (n) { nA++; nF += n; if (ok && !s2.done) s2.done = true; } });
   D.acts.forEach(a => { if (!a.kind && (a.ai || a.lub) && minor(a) && st(a.id).f.deceased_status?.v !== 'dziecko') st(a.id).f.deceased_status = {v:'dziecko', src:'edit', ok:true}; });
