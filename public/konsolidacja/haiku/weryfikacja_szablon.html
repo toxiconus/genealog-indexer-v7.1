@@ -427,7 +427,14 @@ $('bPrev').onclick = () => step(-1); $('bNext').onclick = () => step(1);
 $('bOk').onclick = () => { const a = curAct(), r = $('main').querySelector('.row.act'); if (!a) return; if (!a.kind && (!r || (progOf(a) === 100 && !st(a.id).done)) || (r && st(a.id).done)) { if (!st(a.id).done) doDone(); else nextTodo(); return; } if (!r) return; const inp = r.querySelector('input[data-f],textarea[data-f]'), f = inp.dataset.f, val = inp.value.trim(); const c = [...r.querySelectorAll('.chip[data-f]')].find(b => clean(b.dataset.v) === clean(val)); commit(a, f, val, c ? c.dataset.s : 'edit'); keepScroll(true); };
 $('bSkip').onclick = () => { const a = curAct(), r = $('main').querySelector('.row.act'); if (!a || !r) return; const f = r.querySelector('input[data-f],textarea[data-f]').dataset.f; commit(a, f, getv(a,f), 'ai', {skip:true, ok:false}); keepScroll(true); };
 const doAll = () => { const a = curAct(); if (!a || !a.ai) return toast('Brak odczytu AI do porównania'); let n = 0; fieldsOf(a).forEach(f => { if (diffState(a,f.id) === 'eq' && !st(a.id).f[f.id]) { st(a.id).f[f.id] = {v: clean(a.ai[f.id]), src:'ai', ok:true, unc:st(a.id).f[f.id]?.unc}; n++; } }); save(); renderAct(); toast(`Przyjęto zgodne pola: ${n}`); };
-const doDone = () => { const a = curAct(); if (!a) return; if (!st(a.id).done && !lubGuard('__next__')) return; const s = st(a.id); s.done = !s.done; save(); renderList(); renderAct(); toast(s.done ? 'Akt zatwierdzony ✓' : 'Cofnięto zatwierdzenie'); if (s.done) nextTodo(); };
+// oczywiste rzeczy robione automatycznie: (1) nieletni → stan „dziecko”; (2) w zatwierdzonym akcie znikają z uwag zdania o niepewności/„do sprawdzenia”/zgodności z indeksem (oryginał → notes_org)
+const NOTE_JUNK = /weryfikacj|^zgon\s+['‘]|niepewn|do sprawdzenia|sprawdzi[ćc]|odczyt|nieczytel|orientacyjn|czytane|indeks|(^|\s)lp\s*\d+|zgodn|^akt spisany|^data (aktu|zgonu|śmierci)|^wiek|^godzin/i;
+const cleanNote = n => { const parts = String(n || '').split(/(?<=;)\s+|(?<=\.)\s+(?=[A-ZĄĆĘŁŃÓŚŹŻ„"'])/).map(x => x.trim()).filter(Boolean); const keep = parts.filter(x => !NOTE_JUNK.test(x.replace(/^["„]+/, ''))); return keep.join(' ').replace(/^["„]+|["”]+$/g, '').trim(); };
+function autoResolve(a){ if (a.kind || !(a.ai || a.lub)) return false; const s = st(a.id); let ch = false;
+  if (minor(a) && !s.f.deceased_status) { s.f.deceased_status = {v:'dziecko', src:'edit', ok:true}; ch = true; }
+  if (s.done) { const x = s.f.notes, cur = x ? x.v : getv(a,'notes'); if ((!x || x.src === 'csv' || x.src === 'auto') && cur) { const cl = cleanNote(cur); if (cl !== cur) { s.f.notes = {v:cl, src:'auto', ok:true}; s.notesOrg = s.notesOrg || cur; ch = true; } } }
+  return ch; }
+const doDone = () => { const a = curAct(); if (!a) return; if (!st(a.id).done && !lubGuard('__next__')) return; const s = st(a.id); s.done = !s.done; if (s.done) autoResolve(a); save(); renderList(); renderAct(); toast(s.done ? 'Akt zatwierdzony ✓' : 'Cofnięto zatwierdzenie'); if (s.done) nextTodo(); };
 // ---- skany i widok
 let extra = {};
 const scanUrls = () => { const base = S.scanBase || D.scanBase || '', o = {}; Object.entries(D.scanFiles || {}).forEach(([k, f]) => { o[k] = base + f.split('/').map(encodeURIComponent).join('/'); }); return o; };
@@ -473,6 +480,7 @@ function rows(){ return D.acts.filter(a => a.ai && !a.kind).map(a => { const s =
   r.death_time = (s.hid && s.hid.death_time) || '';   // godzina zgonu: ukryta w narzędziu; w eksporcie tylko wartość potwierdzona wcześniej przez użytkownika (nigdy odczyt AI)
   const unc = FIELDS.filter(f => (isUnc(a,f.id) && !s.f?.[f.id]?.ok) || (s.f?.[f.id]?.unc)).map(f => f.id); r.uncertain_fields = unc.join(','); r.verification_notes = FIELDS.filter(f => s.f?.[f.id]?.note).map(f => f.id + ': ' + s.f[f.id].note).join(' | ');
   r.scan_path = (D.scanFiles || {})[scanOf(a)] || '';
+  if (s.notesOrg && s.f?.notes?.src === 'auto') r.notes_org = s.notesOrg;
   if (!s.done) r.death_time = '';
   r.death_time = normTime(r.death_time); r.death_date = normDate(r.death_date); r.act_date = normDate(r.act_date); r.deceased_status = minor(a) ? 'dziecko' : String(r.deceased_status || '').trim().toLowerCase(); r.profession = String(r.profession || '').trim().toLowerCase(); if (r.deceased_spouse) r.deceased_spouse = normFieldVal(a,'deceased_spouse',r.deceased_spouse).replace(/(?<=\S)y(\??)((?: \((?:owd\.|†)\))?)$/,(m0,q0,t0)=>/^[^ ]*a /.test(r.deceased_spouse)?'a'+q0+t0:m0);
   const ed = Object.keys(s.f||{}).length; r.verification_status = s.done ? 'ok' : (ed ? 'ai_v1_w_trakcie' : 'ai_v1'); return r; }); }
@@ -492,6 +500,7 @@ $('fVer').onchange = async e => { try { const R = parseCsv(await e.target.files[
     FIELDS.forEach(f => { let v = ix[f.id] != null ? (r[ix[f.id]] || '').trim() : ''; if (!v) return; v = normFieldVal(a, f.id, v); if (f.id === 'deceased_spouse' && !/\((?:owd\.?|†)\)/.test(v)) v = spMark(v, spDef(r[ix.deceased_status])); if (s2.f[f.id]?.ok) { nSkip++; return; } s2.f[f.id] = {v, src:'csv', ok:ok, unc:unc.has(f.id)}; n++; });
     if (n) { nA++; nF += n; if (ok && !s2.done) s2.done = true; } });
   D.acts.forEach(a => { if (!a.kind && (a.ai || a.lub) && minor(a) && st(a.id).f.deceased_status?.v !== 'dziecko') st(a.id).f.deceased_status = {v:'dziecko', src:'edit', ok:true}; });
+  D.acts.forEach(a => autoResolve(a));
   save(); init(); toast(`Wczytano z CSV: ${nF} pól w ${nA} aktach (pominięto już zatwierdzone: ${nSkip})`); } catch(x) { toast('Błędny plik CSV'); } e.target.value = ''; };
 $('mLoad').onclick = () => $('fLoad').click(); $('fLoad').onchange = async e => { try { S = Object.assign(S, JSON.parse(await e.target.files[0].text())); save(); init(); toast('Wczytano kopię'); } catch(x){ toast('Błędny plik'); } };
 $('mReset').onclick = () => { if ($('mReset').dataset.arm) { S.acts = {}; save(); delete $('mReset').dataset.arm; $('mReset').textContent = '🗑 Wyczyść moje wybory'; init(); toast('Wyczyszczono'); } else { $('mReset').dataset.arm = 1; $('mReset').textContent = '⚠ Dotknij ponownie, by wyczyścić'; } };
@@ -772,6 +781,6 @@ function normActs(){ D.acts.forEach(a => { ['ai','lub'].forEach(k => { const o =
 try { const tp = $('top'), setTT = () => document.documentElement.style.setProperty('--tt', tp.offsetHeight + 'px'); setTT(); if (window.ResizeObserver) { new ResizeObserver(setTT).observe(tp); let ft; new ResizeObserver(() => { clearTimeout(ft); ft = setTimeout(() => { try { if (img.naturalWidth && !$('view').classList.contains('xl')) fit(roiOf(curAct() || {})); } catch(e){} }, 150); }).observe($('view')); } window.addEventListener('resize', setTT); } catch(e) {}
 normActs();
 // migracja zapisanych wcześniej wartości (localStorage / wczytane kopie): miejscowości, małżonek, wiek – do obecnych zasad
-try { let ch = 0; D.acts.forEach(a => { const sf = S.acts[a.id]?.f; if (!sf) return; ['death_place','deceased_birth_place','deceased_residence','deceased_spouse','age'].forEach(f => { const x = sf[f]; if (x && typeof x.v === 'string' && x.v) { const nv = normFieldVal(a, f, x.v); if (nv !== x.v) { x.v = nv; ch++; } } }); }); if (ch) save(); } catch(e) {}
+try { let ch = 0; D.acts.forEach(a => { const sf = S.acts[a.id]?.f; if (!sf) return; ['death_place','deceased_birth_place','deceased_residence','deceased_spouse','age'].forEach(f => { const x = sf[f]; if (x && typeof x.v === 'string' && x.v) { const nv = normFieldVal(a, f, x.v); if (nv !== x.v) { x.v = nv; ch++; } } }); }); D.acts.forEach(a => { if (autoResolve(a)) ch++; }); if (ch) save(); } catch(e) {}
 loadExtra().then(init);
 </script></body></html>
