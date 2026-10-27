@@ -436,8 +436,9 @@ const normDate = v => { v = String(v ?? '').trim(); const m = v.match(/^(\d{1,2}
 function rows(){ return D.acts.filter(a => a.ai && !a.kind).map(a => { const s = S.acts[a.id] || {f:{}}; const r = {id:a.id, death_year:a.year, death_act_number:a.act}; COLS.forEach(c => { if (!(c in r)) r[c] = a.ai[c] ?? ''; });
   FIELDS.forEach(f => { if (s.f?.[f.id]) r[f.id] = s.f[f.id].v; });
   if (s.hid && s.hid.death_time != null) r.death_time = s.hid.death_time;   // godzina zgonu: ukryta w narzędziu, ale zachowana w danych i eksporcie
-  const unc = FIELDS.filter(f => (isUnc(a,f.id) && !s.f?.[f.id]?.ok) || (s.f?.[f.id]?.unc)).map(f => f.id); if (!(s.hid && s.hid.death_time != null) && (a.unc || []).includes('death_time')) unc.push('death_time'); r.uncertain_fields = unc.join(','); r.verification_notes = FIELDS.filter(f => s.f?.[f.id]?.note).map(f => f.id + ': ' + s.f[f.id].note).join(' | ');
+  const unc = FIELDS.filter(f => (isUnc(a,f.id) && !s.f?.[f.id]?.ok) || (s.f?.[f.id]?.unc)).map(f => f.id); if (s.done && !(s.hid && s.hid.death_time != null) && (a.unc || []).includes('death_time')) unc.push('death_time'); r.uncertain_fields = unc.join(','); r.verification_notes = FIELDS.filter(f => s.f?.[f.id]?.note).map(f => f.id + ': ' + s.f[f.id].note).join(' | ');
   r.scan_path = (D.scanFiles || {})[scanOf(a)] || '';
+  if (!s.done) r.death_time = '';   // godzina tylko w zatwierdzonych aktach; w niezatwierdzonych pusta
   r.death_time = normTime(r.death_time); r.death_date = normDate(r.death_date); r.act_date = normDate(r.act_date); r.deceased_status = minor(a) ? 'dziecko' : String(r.deceased_status || '').trim().toLowerCase(); r.profession = String(r.profession || '').trim().toLowerCase();
   const ed = Object.keys(s.f||{}).length; r.verification_status = s.done ? 'ok' : (ed ? 'ai_v1_w_trakcie' : 'ai_v1'); return r; }); }
 $('mCsv').onclick = () => { const rs = rows(); dl('ZGONY_zweryfikowane.csv', COLS.join(';') + '\r\n' + rs.map(r => COLS.map(c => q(r[c])).join(';')).join('\r\n') + '\r\n'); toast(`Eksport: ${rs.length} aktów`); };
