@@ -771,5 +771,7 @@ function normActs(){ D.acts.forEach(a => { ['ai','lub'].forEach(k => { const o =
 // układ komputerowy: wysokość górnego paska → pozycja skanu; po zmianie rozmiaru dopasuj skan
 try { const tp = $('top'), setTT = () => document.documentElement.style.setProperty('--tt', tp.offsetHeight + 'px'); setTT(); if (window.ResizeObserver) { new ResizeObserver(setTT).observe(tp); let ft; new ResizeObserver(() => { clearTimeout(ft); ft = setTimeout(() => { try { if (img.naturalWidth && !$('view').classList.contains('xl')) fit(roiOf(curAct() || {})); } catch(e){} }, 150); }).observe($('view')); } window.addEventListener('resize', setTT); } catch(e) {}
 normActs();
+// migracja zapisanych wcześniej wartości (localStorage / wczytane kopie): miejscowości, małżonek, wiek – do obecnych zasad
+try { let ch = 0; D.acts.forEach(a => { const sf = S.acts[a.id]?.f; if (!sf) return; ['death_place','deceased_birth_place','deceased_residence','deceased_spouse','age'].forEach(f => { const x = sf[f]; if (x && typeof x.v === 'string' && x.v) { const nv = normFieldVal(a, f, x.v); if (nv !== x.v) { x.v = nv; ch++; } } }); }); if (ch) save(); } catch(e) {}
 loadExtra().then(init);
 </script></body></html>
