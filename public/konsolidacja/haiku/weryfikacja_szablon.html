@@ -290,6 +290,8 @@ function chipsFor(a,f){ const cur = getv(a,f); const out = []; const seen = new 
     const fa = clean(getv(a,'father_last_name')), mo = clean(getv(a,'mother_last_name'));
     if (fa && (sx === 'K' || sx === 'M')) add('akt','z OJCA' + (sx === 'K' ? ' (żeńska)' : ''), infl(fa, sx === 'K') + q(fa));
     else if (!fa && mo && (sx === 'K' || sx === 'M')) add('akt','z MATKI – nieślubne' + (sx === 'M' ? ' (męska)' : ''), infl(mo, sx === 'K') + q(mo)); }
+  if (f === 'deceased_maiden_name' && (isChild(a) || minor(a)) && getv(a,'deceased_sex') === 'K') { const fa = clean(getv(a,'father_last_name')), mo = clean(getv(a,'mother_last_name')), fm = n => clean(n).replace(/(sk|ck|dzk)i(\??)$/i, '$1a$2');
+    if (fa) add('akt','z OJCA (rodowe dziecka)', fm(fa)); else if (mo) add('akt','z MATKI – nieślubne', fm(mo)); }
   return out.join(''); }
 const SRCN = {csv:'z CSV', txt:'z tekstu', ai:'AI', lub:'LUB', bz:'BAZA', akt:'AKT', edit:'własne'};
 function tagsFor(a,f,v,x){ const ds = diffState(a,f); const c = FT[f] ? countOf(f,v) : null;
