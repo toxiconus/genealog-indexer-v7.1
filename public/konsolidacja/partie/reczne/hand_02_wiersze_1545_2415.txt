@@ -1,6 +1,6 @@
-1545 | ojc=Józefa | mat=Jadwigi | nazw=Wscisło | fl=dopełniacz w G (c. Józefa i Jadwigi)
-1556 | ojc=Józefa | mat=Katarzyny | nazw=Czerneckiej | fl=dopełniacz w G
-1564 | ojc=Jana | mat=Anny | nazw=Garbacz | fl=dopełniacz w G
+1545 | ojc=Józef | mat=Jadwiga | nazw=Wscisło | fl=dopełniacz w G (c. Józefa i Jadwigi)
+1556 | ojc=Józef | mat=Katarzyna | nazw=Czerneckiej | fl=dopełniacz w G
+1564 | ojc=Jan | mat=Anna | nazw=Garbacz | fl=dopełniacz w G
 1568 | ojc=Jan | mat=Jadwiga | nazw=Tupaj
 1569 | ojc=Jakub | mat=Konstancja | nazw=Ciećko
 1570 | ojc=Wawrzyniec | mat=Marianna | nazw=Dobrzyńska
@@ -43,32 +43,32 @@
 1625 | ojc=Józef | mat=Marianna | nazw=Pcion
 1627 | ojc=Maciej | mat=Zofia | nazw=Siemion
 1628 | ojc=Józef | mat=Marianna | nazw=Chwałko
-1844 | ojc=Józefa | mat=Marianny | fl=dopełniacz w G (s. Józefa i Marianny); nazwisko dziecka nieczytelne
-1846 | ojc=Tomasza | fl=dopełniacz w G (c. Tomasza); brak matki w G
+1844 | ojc=Józef | mat=Marianna | fl=dopełniacz w G (s. Józefa i Marianny); nazwisko dziecka nieczytelne
+1846 | ojc=Tomasz | fl=dopełniacz w G (c. Tomasza); brak matki w G
 1848 | fl=w G tylko 'nazwisko nieczytelne'
-1849 | ojc=Walentego | fl=dopełniacz w G (s. Walentego); brak matki w G
-1853 | ojc=Piotra | fl=dopełniacz w G (s Piotra); brak matki w G
-1854 | ojc=Antoniego | fl=dopełniacz w G (s Antoniego); brak matki w G
-1856 | ojc=Jana | mat=Marianny | nazw=Obydź | fl=dopełniacz w G (c Jana i Marianny Obydź)
+1849 | ojc=Walenty | fl=dopełniacz w G (s. Walentego); brak matki w G
+1853 | ojc=Piotr | fl=dopełniacz w G (s Piotra); brak matki w G
+1854 | ojc=Antoni | fl=dopełniacz w G (s Antoniego); brak matki w G
+1856 | ojc=Jan | mat=Marianna | nazw=Obydź | fl=dopełniacz w G (c Jana i Marianny Obydź)
 1860 | fl=w G tylko 'nazwisko nieczytelne'
 1861 | fl=w G tylko 'Kydzień ?' (niejasne, czy nazwisko rodzica)
-1862 | ojc=Jana | mat=Zofii | nazw=Nieściur | fl=dopełniacz w G (c Jana i Zofii Nieściur)
-1868 | ojc=Macieja | fl=dopełniacz w G (s Macieja); brak matki w G
+1862 | ojc=Jan | mat=Zofia | nazw=Nieściur | fl=dopełniacz w G (c Jana i Zofii Nieściur)
+1868 | ojc=Maciej | fl=dopełniacz w G (s Macieja); brak matki w G
 1870 | mat=Marianna | nazw=Kosidłowa | fl=wdowa (z Marianny Kosidłowej wdowy); ojciec nie podany
 1873 | fl=w G tylko 'Łatka' (bez rodziców)
 1877 | mat=Antonina | nazw=Michałkówna | fl=niezamężna (z Antoniny Michałkówny niezamężnej); ojciec nie podany
 1878 | fl=w G dopisek: ślub w 1910 roku w Barorzu (nie rodzice)
-1879 | ojc=Andrzeja | fl=dopełniacz w G (c Andrzeja); brak matki w G
-1884 | ojc=Andrzeja | fl=dopełniacz w G (s Andrzeja); brak matki w G
+1879 | ojc=Andrzej | fl=dopełniacz w G (c Andrzeja); brak matki w G
+1884 | ojc=Andrzej | fl=dopełniacz w G (s Andrzeja); brak matki w G
 1885 | mat=Katarzyna | nazw=Pawłaskowa | fl=wdowa (s. Katatzyny Pawłaskowej); pisownia 'Katatzyny' zachowana; ojciec nie podany
-1887 | ojc=Michała | mat=Rozalii | nazw=Koguc | fl=dopełniacz w G (c Michała i Rozalii Koguc)
-1890 | ojc=Andrzeja | mat=Agnieszki | nazw=Sagan | fl=dopełniacz w G (c Andrzeja i Agnieszki Sagan)
+1887 | ojc=Michał | mat=Rozalia | nazw=Koguc | fl=dopełniacz w G (c Michała i Rozalii Koguc)
+1890 | ojc=Andrzej | mat=Agnieszka | nazw=Sagan | fl=dopełniacz w G (c Andrzeja i Agnieszki Sagan)
 1891 | mat=Katarzyna | matw=37 | fl=niezamężna lat 37 (w G); ojciec nie podany
 1893 | fl=w G tylko 'Szydłowska'
-1896 | mat=Marii | fl=niezamężna (z Marii niezamężnej); ojciec nie podany
+1896 | mat=Maria | fl=niezamężna (z Marii niezamężnej); ojciec nie podany
 1897 | fl=w G tylko 'Wójtowicz ?'
 1898 | fl=w G tylko 'nazwisko nieczytelne'
-1899 | ojc=Gabryela | mat=Marianny | nazw=Dulkoskich | fl=dopełniacz w G; ojciec tkacz (c Gabryela (tkacza) i Marianny z Dulkoskich)
+1899 | ojc=Gabryel | mat=Marianna | nazw=Dulkoskich | fl=dopełniacz w G; ojciec tkacz (c Gabryela (tkacza) i Marianny z Dulkoskich)
 1907 | fl=w G tylko 'Chornikowski'
 1938 | fl=w G tylko 'nazwisko nieczytelne'
 1939 | fl=w G tylko 'Łach'

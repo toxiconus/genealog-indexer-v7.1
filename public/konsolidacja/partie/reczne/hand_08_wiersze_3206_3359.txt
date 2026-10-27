@@ -70,7 +70,7 @@
 3276 | miejsc=Moczydła | ojc=Wojciech | ojcw=47 | mat=Rozalia | nazw=Marchewka | matw=33
 3277 | miejsc=Brzozówka | ojc=Józef | mat=Franciszka | nazw=Machulak
 3278 | miejsc=Blinów | ojc=Filip | mat=Katarzyna | nazw=Felek
-3279 | miejsc=Blinów | ojc=Piotr | ojcw=36 | mat=Anny | nazw=Zych | matw=38 | fl=imię matki w G w dopełniaczu 'Anny' - zapisane jako w G
+3279 | miejsc=Blinów | ojc=Piotr | ojcw=36 | mat=Anna | nazw=Zych | matw=38 | fl=imię matki w G w dopełniaczu 'Anny' - zapisane jako w G
 3280 | miejsc=Moczydła | ojc=Szymon | mat=Anna | nazw=Król
 3281 | miejsc=Blinów | ojc=Michał | mat=Anastazja | nazw=Gnat
 3282 | miejsc=Blinów | ojc=Walenty | mat=Józefa | nazw=Kozaczek
@@ -103,7 +103,7 @@
 3311 | miejsc=Moczydła | ojc=Paweł | mat=Franciszka | nazw=Jędrzejczak
 3312 | miejsc=Brzozówka | ojc=Jan | ojcw=29 | mat=Józefa | nazw=Nieściur | matw=26
 3313 | miejsc=Blinów | ojc=Mikołaj | mat=Zofia | nazw=Kosidło
-3314 | miejsc=Moczydła | ojc=Franciszek | ojcw=42 | mat=Ewy | nazw=Babiarz | matw=36 | fl=imię matki w G w dopełniaczu 'Ewy' - zapisane jako w G
+3314 | miejsc=Moczydła | ojc=Franciszek | ojcw=42 | mat=Ewa | nazw=Babiarz | matw=36 | fl=imię matki w G w dopełniaczu 'Ewy' - zapisane jako w G
 3315 | miejsc=Blinów | ojc=Marcin | ojcw=40 | mat=Antonina | nazw=Kosidło
 3316 | miejsc=Brzozówka | ojc=Jan | ojcw=37 | mat=Zofia | nazw=Brzeska | matw=36
 3317 | miejsc=Brzozówka | ojc=Stanisław | mat=Katarzyna | nazw=Szuba

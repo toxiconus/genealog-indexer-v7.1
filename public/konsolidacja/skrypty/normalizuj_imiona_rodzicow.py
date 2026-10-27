@@ -12,14 +12,16 @@ OJ = {'Wojciecha':'Wojciech','Jana':'Jan','Pawła':'Paweł','Marcina':'Marcin','
  'Piotra':'Piotr','Mateusza':'Mateusz','Wawrzyńca':'Wawrzyniec','Filipa':'Filip','Adama':'Adam','Kacpra':'Kacper','Jędrzeja':'Jędrzej',
  'Grzegorza':'Grzegorz','Dominika':'Dominik','Kazimierza':'Kazimierz','Szczepana (?)':'Szczepan (?)','Wincentego':'Wincenty','Mikołaja':'Mikołaj',
  'Sebastiana':'Sebastian','Łukasza':'Łukasz','Leonarda':'Leonard','Krzysztofa':'Krzysztof','Nikodema':'Nikodem','Onufrego':'Onufry',
- 'Aleksandra':'Aleksander','Feliksa':'Feliks'}
+ 'Aleksandra':'Aleksander','Feliksa':'Feliks','Błażeja':'Błażej','Szczepana':'Szczepan','Tadeusza':'Tadeusz',
+ 'Gabryela':'Gabryel','Ludwika':'Ludwik','Gwatberta':'Gwatbert'}
 OJ_PISOWNIA = {'Woyciecha':'Wojciech','Wawrzenca':'Wawrzyniec','Kaspra':'Kasper'}   # starsza pisownia
 OJ_WSTRZYMANE = {'Franciszka','Stanisława'}                                       # wymagają kontekstu
 MA = {'Marianny':'Marianna','Katarzyny':'Katarzyna','Zofii':'Zofia','Agnieszki':'Agnieszka','Franciszki':'Franciszka','Anny':'Anna','Jadwigi':'Jadwiga',
  'Ewy':'Ewa','Antoniny':'Antonina','Rozalii':'Rozalia','Anastazji':'Anastazja','Agaty':'Agata','Magdaleny':'Magdalena','Tekli':'Tekla',
  'Petroneli':'Petronela','Teresy':'Teresa','Małgorzaty':'Małgorzata','Józefy':'Józefa','Barbary':'Barbara','Reginy':'Regina','Doroty':'Dorota',
- 'Anieli':'Aniela','Łucji':'Łucja','Cecylii':'Cecylia','Elżbiety':'Elżbieta','Henryki':'Henryka','Salomei':'Salomea','Zuzanny':'Zuzanna'}
-MA_PISOWNIA = {'Maryanny':'Marianna','Marjanny':'Marianna','Zofji':'Zofia'}
+ 'Anieli':'Aniela','Łucji':'Łucja','Cecylii':'Cecylia','Elżbiety':'Elżbieta','Henryki':'Henryka','Salomei':'Salomea','Zuzanny':'Zuzanna','Heleny':'Helena','Seweryny':'Seweryna','Emilii':'Emilia','Walerii':'Waleria','Leoni':'Leonia','Leonii':'Leonia',
+ 'Scholastyki':'Scholastyka','Julianny':'Julianna','Marii':'Maria','Emilianny':'Emilianna'}
+MA_PISOWNIA = {'Zofi':'Zofia','Maryanny':'Marianna','Marjanny':'Marianna','Zofji':'Zofia'}
 def mianownik(col, v):
     """-> (nowa_wartosc, powod) | (v, None) bez zmiany | (v, 'WSTRZYMANE') gdy wymaga kontekstu."""
     g, sp = (OJ, OJ_PISOWNIA) if col == 'ojciec_imie' else (MA, MA_PISOWNIA)

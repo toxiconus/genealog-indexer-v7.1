@@ -75,7 +75,7 @@
 3127 | miejsc=Moczydła | ojc=Józef | ojcw=25 | mat=Marianna | nazw=Paciorek | matw=24
 3128 | miejsc=Blinów | ojc=Bartłomiej | ojcw=33 | mat=Marianna | nazw=Dąbroska | matw=35
 3129 | miejsc=Blinów | ojc=Tomasz | ojcw=33 | mat=Antonina | nazw=Lewek | matw=38
-3130 | miejsc=Blinów | ojc=Franciszek | ojcw=37 | mat=Zofii | nazw=Pcionek | matw=38
+3130 | miejsc=Blinów | ojc=Franciszek | ojcw=37 | mat=Zofia | nazw=Pcionek | matw=38
 3131 | miejsc=Blinów | ojc=Jan | ojcw=37 | mat=Antonina | nazw=Michałek | matw=37
 3132 | miejsc=Brzozówka | mat=Marianna | nazw=Szydłoska | matw=24 | fl=jedna osoba w G (matka), ojciec nie podany
 3133 | miejsc=Brzozówka | ojc=Jan | ojcw=27 | mat=Józefa | nazw=Nieściur | matw=23
@@ -97,8 +97,8 @@
 3149 | miejsc=Blinów | ojc=Jakub | ojcw=29 | mat=Jadwiga | nazw=Mróz | matw=28 | fl=nazwisko matki z '(?)'
 3150 | miejsc=Brzozówka | mat=Marianna | nazw=Janikowej | matw=38 | fl=matka: nazwisko mężatki Janikowa, panieńskie 'z Pudłów' (w G)
 3151 | miejsc=Brzozówka | ojc=Maciej | ojcw=42 | mat=Marianna | nazw=Igras | matw=23 | fl=w nawiasie zawód ojca: szynkarz w Brzozówce
-3152 | miejsc=Blinów | ojc=Wojciech | ojcw=50 | mat=Zofii | nazw=Nieściur | matw=32
-3153 | miejsc=Blinów | ojc=Antoni | ojcw=24 | mat=Agnieszki | nazw=Gnat | matw=27
+3152 | miejsc=Blinów | ojc=Wojciech | ojcw=50 | mat=Zofia | nazw=Nieściur | matw=32
+3153 | miejsc=Blinów | ojc=Antoni | ojcw=24 | mat=Agnieszka | nazw=Gnat | matw=27
 3154 | miejsc=Blinów | ojc=Wojciech | ojcw=42 | mat=Marianna | nazw=Kosidło | matw=40
 3155 | miejsc=Blinów | ojc=Jakub | ojcw=43 | mat=Marianna | nazw=Szuba | matw=39
 3156 | miejsc=Blinów | ojc=Józef | ojcw=28 | mat=Antonina | nazw=Gnat | matw=26

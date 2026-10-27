@@ -131,7 +131,7 @@
 4895 | miejsc=Moczydła | ojc=Paweł | ojcw=44 | mat=Katarzyna | nazw=Żaba | matw=42
 4896 | miejsc=Blinów | ojc=Michał | ojcw=30 | mat=Józefa | nazw=Serafin | matw=30
 4897 | miejsc=Blinów | ojc=Antoni | ojcw=27 | mat=Józefa | nazw=Pawłasek | matw=27
-4898 | miejsc=Moczydła | ojc=Józef | ojcw=50 | mat=Marianny | fl=imię matki w G w dopełniaczu 'Marianny', nazwisko matki brak
+4898 | miejsc=Moczydła | ojc=Józef | ojcw=50 | mat=Marianna | fl=imię matki w G w dopełniaczu 'Marianny', nazwisko matki brak
 4899 | miejsc=Moczydła | ojc=Piotr | ojcw=32 | mat=Marianna | nazw=Mitrewicz | matw=30
 4900 | miejsc=Brzozówka | ojc=Andrzej | ojcw=42 | mat=Marianna | nazw=Machulak | matw=38
 4901 | miejsc=Moczydła | ojc=Jan | ojcw=31 | mat=Agnieszka | nazw=Łatka | matw=28

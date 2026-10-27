@@ -28,7 +28,7 @@
 5249 | miejsc=Blinów | ojc=Tomasz | ojcw=30 | mat=Katarzyna | nazw=Nikolas | matw=30
 5250 | miejsc=Blinów | ojc=Bartłomiej | ojcw=30 | mat=Anna | nazw=Wróbel | matw=20
 5251 | miejsc=Blinów | ojc=Andrzej | ojcw=24 | mat=Franciszka | nazw=Gąska | matw=33 | fl=nazwisko dziecka w G 'Samól' (zapisane jak w arkuszu, być może wariant Samol)
-5252 | miejsc=Blinów | ojc=Wojciech | ojcw=37 | mat=Agnieszki | nazw=Pizoń | matw=25 | fl=imię matki w G w dopełniaczu 'Agnieszki' (zapisane jak w arkuszu)
+5252 | miejsc=Blinów | ojc=Wojciech | ojcw=37 | mat=Agnieszka | nazw=Pizoń | matw=25 | fl=imię matki w G w dopełniaczu 'Agnieszki' (zapisane jak w arkuszu)
 5253 | miejsc=Blinów | ojc=Franciszek | ojcw=30 | mat=Anastazja | nazw=Tomiło | matw=21
 5254 | miejsc=Blinów | ojc=Walenty | ojcw=30 | mat=Katarzyna | nazw=Bartysiak | matw=24
 5255 | miejsc=Blinów | ojc=Ignacy | ojcw=53 | mat=Franciszka | nazw=Kurczak | matw=44

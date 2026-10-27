@@ -45,7 +45,7 @@
 3404 | miejsc=Brzozówka | ojc=Stanisław | ojcw=28 | mat=Anna | nazw=Ogon
 3405 | miejsc=Blinów | ojc=Filip | ojcw=35 | mat=Zofia | nazw=Sokół
 3406 | miejsc=Blinów | ojc=Tomasz | ojcw=23 | mat=Anna | nazw=Ciećko
-3407 | miejsc=Moczydła | ojc=Tomasz | ojcw=35 | mat=Katarzyny | nazw=Babiarz | matw=36 | fl=imię matki w G w dopełniaczu 'Katarzyny' - zapisane jako w G
+3407 | miejsc=Moczydła | ojc=Tomasz | ojcw=35 | mat=Katarzyna | nazw=Babiarz | matw=36 | fl=imię matki w G w dopełniaczu 'Katarzyny' - zapisane jako w G
 3408 | miejsc=Moczydła | ojc=Andrzej | mat=Marianna | nazw=Koguc
 3409 | miejsc=Moczydła | ojc=Franciszek | ojcw=40 | mat=Katarzyna | nazw=Mazur
 3410 | miejsc=Blinów | ojc=Jan | ojcw=28 | mat=Katarzyna | nazw=Dobrzyńska | fl=w G brak ukośnika po miejscowości

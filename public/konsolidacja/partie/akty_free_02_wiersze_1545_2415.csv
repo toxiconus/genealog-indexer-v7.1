@@ -1,7 +1,7 @@
 ﻿id_archiwalne;wiersz_zrodlo;typ_wpisu;rok;nr;nazwisko_dziecka;imie_dziecka;data_tekst;data_iso;ojciec_imie;ojciec_nazwisko;ojciec_wiek;ojciec_rok_ur_przyb;miejscowosc;matka_imie;matka_nazwisko;matka_wiek;matka_rok_ur_przyb;karta_nr;uwagi_surowe;flagi
-U001550;1545;akt;1840;2;Paciorek;Walenty;;;Józefa;;;;;Jadwigi;Wscisło;;;;kol.G: c.Józefa i Jadwigi Wscisło;"dopełniacz w G (c. Józefa i Jadwigi); brak nazwiska ojca (kol. H pusta)"
-U001561;1556;akt;1840;1;Pscionkowna;Marianna;;;Józefa;;;;;Katarzyny;Czerneckiej;;;;kol.G: c.Józefa i Katarzyny Czerneckiej;"dopełniacz w G; brak nazwiska ojca (kol. H pusta)"
-U001569;1564;akt;1840;5;Szyska;Marianna;;;Jana;;;;;Anny;Garbacz;;;;kol.G: c Jana i Anny Garbacz;"dopełniacz w G; brak nazwiska ojca (kol. H pusta)"
+U001550;1545;akt;1840;2;Paciorek;Walenty;;;Józef;;;;;Jadwiga;Wscisło;;;;kol.G: c.Józefa i Jadwigi Wscisło;"dopełniacz w G (c. Józefa i Jadwigi); brak nazwiska ojca (kol. H pusta)"
+U001561;1556;akt;1840;1;Pscionkowna;Marianna;;;Józef;;;;;Katarzyna;Czerneckiej;;;;kol.G: c.Józefa i Katarzyny Czerneckiej;"dopełniacz w G; brak nazwiska ojca (kol. H pusta)"
+U001569;1564;akt;1840;5;Szyska;Marianna;;;Jan;;;;;Anna;Garbacz;;;;kol.G: c Jana i Anny Garbacz;"dopełniacz w G; brak nazwiska ojca (kol. H pusta)"
 U001630;1568;akt;1841;57;Babiarz;Józefa;;;Jan;Babiarz;;;;Jadwiga;Tupaj;;;;"kol.G: Jan; kol.L: Jadwiga; kol.M: Tupaj";
 U001608;1569;akt;1841;35;Baran;Anna;;;Jakub;Baran;;;;Konstancja;Ciećko;;;;"kol.G: Jakub; kol.L: Konstancja; kol.M: Ciećko";
 U001636;1570;akt;1841;63;Baran;Ewa;;;Wawrzyniec;Baran;;;;Marianna;Dobrzyńska;;;;"kol.G: Wawrzyniec; kol.L: Marianna; kol.M: Dobrzyńska";
@@ -44,32 +44,32 @@ U001605;1624;akt;1841;32;Wieleba;Józefa;;;Józef;Wieleba;;;;Marianna;Boczek;;;;
 U001634;1625;akt;1841;61;Wieleba;Mikołaj;;;Józef;Wieleba;;;;Marianna;Pcion;;;;"kol.G: Józef; kol.L: Marianna; kol.M: Pcion";
 U001631;1627;akt;1841;58;Woś;Andrzej;;;Maciej;Woś;;;;Zofia;Siemion;;;;"kol.G: Maciej; kol.L: Zofia; kol.M: Siemion";
 U001615;1628;akt;1841;42;Woś;Franciszek;;;Józef;Woś;;;;Marianna;Chwałko;;;;"kol.G: Józef; kol.L: Marianna; kol.M: Chwałko";
-U001854;1844;akt;1845;19;?;Grzegorz;;;Józefa;;;;;Marianny;;;;;kol.G: nazwisko nieczytelne, s. Józefa i Marianny;"dopełniacz w G (s. Józefa i Marianny); nazwisko dziecka nieczytelne; brak nazwiska ojca (kol. H pusta)"
-U001856;1846;akt;1845;37;Baran;Anna;;;Tomasza;;;;;;;;;;"kol.G: c. Tomasza; kol.J: około 1845; kol.O: około 1845";"dopełniacz w G (c. Tomasza); brak matki w G; brak nazwiska ojca (kol. H pusta)"
+U001854;1844;akt;1845;19;?;Grzegorz;;;Józef;;;;;Marianna;;;;;kol.G: nazwisko nieczytelne, s. Józefa i Marianny;"dopełniacz w G (s. Józefa i Marianny); nazwisko dziecka nieczytelne; brak nazwiska ojca (kol. H pusta)"
+U001856;1846;akt;1845;37;Baran;Anna;;;Tomasz;;;;;;;;;;"kol.G: c. Tomasza; kol.J: około 1845; kol.O: około 1845";"dopełniacz w G (c. Tomasza); brak matki w G; brak nazwiska ojca (kol. H pusta)"
 U001858;1848;akt;1845;13;Bencał ?;Józef;;;;;;;;;;;;;kol.G: nazwisko nieczytelne;w G tylko 'nazwisko nieczytelne'
-U001859;1849;akt;1845;25;Biały;Wojciech;;;Walentego;;;;;;;;;;kol.G: s. Walentego;"dopełniacz w G (s. Walentego); brak matki w G; brak nazwiska ojca (kol. H pusta)"
-U001864;1853;akt;1845;16;Dobrzyński;Józef;;;Piotra;;;;;;;;;;"kol.G: s Piotra; kol.J: około 1845; kol.O: około 1845";"dopełniacz w G (s Piotra); brak matki w G; brak nazwiska ojca (kol. H pusta)"
-U001863;1854;akt;1845;24;Dobrzyński;Wincenty;;;Antoniego;;;;;;;;;;"kol.G: s Antoniego; kol.J: około 1845; kol.O: około 1845";"dopełniacz w G (s Antoniego); brak matki w G; brak nazwiska ojca (kol. H pusta)"
-U001866;1856;akt;1845;26;Gnat;Marianna;;;Jana;;;;;Marianny;Obydź;;;;kol.G: c Jana i Marianny Obydź;"dopełniacz w G (c Jana i Marianny Obydź); brak nazwiska ojca (kol. H pusta)"
+U001859;1849;akt;1845;25;Biały;Wojciech;;;Walenty;;;;;;;;;;kol.G: s. Walentego;"dopełniacz w G (s. Walentego); brak matki w G; brak nazwiska ojca (kol. H pusta)"
+U001864;1853;akt;1845;16;Dobrzyński;Józef;;;Piotr;;;;;;;;;;"kol.G: s Piotra; kol.J: około 1845; kol.O: około 1845";"dopełniacz w G (s Piotra); brak matki w G; brak nazwiska ojca (kol. H pusta)"
+U001863;1854;akt;1845;24;Dobrzyński;Wincenty;;;Antoni;;;;;;;;;;"kol.G: s Antoniego; kol.J: około 1845; kol.O: około 1845";"dopełniacz w G (s Antoniego); brak matki w G; brak nazwiska ojca (kol. H pusta)"
+U001866;1856;akt;1845;26;Gnat;Marianna;;;Jan;;;;;Marianna;Obydź;;;;kol.G: c Jana i Marianny Obydź;"dopełniacz w G (c Jana i Marianny Obydź); brak nazwiska ojca (kol. H pusta)"
 U001871;1860;akt;1845;36;K ?;Dominik;;;;;;;;;;;;;kol.G: nazwisko nieczytelne;w G tylko 'nazwisko nieczytelne'
 U001870;1861;akt;1845;23;K ?;Ewa;;;;;;;;;;;;;kol.G: Kydzień ?;w G tylko 'Kydzień ?' (niejasne, czy nazwisko rodzica)
-U001872;1862;akt;1845;2;Kania;Agnieszka;;;Jana;;;;;Zofii;Nieściur;;;;"kol.G: c Jana i Zofii Nieściur; kol.J: około 1845; kol.O: około 1845";"dopełniacz w G (c Jana i Zofii Nieściur); brak nazwiska ojca (kol. H pusta)"
-U001876;1868;akt;1845;48;Kosidło;Ignacy;;;Macieja;;;;;;;;;;kol.G: s Macieja;"dopełniacz w G (s Macieja); brak matki w G; brak nazwiska ojca (kol. H pusta)"
+U001872;1862;akt;1845;2;Kania;Agnieszka;;;Jan;;;;;Zofia;Nieściur;;;;"kol.G: c Jana i Zofii Nieściur; kol.J: około 1845; kol.O: około 1845";"dopełniacz w G (c Jana i Zofii Nieściur); brak nazwiska ojca (kol. H pusta)"
+U001876;1868;akt;1845;48;Kosidło;Ignacy;;;Maciej;;;;;;;;;;kol.G: s Macieja;"dopełniacz w G (s Macieja); brak matki w G; brak nazwiska ojca (kol. H pusta)"
 U001877;1870;akt;1845;11;Kosidło;Wojciech;;;;;;;;Marianna;Kosidłowa;;;;kol.G: z Marianny Kosidłowej wdowy;"wdowa (z Marianny Kosidłowej wdowy); ojciec nie podany"
 U001883;1873;akt;1845;41;Łatka;Michał;;;;;;;;;;;;;kol.G: Łatka;w G tylko 'Łatka' (bez rodziców)
 U001887;1877;akt;1845;50;Michałek ?;Marcin;;;;;;;;Antonina;Michałkówna;;;;kol.G: z Antoniny Michałkówny niezamężnej;"niezamężna (z Antoniny Michałkówny niezamężnej); ojciec nie podany"
 U001888;1878;akt;1845;44;Nieściur;Andrzej;;;;;;;;;;;;;"kol.G: dopisek: ślub w 1910 roku w Barorzu; kol.J: około 1845; kol.O: około 1845";w G dopisek: ślub w 1910 roku w Barorzu (nie rodzice)
-U001889;1879;akt;1845;4;Ogon;Magdalena;;;Andrzeja;;;;;;;;;;kol.G: c Andrzeja;"dopełniacz w G (c Andrzeja); brak matki w G; brak nazwiska ojca (kol. H pusta)"
-U001892;1884;akt;1845;46;Pawłasek;Tomasz;;;Andrzeja;;;;;;;;;;kol.G: s Andrzeja;"dopełniacz w G (s Andrzeja); brak matki w G; brak nazwiska ojca (kol. H pusta)"
+U001889;1879;akt;1845;4;Ogon;Magdalena;;;Andrzej;;;;;;;;;;kol.G: c Andrzeja;"dopełniacz w G (c Andrzeja); brak matki w G; brak nazwiska ojca (kol. H pusta)"
+U001892;1884;akt;1845;46;Pawłasek;Tomasz;;;Andrzej;;;;;;;;;;kol.G: s Andrzeja;"dopełniacz w G (s Andrzeja); brak matki w G; brak nazwiska ojca (kol. H pusta)"
 U001893;1885;akt;1845;27;Pawłasek;Wojciech;;;;;;;;Katarzyna;Pawłaskowa;;;;kol.G: s. Katatzyny Pawłaskowej (wdowy);"wdowa (s. Katatzyny Pawłaskowej); pisownia 'Katatzyny' zachowana; ojciec nie podany"
-U001897;1887;akt;1845;1;Piech;Agnieszka;;;Michała;;;;;Rozalii;Koguc;;;;"kol.G: c Michała i Rozalii Koguc; kol.J: około 1845; kol.O: około 1845";"dopełniacz w G (c Michała i Rozalii Koguc); brak nazwiska ojca (kol. H pusta)"
-U001900;1890;akt;1845;49;Stręciwilk;Katarzyna;;;Andrzeja;;;;;Agnieszki;Sagan;;;;kol.G: c Andrzeja i Agnieszki Sagan;"dopełniacz w G (c Andrzeja i Agnieszki Sagan); brak nazwiska ojca (kol. H pusta)"
+U001897;1887;akt;1845;1;Piech;Agnieszka;;;Michał;;;;;Rozalia;Koguc;;;;"kol.G: c Michała i Rozalii Koguc; kol.J: około 1845; kol.O: około 1845";"dopełniacz w G (c Michała i Rozalii Koguc); brak nazwiska ojca (kol. H pusta)"
+U001900;1890;akt;1845;49;Stręciwilk;Katarzyna;;;Andrzej;;;;;Agnieszka;Sagan;;;;kol.G: c Andrzeja i Agnieszki Sagan;"dopełniacz w G (c Andrzeja i Agnieszki Sagan); brak nazwiska ojca (kol. H pusta)"
 U001901;1891;akt;1845;20;Studziński;Józef;;;;;;;;Katarzyna;;37;~1808;;kol.G: s. Katarzyny (nie zamężnej lat 37);"niezamężna lat 37 (w G); ojciec nie podany"
 U001903;1893;akt;1845;17;Szydłoska;Józefa;;;;;;;;;;;;;kol.G: Szydłowska;w G tylko 'Szydłowska'
-U001906;1896;akt;1845;38;Wnuk;Dominik;;;;;;;;Marii;;;;;kol.G: z Marii niezamężnej;"niezamężna (z Marii niezamężnej); ojciec nie podany"
+U001906;1896;akt;1845;38;Wnuk;Dominik;;;;;;;;Maria;;;;;kol.G: z Marii niezamężnej;"niezamężna (z Marii niezamężnej); ojciec nie podany"
 U001907;1897;akt;1845;9;Woytowicz;Walenty;;;;;;;;;;;;;kol.G: Wójtowicz ?;w G tylko 'Wójtowicz ?'
 U001910;1898;akt;1846;66;?;Marcin;;;;;;;;;;;;;kol.G: nazwisko nieczytelne;w G tylko 'nazwisko nieczytelne'
-U001909;1899;akt;1846;68;?;Waleria Katarzyna;;;Gabryela;;;;;Marianny;Dulkoskich;;;;kol.G: c Gabryela (tkacza) i Marianny z Dulkoskich;"dopełniacz w G; ojciec tkacz (c Gabryela (tkacza) i Marianny z Dulkoskich); brak nazwiska ojca (kol. H pusta)"
+U001909;1899;akt;1846;68;?;Waleria Katarzyna;;;Gabryel;;;;;Marianna;Dulkoskich;;;;kol.G: c Gabryela (tkacza) i Marianny z Dulkoskich;"dopełniacz w G; ojciec tkacz (c Gabryela (tkacza) i Marianny z Dulkoskich); brak nazwiska ojca (kol. H pusta)"
 U001918;1907;akt;1846;74;Chornikoski;Andrzej;;;;;;;;;;;;;kol.G: Chornikowski;w G tylko 'Chornikowski'
 U001950;1938;akt;1846;29;Ł ?;Katarzyna;;;;;;;;;;;;;kol.G: nazwisko nieczytelne;w G tylko 'nazwisko nieczytelne'
 U001949;1939;akt;1846;50;Łach;Franciszka;;;;;;;;;;;;;kol.G: Łach;w G tylko 'Łach'

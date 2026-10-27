@@ -37,7 +37,7 @@
 2937 | miejsc=Moczydła | ojc=Jan | ojcw=30 | mat=Zofia | nazw=Wieleba | matw=27
 2938 | miejsc=Blinów | mat=Marianna | nazw=Baranowna | matw=27 | fl=jedna osoba w G (matka), ojciec nie podany
 2939 | miejsc=Brzozówka | ojc=Wojciech | ojcw=26 | mat=Katarzyna | nazw=Kopiwoda | matw=25
-2940 | miejsc=Brzozówka | ojc=Szczepan | ojcw=33 | mat=Tekli | nazw=Chmiel | matw=35
+2940 | miejsc=Brzozówka | ojc=Szczepan | ojcw=33 | mat=Tekla | nazw=Chmiel | matw=35
 2941 | miejsc=Blinów | ojc=Błażej | ojcw=30 | mat=Antonina | nazw=Kosidło | matw=26
 2942 | miejsc=Blinów | ojc=Jan | ojcw=41 | mat=Antonina | nazw=Dziedzic | matw=39
 2943 | miejsc=Blinów | ojc=Jan | ojcw=41 | mat=Antonina | nazw=Dziedzic | matw=39 | fl=ten sam wpis rodziców co 2942 (dwa wiersze, inne dziecko)
@@ -138,7 +138,7 @@
 3039 | miejsc=Blinów | ojc=Józef | ojcw=29 | mat=Marianna | nazw=Dobrzynska | matw=26
 3040 | miejsc=Moczydła | ojc=Wojciech | ojcw=41 | mat=Rozalia | nazw=Marchewka | matw=29
 3041 | miejsc=Moczydła | ojc=Szymon | ojcw=36 | mat=Anna | nazw=Król | matw=33
-3042 | miejsc=Blinów | ojc=Michał | ojcw=24 | mat=Anastazji | nazw=Gnat | matw=25
+3042 | miejsc=Blinów | ojc=Michał | ojcw=24 | mat=Anastazja | nazw=Gnat | matw=25
 3043 | miejsc=Blinów | ojc=Paweł | ojcw=39 | mat=Dorota | nazw=Sobótków | matw=28 | fl=nazwisko matki z 'z' (panieńskie)
 3044 | miejsc=Moczydła | ojc=Wawrzyniec | ojcw=55 | mat=Katarzyna | nazw=Pastucha | matw=46 | fl=w G brak spacji przed 'Katarzyna' (iKatarzyna)
 3045 | miejsc=Blinów | ojc=Jan | ojcw=30 | mat=Zofia | nazw=Ogon | matw=27
