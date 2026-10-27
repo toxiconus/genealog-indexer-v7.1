@@ -48,3 +48,8 @@ Narzędzie szuka skanów po ścieżce z tabeli `SCAN_FILES` w `build_weryfikacja
 
 ## E. Raport końcowy (krótko, po polsku)
 Liczba stron, liczba aktów, lista braków/podejrzeń (numery aktów), lista zapisanych plików, ścieżka folderu.
+
+## Zmiany robocze (2026-10-27)
+- Godziny zgonu (death_time) nie są już wymagane ani weryfikowane (pole wyłączone w narzędziu).
+- Miejscowości zapisywać w mianowniku (Kaczyniec, Blinów, Brzozówka, Moczydła, Słodków), żonę/męża jako „Imię Nazwisko (żona)” (np. Marianna Pudło), bez „z Pudłów”.
+- Nazwisko rodowe kobiety = nazwisko ojca w formie żeńskiej (także dla dzieci); dla chłopców i mężczyzn brak.

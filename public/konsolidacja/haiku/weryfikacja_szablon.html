@@ -135,7 +135,7 @@ body.textmode main{margin-bottom:330px}body.textmode #view{height:30vh}body.text
 <script>
 const D = /*DATA*/null;
 const $ = id => document.getElementById(id);
-const FIELDS = D.fields, AM = {}; D.acts.forEach(a => AM[a.id] = a);
+const FIELDS = D.fields.filter(f => f.id !== 'death_time'), AM = {}; D.acts.forEach(a => AM[a.id] = a);
 // kolejność wg tekstu aktu: margines (nazwisko, miejsce) → data → godzina → świadkowie → reszta z treści
 // kolejność jak w akcie: margines (miejsce zgonu, imię i nazwisko) → data aktu → świadkowie → data i godzina zgonu → płeć, urodzony i zamieszkały → wiek, zawód, stan, małżonek → rodzice
 const ORD = ['death_place','deceased_last_name','deceased_first_name','act_date','informant1','informant2','death_date','death_time','deceased_sex','deceased_birth_place','deceased_residence','age','profession','deceased_status','deceased_spouse','deceased_maiden_name','father_first_name','father_last_name','mother_first_name','mother_last_name','officiant','notes'];
@@ -290,8 +290,8 @@ function chipsFor(a,f){ const cur = getv(a,f); const out = []; const seen = new 
     const fa = clean(getv(a,'father_last_name')), mo = clean(getv(a,'mother_last_name'));
     if (fa && (sx === 'K' || sx === 'M')) add('akt','z OJCA' + (sx === 'K' ? ' (żeńska)' : ''), infl(fa, sx === 'K') + q(fa));
     else if (!fa && mo && (sx === 'K' || sx === 'M')) add('akt','z MATKI – nieślubne' + (sx === 'M' ? ' (męska)' : ''), infl(mo, sx === 'K') + q(mo)); }
-  if (f === 'deceased_maiden_name' && (isChild(a) || minor(a)) && getv(a,'deceased_sex') === 'K') { const fa = clean(getv(a,'father_last_name')), mo = clean(getv(a,'mother_last_name')), fm = n => clean(n).replace(/(sk|ck|dzk)i(\??)$/i, '$1a$2');
-    if (fa) add('akt','z OJCA (rodowe dziecka)', fm(fa)); else if (mo) add('akt','z MATKI – nieślubne', fm(mo)); }
+  if (f === 'deceased_maiden_name' && getv(a,'deceased_sex') === 'K') { const fa = clean(getv(a,'father_last_name')), mo = clean(getv(a,'mother_last_name')), fm = n => clean(n).replace(/(sk|ck|dzk)i(\??)$/i, '$1a$2');
+    if (fa) add('akt','z OJCA (rodowe)', fm(fa)); else if (mo && (isChild(a) || minor(a))) add('akt','z MATKI – nieślubne', fm(mo)); }
   return out.join(''); }
 const SRCN = {csv:'z CSV', txt:'z tekstu', ai:'AI', lub:'LUB', bz:'BAZA', akt:'AKT', edit:'własne'};
 function tagsFor(a,f,v,x){ const ds = diffState(a,f); const c = FT[f] ? countOf(f,v) : null;
@@ -451,7 +451,7 @@ $('mFix').onclick = () => { $('menu').style.display = 'none'; const o = {}; Obje
 $('mVer').onclick = () => { $('menu').style.display = 'none'; $('fVer').click(); };
 $('fVer').onchange = async e => { try { const R = parseCsv(await e.target.files[0].text()), H = R[0], ix = {}; H.forEach((h, i) => ix[h] = i); let nA = 0, nF = 0, nSkip = 0;
   R.slice(1).forEach(r => { const a = AM[r[ix.id]]; if (!a || a.kind) return; const s2 = st(a.id); if (ix.scan_path != null && r[ix.scan_path]) { D.scanFiles = D.scanFiles || {}; const pth = r[ix.scan_path], key = Object.keys(D.scanFiles).find(k => D.scanFiles[k] === pth) || pth; D.scanFiles[key] = pth; s2.scan = key; } const ok = (r[ix.verification_status] || '') === 'ok'; const unc = new Set((r[ix.uncertain_fields] || '').split(/[;,]/).filter(Boolean)); let n = 0;
-    FIELDS.forEach(f => { const v = ix[f.id] != null ? (r[ix[f.id]] || '').trim() : ''; if (!v) return; if (s2.f[f.id]?.ok) { nSkip++; return; } s2.f[f.id] = {v, src:'csv', ok:ok, unc:unc.has(f.id)}; n++; });
+    FIELDS.forEach(f => { let v = ix[f.id] != null ? (r[ix[f.id]] || '').trim() : ''; if (!v) return; v = normFieldVal(a, f.id, v); if (s2.f[f.id]?.ok) { nSkip++; return; } s2.f[f.id] = {v, src:'csv', ok:ok, unc:unc.has(f.id)}; n++; });
     if (n) { nA++; nF += n; if (ok && !s2.done) s2.done = true; } });
   D.acts.forEach(a => { if (!a.kind && (a.ai || a.lub) && minor(a) && st(a.id).f.deceased_status?.v !== 'dziecko') st(a.id).f.deceased_status = {v:'dziecko', src:'edit', ok:true}; });
   save(); init(); toast(`Wczytano z CSV: ${nF} pól w ${nA} aktach (pominięto już zatwierdzone: ${nSkip})`); } catch(x) { toast('Błędny plik CSV'); } e.target.value = ''; };
@@ -574,7 +574,9 @@ const missingAudit = (a, FS) => {
   const val = id => { const x=st(a.id).f[id]; return clean(x ? x.v : (a.ai?.[id] ?? '')); };
   const baseVal = id => clean(a.lub?.[id]);
   const addGap = (id, why) => { if (!val(id) && !gaps.some(x=>x.id===id)) gaps.push({id,label:label(id),why}); };
+  const addGapMaiden = () => { if (val('deceased_sex') === 'K' && !val('deceased_maiden_name') && val('father_last_name')) addGap('deceased_maiden_name', 'brak nazwiska rodowego – wynika z nazwiska ojca (' + val('father_last_name') + ')'); };
   const addCheck = (id, why) => { if (!checks.some(x=>x.id===id&&x.why===why)) checks.push({id,label:label(id),why}); };
+  addGapMaiden();
   if (!hasAI) {
     if (a.lub) {
       ['deceased_last_name','deceased_first_name','death_date','age','father_first_name','mother_first_name'].forEach(id => {
@@ -686,5 +688,19 @@ $('bText').onclick = () => { W.on = false; document.body.classList.remove('wz');
 $('mTxt').onclick = () => { const L = ['# Teksty aktów zmarłych (Haiku AI v1, z poprawkami z narzędzia)', '']; D.acts.filter(a => a.tekst).forEach(a => { const ch = S.acts[a.id]?.text != null; L.push(`## ${a.id}${ch ? ' · POPRAWIONY' : ''}`, '> ' + txtOf(a), ''); if (ch) L.push('Oryginał Haiku:', '> ' + a.tekst, ''); }); dl('ZGONY_teksty_poprawione.md', L.join('\n'), 'text/markdown'); };
 document.addEventListener('click', e => { if (!e.target.closest('#menu') && !e.target.closest('#bMenu') && !e.target.closest('#bMenu2') && !e.target.closest('#fab') && !e.target.closest('#tMenu') && !e.target.closest('#zMenu')) $('menu').style.display = 'none'; });
 function init(){ HS = histSnap(S.acts); $('zRf').classList.toggle('on', !!S.noroi); renderTabs(); renderList(); if (!S.cur || !AM[S.cur]) S.cur = (D.acts.find(a => a.ai) || D.acts[0])?.id; renderList(); renderAct(); showScan(); }
+// --- normalizacja wartości: miejscowości (Kaczyńce/Kaczyńcu → Kaczyniec), żona/mąż „z Pudłów” → „Pudło”, „(z …)” przy nazwisku rodowym
+const PLC = [[/^Kaczy[ńn](?:ce|cu|ca|cach|com|iec|ców)$/i,'Kaczyniec'],[/^Blin(?:ów|owie|owem)$/i,'Blinów'],[/^Brzozówk(?:a|i|ę|ą|ach|e)$|^Brzozówce$/i,'Brzozówka'],[/^Moczydł(?:a|ach|om|ami)$/i,'Moczydła'],[/^Słodk(?:ów|owie|owem)$/i,'Słodków']];
+const PLF = new Set(['death_place','deceased_birth_place','deceased_residence']);
+const SPB = {'Stępniów':'Stępień','Stępniach':'Stępień','Stępni':'Stępień'};
+function spBase(w){ const root = fold(w.replace(/(ów|ych|ich|ach|ami|om)$/i, '')), C = (D.counts && D.counts.s) || {}; let best = null;
+  for (const [n, c] of Object.entries(C)) { const fn = fold(n); if (Math.abs(fn.length - root.length) > 2 || fn[0] !== root[0]) continue; const f2 = fn.replace(/[aeoyi]$/, ''), f3 = f2.replace(/e(?=[^aeiouy]$)/, ''), d = Math.min(lev(f2, root, 2), lev(f3, root, 2)); if (d > 1 || (d === 1 && root.length < 5)) continue; const sc = c * 10 - d * 1000; if (!best || sc > best.sc) best = {n, sc, d}; } return best && (best.n + (best.d ? '?' : '')); }
+function normFieldVal(a, f, v){ if (!v) return v;
+  if (PLF.has(f)) return v.replace(/[\p{L}]+/gu, w => { for (const [re, c] of PLC) if (re.test(w)) return c; return w; });
+  if (f === 'deceased_spouse') { const m = v.match(/^(\S+(?:\s+\S+)?)\s+z(?:e)?\s+(\S+?)(\?)?(\s*\((?:żona|mąż)\))?\s*$/u); if (!m) return v; const w = m[2]; let base = SPB[w] || spBase(w), q = m[3] || '';
+    if (!base) { base = guessBase(w, 'mother_last_name', a); q = '?'; } return `${m[1]} ${base}${q}${m[4] ? ' ' + m[4].trim() : ''}`; }
+  if (['mother_last_name','father_last_name','deceased_maiden_name','deceased_last_name'].includes(f)) { const t = v.replace(/\s*\((?:ze?)\s[^)]*\)/u, '').trim(); return t || v; }
+  return v; }
+function normActs(){ D.acts.forEach(a => { ['ai','lub'].forEach(k => { const o = a[k]; if (!o) return; Object.keys(o).forEach(f => { if (typeof o[f] === 'string') o[f] = normFieldVal(a, f, o[f]); }); }); }); }
+normActs();
 loadExtra().then(init);
 </script></body></html>
