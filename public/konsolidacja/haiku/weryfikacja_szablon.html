@@ -196,6 +196,7 @@ function near(f, v){ const t = FT[f]; const w = fold(clean(v)); if (!t || w.leng
   out.sort((x,y) => x[2]-y[2] || y[1]-x[1]); return fuzzCache[k] = out.slice(0,3); }
 function diffState(a,f){ let x = a.ai?.[f], y = a.lub?.[f]; if (f === 'deceased_spouse') { x = x && x.replace(/\s*\((?:owd\.?|†)\)/g,''); y = y && y.replace(/\s*\((?:owd\.?|†)\)/g,''); } if (!x || !y) return ''; if (exact(x,y)) return 'eq'; if (loose(x,y)) return 'ap'; return 'ne'; }
 function hasDiff(a){ return fieldsOf(a).some(f => diffState(a,f.id) === 'ne' && !S.acts[a.id]?.f?.[f.id]?.ok && !S.acts[a.id]?.done); }   // czerwona ramka tylko dla nierozstrzygniętych różnic AI↔Lubgens (zatwierdzone pole = rozstrzygnięte)
+const aiWarn = (a,f) => !!a.ai && (a.unc.includes(f) || /\?/.test(a.ai[f]||''));
 function isUnc(a,f){ const x = S.acts[a.id]?.f?.[f]; if (x && x.unc !== undefined) return !!x.unc; return !!a.ai && (a.unc.includes(f) || /\?/.test(a.ai[f]||'')); }
 
 // ---- raport spójności (moduł wspolne/raport.js)
@@ -335,7 +336,7 @@ function renderAct(){ const a = AM[S.cur]; const m = $('main'); if (!a){ m.inner
   FS.forEach(f => { const v = getv(a,f.id), x = s.f[f.id]; if (!appl(a,f.id) && !clean(v)) return;
     if (S.hideOk && (x?.ok || x?.skip)) { h += `<div class="mini"><span>${f.label}: <b>${x.skip?'— pominięte —':esc(v)}</b> ${x.unc?'<span class="tag q">? niepewne</span>':''} ${x.ok?'✓ '+(SRCN[x.src]||''):''}</span><button class="sm" data-undo="${f.id}">zmień</button></div>`; return; }
     const long = f.id === 'notes' || f.id === 'p_note', uncOn = isUnc(a,f.id); const pend = !(x?.ok || x?.skip); const isAct = pend && !actDone; if (isAct) actDone = true;
-    h += `<div class="row ${x?.ok?'ok':''} ${isAct?'act':''}"><div class="lab"><span>${f.label} ${tagsFor(a,f.id,v,x)}</span><span>${x?.ok?'✓ '+(SRCN[x.src]||''):x?.skip?'pominięte':''}</span></div>
+    h += `<div class="row ${x?.ok?'ok':''} ${isAct?'act':''}"><div class="lab"><span>${f.label} ${tagsFor(a,f.id,v,x)}${aiWarn(a,f.id)?' <span class="tag q" title="Odczyt AI był niepewny – sprawdź na skanie (to tylko ostrzeżenie, nie wymaga usuwania)">⚠ AI</span>':''}</span><span>${x?.ok?'✓ '+(SRCN[x.src]||''):x?.skip?'pominięte':''}</span></div>
      ${long?`<textarea rows="2" data-f="${f.id}">${esc(v)}</textarea>`:`<input data-f="${f.id}" value="${esc(v)}" ${FT[f.id]?`list="${FT[f.id]==='s'?'dlS':'dlN'}"`:''} autocomplete="off">`}${dwHtml(a,f.id)}
      ${agePick(a,f.id)}
      <div class="chips">${chipsFor(a,f.id)}${clean(v)&&!x?.ok?`<button class="chip btn-ok" data-ok="${f.id}">✓ zatwierdź</button>`:''}<button class="chip uncb ${x?.unc?'sel':''}" data-unc="${f.id}">? niepewne</button>${!x?.skip&&!x?.ok?`<button class="chip btn-skip" data-skip="${f.id}">pomiń</button>`:''}${x?`<button class="chip" data-undo="${f.id}">↺ cofnij</button>`:''}${long&&clean(v)?`<button class="chip" data-nclr="${f.id}">🗑 usuń uwagę</button>`:''}</div>
@@ -345,7 +346,7 @@ function renderAct(){ const a = AM[S.cur]; const m = $('main'); if (!a){ m.inner
   m.querySelectorAll('[data-ok]').forEach(b => b.onclick = () => { const f = b.dataset.ok, inp = m.querySelector(`[data-f="${f}"]`), cur = inp && inp.tagName !== 'BUTTON' ? inp.value.trim() : clean(getv(a,f)); const same = clean(cur) === clean(getv(a,f)); setf(a, f, cur, same ? ((S.acts[a.id].f[f]?.src) || (a.ai?.[f] ? 'ai' : 'lub')) : 'edit'); });
   m.querySelectorAll('[data-undo]').forEach(b => b.onclick = () => { delete st(a.id).f[b.dataset.undo]; save(); keepScroll(); });
   m.querySelectorAll('[data-skip]').forEach(b => b.onclick = () => { commit(a, b.dataset.skip, getv(a,b.dataset.skip), 'ai', {skip:true, ok:false}); keepScroll(true); });
-  m.querySelectorAll('[data-unc]').forEach(b => b.onclick = () => { const f = b.dataset.unc, x = st(a.id).f[f] || {v:getv(a,f), src:(a.ai?.[f]?'ai':'lub'), ok:false}; x.unc = !isUnc(a,f); st(a.id).f[f] = x; save(); keepScroll(); });
+  m.querySelectorAll('[data-unc]').forEach(b => b.onclick = () => { const f = b.dataset.unc, x = st(a.id).f[f] || {v:getv(a,f), src:(a.ai?.[f]?'ai':'lub'), ok:false}; x.unc = !x.unc; st(a.id).f[f] = x; save(); keepScroll(); });
   m.querySelectorAll('[data-note]').forEach(i => i.onchange = () => { const x = st(a.id).f[i.dataset.note]; if (x) { x.note = i.value.trim(); save(); } });
   bindAgePick(m, a);
   m.querySelectorAll('input[data-f],textarea[data-f]').forEach(i => { i.onchange = () => setf(a, i.dataset.f, i.value.trim(), 'edit'); i.onfocus = () => focusField(a, i.dataset.f); });
@@ -373,7 +374,7 @@ const W = {on:false, i:0, unc:false, note:'', val:null};
 const emptyF = (a,f) => (!appl(a,f) && !clean(getv(a,f))) || !(a.ai?.[f] || a.lub?.[f] || (a.alts?.[f]||[]).length);
 function wizSeek(a, from, d){ const FS = fieldsOf(a); let i = from; while (i >= 0 && i < FS.length && emptyF(a, FS[i].id) && !st(a.id).f[FS[i].id]) i += d; return i; }
 function wizStart(){ const a = curAct(); if (!a) return; const FS = fieldsOf(a); let i = 0; while (i < FS.length && (st(a.id).f[FS[i].id] || emptyF(a, FS[i].id))) i++; W.i = i; wizLoad(); }
-function wizLoad(){ const a = curAct(), FS = fieldsOf(a), f = FS[W.i], x = f && st(a.id).f[f.id]; W.unc = f ? isUnc(a,f.id) : false; W.note = x?.note || ''; W.val = null; }
+function wizLoad(){ const a = curAct(), FS = fieldsOf(a), f = FS[W.i], x = f && st(a.id).f[f.id]; W.unc = !!x?.unc; /* niepewność AI = tylko ostrzeżenie */ W.note = x?.note || ''; W.val = null; }
 function wizGo(d){ const a = curAct(), FS = fieldsOf(a); let i = W.i + d; i = wizSeek(a, i, d); if (i < 0) i = wizSeek(a, 0, 1); W.i = Math.max(0, Math.min(FS.length, i)); wizLoad(); renderWiz(); }
 function wizSave(v, src){ const a = curAct(), f = fieldsOf(a)[W.i]; if (!f) return; commit(a, f.id, v, src, {unc:W.unc, note:W.note, ok:true, skip:false}); renderList(); wizGo(1); }
 function wizSkip(){ const a = curAct(), f = fieldsOf(a)[W.i]; if (!f) return; commit(a, f.id, getv(a,f.id), 'ai', {skip:true, ok:false, unc:W.unc, note:W.note}); renderList(); wizGo(1); }
@@ -478,7 +479,7 @@ const normDate = v => { v = String(v ?? '').trim(); const m = v.match(/^(\d{1,2}
 function rows(){ return D.acts.filter(a => a.ai && !a.kind).map(a => { const s = S.acts[a.id] || {f:{}}; const r = {id:a.id, death_year:a.year, death_act_number:a.act}; COLS.forEach(c => { if (!(c in r)) r[c] = a.ai[c] ?? ''; });
   FIELDS.forEach(f => { if (s.f?.[f.id]) r[f.id] = s.f[f.id].v; });
   r.death_time = (s.hid && s.hid.death_time) || '';   // godzina zgonu: ukryta w narzędziu; w eksporcie tylko wartość potwierdzona wcześniej przez użytkownika (nigdy odczyt AI)
-  const unc = FIELDS.filter(f => (isUnc(a,f.id) && !s.f?.[f.id]?.ok) || (s.f?.[f.id]?.unc)).map(f => f.id); r.uncertain_fields = unc.join(','); r.verification_notes = FIELDS.filter(f => s.f?.[f.id]?.note).map(f => f.id + ': ' + s.f[f.id].note).join(' | ');
+  const unc = FIELDS.filter(f => (isUnc(a,f.id) && !s.f?.[f.id]?.ok && !s.done) || (s.f?.[f.id]?.unc)).map(f => f.id); r.uncertain_fields = unc.join(','); r.verification_notes = FIELDS.filter(f => s.f?.[f.id]?.note).map(f => f.id + ': ' + s.f[f.id].note).join(' | ');
   r.scan_path = (D.scanFiles || {})[scanOf(a)] || '';
   if (s.notesOrg && s.f?.notes?.src === 'auto') r.notes_org = s.notesOrg;
   if (!s.done) r.death_time = '';
@@ -497,7 +498,7 @@ $('mVer').onclick = () => { $('menu').style.display = 'none'; $('fVer').click();
 $('fVer').onchange = async e => { try { const R = parseCsv(await e.target.files[0].text()), H = R[0], ix = {}; H.forEach((h, i) => ix[h] = i); let nA = 0, nF = 0, nSkip = 0;
   R.slice(1).forEach(r => { const a = AM[r[ix.id]]; if (!a || a.kind) return; const s2 = st(a.id); if (ix.scan_path != null && r[ix.scan_path]) { D.scanFiles = D.scanFiles || {}; const pth = r[ix.scan_path], key = Object.keys(D.scanFiles).find(k => D.scanFiles[k] === pth) || pth; D.scanFiles[key] = pth; s2.scan = key; } const ok = (r[ix.verification_status] || '') === 'ok'; const unc = new Set((r[ix.uncertain_fields] || '').split(/[;,]/).filter(Boolean)); let n = 0;
     if (ix.death_time != null && (r[ix.death_time] || '').trim() && !/\?/.test(r[ix.death_time]) && !new Set((r[ix.uncertain_fields] || '').split(/[;,]/)).has('death_time')) { s2.hid = s2.hid || {}; s2.hid.death_time = r[ix.death_time].trim(); }
-    FIELDS.forEach(f => { let v = ix[f.id] != null ? (r[ix[f.id]] || '').trim() : ''; if (!v) return; v = normFieldVal(a, f.id, v); if (f.id === 'deceased_spouse' && !/\((?:owd\.?|†)\)/.test(v)) v = spMark(v, spDef(r[ix.deceased_status])); if (s2.f[f.id]?.ok) { nSkip++; return; } s2.f[f.id] = {v, src:'csv', ok:ok, unc:unc.has(f.id)}; n++; });
+    FIELDS.forEach(f => { let v = ix[f.id] != null ? (r[ix[f.id]] || '').trim() : ''; if (!v) return; v = normFieldVal(a, f.id, v); if (f.id === 'deceased_spouse' && !/\((?:owd\.?|†)\)/.test(v)) v = spMark(v, spDef(r[ix.deceased_status])); if (s2.f[f.id]?.ok) { nSkip++; return; } s2.f[f.id] = {v, src:'csv', ok:ok, unc:!ok && unc.has(f.id)}; n++; });
     if (n) { nA++; nF += n; if (ok && !s2.done) s2.done = true; } });
   D.acts.forEach(a => { if (!a.kind && (a.ai || a.lub) && minor(a) && st(a.id).f.deceased_status?.v !== 'dziecko') st(a.id).f.deceased_status = {v:'dziecko', src:'edit', ok:true}; });
   D.acts.forEach(a => autoResolve(a));
@@ -724,7 +725,7 @@ function renderText(a){ const m = $('main'), s = st(a.id), FS = fieldsOf(a), md 
     sh.querySelectorAll('.chip[data-f]').forEach(b => b.onclick = () => { approveAll(a, FS, b.dataset.f, b.dataset.v, b.dataset.s); adv(); });
     $('tfOk').onclick = () => { const v = $('tfv').value.trim(), c = sh.querySelector('.chip.sel[data-f]'); approveAll(a, FS, f, v, c && clean(c.dataset.v) === clean(v) ? c.dataset.s : (st(a.id).f[f]?.src || 'edit')); adv(); };
     $('tfSkip').onclick = () => { commit(a, f, getv(a,f), 'ai', {skip:true, ok:false}); adv(); };
-    $('tfUnc').onclick = () => { const x = st(a.id).f[f] || {v:getv(a,f), src:(a.ai?.[f]?'ai':'lub'), ok:false}; x.unc = !isUnc(a,f); st(a.id).f[f] = x; save(); rerender(false); };
+    $('tfUnc').onclick = () => { const x = st(a.id).f[f] || {v:getv(a,f), src:(a.ai?.[f]?'ai':'lub'), ok:false}; x.unc = !x.unc; st(a.id).f[f] = x; save(); rerender(false); };
     if ($('tfNote')) $('tfNote').onchange = () => { const x = st(a.id).f[f]; if (x) { x.note = $('tfNote').value.trim(); save(); } }; }
   setTimeout(() => { selScroll(); focusTxt(a); }, 30);
   if ($('tfMinus')) { $('tfMinus').onclick = () => { S.tfs = Math.max(13, fs-2); save(); renderAct(); }; $('tfPlus').onclick = () => { S.tfs = Math.min(30, fs+2); save(); renderAct(); }; }
@@ -781,6 +782,6 @@ function normActs(){ D.acts.forEach(a => { ['ai','lub'].forEach(k => { const o =
 try { const tp = $('top'), setTT = () => document.documentElement.style.setProperty('--tt', tp.offsetHeight + 'px'); setTT(); if (window.ResizeObserver) { new ResizeObserver(setTT).observe(tp); let ft; new ResizeObserver(() => { clearTimeout(ft); ft = setTimeout(() => { try { if (img.naturalWidth && !$('view').classList.contains('xl')) fit(roiOf(curAct() || {})); } catch(e){} }, 150); }).observe($('view')); } window.addEventListener('resize', setTT); } catch(e) {}
 normActs();
 // migracja zapisanych wcześniej wartości (localStorage / wczytane kopie): miejscowości, małżonek, wiek – do obecnych zasad
-try { let ch = 0; D.acts.forEach(a => { const sf = S.acts[a.id]?.f; if (!sf) return; ['death_place','deceased_birth_place','deceased_residence','deceased_spouse','age'].forEach(f => { const x = sf[f]; if (x && typeof x.v === 'string' && x.v) { const nv = normFieldVal(a, f, x.v); if (nv !== x.v) { x.v = nv; ch++; } } }); }); D.acts.forEach(a => { if (autoResolve(a)) ch++; }); if (ch) save(); } catch(e) {}
+try { let ch = 0; D.acts.forEach(a => { const sf = S.acts[a.id]?.f; if (!sf) return; ['death_place','deceased_birth_place','deceased_residence','deceased_spouse','age'].forEach(f => { const x = sf[f]; if (x && typeof x.v === 'string' && x.v) { const nv = normFieldVal(a, f, x.v); if (nv !== x.v) { x.v = nv; ch++; } } }); }); D.acts.forEach(a => { if (autoResolve(a)) ch++; const sf = S.acts[a.id]; if (sf?.done) Object.values(sf.f || {}).forEach(x => { if (x.unc) { x.unc = false; ch++; } }); }); if (ch) save(); } catch(e) {}
 loadExtra().then(init);
 </script></body></html>
