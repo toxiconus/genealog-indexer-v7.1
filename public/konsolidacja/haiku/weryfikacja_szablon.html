@@ -195,7 +195,7 @@ function near(f, v){ const t = FT[f]; const w = fold(clean(v)); if (!t || w.leng
   const out = []; for (const [n,c] of Object.entries(D.counts[t])) { if (c < 3) continue; const d = lev(w, fold(n), 2); if (d <= 2 && n !== clean(v)) out.push([n,c,d]); }
   out.sort((x,y) => x[2]-y[2] || y[1]-x[1]); return fuzzCache[k] = out.slice(0,3); }
 function diffState(a,f){ let x = a.ai?.[f], y = a.lub?.[f]; if (f === 'deceased_spouse') { x = x && x.replace(/\s*\((?:owd\.?|†)\)/g,''); y = y && y.replace(/\s*\((?:owd\.?|†)\)/g,''); } if (!x || !y) return ''; if (exact(x,y)) return 'eq'; if (loose(x,y)) return 'ap'; return 'ne'; }
-function hasDiff(a){ return fieldsOf(a).some(f => diffState(a,f.id) === 'ne' && !S.acts[a.id]?.f?.[f.id]?.ok); }   // czerwona ramka tylko dla nierozstrzygniętych różnic AI↔Lubgens (zatwierdzone pole = rozstrzygnięte)
+function hasDiff(a){ return fieldsOf(a).some(f => diffState(a,f.id) === 'ne' && !S.acts[a.id]?.f?.[f.id]?.ok && !S.acts[a.id]?.done); }   // czerwona ramka tylko dla nierozstrzygniętych różnic AI↔Lubgens (zatwierdzone pole = rozstrzygnięte)
 function isUnc(a,f){ const x = S.acts[a.id]?.f?.[f]; if (x && x.unc !== undefined) return !!x.unc; return !!a.ai && (a.unc.includes(f) || /\?/.test(a.ai[f]||'')); }
 
 // ---- raport spójności (moduł wspolne/raport.js)
@@ -537,7 +537,7 @@ function assignTok(a, t, FS){ const toks = []; const re = /[\p{L}]+/gu; let m; w
     if (um >= 0 && ['death_place','deceased_first_name','deceased_last_name'].includes(f) && cur < um) cur = um;
     let from = cur; for (const w of ws) { let j = toks.findIndex((x,k) => k >= from && !x.f && !MIESG.has(fold(x.w)) && stemOk(x.w, w)); if (j < 0) j = toks.findIndex(x => !x.f && !MIESG.has(fold(x.w)) && stemOk(x.w, w)); if (j >= 0) { toks[j].f = f; toks[j].fw = w; toks[j].vr = f !== 'profession' && !lenient(toks[j].w, w) && !((S.acts[a.id]?.vrOk || {})[fold(toks[j].w)+'|'+fold(w)]); from = j; if (w === ws[0]) cur = j; } } }
   return toks; }
-const hlCls = (a, f) => { const x = S.acts[a.id]?.f?.[f]; return x?.skip ? 'sk' : x?.ok ? (x.unc ? 'un' : 'ok') : isUnc(a,f) ? 'un' : diffState(a,f) === 'ne' ? 'cf' : ''; };
+const hlCls = (a, f) => { const x = S.acts[a.id]?.f?.[f]; return x?.skip ? 'sk' : x?.ok ? (x.unc ? 'un' : 'ok') : isUnc(a,f) ? 'un' : diffState(a,f) === 'ne' ? (S.acts[a.id]?.done && clean(getv(a,f)) ? 'ok' : 'cf') : ''; };   // zatwierdzony akt = przyjęte wartości (bez czerwonego)
 function marks(h){ return h.replace(/\[[^\]]*\]/g, q => /\?/.test(q) ? `<span class="mq">${q}</span>` : /nieczytel/i.test(q) ? `<span class="mr">${q}</span>` : `<span class="mg">${q}</span>`); }
 const QRE = /(?:[\p{L}]+\s?)?\[[^\]]*(?:\?|nieczytel)[^\]]*\]/gu;
 function qList(t){ const o = [], c = {}; for (const m of t.matchAll(QRE)) { const k = m[0]; c[k] = c[k] || 0; o.push({s:m.index, e:m.index+k.length, txt:k, key:k+'#'+(c[k]++)}); } return o; }
