@@ -194,8 +194,8 @@ const fuzzCache = {};
 function near(f, v){ const t = FT[f]; const w = fold(clean(v)); if (!t || w.length < 3) return []; const k = t+w; if (fuzzCache[k]) return fuzzCache[k];
   const out = []; for (const [n,c] of Object.entries(D.counts[t])) { if (c < 3) continue; const d = lev(w, fold(n), 2); if (d <= 2 && n !== clean(v)) out.push([n,c,d]); }
   out.sort((x,y) => x[2]-y[2] || y[1]-x[1]); return fuzzCache[k] = out.slice(0,3); }
-function diffState(a,f){ const x = a.ai?.[f], y = a.lub?.[f]; if (!x || !y) return ''; if (exact(x,y)) return 'eq'; if (loose(x,y)) return 'ap'; return 'ne'; }
-function hasDiff(a){ return fieldsOf(a).some(f => diffState(a,f.id) === 'ne'); }
+function diffState(a,f){ let x = a.ai?.[f], y = a.lub?.[f]; if (f === 'deceased_spouse') { x = x && x.replace(/\s*\((?:owd\.?|†)\)/g,''); y = y && y.replace(/\s*\((?:owd\.?|†)\)/g,''); } if (!x || !y) return ''; if (exact(x,y)) return 'eq'; if (loose(x,y)) return 'ap'; return 'ne'; }
+function hasDiff(a){ return fieldsOf(a).some(f => diffState(a,f.id) === 'ne' && !S.acts[a.id]?.f?.[f.id]?.ok); }   // czerwona ramka tylko dla nierozstrzygniętych różnic AI↔Lubgens (zatwierdzone pole = rozstrzygnięte)
 function isUnc(a,f){ const x = S.acts[a.id]?.f?.[f]; if (x && x.unc !== undefined) return !!x.unc; return !!a.ai && (a.unc.includes(f) || /\?/.test(a.ai[f]||'')); }
 
 // ---- raport spójności (moduł wspolne/raport.js)
@@ -489,7 +489,7 @@ $('mVer').onclick = () => { $('menu').style.display = 'none'; $('fVer').click();
 $('fVer').onchange = async e => { try { const R = parseCsv(await e.target.files[0].text()), H = R[0], ix = {}; H.forEach((h, i) => ix[h] = i); let nA = 0, nF = 0, nSkip = 0;
   R.slice(1).forEach(r => { const a = AM[r[ix.id]]; if (!a || a.kind) return; const s2 = st(a.id); if (ix.scan_path != null && r[ix.scan_path]) { D.scanFiles = D.scanFiles || {}; const pth = r[ix.scan_path], key = Object.keys(D.scanFiles).find(k => D.scanFiles[k] === pth) || pth; D.scanFiles[key] = pth; s2.scan = key; } const ok = (r[ix.verification_status] || '') === 'ok'; const unc = new Set((r[ix.uncertain_fields] || '').split(/[;,]/).filter(Boolean)); let n = 0;
     if (ix.death_time != null && (r[ix.death_time] || '').trim() && !/\?/.test(r[ix.death_time]) && !new Set((r[ix.uncertain_fields] || '').split(/[;,]/)).has('death_time')) { s2.hid = s2.hid || {}; s2.hid.death_time = r[ix.death_time].trim(); }
-    FIELDS.forEach(f => { let v = ix[f.id] != null ? (r[ix[f.id]] || '').trim() : ''; if (!v) return; v = normFieldVal(a, f.id, v); if (f.id === 'deceased_spouse' && !/\((?:owd\.|†)\)/.test(v)) v = spMark(v, spDef(r[ix.deceased_status])); if (s2.f[f.id]?.ok) { nSkip++; return; } s2.f[f.id] = {v, src:'csv', ok:ok, unc:unc.has(f.id)}; n++; });
+    FIELDS.forEach(f => { let v = ix[f.id] != null ? (r[ix[f.id]] || '').trim() : ''; if (!v) return; v = normFieldVal(a, f.id, v); if (f.id === 'deceased_spouse' && !/\((?:owd\.?|†)\)/.test(v)) v = spMark(v, spDef(r[ix.deceased_status])); if (s2.f[f.id]?.ok) { nSkip++; return; } s2.f[f.id] = {v, src:'csv', ok:ok, unc:unc.has(f.id)}; n++; });
     if (n) { nA++; nF += n; if (ok && !s2.done) s2.done = true; } });
   D.acts.forEach(a => { if (!a.kind && (a.ai || a.lub) && minor(a) && st(a.id).f.deceased_status?.v !== 'dziecko') st(a.id).f.deceased_status = {v:'dziecko', src:'edit', ok:true}; });
   save(); init(); toast(`Wczytano z CSV: ${nF} pól w ${nA} aktach (pominięto już zatwierdzone: ${nSkip})`); } catch(x) { toast('Błędny plik CSV'); } e.target.value = ''; };
@@ -733,7 +733,7 @@ const SPB = {'Stępniów':'Stępień','Stępniach':'Stępień','Stępni':'Stępi
 function spBase(w){ const root = fold(w.replace(/(ów|ych|ich|ach|ami|om)$/i, '')), C = (D.counts && D.counts.s) || {}; let best = null;
   for (const [n, c] of Object.entries(C)) { const fn = fold(n); if (Math.abs(fn.length - root.length) > 2 || fn[0] !== root[0]) continue; const f2 = fn.replace(/[aeoyi]$/, ''), f3 = f2.replace(/e(?=[^aeiouy]$)/, ''), d = Math.min(lev(f2, root, 2), lev(f3, root, 2)); if (d > 1 || (d === 1 && root.length < 5)) continue; const sc = c * 10 - d * 1000; if (!best || sc > best.sc) best = {n, sc, d}; } return best && (best.n + (best.d ? '?' : '')); }
 // znacznik małżonka: „(owd.)” = żyjący w chwili zgonu (owdowiał), „(†)” = zmarł wcześniej; bez znacznika = nie wiadomo
-const SPM = /\s*\((?:owd\.|†)\)$/;
+const SPM = /\s*\((?:owd\.?|†)\)$/;
 const spFem = v => String(v).split(/;\s*/).map(x => /^\S*a\s/i.test(x) ? x.replace(/((?:sk|ck|dzk)i|(?<=[^aeiouy\s])y)(\??)((?: \((?:owd\.|†)\))?)$/i, (m0,g,q,t) => (/y$/i.test(g) && g.length === 1 ? 'a' : g.slice(0,-1) + 'a') + q + t) : x).join('; ');
 const spMark = (v, m) => spFem(String(v || '').split(/;\s*/).filter(Boolean).map(x => x.replace(SPM, '') + (m ? ' (' + m + ')' : '')).join('; '));
 const spDef = st => { st = String(st || '').toLowerCase(); return /^(żonaty|zamężna)/.test(st) ? 'owd.' : /^(wdowiec|wdowa)/.test(st) ? '†' : ''; };
@@ -760,14 +760,14 @@ function normFieldVal(a, f, v){ if (!v) return v;
   if (f === 'age') return normAge(v);
   if (f === 'death_place' && /^Szpital Janów/i.test(v)) return 'Szpital Janów Lubelski';   // zmarli w szpitalu: bez dopisku miejsca zamieszkania („…(zm.), Moczydła”)
   if (PLF.has(f)) return v.replace(/[\p{L}]+/gu, w => { for (const [re, c] of PLC) if (re.test(w)) return c; return w; });
-  if (f === 'deceased_spouse') { let t = v.trim();
+  if (f === 'deceased_spouse') { let t = v.trim(); t = t.replace(/\(owd\)/gi,'(owd.)');
     if (/\((?:I|II|III)\s*(?:mąż|żona)\)/.test(t)) { const ps = [...t.matchAll(/([^,;()]+?)\s*\((?:I|II|III)\s*(?:mąż|żona)\)/g)].map(m => m[1].trim()); if (ps.length) return ps.join('; '); }
     t = t.replace(/^(?:żona|mąż)\s+/i, '').replace(/\s*\((?:owdowiał[aey]\s*)?(?:żona|mąż)?\)\s*$/i, '').replace(/\sz domu\s+/i, ' z ').trim();
     const m = t.match(/^(\S+(?:\s+\S+)?)\s+ze?\s+(\S+?)(\?)?$/u); if (!m) return spFem(t || v); const w = m[2]; let base = SPB[w] || spBase(w), q = m[3] || '';
     if (!base) { base = guessBase(w, 'mother_last_name', a); q = '?'; } if (/a$/i.test(m[1].split(' ')[0])) base = base.replace(/(sk|ck|dzk)i$/i,'$1a').replace(/(?<=[^aeiouy])y$/i,'a'); return `${m[1]} ${base}${q}`; }
   if (['mother_last_name','father_last_name','deceased_maiden_name','deceased_last_name'].includes(f)) { const t = v.replace(/\s*\((?:ze?)\s[^)]*\)/u, '').trim(); return t || v; }
   return v; }
-function normActs(){ D.acts.forEach(a => { ['ai','lub'].forEach(k => { const o = a[k]; if (!o) return; Object.keys(o).forEach(f => { if (typeof o[f] === 'string') o[f] = normFieldVal(a, f, o[f]); }); if (o.deceased_spouse && !/\((?:owd\.|†)\)/.test(o.deceased_spouse)) o.deceased_spouse = spMark(o.deceased_spouse, spDef(o.deceased_status)); }); }); }
+function normActs(){ D.acts.forEach(a => { ['ai','lub'].forEach(k => { const o = a[k]; if (!o) return; Object.keys(o).forEach(f => { if (typeof o[f] === 'string') o[f] = normFieldVal(a, f, o[f]); }); if (o.deceased_spouse && !/\((?:owd\.?|†)\)/.test(o.deceased_spouse)) o.deceased_spouse = spMark(o.deceased_spouse, spDef(o.deceased_status)); }); }); }
 // układ komputerowy: wysokość górnego paska → pozycja skanu; po zmianie rozmiaru dopasuj skan
 try { const tp = $('top'), setTT = () => document.documentElement.style.setProperty('--tt', tp.offsetHeight + 'px'); setTT(); if (window.ResizeObserver) { new ResizeObserver(setTT).observe(tp); let ft; new ResizeObserver(() => { clearTimeout(ft); ft = setTimeout(() => { try { if (img.naturalWidth && !$('view').classList.contains('xl')) fit(roiOf(curAct() || {})); } catch(e){} }, 150); }).observe($('view')); } window.addEventListener('resize', setTT); } catch(e) {}
 normActs();
