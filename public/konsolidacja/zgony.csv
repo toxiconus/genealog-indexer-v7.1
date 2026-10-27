@@ -1156,7 +1156,7 @@ Z01154;1154;Liber mortuorum;Baranowa;Krystyna;;12;1832;;;77;;;;;;;;;;;;Karta 77;
 Z01155;1155;Liber mortuorum;Baranowa;Agnieszka;;25;1832;;;81;;;;;;;;;;;;Karta 81;;
 Z01156;1156;Liber mortuorum;Barbazakowna;Agata;;17;1832;;;79;;;;;;;;;;;;Karta 79;;
 Z01157;1157;Liber mortuorum;Bucon;Piotr;;23;1832;;;81;;;;;;;;;;;;Karta 81;;
-Z01158;1158;Liber mortuorum;Bzdyrak;Wojciech;m;1;1832;;;75;7;lat;;Franciszka;Magdalena;;;;;~1825;;Karta 75 | s. Franciszka i Magdaleny | 7 lat;;
+Z01158;1158;Liber mortuorum;Bzdyrak;Wojciech;m;1;1832;;;75;7;lat;;Franciszek;Magdalena;;;;;~1825;;Karta 75 | s. Franciszka i Magdaleny | 7 lat;;
 Z01159;1159;Liber mortuorum;Czarny;Wawrzeniec;;5;1832;;;76;;;;;;;;;;;;Karta 76;;
 Z01160;1160;Liber mortuorum;Dobrzański;Wojciech;;9;1832;;;77;;;;;;;;;;;;Karta 77;;
 Z01161;1161;Liber mortuorum;Dziewowa;Agata;;22;1832;;;80;;;;;;;;;;;;Karta 80;;
@@ -2318,11 +2318,11 @@ Z02316;2316;Liber mortuorum;nieczytelne;Ewa;;4;1871;;;;;;;;;;;;;;;;;brak miejsca
 Z02317;2317;Liber mortuorum;Pasternak;Magdalena;k;11;1871;Blinów;;;9;mies;;Piotr;Marianna;Pawłasek;;;;;;Blinów, m-9 c. Piotra i Marianny z Pawłasków;;
 Z02318;2318;Liber mortuorum;Pcion;Paweł;m;12;1871;Blinów;;;1;lat;;Mikołaj;Aniela;Mróz;;;;~1870;;Blinów, lat 1 s. Mikołaja i Anieli z Mrozów;;
 Z02319;2319;Liber mortuorum;Pcionek;Katarzyna;k;25;1871;Moczydła;;;65;lat;wdowa;Tomasz;Anna;Czarnecka;;;;~1806;;Moczdła, lat 65 c.Tomasza i Anny Czarneckich wdowa;;w G literówka 'Moczdła'
-Z02320;2320;Liber mortuorum;Pcionek;Józefa;k;22;1871;Moczydła;;;5;mies;;Franciszka;Marianna;Jachura;;;;;;Moczydła , m-5 c. Franciszka i Marianny z Jachurów;;
+Z02320;2320;Liber mortuorum;Pcionek;Józefa;k;22;1871;Moczydła;;;5;mies;;Franciszek;Marianna;Jachura;;;;;;Moczydła , m-5 c. Franciszka i Marianny z Jachurów;;
 Z02321;2321;Liber mortuorum;Stępień;Wojciech;m;15;1871;Blinów;;;22;lat;;;Agata;;;;;~1849;;Blinów, lat 22 s. ?. I Agaty;;imię ojca nieczytelne ('?.')
 Z02322;2322;Liber mortuorum;Szot;Franciszek;;3;1871;;;;;;;;;;;;;;;;;brak miejsca i numeru wpisu (kol. G)
 Z02323;2323;Liber mortuorum;Szuba;Franciszka;k;20;1871;Blinów;;;68;lat;wdowa;Andrzej;Ewa;Kurczak;;;;~1803;;Blinów , lat 68 c. Andrzeja i Ewy Kurczaków wdowa;;
-Z02324;2324;Liber mortuorum;Szumliński;Andrzej;m;24;1871;Blinów;;;53;lat;;Franciszka;Łucja;;;owd. Agnieszkę Jachura;;~1818;;"Blinów, lat 53 s. Franciszka i Łucji; owd. Agnieszkę Jachura";;
+Z02324;2324;Liber mortuorum;Szumliński;Andrzej;m;24;1871;Blinów;;;53;lat;;Franciszek;Łucja;;;owd. Agnieszkę Jachura;;~1818;;"Blinów, lat 53 s. Franciszka i Łucji; owd. Agnieszkę Jachura";;
 Z02325;2325;Liber mortuorum;Szydłowska;Antonina;k;17;1871;Blinów;;;1;lat;;;Marianna;;;;;~1870;;Blinów, lat 1 c. ?. i Marianny;;imię ojca nieczytelne ('?.')
 Z02326;2326;Liber mortuorum;Wcisło;Marianna;k;10;1871;Brzozówka;;;2;lat;;Jan;Agnieszka;;;;;~1869;;Brzozówka, lat 2 c. Jana I Agnieszki;;
 Z02327;2327;Liber mortuorum;Wnuk;Jan;m;14;1871;Blinów;;;2;lat;;Marcin;Antonina;Kosidło;;;;~1869;;Blinów, lat 2 s. Marcina i Antoniny z Kosidłów;;
@@ -2371,7 +2371,7 @@ Z02369;2369;Liber mortuorum;Stręciwilk;Andrzej;m;19;1872;Brzozówka;;;60;lat;;T
 Z02370;2370;Liber mortuorum;Suloska;Tekla;k;17;1872;Blinów;;;4;lat;;Tomasz;Antonina;Lewek?;;;;~1868;;Blinów, lat 4 c. Tomasza i Antoniny z Lewków;;
 Z02371;2371;Liber mortuorum;Suloski;Andrzej;m;15;1872;Blinów;;;9;lat;;Marcin;Marianna;Machulak;;;;~1863;;Blinów, lat 9 s. Marcina i Marianny z Machulaków;;
 Z02372;2372;Liber mortuorum;Szewczyk;Stanisław;m;48;1872;Brzozówka;;;1;lat;;Wojciech;Marianna;Tracz;;;;~1871;;Brzozówka , lat 1 s. Wojciecha i Marianny z Traczów;;
-Z02373;2373;Liber mortuorum;Szot;Antonina;k;20;1872;Blinów;;;2;lat;;Franciszka;Zofia;Pcionek;;;;~1870;;Blinów, lat 2 c. Franciszka i Zofii z Pcionków;;
+Z02373;2373;Liber mortuorum;Szot;Antonina;k;20;1872;Blinów;;;2;lat;;Franciszek;Zofia;Pcionek;;;;~1870;;Blinów, lat 2 c. Franciszka i Zofii z Pcionków;;
 Z02374;2374;Liber mortuorum;Szuba;Marianna;k;21;1872;Blinów;;;8;lat;;Antoni;Zofia;Kosidło;;;;~1864;;Blinów, lat 8 c. Antoniego i Zofii z Kosidłów;;
 Z02375;2375;Liber mortuorum;Tylus;Franciszka;k;22;1872;Blinów;;;1;lat;;Filip;Zofia;Samuel;;;;~1871;;Blinów, lat 1 c. Filipa i Zofii z Samuelów;;
 Z02376;2376;Liber mortuorum;Wcisło;Piotr;m;33;1872;Blinów;;;21;lat;;Filip;Marianna;;;;;~1851;;Blinów, lat 21 s. Filipa i Marianny;;
@@ -2385,7 +2385,7 @@ Z02383;2383;Liber mortuorum;Brzoszkiewicz;Franciszek;m;17;1873;;;;5;lat;;Jan;Fra
 Z02384;2384;Liber mortuorum;Brzoszkiewicz;Michał;m;19;1873;;;;7;lat;;Jan;Franciszka;;;;;~1866;;l.7 s.Jana i Franciszki;;
 Z02385;2385;Liber mortuorum;Dąbrowski;Jan;m;7;1873;;;;3;lat;;Józef;Barbara;Kolasa;;;;~1870;;l.3 s.Józefa i Barbary z Kolasów;;
 Z02386;2386;Liber mortuorum;Gruszka;Tekla;k;32;1873;;;;8;mies;;Józef;Zofia;;;;;;;m.8 c.Józefa i Zofii;;
-Z02387;2387;Liber mortuorum;Janik;Antoni;m;24;1873;;;;2;lat;;Stanisława;Ewa;Wieleba;;;;~1871;;l.2 s.Stanisława i Ewy z Wielebów;;
+Z02387;2387;Liber mortuorum;Janik;Antoni;m;24;1873;;;;2;lat;;Stanisław;Ewa;Wieleba;;;;~1871;;l.2 s.Stanisława i Ewy z Wielebów;;
 Z02388;2388;Liber mortuorum;Jędrzejczak;Anna;k;30;1873;;;;4;lat;;Marcin;Katarzyna;Nieściur;;;;~1869;;l.4 c.Marcina i Katarzyny z Nieściurów;;
 Z02389;2389;Liber mortuorum;Jędrzejczak;Franciszka;k;33;1873;;;;7;lat;;Marcin;Katarzyna;Kędziora;;;;~1866;;l.7 c.Marcina i Katarzyny z Kędziorów;;
 Z02390;2390;Liber mortuorum;Jędrzejczak;Jan;;41;1873;;;;;;;;;;;;;;;;;brak miejsca i numeru wpisu (kol. G)
@@ -2402,7 +2402,7 @@ Z02400;2400;Liber mortuorum;Lenart;Agnieszka;k;26;1873;;;;1;lat;;;Jadwiga;Lenart
 Z02401;2401;Liber mortuorum;Ładziak;Wawrzyniec;m;8;1873;;;;66;lat;;Jakub;Katarzyna;;;;;~1807;;l.66 s.Jakuba i Katarzyny;;
 Z02402;2402;Liber mortuorum;Machulak;Wojciech;m;10;1873;;;;2;lat;;Piotr;Agnieszka;Kania;;;;~1871;;l.2 s.Piotra i Agnieszki z Kaniów;;
 Z02403;2403;Liber mortuorum;Machulak;Wojciech;m;18;1873;;;;3;lat;;Wojciech;Marianna;;;;;~1870;;l.3 s.Wojciecha i Marianny;;
-Z02404;2404;Liber mortuorum;Marchewka;Marcin;m;20;1873;;;;13;lat;;Stanisława;Katarzyna;;;;;~1860;;l.13 s.Stanisława i Katarzyny;;
+Z02404;2404;Liber mortuorum;Marchewka;Marcin;m;20;1873;;;;13;lat;;Stanisław;Katarzyna;;;;;~1860;;l.13 s.Stanisława i Katarzyny;;
 Z02405;2405;Liber mortuorum;Mróz;Katarzyna;k;12;1873;;;;48;lat;;Wojciech;Agnieszka;Koguc;;owd. Adama Mroza;;~1825;;l.48 c.Wojciecha i Agnieszki Koguców owd.Adama Mroza;;
 Z02406;2406;Liber mortuorum;Mróz;Bartłomiej;m;16;1873;;;;50;lat;;Jakub;Magdalena;;;owd. Marianna Pawłasek;;~1823;;l.50 s.Jakuba i Magdaleny owd.Mariannę z Pawłasków;;
 Z02407;2407;Liber mortuorum;Mróz;Stanisław;;39;1873;;;;;;;;;;;;;;;;;brak miejsca i numeru wpisu (kol. G)
@@ -2420,7 +2420,7 @@ Z02418;2418;Liber mortuorum;Spryszak;Wojciech;m;4;1873;;;;19;lat;;Antoni;Anna;Pu
 Z02419;2419;Liber mortuorum;Stępień;Agata;k;47;1873;;;;50;lat;;Jakub;Zofia;Wcisło;;owd. Wawrzyńca Stępnia;;~1823;;l.l.50 c.Jakuba i Zofii małż.Wcisłów owd.Wawrzyńca Stępnia;;w G 'l.l.50' - wiek odczytany jako 50
 Z02420;2420;Liber mortuorum;Szabat;Zofia;k;31;1873;;;;1;lat;;Józef;Franciszka;;;;;~1872;;l.1 c.Józefa i Franciszki;;
 Z02421;2421;Liber mortuorum;Szabat;Marianna;;36;1873;;;;;;;;;;;;;;;;;brak miejsca i numeru wpisu (kol. G)
-Z02422;2422;Liber mortuorum;Szot;Tekla;k;27;1873;;;;47;lat;;Franciszka;Tekla;Szczecińska;;;;~1826;;l.47 c.Franciszka i Tekli małż.Szczecińskich;;
+Z02422;2422;Liber mortuorum;Szot;Tekla;k;27;1873;;;;47;lat;;Franciszek;Tekla;Szczecińska;;;;~1826;;l.47 c.Franciszka i Tekli małż.Szczecińskich;;
 Z02423;2423;Liber mortuorum;Szydłowska;Tekla;k;28;1873;;;;6;lat;;;Marianna;;;;;~1867;;l.6 c.Marianny;;brak imienia ojca
 Z02424;2424;Liber mortuorum;Szydłowska;Józefa;;40;1873;;;;;;;;;;;;;;;;;brak miejsca i numeru wpisu (kol. G)
 Z02425;2425;Liber mortuorum;Wcisło;Agnieszka;k;5;1873;;;;3;lat;;Paweł;Franciszka;Jędrzejczak;;;;~1870;;l.3 c.Pawła i Franciszki z Jędrzejczaków;;
@@ -2433,11 +2433,11 @@ Z02431;2431;Liber mortuorum;Brzoskiewicz;Mikołaj;m;23;1874;;;;2;lat;;Jan;Franci
 Z02432;2432;Liber mortuorum;Bucoń;Jan;m;11;1874;;;;2;lat;;Michał;Zofia;Serafin;;;;~1872;;l.2 s.Michała i Zofii z Serafinów;;
 Z02433;2433;Liber mortuorum;Dąbrowski;Grzegorz;m;2;1874;;;;1;lat;;Józef;Barbara;Kolasa;;;;~1873;;l.1 s.Józefa i Barbary z Kolasów;;
 Z02434;2434;Liber mortuorum;Jaskuła;Anna;k;4;1874;;;;9;mies;;Wojciech;Zofia;Nieściur;;;;;;m.9 c.Wojciecha i Zofii z Nieściurów;;
-Z02435;2435;Liber mortuorum;Jędrzejczak;Katarzyna;k;18;1874;;;;46;lat;wd.;Stanisława;Agnieszka;Nieściur;;;;~1828;;l.46 wd. c.Stanisława i Agnieszki małż.Nieściurów;;
+Z02435;2435;Liber mortuorum;Jędrzejczak;Katarzyna;k;18;1874;;;;46;lat;wd.;Stanisław;Agnieszka;Nieściur;;;;~1828;;l.46 wd. c.Stanisława i Agnieszki małż.Nieściurów;;
 Z02436;2436;Liber mortuorum;Kaczyński;Michał;m;26;1874;;;;50;lat;;Józef;Ewa;;;owd. Żonę Mariannę;;~1824;;l.50 s.Józefa i Ewy owd. Żonę Mariannę;;
 Z02437;2437;Liber mortuorum;Kędziora;Antoni;m;15;1874;;;;2;lat;;Wojciech;Agnieszka;;;;;~1872;;l.2 s.Wojciecha i Agnieszki;;
 Z02438;2438;Liber mortuorum;Kopiwoda;Szymon;m;25;1874;;;;2;mies;;Jan;Zofia;;;;;;;m.2 s.Jana i Zofii;;
-Z02439;2439;Liber mortuorum;Kosidlak;Jan;m;7;1874;;;;5;mies;;Stanisława;Antonina;Jachura;;;;;;m.5 s.Stanisława i Antoniny z Jachurów;;
+Z02439;2439;Liber mortuorum;Kosidlak;Jan;m;7;1874;;;;5;mies;;Stanisław;Antonina;Jachura;;;;;;m.5 s.Stanisława i Antoniny z Jachurów;;
 Z02440;2440;Liber mortuorum;Kosidło;Michał;m;5;1874;;;;77;lat;wd.;Wojciech;Franciszka;;;;;~1797;;l.77 wd. s.Wojciecha i Franciszki;;
 Z02441;2441;Liber mortuorum;Kosidło;Józef;m;12;1874;;;;5;mies;;Jan;Marianna;Jachura;;;;;;m.5 s.Jana i Marianny z Jachurów;;
 Z02442;2442;Liber mortuorum;Kosidło;Kazimierz;m;14;1874;;;;6;mies;;Jakub;Marianna;Dąbrowska;;;;;;m.6 s.Jakuba i Marianny z Dąbrowskich;;
@@ -2457,8 +2457,8 @@ Z02455;2455;Liber mortuorum;Ganczarz;Franciszek;m;9;1875;;;;54;lat;;Łukasz;Mari
 Z02456;2456;Liber mortuorum;Gąska;Michał;m;23;1875;;;;2;mies;;;Marianna;Michałków Gąskowej;;;;;;m.2 s.Marianny z Michałków Gąskowej;;brak imienia ojca
 Z02457;2457;Liber mortuorum;Jaskuła;Tomasz;m;7;1875;;;;22;lat;;Wojciech;Katarzyna;Sulowska;;;;~1853;;l.22 s.Wojciecha i Katarzyny z Sulowskich;;
 Z02458;2458;Liber mortuorum;Karczmarczyk;Franciszek;m;20;1875;;;;45;lat;;Wojciech;Regina;;;owd. (bez nazwiska);;~1830;;l.45 s.Wojciecha i Reginy owd.;;
-Z02459;2459;Liber mortuorum;Karczmarczyk;Wawrzyniec;m;22;1875;;;;4;mies;;Franciszka;Regina;;;;;;;m.4 s.Franciszka i Reginy;;
-Z02460;2460;Liber mortuorum;Kosidło;Andrzej;m;1;1875;;;;55;lat;;Franciszka;Anna;;;owd. Agata Jędrzejczak;;~1820;;l.55 s.Franciszka i Anny owd.Agatę z Jędrzejczaków;;
+Z02459;2459;Liber mortuorum;Karczmarczyk;Wawrzyniec;m;22;1875;;;;4;mies;;Franciszek;Regina;;;;;;;m.4 s.Franciszka i Reginy;;
+Z02460;2460;Liber mortuorum;Kosidło;Andrzej;m;1;1875;;;;55;lat;;Franciszek;Anna;;;owd. Agata Jędrzejczak;;~1820;;l.55 s.Franciszka i Anny owd.Agatę z Jędrzejczaków;;
 Z02461;2461;Liber mortuorum;Kosidło;Zofia;k;12;1875;;;;43;lat;;Walenty;Katarzyna;Pawłasek;;owd. Wojciecha Kosidło;;~1832;;l.43 c.Walentego i Katarzyny Pawłasków owd.Wojciecha Kosidło;;
 Z02462;2462;Liber mortuorum;Kosidło;Józef;m;18;1875;;;;3;lat;;Wojciech;Zofia;Pawłasek;;;;~1872;;l.3 s.Wojciecha i Zofii z Pawłasków;;
 Z02463;2463;Liber mortuorum;Kosidło;Jan;m;15;1875;;;;1;lat;;Józef;Franciszka;Machulak;;;;~1874;;l.1 s.Józefa i Franciszki z Machulaków;;
@@ -2489,8 +2489,8 @@ Z02487;2487;Liber mortuorum;Krawczyk;Agnieszka;k;1;1876;;;;1;lat;;Wojciech;Anast
 Z02488;2488;Liber mortuorum;Krawczyk;Bartłomiej;m;9;1876;;;;21;lat;;Szymon;Anna;Król;;;;~1855;;l.21 s.Szymona i Anny z Królów;;
 Z02489;2489;Liber mortuorum;Kudrelek;Jakub;m;15;1876;;;;3;lat;;Michał;Anastazja;Gnat;;;;~1873;;l.3 s.Michała i Anastazji z Gnatów;;
 Z02490;2490;Liber mortuorum;Kudrelek;Zofia;k;24;1876;;;;26;lat;;Józef;Jadwiga;Głaz;;;małż. Kudrelków;~1850;;l.26 c.Józefa i Jadwigi z Głazów małż.Kudrelków;;
-Z02491;2491;Liber mortuorum;Machulak;Tekla;k;17;1876;;;;62;lat;wd.;Stanisława;Marianna;Sagan;;;;~1814;;l.62 wd. c.Stanisława i Marianny małż. Saganów;;
-Z02492;2492;Liber mortuorum;Mróz;Piotr;m;3;1876;;;;6;lat;;Franciszka;Marianna;Jędrzejczak;;;;~1870;;l.6 s.Franciszka i Marianny z Jędrzejczaków;;
+Z02491;2491;Liber mortuorum;Machulak;Tekla;k;17;1876;;;;62;lat;wd.;Stanisław;Marianna;Sagan;;;;~1814;;l.62 wd. c.Stanisława i Marianny małż. Saganów;;
+Z02492;2492;Liber mortuorum;Mróz;Piotr;m;3;1876;;;;6;lat;;Franciszek;Marianna;Jędrzejczak;;;;~1870;;l.6 s.Franciszka i Marianny z Jędrzejczaków;;
 Z02493;2493;Liber mortuorum;Mróz;Jan;m;23;1876;;;;8;lat;;Adam;Katarzyna;Koguc;;;;~1868;;l.8 s.Adama i Katarzyny z Koguców;;
 Z02494;2494;Liber mortuorum;Obydź;Jakub;m;10;1876;;;;75;lat;wd.;Paweł;Zofia;;;;;~1801;;l.75 wd. s.Pawła i Zofii;;
 Z02495;2495;Liber mortuorum;Paszkowski;Wawrzyniec;m;8;1876;;;;74;lat;;Mateusz;Anastazja;;;owd. Marianna Kotuł?;;~1802;;l.74 s.Mateusza i Anastazji owd.Mariannę z Kotułów;;
@@ -2544,7 +2544,7 @@ Z02542;2542;Liber mortuorum;Bucoń;Marianna;k;30;1878;;;;70;lat;wd.;Antoni;Anast
 Z02543;2543;Liber mortuorum;Ciećko;Agata;k;7;1878;;;;67;lat;wd.;Andrzej;Agnieszka;Sulowska;;;;~1811;;l.67 wd c.Andrzeja i Agnieszki małż Sulowskich;;
 Z02544;2544;Liber mortuorum;Drozd;Szymon;m;21;1878;;;;38;lat;;Tomasz;Katarzyna;;;owd. Marianna Kudrelek;;~1840;;l.38 s.Tomasza i Katarzyny owd Mariannę z Kudrelków;;
 Z02545;2545;Liber mortuorum;Felek;Anna;k;11;1878;;;;60;lat;wd.;Wojciech;Antonina;Wieleba;;;;~1818;;l.60 wd c.Wojciecha i Antoniny małż Wielebów;;
-Z02546;2546;Liber mortuorum;Ganczarz;Wojciech;m;8;1878;;;;4;lat;;Franciszka;Zofia;Wcisło;;;;~1874;;l.4 s.Franciszka i Zofii z Wcisłów;;
+Z02546;2546;Liber mortuorum;Ganczarz;Wojciech;m;8;1878;;;;4;lat;;Franciszek;Zofia;Wcisło;;;;~1874;;l.4 s.Franciszka i Zofii z Wcisłów;;
 Z02547;2547;Liber mortuorum;Jachura;Jan;m;29;1878;;;;6;mies;;Tomasz;Marianna;Pcionek;;;;;;m.6 s.Tomasza i Marianny z Pcionków;;
 Z02548;2548;Liber mortuorum;Kaczyński;Jan;m;10;1878;;;;40;lat;;Marcin;Zofia;Sulowska;;owd. Katarzyna Janik;;~1838;;l.40 s.Marcina i Zofii z Sulowskich owd Katarzynę z Janików;;
 Z02549;2549;Liber mortuorum;Kędziora;Jan;m;13;1878;;;;66;lat;wd.;Marcin;Anastazja;;;;;~1812;;l.66 wd s.Marcina i Anastazji;;
@@ -2564,10 +2564,10 @@ Z02562;2562;Liber mortuorum;Sokół;Walenty;m;3;1878;;;;60;lat;;Jakub;Małgorzat
 Z02563;2563;Liber mortuorum;Stańczak;Wojciech;m;24;1878;;;;5;mies;;Jakub;Franciszka;Jaworska;;;;;;m.5 s.Jakuba i Franciszki z Jaworskich;;
 Z02564;2564;Liber mortuorum;Szabat;Stanisław;m;15;1878;;;;2;lat;;Dominik;Agnieszka;Kosidło;;;;~1876;;l.2 s.Dominika i Agnieszki z Kosidłów;;
 Z02565;2565;Liber mortuorum;Szłapa;Józef;m;6;1878;;;;6;lat;;;Zofia;Szłap?;;;Baranowej sołdatki;~1872;;l.6 s.Zofii z Szłapów Baranowej sołdatki;;zapis matki niejasny ('Zofii z Szłapów Baranowej')
-Z02566;2566;Liber mortuorum;Szot;Magdalena;k;17;1878;;;;14;lat;;Franciszka;Zofia;Pcionek;;;;~1864;;l.14 c.Franciszka i Zofii z Pcionków;;
+Z02566;2566;Liber mortuorum;Szot;Magdalena;k;17;1878;;;;14;lat;;Franciszek;Zofia;Pcionek;;;;~1864;;l.14 c.Franciszka i Zofii z Pcionków;;
 Z02567;2567;Liber mortuorum;Wcisło;Katarzyna;k;12;1878;;;;3;lat;;Paweł;Marianna;Machulak;;;;~1875;;l.3 c.Pawła i Marianny z Machulaków;;
 Z02568;2568;Liber mortuorum;Wcisło;Tekla;k;23;1878;;;;1;lat;;Jan;Józefa;Nieściur;;;;~1877;;l.1 c.Jana i Józefy z Nieściurów;;
-Z02569;2569;Liber mortuorum;Zuń;Magdalena;k;22;1878;;;;8;lat;;Stanisława;Anna;Wcisło;;;;~1870;;l.8 c.Stanisława i Anny z Wcisłów;;
+Z02569;2569;Liber mortuorum;Zuń;Magdalena;k;22;1878;;;;8;lat;;Stanisław;Anna;Wcisło;;;;~1870;;l.8 c.Stanisława i Anny z Wcisłów;;
 Z02570;2570;Liber mortuorum;Żaba;Marianna;k;26;1878;;;;2;lat;;Tomasz;Anna;Pasternak;;;;~1876;;l.2 c.Tomasza i Anny z Pasternaków;;
 Z02571;2571;Liber mortuorum;Cieciek;Dominik;;1;1879;;;;;;;;;;;;;;;;;brak miejsca i numeru wpisu (kol. G)
 Z02572;2572;Liber mortuorum;Dąbrowski;Stanisław;;13;1879;;;;;;;;;;;;;;;;;brak miejsca i numeru wpisu (kol. G)
@@ -2601,25 +2601,25 @@ Z02599;2599;Liber mortuorum;Kosidło;Katarzyna;k;19;1880;;;;7;lat;;Wojciech;Roza
 Z02600;2600;Liber mortuorum;Kosidło;Marianna;k;31;1880;;;;27;lat;;Tomasz;Zofia;Zuń;;owd. Wojciecha Kosidło;małż. Zuniów;~1853;;l.27 c.Tomasza i Zofii z Zuniów małż. Zuniów owd Wojciecha Kosidło;;
 Z02601;2601;Liber mortuorum;Kozaczek;Anna;k;2;1880;;;;13;lat;;Wojciech;Agnieszka;Kaczyńska;;;;~1867;;l.13 c.Wojciecha i Agnieszki z Kaczyńskich;;
 Z02602;2602;Liber mortuorum;Krawczyk;Katarzyna;k;10;1880;;;;6;lat;;Szymon;Anna;Król;;;;~1874;;l.6 c.Szymona i Anny z Królów;;
-Z02603;2603;Liber mortuorum;Krawczyk;Anna;k;13;1880;;;;38;lat;;Franciszka;Rozalia;Szwed?;;owd. Michała Krawczyka;;~1842;;l.38 c.Franciszka i Rozalii Szwedów owd Michała Krawczyka;;
+Z02603;2603;Liber mortuorum;Krawczyk;Anna;k;13;1880;;;;38;lat;;Franciszek;Rozalia;Szwed?;;owd. Michała Krawczyka;;~1842;;l.38 c.Franciszka i Rozalii Szwedów owd Michała Krawczyka;;
 Z02604;2604;Liber mortuorum;Krzysztoń;Tekla;k;18;1880;;;;2;lat;;Onufry;Zuzanna;Gancarz;;;;~1878;;l.2 c.Onufrego i Zuzanny z Gancarzów;;
-Z02605;2605;Liber mortuorum;Kudrelek;Antonina;k;3;1880;;;;1;lat;;Stanisława;Katarzyna;;;;;~1879;;l.1 c.Stanisława i Katarzyny;;
+Z02605;2605;Liber mortuorum;Kudrelek;Antonina;k;3;1880;;;;1;lat;;Stanisław;Katarzyna;;;;;~1879;;l.1 c.Stanisława i Katarzyny;;
 Z02606;2606;Liber mortuorum;Machul;Antonina;k;30;1880;;;;5;lat;;Andrzej;Marianna;Kosidło;;;;~1875;;l.5 c.Andrzeja i Marianny z Kosidłów;;
 Z02607;2607;Liber mortuorum;Nieściur;Katarzyna;k;4;1880;;;;5;lat;;Antoni;Marianna;Pawłasek;;;;~1875;;l.5 c.Antoniego i Marianny z Pawłasków;;
 Z02608;2608;Liber mortuorum;Paszkoska;Marianna;k;32;1880;;;;49;lat;wd.;Maciej;Anna;Kotuł?;;;;~1831;;l.49 wd c.Macieja i Anny małż Kotułów;;
 Z02609;2609;Liber mortuorum;Pawłasek;Kacper;m;21;1880;;;;53;lat;;Antoni;Marianna;Felek;;owd. Jadwiga Jędrzejczak;;~1827;;l.53 s.Antoniego i Marianny z Felków owd Jadwigę z Jędrzejczaków;;
 Z02610;2610;Liber mortuorum;Pawłasek;Walenty;m;23;1880;;;;8;mies;;Marcin;Marianna;Obydź;;;;;;m.8 s.Marcina i Marianny z Obydziów;;
-Z02611;2611;Liber mortuorum;Pcionek;Wojciech;m;7;1880;;;;4;lat;;Franciszka;Marianna;;;;;~1876;;l.4 s.Franciszka i Marianny;;
-Z02612;2612;Liber mortuorum;Pcionek;Paweł;m;12;1880;;;;6;mies;;Franciszka;Marianna;Jachura;;;;;;m.6 s.Franciszka i Marianny z Jachurów;;
+Z02611;2611;Liber mortuorum;Pcionek;Wojciech;m;7;1880;;;;4;lat;;Franciszek;Marianna;;;;;~1876;;l.4 s.Franciszka i Marianny;;
+Z02612;2612;Liber mortuorum;Pcionek;Paweł;m;12;1880;;;;6;mies;;Franciszek;Marianna;Jachura;;;;;;m.6 s.Franciszka i Marianny z Jachurów;;
 Z02613;2613;Liber mortuorum;Piech;Michał;m;9;1880;;;;72;lat;wd.;Jan;Katarzyna;;;;;~1808;;l.72 wd s.Jana i Katarzyny;;
 Z02614;2614;Liber mortuorum;Rębacz;Józef;m;17;1880;;;;1;lat;;Tomasz;Marianna;Goch;;;;~1879;;l.1 s.Tomasza i Marianny z Gochów;;
-Z02615;2615;Liber mortuorum;Rębacz;Katarzyna;k;27;1880;;;;69;lat;wd.;Stanisława;Marianna;Sagan;;;;~1811;;l.69 wd c.Stanisława i Marianny Saganów;;
+Z02615;2615;Liber mortuorum;Rębacz;Katarzyna;k;27;1880;;;;69;lat;wd.;Stanisław;Marianna;Sagan;;;;~1811;;l.69 wd c.Stanisława i Marianny Saganów;;
 Z02616;2616;Liber mortuorum;Rzewnik;Feliksa;k;8;1880;;;;1;lat;;Wojciech;Marianna;Tracz;;;;~1879;;l.1 c.Wojciecha i Marianny z Traczów;;
 Z02617;2617;Liber mortuorum;Sagan;Aleksander;m;25;1880;;;;1;mies;;Aleksander;Petronela;;;;;;;m.1 s.Aleksandra i Petroneli;;
-Z02618;2618;Liber mortuorum;Sulowski;Tomasz;m;5;1880;;;;52;lat;;Franciszka;Marianna;;;owd. Antonina Lewek?;;~1828;;l.52 s.Franciszka i Marianny owd.Antoninę z Lewków;;
+Z02618;2618;Liber mortuorum;Sulowski;Tomasz;m;5;1880;;;;52;lat;;Franciszek;Marianna;;;owd. Antonina Lewek?;;~1828;;l.52 s.Franciszka i Marianny owd.Antoninę z Lewków;;
 Z02619;2619;Liber mortuorum;Wcisło;Maciej;m;29;1880;;;;9;mies;;Paweł;Marianna;Machulak;;;;;;m.9 s.Pawła i Marianny z Machulaków;;
 Z02620;2620;Liber mortuorum;Wieleba;Antonina;k;26;1880;;;;3;lat;;Feliks;Marianna;Pcionek;;;;~1877;;l.3 c.Feliksa i Marianny z Pcionków;;
-Z02621;2621;Liber mortuorum;Wieleba;Szymon;m;28;1880;;;;25;lat;;Franciszka;Ewa;Babiarz;;;;~1855;;l.25 s.Franciszka i Ewy z Babiarzów;;
-Z02622;2622;Liber mortuorum;Wieleba;Franciszek;m;33;1880;;;;20;lat;;Franciszka;Ewa;Babiarz;;;;~1860;;l.20 s.Franciszka i Ewy z Babiarzów;;
+Z02621;2621;Liber mortuorum;Wieleba;Szymon;m;28;1880;;;;25;lat;;Franciszek;Ewa;Babiarz;;;;~1855;;l.25 s.Franciszka i Ewy z Babiarzów;;
+Z02622;2622;Liber mortuorum;Wieleba;Franciszek;m;33;1880;;;;20;lat;;Franciszek;Ewa;Babiarz;;;;~1860;;l.20 s.Franciszka i Ewy z Babiarzów;;
 Z02623;2623;Liber mortuorum;Wieleba;Marianna;k;15;1880;;;;66;lat;wd.;Marcin;Teresa;Pcionek;;;;~1814;;l.66 wd c.Marcina i Teresy Pcionków;;
 Z02624;2624;Liber mortuorum;Wójtowicz;Franciszek;m;11;1880;;;;10;mies;;Józef;Anastazja;Wieleba;;;;;;m.10 s.Józefa i Anastazji z Wielebów;;

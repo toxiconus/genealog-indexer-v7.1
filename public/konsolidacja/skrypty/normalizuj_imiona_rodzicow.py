@@ -13,14 +13,14 @@ OJ = {'Wojciecha':'Wojciech','Jana':'Jan','Pawła':'Paweł','Marcina':'Marcin','
  'Grzegorza':'Grzegorz','Dominika':'Dominik','Kazimierza':'Kazimierz','Szczepana (?)':'Szczepan (?)','Wincentego':'Wincenty','Mikołaja':'Mikołaj',
  'Sebastiana':'Sebastian','Łukasza':'Łukasz','Leonarda':'Leonard','Krzysztofa':'Krzysztof','Nikodema':'Nikodem','Onufrego':'Onufry',
  'Aleksandra':'Aleksander','Feliksa':'Feliks','Błażeja':'Błażej','Szczepana':'Szczepan','Tadeusza':'Tadeusz',
- 'Gabryela':'Gabryel','Ludwika':'Ludwik','Gwatberta':'Gwatbert'}
+ 'Gabryela':'Gabryel','Ludwika':'Ludwik','Gwatberta':'Gwatbert','Franciszka':'Franciszek','Stanisława':'Stanisław'}
 OJ_PISOWNIA = {'Woyciecha':'Wojciech','Wawrzenca':'Wawrzyniec','Kaspra':'Kasper'}   # starsza pisownia
-OJ_WSTRZYMANE = {'Franciszka','Stanisława'}                                       # wymagają kontekstu
+OJ_WSTRZYMANE = set()                                        # wymagają kontekstu
 MA = {'Marianny':'Marianna','Katarzyny':'Katarzyna','Zofii':'Zofia','Agnieszki':'Agnieszka','Franciszki':'Franciszka','Anny':'Anna','Jadwigi':'Jadwiga',
  'Ewy':'Ewa','Antoniny':'Antonina','Rozalii':'Rozalia','Anastazji':'Anastazja','Agaty':'Agata','Magdaleny':'Magdalena','Tekli':'Tekla',
  'Petroneli':'Petronela','Teresy':'Teresa','Małgorzaty':'Małgorzata','Józefy':'Józefa','Barbary':'Barbara','Reginy':'Regina','Doroty':'Dorota',
  'Anieli':'Aniela','Łucji':'Łucja','Cecylii':'Cecylia','Elżbiety':'Elżbieta','Henryki':'Henryka','Salomei':'Salomea','Zuzanny':'Zuzanna','Heleny':'Helena','Seweryny':'Seweryna','Emilii':'Emilia','Walerii':'Waleria','Leoni':'Leonia','Leonii':'Leonia',
- 'Scholastyki':'Scholastyka','Julianny':'Julianna','Marii':'Maria','Emilianny':'Emilianna'}
+ 'Scholastyki':'Scholastyka','Julianny':'Julianna','Marii':'Maria','Emilianny':'Emilianna','Stanisławy':'Stanisława'}
 MA_PISOWNIA = {'Awy':'Ewa','Katzryny':'Katarzyna','Pertoneli':'Petronela','Zofi':'Zofia','Maryanny':'Marianna','Marjanny':'Marianna','Zofji':'Zofia'}
 
 # Starsza pisownia imion (dowolne pole imienia, po słowach; końcowe „?” zostaje)

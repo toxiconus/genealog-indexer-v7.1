@@ -17,14 +17,14 @@
 2613 | miejsc=Blinów | ojc=Piotr | mat=Anna | nazw=Zysków
 2614 | miejsc=Blinów | ojc=Jan | mat=Anna | nazw=Kaczyńskich
 2615 | miejsc=Moczydła | ojc=Szymon | mat=Anna | nazw=Krolów
-2616 | miejsc=Blinów | ojc=Franciszka | mat=Anna | nazw=Kurczaków
+2616 | miejsc=Blinów | ojc=Franciszek | mat=Anna | nazw=Kurczaków
 2617 | miejsc=Blinów | ojc=Walenty | mat=Józefa | nazw=Kozaków | matw=29
 2618 | miejsc=Brzozówka | ojc=Jan | mat=Katarzyna | nazw=Pudłów | fl=miejsce w kol. B/G zapisane 'Brzozzówka' w oryginale
 2619 | miejsc=Brzozówka | ojc=Szymon | mat=Marianna | nazw=Pytlaków
 2620 | miejsc=Brzozówka | ojc=Jan | mat=Józefa | nazw=Pcionów
 2621 | miejsc=Moczydła | ojc=Kazimierz | mat=Anna | nazw=Jagiełów
 2622 | miejsc=Moczydła | ojc=Jan | mat=Agata | nazw=Wielebów
-2623 | miejsc=Moczydła | ojc=Franciszka | mat=Katarzyna | nazw=Mazurów
+2623 | miejsc=Moczydła | ojc=Franciszek | mat=Katarzyna | nazw=Mazurów
 2624 | miejsc=Blinów | ojc=Dominik | mat=Katarzyna | nazw=Krawczyków | matw=28
 2625 | miejsc=Blinów | ojc=Andrzej | mat=Marianna | nazw=Sobutków
 2626 | miejsc=Blinów | ojc=Piotr | mat=Zofia | nazw=Mazurków
@@ -38,11 +38,11 @@
 2634 | miejsc=Blinów | ojc=Tomasz | mat=Łucja | nazw=Pcionków
 2635 | miejsc=Blinów | ojc=Antoni | mat=Zofia | nazw=Kosidłów
 2636 | miejsc=Brzozówka | ojc=Bartłomiej | mat=Antonina | nazw=Łachów
-2637 | miejsc=Brzozówka | ojc=Stanisława | mat=Marianna | nazw=Kosidłów
+2637 | miejsc=Brzozówka | ojc=Stanisław | mat=Marianna | nazw=Kosidłów
 2638 | miejsc=Blinów | ojc=Jan | mat=Barbara | nazw=Kowalczyków
 2639 | miejsc=Blinów | ojc=Marcin | mat=Zofia | nazw=Kosidłów
 2640 | miejsc=Blinów | ojc=Tomasz | mat=Anna | nazw=Czubów
-2641 | miejsc=Moczydła | ojc=Franciszka | mat=Ewa | nazw=Babiarzów | fl=imię matki 'Awy' zachowane
+2641 | miejsc=Moczydła | ojc=Franciszek | mat=Ewa | nazw=Babiarzów | fl=imię matki 'Awy' zachowane
 2642 | miejsc=Brzozówka | ojc=Jan | mat=Zofia | nazw=Brzeskich
 2643 | miejsc=Blinów | ojc=Marcin | mat=Antonina | nazw=Pawłasków | matw=25
 2644 | miejsc=Moczydła | ojc=Jan | ojcw=25 | mat=Zofia | nazw=Wielebów
@@ -52,7 +52,7 @@
 2648 | miejsc=Blinów | ojc=Andrzej | mat=Marianna | nazw=Saganów
 2649 | miejsc=Blinów | ojc=Andrzej | mat=Marianna | nazw=Saganów
 2650 | miejsc=Moczydła | ojc=Maciej | mat=Anna | nazw=Spryszaków
-2651 | miejsc=Brzozówka | ojc=Stanisława | mat=Leonia | nazw=Sieragowskich | fl=w nawiasie zawód ojca: oficjalista ordynacki
+2651 | miejsc=Brzozówka | ojc=Stanisław | mat=Leonia | nazw=Sieragowskich | fl=w nawiasie zawód ojca: oficjalista ordynacki
 2653 | miejsc=Moczydła | ojc=Tomasz | mat=Zofia | nazw=Zuniów
 2654 | miejsc=Blinów | ojc=Szymon | mat=Marianna | nazw=Dziewów
 2655 | miejsc=Brzozówka | ojc=Jan | mat=Marianna | nazw=Pastulaków
@@ -60,7 +60,7 @@
 2657 | miejsc=Blinów | ojc=Marcin | mat=Zofia | nazw=Jachurów | fl=imię matki 'Zofi' zachowane
 2658 | miejsc=Blinów | ojc=Jakub | mat=Marianna | nazw=Szubów | matw=28
 2659 | miejsc=Blinów | ojc=Marcin | mat=Zofia | nazw=Jachurów | matw=41
-2660 | miejsc=Blinów | ojc=Stanisława | mat=Antonina | nazw=Pawłasków
+2660 | miejsc=Blinów | ojc=Stanisław | mat=Antonina | nazw=Pawłasków
 2661 | miejsc=Brzozówka | ojc=Wojciech | mat=Tekla | nazw=Dobrzyńskich
 2662 | miejsc=Brzozówka | ojc=Wojciech | mat=Tekla | nazw=Dobrzyńskich
 2663 | miejsc=Brzozówka | ojc=Andrzej | mat=Franciszka | nazw=Kłapciów | fl=w nawiasie zawód ojca: stelmach
@@ -68,12 +68,12 @@
 2665 | miejsc=Blinów | ojc=Paweł | mat=Zofia | nazw=Solarzów
 2666 | miejsc=Blinów | ojc=Marcin | mat=Tekla | nazw=Czarneckich
 2667 | miejsc=Brzozówka | ojc=Wojciech | mat=Agnieszka | nazw=Szydłoskich
-2668 | miejsc=Blinów | ojc=Franciszka | mat=Agnieszka | nazw=Pazdraków
+2668 | miejsc=Blinów | ojc=Franciszek | mat=Agnieszka | nazw=Pazdraków
 2669 | miejsc=Blinów | ojc=Wojciech | mat=Zofia | nazw=Pawłoskich
 2670 | miejsc=Blinów | ojc=Józef | mat=Katarzyna | nazw=Pasternaków
 2671 | miejsc=Blinów | ojc=Paweł | mat=Zofia | nazw=Kozaczków | matw=43
 2672 | miejsc=Blinów | ojc=Paweł | mat=Dorota | nazw=Sobutków
-2673 | miejsc=Brzozówka | ojc=Franciszka | mat=Scholastyka | nazw=Gorczyców | fl=w nawiasie zawód ojca: sukiennik z Potoka
+2673 | miejsc=Brzozówka | ojc=Franciszek | mat=Scholastyka | nazw=Gorczyców | fl=w nawiasie zawód ojca: sukiennik z Potoka
 2674 | miejsc=Moczydła | ojc=Wawrzyniec | mat=Katarzyna | nazw=Pastuchów
 2675 | miejsc=Moczydła | ojc=Wojciech | mat=Katarzyna | nazw=Krolów
 2676 | miejsc=Brzozówka | ojc=Wojciech | mat=Tekla | nazw=Saganów
@@ -85,7 +85,7 @@
 2682 | miejsc=Blinów | mat=Zofia | nazw=Pawłaskowny | matw=26 | fl=c. Zofii Pawłaskowny: matka, ojciec nie podany
 2683 | miejsc=Moczydła | ojc=Antoni | mat=Magdalena | nazw=Zielińskich
 2684 | miejsc=Blinów | ojc=Wawrzyniec | mat=Zofia | nazw=Pasternaków | matw=35
-2685 | miejsc=Blinów | ojc=Franciszka | mat=Antonina | nazw=Michałków
+2685 | miejsc=Blinów | ojc=Franciszek | mat=Antonina | nazw=Michałków
 2687 | miejsc=Blinów | ojc=Szymon | mat=Seweryna | nazw=Miszkoskich | fl=w nawiasie zawód ojca: kowal
 2688 | miejsc=Brzozówka | ojc=Jan | mat=Anna | nazw=Buconiów
 2689 | miejsc=Blinów | ojc=Jakub | mat=Zofia | nazw=Obydziów
@@ -102,25 +102,25 @@
 2700 | miejsc=Blinów | mat=Marianna | nazw=Wnukowny | matw=33 | fl=s. Marianny Wnukowny: matka, ojciec nie podany
 2701 | miejsc=Blinów | ojc=Marcin | mat=Antonina | nazw=Kosidłów
 2702 | miejsc=Brzozówka | ojc=Maciej | mat=Katarzyna | nazw=Szubów
-2703 | miejsc=Moczydła | ojc=Stanisława | mat=Zofia | nazw=Zarzecznych
+2703 | miejsc=Moczydła | ojc=Stanisław | mat=Zofia | nazw=Zarzecznych
 2704 | miejsc=Blinów | ojc=Wawrzyniec | ojcw=25 | mat=Katarzyna | nazw=Grelów | matw=22
 2705 | miejsc=Brzozówka | ojc=Szczepan | ojcw=29 | mat=Tekla | nazw=Chmielów
 2706 | miejsc=Moczydła | ojc=Grzegorz | ojcw=30 | mat=Katarzyna | nazw=Tylusów
 2707 | miejsc=Blinów | ojc=Szczepan | ojcw=24 | mat=Katarzyna | nazw=Kudrelków | matw=26
-2708 | miejsc=Blinów | ojc=Franciszka | ojcw=39 | mat=Zofia | nazw=Wcisłow | matw=24
+2708 | miejsc=Blinów | ojc=Franciszek | ojcw=39 | mat=Zofia | nazw=Wcisłow | matw=24
 2709 | miejsc=Brzozówka | ojc=Antoni | ojcw=35 | mat=Marianna | nazw=Pre? | fl=w nawiasie zawód ojca: parobek folwarku; nazwisko matki niepełne
 2710 | miejsc=Moczydła | ojc=Wojciech | ojcw=36 | mat=Katarzyna | nazw=Krolów | matw=30
 2711 | miejsc=Brzozówka | ojc=Jan | ojcw=21 | mat=Katarzyna | nazw=Białkoskich | matw=22 | fl=pisownia 'Katzryny' zachowana
 2712 | miejsc=Moczydła | ojc=Jan | ojcw=47 | mat=Franciszka | nazw=Stępniów
 2713 | miejsc=Blinów | ojc=Piotr | ojcnazw=Jachura | mat=Marianna | nazw=Jędrzejczaków | fl=w nawiasie zawód ojca: żołnierz
 2714 | miejsc=Blinów | ojc=Łukasz | ojcw=21 | mat=Katarzyna | nazw=Baranowskich | matw=17 | fl=w nawiasie zawód ojca: organista
-2715 | miejsc=Moczydła | ojc=Stanisława | ojcw=33 | mat=Ewa | nazw=Wielebów
+2715 | miejsc=Moczydła | ojc=Stanisław | ojcw=33 | mat=Ewa | nazw=Wielebów
 2716 | miejsc=Blinów | ojc=Wojciech | ojcw=45 | mat=Zofia | nazw=Nieściurów | matw=27
 2717 | miejsc=Moczydła | ojc=Marcin | ojcw=33 | mat=Katarzyna | nazw=Nieściurów | fl=w nawiasie zawód ojca: żołnierz
 2718 | miejsc=Blinów | ojc=Michał | mat=Marianna | nazw=Malinowskich | fl=w G dopisek: chrzestny Jan Gieral z Cieślanek (zostaje w uwagach)
 2719 | miejsc=Blinów | ojc=Michał | ojcw=28 | mat=Marianna | nazw=Malinowskich
 2720 | miejsc=Blinów | ojc=Jan | ojcw=22 | mat=Katarzyna | nazw=Janików | matw=25
-2721 | miejsc=Brzozówka | ojc=Stanisława | ojcw=23 | mat=Katarzyna | nazw=Brzeskich | matw=22
+2721 | miejsc=Brzozówka | ojc=Stanisław | ojcw=23 | mat=Katarzyna | nazw=Brzeskich | matw=22
 2722 | miejsc=Brzozówka | ojc=Tomasz | ojcw=22 | mat=Jadwiga | nazw=Rębaczów | matw=23
 2723 | miejsc=Blinów | ojc=Wojciech | ojcw=28 | mat=Józefa | nazw=Jachurów | matw=28
 2724 | miejsc=Blinów | ojc=Filip | ojcw=22 | mat=Katarzyna | nazw=Felków | matw=20
@@ -131,7 +131,7 @@
 2729 | miejsc=Brzozówka | ojc=Szymon | ojcw=50 | mat=Marianna | nazw=Pytlaków | matw=38
 2730 | miejsc=Brzozówka | ojc=Jan | ojcw=22 | mat=Julianna | nazw=Gochów | matw=21
 2731 | miejsc=Brzozówka | ojc=Jan | ojcw=42 | mat=Anna | nazw=Wielebóew | matw=41 | fl=pisownia 'Wielebóew' zachowana
-2732 | miejsc=Blinów | ojc=Stanisława | ojcw=27 | mat=Emilia | nazw=Dzia..kowskich | fl=w nawiasie zawód ojca: ekonom folwarku; nazwisko matki niepełne
+2732 | miejsc=Blinów | ojc=Stanisław | ojcw=27 | mat=Emilia | nazw=Dzia..kowskich | fl=w nawiasie zawód ojca: ekonom folwarku; nazwisko matki niepełne
 2733 | miejsc=Blinów | ojc=Bartłomiej | ojcw=45 | mat=Anna | nazw=Rębeckich | matw=39
 2734 | miejsc=Moczydła | ojc=Adam | ojcw=35 | mat=Katarzyna | nazw=Koguców | matw=36
 2735 | miejsc=Moczydła | ojc=Antoni | ojcw=38 | mat=Katarzyna | nazw=Spryszaków | matw=36

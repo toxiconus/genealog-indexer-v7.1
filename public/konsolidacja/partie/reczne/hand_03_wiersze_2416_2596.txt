@@ -96,10 +96,10 @@
 2541 | miejsc=Blinów | ojc=Błażej | mat=Agnieszka | nazw=Pawłasków | fl=dopełniacz w G (c.); nazwisko panieńskie matki
 2542 | miejsc=Brzozówka | ojc=Antoni | mat=Barbara | nazw=Pawłoskich | fl=dopełniacz w G (s.); nazwisko panieńskie matki
 2543 | miejsc=Blinów | ojc=Jan | mat=Katarzyna | nazw=Baranów | fl=dopełniacz w G (c.); nazwisko panieńskie matki
-2544 | miejsc=Blinów | ojc=Franciszka | mat=Zofia | nazw=Wcisłów | fl=dopełniacz w G (c); nazwisko panieńskie matki
+2544 | miejsc=Blinów | ojc=Franciszek | mat=Zofia | nazw=Wcisłów | fl=dopełniacz w G (c); nazwisko panieńskie matki
 2545 | miejsc=Blinów | ojc=Piotr | mat=Marianna | nazw=Jędrzejczaków | fl=dopełniacz w G (s.); nazwisko panieńskie matki
 2546 | miejsc=Moczydła | ojc=Jan | mat=Marianna | nazw=Gałków | fl=dopełniacz w G (s.); nazwisko panieńskie matki
-2547 | miejsc=Moczydła | ojc=Stanisława | mat=Ewa | nazw=Wielebów | fl=dopełniacz w G (c.); nazwisko panieńskie matki
+2547 | miejsc=Moczydła | ojc=Stanisław | mat=Ewa | nazw=Wielebów | fl=dopełniacz w G (c.); nazwisko panieńskie matki
 2548 | miejsc=Brzozówka | ojc=Jan | mat=Marianna | nazw=Pasternaków | fl=dopełniacz w G (s.); nazwisko panieńskie matki
 2549 | miejsc=Brzozówka | ojc=Wojciech | mat=Tekla | nazw=Dobrzyńskich | fl=dopełniacz w G (c.); nazwisko panieńskie matki
 2550 | miejsc=Blinów | ojc=Wojciech | mat=Zofia | nazw=Pawłoskich | fl=dopełniacz w G (s.); nazwisko panieńskie matki
@@ -115,24 +115,24 @@
 2560 | miejsc=Blinów | ojc=Kazimierz | mat=Marianna | nazw=Pawłasków | fl=dopełniacz w G (c); nazwisko panieńskie matki
 2561 | miejsc=Blinów | ojc=Paweł | mat=Dorota | nazw=Sobótków | fl=dopełniacz w G (c.); nazwisko panieńskie matki
 2562 | miejsc=Brzozówka | ojc=Maciej | mat=Tekla | nazw=Saganów | fl=dopełniacz w G (c.); nazwisko panieńskie matki
-2563 | miejsc=Blinów | ojc=Stanisława | mat=Emilianna | fl=dopełniacz w G (s.); nazwisko panieńskie matki pominięte ('z' bez nazwiska); G: 'Emilianny z'
+2563 | miejsc=Blinów | ojc=Stanisław | mat=Emilianna | fl=dopełniacz w G (s.); nazwisko panieńskie matki pominięte ('z' bez nazwiska); G: 'Emilianny z'
 2564 | miejsc=Brzozówka | ojc=Walenty | mat=Marianna | nazw=Koguców | fl=dopełniacz w G (c.); nazwisko panieńskie matki
 2565 | miejsc=Blinów | ojc=Bartłomiej | mat=Anna | nazw=Rębeckich | fl=dopełniacz w G (s.); nazwisko panieńskie matki
 2566 | miejsc=Moczydła | ojc=Antoni | mat=Katarzyna | nazw=Spryszaków | fl=dopełniacz w G (s.); nazwisko panieńskie matki
 2567 | miejsc=Brzozówka | ojc=Wojciech | mat=Marianna | nazw=Pudłów | fl=dopełniacz w G (s.); nazwisko panieńskie matki
-2568 | miejsc=Blinów | ojc=Franciszka | mat=Marianna | nazw=Kasperskich | fl=dopełniacz w G (s.); nazwisko panieńskie matki
+2568 | miejsc=Blinów | ojc=Franciszek | mat=Marianna | nazw=Kasperskich | fl=dopełniacz w G (s.); nazwisko panieńskie matki
 2569 | miejsc=Blinów | ojc=Ludwik | mat=Zofia | nazw=Kurczaków | fl=dopełniacz w G (s.); nazwisko panieńskie matki
 2570 | miejsc=Blinów | ojc=Kacper | mat=Jadwiga | nazw=Jędrzejczaków | fl=dopełniacz w G (c.); nazwisko panieńskie matki
 2571 | miejsc=Blinów | ojc=Antoni | mat=Agnieszka | nazw=Kurczaków | fl=dopełniacz w G (c.); nazwisko panieńskie matki
 2572 | miejsc=Blinów | mat=Katarzyna | nazw=Pazdrakowej | fl=dopełniacz w G (s. Katarzyny Pazdrakowej); ojciec nie podany
 2573 | miejsc=Moczydła | ojc=Antoni | mat=Magdalena | nazw=Zielińskich | fl=dopełniacz w G (s.); nazwisko panieńskie matki
-2574 | miejsc=Blinów | ojc=Franciszka | mat=Antonina | nazw=Michałków | fl=dopełniacz w G (c.); nazwisko panieńskie matki
+2574 | miejsc=Blinów | ojc=Franciszek | mat=Antonina | nazw=Michałków | fl=dopełniacz w G (c.); nazwisko panieńskie matki
 2576 | miejsc=Blinów | ojc=Jakub | mat=Zofia | nazw=Cisaków | fl=dopełniacz w G (c.); nazwisko panieńskie matki
 2577 | miejsc=Blinów | ojc=Jan | mat=Marianna | nazw=Kosidłów | fl=dopełniacz w G (c.); nazwisko panieńskie matki
 2578 | miejsc=Brzozówka | fl=w G brak tekstu o rodzicach (tylko miejscowość)
 2579 | miejsc=Blinów | ojc=Tomasz | mat=Łucja | nazw=Pcionków | fl=dopełniacz w G (s.); nazwisko panieńskie matki
 2580 | miejsc=Blinów | ojc=Mateusz | mat=Marianna | nazw=Machulków | fl=dopełniacz w G (s.); nazwisko panieńskie matki
-2581 | miejsc=Blinów | ojc=Franciszka | mat=Rozalia | nazw=Szydłoskich | fl=dopełniacz w G (s.); nazwisko panieńskie matki
+2581 | miejsc=Blinów | ojc=Franciszek | mat=Rozalia | nazw=Szydłoskich | fl=dopełniacz w G (s.); nazwisko panieńskie matki
 2582 | miejsc=Moczydła | ojc=Józef | mat=Franciszka | nazw=Obydziów | fl=dopełniacz w G (s.); nazwisko panieńskie matki; miejsce w G zapisane 'Moczyda'
 2583 | miejsc=Brzozówka | ojc=Gwatbert | mat=Rozalia | nazw=Jachurów | fl=dopełniacz w G (s.); nazwisko panieńskie matki; wiek '(l. 39)' w G nieprzypisany
 2584 | miejsc=Blinów | ojc=Jan | mat=Antonina | nazw=Michałków | fl=dopełniacz w G (c.); nazwisko panieńskie matki
@@ -141,7 +141,7 @@
 2587 | miejsc=Blinów | ojc=Jan | mat=Zofia | nazw=Czubów | fl=dopełniacz w G (s.); nazwisko panieńskie matki
 2588 | miejsc=Brzozówka | ojc=Maciej | mat=Katarzyna | nazw=Szubów | fl=dopełniacz w G (s.); nazwisko panieńskie matki
 2589 | miejsc=Blinów | ojc=Józef | mat=Magdalena | nazw=Gniotkiewiczów | ojcnazw=Albiniak | fl=dopełniacz w G (c.); ojciec szynkarz z Blinowa; nazwisko ojca z G (H pusta); wieki 'l.23' i 'l.33' nieprzypisane (rola niejasna)
-2590 | miejsc=Brzozówka | ojc=Franciszka | mat=Jadwiga | nazw=Czubów | fl=dopełniacz w G (s.); nazwisko panieńskie matki
+2590 | miejsc=Brzozówka | ojc=Franciszek | mat=Jadwiga | nazw=Czubów | fl=dopełniacz w G (s.); nazwisko panieńskie matki
 2591 | miejsc=Brzozówka | ojc=Szczepan | mat=Tekla | nazw=Chmielów | fl=dopełniacz w G (c.); nazwisko panieńskie matki
 2592 | miejsc=Blinów | ojc=Jan | mat=Katarzyna | nazw=Baranów | fl=dopełniacz w G (s.); nazwisko panieńskie matki
 2593 | miejsc=Moczydła | ojc=Grzegorz | mat=Katarzyna | nazw=Tylusów | fl=dopełniacz w G (s.); nazwisko panieńskie matki
