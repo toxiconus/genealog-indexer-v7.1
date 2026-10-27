@@ -717,6 +717,7 @@ const SPB = {'Stępniów':'Stępień','Stępniach':'Stępień','Stępni':'Stępi
 function spBase(w){ const root = fold(w.replace(/(ów|ych|ich|ach|ami|om)$/i, '')), C = (D.counts && D.counts.s) || {}; let best = null;
   for (const [n, c] of Object.entries(C)) { const fn = fold(n); if (Math.abs(fn.length - root.length) > 2 || fn[0] !== root[0]) continue; const f2 = fn.replace(/[aeoyi]$/, ''), f3 = f2.replace(/e(?=[^aeiouy]$)/, ''), d = Math.min(lev(f2, root, 2), lev(f3, root, 2)); if (d > 1 || (d === 1 && root.length < 5)) continue; const sc = c * 10 - d * 1000; if (!best || sc > best.sc) best = {n, sc, d}; } return best && (best.n + (best.d ? '?' : '')); }
 function normFieldVal(a, f, v){ if (!v) return v;
+  if (f === 'death_place' && /^Szpital Janów/i.test(v)) return 'Szpital Janów Lubelski';   // zmarli w szpitalu: bez dopisku miejsca zamieszkania („…(zm.), Moczydła”)
   if (PLF.has(f)) return v.replace(/[\p{L}]+/gu, w => { for (const [re, c] of PLC) if (re.test(w)) return c; return w; });
   if (f === 'deceased_spouse') { const m = v.match(/^(\S+(?:\s+\S+)?)\s+z(?:e)?\s+(\S+?)(\?)?(\s*\((?:żona|mąż)\))?\s*$/u); if (!m) return v; const w = m[2]; let base = SPB[w] || spBase(w), q = m[3] || '';
     if (!base) { base = guessBase(w, 'mother_last_name', a); q = '?'; } return `${m[1]} ${base}${q}${m[4] ? ' ' + m[4].trim() : ''}`; }
