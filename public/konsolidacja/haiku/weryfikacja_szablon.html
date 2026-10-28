@@ -129,7 +129,8 @@ body.textmode main{margin-bottom:330px}body.textmode #view{height:30vh}body.text
  <button id="mTop">↑ Lista aktów i filtry (do góry)</button>
  <button id="mOff">✕ Zamknij tryb tekstu / kreator</button>
  <button id="mTxt">⬇ Eksport tekstów aktów (MD, z poprawkami)</button>
- <button id="mSave">⬇ Kopia robocza (JSON)</button>
+ <button id="mFixTxt">✎ Dopasuj teksty aktów do zatwierdzonych pól</button>
+ <button id="mSave">⬇ Wszystko w jednym pliku (kopia JSON: pola, tekst, rejestr, ustawienia)</button>
  <button id="mVer">⬆ Wczytaj zweryfikowany CSV (jako zatwierdzone)</button>
  <button id="mKid">👶 Ustaw „dziecko” u nieletnich (stan cywilny)</button>
  <button id="mBase">📁 Folder główny skanów (ZG)…</button>
@@ -479,7 +480,7 @@ $('zRf').onclick = e => { S.noroi = !S.noroi; save(); e.currentTarget.classList.
 $('zRoi').onclick = e => { V.edit = !V.edit; e.currentTarget.classList.toggle('on', V.edit); toast(V.edit ? 'Tryb obszaru: przeciągnij prostokąt wokół aktu' : 'Tryb obszaru wyłączony'); };
 // ---- eksport / import
 const q = csvCell;
-const COLS = D.cols.concat(['act_date','verification_notes','scan_path']);
+const COLS = D.cols.concat(['act_date','verification_notes','scan_path','act_text']);
 const normTime = v => { const m = String(v ?? '').trim().match(/^(\d{1,2})(?::(\d{2}))?(?::\d{2})?$/); return m ? (m[2] && m[2] !== '00' ? (+m[1]) + ':' + m[2] : String(+m[1])) : String(v ?? '').trim(); };
 const normDate = v => { v = String(v ?? '').trim(); const m = v.match(/^(\d{1,2})\.(\d{1,2})\.(\d{4})$/); return m ? m[3] + '-' + m[2].padStart(2, '0') + '-' + m[1].padStart(2, '0') : v; };
 function rows(){ return D.acts.filter(a => a.ai && !a.kind).map(a => { const s = S.acts[a.id] || {f:{}}; const r = {id:a.id, death_year:a.year, death_act_number:a.act}; COLS.forEach(c => { if (!(c in r)) r[c] = a.ai[c] ?? ''; });
@@ -487,6 +488,7 @@ function rows(){ return D.acts.filter(a => a.ai && !a.kind).map(a => { const s =
   r.death_time = (s.hid && s.hid.death_time) || '';   // godzina zgonu: ukryta w narzędziu; w eksporcie tylko wartość potwierdzona wcześniej przez użytkownika (nigdy odczyt AI)
   const unc = FIELDS.filter(f => (isUnc(a,f.id) && !s.f?.[f.id]?.ok && !s.done) || (s.f?.[f.id]?.unc)).map(f => f.id); r.uncertain_fields = unc.join(','); r.verification_notes = FIELDS.filter(f => s.f?.[f.id]?.note).map(f => f.id + ': ' + s.f[f.id].note).join(' | ');
   r.scan_path = (D.scanFiles || {})[scanOf(a)] || '';
+  r.act_text = s.text != null && s.text !== (a.tekst||'') ? s.text : '';   // poprawiony tekst aktu (tylko gdy zmieniony)
   if (s.notesOrg && s.f?.notes?.src === 'auto') r.notes_org = s.notesOrg;
   if (!s.done) r.death_time = '';
   r.death_time = normTime(r.death_time); r.death_date = normDate(r.death_date); r.act_date = normDate(r.act_date); r.deceased_status = minor(a) ? 'dziecko' : String(r.deceased_status || '').trim().toLowerCase(); r.profession = String(r.profession || '').trim().toLowerCase(); if (r.deceased_spouse) r.deceased_spouse = normFieldVal(a,'deceased_spouse',r.deceased_spouse).replace(/(?<=\S)y(\??)((?: \((?:owd\.|†)\))?)$/,(m0,q0,t0)=>/^[^ ]*a /.test(r.deceased_spouse)?'a'+q0+t0:m0);
@@ -497,6 +499,8 @@ $('mAuto').onclick = () => { $('menu').style.display = 'none'; autoPick(); };
 $('mLog').onclick = () => { const L = ['akt;pole;ai;lubgens;wybrane;zrodlo']; D.acts.forEach(a => { const s = S.acts[a.id]; if (!s) return; Object.entries(s.f).forEach(([f,x]) => L.push([a.id, f, a.ai?.[f]||'', a.lub?.[f]||'', x.v, x.src].map(q).join(';'))); }); dl('ZGONY_log_wyborow.csv', L.join('\r\n') + '\r\n'); };
 $('mRoi').onclick = () => dl('ZGONY_ai1_roi_poprawione.json', JSON.stringify(D.acts.filter(a => a.ai).map(a => ({id:a.id, plik:scanOf(a), strona:1, roi:roiOf(a)})), null, 1), 'application/json');
 $('mRej').onclick = () => { const L = ['id;pole;wartosc;zrodlo;niepewne;opis;pominiete;zatwierdzone']; D.acts.filter(a => a.kind).forEach(a => fieldsOf(a).forEach(f => { const x = S.acts[a.id]?.f?.[f.id]; L.push([a.id, f.id, x ? x.v : (a.ai?.[f.id]||''), x?.src||'ai_v1', x?.unc?'1':'', x?.note||'', x?.skip?'1':'', x?.ok?'1':''].map(q).join(';')); })); dl('ZGONY_rejestr_protokoly_zweryfikowane.csv', L.join('\r\n') + '\r\n'); toast('Eksport rejestru'); };
+function fixAllTexts(){ let n = 0; D.acts.forEach(a => { if (!a.tekst || a.kind) return; const t = txtOf(a), safe = x => !/(_place|_residence)$/.test(x.f) && (/[\[\s]/.test(x.from) || fold(x.from).slice(-3) === fold(x.to).slice(-3)), L = textSugs(a, fieldsOf(a), t).filter(safe).sort((x, y) => y.i - x.i); if (!L.length) return; let r = t, last = Infinity; L.forEach(x => { if (x.e > last) return; r = r.slice(0, x.i) + x.to + r.slice(x.e); last = x.i; }); if (r !== t) { const s2 = st(a.id); if (r === (a.tekst||'')) delete s2.text; else s2.text = r; n++; } }); return n; }
+$('mFixTxt').onclick = () => { $('menu').style.display = 'none'; const n = fixAllTexts(); save(); renderAct(); toast(`Dopasowano tekst do zatwierdzonych pól w ${n} aktach`); };
 $('mSave').onclick = () => dl('weryfikacja_kopia.json', JSON.stringify(S), 'application/json');
 function parseCsv(txt){ txt = txt.replace(/^\uFEFF/, ''); const rows = []; let row = [], cur = '', q = false; for (let i = 0; i < txt.length; i++) { const c = txt[i]; if (q) { if (c === '"') { if (txt[i+1] === '"') { cur += '"'; i++; } else q = false; } else cur += c; } else if (c === '"') q = true; else if (c === ';') { row.push(cur); cur = ''; } else if (c === '\n' || c === '\r') { if (c === '\r' && txt[i+1] === '\n') i++; row.push(cur); cur = ''; if (row.some(x => x !== '')) rows.push(row); row = []; } else cur += c; } if (cur !== '' || row.length) { row.push(cur); if (row.some(x => x !== '')) rows.push(row); } return rows; }
 $('mKid').onclick = () => { $('menu').style.display = 'none'; let n = 0, ch = []; D.acts.forEach(a => { if (a.kind || !(a.ai || a.lub) || !minor(a)) return; const cur = clean(getv(a, 'deceased_status')); if (cur === 'dziecko') return; st(a.id).f.deceased_status = {v:'dziecko', src:'edit', ok:true}; n++; if (cur) ch.push(actName(a.id) + ': „' + cur + '” → dziecko'); }); save(); renderAct(); renderList(); toast(`Ustawiono „dziecko”: ${n}` + (ch.length ? ' (zmieniono: ' + ch.join('; ') + ')' : '')); };
@@ -504,13 +508,14 @@ $('mBase').onclick = () => { $('menu').style.display = 'none'; const cur = S.sca
 $('mFix').onclick = () => { $('menu').style.display = 'none'; const o = {}; Object.entries(D.fix || {}).forEach(([k, v]) => { (o[k] = o[k] || {})[v] = 1; }); Object.entries(S.fixes || {}).forEach(([k, d]) => Object.entries(d).forEach(([q, n]) => { (o[k] = o[k] || {})[q] = (o[k][q] || 0) + n; })); dl('slownik_poprawek.json', JSON.stringify(o, null, 1), 'application/json'); toast(`Słownik poprawek: ${Object.keys(o).length} haseł`); };
 $('mVer').onclick = () => { $('menu').style.display = 'none'; $('fVer').click(); };
 $('fVer').onchange = async e => { try { const R = parseCsv(await e.target.files[0].text()), H = R[0], ix = {}; H.forEach((h, i) => ix[h] = i); let nA = 0, nF = 0, nSkip = 0;
-  R.slice(1).forEach(r => { const a = AM[r[ix.id]]; if (!a || a.kind) return; const s2 = st(a.id); if (ix.scan_path != null && r[ix.scan_path]) { D.scanFiles = D.scanFiles || {}; const pth = r[ix.scan_path], key = Object.keys(D.scanFiles).find(k => D.scanFiles[k] === pth) || pth; D.scanFiles[key] = pth; s2.scan = key; } const ok = (r[ix.verification_status] || '') === 'ok'; const unc = new Set((r[ix.uncertain_fields] || '').split(/[;,]/).filter(Boolean)); let n = 0;
+  R.slice(1).forEach(r => { const a = AM[r[ix.id]]; if (!a || a.kind) return; const s2 = st(a.id); if (ix.scan_path != null && r[ix.scan_path]) { D.scanFiles = D.scanFiles || {}; const pth = r[ix.scan_path], key = Object.keys(D.scanFiles).find(k => D.scanFiles[k] === pth) || pth; D.scanFiles[key] = pth; s2.scan = key; } if (ix.act_text != null && r[ix.act_text] && s2.text == null) s2.text = r[ix.act_text]; const ok = (r[ix.verification_status] || '') === 'ok'; const unc = new Set((r[ix.uncertain_fields] || '').split(/[;,]/).filter(Boolean)); let n = 0;
     if (ix.death_time != null && (r[ix.death_time] || '').trim() && !/\?/.test(r[ix.death_time]) && !new Set((r[ix.uncertain_fields] || '').split(/[;,]/)).has('death_time')) { s2.hid = s2.hid || {}; s2.hid.death_time = r[ix.death_time].trim(); }
     FIELDS.forEach(f => { let v = ix[f.id] != null ? (r[ix[f.id]] || '').trim() : ''; if (!v) return; v = normFieldVal(a, f.id, v); if (f.id === 'deceased_spouse' && !/\((?:owd\.?|†)\)/.test(v)) v = spMark(v, spDef(r[ix.deceased_status])); if (s2.f[f.id]?.ok) { nSkip++; return; } s2.f[f.id] = {v, src:'csv', ok:ok, unc:!ok && unc.has(f.id)}; n++; });
     if (n) { nA++; nF += n; if (ok && !s2.done) s2.done = true; } });
   D.acts.forEach(a => { if (!a.kind && (a.ai || a.lub) && minor(a) && st(a.id).f.deceased_status?.v !== 'dziecko') st(a.id).f.deceased_status = {v:'dziecko', src:'edit', ok:true}; });
   D.acts.forEach(a => autoResolve(a));
-  save(); init(); toast(`Wczytano z CSV: ${nF} pól w ${nA} aktach (pominięto już zatwierdzone: ${nSkip})`); } catch(x) { toast('Błędny plik CSV'); } e.target.value = ''; };
+  const nT = fixAllTexts();
+  save(); init(); toast(`Wczytano z CSV (tekst dopasowany: ${nT}): ${nF} pól w ${nA} aktach (pominięto już zatwierdzone: ${nSkip})`); } catch(x) { toast('Błędny plik CSV'); } e.target.value = ''; };
 $('mLoad').onclick = () => $('fLoad').click(); $('fLoad').onchange = async e => { try { S = Object.assign(S, JSON.parse(await e.target.files[0].text())); save(); init(); toast('Wczytano kopię'); } catch(x){ toast('Błędny plik'); } };
 $('mReset').onclick = () => { if ($('mReset').dataset.arm) { S.acts = {}; save(); delete $('mReset').dataset.arm; $('mReset').textContent = '🗑 Wyczyść moje wybory'; init(); toast('Wyczyszczono'); } else { $('mReset').dataset.arm = 1; $('mReset').textContent = '⚠ Dotknij ponownie, by wyczyścić'; } };
 $('zMenu').onclick = () => { const m = $('menu'); m.style.display = m.style.display === 'block' ? 'none' : 'block'; };
