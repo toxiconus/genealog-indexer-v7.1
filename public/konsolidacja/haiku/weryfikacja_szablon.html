@@ -372,7 +372,7 @@ function dateShort(a, f, v){ const t = String(v ?? '').trim().toLowerCase(); if 
   let y = m[3] ? (m[3].length === 2 ? 1900 + +m[3] : +m[3]) : 0;
   if (!y) { const ad = f === 'death_date' ? dwParse(getv(a,'act_date')) : null; y = (ad && ad.y) || a.year || 1943; if (f === 'death_date' && ad && mo > ad.m) y -= 1; }
   if (d > dim(y, mo)) return v; return y + '-' + String(mo).padStart(2,'0') + '-' + String(d).padStart(2,'0'); }
-function commit(a,f,v,src,extra){ if (src === 'edit' && (f === 'death_date' || f === 'act_date')) v = dateShort(a, f, v); learnFix(a, f, v, src); const o = st(a.id).f[f] || {}; st(a.id).f[f] = Object.assign({v: (src==='edit' ? v : clean(v) || v), src, ok:true, unc:o.unc, note:o.note}, extra||{}); save(); if (/^informant/.test(f) && src !== 'txt' && !(extra && extra.skip)) applyWitText(a, f); }
+function commit(a,f,v,src,extra){ if (src === 'edit' && (f === 'death_date' || f === 'act_date')) v = dateShort(a, f, v); learnFix(a, f, v, src); const o = st(a.id).f[f] || {}; st(a.id).f[f] = Object.assign({v: (src==='edit' ? v : clean(v) || v), src, ok:true, unc:(src==='csv'||src==='auto') ? o.unc : false, note:(src==='csv'||src==='auto') ? o.note : ''}, extra||{}); /* każda świadoma zmiana/wybór rozstrzyga niepewność */ save(); if (/^informant/.test(f) && src !== 'txt' && !(extra && extra.skip)) applyWitText(a, f); }
 function setf(a,f,v,src){ commit(a,f,v,src); keepScroll(true); }
 function keepScroll(next){ const y = window.scrollY; renderAct(); renderList(); window.scrollTo(0,y);
   if (next && S.hideOk) { const r = $('main').querySelector('.row.act') || $('main').querySelector('.row'); if (r) window.scrollTo({top: r.getBoundingClientRect().top + window.scrollY - $('view').offsetHeight - 8}); } }
