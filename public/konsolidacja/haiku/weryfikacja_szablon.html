@@ -211,7 +211,8 @@ function isUnc(a,f){ const x = S.acts[a.id]?.f?.[f]; if (x && x.unc !== undefine
 const repRows = () => D.acts.filter(a => !a.kind && a.ai).map(a => { const g = f => clean(getv(a,f)); return {id:a.id, year:a.year, num:a.act, last:g('deceased_last_name'), first:g('deceased_first_name'), sex:g('deceased_sex'), death:g('death_date'), act:g('act_date'), ageText:g('age'), status:g('deceased_status'), spouse:g('deceased_spouse'), job:g('profession'), father:(g('father_first_name')+' '+g('father_last_name')).trim(), mother:(g('mother_first_name')+' '+g('mother_last_name')).trim(), maiden:g('deceased_maiden_name')}; });
 const repAll = (ign) => raportSpojnosci(repRows()).filter(i => ign || !(S.repIgn || {})[i.id + '|' + i.code]);
 const SEVI = {err:'⛔', warn:'⚠', info:'ℹ'}, SEVN = {err:'Błędy', warn:'Ostrzeżenia', info:'Uwagi'};
-const actName = id => { const a = AM[id]; return a ? `${a.year} · akt ${a.act} · ${a.ai ? a.ai.deceased_last_name + ' ' + a.ai.deceased_first_name : ''}` : id; };
+const nmOf = a => a.ai ? (String(getv(a,'deceased_last_name')||'').replace(/\?/g,'').trim() + ' ' + String(getv(a,'deceased_first_name')||'').replace(/\?/g,'').trim()).trim() : (a.lubName||'');   // nazwa aktu = bieżące (poprawione) nazwisko i imię
+const actName = id => { const a = AM[id]; return a ? `${a.year} · akt ${a.act} · ${nmOf(a)}` : id; };
 function repHtml(a){ if (a.kind) return ''; const L = repAll().filter(i => i.id === a.id); if (!L.length) return ''; return `<div class="rep">${L.map(i => `<div class="ri ${i.sev}"><span>${SEVI[i.sev]} ${esc(i.msg)}${i.rel.map(r => ` <a data-go="${esc(r)}">→ ${esc(actName(r))}</a>`).join('')}</span><button class="sm" data-ign="${esc(i.id + '|' + i.code)}">ignoruj</button></div>`).join('')}</div>`; }
 function repMarks(){ const m = {}; repAll().forEach(i => { if (i.sev === 'info') return; if (i.sev === 'err' || !m[i.id]) m[i.id] = i.sev; }); return m; }
 let repF = {err:true, warn:true, info:false, ign:false};
@@ -332,7 +333,7 @@ function renderAct(){ const a = AM[S.cur]; const m = $('main'); if (!a){ m.inner
   document.body.classList.toggle('textmode', !!(S.tmode && a.tekst)); $('bText').classList.toggle('on', !!S.tmode); $('bText2').classList.toggle('on', !!S.tmode);
   if (S.tmode && a.tekst) return renderText(a);
   bOkLabel();
-  const s = st(a.id), FS = fieldsOf(a); const nm = a.kind ? a.title : (a.ai ? `${a.ai.deceased_last_name} ${a.ai.deceased_first_name}` : `${a.lubName||''}`);
+  const s = st(a.id), FS = fieldsOf(a); const nm = a.kind ? a.title : nmOf(a);
   const unc = a.ai ? FS.filter(f => isUnc(a,f.id) && !s.f[f.id]?.ok && !s.f[f.id]?.skip).length : 0;
   let h = `<div class="card"><div class="hd"><b>${a.kind?'':a.year+' · akt '+a.act+' · '}${nm}</b><span class="muted">${s.done?'✓ zatwierdzony':'do weryfikacji'}${a.ai?` · niepewnych pól: ${unc}`:' · tylko indeks Lubgens'}</span></div>
    ${a.cmp?`<div class="muted" style="margin-top:4px">Porównanie: ${esc(a.cmp)}</div>`:''}
@@ -389,7 +390,7 @@ function wizSkip(){ const a = curAct(), f = fieldsOf(a)[W.i]; if (!f) return; co
 function wizBar(btns){ $('wbar').innerHTML = btns.map(([id,l,c]) => `<button id="${id}" class="${c||''}">${l}</button>`).join(''); }
 function renderWiz(){ const a = curAct(), m = $('main'); if (!a) return; const FS = fieldsOf(a), s = st(a.id);
   const nEq = a.ai && a.lub ? FS.filter(f => diffState(a,f.id) === 'eq' && !s.f[f.id] && appl(a,f.id)).length : 0;
-  const head = `<div class="hd"><b>${a.kind?a.title:a.year+' · akt '+a.act+' · '+(a.ai?a.ai.deceased_last_name+' '+a.ai.deceased_first_name:a.lubName)}</b><span>${nEq?`<button class="sm btn-ok" id="wAcc">Przyjmij zgodne (${nEq})</button> `:''}<button class="sm" id="wX">✕ Zakończ</button></span></div>`;
+  const head = `<div class="hd"><b>${a.kind?a.title:a.year+' · akt '+a.act+' · '+nmOf(a)}</b><span>${nEq?`<button class="sm btn-ok" id="wAcc">Przyjmij zgodne (${nEq})</button> `:''}<button class="sm" id="wX">✕ Zakończ</button></span></div>`;
   if (W.i >= FS.length) { const sk = FS.filter(f => s.f[f.id]?.skip).length, ok = FS.filter(f => s.f[f.id]?.ok).length, un = FS.filter(f => s.f[f.id]?.unc).length;
     m.innerHTML = `<div class="card wz-card">${head}<div class="big">Koniec pól</div><div class="muted">Zapisane: ${ok} · pominięte: ${sk} · niepewne: ${un}${a.cmp?'<br>'+esc(a.cmp):''}</div></div>`;
     wizBar([['wBack','◀ Wstecz'],['wSk',`Pominięte (${sk})`,'btn-skip'],['wFin','Zatwierdź akt ✓ i dalej','btn-ok']]);
@@ -687,7 +688,7 @@ const vrWarn = (a, f, FS, t) => { const v = assignTok(a, t, FS).filter(x => x.f 
 function renderText(a){ const m = $('main'), s = st(a.id), FS = fieldsOf(a), md = S.tmode, t = txtOf(a); const fs = S.tfs || 18;
   if (TA !== a.id) { TA = a.id; TQ = null; TF = null; TW = null; } if (TW && (TW.act !== a.id || wsig() !== TW.sig)) TW = null; if (!TQ && !TF && !TW && md !== 'popraw') { const f0 = seqOf(a, FS, t).find(x => x.pend); if (f0) pickIt(f0); }
   const SQ = seqOf(a, FS, t), curI = SQ.findIndex(x => x.t === 'q' ? x.k === TQ : (!TQ && x.k === TF)), cpos = curI >= 0 ? SQ[curI].pos : 0, pendN = SQ.filter(x => x.pend).length;
-  const nm = a.kind ? a.title : `${a.year} · akt ${a.act} · ${a.ai ? a.ai.deceased_last_name+' '+a.ai.deceased_first_name : a.lubName||''}`;
+  const nm = a.kind ? a.title : `${a.year} · akt ${a.act} · ${nmOf(a)}`;
   const modes = [['pola','Tekst + pola'],['czysty','Do czytania'],['popraw','Edycja tekstu'],['lista','Same pola']];
   let h = `<div class="card"><div class="hd"><b>${esc(nm)}</b><span class="muted">${s.done?'✓ zatwierdzony':'do weryfikacji'}${s.text!=null?' · tekst poprawiony':''}</span></div><div class="tm" style="margin-top:8px"><button class="sm ${md!=='lista'?'on':''}" data-tm="pola" style="flex:1;min-height:44px">📄 Tekst</button><button class="sm ${md==='lista'?'on':''}" data-tm="lista" style="flex:1;min-height:44px">☰ Pola</button><button class="sm" data-tm="" style="flex:0 0 auto;min-height:44px" title="Wróć do zwykłego widoku pól">✕</button></div>${md!=='lista'?`<div class="tm" style="margin-top:6px"><button class="sm ${md==='pola'?'on':''}" data-tm="${md==='pola'?'czysty':'pola'}">🖍 Podświetlenia</button><button class="sm ${md==='popraw'?'on':''}" data-tm="${md==='popraw'?'pola':'popraw'}">✎ Edytuj tekst</button></div>`:''}`;
   const edit = () => { if (!TF || !FS.some(f => f.id === TF)) return ''; const f = FS.find(f => f.id === TF), v = getv(a,TF), x = s.f[TF];
