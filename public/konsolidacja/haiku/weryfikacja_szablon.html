@@ -125,6 +125,36 @@ body.textmode main{margin-bottom:330px}body.textmode #view{height:30vh}body.text
  #list button.srow b{min-width:30px;text-align:right}#list button.srow span{overflow:hidden;text-overflow:ellipsis}
  #view:not(.xl){left:var(--sw);width:calc(var(--vw) - var(--sw))}
 }
+
+/* ===== spokojna wizualizacja: powierzchnie neutralne, kolor tylko jako akcent (pasek / ramka / tekst), nie wypełnienie ===== */
+#list button{background:var(--card);border:1px solid var(--line);position:relative}
+#list button.done{background:var(--card);border-color:var(--line);font-weight:500;color:var(--mut);box-shadow:inset 3px 0 0 var(--lub)}
+#list button.ready{background:var(--card);border:1px solid var(--line);box-shadow:inset 3px 0 0 var(--ai)}
+#list button.part{background:var(--card);border-color:var(--line);box-shadow:inset 0 -3px 0 var(--bz)}
+#list button.diff{border:1px solid var(--line)}#list button.diff::before{content:'';position:absolute;top:3px;right:3px;width:7px;height:7px;border-radius:50%;background:var(--bad)}
+#list button.cur{outline:2px solid var(--acc);outline-offset:-1px;background:var(--bg)}
+#list button.srow b{color:var(--ink)}#list button.done b,#list button.done span{color:var(--mut)}
+.row.ok input{background:var(--bg);border-color:var(--line);border-left:4px solid var(--ok)}
+.row.ok .lab span:last-child{color:var(--ok)}
+.row.act{outline:2px solid var(--acc)}
+.chip.ai,.chip.lub,.chip.bz,.chip.akt{background:var(--card);border-color:var(--line);color:var(--ink)}
+.chip.ai{box-shadow:inset 4px 0 0 var(--ai)}.chip.lub{box-shadow:inset 4px 0 0 var(--lub)}.chip.bz{box-shadow:inset 4px 0 0 var(--bz)}.chip.akt{box-shadow:inset 4px 0 0 #7c3aed}
+.chip.sel{outline:2px solid var(--acc);outline-offset:1px}
+.chip small{color:var(--mut);opacity:1}
+.chip.uncb{background:var(--card);border-color:var(--line);color:var(--bz)}.chip.uncb.sel{background:var(--bzb);border-color:var(--bz);box-shadow:none;outline:0}
+.tag{background:transparent!important;border:1px solid currentColor;font-weight:500}
+.tag.eq{color:var(--lub)}.tag.ne{color:var(--bad)}.tag.ap,.tag.q{color:var(--bz)}
+.chip.btn-ok,button.sm.btn-ok:not(#hDone):not(#tDone){background:var(--card)!important;color:var(--ok)!important;border-color:var(--ok)!important;font-weight:600}
+button.btn-skip,.chip.btn-skip{background:var(--card)!important;color:var(--bz)!important;border-color:var(--bz)!important}
+#bar #bOk,#wbar .btn-ok,#tsheet .act3 .btn-ok,#hDone,#tDone.btn-ok{background:var(--ok)!important;color:#fff!important;border-color:var(--ok)!important}
+.hl,.hl.ok,.hl.un,.hl.cf,.qm,.qm.r{background:transparent}
+.hl{border-bottom-width:2px}.qm{border-bottom-width:2px}
+.warn{background:var(--card);border:1px solid var(--line);border-left:4px solid var(--bad)}
+details.tsug{background:var(--card)!important;border:1px solid var(--line)!important;border-left:4px solid var(--bz)!important}
+.card[style*="--lubb"]{background:var(--card)!important;border:1px solid var(--line)!important;border-left:4px solid var(--lub)!important}
+.card[style*="--badb"]{background:var(--card)!important;border:1px solid var(--line)!important;border-left:4px solid var(--bad)!important}
+.card[style*="--bzb"]{background:var(--card)!important;border:1px solid var(--line)!important;border-left:4px solid var(--bz)!important}
+.tabs button.on{background:var(--ink);color:var(--card);border-color:var(--ink)}
 </style></head><body>
 <div id="menu">
  <button id="mCsv">⬇ Eksport CSV (zweryfikowane)</button>
