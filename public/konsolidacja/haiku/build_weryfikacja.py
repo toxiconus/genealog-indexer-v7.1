@@ -14,7 +14,9 @@ PATHS = "--sciezki" in sys.argv[4:]
 def _argv(name):
     a = sys.argv
     return a[a.index(name) + 1] if name in a and a.index(name) + 1 < len(a) else None
-ROKS = [int(x) for x in (_argv("--rok") or "1943").split(",")]   # np. --rok 1943,1944
+import glob as _g, re as _re
+_det = sorted({1943} | {int(m.group(1)) for f in _g.glob(os.path.join(os.path.dirname(os.path.abspath(__file__)), "ZGONY_*_ai1_import.csv")) for m in [_re.search(r"ZGONY_(\d{4})_ai1_import", f)] if m})
+ROKS = [int(x) for x in _argv("--rok").split(",")] if _argv("--rok") else _det   # domyślnie WSZYSTKIE lata z repo (dane + ROI zawsze komplet; skany z dysku przez scanBase)
 ROK = ROKS[0]
 def PLIK(n, y=None):  # 1943: ZGONY_ai1_*, inne roczniki: ZGONY_<rok>_ai1_*
     y = y or ROK
