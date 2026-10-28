@@ -1,0 +1,38 @@
+[
+ {
+  "id": "ai1-m1944-021",
+  "plik": "M1944_01",
+  "strona": "prawa",
+  "roi": {
+   "x": 0.505,
+   "y": 0.06,
+   "w": 0.48,
+   "h": 0.88
+  },
+  "uwaga": "przybliżone"
+ },
+ {
+  "id": "ai1-m1944-022",
+  "plik": "M1944_02",
+  "strona": "lewa",
+  "roi": {
+   "x": 0.02,
+   "y": 0.06,
+   "w": 0.47,
+   "h": 0.88
+  },
+  "uwaga": "przybliżone"
+ },
+ {
+  "id": "ai1-m1944-023",
+  "plik": "M1944_02",
+  "strona": "prawa",
+  "roi": {
+   "x": 0.505,
+   "y": 0.06,
+   "w": 0.48,
+   "h": 0.88
+  },
+  "uwaga": "przybliżone"
+ }
+]

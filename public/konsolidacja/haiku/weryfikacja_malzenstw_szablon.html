@@ -1,0 +1,142 @@
+<!doctype html>
+<html lang="pl"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Weryfikacja małżeństw – Blinów</title>
+<style>
+:root{--bg:#f4f2ee;--pn:#fbfaf7;--ln:#d9d4c9;--tx:#2b2a27;--mu:#7a7468;--ac:#4f6f8f;--ok:#5f8a63;--okb:#e3ede2;--un:#b0803a;--unb:#f4ead6;--er:#a85a50;--erb:#f3dfdb;--in:#fff;--sb:#ece8e0}
+@media (prefers-color-scheme:dark){:root:not([data-th=light]){--bg:#1f2022;--pn:#272829;--ln:#3a3b3d;--tx:#e6e3dc;--mu:#9a958a;--ac:#8fb0d0;--ok:#86b28a;--okb:#27352a;--un:#d2a65c;--unb:#3a3022;--er:#d58a80;--erb:#3b2724;--in:#1d1e1f;--sb:#232425}}
+:root[data-th=dark]{--bg:#1f2022;--pn:#272829;--ln:#3a3b3d;--tx:#e6e3dc;--mu:#9a958a;--ac:#8fb0d0;--ok:#86b28a;--okb:#27352a;--un:#d2a65c;--unb:#3a3022;--er:#d58a80;--erb:#3b2724;--in:#1d1e1f;--sb:#232425}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--tx);font:14px/1.45 system-ui,Segoe UI,sans-serif}
+header{display:flex;gap:10px;align-items:center;padding:8px 14px;background:var(--pn);border-bottom:1px solid var(--ln);position:sticky;top:0;z-index:20;flex-wrap:wrap}
+header h1{font-size:16px;margin:0;font-weight:600}.sp{flex:1}
+button,select{font:inherit;color:var(--tx);background:var(--pn);border:1px solid var(--ln);border-radius:8px;padding:5px 10px;cursor:pointer}button:hover{border-color:var(--ac)}
+button.pri{background:var(--ac);color:#fff;border-color:var(--ac)}button.ok{background:var(--okb);border-color:var(--ok);color:var(--ok)}
+#app{display:grid;grid-template-columns:230px 1fr;min-height:calc(100vh - 50px)}
+#sb{background:var(--sb);border-right:1px solid var(--ln);overflow:auto;position:sticky;top:50px;height:calc(100vh - 50px);padding:6px}
+.yh{font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--mu);padding:8px 6px 3px}
+.sr{display:flex;gap:6px;align-items:baseline;padding:4px 7px;border-radius:7px;cursor:pointer;border-left:3px solid transparent;font-size:13px}.sr:hover{background:var(--pn)}.sr.cur{background:var(--pn);border-left-color:var(--ac);font-weight:600}
+.sr .n{width:24px;text-align:right;color:var(--mu)}.sr.d{border-left-color:var(--ok)}.sr.w{border-left-color:var(--un)}
+#main{display:grid;grid-template-columns:minmax(380px,46%) 1fr;gap:12px;padding:12px;align-items:start}
+.card{background:var(--pn);border:1px solid var(--ln);border-radius:10px}
+#view{position:sticky;top:60px;height:calc(100vh - 78px);display:flex;flex-direction:column;overflow:hidden}
+#vbar{display:flex;gap:6px;padding:6px 8px;border-bottom:1px solid var(--ln);flex-wrap:wrap;align-items:center}
+#vp{flex:1;position:relative;overflow:hidden;background:#111;cursor:grab;touch-action:none}#vp img{position:absolute;left:0;top:0;transform-origin:0 0;max-width:none;user-select:none;-webkit-user-drag:none}
+#vmiss{position:absolute;inset:0;display:none;align-items:center;justify-content:center;color:#ccc;text-align:center;padding:20px}
+#txt{max-height:22%;overflow:auto;padding:8px 10px;border-top:1px solid var(--ln);font-size:12.5px;color:var(--mu)}
+#form{padding:10px 12px}
+.grp{margin:0 0 12px}.grp h3{margin:0 0 6px;font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--mu);font-weight:600;border-bottom:1px solid var(--ln);padding-bottom:3px}
+.f{display:grid;grid-template-columns:150px 1fr auto;gap:6px;align-items:center;padding:2px 0;border-radius:6px}
+.f label{color:var(--mu);font-size:12.5px}.f input{width:100%;padding:5px 8px;border:1px solid var(--ln);border-radius:7px;background:var(--in);color:var(--tx);font:inherit}
+.f.ok input{background:var(--okb);border-color:var(--ok)}.f.un input{background:var(--unb);border-color:var(--un)}
+.f .b{display:flex;gap:3px}.f .b button{padding:2px 7px;font-size:12px;border-radius:6px}.f .b .on{background:var(--ac);color:#fff;border-color:var(--ac)}
+.ai{grid-column:2/4;font-size:11.5px;color:var(--mu);margin:-2px 0 2px}.nt{grid-column:2/4}.nt input{font-size:12px}
+.warn{background:var(--erb);border:1px solid var(--er);color:var(--er);border-radius:8px;padding:6px 10px;margin:0 0 10px;font-size:12.5px}
+.tag{display:inline-block;font-size:11px;padding:1px 7px;border-radius:9px;border:1px solid var(--ln);color:var(--mu);margin-left:6px}.tag.ok{border-color:var(--ok);color:var(--ok);background:var(--okb)}
+.cols2{display:grid;grid-template-columns:1fr 1fr;gap:0 18px}
+dialog{border:1px solid var(--ln);border-radius:12px;background:var(--pn);color:var(--tx);max-width:760px;width:92%}dialog::backdrop{background:rgba(0,0,0,.45)}
+table{border-collapse:collapse;width:100%;font-size:13px}td,th{border-bottom:1px solid var(--ln);padding:3px 6px;text-align:left}
+@media(max-width:1000px){#app{grid-template-columns:1fr}#sb{position:static;height:auto;max-height:200px}#main{grid-template-columns:1fr}#view{position:static;height:60vh}.cols2{grid-template-columns:1fr}}
+</style></head><body>
+<header><h1>Weryfikacja małżeństw · Blinów</h1><span id="prog" class="tag"></span><span class="sp"></span>
+<button id="bImp">Wczytaj CSV…</button><button id="bExp" class="pri">Zapisz CSV</button><button id="bReg">Rejestry</button><button id="bMenu">Więcej…</button><input type="file" id="fl" accept=".csv,.json" hidden></header>
+<div id="app"><aside id="sb"></aside><div id="main">
+<section id="view" class="card"><div id="vbar"><button id="vAkt">Akt</button><button id="vAll">Cały skan</button><button id="vP">+</button><button id="vM">−</button><span id="vinfo" class="tag"></span></div>
+<div id="vp"><img id="im" alt=""><div id="vmiss"></div></div><div id="txt"></div></section>
+<section id="form" class="card"></section></div></div>
+<dialog id="dg"><div id="dgc"></div><p style="text-align:right"><button onclick="document.getElementById('dg').close()">Zamknij</button></p></dialog>
+<script>
+const D = /*DATA*/null;
+const KEY = 'wm1';
+const $ = id => document.getElementById(id);
+let S; try { S = JSON.parse(localStorage.getItem(KEY) || 'null'); } catch(e) {} if (!S) S = {acts:{}, cur:null};
+const save = () => { try { localStorage.setItem(KEY, JSON.stringify(S)); } catch(e) {} };
+const st = id => S.acts[id] || (S.acts[id] = {f:{}, done:false});
+const clean = v => (v == null ? '' : String(v)).trim();
+const normPl = v => clean(v).replace(/Mocydła/g,'Moczydła').replace(/Mocydłach/g,'Moczydłach').replace(/Kacyniec/g,'Kaczyniec');
+const AM = {}; D.acts.forEach(a => AM[a.id] = a);
+const getv = (a,f) => { const s = S.acts[a.id]; if (s && s.f[f] && s.f[f].v != null) return s.f[f].v; return a.ai[f] != null ? a.ai[f] : ''; };
+const GROUPS = [
+ ['Akt', [['marriage_date','Data aktu (RRRR-MM-DD)'],['marriage_time','Godzina'],['margin_place','Miejscowość (margines)']]],
+ ['Pan młody', [['groom_last_name','Nazwisko'],['groom_first_name','Imię'],['groom_status','Stan (kawaler/wdowiec)'],['groom_age','Wiek'],['groom_birth_place','Miejsce urodzenia'],['groom_residence','Zamieszkanie'],['groom_profession','Zawód'],['groom_father_first_name','Ojciec – imię'],['groom_father_last_name','Ojciec – nazwisko'],['groom_father_alive','Ojciec żyje? (tak/nie)'],['groom_mother_first_name','Matka – imię'],['groom_mother_last_name','Matka – nazwisko rodowe'],['groom_mother_alive','Matka żyje? (tak/nie)']]],
+ ['Panna młoda', [['bride_last_name','Nazwisko'],['bride_first_name','Imię'],['bride_status','Stan (panna/wdowa)'],['bride_age','Wiek'],['bride_birth_place','Miejsce urodzenia'],['bride_residence','Zamieszkanie'],['bride_profession','Zawód'],['bride_father_first_name','Ojciec – imię'],['bride_father_last_name','Ojciec – nazwisko'],['bride_father_alive','Ojciec żyje? (tak/nie)'],['bride_mother_first_name','Matka – imię'],['bride_mother_last_name','Matka – nazwisko rodowe'],['bride_mother_alive','Matka żyje? (tak/nie)']]],
+ ['Świadkowie', [['witness1_name','Świadek 1'],['witness1_residence','Zamieszkanie'],['witness1_profession','Zawód'],['witness2_name','Świadek 2'],['witness2_residence','Zamieszkanie'],['witness2_profession','Zawód']]],
+ ['Zapowiedzi i adnotacje', [['banns','Zapowiedzi (daty)'],['consent','Zgody / dyspensy'],['margin_notes','Adnotacje (margines, stemple)']]]
+];
+const FIELDS = []; GROUPS.forEach(g => g[1].forEach(x => FIELDS.push(x[0])));
+const PLF = new Set(['margin_place','groom_birth_place','groom_residence','bride_birth_place','bride_residence','witness1_residence','witness2_residence']);
+const isUnc = (a,f) => new Set(clean(a.ai.uncertain_fields).split(/[;,]\s*/)).has(f) || /\?\s*$/.test(clean(a.ai[f]));
+const fld = (a,f) => (S.acts[a.id] && S.acts[a.id].f[f]) || null;
+const normV = (f,v) => { v = clean(v); if (PLF.has(f)) v = normPl(v); return v; };
+function commit(a,f,v,flag){ const s = st(a.id); const o = s.f[f] || (s.f[f] = {}); o.v = normV(f,v); if (flag === 'edit') { o.unc = false; o.ok = false; } save(); }
+function nm(a){ return clean(getv(a,'groom_last_name')).replace(/\?/g,'') + ' ' + clean(getv(a,'groom_first_name')).replace(/\?/g,'') + ' z ' + clean(getv(a,'bride_first_name')).replace(/\?/g,'') + ' ' + clean(getv(a,'bride_last_name')).replace(/\?/g,''); }
+function status(a){ const s = S.acts[a.id]; if (!s) return 'n'; if (s.done) return 'd'; return Object.keys(s.f).some(k => s.f[k].ok || s.f[k].v != null) ? 'w' : 'n'; }
+function warns(a){ const w = []; const num = f => { const m = clean(getv(a,f)).match(/\d+/); return m ? +m[0] : null; };
+  [['groom_age','pana młodego'],['bride_age','panny młodej']].forEach(([f,l]) => { const n = num(f); if (n != null && (n < 15 || n > 90)) w.push('Wiek ' + l + ' (' + n + ') wygląda nieprawdopodobnie.'); });
+  const d = clean(getv(a,'marriage_date')); if (d && !/^\d{4}-\d{2}-\d{2}$/.test(d)) w.push('Data aktu nie ma formatu RRRR-MM-DD.');
+  const bn = (clean(getv(a,'banns')).match(/\d{4}-\d{2}-\d{2}/g) || []); if (d && bn.some(x => x > d)) w.push('Zapowiedź po dacie aktu (' + bn.filter(x => x > d).join(', ') + ').');
+  if (!clean(getv(a,'witness1_name')) || !clean(getv(a,'witness2_name'))) w.push('Brak jednego ze świadków.');
+  const r = (D.reg[a.year] || []).find(x => x.akt === a.act); if (r) { const sn = x => clean(x).replace(/\?/g,'').toLowerCase().split(/\s+/)[0]; if (sn(r.mlodzi) !== sn(getv(a,'groom_last_name'))) w.push('Rejestr: pan młody „' + r.mlodzi + '” ≠ w akcie „' + clean(getv(a,'groom_last_name')) + '”.'); const bl = x => clean(x).replace(/\?/g,'').toLowerCase().split(/\s+/).slice(-1)[0]; if (bl(r.panna) !== bl(getv(a,'bride_last_name'))) w.push('Rejestr: panna młoda „' + r.panna + '” ≠ w akcie „' + clean(getv(a,'bride_first_name')) + ' ' + clean(getv(a,'bride_last_name')) + '”.'); }
+  else if (D.reg[a.year]) w.push('Brak wpisu tego aktu w rejestrze alfabetycznym.');
+  return w; }
+/* ---- lista ---- */
+function renderList(){ let h = ''; const years = [...new Set(D.acts.map(a => a.year))].sort(); years.forEach(y => { const acts = D.acts.filter(a => a.year === y); const dn = acts.filter(a => status(a) === 'd').length; h += '<div class="yh">' + y + ' · ' + dn + '/' + acts.length + '</div>'; acts.forEach(a => { h += '<div class="sr ' + status(a) + (S.cur === a.id ? ' cur' : '') + '" data-id="' + a.id + '"><span class="n">' + a.act + '</span><span>' + nm(a).replace(/^ z /,'') + '</span></div>'; }); }); $('sb').innerHTML = h; const done = D.acts.filter(a => status(a) === 'd').length; $('prog').textContent = done + '/' + D.acts.length + ' zatwierdzonych'; }
+$('sb').onclick = e => { const r = e.target.closest('.sr'); if (r) open(r.dataset.id); };
+/* ---- formularz ---- */
+function esc(s){ return String(s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c])); }
+function renderForm(a){ const s = st(a.id); let h = '<h2 style="margin:0 0 8px;font-size:17px">' + a.year + ' · akt ' + a.act + ' · ' + esc(nm(a)) + (s.done ? '<span class="tag ok">zatwierdzony</span>' : '') + '</h2>';
+  const W = warns(a); if (W.length) h += '<div class="warn">' + W.map(esc).join('<br>') + '</div>';
+  GROUPS.forEach(g => { h += '<div class="grp"><h3>' + g[0] + '</h3>'; g[1].forEach(([f,l]) => { const o = fld(a,f) || {}; const un = o.unc || (!o.ok && isUnc(a,f) && !s.done); const cls = o.ok || s.done ? 'ok' : (un ? 'un' : ''); const v = getv(a,f); const ch = o.v != null && clean(o.v) !== clean(a.ai[f]);
+    h += '<div class="f ' + cls + '" data-f="' + f + '"><label>' + l + '</label><input value="' + esc(v) + '" data-f="' + f + '"><span class="b"><button data-act="ok" class="' + (o.ok ? 'on' : '') + '" title="zweryfikowane">✓</button><button data-act="un" class="' + (o.unc ? 'on' : '') + '" title="niepewne">?</button><button data-act="nt" title="uwaga">✎</button></span>' + (ch ? '<div class="ai">odczyt AI: ' + esc(a.ai[f] || '—') + '</div>' : '') + (o.note != null ? '<div class="nt"><input data-note="' + f + '" placeholder="uwaga…" value="' + esc(o.note) + '"></div>' : '') + '</div>'; }); h += '</div>'; });
+  h += '<div style="display:flex;gap:8px;flex-wrap:wrap"><button class="ok" id="bDone">' + (s.done ? 'Cofnij zatwierdzenie' : 'Zatwierdź cały akt ✓') + '</button><button id="bPrev">← poprzedni</button><button id="bNext">następny →</button></div>';
+  $('form').innerHTML = h; }
+$('form').addEventListener('change', e => { const a = AM[S.cur]; if (!a) return; if (e.target.dataset.f) { commit(a, e.target.dataset.f, e.target.value, 'edit'); renderList(); const row = e.target.closest('.f'); row.classList.remove('ok','un'); row.querySelectorAll('.b .on').forEach(x => x.classList.remove('on')); } if (e.target.dataset.note) { const o = st(a.id).f[e.target.dataset.note] || (st(a.id).f[e.target.dataset.note] = {}); o.note = e.target.value; save(); } });
+$('form').addEventListener('click', e => { const a = AM[S.cur]; if (!a) return; const b = e.target.closest('button'); if (!b) return; const row = b.closest('.f'); const f = row && row.dataset.f;
+  if (b.dataset.act === 'ok') { const o = st(a.id).f[f] || (st(a.id).f[f] = {}); o.ok = !o.ok; if (o.ok) { o.unc = false; if (o.v == null) o.v = getv(a,f); } save(); renderList(); renderForm(a); }
+  else if (b.dataset.act === 'un') { const o = st(a.id).f[f] || (st(a.id).f[f] = {}); o.unc = !o.unc; if (o.unc) o.ok = false; save(); renderForm(a); }
+  else if (b.dataset.act === 'nt') { const o = st(a.id).f[f] || (st(a.id).f[f] = {}); if (o.note == null) o.note = ''; save(); renderForm(a); const i = $('form').querySelector('[data-note="' + f + '"]'); if (i) i.focus(); }
+  else if (b.id === 'bDone') { const s = st(a.id); s.done = !s.done; if (s.done) FIELDS.forEach(f => { const o = s.f[f] || (s.f[f] = {}); if (o.v == null) o.v = getv(a,f); o.ok = true; o.unc = false; }); else FIELDS.forEach(f => { if (s.f[f]) s.f[f].ok = false; }); save(); renderList(); renderForm(a); }
+  else if (b.id === 'bPrev' || b.id === 'bNext') { const i = D.acts.indexOf(a) + (b.id === 'bNext' ? 1 : -1); if (D.acts[i]) open(D.acts[i].id); } });
+/* ---- skan ---- */
+const im = $('im'), vp = $('vp'); let T = {x:0,y:0,s:1}, NW = 0, NH = 0, curRoi = null;
+const apply = () => { im.style.transform = 'translate(' + T.x + 'px,' + T.y + 'px) scale(' + T.s + ')'; };
+function fitRoi(r){ if (!NW) return; const cw = vp.clientWidth, ch = vp.clientHeight; const rw = r.w * NW, rh = r.h * NH; const s = Math.min(cw / rw, ch / rh); T.s = s; T.x = (cw - rw * s) / 2 - r.x * NW * s; T.y = (ch - rh * s) / 2 - r.y * NH * s; apply(); }
+function showScan(a){ const key = a.roi.plik; const src = D.scans[key]; curRoi = a.roi.roi; $('vmiss').style.display = 'none'; $('vinfo').textContent = a.roi.file || key;
+  if (!src) { im.removeAttribute('src'); $('vmiss').style.display = 'flex'; $('vmiss').textContent = 'Brak skanu: ' + key; return; }
+  im.onload = () => { NW = im.naturalWidth; NH = im.naturalHeight; fitRoi(curRoi); }; im.onerror = () => { $('vmiss').style.display = 'flex'; $('vmiss').innerHTML = 'Nie można wczytać skanu.<br>' + esc(src); }; im.src = src; }
+$('vAkt').onclick = () => curRoi && fitRoi(curRoi); $('vAll').onclick = () => fitRoi({x:0,y:0,w:1,h:1});
+const zoom = (k, cx, cy) => { cx = cx == null ? vp.clientWidth / 2 : cx; cy = cy == null ? vp.clientHeight / 2 : cy; T.x = cx - (cx - T.x) * k; T.y = cy - (cy - T.y) * k; T.s *= k; apply(); };
+$('vP').onclick = () => zoom(1.3); $('vM').onclick = () => zoom(1 / 1.3);
+vp.addEventListener('wheel', e => { e.preventDefault(); const r = vp.getBoundingClientRect(); zoom(e.deltaY < 0 ? 1.15 : 1 / 1.15, e.clientX - r.left, e.clientY - r.top); }, {passive:false});
+let drag = null; vp.addEventListener('pointerdown', e => { drag = {x:e.clientX - T.x, y:e.clientY - T.y}; vp.setPointerCapture(e.pointerId); vp.style.cursor = 'grabbing'; });
+vp.addEventListener('pointermove', e => { if (!drag) return; T.x = e.clientX - drag.x; T.y = e.clientY - drag.y; apply(); }); vp.addEventListener('pointerup', () => { drag = null; vp.style.cursor = 'grab'; });
+/* ---- otwieranie ---- */
+function open(id){ const a = AM[id]; if (!a) return; S.cur = id; save(); renderList(); renderForm(a); showScan(a); $('txt').textContent = a.text || ''; window.scrollTo(0,0); }
+/* ---- CSV ---- */
+const COLS = D.cols;
+const q = v => { v = v == null ? '' : String(v); return /[;"\n\r]/.test(v) ? '"' + v.replace(/"/g,'""') + '"' : v; };
+function rows(){ return D.acts.map(a => { const s = S.acts[a.id] || {f:{}}; const r = {}; COLS.forEach(c => r[c] = a.ai[c] != null ? a.ai[c] : ''); r.id = a.id; r.marriage_year = a.year; r.marriage_act_number = a.act; FIELDS.forEach(f => { r[f] = normV(f, getv(a,f)); });
+  const unc = FIELDS.filter(f => { const o = s.f[f]; return o ? (o.unc || (!o.ok && !s.done && isUnc(a,f))) : (!s.done && isUnc(a,f)); }); r.uncertain_fields = unc.join(',');
+  r.verification_notes = FIELDS.filter(f => s.f[f] && s.f[f].note).map(f => f + ': ' + s.f[f].note).join(' | ');
+  r.verification_status = s.done ? 'ok' : (status(a) === 'w' ? 'ai_v1_w_trakcie' : 'ai_v1'); return r; }); }
+const csvText = () => COLS.join(';') + '\r\n' + rows().map(r => COLS.map(c => q(r[c])).join(';')).join('\r\n') + '\r\n';
+function download(name, text, type){ const b = new Blob(['﻿' + text], {type: type || 'text/csv;charset=utf-8'}); const u = URL.createObjectURL(b); const l = document.createElement('a'); l.href = u; l.download = name; document.body.appendChild(l); l.click(); setTimeout(() => { URL.revokeObjectURL(u); l.remove(); }, 500); }
+$('bExp').onclick = () => download('MALZENSTWA_zweryfikowane_auto.csv', csvText());
+function parseCsv(t){ t = t.replace(/^﻿/,''); const out = []; let row = [], c = '', inq = false; for (let i = 0; i < t.length; i++) { const ch = t[i]; if (inq) { if (ch === '"') { if (t[i+1] === '"') { c += '"'; i++; } else inq = false; } else c += ch; } else if (ch === '"') inq = true; else if (ch === ';') { row.push(c); c = ''; } else if (ch === '\n') { row.push(c.replace(/\r$/,'')); out.push(row); row = []; c = ''; } else c += ch; } if (c || row.length) { row.push(c.replace(/\r$/,'')); out.push(row); } return out; }
+let OVW = false;
+function importCsv(text){ const rs = parseCsv(text); const h = rs[0]; const ix = {}; h.forEach((k,i) => ix[k] = i); let n = 0, skip = 0, miss = 0;
+  rs.slice(1).forEach(r => { const id = r[ix.id]; const a = AM[id]; if (!a) { miss++; return; } const ok = r[ix.verification_status] === 'ok'; const unc = new Set(clean(r[ix.uncertain_fields]).split(/[;,]\s*/)); const s = st(id);
+    FIELDS.forEach(f => { if (ix[f] == null) return; const v = normV(f, r[ix[f]]); if (s.f[f] && s.f[f].ok && !OVW) { skip++; return; } const o = s.f[f] || (s.f[f] = {}); o.v = v; o.ok = ok; o.unc = !ok && unc.has(f); n++; });
+    if (ix.verification_notes != null) clean(r[ix.verification_notes]).split(' | ').forEach(p => { const m = p.match(/^(\w+): (.*)$/); if (m && FIELDS.includes(m[1])) { (s.f[m[1]] || (s.f[m[1]] = {})).note = m[2]; } });
+    if (ok) s.done = true; });
+  save(); renderList(); if (AM[S.cur]) open(S.cur); alert('Wczytano pól: ' + n + (skip ? ', pominięto zatwierdzonych: ' + skip : '') + (miss ? ', nieznanych aktów: ' + miss : '')); }
+$('bImp').onclick = () => $('fl').click();
+$('fl').onchange = e => { const f = e.target.files[0]; if (!f) return; const rd = new FileReader(); rd.onload = () => { if (/\.json$/i.test(f.name)) { try { S = JSON.parse(rd.result); save(); renderList(); open(S.cur || D.acts[0].id); } catch(x) { alert('Błędny JSON'); } } else importCsv(rd.result); e.target.value = ''; }; rd.readAsText(f, 'utf-8'); };
+/* ---- rejestry ---- */
+$('bReg').onclick = () => { let h = '<h3>Rejestry alfabetyczne zaślubionych</h3>'; Object.keys(D.reg).forEach(y => { h += '<h4>' + y + '</h4><table><tr><th>Lp.</th><th>Pan młody</th><th>Panna młoda</th><th>Akt</th><th></th></tr>'; D.reg[y].forEach(r => { const a = D.acts.find(x => x.year == y && x.act === r.akt); h += '<tr><td>' + r.lp + '</td><td>' + esc(r.mlodzi) + '</td><td>' + esc(r.panna) + '</td><td>' + r.akt + '</td><td>' + (a ? '<a href="#" data-o="' + a.id + '">otwórz</a>' : '<span style="color:var(--mu)">brak skanu</span>') + '</td></tr>'; }); h += '</table>'; }); $('dgc').innerHTML = h; $('dg').showModal(); };
+$('dgc').addEventListener('click', e => { const l = e.target.closest('[data-o]'); if (l) { e.preventDefault(); $('dg').close(); open(l.dataset.o); } });
+$('bMenu').onclick = () => { $('dgc').innerHTML = '<h3>Więcej</h3><p><button id="mJson">Zapisz stan (JSON)</button> <button id="mOvw">Wczytaj CSV z nadpisaniem…</button> <button id="mTh">Motyw jasny/ciemny</button> <button id="mClr">Wyczyść zapis w przeglądarce</button></p><p style="color:var(--mu);font-size:12.5px">Zapis automatyczny jest w pamięci przeglądarki. CSV zawiera wszystko: pola, status, niepewne pola, uwagi i tekst aktu.</p>'; $('dg').showModal(); };
+$('dgc').addEventListener('click', e => { if (e.target.id === 'mJson') download('malzenstwa_stan.json', JSON.stringify(S), 'application/json'); if (e.target.id === 'mOvw') { OVW = true; $('dg').close(); $('fl').click(); } if (e.target.id === 'mTh') { const r = document.documentElement; r.dataset.th = r.dataset.th === 'dark' ? 'light' : 'dark'; } if (e.target.id === 'mClr' && confirm('Usunąć zapis z przeglądarki?')) { try { localStorage.removeItem(KEY); } catch(x) {} S = {acts:{}, cur:null}; renderList(); open(D.acts[0].id); $('dg').close(); } });
+document.addEventListener('keydown', e => { if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return; const a = AM[S.cur]; if (!a) return; const i = D.acts.indexOf(a); if (e.key === 'ArrowRight' && D.acts[i+1]) open(D.acts[i+1].id); if (e.key === 'ArrowLeft' && D.acts[i-1]) open(D.acts[i-1].id); });
+window.addEventListener('resize', () => curRoi && fitRoi(curRoi));
+D.acts.forEach(a => { Object.keys(a.ai).forEach(k => { if (typeof a.ai[k] === 'string') a.ai[k] = PLF.has(k) ? normPl(a.ai[k]) : a.ai[k]; }); });
+renderList(); open(S.cur && AM[S.cur] ? S.cur : D.acts[0].id);
+</script></body></html>

@@ -1,0 +1,146 @@
+[
+ {
+  "id": "ai1-m1945-001",
+  "plik": "M1945_01",
+  "strona": "lewa",
+  "roi": {
+   "x": 0.02,
+   "y": 0.06,
+   "w": 0.47,
+   "h": 0.88
+  },
+  "uwaga": "przybliżone"
+ },
+ {
+  "id": "ai1-m1945-002",
+  "plik": "M1945_01",
+  "strona": "prawa",
+  "roi": {
+   "x": 0.505,
+   "y": 0.06,
+   "w": 0.48,
+   "h": 0.88
+  },
+  "uwaga": "przybliżone"
+ },
+ {
+  "id": "ai1-m1945-003",
+  "plik": "M1945_02",
+  "strona": "lewa",
+  "roi": {
+   "x": 0.02,
+   "y": 0.06,
+   "w": 0.47,
+   "h": 0.88
+  },
+  "uwaga": "przybliżone"
+ },
+ {
+  "id": "ai1-m1945-004",
+  "plik": "M1945_02",
+  "strona": "prawa",
+  "roi": {
+   "x": 0.505,
+   "y": 0.06,
+   "w": 0.48,
+   "h": 0.88
+  },
+  "uwaga": "przybliżone"
+ },
+ {
+  "id": "ai1-m1945-005",
+  "plik": "M1945_03",
+  "strona": "lewa",
+  "roi": {
+   "x": 0.02,
+   "y": 0.06,
+   "w": 0.47,
+   "h": 0.88
+  },
+  "uwaga": "przybliżone"
+ },
+ {
+  "id": "ai1-m1945-006",
+  "plik": "M1945_03",
+  "strona": "prawa",
+  "roi": {
+   "x": 0.505,
+   "y": 0.06,
+   "w": 0.48,
+   "h": 0.88
+  },
+  "uwaga": "przybliżone"
+ },
+ {
+  "id": "ai1-m1945-007",
+  "plik": "M1945_04",
+  "strona": "lewa",
+  "roi": {
+   "x": 0.02,
+   "y": 0.06,
+   "w": 0.47,
+   "h": 0.88
+  },
+  "uwaga": "przybliżone"
+ },
+ {
+  "id": "ai1-m1945-008",
+  "plik": "M1945_04",
+  "strona": "prawa",
+  "roi": {
+   "x": 0.505,
+   "y": 0.06,
+   "w": 0.48,
+   "h": 0.88
+  },
+  "uwaga": "przybliżone"
+ },
+ {
+  "id": "ai1-m1945-009",
+  "plik": "M1945_05",
+  "strona": "lewa",
+  "roi": {
+   "x": 0.02,
+   "y": 0.06,
+   "w": 0.47,
+   "h": 0.88
+  },
+  "uwaga": "przybliżone"
+ },
+ {
+  "id": "ai1-m1945-010",
+  "plik": "M1945_05",
+  "strona": "prawa",
+  "roi": {
+   "x": 0.505,
+   "y": 0.06,
+   "w": 0.48,
+   "h": 0.88
+  },
+  "uwaga": "przybliżone"
+ },
+ {
+  "id": "ai1-m1945-011",
+  "plik": "M1945_06",
+  "strona": "lewa",
+  "roi": {
+   "x": 0.02,
+   "y": 0.06,
+   "w": 0.47,
+   "h": 0.88
+  },
+  "uwaga": "przybliżone"
+ },
+ {
+  "id": "ai1-m1945-012",
+  "plik": "M1945_06",
+  "strona": "prawa",
+  "roi": {
+   "x": 0.505,
+   "y": 0.06,
+   "w": 0.48,
+   "h": 0.88
+  },
+  "uwaga": "przybliżone"
+ }
+]
