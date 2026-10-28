@@ -18,7 +18,8 @@ button.sm{min-height:34px;padding:5px 9px;font-size:14px}
 #list button.cur{outline:3px solid var(--acc)}
 #list button.ready{background:var(--lubb);border:2px solid var(--lub)}#list button.done{background:var(--lubb);border-color:var(--lub);font-weight:600}#list button.part{background:linear-gradient(to top,var(--bzb) calc(var(--p)*1%),var(--card) calc(var(--p)*1%));border-color:var(--bz)}
 #list button.diff{border-color:var(--bad);border-width:2px}
-#list button.noai{opacity:.55}
+#list button.noai{opacity:.55}#list #sbT{display:none}
+@media (min-width:1000px){#list #sbT{display:block}}
 .tabs{display:flex;gap:6px;padding:6px 10px;flex-wrap:nowrap;overflow-x:auto;background:var(--card)}.tabs button{flex:0 0 auto}
 .tabs button.on{background:var(--acc);color:#fff}
 #view{position:sticky;top:0;z-index:25;height:42vh;background:#222;overflow:hidden;touch-action:none}
@@ -114,6 +115,15 @@ body.textmode main{margin-bottom:330px}body.textmode #view{height:30vh}body.text
  button{min-height:36px}
  #bar button{min-height:46px}
  #toast{left:calc(var(--vw) + (100vw - var(--vw))/2)}
+ /* lista aktów: pionowy pasek po lewej (wąski = numery, szeroki = rocznik / nr / nazwisko imię) */
+ :root{--sw:58px}body.sbx{--sw:280px}
+ #list{position:fixed;left:0;top:var(--tt,130px);bottom:0;width:var(--sw);flex-direction:column;flex-wrap:nowrap;overflow-x:hidden;overflow-y:auto;padding:6px 5px;gap:4px;border-bottom:0;border-right:1px solid var(--line);z-index:35}
+ #list button{min-width:0;width:100%;min-height:34px;padding:4px 2px;flex:0 0 auto}
+ #list #sbT{position:sticky;top:-6px;z-index:2;background:var(--card);font-size:15px}
+ #list .syh{font-weight:700;font-size:13px;padding:6px 4px 2px;color:var(--mut);border-bottom:1px solid var(--line);margin-top:4px}
+ #list button.srow{text-align:left;display:flex;gap:8px;align-items:baseline;padding:4px 8px;white-space:nowrap;overflow:hidden}
+ #list button.srow b{min-width:30px;text-align:right}#list button.srow span{overflow:hidden;text-overflow:ellipsis}
+ #view:not(.xl){left:var(--sw);width:calc(var(--vw) - var(--sw))}
 }
 </style></head><body>
 <div id="menu">
@@ -301,10 +311,12 @@ function renderTabs(){ const ys = ['all',...new Set(D.acts.filter(a => !a.kind).
   $('tHide').onclick = () => { S.hideDoneActs = !S.hideDoneActs; save(); renderTabs(); renderList(); };
   $('tabs').querySelectorAll('button[data-y],button[data-f]').forEach(b => b.onclick = () => { if (b.dataset.y) S.year = b.dataset.y; else S.flt = b.dataset.f; save(); renderTabs(); renderList(); }); }
 function progOf(a){ const s = S.acts[a.id]; if (!s) return 0; let n = 0, d = 0; fieldsOf(a).forEach(f => { if (!appl(a,f.id) && !clean(getv(a,f.id))) return; if (!(a.ai?.[f.id] || a.lub?.[f.id] || (a.alts?.[f.id]||[]).length || s.f[f.id])) return; n++; if (s.f[f.id]?.ok || s.f[f.id]?.skip) d++; }); return n ? Math.round(100 * d / n) : 0; }
-function renderList(){ const v = visible(), rmk = repMarks(); $('list').innerHTML = v.map(a => { const pr = a.kind ? 0 : progOf(a); return `<button data-id="${a.id}" style="--p:${pr}" class="${rmk[a.id]?'rp-'+rmk[a.id]:''} ${pr>0&&pr<100&&!S.acts[a.id]?.done?'part':''} ${pr===100&&!S.acts[a.id]?.done?'ready':''} ${a.id===S.cur?'cur':''} ${S.acts[a.id]?.done?'done':''} ${a.ai&&hasDiff(a)?'diff':''} ${a.ai?'':'noai'}" title="${a.year}">${S.acts[a.id]?.done?'✓ ':(pr===100&&!a.kind?'● ':'')}${a.kind==='rej'?'Lp'+a.act:a.kind==='prot'?'Prot '+a.year:(S.year==='all'?String(a.year).slice(2)+'/':'')+a.act}</button>`; }).join('') || '<span class="muted">Brak aktów w tym filtrze</span>';
-  $('list').querySelectorAll('button').forEach(b => b.onclick = () => open(b.dataset.id));
+let _wl = null; addEventListener('resize', () => { clearTimeout(_wl); _wl = setTimeout(() => { try { renderList(); } catch(e) {} }, 200); });
+const WIDE = () => window.matchMedia && matchMedia('(min-width:1000px)').matches;
+function renderList(){ const v = visible(), rmk = repMarks(), wide = WIDE(), ex = wide && !!S.sbx; document.body.classList.toggle('sbx', ex); let lastY = null; $('list').innerHTML = (wide ? `<button id="sbT" title="${ex ? 'Zwiń do numerów' : 'Rozwiń: rocznik, nr, nazwisko imię'}">${ex ? '⇤ zwiń' : '⇥'}</button>` : '') + v.map(a => { const pr = a.kind ? 0 : progOf(a); const yh = ex && !a.kind && a.year !== lastY ? (lastY = a.year, `<div class="syh">${a.year}</div>`) : ''; return yh + `<button data-id="${a.id}" style="--p:${pr}" class="${rmk[a.id]?'rp-'+rmk[a.id]:''} ${pr>0&&pr<100&&!S.acts[a.id]?.done?'part':''} ${pr===100&&!S.acts[a.id]?.done?'ready':''} ${a.id===S.cur?'cur':''} ${S.acts[a.id]?.done?'done':''} ${a.ai&&hasDiff(a)?'diff':''} ${a.ai?'':'noai'} ${ex?'srow':''}" title="${a.year}">${S.acts[a.id]?.done?'✓ ':(pr===100&&!a.kind?'● ':'')}${ex ? (a.kind==='rej'?'<b>Lp'+a.act+'</b><span>'+esc(a.title||'')+'</span>':a.kind==='prot'?'<b>Prot</b><span>'+a.year+'</span>':'<b>'+a.act+'</b><span>'+esc(nmOf(a))+'</span>') : (a.kind==='rej'?'Lp'+a.act:a.kind==='prot'?'Prot '+a.year:(S.year==='all'?String(a.year).slice(2)+'/':'')+a.act)}</button>`; }).join('') || '<span class="muted">Brak aktów w tym filtrze</span>';
+  $('list').querySelectorAll('button[data-id]').forEach(b => b.onclick = () => open(b.dataset.id)); if ($('sbT')) $('sbT').onclick = () => { S.sbx = !S.sbx; save(); renderList(); };
   const done = D.acts.filter(a => !a.kind && S.acts[a.id]?.done).length, ai = D.acts.filter(a => !a.kind && a.ai).length; $('prog').textContent = `${done}/${ai} zatwierdz.`; bOkLabel();
-  const c = $('list').querySelector('.cur'); if (c) c.scrollIntoView({inline:'center', block:'nearest'}); }
+  const c = $('list').querySelector('.cur'); if (c) c.scrollIntoView(wide ? {block:'nearest'} : {inline:'center', block:'nearest'}); }
 // ---- akt
 function lubMissing(a){ if (!a || a.kind || !a.lub) return []; return fieldsOf(a).filter(f => { const lv = clean(a.lub[f.id]); if (!lv || !appl(a, f.id)) return false; const x = st(a.id).f[f.id]; if (x?.skip) return false; return !clean(getv(a, f.id)); }); }
 function lubGuard(toId){ const p = AM[S.cur]; if (!p || p.id === toId || S.acts[p.id]?.lubAck) return true; const L = lubMissing(p); if (!L.length) return true;
