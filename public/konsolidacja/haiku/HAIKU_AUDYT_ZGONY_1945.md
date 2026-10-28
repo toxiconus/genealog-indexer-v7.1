@@ -62,7 +62,7 @@ Foldery skanów: `J:\Genealog\Blinów, św. Jana Chrzciciela\Blinów - lubgens\B
 - Nazwy miejscowości w mianowniku wg zasad: `Moczydła`, `Kaczyniec` (wcześniej `Mocydła`, `Kacyniec`) w CSV i w pliku tekstowym.
 - Akt 3: rodzice poprawieni wg tekstu skanu (ojciec Stanisław Żuń, matka Anna Wicłok?); wcześniej błędnie Wiechnik.
 - Akt 40: miejsce zgonu i zamieszkania `Kasprówka?` — do potwierdzenia na skanie.
-- Akt 24: wiek `3 tygodnie`; akt 70 (wiek `74?`) — format wieku zgodnie z dyspozycjami.
+- Akt 24: wiek `3 tygodnie`; akt 30 (wiek `74?`) — format wieku zgodnie z dyspozycjami.
 - Akty 44 i 47: `death_year` = 1944 (zgon „roku ubiegłego”, akt spisany w 1945).
 
 **Nie zrobione — wymagają sprawdzenia na skanie (nie zgaduję):**
