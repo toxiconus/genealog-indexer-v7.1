@@ -20,20 +20,20 @@ Uwagi odczytu: data i godzina zgonu oraz nazwisko matki niepewne.
 
 # Akty 3–47 — odczyt AI v1 ze skanów Z1945_02…Z1945_13 (tekst zrekonstruowany z pól, NIE dosłowny; do audytu)
 
-## ai1-1945-003 · Akt 3 · margines: „Mocydła, Magdalena Wiechnik”
-> Działo się we wsi Blinów dnia 25.01.1945. Stawili się: Józef Wiechnik i Antoni Żuń, którzy oświadczyli, że dnia 23.01.1945 o godz. 3 umarł(a) w miejscowości Mocydła Magdalena Wiechnik, 65 lat, zamężna, gospodyni, córka Stanisław Wiechnik? i Anna Wcisło?. Małżonek: Józef Wiechnik (owd.).
+## ai1-1945-003 · Akt 3 · margines: „Moczydła, Magdalena Wiechnik”
+> Działo się we wsi Blinów dnia 25.01.1945. Stawili się: Józef Wiechnik i Antoni Żuń, którzy oświadczyli, że dnia 23.01.1945 o godz. 3 umarł(a) w miejscowości Moczydła Magdalena Wiechnik, 65 lat, zamężna, gospodyni, córka Stanisław Wiechnik? i Anna Wcisło?. Małżonek: Józef Wiechnik (owd.).
 Uwagi odczytu: Data aktu 25.01 (odczyt niepewny); nazwisko rodzica/matki do sprawdzenia. Niepewne pola: father_last_name,mother_last_name,informant2.
 
-## ai1-1945-004 · Akt 4 · margines: „Kacyniec, Janina Marchewka”
-> Działo się we wsi Blinów dnia 31.01.1945. Stawili się: Franciszek Sulowski i Józef Krystoń?, którzy oświadczyli, że dnia 30.01.1945 o godz. 12 umarł(a) w miejscowości Kacyniec Janina Marchewka, 1 rok 6 miesięcy, dziecko, córka   i  Bronisława Marchewka (niezamężna). Małżonek: —.
+## ai1-1945-004 · Akt 4 · margines: „Kaczyniec, Janina Marchewka”
+> Działo się we wsi Blinów dnia 31.01.1945. Stawili się: Franciszek Sulowski i Józef Krystoń?, którzy oświadczyli, że dnia 30.01.1945 o godz. 12 umarł(a) w miejscowości Kaczyniec Janina Marchewka, 1 rok 6 miesięcy, dziecko, córka   i  Bronisława Marchewka (niezamężna). Małżonek: —.
 Uwagi odczytu: Córka niezamężnej Bronisławy Marchewki. Niepewne pola: informant2.
 
-## ai1-1945-005 · Akt 5 · margines: „Mocydła, Franciszek Janik”
-> Działo się we wsi Blinów dnia 03.02.1945. Stawili się: Władysław Kraczyk i Antoni Sokół, którzy oświadczyli, że dnia 02.02.1945 o godz. 18 umarł(a) w miejscowości Mocydła Franciszek Janik, 31 lat, żonaty, rolnik, syn Franciszek Janik i Jadwiga Kaciński?. Małżonek: Stefania Kraczyk (owd.).
+## ai1-1945-005 · Akt 5 · margines: „Moczydła, Franciszek Janik”
+> Działo się we wsi Blinów dnia 03.02.1945. Stawili się: Władysław Kraczyk i Antoni Sokół, którzy oświadczyli, że dnia 02.02.1945 o godz. 18 umarł(a) w miejscowości Moczydła Franciszek Janik, 31 lat, żonaty, rolnik, syn Franciszek Janik i Jadwiga Kaciński?. Małżonek: Stefania Kraczyk (owd.).
 Uwagi odczytu: — Niepewne pola: mother_last_name.
 
-## ai1-1945-006 · Akt 6 · margines: „Kacyniec, Zygmunt Sobutka”
-> Działo się we wsi Blinów dnia 07.02.1945. Stawili się: Antoni Ościsnic? i Jan Szabat, którzy oświadczyli, że dnia 07.02.1945 o godz. 10 umarł(a) w miejscowości Kacyniec Zygmunt Sobutka, 10 miesięcy, dziecko, syn Jan Sobutka i Katarzyna Widomska?. Małżonek: —.
+## ai1-1945-006 · Akt 6 · margines: „Kaczyniec, Zygmunt Sobutka”
+> Działo się we wsi Blinów dnia 07.02.1945. Stawili się: Antoni Ościsnic? i Jan Szabat, którzy oświadczyli, że dnia 07.02.1945 o godz. 10 umarł(a) w miejscowości Kaczyniec Zygmunt Sobutka, 10 miesięcy, dziecko, syn Jan Sobutka i Katarzyna Widomska?. Małżonek: —.
 Uwagi odczytu: Zgon w dniu zapisu (dnia dzisiejszego). Niepewne pola: mother_last_name,informant1.
 
 ## ai1-1945-007 · Akt 7 · margines: „Blinów, Tomasz Ścionek”
@@ -44,8 +44,8 @@ Uwagi odczytu: Godzina aktu i wiek do sprawdzenia. Niepewne pola: age,death_time
 > Działo się we wsi Blinów dnia 13.02.1945. Stawili się: Jan Pawłasek i Mateusz Sulowski, którzy oświadczyli, że dnia 10.02.1945 o godz. 15 umarł(a) w miejscowości Blinów Stefania Kędziora, 38 lat, zamężna, gospodyni, córka Wojciech Pawłasek i Agnieszka Kaciński?. Małżonek: Jan Kędziora (owd.).
 Uwagi odczytu: Rodzice: małżonkowie Pawłasek (z Kacyńskich). Niepewne pola: father_last_name,informant2.
 
-## ai1-1945-009 · Akt 9 · margines: „Mocydła, Bronisław Pawłasek”
-> Działo się we wsi Blinów dnia 15.02.1945. Stawili się: Stanisław Łatka i Adam Stroński?, którzy oświadczyli, że dnia 11.02.1945 o godz. 23 umarł(a) w miejscowości Mocydła Bronisław Pawłasek, 21 lat, kawaler, rolnik, syn Stanisław Pawłasek i Felicja? Łatka. Małżonek: —.
+## ai1-1945-009 · Akt 9 · margines: „Moczydła, Bronisław Pawłasek”
+> Działo się we wsi Blinów dnia 15.02.1945. Stawili się: Stanisław Łatka i Adam Stroński?, którzy oświadczyli, że dnia 11.02.1945 o godz. 23 umarł(a) w miejscowości Moczydła Bronisław Pawłasek, 21 lat, kawaler, rolnik, syn Stanisław Pawłasek i Felicja? Łatka. Małżonek: —.
 Uwagi odczytu: — Niepewne pola: mother_first_name,informant2.
 
 ## ai1-1945-010 · Akt 10 · margines: „Blinów, Cesława Kolasa”
@@ -56,24 +56,24 @@ Uwagi odczytu: Data zgonu 06.02 (akt 19.02) do sprawdzenia. Niepewne pola: death
 > Działo się we wsi Blinów dnia 25.02.1945. Stawili się: Jan Martyna i Bolesław Filipek, którzy oświadczyli, że dnia 23.02.1945 o godz. 23 umarł(a) w miejscowości folwark Brzozówka Zofia Dąbrowska, 72 lata, panna, wyrobnica, córka Jan Dąbrowski i Felicja Skalska. Małżonek: —.
 Uwagi odczytu: Jeden ze stawających niepiśmienny; podpis Filipek B. Niepewne pola: —.
 
-## ai1-1945-012 · Akt 12 · margines: „Kacyniec, Władysław Kraczyk”
-> Działo się we wsi Blinów dnia 05.03.1945. Stawili się: Józef Borowski i Jan Szubstarski, którzy oświadczyli, że dnia 04.03.1945 o godz. 12 umarł(a) w miejscowości Kacyniec Władysław Kraczyk, 2 miesiące, dziecko, syn Jan Kraczyk i Marianna Pirom. Małżonek: —.
+## ai1-1945-012 · Akt 12 · margines: „Kaczyniec, Władysław Kraczyk”
+> Działo się we wsi Blinów dnia 05.03.1945. Stawili się: Józef Borowski i Jan Szubstarski, którzy oświadczyli, że dnia 04.03.1945 o godz. 12 umarł(a) w miejscowości Kaczyniec Władysław Kraczyk, 2 miesiące, dziecko, syn Jan Kraczyk i Marianna Pirom. Małżonek: —.
 Uwagi odczytu: — Niepewne pola: —.
 
-## ai1-1945-013 · Akt 13 · margines: „Kacyniec, Kazimierz Kudrelek”
-> Działo się we wsi Blinów dnia 23.03.1945. Stawili się: Michał Breś i Stefan Jaryna, którzy oświadczyli, że dnia 21.03.1945 o godz. 10 umarł(a) w miejscowości Kacyniec Kazimierz Kudrelek, 1 rok 4 miesiące, dziecko, syn   i  Katarzyna Kudrelek (niezamężna). Małżonek: —.
+## ai1-1945-013 · Akt 13 · margines: „Kaczyniec, Kazimierz Kudrelek”
+> Działo się we wsi Blinów dnia 23.03.1945. Stawili się: Michał Breś i Stefan Jaryna, którzy oświadczyli, że dnia 21.03.1945 o godz. 10 umarł(a) w miejscowości Kaczyniec Kazimierz Kudrelek, 1 rok 4 miesiące, dziecko, syn   i  Katarzyna Kudrelek (niezamężna). Małżonek: —.
 Uwagi odczytu: Syn niezamężnej Katarzyny Kudrelek. Niepewne pola: —.
 
 ## ai1-1945-014 · Akt 14 · margines: „Blinów, Katarzyna Fila”
 > Działo się we wsi Blinów dnia 23.03.1945. Stawili się: Jan Kosidło i Antoni Kowalczyk, którzy oświadczyli, że dnia 22.03.1945 o godz. 12 umarł(a) w miejscowości Blinów Katarzyna Fila, 47 lat, zamężna, rolniczka, córka Maciej Sobutka? i Rozalia Ścionek. Małżonek: Jan Fila (owd.).
 Uwagi odczytu: Rodzice: Maciej i Rozalia z Ścionków małż. Sobutków? Niepewne pola: father_last_name.
 
-## ai1-1945-015 · Akt 15 · margines: „Mocydła, Piotr Dziewa”
-> Działo się we wsi Blinów dnia 2?.03.1945. Stawili się: Marcin Wcisło i Józef Bednarczyk, którzy oświadczyli, że dnia 23.03.1945 o godz. 13 umarł(a) w miejscowości Mocydła Piotr Dziewa, 47 lat, żonaty, rolnik, syn Antoni Dziewa i Anna Ścionek. Małżonek: Stanisława Mróz (owd.).
+## ai1-1945-015 · Akt 15 · margines: „Moczydła, Piotr Dziewa”
+> Działo się we wsi Blinów dnia 2?.03.1945. Stawili się: Marcin Wcisło i Józef Bednarczyk, którzy oświadczyli, że dnia 23.03.1945 o godz. 13 umarł(a) w miejscowości Moczydła Piotr Dziewa, 47 lat, żonaty, rolnik, syn Antoni Dziewa i Anna Ścionek. Małżonek: Stanisława Mróz (owd.).
 Uwagi odczytu: Data aktu (marzec) do sprawdzenia. Niepewne pola: death_date,age.
 
-## ai1-1945-016 · Akt 16 · margines: „Mocydła, Józef Dobrzyński”
-> Działo się we wsi Blinów dnia 22.03.1945. Stawili się: Antoni Żuń i Antoni Sokół, którzy oświadczyli, że dnia 21.03.1945 o godz. 5 umarł(a) w miejscowości Mocydła Józef Dobrzyński, 61 lat, wdowiec, rolnik, syn Andrzej Dobrzyński i Anna Janik. Małżonek: —.
+## ai1-1945-016 · Akt 16 · margines: „Moczydła, Józef Dobrzyński”
+> Działo się we wsi Blinów dnia 22.03.1945. Stawili się: Antoni Żuń i Antoni Sokół, którzy oświadczyli, że dnia 21.03.1945 o godz. 5 umarł(a) w miejscowości Moczydła Józef Dobrzyński, 61 lat, wdowiec, rolnik, syn Andrzej Dobrzyński i Anna Janik. Małżonek: —.
 Uwagi odczytu: Daty do sprawdzenia. Niepewne pola: death_date,death_time.
 
 ## ai1-1945-017 · Akt 17 · margines: „Blinów, Wawrzyniec Mularczyk”
@@ -88,48 +88,48 @@ Uwagi odczytu: Rodzice: Wojciech i Jadwiga z Machulaków małż. Krystonów. Nie
 > Działo się we wsi Blinów dnia 14.04.1945. Stawili się: Tomasz Dobrzyński i Walenty Rębecki, którzy oświadczyli, że dnia 13.04.1945 o godz. 3 umarł(a) w miejscowości Brzozówka Jan Kędziora, 1 rok, dziecko, syn Marcin Kędziora i Stefania Syrka?. Małżonek: —.
 Uwagi odczytu: — Niepewne pola: mother_last_name.
 
-## ai1-1945-020 · Akt 20 · margines: „Kacyniec, Stanisław Dobrzyński”
-> Działo się we wsi Blinów dnia 14.04.1945. Stawili się: Andrzej Kosidło i Jan Ścionek, którzy oświadczyli, że dnia 06.04.1945 o godz. 15 umarł(a) w miejscowości Kacyniec Stanisław Dobrzyński, 42 lata, żonaty, rolnik, syn Ludwik Dobrzyński i Anna Lenart. Małżonek: Zofia Skrzypek (owd.).
+## ai1-1945-020 · Akt 20 · margines: „Kaczyniec, Stanisław Dobrzyński”
+> Działo się we wsi Blinów dnia 14.04.1945. Stawili się: Andrzej Kosidło i Jan Ścionek, którzy oświadczyli, że dnia 06.04.1945 o godz. 15 umarł(a) w miejscowości Kaczyniec Stanisław Dobrzyński, 42 lata, żonaty, rolnik, syn Ludwik Dobrzyński i Anna Lenart. Małżonek: Zofia Skrzypek (owd.).
 Uwagi odczytu: — Niepewne pola: spouse.
 
 ## ai1-1945-021 · Akt 21 · margines: „Brzozówka, Mikołaj Kopiwoda”
 > Działo się we wsi Blinów dnia 23.04.1945. Stawili się: Andrzej Sycka? i Walenty Mazurek, którzy oświadczyli, że dnia 21.04.1945 o godz. 5 umarł(a) w miejscowości Brzozówka Mikołaj Kopiwoda, 63 lata, żonaty, rolnik, syn Jan Kopiwoda i Zofia Sańko. Małżonek: Barbara Sulowska (owd.).
 Uwagi odczytu: — Niepewne pola: informant1.
 
-## ai1-1945-022 · Akt 22 · margines: „Kacyniec, Cesława Łatka”
-> Działo się we wsi Blinów dnia 23.04.1945. Stawili się: Franciszek Sobutka i Józef Sobutka, którzy oświadczyli, że dnia 21.04.1945 o godz. 8 umarł(a) w miejscowości Kacyniec Cesława Łatka, 3 lata, dziecko, córka Jan Łatka i Stanisława Ogon. Małżonek: —.
+## ai1-1945-022 · Akt 22 · margines: „Kaczyniec, Cesława Łatka”
+> Działo się we wsi Blinów dnia 23.04.1945. Stawili się: Franciszek Sobutka i Józef Sobutka, którzy oświadczyli, że dnia 21.04.1945 o godz. 8 umarł(a) w miejscowości Kaczyniec Cesława Łatka, 3 lata, dziecko, córka Jan Łatka i Stanisława Ogon. Małżonek: —.
 Uwagi odczytu: — Niepewne pola: —.
 
-## ai1-1945-023 · Akt 23 · margines: „Kacyniec, Marianna Surma”
-> Działo się we wsi Blinów dnia 27.04.1945. Stawili się: Paweł Sulowski i Michał Kosidło, którzy oświadczyli, że dnia 25.04.1945 o godz. 15 umarł(a) w miejscowości Kacyniec Marianna Surma, 55 lat, zamężna, gospodyni, córka Józef Surma? i Marianna Pasternak. Małżonek: Wojciech Surma (owd.).
+## ai1-1945-023 · Akt 23 · margines: „Kaczyniec, Marianna Surma”
+> Działo się we wsi Blinów dnia 27.04.1945. Stawili się: Paweł Sulowski i Michał Kosidło, którzy oświadczyli, że dnia 25.04.1945 o godz. 15 umarł(a) w miejscowości Kaczyniec Marianna Surma, 55 lat, zamężna, gospodyni, córka Józef Surma? i Marianna Pasternak. Małżonek: Wojciech Surma (owd.).
 Uwagi odczytu: Nazwisko rodziców (Baldas?) do sprawdzenia. Niepewne pola: father_last_name,mother_last_name.
 
-## ai1-1945-024 · Akt 24 · margines: „Kacyniec, Józef Tadeusz Bocrek”
-> Działo się we wsi Blinów dnia 27.04.1945. Stawili się: Jan Szubstarski i Jan Syrka?, którzy oświadczyli, że dnia 26.04.1945 o godz. 5 umarł(a) w miejscowości Kacyniec Józef Tadeusz Bocrek, 3 tygodnie, dziecko, syn Władysław Bocrek i Weronika Obieścin?. Małżonek: —.
+## ai1-1945-024 · Akt 24 · margines: „Kaczyniec, Józef Tadeusz Bocrek”
+> Działo się we wsi Blinów dnia 27.04.1945. Stawili się: Jan Szubstarski i Jan Syrka?, którzy oświadczyli, że dnia 26.04.1945 o godz. 5 umarł(a) w miejscowości Kaczyniec Józef Tadeusz Bocrek, 3 tygodnie, dziecko, syn Władysław Bocrek i Weronika Obieścin?. Małżonek: —.
 Uwagi odczytu: — Niepewne pola: mother_last_name,informant2,death_date.
 
 ## ai1-1945-025 · Akt 25 · margines: „Brzozówka, Katarzyna Machulak”
 > Działo się we wsi Blinów dnia 07.05.1945. Stawili się: Cesław Buron i Paweł Machulak, którzy oświadczyli, że dnia 05.05.1945 o godz. 8 umarł(a) w miejscowości Brzozówka Katarzyna Machulak, 73 lata, wdowa, gospodyni, córka Walenty Jachura? i Marianna Białkowska. Małżonek: —.
 Uwagi odczytu: Rodzice: Walenty i Marianna z Białkowskich małż. Jachurów. Niepewne pola: father_last_name.
 
-## ai1-1945-026 · Akt 26 · margines: „Mocydła, Walenty Wilk”
-> Działo się we wsi Blinów dnia 04.06.1945. Stawili się: Franciszek Wieleba i Wojciech Wieleba?, którzy oświadczyli, że dnia 02.06.1945 o godz. 15 umarł(a) w miejscowości Mocydła Walenty Wilk, 46 lat, żonaty, rolnik, syn Walenty Wilk i Józefa Kamińska. Małżonek: Marianna Wieleba (owd.).
+## ai1-1945-026 · Akt 26 · margines: „Moczydła, Walenty Wilk”
+> Działo się we wsi Blinów dnia 04.06.1945. Stawili się: Franciszek Wieleba i Wojciech Wieleba?, którzy oświadczyli, że dnia 02.06.1945 o godz. 15 umarł(a) w miejscowości Moczydła Walenty Wilk, 46 lat, żonaty, rolnik, syn Walenty Wilk i Józefa Kamińska. Małżonek: Marianna Wieleba (owd.).
 Uwagi odczytu: Wiek do sprawdzenia. Niepewne pola: age,informant2.
 
 ## ai1-1945-027 · Akt 27 · margines: „Blinów, Cesława Sobutka”
 > Działo się we wsi Blinów dnia 09.06.1945. Stawili się: Ludwik Spryszak i Jan Kędziora, którzy oświadczyli, że dnia 08.06.1945 o godz. 16 umarł(a) w miejscowości Blinów Cesława Sobutka, 1 rok, dziecko, córka Józef Sobutka i Stefania Ścionek. Małżonek: —.
 Uwagi odczytu: — Niepewne pola: —.
 
-## ai1-1945-028 · Akt 28 · margines: „Kacyniec, Teofila Machul”
-> Działo się we wsi Blinów dnia 15.06.1945. Stawili się: Antoni Wojnarczak? i Tomasz Szubstarski, którzy oświadczyli, że dnia 14.06.1945 o godz. 11 umarł(a) w miejscowości Kacyniec Teofila Machul, 65 lat, wdowa, rolniczka, córka Wojciech Surma i Ludwika Kosidło. Małżonek: —.
+## ai1-1945-028 · Akt 28 · margines: „Kaczyniec, Teofila Machul”
+> Działo się we wsi Blinów dnia 15.06.1945. Stawili się: Antoni Wojnarczak? i Tomasz Szubstarski, którzy oświadczyli, że dnia 14.06.1945 o godz. 11 umarł(a) w miejscowości Kaczyniec Teofila Machul, 65 lat, wdowa, rolniczka, córka Wojciech Surma i Ludwika Kosidło. Małżonek: —.
 Uwagi odczytu: — Niepewne pola: informant1.
 
-## ai1-1945-029 · Akt 29 · margines: „Mocydła, Jadwiga Kraczyk”
-> Działo się we wsi Blinów dnia 16.06.1945. Stawili się: Jan Mróz i Jan Wójcik, którzy oświadczyli, że dnia 13.06.1945 o godz. 14 umarł(a) w miejscowości Mocydła Jadwiga Kraczyk, 63 lata, wdowa, rolniczka, córka Andrzej Kraczyk? i  . Małżonek: —.
+## ai1-1945-029 · Akt 29 · margines: „Moczydła, Jadwiga Kraczyk”
+> Działo się we wsi Blinów dnia 16.06.1945. Stawili się: Jan Mróz i Jan Wójcik, którzy oświadczyli, że dnia 13.06.1945 o godz. 14 umarł(a) w miejscowości Moczydła Jadwiga Kraczyk, 63 lata, wdowa, rolniczka, córka Andrzej Kraczyk? i  . Małżonek: —.
 Uwagi odczytu: Imię matki nieznane; rodzina Bogunów. Niepewne pola: mother_first_name,age.
 
-## ai1-1945-030 · Akt 30 · margines: „Kacyniec, Katarzyna Mróz”
-> Działo się we wsi Blinów dnia 27.07.1945. Stawili się: Michał Breś i Jan Mróz, którzy oświadczyli, że dnia 26.07.1945 o godz. 12 umarł(a) w miejscowości Kacyniec Katarzyna Mróz, 74? lata, wdowa, gospodyni, córka Franciszek Kosidło i Agnieszka Pasdrak?. Małżonek: —.
+## ai1-1945-030 · Akt 30 · margines: „Kaczyniec, Katarzyna Mróz”
+> Działo się we wsi Blinów dnia 27.07.1945. Stawili się: Michał Breś i Jan Mróz, którzy oświadczyli, że dnia 26.07.1945 o godz. 12 umarł(a) w miejscowości Kaczyniec Katarzyna Mróz, 74? lata, wdowa, gospodyni, córka Franciszek Kosidło i Agnieszka Pasdrak?. Małżonek: —.
 Uwagi odczytu: Wiek i godzina do sprawdzenia. Niepewne pola: age,death_time,mother_last_name.
 
 ## ai1-1945-031 · Akt 31 · margines: „Blinów, Agata Jędrzejczak”
@@ -164,8 +164,8 @@ Uwagi odczytu: Kotecki – rządca majątku Blinów; Żarnowski – organista; p
 > Działo się we wsi Blinów dnia 27.10.1945. Stawili się: Józef Pastucha i Paweł Samol, którzy oświadczyli, że dnia 26.10.1945 o godz. 23 umarł(a) w miejscowości Blinów Józef Ścionek, 1 rok 8 miesięcy, dziecko, syn Antoni Ścionek i Marianna Jaryna. Małżonek: —.
 Uwagi odczytu: — Niepewne pola: —.
 
-## ai1-1945-039 · Akt 39 · margines: „Kacyniec, Paweł Sobutka”
-> Działo się we wsi Blinów dnia 06.11.1945. Stawili się: Antoni Kosidło i Stanisław Kraczyk, którzy oświadczyli, że dnia 03.11.1945 o godz. 17 umarł(a) w miejscowości Kacyniec Paweł Sobutka, 43 lata, żonaty, rolnik, syn Wojciech Sobutka i Agnieszka Pirom. Małżonek: Marianna Kraczyk (owd.).
+## ai1-1945-039 · Akt 39 · margines: „Kaczyniec, Paweł Sobutka”
+> Działo się we wsi Blinów dnia 06.11.1945. Stawili się: Antoni Kosidło i Stanisław Kraczyk, którzy oświadczyli, że dnia 03.11.1945 o godz. 17 umarł(a) w miejscowości Kaczyniec Paweł Sobutka, 43 lata, żonaty, rolnik, syn Wojciech Sobutka i Agnieszka Pirom. Małżonek: Marianna Kraczyk (owd.).
 Uwagi odczytu: — Niepewne pola: —.
 
 ## ai1-1945-040 · Akt 40 · margines: „Blinów, Łucja Kudrelek”
@@ -176,8 +176,8 @@ Uwagi odczytu: Rodzice: Wawrzyniec i Marianna z niepamiętnych małż. Raków. N
 > Działo się we wsi Blinów dnia 20.11.1945. Stawili się: Stefan Kosidło i Michał Rębecki, którzy oświadczyli, że dnia 17.11.1945 o godz. 17 umarł(a) w miejscowości szpital w Janowie Lubelskim Stanisław Kędziora, 32 lata, żonaty, rolnik, syn Józef Kędziora i Katarzyna Śliwiecka?. Małżonek: Marianna Dubiel (owd.).
 Uwagi odczytu: Zmarł w szpitalu w Janowie Lub.; zamieszkały w Blinowie. Niepewne pola: mother_last_name.
 
-## ai1-1945-042 · Akt 42 · margines: „Mocydła, Marianna Mróz”
-> Działo się we wsi Blinów dnia 23.11.1945. Stawili się: Marcin Wcisło i Jan Mróz, którzy oświadczyli, że dnia 22.11.1945 o godz. 3 umarł(a) w miejscowości Mocydła Marianna Mróz, 2 lata, dziecko, córka Jan Mróz i Marianna Sagan. Małżonek: —.
+## ai1-1945-042 · Akt 42 · margines: „Moczydła, Marianna Mróz”
+> Działo się we wsi Blinów dnia 23.11.1945. Stawili się: Marcin Wcisło i Jan Mróz, którzy oświadczyli, że dnia 22.11.1945 o godz. 3 umarł(a) w miejscowości Moczydła Marianna Mróz, 2 lata, dziecko, córka Jan Mróz i Marianna Sagan. Małżonek: —.
 Uwagi odczytu: — Niepewne pola: —.
 
 ## ai1-1945-043 · Akt 43 · margines: „Brzozówka, Stanisław Bigos”

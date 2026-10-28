@@ -55,3 +55,23 @@ Foldery skanów: `J:\Genealog\Blinów, św. Jana Chrzciciela\Blinów - lubgens\B
 | 45 | Michał Woś | [Z1945_12_akty_43-46.jpg](file:///J:/Genealog/Blin%C3%B3w%2C%20%C5%9Bw.%20Jana%20Chrzciciela/Blin%C3%B3w%20-%20lubgens/BLIN/ZG/Z%201945/Z1945_12_akty_43-46.jpg) | death_date,age |
 | 46 | Tadeusz Król | [Z1945_12_akty_43-46.jpg](file:///J:/Genealog/Blin%C3%B3w%2C%20%C5%9Bw.%20Jana%20Chrzciciela/Blin%C3%B3w%20-%20lubgens/BLIN/ZG/Z%201945/Z1945_12_akty_43-46.jpg) | death_date,informant2 |
 | 47 | Antoni Białkowski | [Z1945_13_akt_47_rejestr_protokol_zamkniecia.jpg](file:///J:/Genealog/Blin%C3%B3w%2C%20%C5%9Bw.%20Jana%20Chrzciciela/Blin%C3%B3w%20-%20lubgens/BLIN/ZG/Z%201945/Z1945_13_akt_47_rejestr_protokol_zamkniecia.jpg) | death_date,age |
+
+## Przegląd rocznika 1945 (Haiku, 28.10) — co zrobiono i co zostało
+
+**Zrobione (tylko poprawki pewne lub mechaniczne):**
+- Nazwy miejscowości w mianowniku wg zasad: `Moczydła`, `Kaczyniec` (wcześniej `Mocydła`, `Kacyniec`) w CSV i w pliku tekstowym.
+- Akt 3: rodzice poprawieni wg tekstu skanu (ojciec Stanisław Żuń, matka Anna Wicłok?); wcześniej błędnie Wiechnik.
+- Akt 40: miejsce zgonu i zamieszkania `Kasprówka?` — do potwierdzenia na skanie.
+- Akt 24: wiek `3 tygodnie`; akt 70 (wiek `74?`) — format wieku zgodnie z dyspozycjami.
+- Akty 44 i 47: `death_year` = 1944 (zgon „roku ubiegłego”, akt spisany w 1945).
+
+**Nie zrobione — wymagają sprawdzenia na skanie (nie zgaduję):**
+- Akty 2, 10, 15, 16, 20, 24, 44, 45, 46, 47: daty zgonu i aktu. Akt 45: zgon 17.12 przy akcie 12.12 — niemożliwe, sprawdzić datę aktu.
+- Akt 15: data aktu `03-2?` nieczytelna.
+- Akt 9, 18, 19, 22, 24, 30, 32, 36, 41: nazwiska rodziców i matek (formy z „?” do sprawdzenia).
+- Wszystkie kobiety: `deceased_maiden_name` puste. Wg dyspozycji rodowe = nazwisko ojca w formie żeńskiej; reguły odmiany do ustalenia przed wypełnieniem.
+- Wdowy (akty 18, 25, 28, 29, 35, 47 i in.): brak małżonka `(†)` — zapisać z aktu.
+- Wiek aktów 3, 7, 26, 30 — do sprawdzenia.
+- ROI aktów 1945 są przybliżone (nie zweryfikowane siatką); pola `_pola.json` puste.
+
+**Uwaga:** przegląd był częściowy. Pełna weryfikacja każdego aktu wymaga odczytu skanów w mniejszych wycinkach (ROI), jak zapisano w `HAIKU_ZALOZENIA.md` §4.
