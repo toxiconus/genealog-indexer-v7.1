@@ -8,11 +8,12 @@ scans_dir, out = sys.argv[1], sys.argv[2]
 embed = '--bez-skanow' not in sys.argv
 BASE = 'file:///J:/Genealog/Blin%C3%B3w%2C%20%C5%9Bw.%20Jana%20Chrzciciela/Blin%C3%B3w%20-%20lubgens/BLIN/M%C5%BB/'
 years = sorted(int(re.search(r'MALZENSTWA_(\d{4})_', p).group(1)) for p in glob.glob(H + '/MALZENSTWA_*_ai1_import.csv'))
-acts, reg, cols, scans = [], {}, None, {}
+acts, reg, cols, scans, pola = [], {}, None, {}, {}
 for y in years:
     rows = list(csv.reader(open(f'{H}/MALZENSTWA_{y}_ai1_import.csv', encoding='utf-8-sig', newline=''), delimiter=';'))
     cols = rows[0] + (['margin_names'] if 'margin_names' not in rows[0] else [])
     roi = {r['id']: r for r in json.load(open(f'{H}/MALZENSTWA_{y}_ai1_roi.json', encoding='utf-8'))}
+    pola.update(json.load(open(f'{H}/MALZENSTWA_{y}_ai1_pola.json', encoding='utf-8')) if os.path.exists(f'{H}/MALZENSTWA_{y}_ai1_pola.json') else {})
     reg[y] = json.load(open(f'{H}/MALZENSTWA_{y}_ai1_rejestr.json', encoding='utf-8'))
     for r in rows[1:]:
         d = dict(zip(cols, r))
@@ -28,7 +29,7 @@ for y in years:
         k = a['roi']['plik']
         a['roi']['file'] = os.path.basename(next((f for f in glob.glob(f'{scans_dir}/M {a["year"]}/{k}_*.jpg')), k))
 acts.sort(key=lambda a: (a['year'], a['act']))
-D = dict(acts=acts, reg={str(k): v for k, v in reg.items()}, cols=cols, scans=scans)
+D = dict(pola=pola, acts=acts, reg={str(k): v for k, v in reg.items()}, cols=cols, scans=scans)
 t = open(H + '/weryfikacja_malzenstw_szablon.html', encoding='utf-8').read()
 t = t.replace('/*DATA*/null', json.dumps(D, ensure_ascii=False).replace('</', '<\\/'))
 open(out, 'w', encoding='utf-8').write(t)

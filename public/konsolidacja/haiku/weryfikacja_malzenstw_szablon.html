@@ -20,6 +20,7 @@ button.pri{background:var(--ac);color:#fff;border-color:var(--ac)}button.ok{back
 #view{position:sticky;top:60px;height:calc(100vh - 78px);display:flex;flex-direction:column;overflow:hidden}
 #vbar{display:flex;gap:6px;padding:6px 8px;border-bottom:1px solid var(--ln);flex-wrap:wrap;align-items:center}
 #vp{flex:1;position:relative;overflow:hidden;background:#111;cursor:grab;touch-action:none}#vp img{position:absolute;left:0;top:0;transform-origin:0 0;max-width:none;user-select:none;-webkit-user-drag:none}
+#ov{position:absolute;left:0;top:0;transform-origin:0 0;pointer-events:none}#ov b{position:absolute;border:3px solid;border-radius:3px;box-sizing:border-box}#ov b.p{border-color:#e0b800;background:rgba(224,184,0,.12)}#ov b.a{border-color:#a24fd0;background:rgba(162,79,208,.12)}#ov b.f{border-color:#4f9fd0;background:rgba(79,159,208,.08)}
 #vmiss{position:absolute;inset:0;display:none;align-items:center;justify-content:center;color:#ccc;text-align:center;padding:20px}
 #txt{max-height:22%;overflow:auto;padding:8px 10px;border-top:1px solid var(--ln);font-size:12.5px;color:var(--mu)}
 #form{padding:10px 12px}
@@ -66,8 +67,8 @@ table{border-collapse:collapse;width:100%;font-size:13px}td,th{border-bottom:1px
 <button id="bImp">Wczytaj CSV…</button><button id="bExp" class="pri">Zapisz CSV</button><button id="bReg">Rejestry</button><button id="bMenu">Więcej…</button><input type="file" id="fl" accept=".csv,.json" hidden></header>
 <div id="scrim"></div><div id="pbar"><button id="pSb">☰ Akty</button><button id="pPr">‹</button><button id="pOk" class="ok">✓ Zatwierdź</button><button id="pNx">›</button></div>
 <div id="app"><aside id="sb"></aside><div id="main">
-<section id="view" class="card"><div id="vbar"><button id="vAkt">Akt</button><button id="vAll">Cały skan</button><button id="vP">+</button><button id="vM">−</button><span id="vinfo" class="tag"></span><span class="sp"></span><button id="vTx" class="phone" title="tekst odczytu">Aa</button><button id="vMin" class="phone" title="zwiń/rozwiń skan">▾</button></div>
-<div id="vp"><img id="im" alt=""><div id="vmiss"></div></div><div id="txt"></div><div id="vh"><i></i></div></section>
+<section id="view" class="card"><div id="vbar"><button id="vAkt">Akt</button><button id="vAll">Cały skan</button><button id="vMk" title="pieczątki i adnotacje">Pieczątki/adn. ▸</button><button id="vP">+</button><button id="vM">−</button><span id="vinfo" class="tag"></span><span class="sp"></span><button id="vTx" class="phone" title="tekst odczytu">Aa</button><button id="vMin" class="phone" title="zwiń/rozwiń skan">▾</button></div>
+<div id="vp"><img id="im" alt=""><div id="ov"></div><div id="vmiss"></div></div><div id="txt"></div><div id="vh"><i></i></div></section>
 <section id="form" class="card"></section></div></div>
 <dialog id="dg"><div id="dgc"></div><p style="text-align:right"><button onclick="document.getElementById('dg').close()">Zamknij</button></p></dialog>
 <script>
@@ -129,14 +130,20 @@ $('form').addEventListener('click', e => { const a = AM[S.cur]; if (!a) return; 
   else if (b.id === 'bPrev' || b.id === 'bNext') { const i = D.acts.indexOf(a) + (b.id === 'bNext' ? 1 : -1); if (D.acts[i]) open(D.acts[i].id); } });
 /* ---- skan ---- */
 const im = $('im'), vp = $('vp'); let T = {x:0,y:0,s:1}, NW = 0, NH = 0, curRoi = null;
-const apply = () => { im.style.transform = 'translate(' + T.x + 'px,' + T.y + 'px) scale(' + T.s + ')'; };
+const apply = () => { $('ov').style.transform = 'translate(' + T.x + 'px,' + T.y + 'px) scale(' + T.s + ')'; im.style.transform = 'translate(' + T.x + 'px,' + T.y + 'px) scale(' + T.s + ')'; };
 function fitRoi(r){ if (!NW) return; const cw = vp.clientWidth, ch = vp.clientHeight; const rw = r.w * NW, rh = r.h * NH; const ph = PH() && r.h < .95; const s = ph ? cw / rw : Math.min(cw / rw, ch / rh); T.s = s; T.x = (cw - rw * s) / 2 - r.x * NW * s; T.y = ph ? 4 - r.y * NH * s : (ch - rh * s) / 2 - r.y * NH * s; apply(); }
+const REG_OF = f => /^margin_(place|names)$/.test(f) ? 'margines' : /^(marriage_date|witness)/.test(f) ? 'poczatek' : /^groom_/.test(f) ? 'pan_mlody' : /^bride_/.test(f) ? 'panna_mloda' : f === 'officiant' ? 'zakonczenie' : f === 'margin_notes' ? 'adnotacje' : null;
+const padR = r => { const p = .008; return {x: Math.max(0, r.x - p), y: Math.max(0, r.y - p), w: Math.min(1, r.w + 2 * p), h: Math.min(1, r.h + 2 * p)}; };
+function drawOv(a){ const P = D.pola[a.id] || {}; const ov = $('ov'); ov.style.width = NW + 'px'; ov.style.height = NH + 'px'; let h = ''; const box = (r, c, t) => '<b class="' + c + '" title="' + esc(t || '') + '" style="left:' + r.x * 100 + '%;top:' + r.y * 100 + '%;width:' + r.w * 100 + '%;height:' + r.h * 100 + '%"></b>'; (P.pieczatki || []).forEach(r => h += box(r, 'p', 'pieczątka: ' + (r.opis || ''))); (P.adnotacje || []).forEach(r => h += box(r, 'a', 'adnotacja: ' + (r.opis || ''))); ov.innerHTML = h; }
+function fitField(f){ const a = AM[S.cur]; if (!a) return; const P = D.pola[a.id]; const k = REG_OF(f); if (!P || !k) return; let r = k === 'adnotacje' ? ((P.adnotacje || [])[0] || P.zakonczenie) : P[k]; if (r && NW) { curRoi = a.roi.roi; fitRoi(padR(r)); } }
+$('form').addEventListener('focusin', e => { const f = e.target.dataset && e.target.dataset.f; if (f) fitField(f); });
+let annI = 0; function nextMark(){ const a = AM[S.cur]; const P = (a && D.pola[a.id]) || {}; const L = (P.pieczatki || []).map(r => ['pieczątka', r]).concat((P.adnotacje || []).map(r => ['adnotacja', r])); if (!L.length) { alert('Brak wykrytych pieczątek i adnotacji w tym akcie.'); return; } const x = L[annI++ % L.length]; fitRoi(padR(x[1])); $('vinfo').textContent = x[0] + ': ' + (x[1].opis || ''); }
 function showScan(a){ const key = a.roi.plik; const src = D.scans[key]; curRoi = a.roi.roi; $('vmiss').style.display = 'none'; $('vinfo').textContent = a.roi.file || key;
   if (!src) { im.removeAttribute('src'); $('vmiss').style.display = 'flex'; $('vmiss').textContent = 'Brak skanu: ' + key; return; }
-  im.onload = () => { NW = im.naturalWidth; NH = im.naturalHeight; fitRoi(curRoi); }; im.onerror = () => { $('vmiss').style.display = 'flex'; $('vmiss').innerHTML = 'Nie można wczytać skanu.<br>' + esc(src); }; im.src = src; }
+  im.onload = () => { NW = im.naturalWidth; NH = im.naturalHeight; drawOv(a); fitRoi(curRoi); }; im.onerror = () => { $('vmiss').style.display = 'flex'; $('vmiss').innerHTML = 'Nie można wczytać skanu.<br>' + esc(src); }; if (im.getAttribute('src') === src && NW) { drawOv(a); fitRoi(curRoi); } else im.src = src; }
 $('vAkt').onclick = () => curRoi && fitRoi(curRoi); $('vAll').onclick = () => fitRoi({x:0,y:0,w:1,h:1});
 const zoom = (k, cx, cy) => { cx = cx == null ? vp.clientWidth / 2 : cx; cy = cy == null ? vp.clientHeight / 2 : cy; T.x = cx - (cx - T.x) * k; T.y = cy - (cy - T.y) * k; T.s *= k; apply(); };
-$('vP').onclick = () => zoom(1.3); $('vM').onclick = () => zoom(1 / 1.3);
+$('vMk').onclick = nextMark; $('vP').onclick = () => zoom(1.3); $('vM').onclick = () => zoom(1 / 1.3);
 vp.addEventListener('wheel', e => { e.preventDefault(); const r = vp.getBoundingClientRect(); zoom(e.deltaY < 0 ? 1.15 : 1 / 1.15, e.clientX - r.left, e.clientY - r.top); }, {passive:false});
 let drag = null; vp.addEventListener('pointerdown', e => { drag = {x:e.clientX - T.x, y:e.clientY - T.y}; vp.setPointerCapture(e.pointerId); vp.style.cursor = 'grabbing'; });
 vp.addEventListener('pointermove', e => { if (!drag) return; T.x = e.clientX - drag.x; T.y = e.clientY - drag.y; apply(); }); vp.addEventListener('pointerup', () => { drag = null; vp.style.cursor = 'grab'; });

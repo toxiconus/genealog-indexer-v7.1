@@ -1,0 +1,246 @@
+{
+ "ai1-m1944-021": {
+  "margines": {
+   "x": 0.895,
+   "y": 0.127,
+   "w": 0.06,
+   "h": 0.1836,
+   "pewnosc": "srednia"
+  },
+  "poczatek": {
+   "x": 0.4725,
+   "y": 0.1224,
+   "w": 0.39,
+   "h": 0.1758,
+   "pewnosc": "srednia"
+  },
+  "pan_mlody": {
+   "x": 0.4725,
+   "y": 0.3008,
+   "w": 0.39,
+   "h": 0.0846,
+   "pewnosc": "srednia"
+  },
+  "panna_mloda": {
+   "x": 0.4725,
+   "y": 0.388,
+   "w": 0.39,
+   "h": 0.0977,
+   "pewnosc": "srednia"
+  },
+  "zakonczenie": {
+   "x": 0.4725,
+   "y": 0.485,
+   "w": 0.39,
+   "h": 0.2507,
+   "pewnosc": "srednia"
+  },
+  "podpisy": {
+   "x": 0.51,
+   "y": 0.7357,
+   "w": 0.3,
+   "h": 0.0651,
+   "pewnosc": "srednia"
+  },
+  "pieczatki": [
+   {
+    "opis": "okrągła/prostokątna pieczęć 'DECANUS JANOVIENSIS' (czerwona)",
+    "x": 0.8725,
+    "y": 0.0534,
+    "w": 0.0675,
+    "h": 0.0358,
+    "pewnosc": "wysoka"
+   },
+   {
+    "opis": "fragment czerwonej pieczęci przy prawej krawędzi (sąsiednia karta)",
+    "x": 0.945,
+    "y": 0.0423,
+    "w": 0.03,
+    "h": 0.0358,
+    "pewnosc": "niska"
+   }
+  ],
+  "adnotacje": [
+   {
+    "opis": "dopisek o zgonie (margines, inny charakter pisma)",
+    "x": 0.854,
+    "y": 0.3125,
+    "w": 0.1,
+    "h": 0.1139,
+    "pewnosc": "srednia"
+   },
+   {
+    "opis": "napis '1944-46 B' nad tekstem (sygnatura, nie dopisek do aktu)",
+    "x": 0.6325,
+    "y": 0.0378,
+    "w": 0.115,
+    "h": 0.0293,
+    "pewnosc": "niska"
+   }
+  ],
+  "strona": {
+   "x": 0.4675,
+   "y": 0.0358,
+   "w": 0.485,
+   "h": 0.9277,
+   "pewnosc": "wysoka"
+  }
+ },
+ "ai1-m1944-022": {
+  "margines": {
+   "x": 0.02,
+   "y": 0.0833,
+   "w": 0.0725,
+   "h": 0.1523,
+   "pewnosc": "wysoka"
+  },
+  "poczatek": {
+   "x": 0.0975,
+   "y": 0.0833,
+   "w": 0.3815,
+   "h": 0.1758,
+   "pewnosc": "srednia"
+  },
+  "pan_mlody": {
+   "x": 0.0975,
+   "y": 0.2331,
+   "w": 0.3815,
+   "h": 0.0872,
+   "pewnosc": "srednia"
+  },
+  "panna_mloda": {
+   "x": 0.0975,
+   "y": 0.3177,
+   "w": 0.3815,
+   "h": 0.1055,
+   "pewnosc": "srednia"
+  },
+  "zakonczenie": {
+   "x": 0.0975,
+   "y": 0.4199,
+   "w": 0.3815,
+   "h": 0.2865,
+   "pewnosc": "srednia"
+  },
+  "podpisy": {
+   "x": 0.0975,
+   "y": 0.7129,
+   "w": 0.285,
+   "h": 0.0892,
+   "pewnosc": "srednia"
+  },
+  "pieczatki": [],
+  "adnotacje": [
+   {
+    "x": 0.02,
+    "y": 0.2376,
+    "w": 0.0725,
+    "h": 0.0931,
+    "pewnosc": "wysoka",
+    "opis": "dopisek o zgonie na lewym marginesie (inne pismo)"
+   }
+  ],
+  "strona": {
+   "x": 0.0025,
+   "y": 0.0326,
+   "w": 0.49,
+   "h": 0.9323,
+   "pewnosc": "wysoka"
+  }
+ },
+ "ai1-m1944-023": {
+  "margines": {
+   "x": 0.8975,
+   "y": 0.0833,
+   "w": 0.0975,
+   "h": 0.1458,
+   "pewnosc": "wysoka"
+  },
+  "poczatek": {
+   "x": 0.5125,
+   "y": 0.0833,
+   "w": 0.3835,
+   "h": 0.1758,
+   "pewnosc": "srednia"
+  },
+  "pan_mlody": {
+   "x": 0.5125,
+   "y": 0.2539,
+   "w": 0.3835,
+   "h": 0.0664,
+   "pewnosc": "srednia"
+  },
+  "panna_mloda": {
+   "x": 0.5125,
+   "y": 0.3177,
+   "w": 0.3835,
+   "h": 0.0742,
+   "pewnosc": "srednia"
+  },
+  "zakonczenie": {
+   "x": 0.5125,
+   "y": 0.3893,
+   "w": 0.3835,
+   "h": 0.263,
+   "pewnosc": "srednia"
+  },
+  "podpisy": {
+   "x": 0.545,
+   "y": 0.6673,
+   "w": 0.2925,
+   "h": 0.0749,
+   "pewnosc": "srednia"
+  },
+  "pieczatki": [
+   {
+    "x": 0.9075,
+    "y": 0.0404,
+    "w": 0.0715,
+    "h": 0.043,
+    "pewnosc": "wysoka",
+    "opis": "stempel DECANUS JANOVIENSIS (czerwony, prostokatny)"
+   },
+   {
+    "x": 0.8325,
+    "y": 0.6888,
+    "w": 0.1215,
+    "h": 0.0651,
+    "pewnosc": "wysoka",
+    "opis": "czerwony stempel z napisem o przeniesieniu aktu do rejestru"
+   },
+   {
+    "x": 0.849,
+    "y": 0.7585,
+    "w": 0.1,
+    "h": 0.054,
+    "pewnosc": "srednia",
+    "opis": "pieczec kierownika USC z podpisem"
+   }
+  ],
+  "adnotacje": [
+   {
+    "x": 0.8975,
+    "y": 0.2331,
+    "w": 0.0975,
+    "h": 0.0977,
+    "pewnosc": "wysoka",
+    "opis": "dopisek o zgonie na prawym marginesie (inne pismo)"
+   },
+   {
+    "x": 0.825,
+    "y": 0.3333,
+    "w": 0.0225,
+    "h": 0.026,
+    "pewnosc": "niska",
+    "opis": "maly znak poprawki miedzy liniami"
+   }
+  ],
+  "strona": {
+   "x": 0.505,
+   "y": 0.0326,
+   "w": 0.49,
+   "h": 0.9323,
+   "pewnosc": "wysoka"
+  }
+ }
+}

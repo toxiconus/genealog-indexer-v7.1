@@ -1,0 +1,884 @@
+{
+ "ai1-m1945-001": {
+  "margines": {
+   "x": 0.0094,
+   "y": 0.1344,
+   "w": 0.0762,
+   "h": 0.1629,
+   "pewnosc": "wysoka"
+  },
+  "poczatek": {
+   "x": 0.0956,
+   "y": 0.1238,
+   "w": 0.3831,
+   "h": 0.1906,
+   "pewnosc": "srednia"
+  },
+  "pan_mlody": {
+   "x": 0.0956,
+   "y": 0.316,
+   "w": 0.3831,
+   "h": 0.0717,
+   "pewnosc": "srednia"
+  },
+  "panna_mloda": {
+   "x": 0.0956,
+   "y": 0.3876,
+   "w": 0.3831,
+   "h": 0.1059,
+   "pewnosc": "srednia"
+  },
+  "zakonczenie": {
+   "x": 0.0956,
+   "y": 0.4935,
+   "w": 0.3831,
+   "h": 0.2052,
+   "pewnosc": "srednia"
+  },
+  "podpisy": {
+   "x": 0.1094,
+   "y": 0.7068,
+   "w": 0.2906,
+   "h": 0.1832,
+   "pewnosc": "wysoka"
+  },
+  "pieczatki": [
+   {
+    "x": 0.0537,
+    "y": 0.3111,
+    "w": 0.0537,
+    "h": 0.1246,
+    "pewnosc": "wysoka",
+    "opis": "czerwony stempel USC z podpisem kierownika"
+   }
+  ],
+  "adnotacje": [
+   {
+    "x": 0.0081,
+    "y": 0.3054,
+    "w": 0.0331,
+    "h": 0.1319,
+    "pewnosc": "wysoka",
+    "opis": "czerwony nadruk na marginesie (przeniesienie aktu, pionowo)"
+   }
+  ],
+  "strona": {
+   "x": 0.005,
+   "y": 0.0269,
+   "w": 0.4763,
+   "h": 0.9324,
+   "pewnosc": "wysoka"
+  }
+ },
+ "ai1-m1945-002": {
+  "margines": {
+   "x": 0.9,
+   "y": 0.0855,
+   "w": 0.08,
+   "h": 0.1466,
+   "pewnosc": "wysoka"
+  },
+  "poczatek": {
+   "x": 0.5138,
+   "y": 0.0749,
+   "w": 0.3837,
+   "h": 0.1629,
+   "pewnosc": "srednia"
+  },
+  "pan_mlody": {
+   "x": 0.5138,
+   "y": 0.2378,
+   "w": 0.3837,
+   "h": 0.0733,
+   "pewnosc": "srednia"
+  },
+  "panna_mloda": {
+   "x": 0.5138,
+   "y": 0.3111,
+   "w": 0.3837,
+   "h": 0.1189,
+   "pewnosc": "srednia"
+  },
+  "zakonczenie": {
+   "x": 0.5138,
+   "y": 0.43,
+   "w": 0.3837,
+   "h": 0.2191,
+   "pewnosc": "srednia"
+  },
+  "podpisy": {
+   "x": 0.5363,
+   "y": 0.6612,
+   "w": 0.3137,
+   "h": 0.1816,
+   "pewnosc": "wysoka"
+  },
+  "pieczatki": [
+   {
+    "x": 0.9156,
+    "y": 0.0448,
+    "w": 0.0612,
+    "h": 0.0407,
+    "pewnosc": "wysoka",
+    "opis": "rozowa pieczec DECYZJA JANOWIENSKA"
+   },
+   {
+    "x": 0.9,
+    "y": 0.4235,
+    "w": 0.0844,
+    "h": 0.0627,
+    "pewnosc": "wysoka",
+    "opis": "czerwony stempel USC z podpisem kierownika"
+   }
+  ],
+  "adnotacje": [
+   {
+    "x": 0.8981,
+    "y": 0.2565,
+    "w": 0.0944,
+    "h": 0.0871,
+    "pewnosc": "srednia",
+    "opis": "niebieski dopisek o aktualnej nazwie miejscowosci"
+   },
+   {
+    "x": 0.8981,
+    "y": 0.3518,
+    "w": 0.0944,
+    "h": 0.0733,
+    "pewnosc": "srednia",
+    "opis": "czerwony dopisek z 2013 (przeniesienie aktu, slub, akt zgonu)"
+   }
+  ],
+  "strona": {
+   "x": 0.5,
+   "y": 0.0269,
+   "w": 0.4969,
+   "h": 0.9406,
+   "pewnosc": "wysoka"
+  }
+ },
+ "ai1-m1945-003": {
+  "margines": {
+   "x": 0.0075,
+   "y": 0.0859,
+   "w": 0.0925,
+   "h": 0.1693,
+   "pewnosc": "srednia"
+  },
+  "poczatek": {
+   "x": 0.0975,
+   "y": 0.0898,
+   "w": 0.3775,
+   "h": 0.1523,
+   "pewnosc": "srednia"
+  },
+  "pan_mlody": {
+   "x": 0.0975,
+   "y": 0.2311,
+   "w": 0.3775,
+   "h": 0.0801,
+   "pewnosc": "srednia"
+  },
+  "panna_mloda": {
+   "x": 0.0975,
+   "y": 0.3112,
+   "w": 0.3775,
+   "h": 0.138,
+   "pewnosc": "srednia"
+  },
+  "zakonczenie": {
+   "x": 0.0975,
+   "y": 0.4479,
+   "w": 0.3775,
+   "h": 0.224,
+   "pewnosc": "srednia"
+  },
+  "podpisy": {
+   "x": 0.1175,
+   "y": 0.8398,
+   "w": 0.35,
+   "h": 0.0794,
+   "pewnosc": "srednia"
+  },
+  "podpis_ksiedza": {
+   "x": 0.2575,
+   "y": 0.6719,
+   "w": 0.1475,
+   "h": 0.043,
+   "pewnosc": "srednia"
+  },
+  "pieczatki": [],
+  "adnotacje": [],
+  "strona": {
+   "x": 0.095,
+   "y": 0.0846,
+   "w": 0.3825,
+   "h": 0.8398,
+   "pewnosc": "srednia"
+  }
+ },
+ "ai1-m1945-004": {
+  "margines": {
+   "x": 0.899,
+   "y": 0.0879,
+   "w": 0.096,
+   "h": 0.1673,
+   "pewnosc": "srednia"
+  },
+  "poczatek": {
+   "x": 0.5175,
+   "y": 0.0768,
+   "w": 0.3715,
+   "h": 0.1654,
+   "pewnosc": "srednia"
+  },
+  "pan_mlody": {
+   "x": 0.5175,
+   "y": 0.2422,
+   "w": 0.3715,
+   "h": 0.069,
+   "pewnosc": "srednia"
+  },
+  "panna_mloda": {
+   "x": 0.5175,
+   "y": 0.3112,
+   "w": 0.3715,
+   "h": 0.1217,
+   "pewnosc": "srednia"
+  },
+  "zakonczenie": {
+   "x": 0.5175,
+   "y": 0.431,
+   "w": 0.3715,
+   "h": 0.2428,
+   "pewnosc": "srednia"
+  },
+  "podpisy": {
+   "x": 0.5225,
+   "y": 0.8626,
+   "w": 0.3025,
+   "h": 0.0553,
+   "pewnosc": "srednia"
+  },
+  "podpis_ksiedza": {
+   "x": 0.7025,
+   "y": 0.6784,
+   "w": 0.145,
+   "h": 0.0345,
+   "pewnosc": "srednia"
+  },
+  "pieczatki": [
+   {
+    "x": 0.906,
+    "y": 0.0534,
+    "w": 0.07,
+    "h": 0.0365,
+    "pewnosc": "wysoka",
+    "opis": "czerwony prostokatny stempel DECANUS JANOVIENSIS"
+   }
+  ],
+  "adnotacje": [
+   {
+    "x": 0.896,
+    "y": 0.2786,
+    "w": 0.09,
+    "h": 0.1263,
+    "pewnosc": "srednia",
+    "opis": "dopisek o smierci (zmarla 29.10.1987, akta 473/97) inny charakter pisma, z podpisem"
+   }
+  ],
+  "strona": {
+   "x": 0.51,
+   "y": 0.0749,
+   "w": 0.385,
+   "h": 0.8496,
+   "pewnosc": "srednia"
+  }
+ },
+ "ai1-m1945-005": {
+  "margines": {
+   "x": 0.0075,
+   "y": 0.0846,
+   "w": 0.09,
+   "h": 0.1888,
+   "pewnosc": "wysoka"
+  },
+  "poczatek": {
+   "x": 0.0975,
+   "y": 0.0846,
+   "w": 0.3775,
+   "h": 0.1576,
+   "pewnosc": "srednia"
+  },
+  "pan_mlody": {
+   "x": 0.0975,
+   "y": 0.2422,
+   "w": 0.3775,
+   "h": 0.0586,
+   "pewnosc": "srednia"
+  },
+  "panna_mloda": {
+   "x": 0.0975,
+   "y": 0.3008,
+   "w": 0.3775,
+   "h": 0.0898,
+   "pewnosc": "srednia"
+  },
+  "zakonczenie": {
+   "x": 0.0975,
+   "y": 0.3906,
+   "w": 0.3775,
+   "h": 0.2552,
+   "pewnosc": "srednia"
+  },
+  "podpisy": {
+   "x": 0.1,
+   "y": 0.8268,
+   "w": 0.37,
+   "h": 0.0879,
+   "pewnosc": "srednia"
+  },
+  "pieczatki": [
+   {
+    "x": 0.0125,
+    "y": 0.4557,
+    "w": 0.095,
+    "h": 0.0521,
+    "pewnosc": "srednia",
+    "opis": "czerwona pieczęć KIEROWNIK USC (margines)"
+   },
+   {
+    "x": 0.025,
+    "y": 0.6608,
+    "w": 0.115,
+    "h": 0.0651,
+    "pewnosc": "wysoka",
+    "opis": "prostokątny stempel przeniesienia aktu, 2016"
+   },
+   {
+    "x": 0.0425,
+    "y": 0.7357,
+    "w": 0.1075,
+    "h": 0.0781,
+    "pewnosc": "wysoka",
+    "opis": "czerwona pieczęć KIEROWNIK USC z podpisem"
+   }
+  ],
+  "adnotacje": [
+   {
+    "x": 0.0075,
+    "y": 0.293,
+    "w": 0.095,
+    "h": 0.0651,
+    "pewnosc": "srednia",
+    "opis": "dopisek: aktualna nazwa miejscowości, USC 2008"
+   },
+   {
+    "x": 0.0075,
+    "y": 0.4036,
+    "w": 0.095,
+    "h": 0.0586,
+    "pewnosc": "wysoka",
+    "opis": "dopisek o zgonie, USC Zagrowiec"
+   }
+  ],
+  "strona": {
+   "x": 0.005,
+   "y": 0.0391,
+   "w": 0.475,
+   "h": 0.8984,
+   "pewnosc": "wysoka"
+  }
+ },
+ "ai1-m1945-006": {
+  "margines": {
+   "x": 0.9,
+   "y": 0.0814,
+   "w": 0.0925,
+   "h": 0.1888,
+   "pewnosc": "srednia"
+  },
+  "poczatek": {
+   "x": 0.515,
+   "y": 0.0781,
+   "w": 0.38,
+   "h": 0.1628,
+   "pewnosc": "srednia"
+  },
+  "pan_mlody": {
+   "x": 0.515,
+   "y": 0.2422,
+   "w": 0.38,
+   "h": 0.069,
+   "pewnosc": "srednia"
+  },
+  "panna_mloda": {
+   "x": 0.515,
+   "y": 0.3112,
+   "w": 0.38,
+   "h": 0.1185,
+   "pewnosc": "srednia"
+  },
+  "zakonczenie": {
+   "x": 0.515,
+   "y": 0.431,
+   "w": 0.38,
+   "h": 0.2168,
+   "pewnosc": "srednia"
+  },
+  "podpisy": {
+   "x": 0.52,
+   "y": 0.7422,
+   "w": 0.345,
+   "h": 0.0651,
+   "pewnosc": "srednia"
+  },
+  "pieczatki": [
+   {
+    "x": 0.9075,
+    "y": 0.0534,
+    "w": 0.0675,
+    "h": 0.0358,
+    "pewnosc": "wysoka",
+    "opis": "czerwona pieczęć DECANUS JAROVIENSIS"
+   }
+  ],
+  "adnotacje": [
+   {
+    "x": 0.895,
+    "y": 0.2962,
+    "w": 0.09,
+    "h": 0.0846,
+    "pewnosc": "srednia",
+    "opis": "dopisek o zawarciu 1988 (USC Janów) i krótka adnotacja"
+   }
+  ],
+  "strona": {
+   "x": 0.505,
+   "y": 0.0391,
+   "w": 0.4875,
+   "h": 0.9017,
+   "pewnosc": "wysoka"
+  }
+ },
+ "ai1-m1945-007": {
+  "margines": {
+   "x": 0.009,
+   "y": 0.0879,
+   "w": 0.0825,
+   "h": 0.1465,
+   "pewnosc": "srednia"
+  },
+  "poczatek": {
+   "x": 0.0975,
+   "y": 0.0814,
+   "w": 0.38,
+   "h": 0.1562,
+   "pewnosc": "srednia"
+  },
+  "pan_mlody": {
+   "x": 0.0975,
+   "y": 0.2246,
+   "w": 0.38,
+   "h": 0.0944,
+   "pewnosc": "srednia"
+  },
+  "panna_mloda": {
+   "x": 0.0975,
+   "y": 0.3158,
+   "w": 0.38,
+   "h": 0.0781,
+   "pewnosc": "srednia"
+  },
+  "zakonczenie": {
+   "x": 0.0975,
+   "y": 0.3906,
+   "w": 0.38,
+   "h": 0.2865,
+   "pewnosc": "srednia"
+  },
+  "podpisy": {
+   "x": 0.1025,
+   "y": 0.6934,
+   "w": 0.3,
+   "h": 0.1497,
+   "pewnosc": "srednia"
+  },
+  "pieczatki": [],
+  "adnotacje": [],
+  "strona": {
+   "x": 0.015,
+   "y": 0.0456,
+   "w": 0.4775,
+   "h": 0.9049,
+   "pewnosc": "srednia"
+  }
+ },
+ "ai1-m1945-008": {
+  "margines": {
+   "x": 0.9025,
+   "y": 0.0846,
+   "w": 0.0725,
+   "h": 0.1725,
+   "pewnosc": "srednia"
+  },
+  "poczatek": {
+   "x": 0.5125,
+   "y": 0.0781,
+   "w": 0.3825,
+   "h": 0.1725,
+   "pewnosc": "srednia"
+  },
+  "pan_mlody": {
+   "x": 0.5125,
+   "y": 0.2507,
+   "w": 0.3825,
+   "h": 0.1237,
+   "pewnosc": "srednia"
+  },
+  "panna_mloda": {
+   "x": 0.5125,
+   "y": 0.3776,
+   "w": 0.3825,
+   "h": 0.0879,
+   "pewnosc": "srednia"
+  },
+  "zakonczenie": {
+   "x": 0.5125,
+   "y": 0.4655,
+   "w": 0.3825,
+   "h": 0.2441,
+   "pewnosc": "srednia"
+  },
+  "podpisy": {
+   "x": 0.52,
+   "y": 0.7129,
+   "w": 0.35,
+   "h": 0.1497,
+   "pewnosc": "srednia"
+  },
+  "pieczatki": [
+   {
+    "x": 0.915,
+    "y": 0.0488,
+    "w": 0.0575,
+    "h": 0.0423,
+    "pewnosc": "wysoka",
+    "opis": "czerwony prostokatny stempel DECANUS JAMOVIENSIS"
+   },
+   {
+    "x": 0.77,
+    "y": 0.8659,
+    "w": 0.065,
+    "h": 0.0651,
+    "pewnosc": "niska",
+    "opis": "niebieski slad/plama atramentu (ew. pieczec)"
+   }
+  ],
+  "adnotacje": [],
+  "strona": {
+   "x": 0.5,
+   "y": 0.0456,
+   "w": 0.4925,
+   "h": 0.9049,
+   "pewnosc": "srednia"
+  }
+ },
+ "ai1-m1945-009": {
+  "margines": {
+   "x": 0.005,
+   "y": 0.083,
+   "w": 0.088,
+   "h": 0.182,
+   "pewnosc": "wysoka"
+  },
+  "poczatek": {
+   "x": 0.095,
+   "y": 0.078,
+   "w": 0.382,
+   "h": 0.184,
+   "pewnosc": "srednia"
+  },
+  "pan_mlody": {
+   "x": 0.095,
+   "y": 0.255,
+   "w": 0.382,
+   "h": 0.103,
+   "pewnosc": "srednia"
+  },
+  "panna_mloda": {
+   "x": 0.095,
+   "y": 0.358,
+   "w": 0.382,
+   "h": 0.116,
+   "pewnosc": "srednia"
+  },
+  "zakonczenie": {
+   "x": 0.095,
+   "y": 0.474,
+   "w": 0.382,
+   "h": 0.245,
+   "pewnosc": "srednia"
+  },
+  "podpisy": {
+   "x": 0.105,
+   "y": 0.728,
+   "w": 0.342,
+   "h": 0.185,
+   "pewnosc": "srednia"
+  },
+  "pieczatki": [],
+  "adnotacje": [
+   {
+    "x": 0.008,
+    "y": 0.316,
+    "w": 0.084,
+    "h": 0.117,
+    "pewnosc": "wysoka",
+    "opis": "dopisek na marginesie (data zgonu, numer aktu USC), inny charakter pisma"
+   },
+   {
+    "x": 0.403,
+    "y": 0.663,
+    "w": 0.065,
+    "h": 0.024,
+    "pewnosc": "srednia",
+    "opis": "poprawka miedzy liniami (przekreslone, wpisane slowo)"
+   },
+   {
+    "x": 0.095,
+    "y": 0.668,
+    "w": 0.08,
+    "h": 0.03,
+    "pewnosc": "niska",
+    "opis": "poprawka miedzy liniami (nadpisane slowo)"
+   }
+  ],
+  "strona": {
+   "x": 0.003,
+   "y": 0.045,
+   "w": 0.49,
+   "h": 0.9,
+   "pewnosc": "srednia"
+  }
+ },
+ "ai1-m1945-010": {
+  "margines": {
+   "x": 0.902,
+   "y": 0.086,
+   "w": 0.088,
+   "h": 0.148,
+   "pewnosc": "wysoka"
+  },
+  "poczatek": {
+   "x": 0.512,
+   "y": 0.078,
+   "w": 0.386,
+   "h": 0.172,
+   "pewnosc": "srednia"
+  },
+  "pan_mlody": {
+   "x": 0.512,
+   "y": 0.238,
+   "w": 0.386,
+   "h": 0.122,
+   "pewnosc": "srednia"
+  },
+  "panna_mloda": {
+   "x": 0.512,
+   "y": 0.36,
+   "w": 0.386,
+   "h": 0.14,
+   "pewnosc": "srednia"
+  },
+  "zakonczenie": {
+   "x": 0.512,
+   "y": 0.503,
+   "w": 0.386,
+   "h": 0.215,
+   "pewnosc": "srednia"
+  },
+  "podpisy": {
+   "x": 0.522,
+   "y": 0.706,
+   "w": 0.376,
+   "h": 0.165,
+   "pewnosc": "srednia"
+  },
+  "pieczatki": [
+   {
+    "x": 0.902,
+    "y": 0.043,
+    "w": 0.072,
+    "h": 0.05,
+    "pewnosc": "wysoka",
+    "opis": "prostokatna pieczec DECIMUS JANOVIENSIS (czerwona)"
+   },
+   {
+    "x": 0.765,
+    "y": 0.737,
+    "w": 0.119,
+    "h": 0.066,
+    "pewnosc": "wysoka",
+    "opis": "prostokatny stempel: Akt przeniesiono do rejestru stanu cywilnego (z datami)"
+   },
+   {
+    "x": 0.891,
+    "y": 0.749,
+    "w": 0.08,
+    "h": 0.052,
+    "pewnosc": "wysoka",
+    "opis": "stempel tekstowy: Z-ca KIEROWNIKA Urzedu Stanu Cywilnego"
+   },
+   {
+    "x": 0.918,
+    "y": 0.766,
+    "w": 0.035,
+    "h": 0.03,
+    "pewnosc": "srednia",
+    "opis": "okragla pieczec (z podpisem)"
+   }
+  ],
+  "adnotacje": [],
+  "strona": {
+   "x": 0.505,
+   "y": 0.045,
+   "w": 0.49,
+   "h": 0.9,
+   "pewnosc": "srednia"
+  }
+ },
+ "ai1-m1945-011": {
+  "margines": {
+   "x": 0.02,
+   "y": 0.0879,
+   "w": 0.0725,
+   "h": 0.153,
+   "pewnosc": "srednia"
+  },
+  "poczatek": {
+   "x": 0.095,
+   "y": 0.0879,
+   "w": 0.38,
+   "h": 0.1367,
+   "pewnosc": "srednia"
+  },
+  "pan_mlody": {
+   "x": 0.095,
+   "y": 0.2214,
+   "w": 0.38,
+   "h": 0.1159,
+   "pewnosc": "srednia"
+  },
+  "panna_mloda": {
+   "x": 0.095,
+   "y": 0.3353,
+   "w": 0.38,
+   "h": 0.0716,
+   "pewnosc": "srednia"
+  },
+  "zakonczenie": {
+   "x": 0.095,
+   "y": 0.4069,
+   "w": 0.38,
+   "h": 0.306,
+   "pewnosc": "srednia"
+  },
+  "podpisy": {
+   "x": 0.1025,
+   "y": 0.7161,
+   "w": 0.3175,
+   "h": 0.1855,
+   "pewnosc": "srednia"
+  },
+  "pieczatki": [],
+  "adnotacje": [
+   {
+    "x": 0.005,
+    "y": 0.2799,
+    "w": 0.085,
+    "h": 0.1237,
+    "opis": "dopisek na lewym marginesie, inny charakter pisma (zmarła, USC)",
+    "pewnosc": "srednia"
+   }
+  ],
+  "strona": {
+   "x": 0.015,
+   "y": 0.0651,
+   "w": 0.465,
+   "h": 0.8984,
+   "pewnosc": "srednia"
+  }
+ },
+ "ai1-m1945-012": {
+  "margines": {
+   "x": 0.8975,
+   "y": 0.0814,
+   "w": 0.09,
+   "h": 0.1335,
+   "pewnosc": "srednia"
+  },
+  "poczatek": {
+   "x": 0.515,
+   "y": 0.0833,
+   "w": 0.3775,
+   "h": 0.112,
+   "pewnosc": "srednia"
+  },
+  "pan_mlody": {
+   "x": 0.515,
+   "y": 0.194,
+   "w": 0.3775,
+   "h": 0.1068,
+   "pewnosc": "srednia"
+  },
+  "panna_mloda": {
+   "x": 0.515,
+   "y": 0.3008,
+   "w": 0.3775,
+   "h": 0.0885,
+   "pewnosc": "srednia"
+  },
+  "zakonczenie": {
+   "x": 0.515,
+   "y": 0.3893,
+   "w": 0.3775,
+   "h": 0.265,
+   "pewnosc": "srednia"
+  },
+  "podpisy": {
+   "x": 0.5375,
+   "y": 0.6641,
+   "w": 0.2825,
+   "h": 0.2507,
+   "pewnosc": "srednia"
+  },
+  "pieczatki": [
+   {
+    "x": 0.911,
+    "y": 0.0508,
+    "w": 0.068,
+    "h": 0.0384,
+    "opis": "prostokatna czerwona pieczec z napisem DECANUS JANOVIENSIS",
+    "pewnosc": "wysoka"
+   }
+  ],
+  "adnotacje": [
+   {
+    "x": 0.895,
+    "y": 0.2181,
+    "w": 0.089,
+    "h": 0.0879,
+    "opis": "dopisek na prawym marginesie, inny charakter pisma (zmarla, USC)",
+    "pewnosc": "srednia"
+   }
+  ],
+  "strona": {
+   "x": 0.5,
+   "y": 0.0651,
+   "w": 0.4925,
+   "h": 0.8984,
+   "pewnosc": "srednia"
+  }
+ }
+}
