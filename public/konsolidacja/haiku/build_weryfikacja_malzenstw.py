@@ -11,7 +11,7 @@ years = sorted(int(re.search(r'MALZENSTWA_(\d{4})_', p).group(1)) for p in glob.
 acts, reg, cols, scans, pola = [], {}, None, {}, {}
 for y in years:
     rows = list(csv.reader(open(f'{H}/MALZENSTWA_{y}_ai1_import.csv', encoding='utf-8-sig', newline=''), delimiter=';'))
-    cols = rows[0] + (['margin_names'] if 'margin_names' not in rows[0] else [])
+    cols = rows[0] + [c for c in ('margin_groom','margin_bride') if c not in rows[0]]
     roi = {r['id']: r for r in json.load(open(f'{H}/MALZENSTWA_{y}_ai1_roi.json', encoding='utf-8'))}
     pola.update(json.load(open(f'{H}/MALZENSTWA_{y}_ai1_pola.json', encoding='utf-8')) if os.path.exists(f'{H}/MALZENSTWA_{y}_ai1_pola.json') else {})
     reg[y] = json.load(open(f'{H}/MALZENSTWA_{y}_ai1_rejestr.json', encoding='utf-8'))
