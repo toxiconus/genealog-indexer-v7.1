@@ -25,17 +25,23 @@ button.pri{background:var(--ac);color:#fff;border-color:var(--ac)}button.ok{back
 #txt{max-height:22%;overflow:auto;padding:8px 10px;border-top:1px solid var(--ln);font-size:12.5px;color:var(--mu)}
 #form{padding:10px 12px}
 .grp{margin:0 0 12px}.grp h3{margin:0 0 6px;font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--mu);font-weight:600;border-bottom:1px solid var(--ln);padding-bottom:3px}
-.f{display:grid;grid-template-columns:150px 1fr auto;gap:6px;align-items:center;padding:2px 0;border-radius:6px}
-.f label{color:var(--mu);font-size:12.5px}.f input{width:100%;padding:5px 8px;border:1px solid var(--ln);border-radius:7px;background:var(--in);color:var(--tx);font:inherit}
-.f.ok input{background:var(--okb);border-color:var(--ok)}.f.un input{background:var(--unb);border-color:var(--un)}
-.f .b{display:flex;gap:3px}.f .b button{padding:2px 7px;font-size:12px;border-radius:6px}.f .b .on{background:var(--ac);color:#fff;border-color:var(--ac)}
-.ai{grid-column:2/4;font-size:11.5px;color:var(--mu);margin:-2px 0 2px}.nt{grid-column:2/4}.nt input{font-size:12px}
+.f{display:grid;grid-template-columns:1fr auto;gap:3px 6px;align-items:start;padding:5px 0;border-radius:6px;border-bottom:1px dashed var(--ln)}
+.f label{grid-column:1/-1;color:var(--mu);font-size:12px}.f input,.f textarea{width:100%;padding:7px 9px;border:1px solid var(--ln);border-radius:8px;background:var(--in);color:var(--tx);font:inherit}.f textarea{resize:vertical;line-height:1.4}
+.f.ok input,.f.ok textarea{background:var(--okb);border-color:var(--ok)}.f.un input,.f.un textarea{background:var(--unb);border-color:var(--un)}
+.ins{display:grid;grid-template-columns:repeat(var(--n,1),1fr);gap:6px}.cell{min-width:0}.tgw{display:block;min-height:0}
+.f .b{display:flex;gap:4px}.f .b button{padding:2px 9px;font-size:13px;border-radius:7px}.f .b .on{background:var(--ac);color:#fff;border-color:var(--ac)}
+.ex,.chps,.ntw,.dw{grid-column:1/-1}.chps{display:flex;flex-wrap:wrap;gap:5px}.chps:empty,.ntw:empty{display:none}.ex{display:flex;gap:6px;flex-wrap:wrap;align-items:center}.nt input,.ntw input{font-size:13px}
+.pb{border-left:4px solid var(--c,var(--ln));padding:4px 0 4px 10px;margin:0 0 14px;border-radius:2px}.pb.g{--c:#5b7fa6}.pb.b{--c:#b06f8c}.pb.w{--c:#8a8a80}.pb.mg{--c:#b0803a}.pb.akt{--c:var(--ac)}.pb.sub{margin:8px 0 6px 2px;--c:inherit;border-left-width:3px;border-left-style:dotted;border-left-color:inherit;padding-left:8px}
+.pb.g .pb.sub{border-left-color:#5b7fa6}.pb.b .pb.sub{border-left-color:#b06f8c}
+.pt{font-size:12.5px;letter-spacing:.05em;text-transform:uppercase;font-weight:700;color:var(--c,var(--mu));margin:2px 0 4px}.pb.sub>.pt{font-size:11.5px;font-weight:600;color:var(--mu)}
+.pb.g>.pt{color:#5b7fa6}.pb.b>.pt{color:#b06f8c}
+.stb{display:flex;gap:6px}.stb button{padding:6px 14px;border-radius:8px}.stb .on{background:var(--ac);color:#fff;border-color:var(--ac)}
 .warn{background:var(--erb);border:1px solid var(--er);color:var(--er);border-radius:8px;padding:6px 10px;margin:0 0 10px;font-size:12.5px}
 .tag{display:inline-block;font-size:11px;padding:1px 7px;border-radius:9px;border:1px solid var(--ln);color:var(--mu);margin-left:6px}.tag.ok{border-color:var(--ok);color:var(--ok);background:var(--okb)}
 .cols2{display:grid;grid-template-columns:1fr 1fr;gap:0 18px}
 dialog{border:1px solid var(--ln);border-radius:12px;background:var(--pn);color:var(--tx);max-width:760px;width:92%}dialog::backdrop{background:rgba(0,0,0,.45)}
 table{border-collapse:collapse;width:100%;font-size:13px}td,th{border-bottom:1px solid var(--ln);padding:3px 6px;text-align:left}
-.yn{display:flex;gap:4px}.yn button{flex:1;padding:5px 6px;border-radius:8px;opacity:.75}.yn .y.on{background:var(--okb);border-color:var(--ok);color:var(--ok);opacity:1;font-weight:600}.yn .n.on{background:var(--erb);border-color:var(--er);color:var(--er);opacity:1;font-weight:600}.yn .z.on{background:var(--sb);border-color:var(--mu);color:var(--mu);opacity:1;font-weight:600}
+.yn{display:inline-flex;gap:4px}.yn button{padding:5px 12px;border-radius:8px;opacity:.8}.yn .y.on{background:var(--okb);border-color:var(--ok);color:var(--ok);opacity:1;font-weight:600}.yn .n.on{background:var(--erb);border-color:var(--er);color:var(--er);opacity:1;font-weight:600}.yn .z.on{background:var(--sb);border-color:var(--mu);color:var(--mu);opacity:1;font-weight:600}
 .chp{grid-column:2/4;display:flex;flex-wrap:wrap;gap:5px;margin:1px 0 3px}.chip{border:1px solid var(--ln);border-radius:8px;padding:4px 9px;min-height:32px;font-size:13px;display:inline-flex;gap:5px;align-items:center}.chip small{color:var(--mu);font-size:10.5px}.chip.bz{border-color:var(--ac)}.chip.ai{border-color:var(--un);background:var(--unb)}.chip.akt{border-color:#6b5b95}.chip.fx{border-color:var(--ok)}
 .tg{font-size:10.5px;padding:0 6px;border-radius:8px;border:1px solid var(--ln);margin-left:3px}.tg.ok{color:var(--ok);border-color:var(--ok)}.tg.nw{color:var(--un);border-color:var(--un);background:var(--unb)}
 .dw{grid-column:2/4;margin:2px 0}.dwr{display:flex;flex-wrap:wrap;gap:8px}.dwg{display:inline-flex}.dwg button{min-height:40px;min-width:38px;padding:0 8px;font-size:18px;border-radius:0}.dwg button:first-child{border-radius:8px 0 0 8px}.dwg button:last-child{border-radius:0 8px 8px 0}.dwi{border:1px solid var(--ln);background:var(--in);color:var(--tx);text-align:center;padding:5px 4px;font:inherit;min-height:40px;border-radius:0}input.dwi[data-p=d]{width:48px}input.dwi[data-p=y]{width:64px}select.dwi{width:112px}.dwl{font-size:12.5px;color:var(--mu);margin-top:3px}
@@ -57,9 +63,8 @@ table{border-collapse:collapse;width:100%;font-size:13px}td,th{border-bottom:1px
  .phone{display:inline-block}
  #vbar button{padding:6px 10px;min-height:32px}
  #vinfo{max-width:30vw;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
- .f{grid-template-columns:1fr auto;gap:3px 6px;padding:4px 0}.f label{grid-column:1/3}
- .yn button{min-height:44px;font-size:15px}.f input{font-size:16px;padding:9px 10px;min-height:44px}.f .b button{min-height:44px;min-width:40px;font-size:16px}
- .ai,.nt,.chp,.dw{grid-column:1/3}
+ .f{padding:6px 0}
+ .yn button{min-height:44px;font-size:15px}.f input,.f textarea{font-size:16px;padding:9px 10px}.f input{min-height:44px}.stb button{min-height:44px}.f .b button{min-height:44px;min-width:40px;font-size:16px}
  #form h2{font-size:15px!important}
  #pbar{display:flex;position:fixed;left:0;right:0;bottom:0;z-index:50;gap:6px;padding:7px 8px calc(7px + env(safe-area-inset-bottom));background:var(--pn);border-top:1px solid var(--ln)}
  #pbar button{flex:1;min-height:48px;font-size:15px}#pbar #pOk{flex:2;font-weight:600}
@@ -73,7 +78,6 @@ table{border-collapse:collapse;width:100%;font-size:13px}td,th{border-bottom:1px
 <section id="view" class="card"><div id="vbar"><button id="vAkt">Akt</button><button id="vAll">Cały skan</button><button id="vMk" title="pieczątki i adnotacje">Pieczątki/adn. ▸</button><button id="vP">+</button><button id="vM">−</button><span id="vinfo" class="tag"></span><span class="sp"></span><button id="vTx" class="phone" title="tekst odczytu">Aa</button><button id="vMin" class="phone" title="zwiń/rozwiń skan">▾</button></div>
 <div id="vp"><img id="im" alt=""><div id="ov"></div><div id="vmiss"></div></div><div id="txt"></div><div id="vh"><i></i></div></section>
 <section id="form" class="card"></section></div></div>
-<datalist id="dlS"></datalist><datalist id="dlN"></datalist><datalist id="dlP"></datalist>
 <dialog id="dg"><div id="dgc"></div><p style="text-align:right"><button onclick="document.getElementById('dg').close()">Zamknij</button></p></dialog>
 <script>
 const D = /*DATA*/null;
@@ -86,15 +90,24 @@ const clean = v => (v == null ? '' : String(v)).trim();
 const normPl = v => clean(v).replace(/Mocydła/g,'Moczydła').replace(/Mocydłach/g,'Moczydłach').replace(/Kacyniec/g,'Kaczyniec');
 const AM = {}; D.acts.forEach(a => AM[a.id] = a);
 const getv = (a,f) => { const s = S.acts[a.id]; if (s && s.f[f] && s.f[f].v != null) return s.f[f].v; return a.ai[f] != null ? a.ai[f] : ''; };
-const GROUPS = [
- ['① Margines (nr aktu, miejscowość, młodzi)', [['margin_place','Miejscowość (margines)'],['margin_groom_first_name','Margines – pan młody: imię'],['margin_groom_last_name','Margines – pan młody: nazwisko'],['margin_bride_first_name','Margines – panna młoda: imię'],['margin_bride_last_name','Margines – panna młoda: nazwisko']]],
- ['② Początek aktu – data i świadkowie', [['marriage_date','Data aktu (RRRR-MM-DD)']]],
- ['③ Świadkowie (w tekście przed młodymi)', [['witness1_first_name','Świadek 1 – imię'],['witness1_last_name','Świadek 1 – nazwisko'],['witness1_profession','Zawód'],['witness1_residence','Zamieszkanie'],['witness2_first_name','Świadek 2 – imię'],['witness2_last_name','Świadek 2 – nazwisko'],['witness2_profession','Zawód'],['witness2_residence','Zamieszkanie']]],
- ['④ Pan młody – wg tekstu aktu', [['groom_first_name','Imię'],['groom_last_name','Nazwisko'],['groom_status','Stan'],['groom_profession','Zawód'],['groom_age','Wiek'],['groom_birth_place','Miejsce urodzenia'],['groom_residence','Zamieszkanie'],['groom_father_first_name','Ojciec – imię'],['groom_father_last_name','Ojciec – nazwisko'],['groom_father_alive','Ojciec żyje'],['groom_mother_first_name','Matka – imię'],['groom_mother_last_name','Matka – nazwisko rodowe'],['groom_mother_alive','Matka żyje']]],
- ['⑤ Panna młoda – wg tekstu aktu', [['bride_first_name','Imię'],['bride_last_name','Nazwisko'],['bride_status','Stan'],['bride_profession','Zawód'],['bride_age','Wiek'],['bride_birth_place','Miejsce urodzenia'],['bride_residence','Zamieszkanie'],['bride_father_first_name','Ojciec – imię'],['bride_father_last_name','Ojciec – nazwisko'],['bride_father_alive','Ojciec żyje'],['bride_mother_first_name','Matka – imię'],['bride_mother_last_name','Matka – nazwisko rodowe'],['bride_mother_alive','Matka żyje']]],
- ['⑥ Zakończenie aktu', [['officiant','Duchowny (ksiądz)'],['margin_notes','Adnotacje i uwagi (margines, stemple, zgon, kolejne małżeństwo…)']]]
+const pair = (id, l, a, b, ex) => Object.assign({k:'pair', id, l, f:[a, b]}, ex || {});
+const one = (f, l, ex) => Object.assign({k:'one', id:f, l, f:[f]}, ex || {});
+const person = (x, title, cls) => ({t:title, cls, rows:[
+  pair(x + '_nm', 'Imię i nazwisko', x + '_first_name', x + '_last_name'),
+  one(x + '_status', 'Stan', {status:x}),
+  pair(x + '_prev', 'Po kim (imię i nazwisko rodowe)', x + '_prev_spouse_first_name', x + '_prev_spouse_last_name', {cond:x}),
+  one(x + '_profession', 'Zawód'), one(x + '_age', 'Wiek', {age:1}), one(x + '_birth_place', 'Miejsce urodzenia'), one(x + '_residence', 'Zamieszkanie')],
+  sub:[{t:'Ojciec', cls:'sub', rows:[pair(x + '_father', 'Imię i nazwisko', x + '_father_first_name', x + '_father_last_name', {alive:x + '_father_alive'})]},
+       {t:'Matka', cls:'sub', rows:[pair(x + '_mother', 'Imię i nazwisko rodowe', x + '_mother_first_name', x + '_mother_last_name', {alive:x + '_mother_alive'})]}]});
+const witness = (k) => ({t:'Świadek ' + k, cls:'w', rows:[pair('w' + k, 'Imię i nazwisko', 'witness' + k + '_first_name', 'witness' + k + '_last_name'), one('witness' + k + '_profession', 'Zawód'), one('witness' + k + '_residence', 'Zamieszkanie')]});
+const BLOCKS = [
+ {t:'Akt', cls:'akt', rows:[one('marriage_date', 'Data aktu (RRRR-MM-DD)', {date:1}), one('margin_place', 'Miejscowość (margines)')]},
+ {t:'Margines – imiona młodych', cls:'mg', sub:[{t:'Pan młody', cls:'g', rows:[pair('mg_g', 'Imię i nazwisko', 'margin_groom_first_name', 'margin_groom_last_name')]}, {t:'Panna młoda', cls:'b', rows:[pair('mg_b', 'Imię i nazwisko', 'margin_bride_first_name', 'margin_bride_last_name')]}]},
+ witness(1), witness(2), person('groom', 'Pan młody', 'g'), person('bride', 'Panna młoda', 'b'),
+ {t:'Zakończenie aktu', cls:'akt', rows:[one('officiant', 'Duchowny (ksiądz)'), one('margin_notes', 'Adnotacje i uwagi (margines, stemple, zgon, kolejne małżeństwo…)', {big:1})]}
 ];
-const FIELDS = []; GROUPS.forEach(g => g[1].forEach(x => FIELDS.push(x[0])));
+const ROWS = {}; const FIELDS = [];
+(function walk(L){ L.forEach(b => { (b.rows || []).forEach(r => { ROWS[r.id] = r; r.f.concat(r.alive ? [r.alive] : []).forEach(f => FIELDS.push(f)); }); walk(b.sub || []); }); })(BLOCKS);
 const PLF = new Set(['margin_place','groom_birth_place','groom_residence','bride_birth_place','bride_residence','witness1_residence','witness2_residence']);
 const isUnc = (a,f) => new Set(clean(a.ai.uncertain_fields).split(/[;,]\s*/)).has(f) || /\?\s*$/.test(clean(a.ai[f]));
 const fld = (a,f) => (S.acts[a.id] && S.acts[a.id].f[f]) || null;
@@ -114,34 +127,37 @@ function warns(a){ const w = []; const num = f => { const m = clean(getv(a,f)).m
 function renderList(){ let h = ''; const hide = S.hideDone !== false; const years = [...new Set(D.acts.map(a => a.year))].sort(); years.forEach(y => { const acts = D.acts.filter(a => a.year === y); const dn = acts.filter(a => status(a) === 'd').length; h += '<div class="yh">' + y + ' · ' + dn + '/' + acts.length + '</div>'; acts.filter(a => !(hide && status(a) === 'd' && a.id !== S.cur)).forEach(a => { h += '<div class="sr ' + status(a) + (S.cur === a.id ? ' cur' : '') + '" data-id="' + a.id + '"><span class="n">' + a.act + '</span><span>' + nm(a).replace(/^ z /,'') + '</span></div>'; }); }); h = '<div style="padding:4px 4px 6px"><button id="hdT" style="width:100%">' + (hide ? 'Pokaż zatwierdzone' : 'Ukryj zatwierdzone') + '</button></div>' + h; $('sb').innerHTML = h; const done = D.acts.filter(a => status(a) === 'd').length; $('prog').textContent = done + '/' + D.acts.length + ' zatwierdzonych'; }
 $('sb').onclick = e => { if (e.target.id === 'hdT') { S.hideDone = S.hideDone === false; save(); renderList(); return; } const r = e.target.closest('.sr'); if (r) open(r.dataset.id); };
 
-/* ---- baza: nazwiska, imiona, miejscowości (wybór istniejących / edycja / nowy wpis) ---- */
+/* ---- baza wg płci: nazwiska, imiona, miejscowości (wybór istniejących / edycja / nowy wpis) ---- */
 const fold = s => (s||'').toString().toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,'').replace(/ł/g,'l');
 function lev(a, b, max){ a = String(a); b = String(b); const m = a.length, n = b.length; if (max !== undefined && Math.abs(m-n) > max) return max + 1; if (!m) return n; if (!n) return m; let p = [...Array(n+1).keys()]; for (let i = 1; i <= m; i++) { const c = [i]; for (let j = 1; j <= n; j++) c[j] = Math.min(p[j]+1, c[j-1]+1, p[j-1] + (a[i-1] === b[j-1] ? 0 : 1)); p = c; } return p[n]; }
-const NT = f => PLF.has(f) ? 'p' : /_first_name$/.test(f) ? 'n' : /_last_name$/.test(f) ? 's' : null;
-const DB = D.counts || {s:{}, n:{}, p:{}}; const FM = {};
+const GN = f => /prev_spouse/.test(f) ? (/^groom/.test(f) ? 'f' : 'm') : /mother/.test(f) ? 'f' : /father/.test(f) ? 'm' : /^(bride|margin_bride)/.test(f) ? 'f' : 'm';
+const dbk = f => PLF.has(f) ? 'p' : /_first_name$/.test(f) ? 'n_' + GN(f) : /_last_name$/.test(f) ? 's_' + GN(f) : null;
+const DB = D.counts || {}; const FM = {};
 const FMget = t => FM[t] || (FM[t] = (() => { const m = {}; Object.entries(DB[t] || {}).forEach(([n,c]) => { const k = fold(n); if (!m[k] || m[k][1] < c) m[k] = [n,c]; }); return m; })());
 const cntOf = (t, v) => { v = clean(v).replace(/\?/g,''); if (!v) return null; const c = (DB[t] || {})[v]; if (c) return {c, name:v}; const m = FMget(t)[fold(v)]; return m ? {c:m[1], name:m[0], alt:true} : {c:0}; };
 const nearCache = {};
 function near(t, v){ v = clean(v).replace(/\?/g,''); const w = fold(v); if (w.length < 2) return []; const k = t + w; if (nearCache[k]) return nearCache[k]; const out = []; const mx = w.length >= 6 ? 2 : 1;
-  Object.entries(DB[t] || {}).forEach(([n,c]) => { if (c < 2 || n === v) return; const fn = fold(n); const d = lev(w, fn, mx); if (d <= mx) out.push([n,c,d]); else if (t === 'p' && w.length >= 4 && (fn.includes(w) || w.includes(fn)) && fn.length >= 4) out.push([n,c,3]); });
-  out.sort((x,y) => x[2] - y[2] || y[1] - x[1]); return nearCache[k] = out.slice(0,5); }
+  Object.entries(DB[t] || {}).forEach(([n,c]) => { if (c < 2 || n === v) return; const fn = fold(n); if (fn === w) return; const d = lev(w, fn, mx); if (d <= mx) out.push([n,c,d]); else if (t === 'p' && w.length >= 4 && (fn.includes(w) || w.includes(fn)) && fn.length >= 4) out.push([n,c,3]); });
+  out.sort((x,y) => x[2] - y[2] || y[1] - x[1]); return nearCache[k] = out.slice(0,4); }
 const infl = (n, fem) => { const w = clean(n).replace(/\?/g,''); if (!w) return ''; return fem ? w.replace(/(sk|ck|dzk)i$/i,'$1a') : w.replace(/(sk|ck|dzk)a$/i,'$1i'); };
 const nmFix = () => S.fixes || (S.fixes = {});
-function learn(a, f, v){ const t = NT(f); const x = clean(a.ai[f]).replace(/\?/g,''), y = clean(v); if (!t || !x || !y || fold(x) === fold(y) || x.length < 3 || lev(fold(x), fold(y), 3) > 3) return; const d = nmFix()[fold(x)] || (nmFix()[fold(x)] = {}); d[y] = (d[y] || 0) + 1; }
-function chipsFor(a, f){ const t = NT(f); const age = /_age$/.test(f); if (!t && !age) return ''; const cur = clean(getv(a,f)).replace(/\?/g,''); const seen = new Set(), out = [];
-  const add = (cls, lbl, val, extra) => { if (!val || val === clean(getv(a,f)) || seen.has(val)) return; seen.add(val); out.push('<button class="chip ' + cls + '" data-cv="' + f + '" data-v="' + esc(val) + '"><small>' + lbl + '</small>' + esc(val) + (extra || '') + '</button>'); };
-  if (t) { const aiv = clean(a.ai[f]); if (aiv && aiv !== clean(getv(a,f))) add('ai', 'AI', aiv.replace(/\?$/,''), '');
+function learn(a, f, v){ const t = dbk(f); const x = clean(a.ai[f]).replace(/\?/g,''), y = clean(v); if (!t || !x || !y || fold(x) === fold(y) || x.length < 3 || lev(fold(x), fold(y), 3) > 3) return; const d = nmFix()[fold(x)] || (nmFix()[fold(x)] = {}); d[y] = (d[y] || 0) + 1; }
+function chipsFor(a, f){ const t = dbk(f); const age = /_age$/.test(f); if (!t && !age) return ''; const curRaw = clean(getv(a,f)); const cur = curRaw.replace(/\?/g,''); const seen = new Set(), out = [];
+  const add = (cls, lbl, val, extra) => { if (!val || val === curRaw || seen.has(val)) return; seen.add(val); out.push('<button class="chip ' + cls + '" data-cv="' + f + '" data-v="' + esc(val) + '"><small>' + lbl + '</small>' + esc(val) + (extra || '') + '</button>'); };
+  if (t) { const x = cntOf(t, cur);
+    if (x && x.alt) add('bz', 'popraw →', x.name, ' <small>×' + x.c + '</small>');
+    const aiv = clean(a.ai[f]).replace(/\?$/,''); if (aiv && aiv !== curRaw) add('ai', 'AI', aiv, '');
     const fx = nmFix()[fold(cur)]; if (fx) Object.entries(fx).sort((p,q) => q[1] - p[1]).slice(0,2).forEach(([q,n]) => add('fx', 'poprawiane', q, ' <small>×' + n + '</small>'));
     if (f === 'groom_last_name') add('akt', 'z OJCA', infl(getv(a,'groom_father_last_name'), false));
-    if (f === 'bride_last_name') add('akt', 'z OJCA (żeńska)', infl(getv(a,'bride_father_last_name'), true));
-    if (f === 'groom_father_last_name') add('akt', 'jak pan młody', infl(getv(a,'groom_last_name'), false));
-    if (f === 'bride_father_last_name') add('akt', 'jak panna (męska)', infl(getv(a,'bride_last_name'), false));
-    if (cur) near(t, cur).forEach(([n,c]) => add('bz', 'BAZA ≈', n, ' <small>×' + c + '</small>'));
-    else if (t === 'p') Object.entries(DB.p || {}).sort((p,q) => q[1] - p[1]).slice(0,5).forEach(([n,c]) => add('bz', 'częste', n, ' <small>×' + c + '</small>')); }
+    if (f === 'bride_last_name') add('akt', 'z OJCA', infl(getv(a,'bride_father_last_name'), true));
+    if (f === 'groom_father_last_name') add('akt', 'jak syn', infl(getv(a,'groom_last_name'), false));
+    if (f === 'bride_father_last_name') add('akt', 'jak córka', infl(getv(a,'bride_last_name'), false));
+    if (cur && !(x && x.c && !x.alt)) near(t, cur).forEach(([n,c]) => add('bz', 'baza', n, ' <small>×' + c + '</small>'));
+    else if (!cur && t === 'p') Object.entries(DB.p || {}).sort((p,q) => q[1] - p[1]).slice(0,5).forEach(([n,c]) => add('bz', 'częste', n, ' <small>×' + c + '</small>')); }
   if (age) out.push('<button class="chip" data-age="-1">− 1</button><button class="chip" data-age="1">+ 1</button>');
-  return out.length ? '<div class="chp">' + out.join('') + '</div>' : ''; }
-function tagFor(a, f){ const t = NT(f); if (!t) return ''; const x = cntOf(t, getv(a,f)); if (!x) return ''; if (x.c) return '<span class="tg ok">' + (x.alt ? 'w bazie jako „' + esc(x.name) + '”' : 'w bazie') + ' ×' + x.c + '</span>'; return '<span class="tg nw">nowy wpis</span>'; }
-$('dlS').innerHTML = Object.keys(DB.s || {}).filter(k => DB.s[k] >= 2).sort().map(k => '<option value="' + esc(k) + '">').join(''); $('dlN').innerHTML = Object.keys(DB.n || {}).filter(k => DB.n[k] >= 2).sort().map(k => '<option value="' + esc(k) + '">').join(''); $('dlP').innerHTML = Object.keys(DB.p || {}).filter(k => DB.p[k] >= 2).sort().map(k => '<option value="' + esc(k) + '">').join('');
+  return out.join(''); }
+function tagFor(a, f){ const t = dbk(f); if (!t) return ''; const x = cntOf(t, getv(a,f)); if (!x) return ''; if (x.c && !x.alt) return '<span class="tg ok">✓ ×' + x.c + '</span>'; if (x.alt) return '<span class="tg nw">pisownia ≠ baza</span>'; return '<span class="tg nw">nowe</span>'; }
+['s_m','s_f','n_m','n_f','p'].forEach(k => { const dl = document.createElement('datalist'); dl.id = 'dl_' + k; dl.innerHTML = Object.keys(DB[k] || {}).filter(n => DB[k][n] >= 2).sort().map(n => '<option value="' + esc(n) + '">').join(''); document.body.appendChild(dl); });
 /* ---- data: − / + dzień, miesiąc, rok; wpis skrótem ---- */
 const MIES = ['styczeń','luty','marzec','kwiecień','maj','czerwiec','lipiec','sierpień','wrzesień','październik','listopad','grudzień'], MIESD = ['stycznia','lutego','marca','kwietnia','maja','czerwca','lipca','sierpnia','września','października','listopada','grudnia'], DNI = ['niedziela','poniedziałek','wtorek','środa','czwartek','piątek','sobota'], ROM = ['i','ii','iii','iv','v','vi','vii','viii','ix','x','xi','xii'];
 const dim = (y, m) => new Date(Date.UTC(y, m, 0)).getUTCDate(); const p2 = n => String(n).padStart(2,'0');
@@ -153,34 +169,59 @@ function dwApply(w, step){ const a = AM[S.cur]; const f = w.dataset.f; const g =
   w.querySelector('[data-p=d]').value = d; w.querySelector('[data-p=m]').value = m; w.querySelector('[data-p=y]').value = y; w.querySelector('.dwl').textContent = dwLabel(y, m, d);
   if (d > dim(y, m)) return; const iso = String(y).padStart(4,'0') + '-' + p2(m) + '-' + p2(d); const row = w.closest('.f'); row.querySelector('input[data-f]').value = iso; commit(a, f, iso, 'edit'); row.classList.remove('ok','un'); row.querySelectorAll('.b .on').forEach(x => x.classList.remove('on')); renderList(); refreshWarn(a); }
 function dateShort(a, v){ const t = String(v == null ? '' : v).trim().toLowerCase(); if (!t || /^\d{4}-\d{2}-\d{2}$/.test(t)) return v; const m = t.match(/^(\d{1,2})[\s.\/-]+([a-ząćęłńóśźż]+|\d{1,2})\.?(?:[\s.\/-]+(\d{2,4}))?\.?$/i); if (!m) return v; let mo = 0; if (/^\d+$/.test(m[2])) mo = +m[2]; else { const w = m[2], ri = ROM.indexOf(w); if (ri >= 0) mo = ri + 1; else if (w.length >= 3) mo = MIES.findIndex((n,i) => n.startsWith(w) || MIESD[i].startsWith(w) || n.slice(0,3) === w.slice(0,3)) + 1; } const d = +m[1]; if (!(mo >= 1 && mo <= 12 && d >= 1 && d <= 31)) return v; const y = m[3] ? (m[3].length === 2 ? 1900 + +m[3] : +m[3]) : a.year; if (d > dim(y, mo)) return v; return y + '-' + p2(mo) + '-' + p2(d); }
-/* ---- formularz ---- */
-function esc(s){ return String(s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c])); }
+/* ---- formularz: bloki osób, wiersze (imię+nazwisko w jednej linii), przyciski symboli ---- */
+function esc(s){ return String(s == null ? '' : s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c])); }
 const ynVal = v => { v = clean(v).toLowerCase(); return /^tak/.test(v) ? 'tak' : /^nie/.test(v) ? 'nie' : ''; };
-const ynHtml = (f, v) => { const c = ynVal(v); return '<span class="yn" data-yn="' + f + '"><button data-yn="tak" class="y' + (c === 'tak' ? ' on' : '') + '">✓ tak</button><button data-yn="nie" class="n' + (c === 'nie' ? ' on' : '') + '">✗ nie</button><button data-yn="" class="z' + (c === '' ? ' on' : '') + '">– brak</button></span>'; };
+const ynHtml = (f, v) => { const c = ynVal(v); return '<span class="yn" data-yn="' + f + '"><button data-yn="tak" class="y' + (c === 'tak' ? ' on' : '') + '">żyje</button><button data-yn="nie" class="n' + (c === 'nie' ? ' on' : '') + '">(zm.)</button><button data-yn="" class="z' + (c === '' ? ' on' : '') + '">–</button></span>'; };
+const STB = {groom:['kawaler','wdowiec'], bride:['panna','wdowa']};
+const uncOf = (a, f) => { const o = fld(a,f); if (o && o.unc !== undefined) return !!o.unc; return isUnc(a,f); };
+const rowFs = r => r.f.concat(r.alive ? [r.alive] : []);
+const condOn = (a, r) => !r.cond || /^wd/i.test(clean(getv(a, r.cond + '_status')));
+function genRow(a, r, s){ const fs = rowFs(r); const os = fs.map(f => fld(a,f) || {});
+  const ok = s.done || os.every(o => o.ok); const un = !ok && fs.some((f,i) => os[i].unc || (os[i].unc === undefined && !os[i].ok && isUnc(a,f))); const cls = ok ? 'ok' : (un ? 'un' : '');
+  const cells = r.f.map(f => { const v = getv(a,f), k = dbk(f); const attrs = ' data-f="' + f + '"' + (k ? ' list="dl_' + k + '" autocomplete="off"' : '');
+    const ctl = r.big ? '<textarea rows="3"' + attrs + '>' + esc(v) + '</textarea>' : '<input value="' + esc(v) + '"' + attrs + '>'; return '<div class="cell">' + ctl + '<span class="tgw">' + tagFor(a,f) + '</span></div>'; }).join('');
+  let ex = ''; if (r.alive) ex += ynHtml(r.alive, getv(a, r.alive));
+  if (r.status) ex += '<div class="stb">' + STB[r.status].map(x => '<button data-st="' + x + '" data-f="' + r.f[0] + '" class="' + (clean(getv(a, r.f[0])).toLowerCase() === x ? 'on' : '') + '">' + x + '</button>').join('') + '</div>';
+  if (r.big) ex += '<button class="chip" data-big="' + r.f[0] + '">⤢ większe okno edycji</button>';
+  const noteF = fs.find(f => (fld(a,f) || {}).note) || fs[0]; const showNote = os.some(o => o.unc) || os.some(o => clean(o.note));
+  return '<div class="f ' + cls + (r.big ? ' bg' : '') + '" data-row="' + r.id + '" data-fs="' + fs.join(',') + '"><label>' + r.l + '</label><div class="ins" style="--n:' + r.f.length + '">' + cells + '</div><span class="b"><button data-act="ok" class="' + (os.every(o => o.ok) ? 'on' : '') + '" title="zweryfikowane">✓</button><button data-act="un" class="' + (os.some(o => o.unc) ? 'on' : '') + '" title="niepewne – opis">?</button></span>'
+    + (r.date ? dwHtml(a, r.f[0]) : '') + (ex ? '<div class="ex">' + ex + '</div>' : '') + '<div class="chps">' + r.f.map(f => chipsFor(a,f)).join('') + '</div><div class="ntw">' + (showNote ? '<input data-note="' + noteF + '" placeholder="opis niepewności / uwaga…" value="' + esc((fld(a,noteF) || {}).note || '') + '">' : '') + '</div></div>'; }
+function blockHtml(a, b, s, top){ let h = '<div class="pb ' + (b.cls || '') + (top ? ' top' : '') + '"><div class="pt">' + b.t + '</div>'; (b.rows || []).forEach(r => { if (condOn(a, r)) h += genRow(a, r, s); }); (b.sub || []).forEach(x => h += blockHtml(a, x, s, false)); return h + '</div>'; }
 function refreshWarn(a){ const W = warns(a); let d = document.querySelector('#form .warn'); if (!W.length) { if (d) d.remove(); return; } if (!d) { d = document.createElement('div'); d.className = 'warn'; const h2 = document.querySelector('#form h2'); h2.insertAdjacentElement('afterend', d); } d.innerHTML = W.map(esc).join('<br>'); }
-function nextField(f){ const rows = [...document.querySelectorAll('#form .f')]; const i = rows.findIndex(r => r.dataset.f === f); const n = rows.slice(i + 1).find(r => !r.classList.contains('ok')); if (!n) return; const top = (PH() ? (document.getElementById('view').getBoundingClientRect().bottom + 8) : 70); window.scrollTo({top: window.scrollY + n.getBoundingClientRect().top - top, behavior:'smooth'}); }
+function nextField(f){ const rows = [...document.querySelectorAll('#form .f')]; const i = rows.findIndex(r => (' ' + r.dataset.fs.split(',').join(' ') + ' ').includes(' ' + f + ' ')); const n = rows.slice(i + 1).find(r => !r.classList.contains('ok')); if (!n) return; const top = (PH() ? (document.getElementById('view').getBoundingClientRect().bottom + 8) : 70); window.scrollTo({top: window.scrollY + n.getBoundingClientRect().top - top, behavior:'smooth'}); }
 function renderForm(a){ const s = st(a.id); let h = '<h2 style="margin:0 0 8px;font-size:17px">' + a.year + ' · akt ' + a.act + ' · ' + esc(nm(a)) + (s.done ? '<span class="tag ok">zatwierdzony</span>' : '') + '</h2>';
   const W = warns(a); if (W.length) h += '<div class="warn">' + W.map(esc).join('<br>') + '</div>';
-  GROUPS.forEach(g => { h += '<div class="grp"><h3>' + g[0] + '</h3>'; g[1].forEach(([f,l]) => { const o = fld(a,f) || {}; const un = o.unc || (!o.ok && isUnc(a,f) && !s.done); const cls = o.ok || s.done ? 'ok' : (un ? 'un' : ''); const v = getv(a,f); const ch = o.v != null && clean(o.v) !== clean(a.ai[f]);
-    const isDate = f === 'marriage_date', nt = NT(f); const ctl = /_alive$/.test(f) ? ynHtml(f, v) : '<input value="' + esc(v) + '" data-f="' + f + '"' + (nt ? ' list="' + (nt === 's' ? 'dlS' : nt === 'n' ? 'dlN' : 'dlP') + '" autocomplete="off"' : '') + '>';
-    h += '<div class="f ' + cls + '" data-f="' + f + '"><label>' + l + ' ' + tagFor(a, f) + '</label>' + ctl + '<span class="b"><button data-act="ok" class="' + (o.ok ? 'on' : '') + '" title="zweryfikowane">✓</button><button data-act="un" class="' + (o.unc ? 'on' : '') + '" title="niepewne">?</button><button data-act="nt" title="uwaga">✎</button></span>' + (isDate ? dwHtml(a, f) : '') + chipsFor(a, f) + (ch ? '<div class="ai">odczyt AI: ' + esc(a.ai[f] || '—') + '</div>' : '') + (o.note != null ? '<div class="nt"><input data-note="' + f + '" placeholder="uwaga…" value="' + esc(o.note) + '"></div>' : '') + '</div>'; }); h += '</div>'; });
+  BLOCKS.forEach(b => h += blockHtml(a, b, s, true));
   h += '<div style="display:flex;gap:8px;flex-wrap:wrap"><button class="ok" id="bDone">' + (s.done ? 'Cofnij zatwierdzenie' : 'Zatwierdź cały akt ✓') + '</button><button id="bPrev">← poprzedni</button><button id="bNext">następny →</button></div>';
-  $('form').innerHTML = h; }
-$('form').addEventListener('change', e => { const a = AM[S.cur]; if (!a) return; if (e.target.classList.contains('dwi')) { dwApply(e.target.closest('.dw')); return; } if (e.target.dataset.f) { commit(a, e.target.dataset.f, e.target.value, 'edit'); renderList(); const row = e.target.closest('.f'); row.classList.remove('ok','un'); row.querySelectorAll('.b .on').forEach(x => x.classList.remove('on')); refreshWarn(a); if (e.target.dataset.f === 'marriage_date' || NT(e.target.dataset.f)) renderForm(a); } if (e.target.dataset.note) { const o = st(a.id).f[e.target.dataset.note] || (st(a.id).f[e.target.dataset.note] = {}); o.note = e.target.value; save(); } });
-$('form').addEventListener('click', e => { const a = AM[S.cur]; if (!a) return; const b = e.target.closest('button'); if (!b) return;
-  if (b.dataset.cv) { commit(a, b.dataset.cv, b.dataset.v, 'edit'); st(a.id).f[b.dataset.cv].ok = true; save(); renderList(); renderForm(a); nextField(b.dataset.cv); return; }
-  if (b.dataset.age) { const row = b.closest('.f'), f = row.dataset.f, cur = clean(getv(a,f)); const nv = /\d+/.test(cur) ? cur.replace(/\d+/, n => Math.max(0, +n + +b.dataset.age)) : ''; if (nv) { commit(a, f, nv, 'edit'); renderList(); renderForm(a); } return; }
-  if (b.dataset.dw) { dwApply(b.closest('.dw'), b.dataset.dw); return; } if (b.dataset.yn != null && b.closest('.yn')) { const f2 = b.closest('.yn').dataset.yn; commit(a, f2, b.dataset.yn, 'edit'); const o2 = st(a.id).f[f2]; o2.ok = true; save(); renderList(); renderForm(a); nextField(f2); return; } const row = b.closest('.f'); const f = row && row.dataset.f;
-  if (b.dataset.act === 'ok') { const o = st(a.id).f[f] || (st(a.id).f[f] = {}); o.ok = !o.ok; if (o.ok) { o.unc = false; if (o.v == null) o.v = getv(a,f); } save(); renderList(); renderForm(a); if (o.ok) nextField(f); }
-  else if (b.dataset.act === 'un') { const o = st(a.id).f[f] || (st(a.id).f[f] = {}); o.unc = !o.unc; if (o.unc) o.ok = false; save(); renderForm(a); }
-  else if (b.dataset.act === 'nt') { const o = st(a.id).f[f] || (st(a.id).f[f] = {}); if (o.note == null) o.note = ''; save(); renderForm(a); const i = $('form').querySelector('[data-note="' + f + '"]'); if (i) i.focus(); }
-  else if (b.id === 'bDone') { const s = st(a.id); s.done = !s.done; if (s.done) FIELDS.forEach(f => { const o = s.f[f] || (s.f[f] = {}); if (o.v == null) o.v = getv(a,f); o.ok = true; o.unc = false; }); else FIELDS.forEach(f => { if (s.f[f]) s.f[f].ok = false; }); save(); renderList(); if (s.done) { const nx = D.acts.slice(D.acts.indexOf(a) + 1).concat(D.acts).find(x => status(x) !== 'd'); if (nx) { open(nx.id); return; } } renderForm(a); }
-  else if (b.id === 'bPrev' || b.id === 'bNext') { const i = D.acts.indexOf(a) + (b.id === 'bNext' ? 1 : -1); if (D.acts[i]) open(D.acts[i].id); } });
+  $('form').innerHTML = h; autoGrow(); }
+function autoGrow(){ document.querySelectorAll('#form textarea[data-f]').forEach(t => { t.style.height = 'auto'; t.style.height = Math.min(220, t.scrollHeight + 2) + 'px'; }); }
+function rowEl(r){ return document.querySelector('#form .f[data-row="' + r.id + '"]'); }
+function hardRefresh(a, r){ const el = rowEl(r); if (!el) return; const t = document.createElement('div'); t.innerHTML = genRow(a, r, st(a.id)); el.replaceWith(t.firstChild); autoGrow(); }
+function softRefresh(a, r){ const el = rowEl(r); if (!el) return; const t = document.createElement('div'); t.innerHTML = genRow(a, r, st(a.id)); const n = t.firstChild; const oc = el.querySelectorAll('.cell'), nc = n.querySelectorAll('.cell'); oc.forEach((c,i) => { c.querySelector('.tgw').innerHTML = nc[i].querySelector('.tgw').innerHTML; const inp = c.querySelector('[data-f]'); const nv = nc[i].querySelector('[data-f]').value; if (document.activeElement !== inp && inp.value !== nv) inp.value = nv; });
+  el.className = n.className; el.querySelector('.b').innerHTML = n.querySelector('.b').innerHTML; el.querySelector('.chps').innerHTML = n.querySelector('.chps').innerHTML; el.querySelector('.ntw').innerHTML = n.querySelector('.ntw').innerHTML; const dw = el.querySelector('.dw'); if (dw && n.querySelector('.dw')) dw.innerHTML = n.querySelector('.dw').innerHTML; const yn = el.querySelector('.yn'); if (yn && n.querySelector('.yn')) yn.innerHTML = n.querySelector('.yn').innerHTML; autoGrow(); }
+const rowOf = el => { const e = el.closest('.f'); return e ? ROWS[e.dataset.row] : null; };
+$('form').addEventListener('input', e => { if (e.target.tagName === 'TEXTAREA') autoGrow(); });
+$('form').addEventListener('change', e => { const a = AM[S.cur]; if (!a) return; if (e.target.classList.contains('dwi')) { dwApply(e.target.closest('.dw')); return; }
+  if (e.target.dataset.f) { const r = rowOf(e.target); commit(a, e.target.dataset.f, e.target.value, 'edit'); renderList(); refreshWarn(a); if (r) { if (r.status) renderForm(a); else softRefresh(a, r); } }
+  if (e.target.dataset.note) { const o = st(a.id).f[e.target.dataset.note] || (st(a.id).f[e.target.dataset.note] = {}); o.note = e.target.value; save(); } });
+$('form').addEventListener('click', e => { const a = AM[S.cur]; if (!a) return; const b = e.target.closest('button'); if (!b) return; const r = rowOf(b);
+  if (b.dataset.cv) { commit(a, b.dataset.cv, b.dataset.v, 'edit'); st(a.id).f[b.dataset.cv].ok = true; save(); renderList(); hardRefresh(a, r); refreshWarn(a); const ok = rowFs(r).every(f => (fld(a,f) || {}).ok); if (ok) nextField(b.dataset.cv); return; }
+  if (b.dataset.age) { const f = r.f[0], cur = clean(getv(a,f)); const nv = /\d+/.test(cur) ? cur.replace(/\d+/, n => Math.max(0, +n + +b.dataset.age)) : ''; if (nv) { commit(a, f, nv, 'edit'); renderList(); hardRefresh(a, r); refreshWarn(a); } return; }
+  if (b.dataset.dw) { dwApply(b.closest('.dw'), b.dataset.dw); return; }
+  if (b.dataset.yn != null && b.closest('.yn')) { const f2 = b.closest('.yn').dataset.yn; commit(a, f2, b.dataset.yn, 'edit'); st(a.id).f[f2].ok = true; save(); renderList(); hardRefresh(a, r); return; }
+  if (b.dataset.st) { commit(a, b.dataset.f, b.dataset.st, 'edit'); st(a.id).f[b.dataset.f].ok = true; save(); renderList(); renderForm(a); return; }
+  if (b.dataset.big) { const f = b.dataset.big; $('dgc').innerHTML = '<h3>Adnotacje i uwagi</h3><textarea id="bigTa" style="width:100%;min-height:50vh;font:16px/1.5 system-ui;padding:10px;border:1px solid var(--ln);border-radius:8px;background:var(--in);color:var(--tx)"></textarea>'; $('bigTa').value = getv(a,f); $('dg').dataset.big = f; $('dg').showModal(); $('bigTa').focus(); return; }
+  if (b.dataset.act === 'ok' && r) { const fs = rowFs(r), all = fs.every(f => (fld(a,f) || {}).ok); fs.forEach(f => { const o = st(a.id).f[f] || (st(a.id).f[f] = {}); if (all) o.ok = false; else { o.ok = true; o.unc = false; if (o.v == null) o.v = getv(a,f); } }); save(); renderList(); hardRefresh(a, r); if (!all) nextField(fs[0]); return; }
+  if (b.dataset.act === 'un' && r) { const fs = rowFs(r), any = fs.some(f => (fld(a,f) || {}).unc); fs.forEach(f => { const o = st(a.id).f[f] || (st(a.id).f[f] = {}); o.unc = !any; if (!any) o.ok = false; }); save(); hardRefresh(a, r); const i = rowEl(r).querySelector('[data-note]'); if (i && !any) i.focus(); return; }
+  if (b.id === 'bDone') { const s = st(a.id); s.done = !s.done; if (s.done) FIELDS.forEach(f => { const o = s.f[f] || (s.f[f] = {}); if (o.v == null) o.v = getv(a,f); o.ok = true; o.unc = false; }); else FIELDS.forEach(f => { if (s.f[f]) s.f[f].ok = false; }); save(); renderList(); if (s.done) { const nx = D.acts.slice(D.acts.indexOf(a) + 1).concat(D.acts).find(x => status(x) !== 'd'); if (nx) { open(nx.id); return; } } renderForm(a); return; }
+  if (b.id === 'bPrev' || b.id === 'bNext') { const i = D.acts.indexOf(a) + (b.id === 'bNext' ? 1 : -1); if (D.acts[i]) open(D.acts[i].id); } });
+$('dg').addEventListener('close', () => { const f = $('dg').dataset.big; if (!f) return; delete $('dg').dataset.big; const a = AM[S.cur]; const ta = $('bigTa'); if (a && ta) { commit(a, f, ta.value, 'edit'); renderList(); renderForm(a); } });
 /* ---- skan ---- */
 const im = $('im'), vp = $('vp'); let T = {x:0,y:0,s:1}, NW = 0, NH = 0, curRoi = null;
 const apply = () => { $('ov').style.transform = 'translate(' + T.x + 'px,' + T.y + 'px) scale(' + T.s + ')'; im.style.transform = 'translate(' + T.x + 'px,' + T.y + 'px) scale(' + T.s + ')'; };
 function fitRoi(r){ if (!NW) return; const cw = vp.clientWidth, ch = vp.clientHeight; const rw = r.w * NW, rh = r.h * NH; const ph = PH() && r.h < .95; const s = ph ? cw / rw : Math.min(cw / rw, ch / rh); T.s = s; T.x = (cw - rw * s) / 2 - r.x * NW * s; T.y = ph ? 4 - r.y * NH * s : (ch - rh * s) / 2 - r.y * NH * s; apply(); }
-const REG_OF = f => /^margin_(place|groom|bride)$/.test(f) ? 'margines' : /^(marriage_date|witness)/.test(f) ? 'poczatek' : /^groom_/.test(f) ? 'pan_mlody' : /^bride_/.test(f) ? 'panna_mloda' : f === 'officiant' ? 'zakonczenie' : f === 'margin_notes' ? 'adnotacje' : null;
+const REG_OF = f => /^margin_(place|groom|bride)/.test(f) ? 'margines' : /^(marriage_date|witness)/.test(f) ? 'poczatek' : /^groom_/.test(f) ? 'pan_mlody' : /^bride_/.test(f) ? 'panna_mloda' : f === 'officiant' ? 'zakonczenie' : f === 'margin_notes' ? 'adnotacje' : null;
 const padR = r => { const p = .008; return {x: Math.max(0, r.x - p), y: Math.max(0, r.y - p), w: Math.min(1, r.w + 2 * p), h: Math.min(1, r.h + 2 * p)}; };
 function drawOv(a){ const P = D.pola[a.id] || {}; const ov = $('ov'); ov.style.width = NW + 'px'; ov.style.height = NH + 'px'; let h = ''; const box = (r, c, t) => '<b class="' + c + '" title="' + esc(t || '') + '" style="left:' + r.x * 100 + '%;top:' + r.y * 100 + '%;width:' + r.w * 100 + '%;height:' + r.h * 100 + '%"></b>'; (P.pieczatki || []).forEach(r => h += box(r, 'p', 'pieczątka: ' + (r.opis || ''))); (P.adnotacje || []).forEach(r => h += box(r, 'a', 'adnotacja: ' + (r.opis || ''))); ov.innerHTML = h; }
 function fitField(f){ const a = AM[S.cur]; if (!a) return; const P = D.pola[a.id]; const k = REG_OF(f); if (!P || !k) return; let r = k === 'adnotacje' ? ((P.adnotacje || [])[0] || P.zakonczenie) : P[k]; if (r && NW) { curRoi = a.roi.roi; fitRoi(padR(r)); } }
@@ -198,7 +239,7 @@ vp.addEventListener('pointermove', e => { if (!drag) return; T.x = e.clientX - d
 /* ---- otwieranie ---- */
 function open(id){ const a = AM[id]; if (!a) return; S.cur = id; save(); renderList(); renderForm(a); showScan(a); $('txt').textContent = a.text || ''; window.scrollTo(0,0); }
 /* ---- CSV ---- */
-const COLS = D.cols.filter(c => c !== 'margin_names').concat(['margin_groom','margin_bride','margin_groom_first_name','margin_groom_last_name','margin_bride_first_name','margin_bride_last_name','witness1_first_name','witness1_last_name','witness2_first_name','witness2_last_name'].filter(c => !D.cols.includes(c)));
+const COLS = D.cols.filter(c => c !== 'margin_names').concat(['margin_groom','margin_bride','margin_groom_first_name','margin_groom_last_name','margin_bride_first_name','margin_bride_last_name','witness1_first_name','witness1_last_name','witness2_first_name','witness2_last_name','groom_prev_spouse_first_name','groom_prev_spouse_last_name','bride_prev_spouse_first_name','bride_prev_spouse_last_name'].filter(c => !D.cols.includes(c)));
 const q = v => { v = v == null ? '' : String(v); return /[;"\n\r]/.test(v) ? '"' + v.replace(/"/g,'""') + '"' : v; };
 function rows(){ return D.acts.map(a => { const s = S.acts[a.id] || {f:{}}; const r = {}; COLS.forEach(c => r[c] = a.ai[c] != null ? a.ai[c] : ''); r.id = a.id; r.marriage_year = a.year; r.marriage_act_number = a.act; FIELDS.forEach(f => { r[f] = normV(f, getv(a,f)); });
   const unc = FIELDS.filter(f => { const o = s.f[f]; return o ? (o.unc || (!o.ok && !s.done && isUnc(a,f))) : (!s.done && isUnc(a,f)); }); r.uncertain_fields = unc.join(',');
@@ -226,6 +267,7 @@ document.addEventListener('keydown', e => { if (e.target.tagName === 'INPUT' || 
 window.addEventListener('resize', () => curRoi && fitRoi(curRoi));
 D.acts.forEach(a => { [1,2].forEach(k => { const w = clean(a.ai['witness' + k + '_name']).split(/\s+/).filter(Boolean); if (!clean(a.ai['witness' + k + '_last_name']) && w.length) { a.ai['witness' + k + '_last_name'] = w[w.length - 1]; a.ai['witness' + k + '_first_name'] = w.slice(0, -1).join(' '); } }); });
 D.acts.forEach(a => { const c = x => clean(a.ai[x]).replace(/\?/g,''); ['groom','bride'].forEach(x => { const old = clean(a.ai['margin_' + x]).split(/\s+/).filter(Boolean); ['first_name','last_name'].forEach((k,i) => { const key = 'margin_' + x + '_' + k; if (!clean(a.ai[key])) { a.ai[key] = old.length > 1 ? (i ? old[old.length - 1] : old.slice(0,-1).join(' ')) : c(x + '_' + k); a.ai.uncertain_fields = (clean(a.ai.uncertain_fields) ? clean(a.ai.uncertain_fields) + ',' : '') + key; } }); }); });
+D.acts.forEach(a => { ['groom','bride'].forEach(x => { if (clean(a.ai[x + '_prev_spouse_last_name']) || clean(a.ai[x + '_prev_spouse_first_name'])) return; if (!/^wd/i.test(clean(a.ai[x + '_status']))) return; const src = clean(a.ai.margin_notes) + ' ' + clean(a.text); const m = src.match(/wdow\S*\s+po\s+([A-ZŻŹĆŚŁÓĄĘŃ][a-ząćęłńóśźż]+)\s+(?:z|ze)\s+([A-ZŻŹĆŚŁÓĄĘŃ][a-ząćęłńóśźż]+)/); if (m) { a.ai[x + '_prev_spouse_first_name'] = m[1]; a.ai[x + '_prev_spouse_last_name'] = m[2]; a.ai.uncertain_fields = (clean(a.ai.uncertain_fields) ? clean(a.ai.uncertain_fields) + ',' : '') + x + '_prev_spouse_first_name,' + x + '_prev_spouse_last_name'; } }); });
 D.acts.forEach(a => { Object.keys(a.ai).forEach(k => { if (typeof a.ai[k] === 'string') a.ai[k] = PLF.has(k) ? normPl(a.ai[k]) : a.ai[k]; }); });
 
 /* ---- telefon: szuflada aktów, pływający skan, pasek dolny ---- */
