@@ -34,6 +34,7 @@ button.pri{background:var(--ac);color:#fff;border-color:var(--ac)}button.ok{back
 .cols2{display:grid;grid-template-columns:1fr 1fr;gap:0 18px}
 dialog{border:1px solid var(--ln);border-radius:12px;background:var(--pn);color:var(--tx);max-width:760px;width:92%}dialog::backdrop{background:rgba(0,0,0,.45)}
 table{border-collapse:collapse;width:100%;font-size:13px}td,th{border-bottom:1px solid var(--ln);padding:3px 6px;text-align:left}
+.yn{display:flex;gap:4px}.yn button{flex:1;padding:5px 6px;border-radius:8px;opacity:.75}.yn .y.on{background:var(--okb);border-color:var(--ok);color:var(--ok);opacity:1;font-weight:600}.yn .n.on{background:var(--erb);border-color:var(--er);color:var(--er);opacity:1;font-weight:600}.yn .z.on{background:var(--sb);border-color:var(--mu);color:var(--mu);opacity:1;font-weight:600}
 .phone{display:none}#scrim,#pbar,#vh{display:none}
 @media(max-width:1000px){
  :root{--hh:48px;--vhp:36vh}
@@ -53,7 +54,7 @@ table{border-collapse:collapse;width:100%;font-size:13px}td,th{border-bottom:1px
  #vbar button{padding:6px 10px;min-height:32px}
  #vinfo{max-width:30vw;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
  .f{grid-template-columns:1fr auto;gap:3px 6px;padding:4px 0}.f label{grid-column:1/3}
- .f input{font-size:16px;padding:9px 10px;min-height:44px}.f .b button{min-height:44px;min-width:40px;font-size:16px}
+ .yn button{min-height:44px;font-size:15px}.f input{font-size:16px;padding:9px 10px;min-height:44px}.f .b button{min-height:44px;min-width:40px;font-size:16px}
  .ai,.nt{grid-column:1/3}
  #form h2{font-size:15px!important}
  #pbar{display:flex;position:fixed;left:0;right:0;bottom:0;z-index:50;gap:6px;padding:7px 8px calc(7px + env(safe-area-inset-bottom));background:var(--pn);border-top:1px solid var(--ln)}
@@ -81,10 +82,10 @@ const normPl = v => clean(v).replace(/Mocydła/g,'Moczydła').replace(/Mocydłac
 const AM = {}; D.acts.forEach(a => AM[a.id] = a);
 const getv = (a,f) => { const s = S.acts[a.id]; if (s && s.f[f] && s.f[f].v != null) return s.f[f].v; return a.ai[f] != null ? a.ai[f] : ''; };
 const GROUPS = [
- ['Akt', [['marriage_date','Data aktu (RRRR-MM-DD)'],['marriage_time','Godzina'],['margin_place','Miejscowość (margines)']]],
- ['Pan młody', [['groom_last_name','Nazwisko'],['groom_first_name','Imię'],['groom_status','Stan (kawaler/wdowiec)'],['groom_age','Wiek'],['groom_birth_place','Miejsce urodzenia'],['groom_residence','Zamieszkanie'],['groom_profession','Zawód'],['groom_father_first_name','Ojciec – imię'],['groom_father_last_name','Ojciec – nazwisko'],['groom_father_alive','Ojciec żyje? (tak/nie)'],['groom_mother_first_name','Matka – imię'],['groom_mother_last_name','Matka – nazwisko rodowe'],['groom_mother_alive','Matka żyje? (tak/nie)']]],
- ['Panna młoda', [['bride_last_name','Nazwisko'],['bride_first_name','Imię'],['bride_status','Stan (panna/wdowa)'],['bride_age','Wiek'],['bride_birth_place','Miejsce urodzenia'],['bride_residence','Zamieszkanie'],['bride_profession','Zawód'],['bride_father_first_name','Ojciec – imię'],['bride_father_last_name','Ojciec – nazwisko'],['bride_father_alive','Ojciec żyje? (tak/nie)'],['bride_mother_first_name','Matka – imię'],['bride_mother_last_name','Matka – nazwisko rodowe'],['bride_mother_alive','Matka żyje? (tak/nie)']]],
- ['Świadkowie', [['witness1_name','Świadek 1'],['witness1_residence','Zamieszkanie'],['witness1_profession','Zawód'],['witness2_name','Świadek 2'],['witness2_residence','Zamieszkanie'],['witness2_profession','Zawód']]],
+ ['Akt', [['marriage_date','Data aktu (RRRR-MM-DD)'],['margin_place','Miejscowość (margines)']]],
+ ['Pan młody', [['groom_first_name','Imię'],['groom_last_name','Nazwisko'],['groom_status','Stan'],['groom_profession','Zawód'],['groom_age','Wiek'],['groom_birth_place','Miejsce urodzenia'],['groom_residence','Zamieszkanie'],['groom_father_first_name','Ojciec – imię'],['groom_father_last_name','Ojciec – nazwisko'],['groom_father_alive','Ojciec żyje'],['groom_mother_first_name','Matka – imię'],['groom_mother_last_name','Matka – nazwisko rodowe'],['groom_mother_alive','Matka żyje']]],
+ ['Panna młoda', [['bride_first_name','Imię'],['bride_last_name','Nazwisko'],['bride_status','Stan'],['bride_profession','Zawód'],['bride_age','Wiek'],['bride_birth_place','Miejsce urodzenia'],['bride_residence','Zamieszkanie'],['bride_father_first_name','Ojciec – imię'],['bride_father_last_name','Ojciec – nazwisko'],['bride_father_alive','Ojciec żyje'],['bride_mother_first_name','Matka – imię'],['bride_mother_last_name','Matka – nazwisko rodowe'],['bride_mother_alive','Matka żyje']]],
+ ['Świadkowie', [['witness1_name','Świadek 1'],['witness1_profession','Zawód'],['witness1_residence','Zamieszkanie'],['witness2_name','Świadek 2'],['witness2_profession','Zawód'],['witness2_residence','Zamieszkanie']]],
  ['Zgody i adnotacje', [['consent','Zgody / dyspensy'],['margin_notes','Adnotacje (margines, stemple)']]]
 ];
 const FIELDS = []; GROUPS.forEach(g => g[1].forEach(x => FIELDS.push(x[0])));
@@ -107,14 +108,16 @@ function renderList(){ let h = ''; const years = [...new Set(D.acts.map(a => a.y
 $('sb').onclick = e => { const r = e.target.closest('.sr'); if (r) open(r.dataset.id); };
 /* ---- formularz ---- */
 function esc(s){ return String(s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c])); }
+const ynVal = v => { v = clean(v).toLowerCase(); return /^tak/.test(v) ? 'tak' : /^nie/.test(v) ? 'nie' : ''; };
+const ynHtml = (f, v) => { const c = ynVal(v); return '<span class="yn" data-yn="' + f + '"><button data-yn="tak" class="y' + (c === 'tak' ? ' on' : '') + '">✓ tak</button><button data-yn="nie" class="n' + (c === 'nie' ? ' on' : '') + '">✗ nie</button><button data-yn="" class="z' + (c === '' ? ' on' : '') + '">– brak</button></span>'; };
 function renderForm(a){ const s = st(a.id); let h = '<h2 style="margin:0 0 8px;font-size:17px">' + a.year + ' · akt ' + a.act + ' · ' + esc(nm(a)) + (s.done ? '<span class="tag ok">zatwierdzony</span>' : '') + '</h2>';
   const W = warns(a); if (W.length) h += '<div class="warn">' + W.map(esc).join('<br>') + '</div>';
   GROUPS.forEach(g => { h += '<div class="grp"><h3>' + g[0] + '</h3>'; g[1].forEach(([f,l]) => { const o = fld(a,f) || {}; const un = o.unc || (!o.ok && isUnc(a,f) && !s.done); const cls = o.ok || s.done ? 'ok' : (un ? 'un' : ''); const v = getv(a,f); const ch = o.v != null && clean(o.v) !== clean(a.ai[f]);
-    h += '<div class="f ' + cls + '" data-f="' + f + '"><label>' + l + '</label><input value="' + esc(v) + '" data-f="' + f + '"><span class="b"><button data-act="ok" class="' + (o.ok ? 'on' : '') + '" title="zweryfikowane">✓</button><button data-act="un" class="' + (o.unc ? 'on' : '') + '" title="niepewne">?</button><button data-act="nt" title="uwaga">✎</button></span>' + (ch ? '<div class="ai">odczyt AI: ' + esc(a.ai[f] || '—') + '</div>' : '') + (o.note != null ? '<div class="nt"><input data-note="' + f + '" placeholder="uwaga…" value="' + esc(o.note) + '"></div>' : '') + '</div>'; }); h += '</div>'; });
+    h += '<div class="f ' + cls + '" data-f="' + f + '"><label>' + l + '</label>' + (/_alive$/.test(f) ? ynHtml(f, v) : '<input value="' + esc(v) + '" data-f="' + f + '">') + '<span class="b"><button data-act="ok" class="' + (o.ok ? 'on' : '') + '" title="zweryfikowane">✓</button><button data-act="un" class="' + (o.unc ? 'on' : '') + '" title="niepewne">?</button><button data-act="nt" title="uwaga">✎</button></span>' + (ch ? '<div class="ai">odczyt AI: ' + esc(a.ai[f] || '—') + '</div>' : '') + (o.note != null ? '<div class="nt"><input data-note="' + f + '" placeholder="uwaga…" value="' + esc(o.note) + '"></div>' : '') + '</div>'; }); h += '</div>'; });
   h += '<div style="display:flex;gap:8px;flex-wrap:wrap"><button class="ok" id="bDone">' + (s.done ? 'Cofnij zatwierdzenie' : 'Zatwierdź cały akt ✓') + '</button><button id="bPrev">← poprzedni</button><button id="bNext">następny →</button></div>';
   $('form').innerHTML = h; }
 $('form').addEventListener('change', e => { const a = AM[S.cur]; if (!a) return; if (e.target.dataset.f) { commit(a, e.target.dataset.f, e.target.value, 'edit'); renderList(); const row = e.target.closest('.f'); row.classList.remove('ok','un'); row.querySelectorAll('.b .on').forEach(x => x.classList.remove('on')); } if (e.target.dataset.note) { const o = st(a.id).f[e.target.dataset.note] || (st(a.id).f[e.target.dataset.note] = {}); o.note = e.target.value; save(); } });
-$('form').addEventListener('click', e => { const a = AM[S.cur]; if (!a) return; const b = e.target.closest('button'); if (!b) return; const row = b.closest('.f'); const f = row && row.dataset.f;
+$('form').addEventListener('click', e => { const a = AM[S.cur]; if (!a) return; const b = e.target.closest('button'); if (!b) return; if (b.dataset.yn != null && b.closest('.yn')) { const f2 = b.closest('.yn').dataset.yn; commit(a, f2, b.dataset.yn, 'edit'); const o2 = st(a.id).f[f2]; o2.ok = true; save(); renderList(); renderForm(a); return; } const row = b.closest('.f'); const f = row && row.dataset.f;
   if (b.dataset.act === 'ok') { const o = st(a.id).f[f] || (st(a.id).f[f] = {}); o.ok = !o.ok; if (o.ok) { o.unc = false; if (o.v == null) o.v = getv(a,f); } save(); renderList(); renderForm(a); }
   else if (b.dataset.act === 'un') { const o = st(a.id).f[f] || (st(a.id).f[f] = {}); o.unc = !o.unc; if (o.unc) o.ok = false; save(); renderForm(a); }
   else if (b.dataset.act === 'nt') { const o = st(a.id).f[f] || (st(a.id).f[f] = {}); if (o.note == null) o.note = ''; save(); renderForm(a); const i = $('form').querySelector('[data-note="' + f + '"]'); if (i) i.focus(); }
