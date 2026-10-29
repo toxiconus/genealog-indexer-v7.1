@@ -34,18 +34,44 @@ button.pri{background:var(--ac);color:#fff;border-color:var(--ac)}button.ok{back
 .cols2{display:grid;grid-template-columns:1fr 1fr;gap:0 18px}
 dialog{border:1px solid var(--ln);border-radius:12px;background:var(--pn);color:var(--tx);max-width:760px;width:92%}dialog::backdrop{background:rgba(0,0,0,.45)}
 table{border-collapse:collapse;width:100%;font-size:13px}td,th{border-bottom:1px solid var(--ln);padding:3px 6px;text-align:left}
-@media(max-width:1000px){#app{grid-template-columns:1fr}#sb{position:static;height:auto;max-height:200px}#main{grid-template-columns:1fr}#view{position:static;height:60vh}.cols2{grid-template-columns:1fr}}
+.phone{display:none}#scrim,#pbar,#vh{display:none}
+@media(max-width:1000px){
+ :root{--hh:48px;--vhp:36vh}
+ header{position:fixed;left:0;right:0;top:0;padding:5px 8px;gap:6px}header h1{display:none}#prog{font-size:11px}#bImp,#bReg{display:none}
+ header button{padding:6px 9px}
+ #app{display:block}
+ #sb{position:fixed;left:0;top:0;bottom:0;width:80vw;max-width:310px;z-index:70;height:auto;transform:translateX(-105%);transition:transform .2s;box-shadow:4px 0 18px rgba(0,0,0,.35);padding:8px 6px 80px}
+ body.sbo #sb{transform:none}body.sbo #scrim{display:block;position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:65}
+ .sr{padding:9px 8px;font-size:15px}.sr .n{width:28px}
+ #main{display:block;padding:8px 8px 90px;padding-top:calc(var(--hh) + var(--vhp) + 14px)}
+ body.vmin #main{padding-top:calc(var(--hh) + 46px)}
+ #view{position:fixed;left:6px;right:6px;top:calc(var(--hh) + 4px);height:var(--vhp);z-index:40;box-shadow:0 6px 22px rgba(0,0,0,.4)}
+ body.vmin #view{height:38px}body.vmin #vp,body.vmin #txt,body.vmin #vh{display:none!important}body.vmin #vbar>:not(.phone){display:none}
+ #vh{display:flex;align-items:center;justify-content:center;height:18px;cursor:ns-resize;touch-action:none;background:var(--sb);border-top:1px solid var(--ln)}#vh i{width:44px;height:4px;border-radius:2px;background:var(--mu)}
+ #txt{display:none}body.vtx #txt{display:block;max-height:30%}
+ .phone{display:inline-block}
+ #vbar button{padding:6px 10px;min-height:32px}
+ #vinfo{max-width:30vw;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+ .f{grid-template-columns:1fr auto;gap:3px 6px;padding:4px 0}.f label{grid-column:1/3}
+ .f input{font-size:16px;padding:9px 10px;min-height:44px}.f .b button{min-height:44px;min-width:40px;font-size:16px}
+ .ai,.nt{grid-column:1/3}
+ #form h2{font-size:15px!important}
+ #pbar{display:flex;position:fixed;left:0;right:0;bottom:0;z-index:50;gap:6px;padding:7px 8px calc(7px + env(safe-area-inset-bottom));background:var(--pn);border-top:1px solid var(--ln)}
+ #pbar button{flex:1;min-height:48px;font-size:15px}#pbar #pOk{flex:2;font-weight:600}
+ .cols2{grid-template-columns:1fr}
+}
 </style></head><body>
 <header><h1>Weryfikacja małżeństw · Blinów</h1><span id="prog" class="tag"></span><span class="sp"></span>
 <button id="bImp">Wczytaj CSV…</button><button id="bExp" class="pri">Zapisz CSV</button><button id="bReg">Rejestry</button><button id="bMenu">Więcej…</button><input type="file" id="fl" accept=".csv,.json" hidden></header>
+<div id="scrim"></div><div id="pbar"><button id="pSb">☰ Akty</button><button id="pPr">‹</button><button id="pOk" class="ok">✓ Zatwierdź</button><button id="pNx">›</button></div>
 <div id="app"><aside id="sb"></aside><div id="main">
-<section id="view" class="card"><div id="vbar"><button id="vAkt">Akt</button><button id="vAll">Cały skan</button><button id="vP">+</button><button id="vM">−</button><span id="vinfo" class="tag"></span></div>
-<div id="vp"><img id="im" alt=""><div id="vmiss"></div></div><div id="txt"></div></section>
+<section id="view" class="card"><div id="vbar"><button id="vAkt">Akt</button><button id="vAll">Cały skan</button><button id="vP">+</button><button id="vM">−</button><span id="vinfo" class="tag"></span><span class="sp"></span><button id="vTx" class="phone" title="tekst odczytu">Aa</button><button id="vMin" class="phone" title="zwiń/rozwiń skan">▾</button></div>
+<div id="vp"><img id="im" alt=""><div id="vmiss"></div></div><div id="txt"></div><div id="vh"><i></i></div></section>
 <section id="form" class="card"></section></div></div>
 <dialog id="dg"><div id="dgc"></div><p style="text-align:right"><button onclick="document.getElementById('dg').close()">Zamknij</button></p></dialog>
 <script>
 const D = /*DATA*/null;
-const KEY = 'wm1';
+const KEY = 'wm1'; const PH = () => matchMedia('(max-width:1000px)').matches;
 const $ = id => document.getElementById(id);
 let S; try { S = JSON.parse(localStorage.getItem(KEY) || 'null'); } catch(e) {} if (!S) S = {acts:{}, cur:null};
 const save = () => { try { localStorage.setItem(KEY, JSON.stringify(S)); } catch(e) {} };
@@ -59,7 +85,7 @@ const GROUPS = [
  ['Pan młody', [['groom_last_name','Nazwisko'],['groom_first_name','Imię'],['groom_status','Stan (kawaler/wdowiec)'],['groom_age','Wiek'],['groom_birth_place','Miejsce urodzenia'],['groom_residence','Zamieszkanie'],['groom_profession','Zawód'],['groom_father_first_name','Ojciec – imię'],['groom_father_last_name','Ojciec – nazwisko'],['groom_father_alive','Ojciec żyje? (tak/nie)'],['groom_mother_first_name','Matka – imię'],['groom_mother_last_name','Matka – nazwisko rodowe'],['groom_mother_alive','Matka żyje? (tak/nie)']]],
  ['Panna młoda', [['bride_last_name','Nazwisko'],['bride_first_name','Imię'],['bride_status','Stan (panna/wdowa)'],['bride_age','Wiek'],['bride_birth_place','Miejsce urodzenia'],['bride_residence','Zamieszkanie'],['bride_profession','Zawód'],['bride_father_first_name','Ojciec – imię'],['bride_father_last_name','Ojciec – nazwisko'],['bride_father_alive','Ojciec żyje? (tak/nie)'],['bride_mother_first_name','Matka – imię'],['bride_mother_last_name','Matka – nazwisko rodowe'],['bride_mother_alive','Matka żyje? (tak/nie)']]],
  ['Świadkowie', [['witness1_name','Świadek 1'],['witness1_residence','Zamieszkanie'],['witness1_profession','Zawód'],['witness2_name','Świadek 2'],['witness2_residence','Zamieszkanie'],['witness2_profession','Zawód']]],
- ['Zapowiedzi i adnotacje', [['banns','Zapowiedzi (daty)'],['consent','Zgody / dyspensy'],['margin_notes','Adnotacje (margines, stemple)']]]
+ ['Zgody i adnotacje', [['consent','Zgody / dyspensy'],['margin_notes','Adnotacje (margines, stemple)']]]
 ];
 const FIELDS = []; GROUPS.forEach(g => g[1].forEach(x => FIELDS.push(x[0])));
 const PLF = new Set(['margin_place','groom_birth_place','groom_residence','bride_birth_place','bride_residence','witness1_residence','witness2_residence']);
@@ -72,7 +98,6 @@ function status(a){ const s = S.acts[a.id]; if (!s) return 'n'; if (s.done) retu
 function warns(a){ const w = []; const num = f => { const m = clean(getv(a,f)).match(/\d+/); return m ? +m[0] : null; };
   [['groom_age','pana młodego'],['bride_age','panny młodej']].forEach(([f,l]) => { const n = num(f); if (n != null && (n < 15 || n > 90)) w.push('Wiek ' + l + ' (' + n + ') wygląda nieprawdopodobnie.'); });
   const d = clean(getv(a,'marriage_date')); if (d && !/^\d{4}-\d{2}-\d{2}$/.test(d)) w.push('Data aktu nie ma formatu RRRR-MM-DD.');
-  const bn = (clean(getv(a,'banns')).match(/\d{4}-\d{2}-\d{2}/g) || []); if (d && bn.some(x => x > d)) w.push('Zapowiedź po dacie aktu (' + bn.filter(x => x > d).join(', ') + ').');
   if (!clean(getv(a,'witness1_name')) || !clean(getv(a,'witness2_name'))) w.push('Brak jednego ze świadków.');
   const r = (D.reg[a.year] || []).find(x => x.akt === a.act); if (r) { const sn = x => clean(x).replace(/\?/g,'').toLowerCase().split(/\s+/)[0]; if (sn(r.mlodzi) !== sn(getv(a,'groom_last_name'))) w.push('Rejestr: pan młody „' + r.mlodzi + '” ≠ w akcie „' + clean(getv(a,'groom_last_name')) + '”.'); const bl = x => clean(x).replace(/\?/g,'').toLowerCase().split(/\s+/).slice(-1)[0]; if (bl(r.panna) !== bl(getv(a,'bride_last_name'))) w.push('Rejestr: panna młoda „' + r.panna + '” ≠ w akcie „' + clean(getv(a,'bride_first_name')) + ' ' + clean(getv(a,'bride_last_name')) + '”.'); }
   else if (D.reg[a.year]) w.push('Brak wpisu tego aktu w rejestrze alfabetycznym.');
@@ -98,7 +123,7 @@ $('form').addEventListener('click', e => { const a = AM[S.cur]; if (!a) return; 
 /* ---- skan ---- */
 const im = $('im'), vp = $('vp'); let T = {x:0,y:0,s:1}, NW = 0, NH = 0, curRoi = null;
 const apply = () => { im.style.transform = 'translate(' + T.x + 'px,' + T.y + 'px) scale(' + T.s + ')'; };
-function fitRoi(r){ if (!NW) return; const cw = vp.clientWidth, ch = vp.clientHeight; const rw = r.w * NW, rh = r.h * NH; const s = Math.min(cw / rw, ch / rh); T.s = s; T.x = (cw - rw * s) / 2 - r.x * NW * s; T.y = (ch - rh * s) / 2 - r.y * NH * s; apply(); }
+function fitRoi(r){ if (!NW) return; const cw = vp.clientWidth, ch = vp.clientHeight; const rw = r.w * NW, rh = r.h * NH; const ph = PH() && r.h < .95; const s = ph ? cw / rw : Math.min(cw / rw, ch / rh); T.s = s; T.x = (cw - rw * s) / 2 - r.x * NW * s; T.y = ph ? 4 - r.y * NH * s : (ch - rh * s) / 2 - r.y * NH * s; apply(); }
 function showScan(a){ const key = a.roi.plik; const src = D.scans[key]; curRoi = a.roi.roi; $('vmiss').style.display = 'none'; $('vinfo').textContent = a.roi.file || key;
   if (!src) { im.removeAttribute('src'); $('vmiss').style.display = 'flex'; $('vmiss').textContent = 'Brak skanu: ' + key; return; }
   im.onload = () => { NW = im.naturalWidth; NH = im.naturalHeight; fitRoi(curRoi); }; im.onerror = () => { $('vmiss').style.display = 'flex'; $('vmiss').innerHTML = 'Nie można wczytać skanu.<br>' + esc(src); }; im.src = src; }
@@ -133,10 +158,25 @@ $('fl').onchange = e => { const f = e.target.files[0]; if (!f) return; const rd 
 /* ---- rejestry ---- */
 $('bReg').onclick = () => { let h = '<h3>Rejestry alfabetyczne zaślubionych</h3>'; Object.keys(D.reg).forEach(y => { h += '<h4>' + y + '</h4><table><tr><th>Lp.</th><th>Pan młody</th><th>Panna młoda</th><th>Akt</th><th></th></tr>'; D.reg[y].forEach(r => { const a = D.acts.find(x => x.year == y && x.act === r.akt); h += '<tr><td>' + r.lp + '</td><td>' + esc(r.mlodzi) + '</td><td>' + esc(r.panna) + '</td><td>' + r.akt + '</td><td>' + (a ? '<a href="#" data-o="' + a.id + '">otwórz</a>' : '<span style="color:var(--mu)">brak skanu</span>') + '</td></tr>'; }); h += '</table>'; }); $('dgc').innerHTML = h; $('dg').showModal(); };
 $('dgc').addEventListener('click', e => { const l = e.target.closest('[data-o]'); if (l) { e.preventDefault(); $('dg').close(); open(l.dataset.o); } });
-$('bMenu').onclick = () => { $('dgc').innerHTML = '<h3>Więcej</h3><p><button id="mJson">Zapisz stan (JSON)</button> <button id="mOvw">Wczytaj CSV z nadpisaniem…</button> <button id="mTh">Motyw jasny/ciemny</button> <button id="mClr">Wyczyść zapis w przeglądarce</button></p><p style="color:var(--mu);font-size:12.5px">Zapis automatyczny jest w pamięci przeglądarki. CSV zawiera wszystko: pola, status, niepewne pola, uwagi i tekst aktu.</p>'; $('dg').showModal(); };
-$('dgc').addEventListener('click', e => { if (e.target.id === 'mJson') download('malzenstwa_stan.json', JSON.stringify(S), 'application/json'); if (e.target.id === 'mOvw') { OVW = true; $('dg').close(); $('fl').click(); } if (e.target.id === 'mTh') { const r = document.documentElement; r.dataset.th = r.dataset.th === 'dark' ? 'light' : 'dark'; } if (e.target.id === 'mClr' && confirm('Usunąć zapis z przeglądarki?')) { try { localStorage.removeItem(KEY); } catch(x) {} S = {acts:{}, cur:null}; renderList(); open(D.acts[0].id); $('dg').close(); } });
+$('bMenu').onclick = () => { $('dgc').innerHTML = '<h3>Więcej</h3><p><button id="mImp">Wczytaj CSV…</button> <button id="mReg">Rejestry</button> <button id="mJson">Zapisz stan (JSON)</button> <button id="mOvw">Wczytaj CSV z nadpisaniem…</button> <button id="mTh">Motyw jasny/ciemny</button> <button id="mClr">Wyczyść zapis w przeglądarce</button></p><p style="color:var(--mu);font-size:12.5px">Zapis automatyczny jest w pamięci przeglądarki. CSV zawiera wszystko: pola, status, niepewne pola, uwagi i tekst aktu.</p>'; $('dg').showModal(); };
+$('dgc').addEventListener('click', e => { if (e.target.id === 'mImp') { $('dg').close(); $('fl').click(); } if (e.target.id === 'mReg') { $('dg').close(); $('bReg').click(); } if (e.target.id === 'mJson') download('malzenstwa_stan.json', JSON.stringify(S), 'application/json'); if (e.target.id === 'mOvw') { OVW = true; $('dg').close(); $('fl').click(); } if (e.target.id === 'mTh') { const r = document.documentElement; r.dataset.th = r.dataset.th === 'dark' ? 'light' : 'dark'; } if (e.target.id === 'mClr' && confirm('Usunąć zapis z przeglądarki?')) { try { localStorage.removeItem(KEY); } catch(x) {} S = {acts:{}, cur:null}; renderList(); open(D.acts[0].id); $('dg').close(); } });
 document.addEventListener('keydown', e => { if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return; const a = AM[S.cur]; if (!a) return; const i = D.acts.indexOf(a); if (e.key === 'ArrowRight' && D.acts[i+1]) open(D.acts[i+1].id); if (e.key === 'ArrowLeft' && D.acts[i-1]) open(D.acts[i-1].id); });
 window.addEventListener('resize', () => curRoi && fitRoi(curRoi));
 D.acts.forEach(a => { Object.keys(a.ai).forEach(k => { if (typeof a.ai[k] === 'string') a.ai[k] = PLF.has(k) ? normPl(a.ai[k]) : a.ai[k]; }); });
-renderList(); open(S.cur && AM[S.cur] ? S.cur : D.acts[0].id);
+
+/* ---- telefon: szuflada aktów, pływający skan, pasek dolny ---- */
+const rt = document.documentElement.style;
+function layout(){ const h = document.querySelector('header'); rt.setProperty('--hh', h.offsetHeight + 'px'); let v = S.vhp || Math.round(innerHeight * .36); v = Math.max(110, Math.min(v, Math.round(innerHeight * .75))); rt.setProperty('--vhp', v + 'px'); document.body.classList.toggle('vmin', !!S.vmin); document.body.classList.toggle('vtx', !!S.vtx); if (PH() && curRoi && !S.vmin) setTimeout(() => fitRoi(curRoi), 30); }
+const sbo = on => document.body.classList.toggle('sbo', on);
+$('pSb').onclick = () => sbo(!document.body.classList.contains('sbo')); $('scrim').onclick = () => sbo(false);
+$('sb').addEventListener('click', e => { if (e.target.closest('.sr')) sbo(false); });
+$('vMin').onclick = () => { S.vmin = !S.vmin; save(); $('vMin').textContent = S.vmin ? '▴' : '▾'; layout(); };
+$('vTx').onclick = () => { S.vtx = !S.vtx; save(); layout(); };
+$('pPr').onclick = () => { const b = $('bPrev'); b && b.click(); }; $('pNx').onclick = () => { const b = $('bNext'); b && b.click(); }; $('pOk').onclick = () => { const b = $('bDone'); b && b.click(); };
+function pOkLbl(){ const a = AM[S.cur]; $('pOk').textContent = a && S.acts[a.id] && S.acts[a.id].done ? '↺ Cofnij zatwierdzenie' : '✓ Zatwierdź akt'; }
+let hd = null; $('vh').addEventListener('pointerdown', e => { hd = {y:e.clientY, v:$('view').offsetHeight}; $('vh').setPointerCapture(e.pointerId); });
+$('vh').addEventListener('pointermove', e => { if (!hd) return; S.vhp = Math.max(110, Math.min(hd.v + e.clientY - hd.y, Math.round(innerHeight * .75))); rt.setProperty('--vhp', S.vhp + 'px'); });
+$('vh').addEventListener('pointerup', () => { if (hd) { hd = null; save(); layout(); } });
+window.addEventListener('resize', layout); new MutationObserver(pOkLbl).observe($('form'), {childList:true});
+renderList(); layout(); $('vMin').textContent = S.vmin ? '▴' : '▾'; open(S.cur && AM[S.cur] ? S.cur : D.acts[0].id); pOkLbl();
 </script></body></html>
