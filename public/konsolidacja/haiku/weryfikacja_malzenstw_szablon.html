@@ -87,7 +87,7 @@ const normPl = v => clean(v).replace(/Mocydła/g,'Moczydła').replace(/Mocydłac
 const AM = {}; D.acts.forEach(a => AM[a.id] = a);
 const getv = (a,f) => { const s = S.acts[a.id]; if (s && s.f[f] && s.f[f].v != null) return s.f[f].v; return a.ai[f] != null ? a.ai[f] : ''; };
 const GROUPS = [
- ['① Margines (nr aktu, miejscowość, młodzi)', [['margin_place','Miejscowość (margines)'],['margin_groom','Pan młody wg marginesu (Imię Nazwisko)'],['margin_bride','Panna młoda wg marginesu (Imię Nazwisko)']]],
+ ['① Margines (nr aktu, miejscowość, młodzi)', [['margin_place','Miejscowość (margines)'],['margin_groom_first_name','Margines – pan młody: imię'],['margin_groom_last_name','Margines – pan młody: nazwisko'],['margin_bride_first_name','Margines – panna młoda: imię'],['margin_bride_last_name','Margines – panna młoda: nazwisko']]],
  ['② Początek aktu – data i świadkowie', [['marriage_date','Data aktu (RRRR-MM-DD)']]],
  ['③ Świadkowie (w tekście przed młodymi)', [['witness1_first_name','Świadek 1 – imię'],['witness1_last_name','Świadek 1 – nazwisko'],['witness1_profession','Zawód'],['witness1_residence','Zamieszkanie'],['witness2_first_name','Świadek 2 – imię'],['witness2_last_name','Świadek 2 – nazwisko'],['witness2_profession','Zawód'],['witness2_residence','Zamieszkanie']]],
  ['④ Pan młody – wg tekstu aktu', [['groom_first_name','Imię'],['groom_last_name','Nazwisko'],['groom_status','Stan'],['groom_profession','Zawód'],['groom_age','Wiek'],['groom_birth_place','Miejsce urodzenia'],['groom_residence','Zamieszkanie'],['groom_father_first_name','Ojciec – imię'],['groom_father_last_name','Ojciec – nazwisko'],['groom_father_alive','Ojciec żyje'],['groom_mother_first_name','Matka – imię'],['groom_mother_last_name','Matka – nazwisko rodowe'],['groom_mother_alive','Matka żyje']]],
@@ -103,7 +103,7 @@ function commit(a,f,v,flag){ if (flag === 'edit') { if (f === 'marriage_date') v
 function nm(a){ return clean(getv(a,'groom_last_name')).replace(/\?/g,'') + ' ' + clean(getv(a,'groom_first_name')).replace(/\?/g,'') + ' z ' + clean(getv(a,'bride_first_name')).replace(/\?/g,'') + ' ' + clean(getv(a,'bride_last_name')).replace(/\?/g,''); }
 function status(a){ const s = S.acts[a.id]; if (!s) return 'n'; if (s.done) return 'd'; return Object.keys(s.f).some(k => s.f[k].ok || s.f[k].v != null) ? 'w' : 'n'; }
 function warns(a){ const w = []; const num = f => { const m = clean(getv(a,f)).match(/\d+/); return m ? +m[0] : null; };
-  { const tk = (s,i) => { const w = clean(s).replace(/\?/g,'').toLowerCase().split(/\s+/).filter(Boolean); return i < 0 ? w[w.length-1] : w[0]; }; [['groom','pan młody'],['bride','panna młoda']].forEach(([x,l]) => { const m = getv(a,'margin_' + x); if (!clean(m)) { w.push('Margines: brak ' + l + ' – przepisz z marginesu.'); return; } if (tk(m,-1) !== tk(getv(a,x + '_last_name'),-1) && tk(m,-1) !== tk(getv(a,x + '_last_name'),0) || tk(m,0) !== tk(getv(a,x + '_first_name'),0)) w.push('Margines a tekst: ' + l + ' „' + clean(m) + '” ≠ „' + clean(getv(a,x + '_first_name')) + ' ' + clean(getv(a,x + '_last_name')) + '”.'); }); }
+  { const dd = (x, y, mx) => lev(fold(clean(x)), fold(clean(y)), mx) > mx; [['groom','pan młody'],['bride','panna młoda']].forEach(([x,l]) => { const mf = getv(a,'margin_' + x + '_first_name'), ml = getv(a,'margin_' + x + '_last_name'); if (!clean(mf) && !clean(ml)) { w.push('Margines: brak ' + l + ' – przepisz z marginesu (imię i nazwisko osobno).'); return; } const tf = getv(a,x + '_first_name'), tl = getv(a,x + '_last_name'); if (dd(ml, tl, 1) || dd(mf, tf, 2)) w.push('Margines a tekst: ' + l + ' „' + clean(mf) + ' ' + clean(ml) + '” ≠ „' + clean(tf) + ' ' + clean(tl) + '”.'); }); }
   [['groom_age','pana młodego'],['bride_age','panny młodej']].forEach(([f,l]) => { const n = num(f); if (n != null && (n < 15 || n > 90)) w.push('Wiek ' + l + ' (' + n + ') wygląda nieprawdopodobnie.'); });
   const d = clean(getv(a,'marriage_date')); if (d && !/^\d{4}-\d{2}-\d{2}$/.test(d)) w.push('Data aktu nie ma formatu RRRR-MM-DD.');
   if (!clean(getv(a,'witness1_last_name')) || !clean(getv(a,'witness2_last_name'))) w.push('Brak jednego ze świadków.');
@@ -117,7 +117,7 @@ $('sb').onclick = e => { if (e.target.id === 'hdT') { S.hideDone = S.hideDone ==
 /* ---- baza: nazwiska, imiona, miejscowości (wybór istniejących / edycja / nowy wpis) ---- */
 const fold = s => (s||'').toString().toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,'').replace(/ł/g,'l');
 function lev(a, b, max){ a = String(a); b = String(b); const m = a.length, n = b.length; if (max !== undefined && Math.abs(m-n) > max) return max + 1; if (!m) return n; if (!n) return m; let p = [...Array(n+1).keys()]; for (let i = 1; i <= m; i++) { const c = [i]; for (let j = 1; j <= n; j++) c[j] = Math.min(p[j]+1, c[j-1]+1, p[j-1] + (a[i-1] === b[j-1] ? 0 : 1)); p = c; } return p[n]; }
-const NT = f => PLF.has(f) ? 'p' : /^margin_/.test(f) ? null : /_first_name$/.test(f) ? 'n' : /_last_name$/.test(f) ? 's' : null;
+const NT = f => PLF.has(f) ? 'p' : /_first_name$/.test(f) ? 'n' : /_last_name$/.test(f) ? 's' : null;
 const DB = D.counts || {s:{}, n:{}, p:{}}; const FM = {};
 const FMget = t => FM[t] || (FM[t] = (() => { const m = {}; Object.entries(DB[t] || {}).forEach(([n,c]) => { const k = fold(n); if (!m[k] || m[k][1] < c) m[k] = [n,c]; }); return m; })());
 const cntOf = (t, v) => { v = clean(v).replace(/\?/g,''); if (!v) return null; const c = (DB[t] || {})[v]; if (c) return {c, name:v}; const m = FMget(t)[fold(v)]; return m ? {c:m[1], name:m[0], alt:true} : {c:0}; };
@@ -198,12 +198,12 @@ vp.addEventListener('pointermove', e => { if (!drag) return; T.x = e.clientX - d
 /* ---- otwieranie ---- */
 function open(id){ const a = AM[id]; if (!a) return; S.cur = id; save(); renderList(); renderForm(a); showScan(a); $('txt').textContent = a.text || ''; window.scrollTo(0,0); }
 /* ---- CSV ---- */
-const COLS = D.cols.filter(c => c !== 'margin_names').concat(['margin_groom','margin_bride','witness1_first_name','witness1_last_name','witness2_first_name','witness2_last_name'].filter(c => !D.cols.includes(c)));
+const COLS = D.cols.filter(c => c !== 'margin_names').concat(['margin_groom','margin_bride','margin_groom_first_name','margin_groom_last_name','margin_bride_first_name','margin_bride_last_name','witness1_first_name','witness1_last_name','witness2_first_name','witness2_last_name'].filter(c => !D.cols.includes(c)));
 const q = v => { v = v == null ? '' : String(v); return /[;"\n\r]/.test(v) ? '"' + v.replace(/"/g,'""') + '"' : v; };
 function rows(){ return D.acts.map(a => { const s = S.acts[a.id] || {f:{}}; const r = {}; COLS.forEach(c => r[c] = a.ai[c] != null ? a.ai[c] : ''); r.id = a.id; r.marriage_year = a.year; r.marriage_act_number = a.act; FIELDS.forEach(f => { r[f] = normV(f, getv(a,f)); });
   const unc = FIELDS.filter(f => { const o = s.f[f]; return o ? (o.unc || (!o.ok && !s.done && isUnc(a,f))) : (!s.done && isUnc(a,f)); }); r.uncertain_fields = unc.join(',');
   r.verification_notes = FIELDS.filter(f => s.f[f] && s.f[f].note).map(f => f + ': ' + s.f[f].note).join(' | ');
-  r.verification_status = s.done ? 'ok' : (status(a) === 'w' ? 'ai_v1_w_trakcie' : 'ai_v1'); [1,2].forEach(k => { r['witness' + k + '_name'] = (clean(r['witness' + k + '_first_name']) + ' ' + clean(r['witness' + k + '_last_name'])).trim(); }); return r; }); }
+  r.verification_status = s.done ? 'ok' : (status(a) === 'w' ? 'ai_v1_w_trakcie' : 'ai_v1'); ['groom','bride'].forEach(x => { r['margin_' + x] = (clean(r['margin_' + x + '_first_name']) + ' ' + clean(r['margin_' + x + '_last_name'])).trim(); }); [1,2].forEach(k => { r['witness' + k + '_name'] = (clean(r['witness' + k + '_first_name']) + ' ' + clean(r['witness' + k + '_last_name'])).trim(); }); return r; }); }
 const csvText = () => COLS.join(';') + '\r\n' + rows().map(r => COLS.map(c => q(r[c])).join(';')).join('\r\n') + '\r\n';
 function download(name, text, type){ const b = new Blob(['﻿' + text], {type: type || 'text/csv;charset=utf-8'}); const u = URL.createObjectURL(b); const l = document.createElement('a'); l.href = u; l.download = name; document.body.appendChild(l); l.click(); setTimeout(() => { URL.revokeObjectURL(u); l.remove(); }, 500); }
 $('bExp').onclick = () => download('MALZENSTWA_zweryfikowane_auto.csv', csvText());
@@ -225,7 +225,7 @@ $('dgc').addEventListener('click', e => { if (e.target.id === 'mImp') { $('dg').
 document.addEventListener('keydown', e => { if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return; const a = AM[S.cur]; if (!a) return; const i = D.acts.indexOf(a); if (e.key === 'ArrowRight' && D.acts[i+1]) open(D.acts[i+1].id); if (e.key === 'ArrowLeft' && D.acts[i-1]) open(D.acts[i-1].id); });
 window.addEventListener('resize', () => curRoi && fitRoi(curRoi));
 D.acts.forEach(a => { [1,2].forEach(k => { const w = clean(a.ai['witness' + k + '_name']).split(/\s+/).filter(Boolean); if (!clean(a.ai['witness' + k + '_last_name']) && w.length) { a.ai['witness' + k + '_last_name'] = w[w.length - 1]; a.ai['witness' + k + '_first_name'] = w.slice(0, -1).join(' '); } }); });
-D.acts.forEach(a => { const c = x => clean(a.ai[x]).replace(/\?/g,''); ['groom','bride'].forEach(x => { if (!clean(a.ai['margin_' + x])) { a.ai['margin_' + x] = c(x + '_first_name') + ' ' + c(x + '_last_name'); a.ai.uncertain_fields = (clean(a.ai.uncertain_fields) ? clean(a.ai.uncertain_fields) + ',' : '') + 'margin_' + x; } }); });
+D.acts.forEach(a => { const c = x => clean(a.ai[x]).replace(/\?/g,''); ['groom','bride'].forEach(x => { const old = clean(a.ai['margin_' + x]).split(/\s+/).filter(Boolean); ['first_name','last_name'].forEach((k,i) => { const key = 'margin_' + x + '_' + k; if (!clean(a.ai[key])) { a.ai[key] = old.length > 1 ? (i ? old[old.length - 1] : old.slice(0,-1).join(' ')) : c(x + '_' + k); a.ai.uncertain_fields = (clean(a.ai.uncertain_fields) ? clean(a.ai.uncertain_fields) + ',' : '') + key; } }); }); });
 D.acts.forEach(a => { Object.keys(a.ai).forEach(k => { if (typeof a.ai[k] === 'string') a.ai[k] = PLF.has(k) ? normPl(a.ai[k]) : a.ai[k]; }); });
 
 /* ---- telefon: szuflada aktów, pływający skan, pasek dolny ---- */
