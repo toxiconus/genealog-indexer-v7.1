@@ -11,15 +11,18 @@
 |---|---|---|
 | `X?` | wartość jest, odczyt niepewny | `Łach?` |
 | `[nieczytelne]` | w akcie coś jest, nie da się odczytać (skan/pismo/uszkodzenie) | godzina, nazwisko matki |
-| `[niepodane]` | akt nie zawiera tej informacji (rubryka pominięta) | zawód, miejsce urodzenia |
+| `___` | nie podano w akcie (rubryka pominięta) | zawód, miejsce urodzenia |
 | `[niepamiętne]` | akt mówi wprost, że nieznane/niepamiętne (nieznane nazwisko rodowe, „z niepamiętnych małżonków") | mother_last_name 1945/40 |
-| `[nieślubne]` | brak ojca, bo dziecko z niezamężnej matki (zamiast pustego) | father_first/last |
+| `---` | brak: ojca nie ma (dziecko niezamężnej) lub osoba nie istnieje | father_first/last |
 | `[uszkodzone]` | ubytek karty/obcięty brzeg/plama | |
 | puste | wyłącznie „nie dotyczy" (maiden u mężczyzn, spouse u kawalerów/dzieci, zawód dziecka) | |
 
 Reguły: 1) zawsze nawiasy `[ ]`, bez wariantów (nie „brak", „nieznane", „-", „?" samo). 2) `[...]` zastępuje całą wartość; `?` dopisujemy tylko do wartości. 3) Pole puste = tylko „nie dotyczy" – cokolwiek innego dostaje znacznik. 4) Oznaczenie tej samej wartości w obu rodzicach itd. identyczne. 5) Wyszukiwanie/statystyki traktują `[...]` jako brak danych, nie jako nazwisko.
 
 ## Wdrożenie (po akceptacji)
-1. Migracja CSV 43–45: `?` samo → `[nieczytelne]` (po sprawdzeniu na skanie), puste ojciec przy dziecku niezamężnej → `[nieślubne]`, reszta pustych wg reguły „dotyczy / nie dotyczy".
+1. Migracja CSV 43–45: `?` samo → `[nieczytelne]` (po sprawdzeniu na skanie), puste ojciec przy dziecku niezamężnej → `---`, reszta pustych wg reguły „dotyczy / nie dotyczy".
 2. Narzędzia (zgony, małżeństwa): przyciski przy polu `?` · nieczyt. · niepodane · niepamięt. · nieślub., zamiast wpisywania ręcznie; baza podpowiedzi ignoruje `[...]`.
 3. Audyt: osobna statystyka per znacznik.
+
+## Do analizy
+Ojciec podany, ale akt dodaje okoliczność (Ameryka, wojsko, zm.) oraz wdowa bez wymienionego ojca. Propozycja: imię i nazwisko wpisane normalnie + osobna rubryka okoliczności (np. `parent_status`); wdowa bez ojca = `___`. Najpierw zliczyć takie przypadki w danych (zgony i małżeństwa).
