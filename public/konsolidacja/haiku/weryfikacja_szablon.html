@@ -210,7 +210,7 @@ const ORDF = [...ORD.map(id => FIELDS.find(f => f.id === id)).filter(Boolean), .
 const NUMW = {'jeden':1,'dwa':2,'trzy':3,'cztery':4,'pięć':5,'sześć':6,'siedem':7,'osiem':8,'dziewięć':9,'dziesięć':10,'jedenaście':11,'dwanaście':12,'trzynaście':13,'czternaście':14};
 const sLow = a => (getv(a,'deceased_status') || '').toString().toLowerCase();
 const isSingle = a => /panna|kawaler/.test(sLow(a));
-const isChild = a => { const t = (getv(a,'age') || '').toString().toLowerCase(); if (!t) return false; if (/miesi|tygod|(^|\s)dni(\s|$)|(^|\s)dzie[ńn](\s|$)|(^|\s)godz/.test(t)) return true; const m = t.match(/\d+/); if (m) return +m[0] < 15; const w = t.split(/\s+/).find(x => NUMW[x] !== undefined); return w ? NUMW[w] < 15 : false; };
+const isChild = a => { const t = (getv(a,'age') || '').toString().toLowerCase(); if (!t) return false; if (/mies|tyg|(^|\s)dni(\s|$)|(^|\s)dn\b|(^|\s)dzie[ńn](\s|$)|(^|\s)godz/.test(t)) return true; const m = t.match(/\d+/); if (m) return +m[0] < 15; const w = t.split(/\s+/).find(x => NUMW[x] !== undefined); return w ? NUMW[w] < 15 : false; };
 const minor = a => { if (isChild(a)) return true; const m = (getv(a,'age') || '').toString().match(/^\s*(\d+)\s*(?:lat|lata|l\.?)?\s*$/i); return m ? +m[1] < (getv(a,'deceased_sex') === 'K' ? 16 : 18) : false; };
 // reguły: panna – bez męża; mężczyzna – nazwisko rodowe puste (nazwisko jest rodowe); dziecko – bez zawodu, chyba że wymieniony
 const appl = (a,f) => { if (f === 'deceased_maiden_name') return getv(a,'deceased_sex') === 'K'; if (f === 'deceased_spouse') return !isSingle(a) && !isChild(a); if (f === 'deceased_status') return !minor(a) || true; if (f === 'profession') return !isChild(a) || !!clean(getv(a,f)); return true; };
@@ -378,7 +378,7 @@ function lubGuard(toId){ const p = AM[S.cur]; if (!p || p.id === toId || S.acts[
 function open(id){ if (!lubGuard(id)) return; S.cur = id; save(); renderList(); if (W.on) wizStart(); renderAct(); showScan(); }
 function chipsFor(a,f){ const cur = getv(a,f); const out = []; const seen = new Set(); const add = (cls,lbl,val,extra='') => { if (!val) return; val = String(val).replace(/\s*\?+/g, '').replace(/\s{2,}/g, ' ').trim(); if (!val) return; const key = cls+val; if (seen.has(key)) return; seen.add(key); out.push(`<button class="chip ${cls} ${clean(cur)===clean(val)?'sel':''}" data-f="${f}" data-v="${val.replace(/"/g,'&quot;')}" data-s="${cls}"><small>${lbl}</small>${val}${extra}</button>`); }; if (f === 'deceased_status') { if (minor(a)) add('edit','nieletni','dziecko'); (clean(getv(a,'deceased_sex')) === 'K' ? ['panna','zamężna','wdowa'] : ['kawaler','żonaty','wdowiec']).forEach(x => add('edit','stan',x)); }
   if (f === 'deceased_spouse' && clean(cur)) { const b = spMark(cur, ''); [['owd.','owd. – żyje'],['†','† – zmarł wcześniej'],['','bez znacznika']].forEach(([m,l]) => add('edit', l, spMark(b, m))); }
-  if (f === 'age') { const mm = clean(cur).match(/^(\d+)\s*(?:[A-Za-zĄĆĘŁŃÓŚŹŻąćęłńóśźż.\-]+)?$/); if (mm) { const n = +mm[1]; [['d','dni'],['t','tyg.'],['m','mies.'],['r','lat'],['g','godz.']].forEach(([u,l]) => add('edit', l, n + ' ' + agePl(n,u))); } }
+  if (f === 'age') { const mm = clean(cur).match(/^(\d+)\s*(?:[A-Za-zĄĆĘŁŃÓŚŹŻąćęłńóśźż.\-]+)?$/); if (mm) { const n = +mm[1]; [['g','godz.'],['d','dn.'],['t','tyg.'],['m','mies.'],['r','lat']].forEach(([u,l]) => add('edit', l, ageFmt(n, u, true))); } }
   const cnt = v => { const c = countOf(f,v); return c === null ? '' : ` <small>×${c}</small>`; };
   if (a.ai?.[f]) add('ai','AI',a.ai[f],cnt(a.ai[f])); if (a.lub?.[f]) add('lub','LUB',a.lub[f],cnt(a.lub[f])); (a.alts?.[f]||[]).forEach(([c,l,v]) => add(c,l,v,cnt(v)));
   if (FT[f]) { [a.ai?.[f], a.lub?.[f]].filter(Boolean).forEach(v => { if (countOf(f,v) === 0) near(f,v).forEach(([n,c]) => add('bz','BAZA ≈',n,` <small>×${c}</small>`)); }); }
@@ -880,22 +880,24 @@ const spDef = st => { st = String(st || '').toLowerCase(); return /^(żonaty|zam
 // wiek: cyfry + pełne polskie jednostki w poprawnej odmianie („1 dzień”, „2 dni”, „3 miesiące”, „5 miesięcy”, „2 lata”, „5 lat”); skróty i liczebniki słowne ujednolicone
 const AGE_W = {zero:0,jeden:1,jedna:1,jedno:1,dwa:2,dwie:2,trzy:3,cztery:4,'pięć':5,'sześć':6,siedem:7,osiem:8,'dziewięć':9,'dziesięć':10,jedenaście:11,'dwanaście':12,'trzynaście':13,'czternaście':14,'piętnaście':15,'szesnaście':16,'siedemnaście':17,'osiemnaście':18,'dziewiętnaście':19,'dwadzieścia':20};
 const AGE_U = {d:['dzień','dni','dni'], t:['tydzień','tygodnie','tygodni'], m:['miesiąc','miesiące','miesięcy'], r:['rok','lata','lat'], g:['godzina','godziny','godzin']};
+const AGE_AB = {d:'dn.', t:'tyg.', m:'mies.', g:'godz.'};   // skróty: lata bez jednostki (gdy sam wiek), dalej: mies., tyg., dn., godz.
+const ageFmt = (n, u, solo) => u === 'r' ? (solo ? String(n) : n + (n === 1 ? ' r.' : ' l.')) : n + ' ' + AGE_AB[u];
 const agePl = (n, u) => { const f = AGE_U[u], k = n % 10, h = n % 100; return n === 1 ? f[0] : (k >= 2 && k <= 4 && !(h >= 12 && h <= 14)) ? f[1] : f[2]; };
 function ageUnit(w){ w = w.toLowerCase(); if (/^(dz|dn|d\.?$)/.test(w)) return 'd'; if (/^(tyg|tydz|t\.?$)/.test(w)) return 't'; if (/^(mies|miesi|m-c|m-cy|m\.?$|msc)/.test(w)) return 'm'; if (/^(rok|roku|lat|lata|l\.?$|r\.?$)/.test(w)) return 'r'; if (/^godz/.test(w)) return 'g'; return ''; }
 function normAge(v){ let t = String(v).trim(); if (!t || /^\d+$/.test(t)) return t;
-  const q = /\?\s*$/.test(t) ? '?' : '', pre = /^~/.test(t) ? '~' : ''; t = t.replace(/\?+\s*$/, '').replace(/^~/, '').trim();
+  const q = (/\?\s*$/.test(t) || /^~/.test(t)) ? '?' : '', pre = ''; t = t.replace(/\?+\s*$/, '').replace(/^~/, '').trim();
   const par = t.match(/^0\s*\((.+)\)$/); if (par) t = par[1];            // „0 (osiem miesięcy)” → „osiem miesięcy”
   if (/^pół\s+roku$/i.test(t)) t = '6 miesięcy';
   t = t.replace(/^(\d+),5\s+roku?$/i, (m0, n) => (+n ? n + ' rok ' : '') + '6 miesięcy').replace(/\bpół\b/gi, '6');
   const parts = [], re = /(\d+|\?|[A-Za-zĄĆĘŁŃÓŚŹŻąćęłńóśźż]+)\s*([A-Za-zĄĆĘŁŃÓŚŹŻąćęłńóśźż.\-]+)/g; let m, rest = t.replace(/[,;]/g, ' ');
   while ((m = re.exec(rest))) { let n = m[1]; if (n !== '?') { if (!/^\d+$/.test(n)) { const w = AGE_W[n.toLowerCase()]; if (w == null) return v; n = w; } n = +n; }
-    const u = ageUnit(m[2]); if (!u) return v; parts.push(n === '?' ? '? ' + AGE_U[u][2] : n + ' ' + agePl(n, u)); }
-  return parts.length ? pre + parts.join(' ') + q : v; }
+    const u = ageUnit(m[2]); if (!u) return v; parts.push({n, u}); }
+  return parts.length ? pre + parts.map(x => x.n === '?' ? '? ' + (x.u === 'r' ? 'l.' : AGE_AB[x.u]) : ageFmt(x.n, x.u, parts.length === 1)).join(' ') + q : v; }
 // wybór wieku jak w kalendarzu: liczba (do 3 cyfr) + kliknięcie jednostki; „dodaj” dopisuje kolejną część (np. 1 rok + 5 miesięcy)
-const AGE_UB = [['g','godz.'],['d','dni'],['t','tyg.'],['m','mies.'],['r','lat']];
+const AGE_UB = [['g','godz.'],['d','dn.'],['t','tyg.'],['m','mies.'],['r','lat']];
 const agePick = (a, f) => f !== 'age' ? '' : `<div class="chips agp" style="align-items:center"><span class="muted">Wybierz:</span><input type="number" class="agn" min="0" max="999" inputmode="numeric" placeholder="liczba" style="width:76px"> ${AGE_UB.map(([u,l]) => `<button class="chip" data-agu="${u}">${l}</button>`).join('')}<label class="muted"><input type="checkbox" class="agadd"> dodaj do obecnego</label></div>`;
 function bindAgePick(root, a){ root.querySelectorAll('.agp').forEach(bar => { const inp = bar.querySelector('.agn'), add = bar.querySelector('.agadd');
-  bar.querySelectorAll('[data-agu]').forEach(b => b.onclick = () => { const n = parseInt(inp.value, 10); if (isNaN(n) || n < 0) { inp.focus(); return; } let v = n + ' ' + agePl(n, b.dataset.agu); const cur = clean(getv(a,'age')); if (add.checked && cur && !/\?|^\d+$/.test(cur)) v = cur + ' ' + v; else if (add.checked && /^\d+$/.test(cur)) v = cur + ' ' + agePl(+cur, 'r') + ' ' + v; setf(a, 'age', normAge(v), 'edit'); }); }); }
+  bar.querySelectorAll('[data-agu]').forEach(b => b.onclick = () => { const n = parseInt(inp.value, 10); if (isNaN(n) || n < 0) { inp.focus(); return; } let v = ageFmt(n, b.dataset.agu, true); const cur = clean(getv(a,'age')); if (add.checked && cur && !/\?|^\d+$/.test(cur)) v = cur + ' ' + ageFmt(n, b.dataset.agu, false); else if (add.checked && /^\d+$/.test(cur)) v = ageFmt(+cur, 'r', false) + ' ' + ageFmt(n, b.dataset.agu, false); setf(a, 'age', normAge(v), 'edit'); }); }); }
 function normFieldVal(a, f, v){ if (!v) return v;
   if (f === 'age') return normAge(v);
   if (f === 'death_place' && /^Szpital Janów/i.test(v)) return 'Szpital Janów Lubelski';   // zmarli w szpitalu: bez dopisku miejsca zamieszkania („…(zm.), Moczydła”)

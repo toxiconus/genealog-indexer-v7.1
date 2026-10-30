@@ -3,8 +3,11 @@
    Zwraca listę {id, sev:'err'|'warn'|'info', code, msg, rel:[id,...]}. Brak pola = test pomijany. */
 const RAP_NUM = {jeden:1,jedna:1,dwa:2,dwie:2,trzy:3,cztery:4,piec:5,szesc:6,siedem:7,osiem:8,dziewiec:9,dziesiec:10,jedenascie:11,dwanascie:12,trzynascie:13,czternascie:14,pietnascie:15,szesnascie:16,siedemnascie:17,osiemnascie:18,dziewietnascie:19,dwadziescia:20,trzydziesci:30,czterdziesci:40,piecdziesiat:50,szescdziesiat:60,siedemdziesiat:70,osiemdziesiat:80,dziewiecdziesiat:90,sto:100};
 // wiek w latach z zapisu ("78", "osiemdziesiąt", "dwa lata", "1 miesiąc"); null gdy nie da się ustalić
-function wiekLat(t){ t = fold(t || ''); if (!t.trim()) return null; let n = null; const d = t.match(/\d+/); if (d) n = +d[0]; else { let s = 0, ok = false; t.split(/[^a-z]+/).forEach(w => { if (RAP_NUM[w]) { s += RAP_NUM[w]; ok = true; } }); if (ok) n = s; }
-  if (n === null) return null; if (/miesi/.test(t)) return n / 12; if (/tydz/.test(t)) return n / 52; if (/(^|[^a-z])(dni|dzien|doba|godz)/.test(t)) return n / 365; return n; }
+function wiekLat(t){ t = fold(t || ''); if (!t.trim()) return null; const U = u => /^(mies|m-c|msc)/.test(u) ? 12 : /^(tyg|tydz)/.test(u) ? 52 : /^(dn|dni|dzien|doba)/.test(u) ? 365 : /^godz/.test(u) ? 8760 : 1;
+  const re = /(\d+)\s*([a-z-]*)/g; let m, n = null; while ((m = re.exec(t))) n = (n || 0) + (+m[1]) / U(m[2]);
+  if (n !== null) return n;
+  let s = 0, ok = false; t.split(/[^a-z]+/).forEach(w => { if (RAP_NUM[w]) { s += RAP_NUM[w]; ok = true; } }); if (!ok) return null;
+  if (/miesi|mies/.test(t)) return s / 12; if (/tydz|tyg/.test(t)) return s / 52; if (/(^|[^a-z])(dni|dn|dzien|doba|godz)/.test(t)) return s / 365; return s; }
 function dzien(s){ const m = /^(\d{4})-(\d{2})-(\d{2})$/.exec(s || ''); return m ? Date.UTC(+m[1], +m[2]-1, +m[3]) / 864e5 : null; }
 const RAP_M_A = /^(kuba|barnaba|bonawentura|jarema|kosma|mykoła|miko[lł]a|saba|zawisza)$/i;
 function raportSpojnosci(rows, opt){ opt = opt || {}; const out = []; const add = (r, sev, code, msg, rel) => out.push({id:r.id, sev, code, msg, rel:rel || []});
