@@ -886,6 +886,7 @@ const agePl = (n, u) => { const f = AGE_U[u], k = n % 10, h = n % 100; return n 
 function ageUnit(w){ w = w.toLowerCase(); if (/^(dz|dn|d\.?$)/.test(w)) return 'd'; if (/^(tyg|tydz|t\.?$)/.test(w)) return 't'; if (/^(mies|miesi|m-c|m-cy|m\.?$|msc)/.test(w)) return 'm'; if (/^(rok|roku|lat|lata|l\.?$|r\.?$)/.test(w)) return 'r'; if (/^godz/.test(w)) return 'g'; return ''; }
 function normAge(v){ let t = String(v).trim(); if (!t || /^\d+$/.test(t)) return t;
   const q = (/\?\s*$/.test(t) || /^~/.test(t)) ? '?' : '', pre = ''; t = t.replace(/\?+\s*$/, '').replace(/^~/, '').trim();
+  if (/^\d+$/.test(t)) return t + q;
   const par = t.match(/^0\s*\((.+)\)$/); if (par) t = par[1];            // „0 (osiem miesięcy)” → „osiem miesięcy”
   if (/^pół\s+roku$/i.test(t)) t = '6 miesięcy';
   t = t.replace(/^(\d+),5\s+roku?$/i, (m0, n) => (+n ? n + ' rok ' : '') + '6 miesięcy').replace(/\bpół\b/gi, '6');
