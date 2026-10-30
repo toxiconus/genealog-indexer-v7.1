@@ -30,4 +30,4 @@ Ojciec podany, ale akt dodaje okoliczność (Ameryka, wojsko, zm.) oraz wdowa be
 ## Uzgodnione 30.10
 - W polu: tylko znaczniki (`___`, `---`, `[niepamiętne]`, `[nieczytelne]`, `X?`). Słowa z aktu (np. „nieślubne", „w Ameryce", „w wojsku") piszemy w uwagach, jeśli akt to wprost podaje.
 - `[niepamiętne]` i `[nieczytelne]` zostają bez zmian.
-- „b.d." (brak danych) nie jest osobnym znacznikiem: znaczy to samo co `___`, więc dwa zapisy by się mieszały. Ewentualnie jako etykieta wyświetlana dla `___` w eksporcie.
+- `b.d.` (brak danych) = osobny znacznik: pole nieznane, bo mamy tylko indeks, a aktu/skanu nie czytaliśmy; w uwagach dopisek „tylko z indeksu". To różni się od `___` (akt czytany, niczego nie podaje).
