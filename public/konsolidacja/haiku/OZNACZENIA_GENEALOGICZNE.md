@@ -6,19 +6,22 @@
 - puste – znaczy trzy różne rzeczy: nie dotyczy (maiden u mężczyzn, spouse u kawalerów), akt nie podaje, nie sprawdzone (profession 63×, spouse 100×, ojciec 4–5×)
 - `[nieczytelne]`, `(nazwisko rodowe nieznane)`, „niepamiętnych małż." – tylko w tekście/uwagach, niespójnie
 
-## Proponowany słownik (w nawiasach kwadratowych, zawsze to samo)
+## Słownik (obowiązuje od 30.10, wersja v2 narzędzia; nawiasy `[ ]`, bez spacji w środku)
 | Znacznik | Znaczenie | Przykład |
 |---|---|---|
-| `X?` | wartość jest, odczyt niepewny | `Łach?` |
-| `[nieczytelne]` | w akcie coś jest, nie da się odczytać (skan/pismo/uszkodzenie) | godzina, nazwisko matki |
-| `___` | nie podano w akcie (rubryka pominięta) | zawód, miejsce urodzenia |
-| `[nieznane]` | akt mówi wprost „nieznany/a” (np. matka nieznana, ojciec nieznany) – różni się od `---` (akt nie mówi nic, bo nie dotyczy) | — |
-| `[niepamiętne]` | akt mówi wprost, że nieznane/niepamiętne (nieznane nazwisko rodowe, „z niepamiętnych małżonków") | mother_last_name 1945/40 |
-| `---` | brak: ojca nie ma (dziecko niezamężnej) lub osoba nie istnieje | father_first/last |
-| `[uszkodzone]` | ubytek karty/obcięty brzeg/plama | |
-| puste | wyłącznie „nie dotyczy" (maiden u mężczyzn, spouse u kawalerów/dzieci, zawód dziecka) | |
+| `X?` | wartość jest, odczyt niepewny (w narzędziu przycisk `?`, nie wpisujemy ręcznie) | `Łach?` |
+| `[_]` | pole dotyczy, ale akt go nie podaje | zawód, miejsce urodzenia |
+| `[-]` | brak: pole nie dotyczy (ojca nie ma, niezamężna) | father_first/last |
+| `[niecz.]` | w akcie coś jest, nie da się odczytać | godzina, nazwisko matki |
+| `[nieznane]` | akt mówi wprost „nieznany/a/niepamiętny”; dosłowne brzmienie do uwag | mother_last_name 1945/40 |
+| `[uszk.]` | ubytek karty, obcięty brzeg, plama | |
+| `[skreśl.]` | skreślone w akcie | |
+| `[b.d.]` | dane tylko z indeksu (akt nieczytany); w uwagach „tylko z indeksu” | |
+| puste | wyłącznie „nie dotyczy” (maiden u mężczyzn, spouse u kawalerów/dzieci, zawód dziecka) | |
 
-Reguły: 1) zawsze nawiasy `[ ]`, bez wariantów (nie „brak", „nieznane", „-", „?" samo). 2) `[...]` zastępuje całą wartość; `?` dopisujemy tylko do wartości. 3) Pole puste = tylko „nie dotyczy" – cokolwiek innego dostaje znacznik. 4) Oznaczenie tej samej wartości w obu rodzicach itd. identyczne. 5) Wyszukiwanie/statystyki traktują `[...]` jako brak danych, nie jako nazwisko.
+Starsze zapisy (`___`, `---`, `b.d.`, `[nieczytelne]`, `[niepamiętne]`, `[uszkodzone]`) narzędzie przy wczytaniu samo zamienia na nowe. W każdym polu można wstawić znacznik w miejscu kursora (np. `Wie[niecz.]lgus`): lista ▾ → „wstaw w miejscu kursora” albo Shift+klik.
+
+Reguły: 1) zawsze nawiasy `[ ]`, bez wariantów. 2) Cała wartość: znacznik zastępuje tekst; część: wstawiamy w kursorze. 3) Pole puste = tylko „nie dotyczy”. 4) Wyszukiwanie i statystyki traktują `[...]` jako brak danych.
 
 ## Wdrożenie (po akceptacji)
 1. Migracja CSV 43–45: `?` samo → `[nieczytelne]` (po sprawdzeniu na skanie), puste ojciec przy dziecku niezamężnej → `---`, reszta pustych wg reguły „dotyczy / nie dotyczy".

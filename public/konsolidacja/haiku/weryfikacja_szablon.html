@@ -178,13 +178,15 @@ details.tsug{background:var(--bzb)!important;border:1px solid var(--line)!import
 .actbar{display:flex;gap:6px;flex-wrap:wrap;margin-top:12px;border-top:1px solid var(--line);padding-top:10px}
 .kbd{font-size:11px;color:var(--mut);margin-top:6px}
   .cnt{display:flex;gap:6px;flex-wrap:wrap;margin-top:4px}.cnt span{font-size:12px;padding:1px 8px;border-radius:9px;background:var(--bg);color:var(--mut);border:1px solid var(--line)}.cnt .c1{background:var(--badb);color:var(--bad)}.cnt .c2{background:var(--bzb);color:var(--bz)}.cnt .c3{background:var(--bzb);color:var(--bz)}
+  .insm{display:block;font-size:12px;color:var(--mut);margin:0 0 6px}.insm input{margin-right:6px}
 #toast button{margin-left:10px;min-height:26px;padding:2px 10px}
 @media (min-width:1000px){
  #toast{pointer-events:auto}
  .topact{display:none!important}
  .ahd{position:sticky;top:var(--tt,130px);z-index:8;padding:8px 14px!important;margin-bottom:8px}
  .ahd .hd{display:flex;gap:10px;align-items:baseline;flex-wrap:wrap}
- .ahd .chips,.ahd details{display:none}
+ .ahd details{display:none}
+ .ahd .chips{margin-top:4px;gap:6px}.ahd .chips .sm,.ahd .chips select{min-height:28px;font-size:12px;padding:2px 8px}
  .ahd .hd b{font-size:16px}
  body.av1 #bar{display:none}
  body.av1 main{padding-bottom:16px}
@@ -433,8 +435,10 @@ const SRCN = {csv:'z CSV', txt:'z tekstu', ai:'AI', lub:'LUB', bz:'BAZA', akt:'A
 function tagsFor(a,f,v,x){ const ds = diffState(a,f); const c = FT[f] ? countOf(f,v) : null;
   return (ds?`<span class="tag ${ds}">${ds==='eq'?'AI=LUB':ds==='ap'?'AI≈LUB':'AI≠LUB'}</span>`:'') + (isUnc(a,f)&&!x?.ok?'<span class="tag q">niepewne</span>':'') + (c===0&&clean(v)?'<span class="tag ne">brak w bazie</span>':(c?`<span class="tag eq">baza ×${c}</span>`:'')); }
 const stripQ = v => String(v == null ? '' : v).replace(/\s*\?+/g, '').replace(/\s{2,}/g, ' ').replace(/\(\s*\)/g, '').trim();
-const MARK = [['---','brak – nie istnieje (np. niezamężna, brak ojca)'],['[nieznane]','akt: nieznany/a (np. matka nieznana)'],['___','nie podano w akcie'],['b.d.','tylko z indeksu (akt nieczytany)'],['[nieczytelne]','jest, ale nieczytelne'],['[niepamiętne]','akt: nieznane / niepamiętne']];
-const isMk = v => /^(---|___|b\.d\.|\[nieczytelne\]|\[nieznane\]|\[niepamiętne\])$/.test(String(v || '').trim());
+const MARK = [['[_]','nie podano w akcie (pole dotyczy)'],['[-]','brak – pole nie dotyczy (np. niezamężna)'],['[niecz.]','jest, ale nieczytelne'],['[nieznane]','akt: nieznany/a/niepamiętny'],['[uszk.]','uszkodzone (dziura, plama)'],['[skreśl.]','skreślone w akcie'],['[b.d.]','tylko z indeksu (akt nieczytany)']];
+const isMk = v => /^\[(?:_|-|niecz\.|nieznane|uszk\.|skreśl\.|b\.d\.)\]$/.test(String(v || '').trim());
+const MKLEG = {'___':'[_]','---':'[-]','b.d.':'[b.d.]','[nieczytelne]':'[niecz.]','[niepamiętne]':'[nieznane]','[niepamiętna]':'[nieznane]','[niepamiętny]':'[nieznane]','[uszkodzone]':'[uszk.]','[nieznany]':'[nieznane]','[nieznana]':'[nieznane]'};
+const normMk = v => { if (typeof v !== 'string') return v; const t = v.trim(); if (MKLEG[t]) return MKLEG[t]; return /\[(?:nieczytelne|niepamiętn[aey]|uszkodzone)\]/.test(v) ? v.replace(/\[nieczytelne\]/g, '[niecz.]').replace(/\[niepamiętn[aey]\]/g, '[nieznane]').replace(/\[uszkodzone\]/g, '[uszk.]') : v; };
 const TXTQ = new Set(['deceased_first_name','deceased_last_name','deceased_maiden_name','father_first_name','father_last_name','mother_first_name','mother_last_name','informant1','informant2','deceased_spouse','deceased_birth_place','deceased_residence','death_place','profession']);
 let _NS = null; const nameSex = () => { if (_NS) return _NS; _NS = {M:new Set(), K:new Set()}; D.acts.filter(a => !a.kind).forEach(a => ['ai','lub'].forEach(k => { const o = a[k]; if (!o) return; const sx = o.deceased_sex; const add = (n, t) => { n = stripQ(n).split(/[\s,;(]/)[0]; if (n.length > 2 && /^[A-ZĄĆĘŁŃÓŚŹŻ]/.test(n)) _NS[t].add(n); }; if (sx === 'M' || sx === 'K') add(o.deceased_first_name, sx); add(o.father_first_name, 'M'); add(o.mother_first_name, 'K'); })); return _NS; };
 function catHtml(a, f){ const t = FT[f]; let L = []; if (t === 's') L = Object.keys(D.counts.s).filter(k => D.counts.s[k] >= 2); else if (t === 'n') { const sx = f === 'father_first_name' ? 'M' : f === 'mother_first_name' ? 'K' : clean(getv(a,'deceased_sex')); const ns = nameSex(); L = [...(ns[sx] || new Set([...ns.M, ...ns.K]))]; } else if (/^informant/.test(f)) return ''; if (!L.length) return '<div class="muted">Brak listy dla tego pola.</div>'; return '<div class="muted" style="margin:6px 0 2px">' + (t === 's' ? 'Wszystkie nazwiska z bazy' : 'Imiona (' + (f === 'father_first_name' ? 'męskie' : f === 'mother_first_name' ? 'żeńskie' : clean(getv(a,'deceased_sex')) === 'K' ? 'żeńskie' : 'męskie') + ')') + '</div><div class="chips">' + L.sort((x, y) => x.localeCompare(y, 'pl')).map(n => `<button class="chip" data-f="${f}" data-v="${esc(n)}" data-s="bz">${esc(n)}</button>`).join('') + '</div>'; }
@@ -470,7 +474,7 @@ function renderAct(){ const a = AM[S.cur]; const m = $('main'); if (!a){ m.inner
      ${long ? `<textarea rows="2" data-f="${f.id}">${esc(disp)}</textarea>` : `<input class="${cls}" data-f="${f.id}" value="${esc(disp)}" ${FT[f.id] ? `list="${FT[f.id] === 's' ? 'dlS' : 'dlN'}"` : ''} autocomplete="off">`}${dwHtml(a,f.id)}${agePick(a,f.id)}
      ${inl.length ? `<div class="chips">${inl.join('')}</div>` : ''}
      <div class="chips cmp"><button class="chip dd" data-dd="${f.id}" title="Lista: AI, baza, Lubgens, znaczniki">▾</button><button class="chip uncb ${qOn ? 'sel' : ''}" data-unc="${f.id}" title="Odczyt niepewny (wciśnięty = niepewne)" aria-pressed="${qOn}">?</button>${long && clean(v) ? `<button class="chip" data-nclr="${f.id}">🗑</button>` : ''}<span style="flex:1"></span>${ok ? `<button class="chip vb btn-ok on" data-unok="${f.id}" title="Zatwierdzone – kliknij, aby cofnąć">✓</button>` : `<button class="chip vb" data-ok="${f.id}" title="Zatwierdź">✓</button>`}</div>
-     <div class="ddl" id="dd-${f.id}" style="display:none"><div class="chips">${ddc.join('')}${MARK.map(([m, d]) => `<button class="chip" data-f="${f.id}" data-v="${m}" data-s="edit"><small>${esc(d)}</small>${esc(m)}</button>`).join('')}</div><div class="ddcat" data-cat="${f.id}"></div></div>
+     <div class="ddl" id="dd-${f.id}" style="display:none"><label class="insm"><input type="checkbox" data-ins ${S.insMode ? 'checked' : ''}> wstaw w miejscu kursora (zamiast zastępować)</label><div class="chips">${ddc.join('')}${MARK.map(([m, d]) => `<button class="chip mk" data-f="${f.id}" data-v="${m}" data-s="edit"><small>${esc(d)}</small>${esc(m)}</button>`).join('')}</div><div class="ddcat" data-cat="${f.id}"></div></div>
      </div>`; };
   { const GROUPS = [
       {id:'zg', t:'Akt i zgon', f:['act_date','death_date','death_place']},
@@ -498,6 +502,9 @@ function renderAct(){ const a = AM[S.cur]; const m = $('main'); if (!a){ m.inner
   m.querySelectorAll('.grp .gh').forEach(hd => hd.onclick = e => { if (e.target.closest('button')) return; const g = hd.parentElement; g.classList.toggle('shut'); GO[a.id + ':' + g.dataset.gid] = g.classList.contains('shut') ? 0 : 1; });
 
   m.querySelectorAll('.chip[data-f]').forEach(b => b.onclick = () => setf(a, b.dataset.f, b.dataset.v, b.dataset.s));
+  m.querySelectorAll('[data-ins]').forEach(c => c.onchange = () => { S.insMode = c.checked; save(); m.querySelectorAll('[data-ins]').forEach(x => x.checked = c.checked); });
+  m.querySelectorAll('.chip.mk[data-f]').forEach(b => b.onclick = e => { const f = b.dataset.f, mk = b.dataset.v, inp = m.querySelector(`input[data-f="${f}"],textarea[data-f="${f}"]`); if (inp && (S.insMode || e.shiftKey)) { const val = inp.value, cs = (inp.dataset.cs || '').split(',').map(Number), st0 = Number.isFinite(cs[0]) && inp.dataset.cs ? Math.min(cs[0], val.length) : val.length, en = inp.dataset.cs ? Math.min(cs[1], val.length) : val.length; inp.value = val.slice(0, st0) + mk + val.slice(en); inp.dataset.cs = (st0 + mk.length) + ',' + (st0 + mk.length); softEdit(a, inp, f); const d = $('dd-' + f); if (d) d.style.display = 'none'; } else setf(a, f, mk, b.dataset.s); });
+  m.querySelectorAll('input[data-f],textarea[data-f]').forEach(i => { const sv = () => { i.dataset.cs = i.selectionStart + ',' + i.selectionEnd; }; i.addEventListener('blur', sv); i.addEventListener('keyup', sv); i.addEventListener('click', sv); });
   const okField = (f, inp) => { { const bd = dateBad(a, f, inp ? inp.value : getv(a,f)); if (bd) { toast('⚠ ' + bd, 5000); return; } } const x0 = S.acts[a.id]?.f?.[f], q = isUnc(a,f), src = x0?.src || (a.ai?.[f] ? 'ai' : a.lub?.[f] ? 'lub' : 'edit'), raw = inp ? inp.value : getv(a,f), cur = f === 'notes' ? raw.trim() : stripQ(raw), same = clean(cur) === clean(getv(a,f)); commit(a, f, cur, same ? src : 'edit', {unc: q, note: x0?.note || ''}); };
   m.querySelectorAll('[data-ok]').forEach(b => b.onclick = () => { const f = b.dataset.ok; okField(f, m.querySelector(`input[data-f="${f}"],textarea[data-f="${f}"]`)); keepScroll(); });
   m.querySelectorAll('[data-unok]').forEach(b => b.onclick = () => { const f = b.dataset.unok, x = st(a.id).f[f] || {v:getv(a,f), src:'ai'}; x.ok = false; x.skip = false; st(a.id).f[f] = x; save(); keepScroll(); });
@@ -534,7 +541,7 @@ function dateShort(a, f, v){ const t = String(v ?? '').trim().toLowerCase(); if 
   if (d > dim(y, mo)) return v; return y + '-' + String(mo).padStart(2,'0') + '-' + String(d).padStart(2,'0'); }
 function commit(a,f,v,src,extra){ if (src === 'edit' && (f === 'death_date' || f === 'act_date')) v = dateShort(a, f, v); learnFix(a, f, v, src); const o = st(a.id).f[f] || {}; st(a.id).f[f] = Object.assign({v: (src==='edit' ? v : clean(v) || v), src, ok:true, unc:(src==='csv'||src==='auto') ? o.unc : false, note:(src==='csv'||src==='auto') ? o.note : ''}, extra||{}); /* każda świadoma zmiana/wybór rozstrzyga niepewność */ save(); if (/^informant/.test(f) && src !== 'txt' && !(extra && extra.skip)) applyWitText(a, f); }
 function setf(a,f,v,src){ commit(a,f,v,src); keepScroll(true); }
-function dateBad(a, f, v){ if (!/^(death_date|act_date)$/.test(f) || !String(v || '').trim()) return ''; const t = dateShort(a, f, String(v).trim().replace(/\?+$/, '')); if (!/^\d{4}-\d{2}-\d{2}$/.test(t)) return 'Niepełna data – podaj dzień, miesiąc i rok (np. 1944-05-30)'; const y = +t.slice(0, 4); if (y < 1940 || y > 1946) return 'Rok ' + y + ' wygląda na pomyłkę (księga: 1943–1945)'; return ''; }
+function dateBad(a, f, v){ if (!/^(death_date|act_date)$/.test(f) || !String(v || '').trim() || isMk(v)) return ''; const t = dateShort(a, f, String(v).trim().replace(/\?+$/, '')); if (!/^\d{4}-\d{2}-\d{2}$/.test(t)) return 'Niepełna data – podaj dzień, miesiąc i rok (np. 1944-05-30)'; const y = +t.slice(0, 4); if (y < 1940 || y > 1946) return 'Rok ' + y + ' wygląda na pomyłkę (księga: 1943–1945)'; return ''; }
 function softEdit(a, inp, f){ const bad = dateBad(a, f, inp.value); if (bad) { toast('⚠ ' + bad + ' – nie zapisano', 5000); inp.value = stripQ(getv(a, f)); return; } commit(a, f, inp.value.trim(), 'edit'); const nv = getv(a, f); if (inp.value.trim() !== nv && document.activeElement !== inp) inp.value = nv; const row = inp.closest('.row'); if (row) { row.classList.add('ok'); row.classList.remove('act'); } const y = window.scrollY; renderList(); window.scrollTo(0, y); }   // wpis w polu nie przebudowuje strony (brak skoków i utraty fokusu)
 function keepScroll(next){ const y = window.scrollY; renderAct(); renderList(); window.scrollTo(0,y);
   if (next && S.hideOk) { const r = $('main').querySelector('.row.act') || $('main').querySelector('.row'); if (r) window.scrollTo({top: r.getBoundingClientRect().top + window.scrollY - $('view').offsetHeight - 8}); } }
@@ -793,7 +800,7 @@ function textSugs(a, FS, t){ const s = st(a.id), out = [], toks = assignTok(a, t
   const inSpan = x => spans.some(q => x.i >= q.i && x.e <= q.e);
   toks.forEach(x => { const fx = s.f[x.f]; if (x.vr && fx?.ok && !fx.skip && !inSpan(x)) out.push({i:x.i, e:x.e, from:x.w, to:inflTo(x.w, x.fw), f:x.f}); });
   spans.forEach(q => out.push(q));
-  const gm = t.match(/godzinie\s+(\[nieczytelne\])/i), tm = okf('death_time').match(/^(\d{1,2})(?::(\d\d))?$/);
+  const gm = t.match(/godzinie\s+(\[nieczytelne\]|\[niecz\.\])/i), tm = okf('death_time').match(/^(\d{1,2})(?::(\d\d))?$/);
   if (gm && tm) { const i = gm.index + gm[0].length - gm[1].length; out.push({i, e:i + gm[1].length, from:gm[1], to:normTime(tm[1] + (tm[2] ? ':' + tm[2] : '')), f:'death_time'}); }
   return out.sort((x, y) => x.i - y.i); }
 const sugHtml = (a, FS, t) => { const L = textSugs(a, FS, t); if (!L.length) return ''; return `<details open class="tsug" style="margin:6px 0;padding:6px 8px;border:1px solid var(--bz);border-radius:10px;background:var(--bzb)"><summary><b>Podpowiedzi do tekstu</b> z zatwierdzonych pól · ${L.length}</summary>${L.map(x => `<div style="display:flex;gap:8px;align-items:center;justify-content:space-between;margin:4px 0"><span>„${esc(x.from)}” → <b>${esc(x.to)}</b> <small class="muted">(${esc((FS.find(f => f.id === x.f) || {}).label || x.f)})</small></span><button class="sm" data-vrt="${x.i}|${x.e}|${esc(x.to)}">Zastosuj</button></div>`).join('')}${L.length > 1 ? `<button class="sm btn-ok" data-sugall="1" style="width:100%;min-height:44px;margin-top:4px">Zastosuj wszystkie (${L.length})</button>` : ''}<div class="muted">Zmienia tylko tekst, wg zatwierdzonych pól. Jeśli to inna osoba/pisownia – wybierz „Obie poprawne” przy polu.</div></details>`; };
@@ -830,7 +837,7 @@ const missingAudit = (a, FS) => {
   FS.forEach(f=>{
     if (f.id==='notes') return;
     const v=val(f.id), x=st(a.id).f[f.id];
-    if (v && (isUnc(a,f.id) && !x?.ok && !x?.skip || /\?|\[.*\]|nieczytelne|niepewn/i.test(v))) {
+    if (v && (isUnc(a,f.id) && !x?.ok && !x?.skip || /\?|\[(?:niecz\.|uszk\.|skreśl\.)\]|nieczytelne|niepewn/i.test(v))) {
       if (!uncertain.some(q=>q.id===f.id)) uncertain.push({id:f.id,label:label(f.id),why:'wartość oznaczona jako niepewna lub zawiera znak niepewności'});
     }
   });
@@ -954,7 +961,7 @@ const AGE_UB = [['g','godz.'],['d','dn.'],['t','tyg.'],['m','mies.'],['r','lat']
 const agePick = (a, f) => f !== 'age' ? '' : `<div class="chips agp" style="align-items:center"><span class="muted">Wybierz:</span><input type="number" class="agn" min="0" max="999" inputmode="numeric" placeholder="liczba" style="width:76px"> ${AGE_UB.map(([u,l]) => `<button class="chip" data-agu="${u}">${l}</button>`).join('')}<label class="muted"><input type="checkbox" class="agadd"> dodaj do obecnego</label></div>`;
 function bindAgePick(root, a){ root.querySelectorAll('.agp').forEach(bar => { const inp = bar.querySelector('.agn'), add = bar.querySelector('.agadd');
   bar.querySelectorAll('[data-agu]').forEach(b => b.onclick = () => { const n = parseInt(inp.value, 10); if (isNaN(n) || n < 0) { inp.focus(); return; } let v = ageFmt(n, b.dataset.agu, true); const cur = clean(getv(a,'age')); if (add.checked && cur && !/\?|^\d+$/.test(cur)) v = cur + ' ' + ageFmt(n, b.dataset.agu, false); else if (add.checked && /^\d+$/.test(cur)) v = ageFmt(+cur, 'r', false) + ' ' + ageFmt(n, b.dataset.agu, false); setf(a, 'age', normAge(v), 'edit'); }); }); }
-function normFieldVal(a, f, v){ if (!v) return v;
+function normFieldVal(a, f, v){ if (!v) return v; v = normMk(v); if (isMk(v)) return v;
   if (f === 'age') return normAge(v);
   if (f === 'death_place' && /^Szpital Janów/i.test(v)) return 'Szpital Janów Lubelski';   // zmarli w szpitalu: bez dopisku miejsca zamieszkania („…(zm.), Moczydła”)
   if (PLF.has(f)) return v.replace(/[\p{L}]+/gu, w => { for (const [re, c] of PLC) if (re.test(w)) return c; return w; });
@@ -970,7 +977,7 @@ function normActs(){ D.acts.forEach(a => { ['ai','lub'].forEach(k => { const o =
 try { const tp = $('top'), setTT = () => document.documentElement.style.setProperty('--tt', tp.offsetHeight + 'px'); setTT(); if (window.ResizeObserver) { new ResizeObserver(setTT).observe(tp); let ft; new ResizeObserver(() => { clearTimeout(ft); ft = setTimeout(() => { try { if (img.naturalWidth && !$('view').classList.contains('xl')) fit(roiOf(curAct() || {})); } catch(e){} }, 150); }).observe($('view')); } window.addEventListener('resize', setTT); } catch(e) {}
 normActs();
 // migracja zapisanych wcześniej wartości (localStorage / wczytane kopie): miejscowości, małżonek, wiek – do obecnych zasad
-try { let ch = 0; D.acts.forEach(a => { const sf = S.acts[a.id]?.f; if (!sf) return; ['death_place','deceased_birth_place','deceased_residence','deceased_spouse','age'].forEach(f => { const x = sf[f]; if (x && typeof x.v === 'string' && x.v) { const nv = normFieldVal(a, f, x.v); if (nv !== x.v) { x.v = nv; ch++; } } }); }); D.acts.forEach(a => { if (autoResolve(a)) ch++; const sf = S.acts[a.id]; if (sf?.done) Object.values(sf.f || {}).forEach(x => { if (x.unc) { x.unc = false; ch++; } }); }); if (ch) save(); } catch(e) {}
+try { let ch = 0; D.acts.forEach(a => { const sf = S.acts[a.id]?.f; if (!sf) return; Object.values(sf).forEach(x => { if (x && typeof x.v === 'string') { const nv = normMk(x.v); if (nv !== x.v) { x.v = nv; ch++; } } }); ['death_place','deceased_birth_place','deceased_residence','deceased_spouse','age'].forEach(f => { const x = sf[f]; if (x && typeof x.v === 'string' && x.v) { const nv = normFieldVal(a, f, x.v); if (nv !== x.v) { x.v = nv; ch++; } } }); }); D.acts.forEach(a => { if (autoResolve(a)) ch++; const sf = S.acts[a.id]; if (sf?.done) Object.values(sf.f || {}).forEach(x => { if (x.unc) { x.unc = false; ch++; } }); }); if (ch) save(); } catch(e) {}
 loadExtra().then(init);
 document.addEventListener('click', e => { if (!e.target.closest('.ddl,.dd')) document.querySelectorAll('.ddl').forEach(d => d.style.display = 'none'); });
 document.addEventListener('keydown', e => {
