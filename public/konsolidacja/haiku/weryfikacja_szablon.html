@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="pl"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>Weryfikacja zgonów AI</title>
+<title>Weryfikacja zgonów v2</title>
 <style>
 :root{--bg:#f2f1ed;--card:#fcfbf9;--ink:#23282e;--mut:#6b7078;--line:#dad7ce;--ai:#43648c;--aib:#e5ebf2;--lub:#4b7a5d;--lubb:#e6eee8;--bz:#966a2e;--bzb:#f1eadc;--bad:#9f4a45;--badb:#f2e3e1;--ok:#4b7a5d;--acc:#3d4d63}
 @media(prefers-color-scheme:dark){:root{--bg:#15171a;--card:#1d2024;--ink:#e4e2dd;--mut:#9b9ea2;--line:#34383d;--aib:#243243;--lubb:#1f3126;--bzb:#382f1f;--badb:#3b2624;--ai:#93b1d4;--lub:#8fbf9f;--bz:#d0a769;--bad:#d89b95;--ok:#8fbf9f;--acc:#93a8c6}}
@@ -213,7 +213,7 @@ details.tsug{background:var(--bzb)!important;border:1px solid var(--line)!import
  <button id="mReset">🗑 Wyczyść moje wybory</button>
 </div>
 <input type="file" id="fScan" accept="image/*" multiple hidden><input type="file" id="fAi" accept=".csv,text/csv" hidden><input type="file" id="fLoad" accept=".json" hidden><input type="file" id="fVer" accept=".csv,text/csv" hidden>
-<div id="top"><header><h1>Weryfikacja zgonów · AI v1</h1><span id="prog"></span><button id="bText" class="sm" title="Pełny tekst aktu od Haiku: kilka trybów">Aa Tekst</button><button id="bMenu" class="sm">⋯ Menu</button></header>
+<div id="top"><header><h1>Weryfikacja zgonów · v2</h1><span id="prog"></span><button id="bText" class="sm" title="Pełny tekst aktu od Haiku: kilka trybów">Aa Tekst</button><button id="bMenu" class="sm">⋯ Menu</button></header>
 <div id="pbar"><i></i></div><div class="tabs" id="tabs"></div>
 <div id="list"></div></div>
 <div id="view"><div id="layer"><img id="img" alt=""><div id="roi"></div></div><div id="noimg">Brak skanu dla tego aktu.<br>Wybierz skan poniżej albo dodaj z telefonu.</div>
@@ -238,7 +238,7 @@ const isSingle = a => /panna|kawaler/.test(sLow(a));
 const isChild = a => { const t = (getv(a,'age') || '').toString().toLowerCase(); if (!t) return false; if (/mies|tyg|(^|\s)dni(\s|$)|(^|\s)dn\b|(^|\s)dzie[ńn](\s|$)|(^|\s)godz/.test(t)) return true; const m = t.match(/\d+/); if (m) return +m[0] < 15; const w = t.split(/\s+/).find(x => NUMW[x] !== undefined); return w ? NUMW[w] < 15 : false; };
 const minor = a => { if (isChild(a)) return true; const m = (getv(a,'age') || '').toString().match(/^\s*(\d+)\s*(?:lat|lata|l\.?)?\s*$/i); return m ? +m[1] < (getv(a,'deceased_sex') === 'K' ? 16 : 18) : false; };
 // reguły: panna – bez męża; mężczyzna – nazwisko rodowe puste (nazwisko jest rodowe); dziecko – bez zawodu, chyba że wymieniony
-const appl = (a,f) => { if (f === 'deceased_maiden_name') return getv(a,'deceased_sex') === 'K'; if (f === 'deceased_spouse') return !isSingle(a) && !isChild(a); if (f === 'deceased_status') return !minor(a) || true; if (f === 'profession') return !isChild(a) || !!clean(getv(a,f)); return true; };
+const appl = (a,f) => { if (f === 'deceased_maiden_name') return getv(a,'deceased_sex') === 'K'; if (f === 'deceased_spouse') return !isSingle(a) && !isChild(a); if (f === 'deceased_status') return true; if (f === 'profession') return !isChild(a) || !!clean(getv(a,f)); return true; };
 const warnsOf = a => { if (!a.ai && !a.lub) return []; const w = []; if (getv(a,'deceased_sex') === 'M' && clean(getv(a,'deceased_maiden_name'))) w.push('Mężczyzna: nazwisko rodowe powinno być puste (nazwisko jest rodowe) — chyba że wyjątek.'); if (isSingle(a) && clean(getv(a,'deceased_spouse'))) w.push('Panna/kawaler: nie powinno być małżonka.'); if (isChild(a) && fold(clean(getv(a,'deceased_status'))) !== 'dziecko') w.push('Dziecko: ustaw stan „dziecko” (nie zostawiaj pustego i nie wpisuj „kawaler/panna”).'); if (!isChild(a) && fold(clean(getv(a,'deceased_status'))) === 'dziecko') w.push('Stan „dziecko” nie pasuje jednoznacznie do odczytanego wieku — sprawdź wiek i zapis stanu w akcie.'); if (isChild(a) && clean(getv(a,'profession'))) w.push('Dziecko z zawodem — potwierdź, że zawód jest wymieniony w akcie.'); return w; };
 const warnHtml = a => { const w = warnsOf(a); return w.length ? `<div class="warn">${w.map(t => '⚠ ' + t).join('<br>')}</div>` : ''; };
 let S = {acts:{}, cur:null, year:'all', flt:'all', hideOk:true, hideDoneActs:true, noroi:false, wiz:false};
@@ -264,7 +264,7 @@ const clean = s => (s||'').toString().replace(/\?/g,'').trim();
 const exact = (a,b) => clean(a).toLowerCase() === clean(b).toLowerCase() && clean(a) !== '';
 const loose = (a,b) => fold(clean(a)) === fold(clean(b)) && clean(a) !== '';
 const st = id => S.acts[id] || (S.acts[id] = {f:{}, done:false});
-const getv = (a,f) => { const x = S.acts[a.id]?.f?.[f]; return x ? x.v : (a.ai?.[f] ?? a.lub?.[f] ?? ''); };
+const getv = (a,f) => { const x = S.acts[a.id]?.f?.[f]; if (x) return x.v; const ai = a.ai?.[f], lb = a.lub?.[f]; return (ai != null && String(ai).trim() !== '') ? ai : (lb ?? ai ?? ''); };
 const countOf = (f, v) => { const t = FT[f]; if (!t) return null; const c = D.counts[t][clean(v)]; return c || 0; };
 const FT = {deceased_last_name:'s', deceased_maiden_name:'s', father_last_name:'s', mother_last_name:'s', deceased_first_name:'n', father_first_name:'n', mother_first_name:'n'};
 $('dlS').innerHTML = Object.keys(D.counts.s).filter(k => D.counts.s[k] >= 2).sort().map(k => `<option value="${k}">`).join('');
