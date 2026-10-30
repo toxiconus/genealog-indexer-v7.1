@@ -26,3 +26,8 @@ Reguły: 1) zawsze nawiasy `[ ]`, bez wariantów (nie „brak", „nieznane", �
 
 ## Do analizy
 Ojciec podany, ale akt dodaje okoliczność (Ameryka, wojsko, zm.) oraz wdowa bez wymienionego ojca. Propozycja: imię i nazwisko wpisane normalnie + osobna rubryka okoliczności (np. `parent_status`); wdowa bez ojca = `___`. Najpierw zliczyć takie przypadki w danych (zgony i małżeństwa).
+
+## Uzgodnione 30.10
+- W polu: tylko znaczniki (`___`, `---`, `[niepamiętne]`, `[nieczytelne]`, `X?`). Słowa z aktu (np. „nieślubne", „w Ameryce", „w wojsku") piszemy w uwagach, jeśli akt to wprost podaje.
+- `[niepamiętne]` i `[nieczytelne]` zostają bez zmian.
+- „b.d." (brak danych) nie jest osobnym znacznikiem: znaczy to samo co `___`, więc dwa zapisy by się mieszały. Ewentualnie jako etykieta wyświetlana dla `___` w eksporcie.
