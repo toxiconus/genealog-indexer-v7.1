@@ -526,10 +526,10 @@ $('zRf').onclick = e => { S.noroi = !S.noroi; save(); e.currentTarget.classList.
 $('zRoi').onclick = e => { V.edit = !V.edit; e.currentTarget.classList.toggle('on', V.edit); toast(V.edit ? 'Tryb obszaru: przeciągnij prostokąt wokół aktu' : 'Tryb obszaru wyłączony'); };
 // ---- eksport / import
 const q = csvCell;
-const COLS = D.cols.concat(['act_date','verification_notes','scan_path','act_text']);
+const COLS = D.cols.concat(['act_date','verification_notes','scan_path','act_text','source_office'].filter(c => !D.cols.includes(c)));
 const normTime = v => { const m = String(v ?? '').trim().match(/^(\d{1,2})(?::(\d{2}))?(?::\d{2})?$/); return m ? (m[2] && m[2] !== '00' ? (+m[1]) + ':' + m[2] : String(+m[1])) : String(v ?? '').trim(); };
 const normDate = v => { v = String(v ?? '').trim(); const m = v.match(/^(\d{1,2})\.(\d{1,2})\.(\d{4})$/); return m ? m[3] + '-' + m[2].padStart(2, '0') + '-' + m[1].padStart(2, '0') : v; };
-function rows(){ return D.acts.filter(a => a.ai && !a.kind).map(a => { const s = S.acts[a.id] || {f:{}}; const r = {id:a.id, death_year:a.year, death_act_number:a.act}; COLS.forEach(c => { if (!(c in r)) r[c] = a.ai[c] ?? ''; });
+function rows(){ return D.acts.filter(a => a.ai && !a.kind).map(a => { const s = S.acts[a.id] || {f:{}}; const r = {id:a.id, death_year:a.year, death_act_number:a.act}; COLS.forEach(c => { if (!(c in r)) r[c] = a.ai[c] ?? ''; }); r.source_office = clean(a.ai.source_office) || 'USC Szastarka';
   FIELDS.forEach(f => { if (s.f?.[f.id]) r[f.id] = s.f[f.id].v; });
   r.death_time = (s.hid && s.hid.death_time) || '';   // godzina zgonu: ukryta w narzędziu; w eksporcie tylko wartość potwierdzona wcześniej przez użytkownika (nigdy odczyt AI)
   const unc = FIELDS.filter(f => (isUnc(a,f.id) && !s.f?.[f.id]?.ok && !s.done) || (s.f?.[f.id]?.unc)).map(f => f.id); r.uncertain_fields = unc.join(','); r.verification_notes = FIELDS.filter(f => s.f?.[f.id]?.note).map(f => f.id + ': ' + s.f[f.id].note).join(' | ');
