@@ -431,7 +431,7 @@ function renderAct(){ const a = AM[S.cur]; const m = $('main'); if (!a){ m.inner
      ${inl.length ? `<div class="chips">${inl.join('')}</div>` : ''}
      <div class="chips cmp"><button class="chip dd" data-dd="${f.id}" title="Lista: AI, baza, Lubgens, znaczniki">▾</button><button class="chip uncb ${qOn ? 'sel' : ''}" data-unc="${f.id}" title="Odczyt niepewny (wciśnięty = niepewne)" aria-pressed="${qOn}">?</button>${long && clean(v) ? `<button class="chip" data-nclr="${f.id}">🗑</button>` : ''}<span style="flex:1"></span>${ok ? `<button class="chip vb btn-ok on" data-unok="${f.id}" title="Zatwierdzone – kliknij, aby cofnąć">✓</button>` : `<button class="chip vb" data-ok="${f.id}" title="Zatwierdź">✓</button>`}</div>
      <div class="ddl" id="dd-${f.id}" style="display:none"><div class="chips">${ddc.join('')}${MARK.map(([m, d]) => `<button class="chip" data-f="${f.id}" data-v="${m}" data-s="edit"><small>${esc(d)}</small>${esc(m)}</button>`).join('')}</div><div class="ddcat" data-cat="${f.id}"></div></div>
-     ${x?.unc ? `<div class="nt"><input data-note="${f.id}" placeholder="Opis niepewności (np. nieczytelne, dwa warianty)" value="${esc(x.note || '')}"><button class="chip" data-ncl="${f.id}">🗑 usuń opis i niepewność</button></div>` : ''}</div>`; };
+     </div>`; };
   { const GROUPS = [
       {id:'z', t:'Zmarły', f:['deceased_first_name','deceased_last_name','deceased_maiden_name','deceased_sex','age','deceased_status','deceased_spouse','deceased_birth_place','deceased_residence','profession']},
       {id:'zg', t:'Zgon i akt', f:['death_date','death_place','act_date']},
