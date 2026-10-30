@@ -21,8 +21,9 @@
  },
  {
   "lp": 5,
-  "nazwisko_imie": "Basan Czesław",
-  "akt": 37
+  "nazwisko_imie": "Baran Czesław",
+  "akt": 37,
+  "wg_odczytu_indeksu": "Basan Czesław"
  },
  {
   "lp": 6,
@@ -41,8 +42,9 @@
  },
  {
   "lp": 9,
-  "nazwisko_imie": "Hasz Klemens",
-  "akt": 11
+  "nazwisko_imie": "Harsz Klemens",
+  "akt": 11,
+  "wg_odczytu_indeksu": "Hasz Klemens"
  },
  {
   "lp": 10,
@@ -61,8 +63,9 @@
  },
  {
   "lp": 13,
-  "nazwisko_imie": "Jakubanek Janina",
-  "akt": 12
+  "nazwisko_imie": "Jakubaszek Janina",
+  "akt": 12,
+  "wg_odczytu_indeksu": "Jakubanek Janina"
  },
  {
   "lp": 14,
@@ -101,13 +104,15 @@
  },
  {
   "lp": 21,
-  "nazwisko_imie": "Kordra Zofia",
-  "akt": 22
+  "nazwisko_imie": "Kozdra Zofia",
+  "akt": 22,
+  "wg_odczytu_indeksu": "Kordra Zofia"
  },
  {
   "lp": 22,
-  "nazwisko_imie": "Karnecka Elżbieta-Maria",
-  "akt": 25
+  "nazwisko_imie": "Karnecka Elżbieta Maria",
+  "akt": 25,
+  "wg_odczytu_indeksu": "Karnecka Elżbieta-Maria"
  },
  {
   "lp": 23,
@@ -176,8 +181,9 @@
  },
  {
   "lp": 36,
-  "nazwisko_imie": "Sprynak Barbara",
-  "akt": 5
+  "nazwisko_imie": "Spryszak Barbara",
+  "akt": 5,
+  "wg_odczytu_indeksu": "Sprynak Barbara"
  },
  {
   "lp": 37,
@@ -186,18 +192,21 @@
  },
  {
   "lp": 38,
-  "nazwisko_imie": "Sułowski Walenty",
-  "akt": 8
+  "nazwisko_imie": "Sulowski Walenty",
+  "akt": 8,
+  "wg_odczytu_indeksu": "Sułowski Walenty"
  },
  {
   "lp": 39,
-  "nazwisko_imie": "Samol Janina",
-  "akt": 10
+  "nazwisko_imie": "Samal Janina",
+  "akt": 10,
+  "wg_odczytu_indeksu": "Samol Janina"
  },
  {
   "lp": 40,
-  "nazwisko_imie": "Sułowski Józef",
-  "akt": 15
+  "nazwisko_imie": "Sulowski Józef",
+  "akt": 15,
+  "wg_odczytu_indeksu": "Sułowski Józef"
  },
  {
   "lp": 41,
@@ -206,8 +215,9 @@
  },
  {
   "lp": 42,
-  "nazwisko_imie": "Sułowska Anastazja",
-  "akt": 27
+  "nazwisko_imie": "Sulowska Anastazja",
+  "akt": 27,
+  "wg_odczytu_indeksu": "Sułowska Anastazja"
  },
  {
   "lp": 43,
@@ -251,8 +261,9 @@
  },
  {
   "lp": 51,
-  "nazwisko_imie": "Sułowski Jan",
-  "akt": 56
+  "nazwisko_imie": "Sulowski Jan",
+  "akt": 56,
+  "wg_odczytu_indeksu": "Sułowski Jan"
  },
  {
   "lp": 52,
@@ -266,13 +277,15 @@
  },
  {
   "lp": 54,
-  "nazwisko_imie": "Tęś Agnieszka",
-  "akt": 29
+  "nazwisko_imie": "Tes Agnieszka",
+  "akt": 29,
+  "wg_odczytu_indeksu": "Tęś Agnieszka"
  },
  {
   "lp": 55,
-  "nazwisko_imie": "Tęś Władysława",
-  "akt": 30
+  "nazwisko_imie": "Tes Władysława",
+  "akt": 30,
+  "wg_odczytu_indeksu": "Tęś Władysława"
  },
  {
   "lp": 56,
@@ -281,8 +294,9 @@
  },
  {
   "lp": 57,
-  "nazwisko_imie": "Wielgus Czesław-Władysław",
-  "akt": 34
+  "nazwisko_imie": "Wielgus Czesława Władysława",
+  "akt": 34,
+  "wg_odczytu_indeksu": "Wielgus Czesław-Władysław"
  },
  {
   "lp": 58,
