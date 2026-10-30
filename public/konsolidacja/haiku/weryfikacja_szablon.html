@@ -406,11 +406,13 @@ function renderAct(){ const a = AM[S.cur]; const m = $('main'); if (!a){ m.inner
   let h = `<div class="card"><div class="hd"><b>${a.kind?'':a.year+' · akt '+a.act+' · '}${nm}</b><span class="muted">${s.done?'✓ zatwierdzony':'do weryfikacji'}${a.ai?` · niepewnych pól: ${unc}`:' · tylko indeks Lubgens'}</span></div>
    ${a.cmp?`<div class="muted" style="margin-top:4px">Porównanie: ${esc(a.cmp)}</div>`:''}
    <div class="chips"><label class="muted">Skan:&nbsp;<select id="selScan">${Object.keys(allScans()).map(k => `<option ${k===scanOf(a)?'selected':''}>${k}</option>`).join('')}<option value="">— brak —</option></select></label>
-   ${a.tekst?`<button class="sm pri" id="cText">Aa Tekst aktu (pola w tekście)</button>`:''}<button class="sm chip ${S.hideOk?'sel':''}" id="tHideOk">👁 Ukryj zatwierdzone pola</button></div>
+   ${a.tekst?`<button class="sm pri" id="cText">Aa Tekst aktu (pola w tekście)</button>`:''}<button class="sm chip ${S.hideOk?'sel':''}" id="tHideOk">👁 Ukryj zatwierdzone pola</button><button class="sm chip ${S.onlyFix?'sel':''}" id="tOnlyFix" title="Pokaż tylko pola niepewne, ze znakiem ? lub wskazane przez audyt">⚠ Tylko do poprawy</button></div>
    ${a.kind?'':`<div class="chips"><button class="sm" id="hAll">Przyjmij zgodne</button>${nQ(a,FS)?`<button class="sm" id="hNoQ" title="Usuń znaki ? ze wszystkich pól tego aktu (poza uwagami)">✂ Usuń ? w akcie (${nQ(a,FS)})</button>`:''}<button class="sm btn-ok" id="hDone">${s.done?'↺ Cofnij zatwierdzenie aktu':'Zatwierdź akt ✓ i dalej'}</button></div>`}
    ${a.lubRaw?`<details><summary class="muted">Indeks Lubgens (surowo)</summary><pre>${a.lubName} · akt ${a.act}/${a.year}\n${a.lubRaw}</pre></details>`:(a.kind?'':'<div class="muted">Lubgens: brak szczegółów w uwagach.</div>')}</div><div class="card">`;
   let actDone = false;
+  const fixIds = S.onlyFix ? (() => { const q = missingAudit(a, FS), o = new Set(); [...q.gaps, ...q.uncertain, ...q.checks].forEach(i => o.add(i.id)); return o; })() : null;
   FS.forEach(f => { const v = getv(a,f.id), x = s.f[f.id]; if (!appl(a,f.id) && !clean(v)) return;
+    if (fixIds && !(((x?.unc) || (isUnc(a,f.id) && !x?.ok) || hasQ(v,f.id) || fixIds.has(f.id)) && !(x?.ok && !x.unc && !hasQ(v,f.id)))) return;
     if (S.hideOk && (x?.ok || x?.skip)) { h += `<div class="mini"><span>${f.label}: <b>${x.skip?'— pominięte —':esc(v)}</b> ${x.unc?'<span class="tag q">? niepewne</span>':''} ${x.ok?'✓ '+(SRCN[x.src]||''):''}</span><button class="sm" data-undo="${f.id}">zmień</button></div>`; return; }
     const long = f.id === 'notes' || f.id === 'p_note', uncOn = isUnc(a,f.id); const pend = !(x?.ok || x?.skip); const isAct = pend && !actDone; if (isAct) actDone = true;
     h += `<div class="row ${x?.ok?'ok':''} ${isAct?'act':''}"><div class="lab"><span>${f.label} ${tagsFor(a,f.id,v,x)}${aiWarn(a,f.id)?' <span class="tag q" title="Odczyt AI był niepewny – sprawdź na skanie (to tylko ostrzeżenie, nie wymaga usuwania)">⚠ AI</span>':''}</span><span>${x?.ok?'✓ '+(SRCN[x.src]||''):x?.skip?'pominięte':''}</span></div>
@@ -428,9 +430,10 @@ function renderAct(){ const a = AM[S.cur]; const m = $('main'); if (!a){ m.inner
   m.querySelectorAll('[data-unc]').forEach(b => b.onclick = () => { const f = b.dataset.unc, x = st(a.id).f[f] || {v:getv(a,f), src:(a.ai?.[f]?'ai':'lub'), ok:false}; x.unc = !x.unc; st(a.id).f[f] = x; save(); keepScroll(); });
   m.querySelectorAll('[data-note]').forEach(i => i.onchange = () => { const x = st(a.id).f[i.dataset.note]; if (x) { x.note = i.value.trim(); save(); } });
   bindAgePick(m, a);
-  m.querySelectorAll('input[data-f],textarea[data-f]').forEach(i => { i.onchange = () => setf(a, i.dataset.f, i.value.trim(), 'edit'); i.onfocus = () => focusField(a, i.dataset.f); });
+  m.querySelectorAll('input[data-f],textarea[data-f]').forEach(i => { i.onchange = () => softEdit(a, i, i.dataset.f); i.onfocus = () => focusField(a, i.dataset.f); });
   if ($('cText')) $('cText').onclick = () => { S.tmode = 'pola'; save(); renderAct(); window.scrollTo(0,0); };
   $('tHideOk').onclick = () => { S.hideOk = !S.hideOk; save(); renderAct(); };
+  $('tOnlyFix').onclick = () => { S.onlyFix = !S.onlyFix; save(); renderAct(); };
   if ($('hAll')) { $('hAll').onclick = doAll; $('hDone').onclick = doDone; }
   $('selScan').onchange = e => { st(a.id).scan = e.target.value; save(); showScan(); }; }
 function learnFix(a, f, v, src){ if (src !== 'edit' || !a.ai || !/name|informant|residence|birth_place|death_place/.test(f)) return; const x = (clean(a.ai[f]) || '').split(',')[0].split(/\s+/), y = (clean(v) || '').split(',')[0].split(/\s+/); if (x.length !== y.length) return; x.forEach((p, i) => { p = p.replace(/\?$/, ''); const q = y[i]; if (p.length > 2 && q && fold(p) !== fold(q) && lev(fold(p), fold(q), 4) <= Math.max(2, Math.floor(p.length / 2))) { S.fixes = S.fixes || {}; const d = (S.fixes[fold(p)] = S.fixes[fold(p)] || {}); d[q] = (d[q] || 0) + 1; } }); }
@@ -446,6 +449,7 @@ function dateShort(a, f, v){ const t = String(v ?? '').trim().toLowerCase(); if 
   if (d > dim(y, mo)) return v; return y + '-' + String(mo).padStart(2,'0') + '-' + String(d).padStart(2,'0'); }
 function commit(a,f,v,src,extra){ if (src === 'edit' && (f === 'death_date' || f === 'act_date')) v = dateShort(a, f, v); learnFix(a, f, v, src); const o = st(a.id).f[f] || {}; st(a.id).f[f] = Object.assign({v: (src==='edit' ? v : clean(v) || v), src, ok:true, unc:(src==='csv'||src==='auto') ? o.unc : false, note:(src==='csv'||src==='auto') ? o.note : ''}, extra||{}); /* każda świadoma zmiana/wybór rozstrzyga niepewność */ save(); if (/^informant/.test(f) && src !== 'txt' && !(extra && extra.skip)) applyWitText(a, f); }
 function setf(a,f,v,src){ commit(a,f,v,src); keepScroll(true); }
+function softEdit(a, inp, f){ commit(a, f, inp.value.trim(), 'edit'); const nv = getv(a, f); if (inp.value.trim() !== nv && document.activeElement !== inp) inp.value = nv; const row = inp.closest('.row'); if (row) { row.classList.add('ok'); row.classList.remove('act'); } const y = window.scrollY; renderList(); window.scrollTo(0, y); }   // wpis w polu nie przebudowuje strony (brak skoków i utraty fokusu)
 function keepScroll(next){ const y = window.scrollY; renderAct(); renderList(); window.scrollTo(0,y);
   if (next && S.hideOk) { const r = $('main').querySelector('.row.act') || $('main').querySelector('.row'); if (r) window.scrollTo({top: r.getBoundingClientRect().top + window.scrollY - $('view').offsetHeight - 8}); } }
 // ---- kreator (po jednym polu)
