@@ -179,6 +179,7 @@ details.tsug{background:var(--bzb)!important;border:1px solid var(--line)!import
 .kbd{font-size:11px;color:var(--mut);margin-top:6px}
   .cnt{display:flex;gap:6px;flex-wrap:wrap;margin-top:4px}.cnt span{font-size:12px;padding:1px 8px;border-radius:9px;background:var(--bg);color:var(--mut);border:1px solid var(--line)}.cnt .c1{background:var(--badb);color:var(--bad)}.cnt .c2{background:var(--bzb);color:var(--bz)}.cnt .c3{background:var(--bzb);color:var(--bz)}
   .insm{display:block;font-size:12px;color:var(--mut);margin:0 0 6px}.insm input{margin-right:6px}
+  #acp{position:fixed;z-index:90;background:var(--card);border:1px solid var(--ai);border-radius:10px;box-shadow:0 10px 30px rgba(0,0,0,.25);max-height:270px;overflow:auto;display:none;min-width:220px}#acp div{padding:7px 12px;display:flex;gap:10px;justify-content:space-between;cursor:pointer;font-size:15px}#acp div small{color:var(--mut);font-size:12px}#acp div.on,#acp div:hover{background:var(--aib)}
 #toast button{margin-left:10px;min-height:26px;padding:2px 10px}
 @media (min-width:1000px){
  #toast{pointer-events:auto}
@@ -471,7 +472,7 @@ function renderAct(){ const a = AM[S.cur]; const m = $('main'); if (!a){ m.inner
     const cnt = FT[f.id] ? countOf(f.id, disp) : null, cls = (!clean(disp) || isMk(disp) || cnt === null) ? '' : (cnt > 0 ? 'good' : 'bad'), ds = diffState(a, f.id);
     const all = chipsFor(a, f.id), chips = all ? all.match(/<button class="chip [\s\S]*?<\/button>/g) || [] : [], inl = /^(deceased_status|deceased_spouse)$/.test(f.id) ? chips.filter(c => /^<button class="chip edit /.test(c)) : [], ddc = chips.filter(c => !inl.includes(c));
     return `<div class="row cf ${ok ? 'ok' : ''} ${qOn ? 'unc' : ''} ${isAct ? 'act' : ''}"><div class="lab"><span>${f.label}${ds ? ` <span class="tag ${ds}">${ds === 'eq' ? 'AI=LUB' : ds === 'ap' ? 'AI≈LUB' : 'AI≠LUB'}</span>` : ''}</span><span>${ok ? '✓ ' + (SRCN[x.src] || '') : ''}</span></div>
-     ${long ? `<textarea rows="2" data-f="${f.id}">${esc(disp)}</textarea>` : `<input class="${cls}" data-f="${f.id}" value="${esc(disp)}" ${FT[f.id] ? `list="${FT[f.id] === 's' ? 'dlS' : 'dlN'}"` : ''} autocomplete="off">`}${dwHtml(a,f.id)}${agePick(a,f.id)}
+     ${long ? `<textarea rows="2" data-f="${f.id}">${esc(disp)}</textarea>` : `<input class="${cls}" data-f="${f.id}" value="${esc(disp)}" autocomplete="off">`}${dwHtml(a,f.id)}${agePick(a,f.id)}
      ${inl.length ? `<div class="chips">${inl.join('')}</div>` : ''}
      <div class="chips cmp"><button class="chip dd" data-dd="${f.id}" title="Lista: AI, baza, Lubgens, znaczniki">▾</button><button class="chip uncb ${qOn ? 'sel' : ''}" data-unc="${f.id}" title="Odczyt niepewny (wciśnięty = niepewne)" aria-pressed="${qOn}">?</button>${long && clean(v) ? `<button class="chip" data-nclr="${f.id}">🗑</button>` : ''}<span style="flex:1"></span>${ok ? `<button class="chip vb btn-ok on" data-unok="${f.id}" title="Zatwierdzone – kliknij, aby cofnąć">✓</button>` : `<button class="chip vb" data-ok="${f.id}" title="Zatwierdź">✓</button>`}</div>
      <div class="ddl" id="dd-${f.id}" style="display:none"><label class="insm"><input type="checkbox" data-ins ${S.insMode ? 'checked' : ''}> wstaw w miejscu kursora (zamiast zastępować)</label><div class="chips">${ddc.join('')}${MARK.map(([m, d]) => `<button class="chip mk" data-f="${f.id}" data-v="${m}" data-s="edit"><small>${esc(d)}</small>${esc(m)}</button>`).join('')}</div><div class="ddcat" data-cat="${f.id}"></div></div>
@@ -979,6 +980,35 @@ normActs();
 // migracja zapisanych wcześniej wartości (localStorage / wczytane kopie): miejscowości, małżonek, wiek – do obecnych zasad
 try { let ch = 0; D.acts.forEach(a => { const sf = S.acts[a.id]?.f; if (!sf) return; Object.values(sf).forEach(x => { if (x && typeof x.v === 'string') { const nv = normMk(x.v); if (nv !== x.v) { x.v = nv; ch++; } } }); ['death_place','deceased_birth_place','deceased_residence','deceased_spouse','age'].forEach(f => { const x = sf[f]; if (x && typeof x.v === 'string' && x.v) { const nv = normFieldVal(a, f, x.v); if (nv !== x.v) { x.v = nv; ch++; } } }); }); D.acts.forEach(a => { if (autoResolve(a)) ch++; const sf = S.acts[a.id]; if (sf?.done) Object.values(sf.f || {}).forEach(x => { if (x.unc) { x.unc = false; ch++; } }); }); if (ch) save(); } catch(e) {}
 loadExtra().then(init);
+
+// ---- podpowiedzi przy pisaniu: „[” = znaczniki, litery = wartości z bazy (nazwiska, imiona, miejscowości, poprzednie wpisy)
+(() => {
+  const nz = t => String(t).toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/ł/g, 'l');
+  const box = document.createElement('div'); box.id = 'acp'; document.body.appendChild(box);
+  let cur = null, items = [], idx = -1;
+  const POOL = {}; const poolOf = f => { if (POOL[f]) return POOL[f]; const m = new Map(), add = v => { v = clean(v); if (v && !isMk(v) && !/[\[\]]/.test(v)) m.set(v, (m.get(v) || 0) + 1); };
+    D.acts.forEach(a => { if (a.kind) return; add(a.ai?.[f]); add(a.lub?.[f]); const x = S.acts[a.id]?.f?.[f]; if (x) add(x.v); }); return POOL[f] = m; };
+  const hide = () => { box.style.display = 'none'; items = []; idx = -1; };
+  const fieldOf = i => i.dataset.f || (i.id === 'tfv' ? (typeof TF !== 'undefined' ? TF : '') : '');
+  const compute = i => { const f = fieldOf(i); if (!f) return null; const v = i.value, c = i.selectionStart ?? v.length, before = v.slice(0, c), mk = before.match(/\[[^\]\s]*$/);
+    if (mk) { const pre = nz(mk[0]); return {from: c - mk[0].length, to: c, list: MARK.filter(([m]) => nz(m).startsWith(pre)).map(([m, d]) => ({v: m, s: d}))}; }
+    if (/^(notes|p_note|verification_notes|act_text|informant1|informant2|age|death_date|act_date|deceased_sex|deceased_status|deceased_spouse)$/.test(f) || !v.trim() || isMk(v)) return null;
+    const pre = nz(v.trim()), t = FT[f], src = t ? Object.entries(D.counts[t]) : [...poolOf(f).entries()];
+    const L = src.filter(([k]) => nz(k).startsWith(pre) && nz(k) !== pre).sort((x, y) => y[1] - x[1] || x[0].localeCompare(y[0], 'pl')).slice(0, 8).map(([k, n]) => ({v: k, s: '×' + n}));
+    return L.length ? {from: 0, to: v.length, list: L} : null; };
+  const show = i => { const r = compute(i); if (!r || !r.list.length) return hide(); cur = {i, r}; items = r.list; idx = -1; const b = i.getBoundingClientRect(); box.innerHTML = items.map((x, k) => `<div data-k="${k}"><span>${esc(x.v)}</span><small>${esc(x.s)}</small></div>`).join(''); box.style.left = b.left + 'px'; box.style.top = (b.bottom + 2) + 'px'; box.style.width = Math.max(b.width, 220) + 'px'; box.style.display = 'block'; };
+  const pick = k => { if (!cur || !items[k]) return; const {i, r} = cur, v = i.value, ins = items[k].v; i.value = v.slice(0, r.from) + ins + v.slice(r.to); const pos = r.from + ins.length; i.setSelectionRange(pos, pos); i.dataset.cs = pos + ',' + pos; hide(); i.dispatchEvent(new Event('input', {bubbles: true})); i.focus(); };
+  const mark = () => [...box.children].forEach((e, k) => e.classList.toggle('on', k === idx));
+  document.addEventListener('input', e => { const i = e.target; if (i.matches && i.matches('input[data-f],textarea[data-f],#tfv') && e.isTrusted !== false) show(i); });
+  document.addEventListener('focusin', e => { const i = e.target; if (i.matches && i.matches('input[data-f],textarea[data-f],#tfv') && /\[[^\]\s]*$/.test(i.value.slice(0, i.selectionStart ?? 0))) show(i); });
+  document.addEventListener('focusout', e => { if (cur && e.target === cur.i) setTimeout(hide, 150); });
+  box.addEventListener('mousedown', e => { e.preventDefault(); const d = e.target.closest('[data-k]'); if (d) pick(+d.dataset.k); });
+  document.addEventListener('keydown', e => { if (box.style.display === 'none' || !items.length) return;
+    if (e.key === 'ArrowDown') { e.preventDefault(); idx = (idx + 1) % items.length; mark(); }
+    else if (e.key === 'ArrowUp') { e.preventDefault(); idx = (idx - 1 + items.length) % items.length; mark(); }
+    else if ((e.key === 'Enter' || e.key === 'Tab') && idx >= 0) { e.preventDefault(); e.stopImmediatePropagation(); pick(idx); }
+    else if (e.key === 'Escape') { hide(); e.stopImmediatePropagation(); } }, true);
+})();
 document.addEventListener('click', e => { if (!e.target.closest('.ddl,.dd')) document.querySelectorAll('.ddl').forEach(d => d.style.display = 'none'); });
 document.addEventListener('keydown', e => {
   if (e.key === 'Escape') document.querySelectorAll('.ddl').forEach(d => d.style.display = 'none');
