@@ -21,7 +21,7 @@ Reguły: 1) zawsze nawiasy `[ ]`, bez wariantów (nie „brak", „nieznane", �
 
 ## Wdrożenie (po akceptacji)
 1. Migracja CSV 43–45: `?` samo → `[nieczytelne]` (po sprawdzeniu na skanie), puste ojciec przy dziecku niezamężnej → `---`, reszta pustych wg reguły „dotyczy / nie dotyczy".
-2. Narzędzia (zgony, małżeństwa): przyciski przy polu `?` · nieczyt. · niepodane · niepamięt. · nieślub., zamiast wpisywania ręcznie; baza podpowiedzi ignoruje `[...]`.
+2. Narzędzia (zgony, małżeństwa): przyciski przy polu: ? · ___ · --- · nieczyt. · niepamięt., zamiast wpisywania ręcznie; baza podpowiedzi ignoruje znaczniki.
 3. Audyt: osobna statystyka per znacznik.
 
 ## Do analizy
