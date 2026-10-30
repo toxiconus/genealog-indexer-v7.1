@@ -100,7 +100,7 @@ body.textmode main{margin-bottom:330px}body.textmode #view{height:30vh}body.text
 
 /* ===== układ na komputer (szeroki ekran): skan po lewej na całą wysokość, pola/audyt po prawej; telefon bez zmian ===== */
 @media (min-width:1000px){
- :root{--vw:57vw}
+ :root{--pw:clamp(520px,42vw,640px);--vw:calc(100vw - var(--pw))}
  #top{position:sticky;top:0;z-index:40;background:var(--card);box-shadow:0 1px 0 var(--line)}
  #view:not(.xl){position:fixed;left:0;top:var(--tt,130px);width:var(--vw);height:auto!important;bottom:0;z-index:20}
  main{margin:0 0 0 var(--vw);max-width:none!important;padding:14px 18px 110px}
@@ -159,6 +159,31 @@ details.tsug{background:var(--bzb)!important;border:1px solid var(--line)!import
 @media(prefers-color-scheme:dark){button.on,button.pri,.tabs button.on,.sm.on,#bText.on,.tm .on{color:#10151b!important}#bar #bOk,#wbar .btn-ok,#tsheet .act3 .btn-ok,#hDone,#tDone.btn-ok,#bar #bOk.rdy{color:#10151b!important}}
 </style><style id="cmpcss">.pair{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:0 8px;border-top:1px solid var(--line)}.pair .chips.cmp{gap:4px}.pair .chip.dd,.pair .chip.uncb,.pair .chip.vb{min-width:36px;padding:4px 8px}.pair .row{border-top:0}.chips.cmp{margin-top:4px}.chip.btn-ok.on{min-width:44px;justify-content:center;font-weight:700}.chip.uncb{min-width:40px;justify-content:center;font-weight:700}.chip.uncb.sel{background:var(--bz)!important;color:#fff!important}.row .lab{margin-bottom:2px}</style>
 <style id="cmpcss2">.grp{border:1px solid var(--line);border-radius:12px;margin:10px 0;padding:0 10px 4px}.gh{display:flex;align-items:center;gap:8px;padding:8px 0 4px;border-bottom:1px solid var(--line)}.gh b{font-size:15px}.chip.pz{min-height:34px;padding:4px 12px;font-weight:600}.chip.pz.on{background:#475569!important;color:#fff!important;border-color:#475569!important}.cf input.good{background:rgba(22,163,74,.16);border-color:#16a34a}.cf input.bad{background:rgba(220,38,38,.14);border-color:#dc2626}.cf.unc input{box-shadow:0 0 0 2px var(--bz)}.cf .chips.cmp{align-items:center}.chip.dd{min-width:40px;justify-content:center}.chip.vb{min-width:48px;justify-content:center;font-weight:700}.ddl{border:1px solid var(--line);border-radius:10px;padding:6px;margin-top:6px}.ddcat{max-height:220px;overflow:auto;margin-top:4px}.grp .row{border-top:0;border-bottom:1px solid var(--line)}.grp .pair{border-top:0}.grp .row:last-child{border-bottom:0}</style>
+<style id="v1css">
+#pbar{height:3px;background:var(--line)}#pbar i{display:block;height:100%;width:0;background:var(--ok);transition:width .3s}
+.sig{margin:0 0 10px;border:1px solid var(--line);border-radius:10px;background:var(--card)}.sig>summary{cursor:pointer;padding:7px 12px;font-size:13px;color:var(--mut);list-style:none}.sig>summary::-webkit-details-marker{display:none}.sig[open]>summary{border-bottom:1px solid var(--line)}.sig>.warn,.sig>.rep,.sig>.card,.sig>details{margin:8px}
+.grp .gh{cursor:pointer;user-select:none}.grp .gh .car{color:var(--mut);width:14px;display:inline-block;transition:transform .15s}.grp.shut .gh .car{transform:rotate(-90deg)}.grp.shut .gbody{display:none}.grp .gsum{display:none;color:var(--mut);font-size:12.5px;flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.grp.shut .gsum{display:block}.grp.shut .gh{border-bottom:0}.grp.shut .gh .gfill{display:none}.grp.cur{border-color:var(--ai);box-shadow:0 0 0 1px var(--ai)}.grp.dn{background:var(--bg)}
+.ddq{width:100%;margin-bottom:6px;font-size:14px;padding:6px 9px;border:1px solid var(--ai);border-radius:8px;background:var(--card);color:var(--ink)}
+.actbar{display:flex;gap:6px;flex-wrap:wrap;margin-top:12px;border-top:1px solid var(--line);padding-top:10px}
+.kbd{font-size:11px;color:var(--mut);margin-top:6px}
+#toast button{margin-left:10px;min-height:26px;padding:2px 10px}
+@media (min-width:1000px){
+ #toast{pointer-events:auto}
+ .topact{display:none!important}
+ .ahd{position:sticky;top:var(--tt,130px);z-index:8;padding:8px 14px!important;margin-bottom:8px}
+ .ahd .hd{display:flex;gap:10px;align-items:baseline;flex-wrap:wrap}
+ .ahd .chips,.ahd details{display:none}
+ .ahd .hd b{font-size:16px}
+ body.av1 #bar{display:none}
+ body.av1 main{padding-bottom:16px}
+ .actbar{position:sticky;bottom:0;z-index:9;background:var(--card);margin:12px -4px 0;padding:10px 4px;box-shadow:0 -6px 12px -8px rgba(0,0,0,.25)}
+ .cf{position:relative}
+ .ddl{position:absolute;left:0;min-width:300px;top:100%;z-index:50;background:var(--card);box-shadow:0 10px 30px rgba(0,0,0,.25);max-height:380px;overflow:auto;margin-top:2px}
+ .pair .cf:nth-child(2) .ddl{left:auto;right:0}
+ .ddcat{max-height:none}
+ .cf .dw{display:none}.cf:focus-within .dw{display:block}
+}
+</style>
 </head><body>
 <div id="menu">
  <button id="mCsv">⬇ Eksport CSV (zweryfikowane)</button>
@@ -189,7 +214,7 @@ details.tsug{background:var(--bzb)!important;border:1px solid var(--line)!import
 </div>
 <input type="file" id="fScan" accept="image/*" multiple hidden><input type="file" id="fAi" accept=".csv,text/csv" hidden><input type="file" id="fLoad" accept=".json" hidden><input type="file" id="fVer" accept=".csv,text/csv" hidden>
 <div id="top"><header><h1>Weryfikacja zgonów · AI v1</h1><span id="prog"></span><button id="bText" class="sm" title="Pełny tekst aktu od Haiku: kilka trybów">Aa Tekst</button><button id="bMenu" class="sm">⋯ Menu</button></header>
-<div class="tabs" id="tabs"></div>
+<div id="pbar"><i></i></div><div class="tabs" id="tabs"></div>
 <div id="list"></div></div>
 <div id="view"><div id="layer"><img id="img" alt=""><div id="roi"></div></div><div id="noimg">Brak skanu dla tego aktu.<br>Wybierz skan poniżej albo dodaj z telefonu.</div>
  <div id="vbar"><button id="zMenu" title="Menu">☰</button><button id="zIn">＋</button><button id="zOut">－</button><button id="zFit">◎</button><button id="zH">⇕</button><button id="zRoi">✎</button><button id="zRf" title="Ukryj/pokaż zaznaczenia na skanie">▭</button></div></div>
@@ -228,6 +253,7 @@ function saveBanner(){ let b = document.getElementById('saveWarn'); if (!lsFail)
 // autozapis do pliku CSV (Chrome/Edge: File System Access API) – po jednorazowym wskazaniu pliku każdy zapis stanu zapisuje też CSV
 function autoQueue(){ if (!AUTOH) return; clearTimeout(autoT); autoT = setTimeout(async () => { try { const w = await AUTOH.createWritable(); await w.write('﻿' + csvText()); await w.close(); const el = document.getElementById('autoSt'); if (el) el.textContent = 'zapisano ' + new Date().toLocaleTimeString('pl-PL'); } catch(e) { const el = document.getElementById('autoSt'); if (el) el.textContent = '⚠ błąd zapisu pliku'; } }, 1200); }
 async function autoPick(){ if (!window.showSaveFilePicker) { toast('Ta przeglądarka nie obsługuje autozapisu – użyj Chrome/Edge'); return; } try { AUTOH = await window.showSaveFilePicker({suggestedName: 'ZGONY_zweryfikowane_auto.csv', types: [{description: 'CSV', accept: {'text/csv': ['.csv']}}]}); autoQueue(); autoQueue(); toast('Autozapis włączony – plik: ' + AUTOH.name); const el = document.getElementById('autoSt'); if (el) el.textContent = 'plik: ' + AUTOH.name; } catch(e) {} }
+let GO = {}, SIGO = false, FOC = 0;
 const toast = (t, ms) => { const e = $('toast'); e.textContent = t; e.style.display = 'block'; clearTimeout(toast.t); toast.t = setTimeout(() => e.style.display = 'none', ms || 2200); };
 /*MODULE:tekst*/
 /*MODULE:plik*/
@@ -370,12 +396,12 @@ let _wl = null; let _ww = matchMedia('(min-width:1000px)').matches; addEventList
 const WIDE = () => window.matchMedia && matchMedia('(min-width:1000px)').matches;
 function renderList(){ const v = visible(), rmk = repMarks(), wide = WIDE(), ex = wide && !!S.sbx; document.body.classList.toggle('sbx', ex); let lastY = null; $('list').innerHTML = (wide ? `<button id="sbT" title="${ex ? 'Zwiń do numerów' : 'Rozwiń: rocznik, nr, nazwisko imię'}">${ex ? '⇤ zwiń' : '⇥'}</button>` : '') + v.map(a => { const pr = a.kind ? 0 : progOf(a); const yh = ex && !a.kind && a.year !== lastY ? (lastY = a.year, `<div class="syh">${a.year}</div>`) : ''; return yh + `<button data-id="${a.id}" style="--p:${pr}" class="${rmk[a.id]?'rp-'+rmk[a.id]:''} ${pr>0&&pr<100&&!S.acts[a.id]?.done?'part':''} ${pr===100&&!S.acts[a.id]?.done?'ready':''} ${a.id===S.cur?'cur':''} ${S.acts[a.id]?.done?'done':''} ${a.ai&&hasDiff(a)?'diff':''} ${a.ai?'':'noai'} ${ex?'srow':''}" title="${a.year}">${S.acts[a.id]?.done?'✓ ':(pr===100&&!a.kind?'● ':'')}${ex ? (a.kind==='rej'?'<b>Lp'+a.act+'</b><span>'+esc(titleOf(a))+'</span>':a.kind==='prot'?'<b>Prot</b><span>'+a.year+'</span>':'<b>'+a.act+'</b><span>'+esc(nmOf(a))+'</span>') : (a.kind==='rej'?'Lp'+a.act:a.kind==='prot'?'Prot '+a.year:(S.year==='all'?String(a.year).slice(2)+'/':'')+a.act)}</button>`; }).join('') || '<span class="muted">Brak aktów w tym filtrze</span>';
   $('list').querySelectorAll('button[data-id]').forEach(b => b.onclick = () => open(b.dataset.id)); if ($('sbT')) $('sbT').onclick = () => { S.sbx = !S.sbx; save(); renderList(); };
-  const done = D.acts.filter(a => !a.kind && S.acts[a.id]?.done).length, ai = D.acts.filter(a => !a.kind && a.ai).length; $('prog').textContent = `${done}/${ai} zatwierdz.`; bOkLabel();
+  const done = D.acts.filter(a => !a.kind && S.acts[a.id]?.done).length, ai = D.acts.filter(a => !a.kind && a.ai).length; $('prog').textContent = `${done}/${ai} zatwierdz.`; { const pi = document.querySelector('#pbar i'); if (pi) pi.style.width = (ai ? Math.round(100*done/ai) : 0) + '%'; } bOkLabel();
   const L = $('list'), c = L.querySelector('.cur'); if (c) { const lr = L.getBoundingClientRect(), cr = c.getBoundingClientRect(); if (wide) { if (cr.top < lr.top || cr.bottom > lr.bottom) L.scrollTop += cr.top - lr.top - (lr.height - cr.height) / 2; } else L.scrollLeft += cr.left - lr.left - (lr.width - cr.width) / 2; } }   // przewija tylko listę, nigdy strony
 // ---- akt
 function lubMissing(a){ if (!a || a.kind || !a.lub) return []; return fieldsOf(a).filter(f => { const lv = clean(a.lub[f.id]); if (!lv || !appl(a, f.id)) return false; const x = st(a.id).f[f.id]; if (x?.skip) return false; return !clean(getv(a, f.id)); }); }
 function lubGuard(toId){ const p = AM[S.cur]; if (!p || p.id === toId || S.acts[p.id]?.lubAck) return true; const L = lubMissing(p); if (!L.length) return true; st(p.id).lubAck = 1; save(); toast('Uwaga – w Lubgens są dane, a u nas puste (' + actName(p.id) + '): ' + L.map(f => f.label + ': ' + clean(p.lub[f.id])).join('; '), 6000); return true; }
-function open(id){ if (!lubGuard(id)) return; S.cur = id; save(); renderList(); if (W.on) wizStart(); renderAct(); showScan(); }
+function open(id){ if (!lubGuard(id)) return; FOC = 1; S.cur = id; save(); renderList(); if (W.on) wizStart(); renderAct(); showScan(); }
 function chipsFor(a,f){ const cur = getv(a,f); const out = []; const seen = new Set(); const add = (cls,lbl,val,extra='') => { if (!val) return; val = String(val).replace(/\s*\?+/g, '').replace(/\s{2,}/g, ' ').trim(); if (!val) return; const key = cls+val; if (seen.has(key)) return; seen.add(key); out.push(`<button class="chip ${cls} ${clean(cur)===clean(val)?'sel':''}" data-f="${f}" data-v="${val.replace(/"/g,'&quot;')}" data-s="${cls}"><small>${lbl}</small>${val}${extra}</button>`); }; if (f === 'deceased_status') { if (minor(a)) add('edit','nieletni','dziecko'); (clean(getv(a,'deceased_sex')) === 'K' ? ['panna','zamężna','wdowa'] : ['kawaler','żonaty','wdowiec']).forEach(x => add('edit','stan',x)); }
   if (f === 'deceased_spouse' && clean(cur)) { const b = spMark(cur, ''); [['owd.','owd. – żyje'],['†','† – zmarł wcześniej'],['','bez znacznika']].forEach(([m,l]) => add('edit', l, spMark(b, m))); }
   if (f === 'age') { const mm = clean(cur).match(/^(\d+)\s*(?:[A-Za-zĄĆĘŁŃÓŚŹŻąćęłńóśźż.\-]+)?$/); if (mm) { const n = +mm[1]; [['g','godz.'],['d','dn.'],['t','tyg.'],['m','mies.'],['r','lat']].forEach(([u,l]) => add('edit', l, ageFmt(n, u, true))); } }
@@ -405,19 +431,20 @@ const nQ = (a, FS) => FS.filter(f => hasQ(getv(a,f.id), f.id)).length;
 function noQ(a, f, quiet){ const o = st(a.id).f[f] || {}, v = String(getv(a,f) || '').replace(/\s*\?+/g, '').replace(/\s{2,}/g, ' ').replace(/\(\s*\)/g, '').trim(); st(a.id).f[f] = Object.assign({}, o, {v, src: 'edit', ok: !!o.ok, unc: false, note: ''}); if (!quiet) save(); return f; }
 function renderAct(){ const a = AM[S.cur]; const m = $('main'); if (!a){ m.innerHTML = '<div class="card muted">Wybierz pozycję z listy powyżej.</div>'; return; }
   if (W.on || !(S.tmode && a.tekst)) { const x = $('tsheet'); if (x) x.remove(); }
+  document.body.classList.toggle('av1', !a.kind && !W.on && !(S.tmode && a.tekst));
   if (W.on) return renderWiz();
   document.body.classList.toggle('textmode', !!(S.tmode && a.tekst)); $('bText').classList.toggle('on', !!S.tmode); $('bText2').classList.toggle('on', !!S.tmode);
   if (S.tmode && a.tekst) return renderText(a);
   bOkLabel();
   const s = st(a.id), FS = fieldsOf(a); const nm = a.kind ? titleOf(a) : nmOf(a);
   const unc = a.ai ? FS.filter(f => isUnc(a,f.id) && !s.f[f.id]?.ok && !s.f[f.id]?.skip).length : 0;
-  let h = `<div class="card"><div class="hd"><b>${a.kind?'':a.year+' · akt '+a.act+' · '}${nm}</b><span class="muted">${s.done?'✓ zatwierdzony':'do weryfikacji'}${a.ai?` · niepewnych pól: ${unc}`:' · tylko indeks Lubgens'}</span></div>
+  let h = `<div class="card ahd"><div class="hd"><b>${a.kind?'':a.year+' · akt '+a.act+' · '}${nm}</b><span class="muted">${s.done?'✓ zatwierdzony':'do weryfikacji'}${a.ai?` · niepewnych pól: ${unc}`:' · tylko indeks Lubgens'}</span></div>
    ${a.cmp?`<div class="muted" style="margin-top:4px">Porównanie: ${esc(a.cmp)}</div>`:''}
    <div class="chips"><label class="muted">Skan:&nbsp;<select id="selScan">${Object.keys(allScans()).map(k => `<option ${k===scanOf(a)?'selected':''}>${k}</option>`).join('')}<option value="">— brak —</option></select></label>
    ${a.tekst?`<button class="sm pri" id="cText">Aa Tekst aktu (pola w tekście)</button>`:''}<button class="sm chip ${S.hideOk?'sel':''}" id="tHideOk">👁 Ukryj zatwierdzone pola</button><button class="sm chip ${S.onlyFix?'sel':''}" id="tOnlyFix" title="Pokaż tylko pola niepewne, ze znakiem ? lub wskazane przez audyt">⚠ Tylko do poprawy</button></div>
-   ${a.kind?'':`<div class="chips"><button class="sm" id="hAll">Przyjmij zgodne</button>${nQ(a,FS)?`<button class="sm" id="hNoQ" title="Usuń znaki ? ze wszystkich pól tego aktu (poza uwagami)">✂ Usuń ? w akcie (${nQ(a,FS)})</button>`:''}<button class="sm btn-ok" id="hDone">${s.done?'↺ Cofnij zatwierdzenie aktu':'Zatwierdź akt ✓ i dalej'}</button></div>`}
+   ${a.kind?'':`<div class="chips topact"><button class="sm" id="hAll">Przyjmij zgodne</button>${nQ(a,FS)?`<button class="sm" id="hNoQ" title="Usuń znaki ? ze wszystkich pól tego aktu (poza uwagami)">✂ Usuń ? w akcie (${nQ(a,FS)})</button>`:''}<button class="sm btn-ok" id="hDone">${s.done?'↺ Cofnij zatwierdzenie aktu':'Zatwierdź akt ✓ i dalej'}</button></div>`}
    ${a.lubRaw?`<details><summary class="muted">Indeks Lubgens (surowo)</summary><pre>${a.lubName} · akt ${a.act}/${a.year}\n${a.lubRaw}</pre></details>`:(a.kind?'':'<div class="muted">Lubgens: brak szczegółów w uwagach.</div>')}</div><div class="card">`;
-  let actDone = false;
+  let actDone = false; 
   const fixIds = S.onlyFix ? (() => { const q = missingAudit(a, FS), o = new Set(); [...q.gaps, ...q.uncertain, ...q.checks].forEach(i => o.add(i.id)); return o; })() : null;
   const cellOf = f => { const v = getv(a,f.id), x = s.f[f.id]; if (!appl(a,f.id) && !clean(v)) return '';
     if (fixIds && !(((x?.unc) || (isUnc(a,f.id) && !x?.ok) || hasQ(v,f.id) || fixIds.has(f.id)) && !(x?.ok && !x.unc && !hasQ(v,f.id)))) return '';
@@ -433,27 +460,36 @@ function renderAct(){ const a = AM[S.cur]; const m = $('main'); if (!a){ m.inner
      <div class="ddl" id="dd-${f.id}" style="display:none"><div class="chips">${ddc.join('')}${MARK.map(([m, d]) => `<button class="chip" data-f="${f.id}" data-v="${m}" data-s="edit"><small>${esc(d)}</small>${esc(m)}</button>`).join('')}</div><div class="ddcat" data-cat="${f.id}"></div></div>
      </div>`; };
   { const GROUPS = [
+      {id:'zg', t:'Akt i zgon', f:['act_date','death_date','death_place']},
+      {id:'i', t:'Zgłaszający', f:['informant1','informant2']},
       {id:'z', t:'Zmarły', f:['deceased_first_name','deceased_last_name','deceased_maiden_name','deceased_sex','age','deceased_status','deceased_spouse','deceased_birth_place','deceased_residence','profession']},
-      {id:'zg', t:'Zgon i akt', f:['death_date','death_place','act_date']},
       {id:'f', t:'Ojciec', par:'father', f:['father_first_name','father_last_name']},
-      {id:'m', t:'Matka', par:'mother', f:['mother_first_name','mother_last_name']},
-      {id:'i', t:'Zgłaszający', f:['informant1','informant2']}], PAIRS = {deceased_first_name:'deceased_last_name', deceased_maiden_name:'deceased_sex', deceased_birth_place:'deceased_residence', father_first_name:'father_last_name', mother_first_name:'mother_last_name', informant1:'informant2'}, REV = {};
+      {id:'m', t:'Matka', par:'mother', f:['mother_first_name','mother_last_name']}], PAIRS = {deceased_first_name:'deceased_last_name', deceased_maiden_name:'deceased_sex', deceased_birth_place:'deceased_residence', father_first_name:'father_last_name', mother_first_name:'mother_last_name', informant1:'informant2'}, REV = {};
     Object.keys(PAIRS).forEach(k => REV[PAIRS[k]] = k);
     const placed = new Set(GROUPS.flatMap(g => g.f)), rest = FS.map(f => f.id).filter(id => !placed.has(id)), ids = FS.map(f => f.id), byId = id => FS[ids.indexOf(id)];
     GROUPS.push({id:'o', t:'Pozostałe', f:rest});
+    const GL = [];
     GROUPS.forEach(g => { const mem = g.f.filter(id => ids.includes(id)), used = new Set(), cells = {}; mem.forEach(id => cells[id] = cellOf(byId(id))); const vis = mem.filter(id => cells[id]); if (!vis.length) return;
       const nOk = vis.filter(id => s.f[id]?.ok).length, allOk = nOk === vis.length;
       let body = ''; vis.forEach(id => { if (used.has(id)) return; used.add(id); const pid = PAIRS[id] || REV[id]; if (pid && vis.includes(pid) && !used.has(pid)) { used.add(pid); const hd = PAIRS[id] ? id : pid, tl = PAIRS[id] ? pid : id; if (!/^<div class="mini"/.test(cells[hd]) && !/^<div class="mini"/.test(cells[tl])) { body += '<div class="pair">' + cells[hd] + cells[tl] + '</div>'; return; } body += cells[hd] + cells[tl]; return; } body += cells[id]; });
-      h += `<div class="grp"><div class="gh"><b>${g.t}</b>${g.par ? `<button class="chip pz ${s.par?.[g.par] ? 'on' : ''}" data-par="${g.par}" title="Zaznacz, jeśli akt podaje, że nie żyje">(zm.)</button>` : ''}<span style="flex:1"></span><span class="muted">${nOk}/${vis.length}</span><button class="chip vb ${allOk ? 'btn-ok on' : ''}" data-gok="${vis.join(',')}" title="Zatwierdź całą grupę">✓</button></div>${body}</div>`; }); }
-  if (!a.kind) h += `<div class="chips" style="margin-top:12px;border-top:1px solid var(--line);padding-top:10px"><button class="sm" id="hPrev">◀ Poprzedni akt</button><button class="sm" id="hClrQ" title="Zdejmij ? ze wszystkich pól tego aktu">Usuń niepewność w akcie</button><button class="sm" id="hAll2">Przyjmij zgodne</button><button class="sm btn-ok" id="hDone2" style="flex:1;min-height:48px;font-size:16px">${s.done ? '↺ Cofnij zatwierdzenie aktu' : 'Zatwierdź akt ✓ i dalej'}</button></div>`;
-  m.innerHTML = warnHtml(a) + repHtml(a) + missingHtml(a, FS) + lubPanel(a, FS) + relHtml(a) + h + '</div>';
+      const sum = vis.map(id => { const x = s.f[id]; const v = x?.skip ? '—' : stripQ(getv(a,id)); return clean(v) ? esc(String(v)) : ''; }).filter(Boolean).join(' · ');
+      GL.push({g, vis, nOk, allOk, body, sum}); });
+    const curG = (GL.find(x => !x.allOk) || {}).g?.id;
+    GL.forEach(x => { const g = x.g, key = a.id + ':' + g.id, ov = GO[key], open = ov !== undefined ? !!ov : g.id === curG;
+      h += `<div class="grp ${open ? '' : 'shut'} ${g.id === curG ? 'cur' : ''} ${x.allOk ? 'dn' : ''}" data-gid="${g.id}"><div class="gh"><span class="car">▾</span><b>${g.t}</b>${g.par ? `<button class="chip pz ${s.par?.[g.par] ? 'on' : ''}" data-par="${g.par}" title="Zaznacz, jeśli akt podaje, że nie żyje">(zm.)</button>` : ''}<span class="gsum">${x.sum}</span><span style="flex:1" class="gfill"></span><span class="muted">${x.nOk}/${x.vis.length}</span><button class="chip vb ${x.allOk ? 'btn-ok on' : ''}" data-gok="${x.vis.join(',')}" title="Zatwierdź całą grupę">✓</button></div><div class="gbody">${x.body}</div></div>`; }); }
+  if (!a.kind) h += `<div class="actbar"><button class="sm" id="hPrev">◀ Poprzedni akt</button><button class="sm" id="hClrQ" title="Zdejmij ? ze wszystkich pól tego aktu">Usuń niepewność w akcie</button><button class="sm" id="hAll2">Przyjmij zgodne</button><button class="sm btn-ok" id="hDone2" style="flex:1;min-height:48px;font-size:16px">${s.done ? '↺ Cofnij zatwierdzenie aktu' : 'Zatwierdź akt ✓ i dalej'}</button></div><div class="kbd">Enter – zatwierdź pole i dalej · Ctrl+Enter – zatwierdź akt · Alt+←/→ – akt · Esc – zamknij listę</div>`;
+  const sigH = warnHtml(a) + repHtml(a) + missingHtml(a, FS) + lubPanel(a, FS) + relHtml(a), tmp = document.createElement('div'); tmp.innerHTML = sigH; const nSig = tmp.children.length;
+  m.innerHTML = h.replace('</div><div class="card">', '</div>' + (nSig ? `<details class="sig" ${SIGO ? 'open' : ''}><summary>⚑ Sygnały i kontrole: ${nSig} (audyt, Lubgens, rodzina)</summary>${sigH}</details>` : '') + '<div class="card">') + '</div>';
+  { const sg = m.querySelector('details.sig'); if (sg) sg.ontoggle = () => { SIGO = sg.open; }; }
+  m.querySelectorAll('.grp .gh').forEach(hd => hd.onclick = e => { if (e.target.closest('button')) return; const g = hd.parentElement; g.classList.toggle('shut'); GO[a.id + ':' + g.dataset.gid] = g.classList.contains('shut') ? 0 : 1; });
+
   m.querySelectorAll('.chip[data-f]').forEach(b => b.onclick = () => setf(a, b.dataset.f, b.dataset.v, b.dataset.s));
   const okField = (f, inp) => { { const bd = dateBad(a, f, inp ? inp.value : getv(a,f)); if (bd) { toast('⚠ ' + bd, 5000); return; } } const x0 = S.acts[a.id]?.f?.[f], q = isUnc(a,f), src = x0?.src || (a.ai?.[f] ? 'ai' : a.lub?.[f] ? 'lub' : 'edit'), raw = inp ? inp.value : getv(a,f), cur = f === 'notes' ? raw.trim() : stripQ(raw), same = clean(cur) === clean(getv(a,f)); commit(a, f, cur, same ? src : 'edit', {unc: q, note: x0?.note || ''}); };
   m.querySelectorAll('[data-ok]').forEach(b => b.onclick = () => { const f = b.dataset.ok; okField(f, m.querySelector(`input[data-f="${f}"],textarea[data-f="${f}"]`)); keepScroll(); });
   m.querySelectorAll('[data-unok]').forEach(b => b.onclick = () => { const f = b.dataset.unok, x = st(a.id).f[f] || {v:getv(a,f), src:'ai'}; x.ok = false; x.skip = false; st(a.id).f[f] = x; save(); keepScroll(); });
-  m.querySelectorAll('[data-gok]').forEach(b => b.onclick = () => { const L = b.dataset.gok.split(','), all = L.every(f => s.f[f]?.ok); L.forEach(f => { if (all) { const x = st(a.id).f[f]; if (x) x.ok = false; } else if (clean(getv(a,f)) || s.f[f]) okField(f, m.querySelector(`input[data-f="${f}"],textarea[data-f="${f}"]`)); }); save(); keepScroll(); });
+  m.querySelectorAll('[data-gok]').forEach(b => b.onclick = () => { delete GO[a.id + ':' + b.closest('.grp').dataset.gid]; FOC = 1; const L = b.dataset.gok.split(','), all = L.every(f => s.f[f]?.ok); L.forEach(f => { if (all) { const x = st(a.id).f[f]; if (x) x.ok = false; } else if (clean(getv(a,f)) || s.f[f]) okField(f, m.querySelector(`input[data-f="${f}"],textarea[data-f="${f}"]`)); }); save(); keepScroll(); });
   m.querySelectorAll('[data-par]').forEach(b => b.onclick = () => { const k = b.dataset.par; s.par = s.par || {}; s.par[k] = s.par[k] ? 0 : 1; save(); keepScroll(); });
-  m.querySelectorAll('[data-dd]').forEach(b => b.onclick = () => { const d = $('dd-' + b.dataset.dd); if (!d) return; const open = d.style.display === 'none'; d.style.display = open ? 'block' : 'none'; if (open) { const c = d.querySelector('.ddcat'); if (c && !c.dataset.done) { c.dataset.done = 1; c.innerHTML = catHtml(a, b.dataset.dd); c.querySelectorAll('.chip[data-f]').forEach(x => x.onclick = () => setf(a, x.dataset.f, x.dataset.v, x.dataset.s)); } } });
+  m.querySelectorAll('[data-dd]').forEach(b => b.onclick = () => { const d = $('dd-' + b.dataset.dd); if (!d) return; const open = d.style.display === 'none'; m.querySelectorAll('.ddl').forEach(x => x.style.display = 'none'); d.style.display = open ? 'block' : 'none'; if (open) { let q = d.querySelector('.ddq'); if (!q) { const nz = t => String(t).toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/ł/g, 'l'); q = document.createElement('input'); q.className = 'ddq'; q.placeholder = 'Szukaj…'; q.autocomplete = 'off'; q.oninput = () => { const t = nz(q.value); d.querySelectorAll('.chip[data-f]').forEach(c => c.style.display = (!t || nz(c.textContent).includes(t)) ? '' : 'none'); }; q.onkeydown = e => { if (e.key === 'Enter') { const c = [...d.querySelectorAll('.chip[data-f]')].find(c => c.style.display !== 'none'); if (c) { e.preventDefault(); c.click(); } } }; d.insertBefore(q, d.firstChild); } if (WIDE()) setTimeout(() => q.focus(), 0); const c = d.querySelector('.ddcat'); if (c && !c.dataset.done) { c.dataset.done = 1; c.innerHTML = catHtml(a, b.dataset.dd); c.querySelectorAll('.chip[data-f]').forEach(x => x.onclick = () => setf(a, x.dataset.f, x.dataset.v, x.dataset.s)); } } });
   if ($('hClrQ')) $('hClrQ').onclick = () => { const n = clearUnc(a, FS); toast('Usunięto niepewność w polach: ' + n); keepScroll(); };
   if ($('hPrev')) $('hPrev').onclick = () => step(-1);
   m.querySelectorAll('[data-noq]').forEach(b => b.onclick = () => { noQ(a, b.dataset.noq); keepScroll(); });
@@ -463,7 +499,8 @@ function renderAct(){ const a = AM[S.cur]; const m = $('main'); if (!a){ m.inner
   m.querySelectorAll('[data-unc]').forEach(b => b.onclick = () => { const f = b.dataset.unc, cur = isUnc(a,f), x = st(a.id).f[f] || {v:getv(a,f), src:(a.ai?.[f]?'ai':'lub'), ok:false}; x.unc = !cur; if (cur) x.note = ''; st(a.id).f[f] = x; save(); keepScroll(); });
   m.querySelectorAll('[data-note]').forEach(i => i.onchange = () => { const x = st(a.id).f[i.dataset.note]; if (x) { x.note = i.value.trim(); save(); } });
   bindAgePick(m, a);
-  m.querySelectorAll('input[data-f],textarea[data-f]').forEach(i => { i.onchange = () => softEdit(a, i, i.dataset.f); i.onfocus = () => focusField(a, i.dataset.f); });
+  m.querySelectorAll('input[data-f],textarea[data-f]').forEach(i => { i.onchange = () => softEdit(a, i, i.dataset.f); i.onfocus = () => focusField(a, i.dataset.f); if (i.tagName === 'INPUT') i.onkeydown = e => { if (e.key === 'Enter' && !e.ctrlKey && !e.altKey && !e.shiftKey) { e.preventDefault(); okField(i.dataset.f, i); FOC = 1; keepScroll(); } }; });
+  if (FOC) { FOC = 0; if (WIDE()) { const t = m.querySelector('.grp:not(.shut) .row.act input[data-f],.grp:not(.shut) .row.act textarea[data-f]') || m.querySelector('.grp:not(.shut) .row:not(.ok) input[data-f]'); if (t) t.focus({preventScroll:true}); } }
   if ($('cText')) $('cText').onclick = () => { S.tmode = 'pola'; save(); renderAct(); window.scrollTo(0,0); };
   $('tHideOk').onclick = () => { S.hideOk = !S.hideOk; save(); renderAct(); };
   $('tOnlyFix').onclick = () => { S.onlyFix = !S.onlyFix; save(); renderAct(); };
@@ -553,7 +590,8 @@ function autoResolve(a){ if (a.kind || !(a.ai || a.lub)) return false; const s =
   if (minor(a) && !s.f.deceased_status) { s.f.deceased_status = {v:'dziecko', src:'edit', ok:true}; ch = true; }
   if (s.done) { const x = s.f.notes, cur = x ? x.v : getv(a,'notes'); if ((!x || x.src === 'csv' || x.src === 'auto') && cur) { const cl = cleanNote(cur); if (cl !== cur) { s.f.notes = {v:cl, src:'auto', ok:true}; s.notesOrg = s.notesOrg || cur; ch = true; } } }
   return ch; }
-const doDone = () => { const a = curAct(); if (!a) return; if (!st(a.id).done && !lubGuard('__next__')) return; const s = st(a.id); s.done = !s.done; if (s.done) autoResolve(a); save(); renderList(); renderAct(); toast(s.done ? 'Akt zatwierdzony ✓' : 'Cofnięto zatwierdzenie'); if (s.done) nextTodo(); };
+const undoToast = id => { const e = $('toast'); e.innerHTML = 'Akt zatwierdzony ✓ <button id="tUndo">Cofnij</button>'; e.style.display = 'block'; clearTimeout(toast.t); toast.t = setTimeout(() => e.style.display = 'none', 6000); $('tUndo').onclick = () => { st(id).done = false; save(); e.style.display = 'none'; open(id); window.scrollTo(0,0); }; };
+const doDone = () => { const a = curAct(); if (!a) return; if (!st(a.id).done && !lubGuard('__next__')) return; const s = st(a.id); s.done = !s.done; if (s.done) autoResolve(a); save(); renderList(); renderAct(); toast(s.done ? 'Akt zatwierdzony ✓' : 'Cofnięto zatwierdzenie'); if (s.done) { const id = a.id; nextTodo(); undoToast(id); } };
 // ---- skany i widok
 let extra = {};
 const scanUrls = () => { const base = S.scanBase || D.scanBase || '', o = {}; Object.entries(D.scanFiles || {}).forEach(([k, f]) => { o[k] = base + f.split('/').map(encodeURIComponent).join('/'); }); return o; };
@@ -917,4 +955,11 @@ normActs();
 // migracja zapisanych wcześniej wartości (localStorage / wczytane kopie): miejscowości, małżonek, wiek – do obecnych zasad
 try { let ch = 0; D.acts.forEach(a => { const sf = S.acts[a.id]?.f; if (!sf) return; ['death_place','deceased_birth_place','deceased_residence','deceased_spouse','age'].forEach(f => { const x = sf[f]; if (x && typeof x.v === 'string' && x.v) { const nv = normFieldVal(a, f, x.v); if (nv !== x.v) { x.v = nv; ch++; } } }); }); D.acts.forEach(a => { if (autoResolve(a)) ch++; const sf = S.acts[a.id]; if (sf?.done) Object.values(sf.f || {}).forEach(x => { if (x.unc) { x.unc = false; ch++; } }); }); if (ch) save(); } catch(e) {}
 loadExtra().then(init);
+document.addEventListener('click', e => { if (!e.target.closest('.ddl,.dd')) document.querySelectorAll('.ddl').forEach(d => d.style.display = 'none'); });
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') document.querySelectorAll('.ddl').forEach(d => d.style.display = 'none');
+  if (!document.body.classList.contains('av1') || W.on) return;
+  if (e.key === 'Enter' && e.ctrlKey) { e.preventDefault(); FOC = 1; doDone(); }
+  else if (e.altKey && (e.key === 'ArrowLeft' || e.key === 'ArrowRight')) { e.preventDefault(); FOC = 1; step(e.key === 'ArrowLeft' ? -1 : 1); }
+});
 </script></body></html>
