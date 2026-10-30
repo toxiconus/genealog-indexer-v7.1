@@ -12,6 +12,7 @@
 | `X?` | wartość jest, odczyt niepewny | `Łach?` |
 | `[nieczytelne]` | w akcie coś jest, nie da się odczytać (skan/pismo/uszkodzenie) | godzina, nazwisko matki |
 | `___` | nie podano w akcie (rubryka pominięta) | zawód, miejsce urodzenia |
+| `[nieznane]` | akt mówi wprost „nieznany/a” (np. matka nieznana, ojciec nieznany) – różni się od `---` (akt nie mówi nic, bo nie dotyczy) | — |
 | `[niepamiętne]` | akt mówi wprost, że nieznane/niepamiętne (nieznane nazwisko rodowe, „z niepamiętnych małżonków") | mother_last_name 1945/40 |
 | `---` | brak: ojca nie ma (dziecko niezamężnej) lub osoba nie istnieje | father_first/last |
 | `[uszkodzone]` | ubytek karty/obcięty brzeg/plama | |
