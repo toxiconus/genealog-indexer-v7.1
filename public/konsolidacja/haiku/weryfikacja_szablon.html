@@ -261,11 +261,20 @@ const fieldsOf = a => a.kind==='prot' ? D.fieldsProt : a.kind==='rej' ? D.fields
 try { const r = localStorage.getItem('wz1'); if (r) S = Object.assign(S, JSON.parse(r)); } catch(e){}
 if (!S.v3) { S.v3 = 1; S.hideDoneActs = false; }
 let HS = null, HIST_WHY = null;
-function histCommit(){ if (!HS) return; const cur = histSnap(S.acts), d = histDiff(HS, cur); if (!d.length) return; S.hist = S.hist || []; const t = new Date().toISOString(); d.forEach(e => { e.n = (S.histN = (S.histN || 0) + 1); e.t = t; if (HIST_WHY) e.why = HIST_WHY; S.hist.push(e); }); if (S.hist.length > 10000) S.hist.splice(0, S.hist.length - 10000); HS = cur; }
+function histCommit(){ if (!HS) return; const cur = histSnap(S.acts), d = histDiff(HS, cur); if (!d.length) return; S.hist = S.hist || []; const t = new Date().toISOString(); d.forEach(e => { e.n = (S.histN = (S.histN || 0) + 1); e.t = t; if (HIST_WHY) e.why = HIST_WHY; S.hist.push(e); }); if (S.hist.length > 4000) S.hist.splice(0, S.hist.length - 4000); HS = cur; }
 let AUTOH = null, autoT = null, lsFail = false;
 let DIRTY = 0; const updInd = () => { const e = document.getElementById('dirty'); if (e) { e.textContent = DIRTY ? '● niezapisane do pliku' : ''; e.title = 'Zmiany są w przeglądarce, ale nie w pliku. Zrób eksport CSV lub kopię JSON (menu).'; } }, markSaved = () => { DIRTY = 0; updInd(); };
-const save = () => { DIRTY = 1; updInd(); try { histCommit(); localStorage.setItem('wz1', JSON.stringify(S)); if (lsFail) { lsFail = false; saveBanner(); } } catch(e) { if (!lsFail) { lsFail = true; saveBanner(); } } autoQueue(); };
-function saveBanner(){ let b = document.getElementById('saveWarn'); if (!lsFail) { if (b) b.remove(); return; } if (!b) { b = document.createElement('div'); b.id = 'saveWarn'; b.style.cssText = 'position:fixed;left:0;right:0;top:0;z-index:99999;background:#b91c1c;color:#fff;padding:8px 12px;font:600 14px system-ui;text-align:center'; document.body.appendChild(b); } b.textContent = '⚠ Przeglądarka NIE zapisuje postępu (brak miejsca/blokada). Włącz „Autozapis CSV do pliku” w menu albo eksportuj CSV!'; }
+let lsWhy = '';
+const lsPut = () => { localStorage.setItem('wz1', JSON.stringify(S)); };
+const save = () => { DIRTY = 1; updInd(); let ok = false;
+  try { histCommit(); lsPut(); ok = true; }
+  catch(e) { try { if (S.hist && S.hist.length > 300) { S.hist.splice(0, S.hist.length - 300); lsPut(); ok = true; } } catch(e2) {} }
+  if (ok) { if (lsFail) { lsFail = false; saveBanner(); } }
+  else { try { localStorage.setItem('wz_t', '1'); localStorage.removeItem('wz_t'); lsWhy = 'quota'; } catch(e3) { lsWhy = 'blocked'; } if (!lsFail) { lsFail = true; } saveBanner(); }
+  autoQueue(); };
+function saveBanner(){ let b = document.getElementById('saveWarn'); if (!lsFail) { if (b) b.remove(); return; } if (!b) { b = document.createElement('div'); b.id = 'saveWarn'; b.style.cssText = 'position:fixed;left:0;right:0;top:0;z-index:99999;background:#b91c1c;color:#fff;padding:8px 12px;font:600 14px system-ui;text-align:center'; document.body.appendChild(b); }
+  b.innerHTML = (lsWhy === 'blocked' ? '⚠ Ta przeglądarka blokuje zapis w pamięci strony (typowe po otwarciu pliku z Pobranych / w trybie prywatnym). Postęp jest tylko w otwartej karcie – nie zamykaj jej, zapisuj kopię. ' : '⚠ Brak miejsca w pamięci przeglądarki – postęp może nie być zapisany. ') + '<button id="swDl" style="margin-left:8px;min-height:30px;padding:2px 10px">⬇ Zapisz kopię teraz</button>';
+  const bt = document.getElementById('swDl'); if (bt) bt.onclick = () => { dl('weryfikacja_kopia.json', JSON.stringify(S), 'application/json'); markSaved(); }; }
 // autozapis do pliku CSV (Chrome/Edge: File System Access API) – po jednorazowym wskazaniu pliku każdy zapis stanu zapisuje też CSV
 function autoQueue(){ if (!AUTOH) return; clearTimeout(autoT); autoT = setTimeout(async () => { try { const w = await AUTOH.createWritable(); await w.write('﻿' + csvText()); await w.close(); markSaved(); const el = document.getElementById('autoSt'); if (el) el.textContent = 'zapisano ' + new Date().toLocaleTimeString('pl-PL'); } catch(e) { const el = document.getElementById('autoSt'); if (el) el.textContent = '⚠ błąd zapisu pliku'; } }, 1200); }
 async function autoPick(){ if (!window.showSaveFilePicker) { toast('Ta przeglądarka nie obsługuje autozapisu – użyj Chrome/Edge'); return; } try { AUTOH = await window.showSaveFilePicker({suggestedName: 'ZGONY_zweryfikowane_auto.csv', types: [{description: 'CSV', accept: {'text/csv': ['.csv']}}]}); autoQueue(); autoQueue(); toast('Autozapis włączony – plik: ' + AUTOH.name); const el = document.getElementById('autoSt'); if (el) el.textContent = 'plik: ' + AUTOH.name; } catch(e) {} }
