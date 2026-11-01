@@ -187,7 +187,7 @@ details.tsug{background:var(--bzb)!important;border:1px solid var(--line)!import
  .ahd{position:sticky;top:var(--tt,130px);z-index:8;padding:8px 14px!important;margin-bottom:8px}
  .ahd .hd{display:flex;gap:10px;align-items:baseline;flex-wrap:wrap}
  .ahd details{display:none}
- .ahd .chips{margin-top:4px;gap:6px}.ahd .chips .sm,.ahd .chips select{min-height:28px;font-size:12px;padding:2px 8px}
+ .ahd .chips label,.ahd #cText{display:none}.ahd .chips{margin-top:4px;gap:6px}.ahd .chips .sm,.ahd .chips select{min-height:28px;font-size:12px;padding:2px 8px}
  .ahd .hd b{font-size:16px}
  body.av1 #bar{display:none}
  body.av1 main{padding-bottom:16px}
@@ -245,7 +245,7 @@ const $ = id => document.getElementById(id);
 const FIELDS = D.fields.filter(f => f.id !== 'death_time'), AM = {}; D.acts.forEach(a => AM[a.id] = a);
 // kolejność wg tekstu aktu: margines (nazwisko, miejsce) → data → godzina → świadkowie → reszta z treści
 // kolejność jak w akcie: margines (miejsce zgonu, imię i nazwisko) → data aktu → świadkowie → data i godzina zgonu → płeć, urodzony i zamieszkały → wiek, zawód, stan, małżonek → rodzice
-const ORD = ['death_place','deceased_last_name','deceased_first_name','act_date','informant1','informant2','death_date','death_time','deceased_sex','deceased_birth_place','deceased_residence','age','profession','deceased_status','deceased_spouse','deceased_maiden_name','father_first_name','father_last_name','mother_first_name','mother_last_name','officiant','notes'];
+const ORD = ['death_place','deceased_last_name','deceased_first_name','act_date','informant1','informant2','death_date','death_time','deceased_birth_place','deceased_residence','deceased_sex','deceased_maiden_name','profession','deceased_status','deceased_spouse','age','father_first_name','father_last_name','mother_first_name','mother_last_name','officiant','notes'];
 const ORDF = [...ORD.map(id => FIELDS.find(f => f.id === id)).filter(Boolean), ...FIELDS.filter(f => !ORD.includes(f.id))];
 const NUMW = {'jeden':1,'dwa':2,'trzy':3,'cztery':4,'pięć':5,'sześć':6,'siedem':7,'osiem':8,'dziewięć':9,'dziesięć':10,'jedenaście':11,'dwanaście':12,'trzynaście':13,'czternaście':14};
 const sLow = a => (getv(a,'deceased_status') || '').toString().toLowerCase();
@@ -478,11 +478,11 @@ function renderAct(){ const a = AM[S.cur]; const m = $('main'); if (!a){ m.inner
      <div class="ddl" id="dd-${f.id}" style="display:none"><label class="insm"><input type="checkbox" data-ins ${S.insMode ? 'checked' : ''}> wstaw w miejscu kursora (zamiast zastępować)</label><div class="chips">${ddc.join('')}${MARK.map(([m, d]) => `<button class="chip mk" data-f="${f.id}" data-v="${m}" data-s="edit"><small>${esc(d)}</small>${esc(m)}</button>`).join('')}</div><div class="ddcat" data-cat="${f.id}"></div></div>
      </div>`; };
   { const GROUPS = [
-      {id:'zg', t:'Akt i zgon', f:['act_date','death_date','death_place']},
-      {id:'i', t:'Zgłaszający', f:['informant1','informant2']},
-      {id:'z', t:'Zmarły', f:['deceased_first_name','deceased_last_name','deceased_maiden_name','deceased_sex','age','deceased_status','deceased_spouse','deceased_birth_place','deceased_residence','profession']},
+      {id:'i', t:'Akt i zgłaszający', f:['act_date','informant1','informant2']},
+      {id:'zg', t:'Zgon', f:['death_date','death_place']},
+      {id:'z', t:'Zmarły', f:['deceased_birth_place','deceased_residence','deceased_first_name','deceased_last_name','deceased_maiden_name','deceased_sex','profession','deceased_status','deceased_spouse','age']},
       {id:'f', t:'Ojciec', par:'father', f:['father_first_name','father_last_name']},
-      {id:'m', t:'Matka', par:'mother', f:['mother_first_name','mother_last_name']}], PAIRS = {deceased_first_name:'deceased_last_name', deceased_maiden_name:'deceased_sex', deceased_birth_place:'deceased_residence', father_first_name:'father_last_name', mother_first_name:'mother_last_name', informant1:'informant2'}, REV = {};
+      {id:'m', t:'Matka', par:'mother', f:['mother_first_name','mother_last_name']}], PAIRS = {deceased_first_name:'deceased_last_name', deceased_maiden_name:'deceased_sex', deceased_birth_place:'deceased_residence', profession:'deceased_status', deceased_spouse:'age', father_first_name:'father_last_name', mother_first_name:'mother_last_name', informant1:'informant2'}, REV = {};
     Object.keys(PAIRS).forEach(k => REV[PAIRS[k]] = k);
     const placed = new Set(GROUPS.flatMap(g => g.f)), rest = FS.map(f => f.id).filter(id => !placed.has(id)), ids = FS.map(f => f.id), byId = id => FS[ids.indexOf(id)];
     GROUPS.push({id:'o', t:'Pozostałe', f:rest});
