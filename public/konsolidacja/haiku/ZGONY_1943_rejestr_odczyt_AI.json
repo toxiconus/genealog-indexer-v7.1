@@ -1,0 +1,326 @@
+{
+ "zrodlo": "Z1943_11 (Lp 1-54) i Z1943_12 (Lp 55-64), rejestr alfabetyczny zmarłych za 1943",
+ "uwaga": "odczyt AI z obrazu, pisownia do porównania z bazą; akty 1-25 nie mają jeszcze odczytu z aktu (tylko Lubgens)",
+ "pozycje": [
+  {
+   "lp": 1,
+   "nazwisko_imie": "Andrejczak Anna",
+   "akt": 48
+  },
+  {
+   "lp": 2,
+   "nazwisko_imie": "Barbarzak Andrzej",
+   "akt": 10
+  },
+  {
+   "lp": 3,
+   "nazwisko_imie": "Baldas Janina",
+   "akt": 11
+  },
+  {
+   "lp": 4,
+   "nazwisko_imie": "Bogun Władysław-Kazimierz",
+   "akt": 12
+  },
+  {
+   "lp": 5,
+   "nazwisko_imie": "Bucoń Aleksandra",
+   "akt": 14
+  },
+  {
+   "lp": 6,
+   "nazwisko_imie": "Bigos Anna",
+   "akt": 17
+  },
+  {
+   "lp": 7,
+   "nazwisko_imie": "Brzezina Ignacy",
+   "akt": 19
+  },
+  {
+   "lp": 8,
+   "nazwisko_imie": "Baran Bolesław",
+   "akt": 23
+  },
+  {
+   "lp": 9,
+   "nazwisko_imie": "Borowski Stanisław",
+   "akt": 24
+  },
+  {
+   "lp": 10,
+   "nazwisko_imie": "Bruszkiewicz Józef",
+   "akt": 26
+  },
+  {
+   "lp": 11,
+   "nazwisko_imie": "Barbarzak Franciszek",
+   "akt": 31
+  },
+  {
+   "lp": 12,
+   "nazwisko_imie": "Bogdański Henryk-Wiktor",
+   "akt": 49
+  },
+  {
+   "lp": 13,
+   "nazwisko_imie": "Dziura Katarzyna",
+   "akt": 36
+  },
+  {
+   "lp": 14,
+   "nazwisko_imie": "Dobrzyńska Kazimiera",
+   "akt": 1
+  },
+  {
+   "lp": 15,
+   "nazwisko_imie": "Dąbrowska Stefania-Maria",
+   "akt": 53
+  },
+  {
+   "lp": 16,
+   "nazwisko_imie": "Dobrzyński Marian",
+   "akt": 63
+  },
+  {
+   "lp": 17,
+   "nazwisko_imie": "Felek Eugeniusz",
+   "akt": 37
+  },
+  {
+   "lp": 18,
+   "nazwisko_imie": "Flis Józefa",
+   "akt": 46
+  },
+  {
+   "lp": 19,
+   "nazwisko_imie": "Felek Katarzyna",
+   "akt": 50
+  },
+  {
+   "lp": 20,
+   "nazwisko_imie": "Gancarz Franciszek",
+   "akt": 9
+  },
+  {
+   "lp": 21,
+   "nazwisko_imie": "Gorczyński Włodzimierz",
+   "akt": 52
+  },
+  {
+   "lp": 22,
+   "nazwisko_imie": "Chmiel Agnieszka",
+   "akt": 30
+  },
+  {
+   "lp": 23,
+   "nazwisko_imie": "Janik Andrzej",
+   "akt": 29
+  },
+  {
+   "lp": 24,
+   "nazwisko_imie": "Jachura Michał",
+   "akt": 42
+  },
+  {
+   "lp": 25,
+   "nazwisko_imie": "Kosidło Jan",
+   "akt": 2
+  },
+  {
+   "lp": 26,
+   "nazwisko_imie": "Kamiński Jan",
+   "akt": 16
+  },
+  {
+   "lp": 27,
+   "nazwisko_imie": "Kamiński Jan",
+   "akt": 20
+  },
+  {
+   "lp": 28,
+   "nazwisko_imie": "Kędziora Kazimiera",
+   "akt": 21
+  },
+  {
+   "lp": 29,
+   "nazwisko_imie": "Kolasa Franciszka",
+   "akt": 32
+  },
+  {
+   "lp": 30,
+   "nazwisko_imie": "Kudrelek Józefa",
+   "akt": 33
+  },
+  {
+   "lp": 31,
+   "nazwisko_imie": "Kędziora Marianna",
+   "akt": 34
+  },
+  {
+   "lp": 32,
+   "nazwisko_imie": "Kędziora Jerzy-Wojciech",
+   "akt": 38
+  },
+  {
+   "lp": 33,
+   "nazwisko_imie": "Kosidło Stefan",
+   "akt": 44
+  },
+  {
+   "lp": 34,
+   "nazwisko_imie": "Kaczyńska Józefa",
+   "akt": 55
+  },
+  {
+   "lp": 35,
+   "nazwisko_imie": "Kędziora Maciej",
+   "akt": 57
+  },
+  {
+   "lp": 36,
+   "nazwisko_imie": "Kudrelek Janina",
+   "akt": 59
+  },
+  {
+   "lp": 37,
+   "nazwisko_imie": "Lach Marian",
+   "akt": 40
+  },
+  {
+   "lp": 38,
+   "nazwisko_imie": "Marchewka Józef",
+   "akt": 51
+  },
+  {
+   "lp": 39,
+   "nazwisko_imie": "Machulak Jan",
+   "akt": 5
+  },
+  {
+   "lp": 40,
+   "nazwisko_imie": "Mróz Edward",
+   "akt": 54
+  },
+  {
+   "lp": 41,
+   "nazwisko_imie": "Mróz Dominik",
+   "akt": 61
+  },
+  {
+   "lp": 42,
+   "nazwisko_imie": "Niziński Ignacy",
+   "akt": 22
+  },
+  {
+   "lp": 43,
+   "nazwisko_imie": "Obydź Stanisław",
+   "akt": 7
+  },
+  {
+   "lp": 44,
+   "nazwisko_imie": "Ogon Walenty",
+   "akt": 58
+  },
+  {
+   "lp": 45,
+   "nazwisko_imie": "Obydź Janina",
+   "akt": 60
+  },
+  {
+   "lp": 46,
+   "nazwisko_imie": "Pasternak Henryk-Stanisław",
+   "akt": 3
+  },
+  {
+   "lp": 47,
+   "nazwisko_imie": "Pasternak Marianna",
+   "akt": 25
+  },
+  {
+   "lp": 48,
+   "nazwisko_imie": "Pawłasek Dominik",
+   "akt": 35
+  },
+  {
+   "lp": 49,
+   "nazwisko_imie": "Pazdrak Stanisław",
+   "akt": 43
+  },
+  {
+   "lp": 50,
+   "nazwisko_imie": "Pizoń Tekla",
+   "akt": 64
+  },
+  {
+   "lp": 51,
+   "nazwisko_imie": "Rębecki Tadeusz",
+   "akt": 6
+  },
+  {
+   "lp": 52,
+   "nazwisko_imie": "Rębecka Petronela",
+   "akt": 15
+  },
+  {
+   "lp": 53,
+   "nazwisko_imie": "Sobutka Wawrzyniec",
+   "akt": 4
+  },
+  {
+   "lp": 54,
+   "nazwisko_imie": "Sobutka Józef",
+   "akt": 13
+  },
+  {
+   "lp": 55,
+   "nazwisko_imie": "Szabat Stefan",
+   "akt": 18
+  },
+  {
+   "lp": 56,
+   "nazwisko_imie": "Solarz Antoni",
+   "akt": 27
+  },
+  {
+   "lp": 57,
+   "nazwisko_imie": "Sokół Stanisław",
+   "akt": 28
+  },
+  {
+   "lp": 58,
+   "nazwisko_imie": "Stasowska Władysława",
+   "akt": 39
+  },
+  {
+   "lp": 59,
+   "nazwisko_imie": "Sikora Jan",
+   "akt": 47
+  },
+  {
+   "lp": 60,
+   "nazwisko_imie": "Wasło Wojciech",
+   "akt": 8
+  },
+  {
+   "lp": 61,
+   "nazwisko_imie": "Widomski Czesław",
+   "akt": 56
+  },
+  {
+   "lp": 62,
+   "nazwisko_imie": "Wimarczyk Jan",
+   "akt": 62
+  },
+  {
+   "lp": 63,
+   "nazwisko_imie": "Zyguła Jan",
+   "akt": 41
+  },
+  {
+   "lp": 64,
+   "nazwisko_imie": "Zyguła Feliksa",
+   "akt": 45
+  }
+ ]
+}
