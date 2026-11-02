@@ -1,11 +1,12 @@
 {
  "zrodlo": "Z1943_11 (Lp 1-54) i Z1943_12 (Lp 55-64), rejestr alfabetyczny zmarłych za 1943",
- "uwaga": "odczyt AI z obrazu, pisownia do porównania z bazą; akty 1-25 nie mają jeszcze odczytu z aktu (tylko Lubgens)",
+ "uwaga": "pisownia zatwierdzona przez właściciela 02.11 (wg bazy i Lubgens); surowy odczyt z obrazu w polu wg_odczytu_indeksu; Tekla (akt 64): małżonek Krzysztoń",
  "pozycje": [
   {
    "lp": 1,
-   "nazwisko_imie": "Andrejczak Anna",
-   "akt": 48
+   "nazwisko_imie": "Andrzejczak Anna",
+   "akt": 48,
+   "wg_odczytu_indeksu": "Andrejczak Anna"
   },
   {
    "lp": 2,
@@ -49,8 +50,9 @@
   },
   {
    "lp": 10,
-   "nazwisko_imie": "Bruszkiewicz Józef",
-   "akt": 26
+   "nazwisko_imie": "Brzuszkiewicz Józef",
+   "akt": 26,
+   "wg_odczytu_indeksu": "Bruszkiewicz Józef"
   },
   {
    "lp": 11,
@@ -139,8 +141,9 @@
   },
   {
    "lp": 28,
-   "nazwisko_imie": "Kędziora Kazimiera",
-   "akt": 21
+   "nazwisko_imie": "Kędziora Kazimierz",
+   "akt": 21,
+   "wg_odczytu_indeksu": "Kędziora Kazimiera"
   },
   {
    "lp": 29,
@@ -244,8 +247,9 @@
   },
   {
    "lp": 49,
-   "nazwisko_imie": "Pazdrak Stanisław",
-   "akt": 43
+   "nazwisko_imie": "Pastucha Stanisław",
+   "akt": 43,
+   "wg_odczytu_indeksu": "Pazdrak Stanisław"
   },
   {
    "lp": 50,
@@ -264,12 +268,12 @@
   },
   {
    "lp": 53,
-   "nazwisko_imie": "Sobutka Wawrzyniec",
+   "nazwisko_imie": "Sobótka Wawrzyniec",
    "akt": 4
   },
   {
    "lp": 54,
-   "nazwisko_imie": "Sobutka Józef",
+   "nazwisko_imie": "Sobótka Józef",
    "akt": 13
   },
   {
@@ -284,13 +288,15 @@
   },
   {
    "lp": 57,
-   "nazwisko_imie": "Sokół Stanisław",
-   "akt": 28
+   "nazwisko_imie": "Sokół Czesława",
+   "akt": 28,
+   "wg_odczytu_indeksu": "Sokół Stanisław"
   },
   {
    "lp": 58,
-   "nazwisko_imie": "Stasowska Władysława",
-   "akt": 39
+   "nazwisko_imie": "Staszowska Władysława",
+   "akt": 39,
+   "wg_odczytu_indeksu": "Stasowska Władysława"
   },
   {
    "lp": 59,
@@ -299,8 +305,9 @@
   },
   {
    "lp": 60,
-   "nazwisko_imie": "Wasło Wojciech",
-   "akt": 8
+   "nazwisko_imie": "Wcisło Wojciech",
+   "akt": 8,
+   "wg_odczytu_indeksu": "Wasło Wojciech"
   },
   {
    "lp": 61,
@@ -309,8 +316,9 @@
   },
   {
    "lp": 62,
-   "nazwisko_imie": "Wimarczyk Jan",
-   "akt": 62
+   "nazwisko_imie": "Winiarczyk Jan",
+   "akt": 62,
+   "wg_odczytu_indeksu": "Wimarczyk Jan"
   },
   {
    "lp": 63,
