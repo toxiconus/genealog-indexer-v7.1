@@ -46,5 +46,29 @@
    "h": 0.415
   },
   "uwaga": "przybliżone"
+ },
+ {
+  "id": "ai1-1935-035",
+  "plik": "685f8df8-image.jpg",
+  "strona": "lewa góra",
+  "roi": {
+   "x": 0.12,
+   "y": 0.04,
+   "w": 0.4,
+   "h": 0.36
+  },
+  "uwaga": "przybliżone"
+ },
+ {
+  "id": "ai1-1935-036",
+  "plik": "685f8df8-image.jpg",
+  "strona": "lewa dół",
+  "roi": {
+   "x": 0.12,
+   "y": 0.43,
+   "w": 0.4,
+   "h": 0.44
+  },
+  "uwaga": "przybliżone"
  }
 ]

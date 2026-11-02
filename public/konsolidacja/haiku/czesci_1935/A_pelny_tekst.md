@@ -38,3 +38,22 @@ Uwagi odczytu: data zgonu i nazwisko rodowe wątpliwe (mianownik "Mikołaj" niep
 Skan: ed11c62d-image.jpg, ROI: x0.52..y0.50..
 > Działo się we wsi Blinowie, dnia czwartego marca, tysiące dziewięćset trzydziestego piątego roku, o godzinie dziewiątej rano. Stawili się: Tomasz Kudło? i Ludwik Dobrzyński?, pełnoletni rolnicy z Brzozówki, i oświadczyli, że dnia dwudziestego drugiego lutego roku bieżącego, o godzinie dziesiątej rano zmarł w Brzozówce tamże urodzony i zamieszkały Wojciech Białoroński?, lat [?] licząc?, rolnik, syn Stanisława i Marjanny z Machulaków, małżonków Białorońskich. Pozostawił po sobie owdowiałą żonę Marjannę z Pudłów. Po przekonaniu się naocznie o śmierci Wojciecha Białorońskiego. Akt ten stawającym przeczytany, przez Nas podpisany został. Proboszcz U.S.C. [podpis nieczytelny]
 Uwagi odczytu: w 15. wierszu wyraz "ten" dopisany ręcznie nad przekreśleniem (zapis: "w 15-tym wierszu napisano 'ten'"); wiek wątpliwy; data zgonu wątpliwa.
+## ai1-1935-011 Weronika Kamińska (Moczydła)
+Skan: a7e50cb7-image.jpg, ROI: x0.08..y0.07..
+> Działo się we wsi Blinowie, dnia piątego marca, tysiące dziewięćset trzydziestego piątego roku, o godzinie jedenastej rano. Stawili się: Jan Hejdło? i Wojciech Pańka?, pełnoletni rolnicy z Moczydeł, i oświadczyli, że dnia trzeciego marca roku bieżącego, o godzinie [?] rano zmarła w Moczydłach tamże urodzona i zamieszkała Weronika z Dziewiorów? Kamińska, lat [?] licząca, rolniczka, córka Jana i Józefy z Gołdziów?, małżonków Dziewiorów. Pozostawiła po sobie owdowiałego męża Andrzeja Kamińskiego?. Po przekonaniu się naocznie o śmierci Weroniki Kamińskiej. Akt ten stawającym przeczytany, przez Nas podpisany został. Proboszcz U.S.C. [podpis nieczytelny]
+Uwagi odczytu: godzina, wiek i nazwisko rodowe wątpliwe.
+
+## ai1-1935-012 Józefa Drózd (Blinów)
+Skan: a7e50cb7-image.jpg, ROI: x0.065..y0.48..
+> Działo się we wsi Blinowie, dnia dziewiątego marca, tysiące dziewięćset trzydziestego piątego roku, o godzinie dziewiątej rano. Stawili się: Wawrzyniec Pankiewicz? z Moczydeł i Paweł Jamioł z Blinowa, pełnoletni rolnicy, i oświadczyli, że dnia siódmego marca roku bieżącego, o godzinie [?] rano zmarła w Blinowie tamże urodzona i zamieszkała Józefa z Pankiewiczów? Drózd, lat [?] licząca, rolniczka, córka Wawrzyńca i Marjany z Dziurów?, małżonków Pankiewiczów. Pozostawiła po sobie owdowiałego męża Tomasza Drózda. Po przekonaniu się naocznie o śmierci Józefy Drózd. Akt ten stawającym przeczytany, przez Nas podpisany został. Proboszcz U.S.C. [podpis nieczytelny]
+Uwagi odczytu: godzina zgonu, wiek i świadkowie wątpliwi.
+
+## ai1-1935-013 Marianna Haszkońska (Brzozówka)
+Skan: a7e50cb7-image.jpg, ROI: x0.51..y0.07..
+> Działo się we wsi Blinowie, dnia jedenastego marca, tysiące dziewięćset trzydziestego piątego roku, o godzinie dziewiątej rano. Stawili się: Józef Dobrzyński i Michał Drózd?, pełnoletni rolnicy z Brzozówki, i oświadczyli, że dnia [?] marca roku bieżącego, o godzinie piątej po południu zmarła w Brzozówce tamże urodzona Marjanna Haszkońska, lat [?] licząca, córka Franciszka i Katarzyny z Buconiów, małżonków Haszkońskich. Po przekonaniu się naocznie o śmierci Marjanny Haszkońskiej. Akt ten stawającym przeczytany, przez Nas podpisany został. Proboszcz U.S.C. [podpis nieczytelny]
+Uwagi odczytu: data zgonu, godzina i wiek wątpliwe.
+
+## ai1-1935-014 Antoni Janik (Moczydła)
+Skan: a7e50cb7-image.jpg, ROI: x0.515..y0.46..
+> Działo się we wsi Blinowie, dnia czternastego marca, tysiące dziewięćset trzydziestego piątego roku, o godzinie dziewiątej rano. Stawili się: Tomasz Janik? i Franciszek Tikora? [Sikora?], pełnoletni rolnicy z Moczydeł, i oświadczyli, że dnia [?] marca roku bieżącego, o godzinie czwartej po południu zmarł w Moczydłach tamże urodzony i zamieszkały Antoni Janik, lat [?] licząc?, rolnik, syn Andrzeja i Doroty z Wilków?, małżonków Janików. Pozostawił po sobie owdowiałą żonę Annę z Kaczyńskich?. Po przekonaniu się naocznie o śmierci Antoniego Janika. Akt ten stawającym przeczytany, przez Nas podpisany został. Proboszcz U.S.C. [podpis nieczytelny]
+Uwagi odczytu: data zgonu, wiek i nazwisko żony wątpliwe; drugi świadek niepewny.
