@@ -1,0 +1,14 @@
+# ZGONY 1935 — C (akty 27–36)
+
+## ai1-1935-027 Hamulan? Solarz (Moczydła)
+> Działo się we wsi Blinowie, dnia trzeciego lipca, tysiące dziewięćset trzydziestego piątego roku, o godzinie czwartej po południu. Stawili się: Paweł Machulak i Marcin Pudło, obaj pełnoletni rolnicy z Moczydeł, i oświadczyli, że dnia wczorajszego, o godzinie dziewiątej rano, zmarł w Moczydłach tamże urodzony i zamieszkały Hamulan? Solarz, lat siedemdziesiąt [?] liczący, rolnik, syn Marcina? i Józefy? z Ptaków? małżonków Solarzów. Po zmarłej Anastazji z Gochów [?]. Po przekonaniu się naocznie o śmierci. Akt ten stawającym przeczytany, przez Nas i świadków podpisany został. Proboszcz U.S.C. [podpis: Ks. Wojtan?]
+
+## ai1-1935-028 Wincentyna Surdacka (Brzozówka)
+> Działo się we wsi Blinowie, dnia dwunastego lipca, tysiące dziewięćset trzydziestego piątego roku, o godzinie dziewiątej rano. Stawili się: Józef Kuta? i Wojciech Szyszka?, petentowie rolnicy z kolonii Brzozówki, i oświadczyli, że dnia dziesiątego lipca roku bieżącego, o godzinie ósmej rano, zmarła w kolonii Brzozówce Wincentyna z Surdackich Surdacka, lat czterdzieści dwa [?], urodzona w Urzędowie [?], a zamieszkała w kolonii Brzozówce, córka Jana i Katarzyny z Ciółkich [?] małżonków Surdackich. Pozostawiła po sobie owdowiałego męża Adama Surdackiego. Po przekonaniu się naocznie o śmierci Wincentyny Surdackiej. Akt ten niepiśmiennym świadkom przeczytany, przez Nas tylko podpisany został. Proboszcz U.S.C. [podpis: Ks. Bielawski]
+
+## ai1-1935-029 Jadwiga Barbarzak (Moczydła)
+> Działo się we wsi Blinowie, dnia trzydziestego lipca, tysiące dziewięćset trzydziestego piątego roku, o godzinie ósmej rano. Stawili się: Karol Kłoza? i Józef Rembeń?, pełnoletni rolnicy z Moczydeł, i oświadczyli, że dnia dwudziestego siódmego lipca roku bieżącego, o godzinie dziesiątej rano, zmarła w Moczydłach tamże urodzona i zamieszkała Jadwiga z Pasznowickich [?] Barbarzak, lat trzydzieści pięć [?] licząca, wdowa po zmarłym Michale Barbarzaku, córka Narcyza? i Marjanny z Kotułów [?] małżonków Pasznowickich [?]. Po przekonaniu się naocznie o śmierci Jadwigi Barbarzak. Akt ten stawającym przeczytany, przez Nas i świadków podpisany został. Proboszcz U.S.C. [podpis: Ks. Bielawski]
+
+## ai1-1935-030 Tadeusz-Jan Kaczyński (Blinów)
+> Działo się we wsi Blinowie, dnia dziesiątego sierpnia, tysiące dziewięćset trzydziestego piątego roku, o godzinie dziesiątej rano. Stawili się: Bolesław Filipek i Bolesław Hara?, petentowie rolnicy z Blinowa, i oświadczyli, że dnia wczorajszego, o godzinie dziesiątej rano, zmarł w Blinowie Tadeusz-Jan Kaczyński, pięć dni liczący, syn Jana i Katarzyny z Samolów [?] małżonków Kaczyńskich. Po przekonaniu się naocznie o śmierci Tadeusza-Jana Kaczyńskiego. Akt ten stawającym przeczytany, przez Nas podpisany został. Proboszcz U.S.C. [podpis: Ks. Bielawski]
+

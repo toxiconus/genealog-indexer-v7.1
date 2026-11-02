@@ -1,0 +1,50 @@
+[
+ {
+  "id": "ai1-1935-015",
+  "plik": "7e11233d-image.jpg",
+  "strona": "lewa góra",
+  "roi": {
+   "x": 0.055,
+   "y": 0.083,
+   "w": 0.445,
+   "h": 0.36
+  },
+  "uwaga": "przybliżone"
+ },
+ {
+  "id": "ai1-1935-016",
+  "plik": "7e11233d-image.jpg",
+  "strona": "lewa dół",
+  "roi": {
+   "x": 0.055,
+   "y": 0.47,
+   "w": 0.445,
+   "h": 0.36
+  },
+  "uwaga": "przybliżone"
+ },
+ {
+  "id": "ai1-1935-017",
+  "plik": "7e11233d-image.jpg",
+  "strona": "prawa góra",
+  "roi": {
+   "x": 0.505,
+   "y": 0.083,
+   "w": 0.475,
+   "h": 0.355
+  },
+  "uwaga": "przybliżone"
+ },
+ {
+  "id": "ai1-1935-018",
+  "plik": "7e11233d-image.jpg",
+  "strona": "prawa dół",
+  "roi": {
+   "x": 0.505,
+   "y": 0.47,
+   "w": 0.475,
+   "h": 0.32
+  },
+  "uwaga": "przybliżone"
+ }
+]
