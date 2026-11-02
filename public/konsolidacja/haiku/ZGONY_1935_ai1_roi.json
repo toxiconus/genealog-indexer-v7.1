@@ -1,0 +1,26 @@
+[
+ {
+  "id": "ai1-1935-001",
+  "plik": "f5296bd0-image.jpg",
+  "strona": "prawa góra",
+  "roi": {
+   "x": 0.5,
+   "y": 0.06,
+   "w": 0.46,
+   "h": 0.38
+  },
+  "uwaga": "przybliżone"
+ },
+ {
+  "id": "ai1-1935-002",
+  "plik": "f5296bd0-image.jpg",
+  "strona": "prawa dół",
+  "roi": {
+   "x": 0.5,
+   "y": 0.48,
+   "w": 0.46,
+   "h": 0.42
+  },
+  "uwaga": "przybliżone"
+ }
+]

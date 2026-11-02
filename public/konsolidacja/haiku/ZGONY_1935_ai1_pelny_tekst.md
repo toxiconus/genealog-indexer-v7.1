@@ -1,0 +1,7 @@
+# ZGONY 1935 — ai1 (Blinów, akta zmarłych za 1935 rok)
+
+## ai1-1935-001 Katarzyna Bucoń (Brzozówka)
+> Działo się we wsi Blinowie, dnia dziesiątego stycznia, tysiące dziewięćset trzydziestego piątego roku, o godzinie dziesiątej rano. Stawili się: Antoni Wcisło i Jan Wojtowicz?, pełnoletni rolnicy z Brzozówki, i oświadczyli, że dnia siódmego stycznia, roku bieżącego, o godzinie jedenastej wieczór, zmarła w Brzozówce Katarzyna z Trojnerów Bucoń, lat osiemdziesiąt cztery licząca, wdowa po Wojciechu Buconiu, urodzona w Jaroćinie?, a zamieszkała w Brzozówce, córka Walentego i Marjamy z Dziechciarzów, małżonków Trojnerów. Po przekonaniu się naocznie o śmierci Katarzyny Bucoń. Akt ten stawającym przeczytany, przez Nas podpisany został. Proboszcz U.S.C.
+
+## ai1-1935-002 Wincenty Machulak (Brzozówka)
+> Działo się we wsi Blinowie, dnia jedenastego stycznia, tysiące dziewięćset trzydziestego piątego roku, o godzinie dziesiątej rano. Stawili się: Władysław Woś i Jan Porężka?, pełnoletni rolnicy z Brzozówki, i oświadczyli, że dnia wczorajszego, o godzinie dziesiątej rano, zmarł w Brzozówce Wincenty Machulak, lat sześćdziesiąt siedem licząca? (licząc), rolnik, urodzony i zamieszkały w Brzozówce, syn Jana i Juljanny z Gochów, małżonków Machulaków. Pozostawił po sobie owdowiałą żonę Katarzynę z Jachurów. Po przekonaniu się naocznie o śmierci Wincentego Machulaka. Akt ten stawającym przeczytany, przez Nas podpisany został. Proboszcz U.S.C.
