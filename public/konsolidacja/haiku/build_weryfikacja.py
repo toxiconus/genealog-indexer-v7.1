@@ -221,7 +221,7 @@ if ROKS == [1935]:   # księga 1935: kolejność pól wg tekstu aktu przedwojenn
     data["ord"] = ["death_place","deceased_last_name","deceased_first_name","act_date","informant1","informant2","death_date","death_time","deceased_maiden_name","age","profession","deceased_status","deceased_spouse","deceased_birth_place","deceased_residence","deceased_sex","father_first_name","father_last_name","mother_first_name","mother_last_name","officiant","notes"]
     data["gz"] = ["deceased_first_name","deceased_last_name","deceased_maiden_name","age","profession","deceased_status","deceased_spouse","deceased_birth_place","deceased_residence","deceased_sex"]
     data["pairs"] = {"deceased_first_name":"deceased_last_name","deceased_maiden_name":"age","profession":"deceased_status","deceased_birth_place":"deceased_residence","father_first_name":"father_last_name","mother_first_name":"mother_last_name"}
-    data["lata"] = [1930, 1940]; data["zakres"] = "1935"
+    data["lata"] = [1930, 1940]; data["zakres"] = "1935"; data["tytul"] = "Weryfikacja zgonów · v3 · 1935"; data["key"] = "wz_v3_1935"
 html = open(os.path.join(here, "weryfikacja_szablon.html"), encoding="utf-8").read()
 html = html.replace("/*DATA*/null", json.dumps(data, ensure_ascii=False))
 html = inline(html)

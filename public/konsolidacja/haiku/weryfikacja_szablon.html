@@ -228,7 +228,7 @@ details.tsug{background:var(--bzb)!important;border:1px solid var(--line)!import
  <button id="mReset">🗑 Wyczyść moje wybory</button>
 </div>
 <input type="file" id="fScan" accept="image/*" multiple hidden><input type="file" id="fAi" accept=".csv,text/csv" hidden><input type="file" id="fLoad" accept=".json" hidden><input type="file" id="fVer" accept=".csv,text/csv" hidden>
-<div id="top"><header><h1>Weryfikacja zgonów · v2</h1><span id="prog"></span><span id="dirty" style="color:var(--bz);font-size:12px;margin-left:8px"></span><button id="bText" class="sm" title="Pełny tekst aktu od Haiku: kilka trybów">Aa Tekst</button><button id="bMenu" class="sm">⋯ Menu</button></header>
+<div id="top"><header><h1 id="h1t">Weryfikacja zgonów · v2</h1><span id="prog"></span><span id="dirty" style="color:var(--bz);font-size:12px;margin-left:8px"></span><button id="bText" class="sm" title="Pełny tekst aktu od Haiku: kilka trybów">Aa Tekst</button><button id="bMenu" class="sm">⋯ Menu</button></header>
 <div id="pbar"><i></i></div><div class="tabs" id="tabs"></div>
 <div id="list"></div></div>
 <div id="view"><div id="layer"><img id="img" alt=""><div id="roi"></div></div><div id="noimg">Brak skanu dla tego aktu.<br>Wybierz skan poniżej albo dodaj z telefonu.</div>
@@ -241,6 +241,7 @@ details.tsug{background:var(--bzb)!important;border:1px solid var(--line)!import
 <datalist id="dlS"></datalist><datalist id="dlN"></datalist>
 <script>
 const D = /*DATA*/null;
+if (D.tytul) { document.getElementById('h1t').textContent = D.tytul; document.title = D.tytul; }
 const $ = id => document.getElementById(id);
 const FIELDS = D.fields.filter(f => f.id !== 'death_time'), AM = {}; D.acts.forEach(a => AM[a.id] = a);
 // kolejność wg tekstu aktu: margines (nazwisko, miejsce) → data → godzina → świadkowie → reszta z treści
@@ -258,14 +259,14 @@ const warnsOf = a => { if (!a.ai && !a.lub) return []; const w = []; if (getv(a,
 const warnHtml = a => { const w = warnsOf(a); return w.length ? `<div class="warn">${w.map(t => '⚠ ' + t).join('<br>')}</div>` : ''; };
 let S = {acts:{}, cur:null, year:'all', flt:'all', hideOk:true, hideDoneActs:true, noroi:false, wiz:false};
 const fieldsOf = a => a.kind==='prot' ? D.fieldsProt : a.kind==='rej' ? D.fieldsRej : ORDF;
-try { const r = localStorage.getItem('wz1'); if (r) S = Object.assign(S, JSON.parse(r)); } catch(e){}
+try { const r = localStorage.getItem(D.key || 'wz1'); if (r) S = Object.assign(S, JSON.parse(r)); } catch(e){}
 if (!S.v3) { S.v3 = 1; S.hideDoneActs = false; }
 let HS = null, HIST_WHY = null;
 function histCommit(){ if (!HS) return; const cur = histSnap(S.acts), d = histDiff(HS, cur); if (!d.length) return; S.hist = S.hist || []; const t = new Date().toISOString(); d.forEach(e => { e.n = (S.histN = (S.histN || 0) + 1); e.t = t; if (HIST_WHY) e.why = HIST_WHY; S.hist.push(e); }); if (S.hist.length > 4000) S.hist.splice(0, S.hist.length - 4000); HS = cur; }
 let AUTOH = null, autoT = null, lsFail = false;
 let DIRTY = 0; const updInd = () => { const e = document.getElementById('dirty'); if (e) { e.textContent = DIRTY ? '● niezapisane do pliku' : ''; e.title = 'Zmiany są w przeglądarce, ale nie w pliku. Zrób eksport CSV lub kopię JSON (menu).'; } }, markSaved = () => { DIRTY = 0; updInd(); };
 let lsWhy = '';
-const lsPut = () => { localStorage.setItem('wz1', JSON.stringify(S)); };
+const lsPut = () => { localStorage.setItem(D.key || 'wz1', JSON.stringify(S)); };
 const save = () => { DIRTY = 1; updInd(); let ok = false;
   try { histCommit(); lsPut(); ok = true; }
   catch(e) { try { if (S.hist && S.hist.length > 300) { S.hist.splice(0, S.hist.length - 300); lsPut(); ok = true; } } catch(e2) {} }
@@ -723,7 +724,7 @@ $('fAi').onchange = async e => { const t = (await e.target.files[0].text()).repl
   D.acts.sort((x,y) => x.year-y.year || x.act-y.act); toast(`Dołączono rekordów AI: ${n}`); init(); };
 $('mScan').onclick = () => $('fScan').click();
 $('fScan').onchange = async e => { for (const f of e.target.files) { extra[f.name] = URL.createObjectURL(f); try { const db = await idb(); db.transaction('s','readwrite').objectStore('s').put(f, f.name); } catch(x){} } toast(`Dodano skanów: ${e.target.files.length}`); renderAct(); };
-const idb = () => new Promise((ok,no) => { const r = indexedDB.open('wz1', 1); r.onupgradeneeded = () => r.result.createObjectStore('s'); r.onsuccess = () => ok(r.result); r.onerror = no; });
+const idb = () => new Promise((ok,no) => { const r = indexedDB.open(D.key || 'wz1', 1); r.onupgradeneeded = () => r.result.createObjectStore('s'); r.onsuccess = () => ok(r.result); r.onerror = no; });
 async function loadExtra(){ try { const db = await idb(), os = db.transaction('s').objectStore('s'); const ks = await new Promise(ok => { const q = os.getAllKeys(); q.onsuccess = () => ok(q.result); }); for (const k of ks) { const b = await new Promise(ok => { const g = os.get(k); g.onsuccess = () => ok(g.result); }); extra[k] = URL.createObjectURL(b); } } catch(e){} }
 
 // ---- tryby tekstowe (pełny tekst od Haiku)
