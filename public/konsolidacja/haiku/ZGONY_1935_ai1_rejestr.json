@@ -1,1 +1,814 @@
-[]
+{
+ "items": [
+  {
+   "id": "rej-1935-01",
+   "kind": "rej",
+   "lp": 1,
+   "last": "Bednarczyk",
+   "first": "Marjama",
+   "act": 3,
+   "plik": "f5296bd0-image.jpg",
+   "roi": {
+    "x": 0.062,
+    "y": 0.159,
+    "w": 0.21,
+    "h": 0.03
+   },
+   "unc": [],
+   "uwaga": "wykaz za 1934 (akty 1934 poza tą księgą)"
+  },
+  {
+   "id": "rej-1935-02",
+   "kind": "rej",
+   "lp": 2,
+   "last": "Bucoń",
+   "first": "Antoni",
+   "act": 32,
+   "plik": "f5296bd0-image.jpg",
+   "roi": {
+    "x": 0.062,
+    "y": 0.185,
+    "w": 0.21,
+    "h": 0.03
+   },
+   "unc": [],
+   "uwaga": "wykaz za 1934 (akty 1934 poza tą księgą)"
+  },
+  {
+   "id": "rej-1935-03",
+   "kind": "rej",
+   "lp": 3,
+   "last": "Bielak",
+   "first": "Marjama",
+   "act": 42,
+   "plik": "f5296bd0-image.jpg",
+   "roi": {
+    "x": 0.062,
+    "y": 0.211,
+    "w": 0.21,
+    "h": 0.03
+   },
+   "unc": [],
+   "uwaga": "wykaz za 1934 (akty 1934 poza tą księgą)"
+  },
+  {
+   "id": "rej-1935-04",
+   "kind": "rej",
+   "lp": 4,
+   "last": "Chmiel",
+   "first": "Marjama",
+   "act": 26,
+   "plik": "f5296bd0-image.jpg",
+   "roi": {
+    "x": 0.062,
+    "y": 0.238,
+    "w": 0.21,
+    "h": 0.03
+   },
+   "unc": [],
+   "uwaga": "wykaz za 1934 (akty 1934 poza tą księgą)"
+  },
+  {
+   "id": "rej-1935-05",
+   "kind": "rej",
+   "lp": 5,
+   "last": "Dobrzyński",
+   "first": "Wojciech",
+   "act": 20,
+   "plik": "f5296bd0-image.jpg",
+   "roi": {
+    "x": 0.062,
+    "y": 0.264,
+    "w": 0.21,
+    "h": 0.03
+   },
+   "unc": [],
+   "uwaga": "wykaz za 1934 (akty 1934 poza tą księgą)"
+  },
+  {
+   "id": "rej-1935-06",
+   "kind": "rej",
+   "lp": 6,
+   "last": "Dąbrowska",
+   "first": "Eugenja",
+   "act": 39,
+   "plik": "f5296bd0-image.jpg",
+   "roi": {
+    "x": 0.062,
+    "y": 0.29,
+    "w": 0.21,
+    "h": 0.03
+   },
+   "unc": [],
+   "uwaga": "wykaz za 1934 (akty 1934 poza tą księgą)"
+  },
+  {
+   "id": "rej-1935-07",
+   "kind": "rej",
+   "lp": 7,
+   "last": "Gumiński",
+   "first": "Jan",
+   "act": 40,
+   "plik": "f5296bd0-image.jpg",
+   "roi": {
+    "x": 0.062,
+    "y": 0.316,
+    "w": 0.21,
+    "h": 0.03
+   },
+   "unc": [],
+   "uwaga": "wykaz za 1934 (akty 1934 poza tą księgą)"
+  },
+  {
+   "id": "rej-1935-08",
+   "kind": "rej",
+   "lp": 8,
+   "last": "Igras",
+   "first": "Józefa",
+   "act": 28,
+   "plik": "f5296bd0-image.jpg",
+   "roi": {
+    "x": 0.062,
+    "y": 0.342,
+    "w": 0.21,
+    "h": 0.03
+   },
+   "unc": [
+    "last"
+   ],
+   "uwaga": "wykaz za 1934 (akty 1934 poza tą księgą)"
+  },
+  {
+   "id": "rej-1935-09",
+   "kind": "rej",
+   "lp": 9,
+   "last": "Jachura",
+   "first": "Anna",
+   "act": 25,
+   "plik": "f5296bd0-image.jpg",
+   "roi": {
+    "x": 0.062,
+    "y": 0.369,
+    "w": 0.21,
+    "h": 0.03
+   },
+   "unc": [],
+   "uwaga": "wykaz za 1934 (akty 1934 poza tą księgą)"
+  },
+  {
+   "id": "rej-1935-10",
+   "kind": "rej",
+   "lp": 10,
+   "last": "Jakubaszek",
+   "first": "Jan-Stanisław",
+   "act": 30,
+   "plik": "f5296bd0-image.jpg",
+   "roi": {
+    "x": 0.062,
+    "y": 0.395,
+    "w": 0.21,
+    "h": 0.03
+   },
+   "unc": [],
+   "uwaga": "wykaz za 1934 (akty 1934 poza tą księgą)"
+  },
+  {
+   "id": "rej-1935-11",
+   "kind": "rej",
+   "lp": 11,
+   "last": "Jędrzejczak",
+   "first": "Magdalena",
+   "act": 36,
+   "plik": "f5296bd0-image.jpg",
+   "roi": {
+    "x": 0.062,
+    "y": 0.421,
+    "w": 0.21,
+    "h": 0.03
+   },
+   "unc": [],
+   "uwaga": "wykaz za 1934 (akty 1934 poza tą księgą)"
+  },
+  {
+   "id": "rej-1935-12",
+   "kind": "rej",
+   "lp": 12,
+   "last": "Kosidło",
+   "first": "Janina-Barbara",
+   "act": 1,
+   "plik": "f5296bd0-image.jpg",
+   "roi": {
+    "x": 0.062,
+    "y": 0.447,
+    "w": 0.21,
+    "h": 0.03
+   },
+   "unc": [],
+   "uwaga": "wykaz za 1934 (akty 1934 poza tą księgą)"
+  },
+  {
+   "id": "rej-1935-13",
+   "kind": "rej",
+   "lp": 13,
+   "last": "Kolasa",
+   "first": "Władysław-Alfons",
+   "act": 2,
+   "plik": "f5296bd0-image.jpg",
+   "roi": {
+    "x": 0.062,
+    "y": 0.473,
+    "w": 0.21,
+    "h": 0.03
+   },
+   "unc": [],
+   "uwaga": "wykaz za 1934 (akty 1934 poza tą księgą)"
+  },
+  {
+   "id": "rej-1935-14",
+   "kind": "rej",
+   "lp": 14,
+   "last": "Kurczak",
+   "first": "Agnieszka",
+   "act": 7,
+   "plik": "f5296bd0-image.jpg",
+   "roi": {
+    "x": 0.062,
+    "y": 0.5,
+    "w": 0.21,
+    "h": 0.03
+   },
+   "unc": [],
+   "uwaga": "wykaz za 1934 (akty 1934 poza tą księgą)"
+  },
+  {
+   "id": "rej-1935-15",
+   "kind": "rej",
+   "lp": 15,
+   "last": "Kosidło",
+   "first": "Jadwiga",
+   "act": 10,
+   "plik": "f5296bd0-image.jpg",
+   "roi": {
+    "x": 0.062,
+    "y": 0.526,
+    "w": 0.21,
+    "h": 0.03
+   },
+   "unc": [],
+   "uwaga": "wykaz za 1934 (akty 1934 poza tą księgą)"
+  },
+  {
+   "id": "rej-1935-16",
+   "kind": "rej",
+   "lp": 16,
+   "last": "Kolasa",
+   "first": "Mikołaj-Jan",
+   "act": 13,
+   "plik": "f5296bd0-image.jpg",
+   "roi": {
+    "x": 0.062,
+    "y": 0.552,
+    "w": 0.21,
+    "h": 0.03
+   },
+   "unc": [],
+   "uwaga": "wykaz za 1934 (akty 1934 poza tą księgą)"
+  },
+  {
+   "id": "rej-1935-17",
+   "kind": "rej",
+   "lp": 17,
+   "last": "Kędziora",
+   "first": "Helena",
+   "act": 18,
+   "plik": "f5296bd0-image.jpg",
+   "roi": {
+    "x": 0.062,
+    "y": 0.578,
+    "w": 0.21,
+    "h": 0.03
+   },
+   "unc": [],
+   "uwaga": "wykaz za 1934 (akty 1934 poza tą księgą)"
+  },
+  {
+   "id": "rej-1935-18",
+   "kind": "rej",
+   "lp": 18,
+   "last": "Kędziora",
+   "first": "Bonifacy-Jan",
+   "act": 22,
+   "plik": "f5296bd0-image.jpg",
+   "roi": {
+    "x": 0.062,
+    "y": 0.604,
+    "w": 0.21,
+    "h": 0.03
+   },
+   "unc": [],
+   "uwaga": "wykaz za 1934 (akty 1934 poza tą księgą)"
+  },
+  {
+   "id": "rej-1935-19",
+   "kind": "rej",
+   "lp": 19,
+   "last": "Kurczak",
+   "first": "Bronisława",
+   "act": 23,
+   "plik": "f5296bd0-image.jpg",
+   "roi": {
+    "x": 0.062,
+    "y": 0.631,
+    "w": 0.21,
+    "h": 0.03
+   },
+   "unc": [],
+   "uwaga": "wykaz za 1934 (akty 1934 poza tą księgą)"
+  },
+  {
+   "id": "rej-1935-20",
+   "kind": "rej",
+   "lp": 20,
+   "last": "Krawczyk",
+   "first": "Jan",
+   "act": 29,
+   "plik": "f5296bd0-image.jpg",
+   "roi": {
+    "x": 0.062,
+    "y": 0.657,
+    "w": 0.21,
+    "h": 0.03
+   },
+   "unc": [],
+   "uwaga": "wykaz za 1934 (akty 1934 poza tą księgą)"
+  },
+  {
+   "id": "rej-1935-21",
+   "kind": "rej",
+   "lp": 21,
+   "last": "Kosidło",
+   "first": "Stefan-Jan",
+   "act": 31,
+   "plik": "f5296bd0-image.jpg",
+   "roi": {
+    "x": 0.062,
+    "y": 0.683,
+    "w": 0.21,
+    "h": 0.03
+   },
+   "unc": [],
+   "uwaga": "wykaz za 1934 (akty 1934 poza tą księgą)"
+  },
+  {
+   "id": "rej-1935-22",
+   "kind": "rej",
+   "lp": 22,
+   "last": "Kędziora",
+   "first": "Szymon",
+   "act": 34,
+   "plik": "f5296bd0-image.jpg",
+   "roi": {
+    "x": 0.062,
+    "y": 0.709,
+    "w": 0.21,
+    "h": 0.03
+   },
+   "unc": [],
+   "uwaga": "wykaz za 1934 (akty 1934 poza tą księgą)"
+  },
+  {
+   "id": "rej-1935-23",
+   "kind": "rej",
+   "lp": 23,
+   "last": "Kosidło",
+   "first": "Józefa",
+   "act": 38,
+   "plik": "f5296bd0-image.jpg",
+   "roi": {
+    "x": 0.312,
+    "y": 0.159,
+    "w": 0.2,
+    "h": 0.03
+   },
+   "unc": [],
+   "uwaga": "wykaz za 1934 (akty 1934 poza tą księgą)"
+  },
+  {
+   "id": "rej-1935-24",
+   "kind": "rej",
+   "lp": 24,
+   "last": "Łatka",
+   "first": "Marjama",
+   "act": 41,
+   "plik": "f5296bd0-image.jpg",
+   "roi": {
+    "x": 0.312,
+    "y": 0.185,
+    "w": 0.2,
+    "h": 0.03
+   },
+   "unc": [],
+   "uwaga": "wykaz za 1934 (akty 1934 poza tą księgą)"
+  },
+  {
+   "id": "rej-1935-25",
+   "kind": "rej",
+   "lp": 25,
+   "last": "Mazurek",
+   "first": "Szymon",
+   "act": 14,
+   "plik": "f5296bd0-image.jpg",
+   "roi": {
+    "x": 0.312,
+    "y": 0.211,
+    "w": 0.2,
+    "h": 0.03
+   },
+   "unc": [],
+   "uwaga": "wykaz za 1934 (akty 1934 poza tą księgą)"
+  },
+  {
+   "id": "rej-1935-26",
+   "kind": "rej",
+   "lp": 26,
+   "last": "Machulak",
+   "first": "Anastazja",
+   "act": 27,
+   "plik": "f5296bd0-image.jpg",
+   "roi": {
+    "x": 0.312,
+    "y": 0.238,
+    "w": 0.2,
+    "h": 0.03
+   },
+   "unc": [],
+   "uwaga": "wykaz za 1934 (akty 1934 poza tą księgą)"
+  },
+  {
+   "id": "rej-1935-27",
+   "kind": "rej",
+   "lp": 27,
+   "last": "Nieściór",
+   "first": "Wawrzyniec",
+   "act": 19,
+   "plik": "f5296bd0-image.jpg",
+   "roi": {
+    "x": 0.312,
+    "y": 0.264,
+    "w": 0.2,
+    "h": 0.03
+   },
+   "unc": [],
+   "uwaga": "wykaz za 1934 (akty 1934 poza tą księgą)"
+  },
+  {
+   "id": "rej-1935-28",
+   "kind": "rej",
+   "lp": 28,
+   "last": "Nieściór",
+   "first": "Katarzyna",
+   "act": 33,
+   "plik": "f5296bd0-image.jpg",
+   "roi": {
+    "x": 0.312,
+    "y": 0.29,
+    "w": 0.2,
+    "h": 0.03
+   },
+   "unc": [],
+   "uwaga": "wykaz za 1934 (akty 1934 poza tą księgą)"
+  },
+  {
+   "id": "rej-1935-29",
+   "kind": "rej",
+   "lp": 29,
+   "last": "Pęcionek",
+   "first": "Ignacy",
+   "act": 4,
+   "plik": "f5296bd0-image.jpg",
+   "roi": {
+    "x": 0.312,
+    "y": 0.316,
+    "w": 0.2,
+    "h": 0.03
+   },
+   "unc": [],
+   "uwaga": "wykaz za 1934 (akty 1934 poza tą księgą)"
+  },
+  {
+   "id": "rej-1935-30",
+   "kind": "rej",
+   "lp": 30,
+   "last": "Pudło",
+   "first": "Marjan-Kleofas",
+   "act": 16,
+   "plik": "f5296bd0-image.jpg",
+   "roi": {
+    "x": 0.312,
+    "y": 0.342,
+    "w": 0.2,
+    "h": 0.03
+   },
+   "unc": [
+    "first"
+   ],
+   "uwaga": "wykaz za 1934 (akty 1934 poza tą księgą)"
+  },
+  {
+   "id": "rej-1935-31",
+   "kind": "rej",
+   "lp": 31,
+   "last": "Rzeszutka",
+   "first": "Tekla",
+   "act": 15,
+   "plik": "f5296bd0-image.jpg",
+   "roi": {
+    "x": 0.312,
+    "y": 0.369,
+    "w": 0.2,
+    "h": 0.03
+   },
+   "unc": [
+    "last"
+   ],
+   "uwaga": "wykaz za 1934 (akty 1934 poza tą księgą)"
+  },
+  {
+   "id": "rej-1935-32",
+   "kind": "rej",
+   "lp": 32,
+   "last": "Rzeszutko",
+   "first": "Kazimierz",
+   "act": 35,
+   "plik": "f5296bd0-image.jpg",
+   "roi": {
+    "x": 0.312,
+    "y": 0.395,
+    "w": 0.2,
+    "h": 0.03
+   },
+   "unc": [
+    "last"
+   ],
+   "uwaga": "wykaz za 1934 (akty 1934 poza tą księgą)"
+  },
+  {
+   "id": "rej-1935-33",
+   "kind": "rej",
+   "lp": 33,
+   "last": "Tozół",
+   "first": "Józefa",
+   "act": 6,
+   "plik": "f5296bd0-image.jpg",
+   "roi": {
+    "x": 0.312,
+    "y": 0.421,
+    "w": 0.2,
+    "h": 0.03
+   },
+   "unc": [
+    "last"
+   ],
+   "uwaga": "wykaz za 1934 (akty 1934 poza tą księgą)"
+  },
+  {
+   "id": "rej-1935-34",
+   "kind": "rej",
+   "lp": 34,
+   "last": "Szuba",
+   "first": "Zofja",
+   "act": 8,
+   "plik": "f5296bd0-image.jpg",
+   "roi": {
+    "x": 0.312,
+    "y": 0.447,
+    "w": 0.2,
+    "h": 0.03
+   },
+   "unc": [],
+   "uwaga": "wykaz za 1934 (akty 1934 poza tą księgą)"
+  },
+  {
+   "id": "rej-1935-35",
+   "kind": "rej",
+   "lp": 35,
+   "last": "Sobutka",
+   "first": "Bronisław",
+   "act": 9,
+   "plik": "f5296bd0-image.jpg",
+   "roi": {
+    "x": 0.312,
+    "y": 0.473,
+    "w": 0.2,
+    "h": 0.03
+   },
+   "unc": [],
+   "uwaga": "wykaz za 1934 (akty 1934 poza tą księgą)"
+  },
+  {
+   "id": "rej-1935-36",
+   "kind": "rej",
+   "lp": 36,
+   "last": "Strzelecki",
+   "first": "Błażej",
+   "act": 11,
+   "plik": "f5296bd0-image.jpg",
+   "roi": {
+    "x": 0.312,
+    "y": 0.5,
+    "w": 0.2,
+    "h": 0.03
+   },
+   "unc": [
+    "last"
+   ],
+   "uwaga": "wykaz za 1934 (akty 1934 poza tą księgą)"
+  },
+  {
+   "id": "rej-1935-37",
+   "kind": "rej",
+   "lp": 37,
+   "last": "Szyszka",
+   "first": "Stanisław",
+   "act": 12,
+   "plik": "f5296bd0-image.jpg",
+   "roi": {
+    "x": 0.312,
+    "y": 0.526,
+    "w": 0.2,
+    "h": 0.03
+   },
+   "unc": [
+    "last"
+   ],
+   "uwaga": "wykaz za 1934 (akty 1934 poza tą księgą)"
+  },
+  {
+   "id": "rej-1935-38",
+   "kind": "rej",
+   "lp": 38,
+   "last": "Sosnowska",
+   "first": "Katarzyna",
+   "act": 17,
+   "plik": "f5296bd0-image.jpg",
+   "roi": {
+    "x": 0.312,
+    "y": 0.552,
+    "w": 0.2,
+    "h": 0.03
+   },
+   "unc": [
+    "last"
+   ],
+   "uwaga": "wykaz za 1934 (akty 1934 poza tą księgą)"
+  },
+  {
+   "id": "rej-1935-39",
+   "kind": "rej",
+   "lp": 39,
+   "last": "Szuba",
+   "first": "Janina",
+   "act": 21,
+   "plik": "f5296bd0-image.jpg",
+   "roi": {
+    "x": 0.312,
+    "y": 0.578,
+    "w": 0.2,
+    "h": 0.03
+   },
+   "unc": [],
+   "uwaga": "wykaz za 1934 (akty 1934 poza tą księgą)"
+  },
+  {
+   "id": "rej-1935-40",
+   "kind": "rej",
+   "lp": 40,
+   "last": "Sosnowski",
+   "first": "Jan",
+   "act": 24,
+   "plik": "f5296bd0-image.jpg",
+   "roi": {
+    "x": 0.312,
+    "y": 0.604,
+    "w": 0.2,
+    "h": 0.03
+   },
+   "unc": [
+    "last"
+   ],
+   "uwaga": "wykaz za 1934 (akty 1934 poza tą księgą)"
+  },
+  {
+   "id": "rej-1935-41",
+   "kind": "rej",
+   "lp": 41,
+   "last": "Tylus",
+   "first": "Anastazja",
+   "act": 37,
+   "plik": "f5296bd0-image.jpg",
+   "roi": {
+    "x": 0.312,
+    "y": 0.631,
+    "w": 0.2,
+    "h": 0.03
+   },
+   "unc": [],
+   "uwaga": "wykaz za 1934 (akty 1934 poza tą księgą)"
+  },
+  {
+   "id": "rej-1935-42",
+   "kind": "rej",
+   "lp": 42,
+   "last": "Wnuk",
+   "first": "Antonina",
+   "act": 5,
+   "plik": "f5296bd0-image.jpg",
+   "roi": {
+    "x": 0.312,
+    "y": 0.657,
+    "w": 0.2,
+    "h": 0.03
+   },
+   "unc": [],
+   "uwaga": "wykaz za 1934 (akty 1934 poza tą księgą)"
+  },
+  {
+   "id": "rej-1935-43",
+   "kind": "rej",
+   "lp": 43,
+   "last": "Wcisło",
+   "first": "Bronisława",
+   "act": 43,
+   "plik": "f5296bd0-image.jpg",
+   "roi": {
+    "x": 0.312,
+    "y": 0.683,
+    "w": 0.2,
+    "h": 0.03
+   },
+   "unc": [],
+   "uwaga": "wykaz za 1934 (akty 1934 poza tą księgą)"
+  },
+  {
+   "id": "rej-1935-44",
+   "kind": "rej",
+   "lp": 44,
+   "last": "Wcisło",
+   "first": "Stefania",
+   "act": 44,
+   "plik": "f5296bd0-image.jpg",
+   "roi": {
+    "x": 0.312,
+    "y": 0.709,
+    "w": 0.2,
+    "h": 0.03
+   },
+   "unc": [],
+   "uwaga": "wykaz za 1934 (akty 1934 poza tą księgą)"
+  }
+ ],
+ "prot": [
+  {
+   "id": "prot-1934",
+   "kind": "prot",
+   "lp": 100,
+   "plik": "f5296bd0-image.jpg",
+   "roi": {
+    "x": 0.05,
+    "y": 0.76,
+    "w": 0.45,
+    "h": 0.22
+   },
+   "title": "Protokół sprawdzenia z duplikatem, 21.01.1935 (str. wykazu 1934)",
+   "ai": {
+    "p_date": "1935-01-21",
+    "p_count": "44",
+    "p_signer": "Dziekan Dekanatu Janowskiego (podpis nieczytelny), pieczęć Dziekan Dekanatu Janów Lubelski",
+    "p_note": "Sprawdzono z duplikatem; protokół rewizyjny sporządzony w księdze urodzonych: w unikacie na 283 karcie?, w duplikacie na 27 karcie?. Blinów 21 stycznia 1935."
+   },
+   "unc": [
+    "p_note"
+   ],
+   "lub": {},
+   "cmp": "Wykaz 1934: 44 pozycje, numery aktów 1–44 bez braków i duplikatów (sprawdzone)."
+  }
+ ],
+ "fields_prot": [
+  [
+   "p_date",
+   "Data protokołu"
+  ],
+  [
+   "p_count",
+   "Zmarłych"
+  ],
+  [
+   "p_signer",
+   "Podpis / urząd"
+  ],
+  [
+   "p_note",
+   "Treść / uwagi"
+  ]
+ ]
+}

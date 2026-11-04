@@ -129,14 +129,14 @@ print("słownik: nazwisk", len(S), "imion", len(N), "poprawek AI→potwierdzone:
 # --- rejestr alfabetyczny i protokoły (elementy do weryfikacji)
 import unicodedata
 REJ = json.load(open(os.path.join(here, PLIK("ZGONY_ai1_rejestr.json", 1943 if 1943 in ROKS else ROK)), encoding="utf-8"))
-if 1943 not in ROKS or isinstance(REJ, list): REJ = {"items": [], "prot": [], "fields_prot": []}
+if (1943 not in ROKS and 1935 not in ROKS) or isinstance(REJ, list): REJ = {"items": [], "prot": [], "fields_prot": []}
 REJ_FILES = {i["plik"] for i in REJ["items"] + REJ["prot"]}
 fold = lambda t: "".join(c for c in unicodedata.normalize("NFD", (t or "").lower()) if not unicodedata.combining(c)).replace("ł", "l")
 items = []
 for it in REJ["items"]:
-    k = (1943, it["act"]); cand = lub.get(k, [])
+    _Y = int(it["id"].split("-")[1]); k = (_Y if _Y == 1943 else 1934, it["act"]); cand = lub.get(k, []) if _Y == 1943 else []
     pick = next((c for c in cand if fold(c[0]["deceased_last_name"])[:3] == fold(it["last"])[:3]), cand[0] if cand else None)
-    a = {"id": it["id"], "kind": "rej", "year": 1943, "act": it["lp"], "file": it["plik"], "roi": it["roi"], "unc": it["unc"],
+    a = {"id": it["id"], "kind": "rej", "year": _Y, "act": it["lp"], "file": it["plik"], "roi": it["roi"], "unc": it["unc"],
          "title": f'Rejestr Lp {it["lp"]} · akt {it["act"]}', "lubRaw": "", "lubName": "",
          "ai": {"deceased_last_name": it["last"], "deceased_first_name": it["first"], "death_act_number": str(it["act"])}, "lub": None, "alts": {}}
     cmp_ = []
@@ -147,13 +147,13 @@ for it in REJ["items"]:
     if k in ai:
         r = ai[k]; a["alts"] = {"deceased_last_name": [["akt", "AKT", r.get("deceased_last_name", "")]], "deceased_first_name": [["akt", "AKT", r.get("deceased_first_name", "")]]}
         cmp_.append(f'odczyt aktu {it["act"]}: {r.get("deceased_last_name","")} {r.get("deceased_first_name","")}')
-    else: cmp_.append("akt poza skanami (brak odczytu aktu)")
+    else: cmp_.append("akt poza skanami (brak odczytu aktu)" if _Y == 1943 else "akty 1934 – poza tą księgą (wykaz do wglądu)")
     if it["uwaga"]: cmp_.append(it["uwaga"])
     a["cmp"] = " · ".join(cmp_)
     items.append(a)
 nlub = len({n for (y, n) in lub if y == 1943})
 for p in REJ["prot"]:
-    items.append({"id": p["id"], "kind": "prot", "year": 1943 if p["id"].endswith("43") else 1944, "act": p["lp"], "file": p["plik"], "roi": p["roi"], "unc": p["unc"],
+    items.append({"id": p["id"], "kind": "prot", "year": 1935 if p["id"].endswith("34") else (1943 if p["id"].endswith("43") else 1944), "act": p["lp"], "file": p["plik"], "roi": p["roi"], "unc": p["unc"],
                   "title": p["title"], "ai": p["ai"], "lub": p.get("lub"), "alts": {}, "lubRaw": "", "lubName": "", "cmp": p["cmp"].replace("64 akty", f"{nlub} akty") if False else p["cmp"]})
 # --- data aktu (spisania) z pełnego tekstu → podpowiedzi do daty zgonu
 import datetime
