@@ -673,7 +673,7 @@ function tbRender(){const el=document.getElementById('tbBody');if(!TREE){el.inne
  const lst=ids.slice(0,TB.lim).map(i=>`<div data-pick="${esc(i)}" style="padding:3px 6px;cursor:pointer;border-radius:5px;${i===TB.sel?'background:#1a3550':''}">${esc(tnm(TREE.P[i]))} <span style="color:var(--mu)">${esc(tbLife(TREE.P[i]))}</span></div>`).join('');
  let right='<div class="leg">Brak osób.</div>';
  if(TB.sel){const id=TB.sel,p=TREE.P[id],o=tbRec(id);const sec=(t,k)=>`<h4 style="margin:10px 0 4px">${t}</h4>`+(o[k].length?o[k].map(x=>`<div class="cd"><div class="h"><span>${esc(x.t)}</span><span style="color:${x.pct>=80?'var(--ok)':'var(--md)'}">${x.pct}%</span></div><div class="chips">${x.why.map(w=>`<span class="chip ${w[1]}">${w[1]==='y'?'✓':w[1]==='p'?'≈':'✗'} ${esc(w[0])}</span>`).join('')}</div><button class="b" data-go="${k}|${esc(x.id)}">Otwórz akt</button></div>`).join(''):'<div class="want">Nic pasującego w bazie (próg 60%).</div>');
-  right=`<div style="overflow:auto;padding-bottom:6px">${tbTree(id)}</div>${tbChrono(id)}<div class="cd">${treePerson(id)}</div>${sec('📜 Chrzest / urodzenie','B')}${sec('📜 Małżeństwo','M')}${sec('📜 Zgon','D')}`}
+  right=`<div style="overflow:auto;padding-bottom:6px">${tbTree(id)}</div>${tbChrono(id)}${tbGosp(id)}<div class="cd">${treePerson(id)}</div>${sec('📜 Chrzest / urodzenie','B')}${sec('📜 Małżeństwo','M')}${sec('📜 Zgon','D')}`}
  el.innerHTML=`<div style="display:grid;grid-template-columns:minmax(200px,260px) 1fr;gap:12px"><div style="max-height:75vh;overflow:auto;border:1px solid var(--ln);border-radius:8px;padding:4px">${tbCtl()}${lst||'<div class="leg">Brak wyników.</div>'}${ids.length>TB.lim?`<div class="leg">pokazano ${TB.lim} z ${ids.length}</div><div style="display:flex;gap:6px;flex-wrap:wrap;margin:4px"><button class="b sm" data-more="400">+400</button><button class="b sm" data-more="all">pokaż wszystkie (${ids.length})</button></div>`:`<div class="leg">${ids.length} os.</div>`}</div><div>${right}</div></div>`}
 (function(){const m=document.createElement('div');m.id='tbModal';m.hidden=true;m.setAttribute('role','dialog');m.style.cssText='position:fixed;inset:0;z-index:1100;background:rgba(5,10,16,.8);padding:2vh 2vw;overflow:auto';
  m.innerHTML='<div class="fm-sheet"><div class="fm-h"><h2>🌳→📜 Osoba z drzewa → akty w bazie</h2><input type="text" id="tbQ" placeholder="szukaj osoby w drzewie…" style="background:var(--p2);border:1px solid var(--ln);color:var(--tx);border-radius:6px;padding:5px 8px"><button id="tbTodo" class="b" title="Osoby bez rodziców z podpowiedzią z bazy i osoby bez aktu urodzenia">📋 Do zbadania</button><button id="tbRepC" class="b" title="Zbiorczy raport błędów chronologii w całym drzewie (CSV)">⚠ Raport chronologii</button><button id="tbClose" class="b">Zamknij ✕</button></div><div class="leg" style="margin-bottom:8px">Ramka: zielona ≥80% / żółta ≥60% / szara = brak aktu w bazie. Kliknij osobę w drzewie, by ją wycentrować.</div><div id="tbBody"></div></div>';document.body.appendChild(m);
@@ -896,7 +896,8 @@ function tbCtl(){
   const sec=(t,cls,rs)=>`<h3 style="margin:12px 0 4px">${t} <span style="color:var(--mu);font-weight:400">(${rs.length})</span></h3>`+(rs.length?`<div class="net-table-wrap" style="overflow:auto"><table class="net-table" style="width:100%;border-collapse:collapse"><tbody>${rs.map(r=>`<tr data-go="${esc(r.id)}" style="cursor:pointer;border-top:1px solid var(--ln)"><td style="padding:4px 6px;white-space:nowrap"><b>${esc(r.name)}</b> <span style="color:var(--mu)">${esc(r.life)}</span></td><td style="padding:4px 6px;color:${r.pct>=80?'var(--ok)':r.pct?'var(--md)':'var(--mu)'}">${r.pct?r.pct+'%':''}</td><td style="padding:4px 6px">${esc(r.txt)}</td></tr>`).join('')}</tbody></table></div>`:'<div class="leg">–</div>');
   g('tdBody').innerHTML=sec('Rodzice do uzupełnienia – kandydat aktu urodzenia z rodzicami','a',ROWS.filter(r=>r.k==='A').sort((a,b)=>b.pct-a.pct))+
    sec('Brak aktu urodzenia w bazie (rok ma akty w indeksie)','b',ROWS.filter(r=>r.k==='B').sort((a,b)=>a.y-b.y))+
-   sec('Rok poza indeksem bazy (luka w danych, nie w drzewie)','c',ROWS.filter(r=>r.k==='C').sort((a,b)=>a.y-b.y));
+   sec('Rok poza indeksem bazy (luka w danych, nie w drzewie)','c',ROWS.filter(r=>r.k==='C').sort((a,b)=>a.y-b.y))+
+   sec('Gospodarze z tabel likwidacyjnych 1864 bez dopasowania w drzewie (tropy do dopisania; odczyt AI wstępny)','g',ROWS.filter(r=>r.k==='G').sort((a,b)=>a.name.localeCompare(b.name,'pl')));
   if(done)g('tdCsv').disabled=false}
  function start(){
   if(!TREE){g('tdProg').textContent='Najpierw wczytaj drzewo.';g('tdBody').innerHTML='';return}
@@ -910,12 +911,42 @@ function tbCtl(){
     else if(!yrsB.has(y))ROWS.push({k:'C',id,name,life,y,pct:0,txt:'w indeksie bazy nie ma aktów urodzenia z roku '+y})
     else ROWS.push({k:'B',id,name,life,y,pct:top?top.pct:0,txt:top?'najlepszy kandydat słaby: '+top.t:'brak kandydata ≥60%'})}
    g('tdProg').textContent=(k<ids.length?'Liczę… ':'Gotowe: ')+k+' / '+ids.length+' osób';
-   draw(k>=ids.length);if(k<ids.length)setTimeout(step,0)})()}
+   if(k<ids.length){draw(false);setTimeout(step,0);return}
+   // faza 2: gospodarze z 1864 bez dopasowania w drzewie
+   if(typeof G==='undefined'||!G.length){draw(true);return}
+   const all=Object.keys(TREE.P),hit=new Set();let j=0;
+   (function ph2(){if(my!==RUN)return;const t1=performance.now();
+    while(j<all.length&&performance.now()-t1<60){let mm=GC.get(all[j]);if(!mm){mm=gMatch(TREE.P[all[j]]);GC.set(all[j],mm)}mm.forEach(x=>hit.add(x.g[0]+'|'+x.g[1]));j++}
+    g('tdProg').textContent='Gospodarze 1864: '+j+' / '+all.length+' osób drzewa';
+    if(j<all.length){setTimeout(ph2,0);return}
+    ROWS=ROWS.filter(r=>r.k!=='G');
+    G.forEach(e=>{if(hit.has(e[0]+'|'+e[1]))return;if(/owa$|ina$/i.test(e[0]))return;const ent=e[3];ROWS.push({k:'G',id:'',name:e[0]+' '+e[1],life:'',y:ent[0]?ent[0][0]:0,pct:0,txt:'skan '+ent.slice(0,3).map(x=>x[0]+'/poz. '+x[1]).join(', ')+(e[2]?' · odczyt niepewny':'')})});
+    g('tdProg').textContent='Gotowe: '+ids.length+' osób bez rodziców; gospodarzy 1864 bez dopasowania: '+ROWS.filter(r=>r.k==='G').length;draw(true)})()})()}
  g('tbTodo').onclick=()=>{m.hidden=false;start()};
  g('tdClose').onclick=()=>{RUN++;m.hidden=true};
  g('tdBody').addEventListener('click',e=>{const tr=e.target.closest('[data-go]');if(!tr)return;RUN++;m.hidden=true;TB.sel=tr.dataset.go;TB.q='';TB.letter='';tbRender()});
- g('tdCsv').onclick=()=>{const L={A:'rodzice do uzupełnienia',B:'brak aktu ur. w bazie',C:'rok poza indeksem'};
+ g('tdCsv').onclick=()=>{const L={A:'rodzice do uzupełnienia',B:'brak aktu ur. w bazie',C:'rok poza indeksem',G:'gospodarz 1864 bez dopasowania w drzewie'};
   const rows=[['kategoria','osoba','id','lata życia','zgodność %','opis']].concat(ROWS.slice().sort((a,b)=>a.k.localeCompare(b.k)||b.pct-a.pct).map(r=>[L[r.k],r.name,r.id,r.life,r.pct||'',r.txt]));
   dl('do_zbadania.csv',rows.map(r=>r.map(q).join(';')).join('\r\n'),'text/csv')}
 })();
+
+/* ---- gospodarze z tabel likwidacyjnych 1864 (AP Lublin 168/1054) ---- */
+const GC=new Map();
+function gMatch(p){
+ if(typeof G==='undefined'||!G.length)return[];
+ const by=tyr(p.b)||tyr(p.b2),dy=tyr(p.d)||tyr(p.d2);
+ if(p.sex==='F')return[];if(by&&(by<1785||by>1846))return[];if(dy&&dy<1864)return[];
+ const out=[];
+ for(const g of G){
+  if(/owa$|ina$/i.test(g[0]))continue;
+  const s1=sSn(p.sn,g[0]),s2=sFn(p.fn,g[1]);
+  if(s1==null||s2==null||s1<.85||s2<.9)continue;
+  out.push({g,pct:Math.round(100*(s1+s2)/2)})}
+ return out.sort((a,b)=>b.pct-a.pct).slice(0,3)}
+function tbGosp(id){
+ const p=TREE.P[id];if(!p)return'';let m=GC.get(id);if(!m){m=gMatch(p);GC.set(id,m)}
+ if(!m.length)return'';
+ return `<div class="cd"><div class="h"><span>🌾 Gospodarz w tabelach likwidacyjnych 1864 (AP Lublin 168/1054)</span></div>`+m.map(x=>{const g=x.g,ent=g[3];
+  return `<div style="margin:4px 0"><b>${esc(g[0]+' '+g[1])}</b> <span style="color:${x.pct>=90?'var(--ok)':'var(--md)'}">${x.pct}%</span>${g[2]?' <span class="chip p">odczyt niepewny</span>':''}<div class="leg">${ent.slice(0,5).map(e=>`skan ${e[0]}, poz. ${esc(e[1])}${e[2]&&e[2]!=='-'?', razem '+esc(e[2])+(e[3]&&e[3]!=='-'?' / '+esc(e[3]):''):''}${e[4]?' ('+esc(e[4])+')':''}`).join(' · ')}${ent.length>5?' · +'+(ent.length-5):''}</div></div>`}).join('')+
+  `<div class="leg">Zgodność imienia i nazwiska + wiek zgodny z życiem w 1864. To trop, nie dowód: w drzewie może być kilku tak samo nazwanych mężczyzn. Odczyt tabel jest wstępny (AI), jednostki: morgi/pręty lub dziesięciny/sążnie zależnie od skanu.</div></div>`}
 </script></body></html>

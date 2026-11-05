@@ -30,6 +30,23 @@ for r in M:
     if n: r[0]=r[0]+'-'+str(n+1)
 tpl = open(os.path.join(here, 'szablon.html'), encoding='utf-8').read()
 data = 'const B=' + json.dumps(B, ensure_ascii=False, separators=(',', ':')) + ';const D=' + json.dumps(D, ensure_ascii=False, separators=(',', ':')) + ';const M=' + json.dumps(M, ensure_ascii=False, separators=(',', ':')) + ';'
+# gospodarze z tabel likwidacyjnych 1864 (AP Lublin 168/1054) – wstępny odczyt AI (opcjonalnie)
+G = []
+_tl = os.path.join(up, 'haiku', 'TABELE_LIKWIDACYJNE_168_1054_odczyt_AI.csv')
+if os.path.exists(_tl):
+    _agg = {}
+    for r in csv.DictReader(open(_tl, encoding='utf-8-sig'), delimiter=';'):
+        nm = re.sub(r'\([^)]*\)', '', (r['gospodarz_pl'] or '').replace('?', '')).strip()
+        t = nm.split()
+        if len(t) < 2: continue
+        sn, fn = t[0], ' '.join(t[1:])
+        dz = (r['dzial'] or '')
+        if re.search(r'[Pp]astwisko|Собрание|Межевой', dz): continue
+        e = _agg.setdefault((sn, fn), [sn, fn, 0, []])
+        if '?' in (r['gospodarz_pl'] or '') or 'niska' in (r['pewnosc'] or ''): e[2] = 1
+        e[3].append([int(r['skan'] or 0), (r['lp'] if r['lp'] not in ('', '-') else r['nr_w_tabeli']) or '', r['razem_m'], r['razem_p'], (r['uwaga_przy_nazwisku'] or '')[:40]])
+    G = list(_agg.values())
+data += 'const G=' + json.dumps(G, ensure_ascii=False, separators=(',', ':')) + ';'
 out = tpl.replace('/*DATA*/', data)
 out = inline(out)
 open(os.path.join(here, 'dopasowanie_osob.html'), 'w', encoding='utf-8').write(out)
