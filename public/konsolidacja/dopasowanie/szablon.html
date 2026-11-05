@@ -671,7 +671,7 @@ function tbRender(){const el=document.getElementById('tbBody');if(!TREE){el.inne
  const lst=ids.slice(0,400).map(i=>`<div data-pick="${esc(i)}" style="padding:3px 6px;cursor:pointer;border-radius:5px;${i===TB.sel?'background:#1a3550':''}">${esc(tnm(TREE.P[i]))} <span style="color:var(--mu)">${esc(tbLife(TREE.P[i]))}</span></div>`).join('');
  let right='<div class="leg">Brak osób.</div>';
  if(TB.sel){const id=TB.sel,p=TREE.P[id],o=tbRec(id);const sec=(t,k)=>`<h4 style="margin:10px 0 4px">${t}</h4>`+(o[k].length?o[k].map(x=>`<div class="cd"><div class="h"><span>${esc(x.t)}</span><span style="color:${x.pct>=80?'var(--ok)':'var(--md)'}">${x.pct}%</span></div><div class="chips">${x.why.map(w=>`<span class="chip ${w[1]}">${w[1]==='y'?'✓':w[1]==='p'?'≈':'✗'} ${esc(w[0])}</span>`).join('')}</div><button class="b" data-go="${k}|${esc(x.id)}">Otwórz akt</button></div>`).join(''):'<div class="want">Nic pasującego w bazie (próg 60%).</div>');
-  right=`<div style="overflow:auto;padding-bottom:6px">${tbTree(id)}</div><div class="cd">${treePerson(id)}</div>${sec('📜 Chrzest / urodzenie','B')}${sec('📜 Małżeństwo','M')}${sec('📜 Zgon','D')}`}
+  right=`<div style="overflow:auto;padding-bottom:6px">${tbTree(id)}</div>${tbChrono(id)}<div class="cd">${treePerson(id)}</div>${sec('📜 Chrzest / urodzenie','B')}${sec('📜 Małżeństwo','M')}${sec('📜 Zgon','D')}`}
  el.innerHTML=`<div style="display:grid;grid-template-columns:minmax(200px,260px) 1fr;gap:12px"><div style="max-height:75vh;overflow:auto;border:1px solid var(--ln);border-radius:8px;padding:4px">${lst||'<div class="leg">Brak wyników.</div>'}${ids.length>400?`<div class="leg">pokazano 400 z ${ids.length} – zawęź szukanie</div>`:''}</div><div>${right}</div></div>`}
 (function(){const m=document.createElement('div');m.id='tbModal';m.hidden=true;m.setAttribute('role','dialog');m.style.cssText='position:fixed;inset:0;z-index:1100;background:rgba(5,10,16,.8);padding:2vh 2vw;overflow:auto';
  m.innerHTML='<div class="fm-sheet"><div class="fm-h"><h2>🌳→📜 Osoba z drzewa → akty w bazie</h2><input type="text" id="tbQ" placeholder="szukaj osoby w drzewie…" style="background:var(--p2);border:1px solid var(--ln);color:var(--tx);border-radius:6px;padding:5px 8px"><button id="tbClose" class="b">Zamknij ✕</button></div><div class="leg" style="margin-bottom:8px">Ramka: zielona ≥80% / żółta ≥60% / szara = brak aktu w bazie. Kliknij osobę w drzewie, by ją wycentrować.</div><div id="tbBody"></div></div>';document.body.appendChild(m);
@@ -802,4 +802,61 @@ function tbDelUi(){
   treeRemove(ids);tbRender();try{treeBox()}catch(e){}toast2('Usunięto z drzewa: '+ids.length+' os.')};
  document.getElementById('tbDel1').onclick=()=>run(false);document.getElementById('tbDel2').onclick=()=>run(true)}
 (function(){const o=tbRender;tbRender=function(){o.apply(this,arguments);try{tbDelUi()}catch(e){console.warn(e)}}})();
+
+/* ---- oś życia osoby + kontrole chronologii (na latach; wskazówki, nie wyroki) ---- */
+function tbChrono(id){
+ const p=TREE.P[id];if(!p)return'';
+ const yr=q=>q?(tyr(q.b)||tyr(q.b2)):0,yd=q=>q?(tyr(q.d)||tyr(q.d2)):0,o=tbRec(id);
+ const actY=k=>{const x=(o[k]||[])[0];if(!x||x.pct<70)return 0;const m=String(x.t).match(/\d{4}/);return m?+m[0]:0};
+ const aB=actY('B'),aD=actY('D'),aM=actY('M');
+ const by=yr(p)||aB,dy=yd(p)||aD,pr=TREE.par[id],fa=pr&&TREE.P[pr[0]],mo=pr&&TREE.P[pr[1]];
+ const ev=[],iss=[];
+ const add=(y,l,k,x)=>{if(!y)return null;const e=Object.assign({y,l,k},x||{});ev.push(e);return e};
+ const bad=(lv,t,...es)=>{iss.push({lv,t});es.forEach(e=>{if(e&&(e.bad||'i')!=='e'){e.bad=lv}})};
+ const eB=add(by,'ur.','b'),eD=add(dy,'zg.','d');
+ const eFa=fa&&yd(fa)?add(yd(fa),'† ojciec','p'):null,eMo=mo&&yd(mo)?add(yd(mo),'† matka','p'):null;
+ if(fa&&yr(fa))add(yr(fa),'ur. ojciec','p');if(mo&&yr(mo))add(yr(mo),'ur. matka','p');
+ if(aB)add(aB,'akt ur.','a');if(aD)add(aD,'akt zg.','a');
+ if(by&&dy&&dy<by)bad('e','zgon ('+dy+') przed urodzeniem ('+by+')',eB,eD);
+ else if(by&&dy&&dy-by>100)bad('w','wiek przy zgonie '+(dy-by)+' lat – sprawdź daty',eB,eD);
+ if(by&&fa){if(yd(fa)&&by>yd(fa)+1)bad('e','urodzony ('+by+') po śmierci ojca ('+yd(fa)+')',eB,eFa);else if(yd(fa)&&by===yd(fa)+1)bad('w','urodzony rok po śmierci ojca – możliwe dziecko pośmiertne, sprawdź dokładne daty',eB,eFa);
+  if(yr(fa)){const a=by-yr(fa);if(a<0)bad('e','ojciec urodzony po dziecku',eB);else if(a<15)bad('w','ojciec miał '+a+' lat przy urodzeniu dziecka',eB);else if(a>65)bad('w','ojciec miał '+a+' lat przy urodzeniu dziecka',eB)}}
+ if(by&&mo){if(yd(mo)&&by>yd(mo))bad('e','urodzony ('+by+') po śmierci matki ('+yd(mo)+')',eB,eMo);
+  if(yr(mo)){const a=by-yr(mo);if(a<0)bad('e','matka urodzona po dziecku',eB);else if(a<15)bad('w','matka miała '+a+' lat przy urodzeniu dziecka',eB);else if(a>50)bad('w','matka miała '+a+' lat przy urodzeniu dziecka',eB)}}
+ if(aB&&yr(p)&&Math.abs(aB-yr(p))>1)bad('w','rok aktu urodzenia ('+aB+') ≠ rok w drzewie ('+yr(p)+')',ev.find(e=>e.k==='a'&&e.l==='akt ur.'));
+ if(aD&&yd(p)&&Math.abs(aD-yd(p))>1)bad('w','rok aktu zgonu ('+aD+') ≠ rok w drzewie ('+yd(p)+')',ev.find(e=>e.k==='a'&&e.l==='akt zg.'));
+ (TREE.sp[id]||[]).forEach(fid=>{const F=TREE.F[fid],spId=F.h===id?F.w:F.h,sp=TREE.P[spId],my=tyr(F.m)||0;
+  const eM=add(my,'ślub z '+tnm(sp).slice(0,16),'m');
+  if(my){if(by&&my-by<15)bad('w','ślub w wieku '+(my-by)+' lat ('+my+')',eM,eB);
+   if(dy&&my>dy)bad('e','ślub ('+my+') po własnym zgonie ('+dy+')',eM,eD);
+   if(sp&&yd(sp)&&my>yd(sp))bad('e','ślub ('+my+') po śmierci małżonka ('+yd(sp)+')',eM);
+   if(sp&&yr(sp)&&my-yr(sp)<15)bad('w','małżonek miał '+(my-yr(sp))+' lat w dniu ślubu',eM)}
+  (F.k||[]).forEach(c=>{const ch=TREE.P[c],cy=yr(ch);if(!cy)return;
+   const ec=add(cy,'ur. '+(ch.fn||'?').split(' ')[0],'c');
+   if(by){const a=cy-by,max=p.sex==='F'?50:65;if(a<0)bad('e','dziecko '+(ch.fn||'')+' urodzone przed rodzicem',ec,eB);else if(a<15)bad('w','wiek przy urodzeniu '+(ch.fn||'dziecka')+': '+a+' lat',ec,eB);else if(a>max)bad('w','wiek przy urodzeniu '+(ch.fn||'dziecka')+': '+a+' lat',ec,eB)}
+   if(dy){const lim=p.sex==='F'?0:1;if(cy>dy+lim)bad('e','dziecko '+(ch.fn||'')+' ('+cy+') urodzone po zgonie rodzica ('+dy+')',ec,eD);else if(p.sex!=='F'&&cy===dy+1)bad('w','dziecko '+(ch.fn||'')+' – rok po zgonie ojca, możliwe pośmiertne',ec,eD)}
+   if(sp&&yd(sp)){const sf=sp.sex!=='F';if(cy>yd(sp)+(sf?1:0))bad('e','dziecko '+(ch.fn||'')+' ('+cy+') po zgonie drugiego rodzica ('+yd(sp)+')',ec)}
+  })});
+ if(aM&&!ev.some(e=>e.k==='m'))add(aM,'akt ślubu','a');
+ ev.sort((a,b)=>a.y-b.y);
+ const ys=ev.map(e=>e.y),lo=Math.min(...ys,by||9999)-3,hi0=Math.max(...ys,dy||0,by?by+1:0)+3,hi=hi0-lo<40?lo+40:hi0;
+ let svg='<div class="leg">Za mało dat (urodzenie/zgon/ślub/dzieci) do narysowania osi.</div>';
+ if(ev.length>=1&&isFinite(lo)){
+  const W=Math.max(640,Math.min(1300,(hi-lo)*13+120)),X=y=>40+(y-lo)/(hi-lo||1)*(W-80),AX=96,H=190;
+  const col={b:'#3fb27f',d:'#3fb27f',m:'#c25b8b',c:'#5aa0e0',p:'#8ea1b5',a:'#d9a441'};
+  let g='';
+  const step=(hi-lo)>80?10:(hi-lo)>40?5:2;for(let y=Math.ceil(lo/step)*step;y<=hi;y+=step)g+=`<line x1="${X(y)}" x2="${X(y)}" y1="${AX-4}" y2="${AX+4}" stroke="#5b6b7c"/><text x="${X(y)}" y="${H-4}" fill="#5b6b7c" font-size="9.5" text-anchor="middle">${y}</text>`;
+  g+=`<line x1="40" x2="${W-40}" y1="${AX}" y2="${AX}" stroke="#2c3b4c"/>`;
+  if(by){const e=dy||hi-2;g+=`<rect x="${X(by)}" y="${AX-5}" width="${Math.max(2,X(e)-X(by))}" height="10" rx="5" fill="#3fb27f" opacity=".35"${dy?'':' stroke="#3fb27f" stroke-dasharray="4 3"'}/>`}
+  const lane={up:0,dn:0};let lastUp=-99,lastDn=-99;
+  ev.forEach(e=>{const up=e.k==='b'||e.k==='d'||e.k==='m',x=X(e.y);let L;
+   if(up){L=(x-lastUp<70)?(lane.up+1)%3:0;lane.up=L;lastUp=x}else{L=(x-lastDn<70)?(lane.dn+1)%3:0;lane.dn=L;lastDn=x}
+   const ty=up?AX-18-L*15:AX+22+L*15,c=e.bad==='e'?'#e5534b':e.bad==='w'?'#e0a53a':col[e.k];
+   g+=`<line x1="${x}" x2="${x}" y1="${AX}" y2="${up?ty+3:ty-9}" stroke="${c}" stroke-width="1" opacity=".6"/>`;
+   g+=e.k==='a'?`<rect x="${x-4.5}" y="${AX-4.5}" width="9" height="9" fill="${c}"/>`:`<circle cx="${x}" cy="${AX}" r="${e.bad?6:4.5}" fill="${c}"${e.bad?' stroke="#fff" stroke-width="1.2"':''}/>`;
+   g+=`<text x="${x}" y="${ty}" fill="${c}" font-size="10.5" text-anchor="middle">${esc(e.y+' '+e.l)}</text>`});
+  svg=`<div style="overflow:auto"><svg xmlns="http://www.w3.org/2000/svg" width="${W}" height="${H}" viewBox="0 0 ${W} ${H}" style="max-width:none;display:block">${g}</svg></div>`}
+ const badge={e:['#e5534b','✗ błąd'],w:['#e0a53a','⚠ sprawdź'],i:['#8ea1b5','ℹ']};
+ const list=iss.length?iss.map(x=>`<div style="margin:2px 0"><span style="color:${badge[x.lv][0]};font-weight:600">${badge[x.lv][1]}</span> ${esc(x.t)}</div>`).join(''):(ev.length?'<div style="color:var(--ok)">✓ Brak sprzeczności chronologicznych w dostępnych datach.</div>':'');
+ return `<div class="cd"><div class="h"><span>⏳ Oś życia i kontrola chronologii</span><span style="color:var(--mu);font-size:11px">kółko = drzewo, kwadrat = akt z bazy</span></div>${svg}${list}<div class="leg" style="margin-top:4px">Kontrole opierają się na samych latach – to wskazówki do sprawdzenia w aktach, nie rozstrzygnięcia.</div></div>`}
 </script></body></html>
