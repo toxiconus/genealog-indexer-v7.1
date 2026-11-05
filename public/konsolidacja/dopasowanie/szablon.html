@@ -61,7 +61,7 @@ button:focus-visible,input:focus-visible,select:focus-visible,.mi:focus-visible{
 </style></head><body>
 <header><h1>🧬 <b>Dopasowanie osób</b> · Blinów · v7</h1><button id="bBack" disabled>◀ wstecz</button><span id="crumb" style="color:var(--mu);font-size:12.5px"></span><span class="sp"></span>
 <button id="zm">🔍−</button><button id="zp">🔍+</button><span id="stat" style="color:var(--mu)"></span>
-<button id="bRep" title="Raport spójności indeksu zgonów">⚠ Raport zgonów</button><button id="bNetwork">Sieć powiązań</button><button id="bFamilies">Rodziny i gałęzie</button><button id="bBridges">Śluby rodziców</button><button id="bPersonIndex">Indeks osób</button><button id="bFam" title="Rodziny z drzewa: dzieci do dopisania i duble (wymaga wczytanego drzewa)">👪 Rodziny</button><button id="bTree" title="Wczytaj lokalny plik drzewa (JSON) – zostaje tylko w przeglądarce">🌳 Drzewo</button><input type="file" id="fTree" accept=".json" hidden><button id="bCsv">⬇ CSV</button><button id="bJson">⬇ JSON</button><button id="bLoad">⬆ JSON</button><input type="file" id="fLoad" accept=".json" hidden></header>
+<button id="bRep" title="Raport spójności indeksu zgonów">⚠ Raport zgonów</button><button id="bNetwork">Sieć powiązań</button><button id="bFamilies">Rodziny i gałęzie</button><button id="bBridges">Śluby rodziców</button><button id="bPersonIndex">Indeks osób</button><button id="bFam" title="Rodziny z drzewa: dzieci do dopisania i duble (wymaga wczytanego drzewa)">👪 Rodziny</button><button id="bTree" title="Wczytaj lokalny plik drzewa (GED / JSON) – zostaje tylko w przeglądarce">🌳 Drzewo</button><button id="bTb" title="Osoba z drzewa → akty w bazie (po wczytaniu drzewa)">🌳→📜 Drzewo w bazie</button><input type="file" id="fTree" accept=".json,.ged,.gedcom" hidden><button id="bCsv">⬇ CSV</button><button id="bJson">⬇ JSON</button><button id="bLoad">⬆ JSON</button><input type="file" id="fLoad" accept=".json" hidden></header>
 <main>
 <aside id="list"><div class="tabs"><button data-md="M">Małżeństwa</button><button data-md="B">Urodzenia</button><button data-md="D">Zgony</button></div><input id="q" placeholder="szukaj: nazwisko, imię, rok…"><div id="lst"></div></aside>
 <section id="mid"><h2 id="ttl"></h2><div id="sub"></div><svg id="map" viewBox="0 0 960 500"></svg><div id="cen"></div><div id="tl"></div><div id="treeBox"></div>
@@ -582,7 +582,7 @@ document.addEventListener('keydown',e=>{if(/INPUT|TEXTAREA|SELECT/.test(e.target
 /* ---- warstwa: drzewo MyHeritage (plik wczytywany lokalnie, nie jest częścią strony) ---- */
 let TREE=null;
 const tyr=s=>{const m=(s||'').match(/\d{4}/);return m?+m[0]:0};
-function treeLoad(j){TREE={P:j.p,F:j.f,par:{},sp:{},miss:j.miss||[],dups:j.dups||{}};for(const fid in j.f){const f=j.f[fid];(f.k||[]).forEach(c=>TREE.par[c]=[f.h,f.w,fid]);[f.h,f.w].forEach(i=>{if(i)(TREE.sp[i]=TREE.sp[i]||[]).push(fid)})}}
+function treeLoad(j){if(typeof TB!=='undefined')TB.cache.clear();TREE={P:j.p,F:j.f,par:{},sp:{},miss:j.miss||[],dups:j.dups||{}};for(const fid in j.f){const f=j.f[fid];(f.k||[]).forEach(c=>TREE.par[c]=[f.h,f.w,fid]);[f.h,f.w].forEach(i=>{if(i)(TREE.sp[i]=TREE.sp[i]||[]).push(fid)})}}
 const tnm=p=>p?`${p.fn||''} ${p.sn||''}`.trim():'?';
 function treeFind(){if(!TREE)return[];const r=cur.r,out=[],mode=cur.mode;
  if(mode==='M'){for(const fid in TREE.F){const f=TREE.F[fid],h=TREE.P[f.h],w=TREE.P[f.w];if(!h||!w)continue;
@@ -607,7 +607,71 @@ function treeBox(){const el=document.getElementById('treeBox');if(!el)return;
  el.innerHTML='<div class="pc"><h3>🌳 W drzewie MyHeritage</h3>'+(res.length?res.map(x=>{const h=x.k==='f'?(()=>{const f=TREE.F[x.id];return treePerson(f.h)+'<br>+ '+treePerson(f.w)+(f.m?`<br>ślub w drzewie: ${esc(f.m)} ${esc(f.mp||'')} · dzieci: ${(f.k||[]).length}`:'')})():treePerson(x.id);
   return`<div class="cd"><div class="h"><span style="color:var(--mu)">id ${esc(x.id)}</span><span style="color:${x.pct>=80?'var(--ok)':'var(--md)'}">${x.pct}%</span></div><div class="d">${h}</div><div class="chips">${x.why.map(w=>`<span class="chip ${w[1]}">${w[1]==='y'?'✓':w[1]==='p'?'≈':'✗'} ${esc(w[0])}</span>`).join('')}</div></div>`}).join(''):'<div class="want">Nikogo pasującego w wczytanym drzewie (próg 60%) – może to nowa osoba do dopisania.</div>')+'</div>'}
 document.getElementById('bTree').onclick=()=>document.getElementById('fTree').click();
-document.getElementById('fTree').onchange=e=>{const f=e.target.files[0];if(!f)return;f.text().then(x=>{try{treeLoad(JSON.parse(x.replace(/^﻿/,'')));treeBox()}catch(err){alert('Nieprawidłowy plik drzewa')}})};
+/* GEDCOM -> format drzewa (p: osoby, f: rodziny); plik zostaje w przeglądarce */
+function gedText(buf){const u=new Uint8Array(buf);if(u[0]===0xFF&&u[1]===0xFE)return new TextDecoder('utf-16le').decode(buf);if(u[0]===0xFE&&u[1]===0xFF)return new TextDecoder('utf-16be').decode(buf);try{return new TextDecoder('utf-8',{fatal:true}).decode(buf).replace(/^﻿/,'')}catch(e){return new TextDecoder('windows-1250').decode(buf)}}
+function gedParse(t){const root={ch:[]},st=[root];
+ t.replace(/\r/g,'').split('\n').forEach(l=>{const m=l.match(/^\s*(\d+)\s+(@[^@]+@\s+)?([A-Za-z_0-9]+)\s?(.*)$/);if(!m)return;const lv=+m[1],n={tag:m[3].toUpperCase(),ptr:(m[2]||'').trim().replace(/@/g,''),val:m[4]||'',ch:[]};
+  if(n.tag==='CONC'||n.tag==='CONT'){const par=st[lv];if(par)par.val+=(n.tag==='CONT'?'\n':'')+n.val;return}
+  if(lv>st.length-1)return;st.length=lv+1;st[lv].ch.push(n);st[lv+1]=n});
+ const g=(n,tag)=>n&&n.ch.find(x=>x.tag===tag),gv=(n,tag)=>(g(n,tag)||{}).val||'',all=(n,tag)=>n.ch.filter(x=>x.tag===tag),ref=v=>(v||'').replace(/@/g,'');
+ const P={},F={};
+ root.ch.forEach(n=>{if(n.tag==='INDI'){const names=all(n,'NAME').map(x=>{const mm=x.val.match(/^([^/]*)\/([^/]*)\/?/);return{fn:gv(x,'GIVN')||(mm?mm[1].trim():x.val.trim()),sn:gv(x,'SURN')||(mm?mm[2].trim():''),type:gv(x,'TYPE').toLowerCase()}});
+   const n0=names[0]||{fn:'',sn:''},al=names.find(x=>/birth|rodow|maiden/.test(x.type)&&x.sn!==n0.sn)||names.find((x,i)=>i>0&&x.sn&&x.sn!==n0.sn);
+   const bi=g(n,'BIRT'),ba=g(n,'BAPT')||g(n,'CHR'),de=g(n,'DEAT'),bu=g(n,'BURI');
+   P[n.ptr]={fn:n0.fn,sn:n0.sn,ms:al?al.sn:'',sex:gv(n,'SEX')||'U',b:gv(bi,'DATE'),bp:gv(bi,'PLAC'),b2:gv(ba,'DATE'),d:gv(de,'DATE'),dp:gv(de,'PLAC'),d2:gv(bu,'DATE'),notes:all(n,'NOTE').map(x=>x.val).filter(Boolean)}}
+  else if(n.tag==='FAM'){const mr=g(n,'MARR');F[n.ptr]={h:ref(gv(n,'HUSB')),w:ref(gv(n,'WIFE')),k:all(n,'CHIL').map(x=>ref(x.val)),m:gv(mr,'DATE'),mp:gv(mr,'PLAC')}}});
+ if(!Object.keys(P).length)throw new Error('brak osób');return{p:P,f:F}}
+document.getElementById('fTree').onchange=e=>{const f=e.target.files[0];if(!f)return;f.arrayBuffer().then(buf=>{try{const x=gedText(buf);let j;if(/\.(ged|gedcom)$/i.test(f.name)||/^\s*0\s+HEAD/.test(x))j=gedParse(x);else j=JSON.parse(x.replace(/^﻿/,''));treeLoad(j);treeBox();toast2('Wczytano drzewo: '+Object.keys(TREE.P).length+' osób, '+Object.keys(TREE.F).length+' rodzin')}catch(err){alert('Nieprawidłowy plik drzewa (GED/JSON)')}});e.target.value=''};
+function toast2(m){let t=document.getElementById('toast2');if(!t){t=document.createElement('div');t.id='toast2';t.style.cssText='position:fixed;left:50%;bottom:20px;transform:translateX(-50%);background:var(--p2);border:1px solid var(--ln);color:var(--tx);padding:8px 14px;border-radius:10px;z-index:2000;font-size:13px';document.body.appendChild(t)}t.textContent=m;t.style.display='block';clearTimeout(t._t);t._t=setTimeout(()=>t.style.display='none',3500)}
+
+/* ---- odwrotnie: osoba z drzewa -> akty w bazie + mini-drzewo ---- */
+const TB={sel:null,q:'',cache:new Map()};
+const pn=(a,b)=>{const v=[a,b].filter(x=>x!=null&&x!=='');return v.length?v.reduce((m,x)=>Math.max(m,x),0):null};
+function tbB(id,p){const out=[],pr=TREE.par[id];for(const r of B){const cr=[['nazwisko',3,pn(sSn(r[3],p.sn),p.ms?sSn(r[3],p.ms):null)],['imię',3,sFn(r[4],p.fn)]];if(cr.some(c=>c[2]!=null&&c[2]<.3))continue;
+  cr.push(['rok ur.',3,sYear(r[1],tyr(p.b)||tyr(p.b2),3)]);if(pr){const fa=TREE.P[pr[0]],mo=TREE.P[pr[1]];if(fa)cr.push(['ojciec',2,sFn(r[6],fa.fn)]);if(mo)cr.push(['matka',2,sFn(r[9],mo.fn)])}
+  const g=grade(cr,(tyr(p.b)||tyr(p.b2))?1:.8);if(g&&g.pct>=60)out.push({k:'B',id:r[0],pct:g.pct,why:g.why,t:`${r[1]}/${r[2]} · ${r[3]} ${r[4]}${r[5]?', '+r[5]:''}${r[6]?' · ojciec '+r[6]+' '+(r[7]||''):''}${r[9]?' · matka '+r[9]+' '+(r[10]||''):''}`})}
+ return out.sort((a,b)=>b.pct-a.pct).slice(0,3)}
+function tbD(id,p){const out=[];const y=tyr(p.d)||tyr(p.d2);for(const r of D){const sn=[sSn(r[2],p.sn),sSn(r[12],p.sn),p.ms?sSn(r[12],p.ms):null,p.ms?sSn(r[2],p.ms):null].filter(x=>x!=null);
+  const cr=[['nazwisko',3,sn.length?Math.max(...sn):null],['imię',3,sFn(r[3],p.fn)]];if(cr.some(c=>c[2]!=null&&c[2]<.3))continue;
+  cr.push(['rok zgonu',3,sYear(r[1],y,2)]);if(r[14])cr.push(['rok ur.',2,sYear(r[14],tyr(p.b)||tyr(p.b2),4)]);
+  const g=grade(cr,y?1:.8);if(g&&g.pct>=60)out.push({k:'D',id:r[0],pct:g.pct,why:g.why,t:`${r[1]} · ${r[2]} ${r[3]}${r[5]?', '+r[5]:''}${r[6]?' · '+r[6]+' '+(r[7]||''):''}${r[8]?' · '+r[8]:''}`})}
+ return out.sort((a,b)=>b.pct-a.pct).slice(0,3)}
+function tbM(id,p){const out=[];for(const fid of (TREE.sp[id]||[])){const f=TREE.F[fid],h=TREE.P[f.h],w=TREE.P[f.w];if(!h||!w)continue;
+  for(const r of M){const cr=[['nazwisko pana',3,sSn(r[4],h.sn)],['imię pana',3,sFn(r[5],h.fn)],['imię panny',3,sFn(r[15],w.fn)],['nazwisko panny',3,Math.max(sSn(r[14],w.sn)||0,sSn(r[18],w.sn)||0,sSn(r[14],w.ms)||0,sSn(r[18],w.ms)||0)]];
+   if(cr.slice(0,3).some(c=>c[2]!=null&&c[2]<.3))continue;if(f.m)cr.push(['rok',2,sYear(r[1],tyr(f.m),2)]);
+   const g=grade(cr);if(g&&g.pct>=60)out.push({k:'M',id:r[0],pct:g.pct,why:g.why,t:`${r[1]}/${r[2]} · ${r[4]} ${r[5]} + ${r[14]} ${r[15]}${r[11]?', '+r[11]:''}`})}}
+ return out.sort((a,b)=>b.pct-a.pct).slice(0,3)}
+function tbRec(id){if(TB.cache.has(id))return TB.cache.get(id);const p=TREE.P[id];const o=p?{B:tbB(id,p),D:tbD(id,p),M:tbM(id,p)}:{B:[],D:[],M:[]};TB.cache.set(id,o);return o}
+const tbBest=o=>Math.max(0,...[...o.B,...o.D,...o.M].map(x=>x.pct));
+function tbLife(p){const b=tyr(p.b)||tyr(p.b2),d=tyr(p.d)||tyr(p.d2);return (b||d)?`${b||'?'}–${d||''}`:''}
+function tbBox(id,x,y,hl){const p=TREE.P[id];if(!p)return'';const o=tbRec(id),best=tbBest(o),col=best>=80?'#3fb27f':best>=60?'#d9a441':'#5b6b7c';
+ const bd=['B','D','M'].filter(k=>o[k].length).map(k=>({B:'ur',D:'zg',M:'ślub'})[k]).join(' · ');
+ return`<g data-id="${esc(id)}" style="cursor:pointer" transform="translate(${x},${y})"><rect width="150" height="50" rx="8" fill="${hl?'#1a3550':'#111b27'}" stroke="${col}" stroke-width="${hl?3:1.5}"/><text x="75" y="19" text-anchor="middle" fill="#e6edf5" font-size="12" font-weight="600">${esc(tnm(p).slice(0,22))}</text><text x="75" y="33" text-anchor="middle" fill="#8ea1b5" font-size="10.5">${esc(tbLife(p))}${p.sex==='F'?' ♀':p.sex==='M'?' ♂':''}</text><text x="75" y="45" text-anchor="middle" fill="${col}" font-size="10">${bd?'📜 '+esc(bd)+' '+best+'%':'brak w bazie'}</text></g>`}
+function tbTree(id){const pr=TREE.par[id],fams=(TREE.sp[id]||[]).slice(0,3),W=170;
+ const row1=[id];fams.forEach(f=>{const F=TREE.F[f],sp=F.h===id?F.w:F.h;if(sp)row1.push(sp)});
+ const kids=[];fams.forEach(f=>(TREE.F[f].k||[]).forEach(c=>kids.push([c,f])));const row0=pr?[pr[0],pr[1]].filter(i=>i&&TREE.P[i]):[];
+ const n=Math.max(row0.length,row1.length,Math.min(kids.length,10),1),Wd=n*W+20;let h='',ln='';const cx=(arr,i)=>(Wd-arr.length*W)/2+i*W+10;
+ const pos1={};row1.forEach((i,k)=>{pos1[i]=cx(row1,k)});
+ row0.forEach((i,k)=>{h+=tbBox(i,cx(row0,k),10,0)});
+ if(row0.length){const xs=row0.map((i,k)=>cx(row0,k)+75);const mx=(Math.min(...xs)+Math.max(...xs))/2;if(row0.length>1)ln+=`<line x1="${xs[0]}" y1="35" x2="${xs[1]}" y2="35" stroke="#5b6b7c"/>`;ln+=`<path d="M${mx} ${row0.length>1?35:60} V80 H${pos1[id]+75} V110" fill="none" stroke="#5b6b7c"/>`}
+ row1.forEach((i,k)=>{h+=tbBox(i,pos1[i],110,i===id);if(k>0)ln+=`<line x1="${pos1[row1[k-1]]+150}" y1="135" x2="${pos1[i]}" y2="135" stroke="#c25b8b" stroke-width="2"/>`});
+ const ks=kids.slice(0,10);ks.forEach(([c,f],k)=>{const x=cx(ks,k);h+=tbBox(c,x,230,0);const F=TREE.F[f],sp=F.h===id?F.w:F.h,mx=((sp&&pos1[sp]!=null)?(pos1[id]+pos1[sp]+150)/2:pos1[id]+75);ln+=`<path d="M${mx} 135 V190 H${x+75} V230" fill="none" stroke="#5b6b7c"/>`});
+ return`<svg viewBox="0 0 ${Wd} ${kids.length?295:185}" style="width:${Wd}px;height:${kids.length?295:185}px;max-width:none;display:block;margin:0 auto">${ln}${h}</svg>`+(kids.length>10?`<div class="leg">+ ${kids.length-10} dzieci nie pokazano</div>`:'')}
+function tbRender(){const el=document.getElementById('tbBody');if(!TREE){el.innerHTML='<div class="leg">Najpierw wczytaj drzewo (🌳 Drzewo → plik .ged lub .json).</div>';return}
+ const q=TB.q.trim().toLowerCase();const ids=Object.keys(TREE.P).filter(i=>!q||(tnm(TREE.P[i])+' '+(TREE.P[i].ms||'')).toLowerCase().includes(q)).sort((a,b)=>(TREE.P[a].sn||'').localeCompare(TREE.P[b].sn||'','pl')||(TREE.P[a].fn||'').localeCompare(TREE.P[b].fn||'','pl'));
+ if(!TB.sel||!TREE.P[TB.sel])TB.sel=ids[0]||null;
+ const lst=ids.slice(0,400).map(i=>`<div data-pick="${esc(i)}" style="padding:3px 6px;cursor:pointer;border-radius:5px;${i===TB.sel?'background:#1a3550':''}">${esc(tnm(TREE.P[i]))} <span style="color:var(--mu)">${esc(tbLife(TREE.P[i]))}</span></div>`).join('');
+ let right='<div class="leg">Brak osób.</div>';
+ if(TB.sel){const id=TB.sel,p=TREE.P[id],o=tbRec(id);const sec=(t,k)=>`<h4 style="margin:10px 0 4px">${t}</h4>`+(o[k].length?o[k].map(x=>`<div class="cd"><div class="h"><span>${esc(x.t)}</span><span style="color:${x.pct>=80?'var(--ok)':'var(--md)'}">${x.pct}%</span></div><div class="chips">${x.why.map(w=>`<span class="chip ${w[1]}">${w[1]==='y'?'✓':w[1]==='p'?'≈':'✗'} ${esc(w[0])}</span>`).join('')}</div><button class="b" data-go="${k}|${esc(x.id)}">Otwórz akt</button></div>`).join(''):'<div class="want">Nic pasującego w bazie (próg 60%).</div>');
+  right=`<div style="overflow:auto;padding-bottom:6px">${tbTree(id)}</div><div class="cd">${treePerson(id)}</div>${sec('📜 Chrzest / urodzenie','B')}${sec('📜 Małżeństwo','M')}${sec('📜 Zgon','D')}`}
+ el.innerHTML=`<div style="display:grid;grid-template-columns:minmax(200px,260px) 1fr;gap:12px"><div style="max-height:75vh;overflow:auto;border:1px solid var(--ln);border-radius:8px;padding:4px">${lst||'<div class="leg">Brak wyników.</div>'}${ids.length>400?`<div class="leg">pokazano 400 z ${ids.length} – zawęź szukanie</div>`:''}</div><div>${right}</div></div>`}
+(function(){const m=document.createElement('div');m.id='tbModal';m.hidden=true;m.setAttribute('role','dialog');m.style.cssText='position:fixed;inset:0;z-index:1100;background:rgba(5,10,16,.8);padding:2vh 2vw;overflow:auto';
+ m.innerHTML='<div class="fm-sheet"><div class="fm-h"><h2>🌳→📜 Osoba z drzewa → akty w bazie</h2><input type="text" id="tbQ" placeholder="szukaj osoby w drzewie…" style="background:var(--p2);border:1px solid var(--ln);color:var(--tx);border-radius:6px;padding:5px 8px"><button id="tbClose" class="b">Zamknij ✕</button></div><div class="leg" style="margin-bottom:8px">Ramka: zielona ≥80% / żółta ≥60% / szara = brak aktu w bazie. Kliknij osobę w drzewie, by ją wycentrować.</div><div id="tbBody"></div></div>';document.body.appendChild(m);
+ document.getElementById('bTb').onclick=()=>{if(!TREE){alert('Najpierw wczytaj drzewo (🌳 Drzewo → plik .ged lub .json).');return}m.hidden=false;tbRender()};
+ document.getElementById('tbClose').onclick=()=>m.hidden=true;
+ document.getElementById('tbQ').oninput=e=>{TB.q=e.target.value;tbRender()};
+ m.addEventListener('click',e=>{const pk=e.target.closest('[data-pick]');if(pk){TB.sel=pk.dataset.pick;tbRender();return}const gx=e.target.closest('g[data-id]');if(gx){TB.sel=gx.dataset.id;tbRender();return}const gb=e.target.closest('[data-go]');if(gb){const [k,id]=gb.dataset.go.split('|');m.hidden=true;go(k,id)}});
+ document.addEventListener('keydown',e=>{if(e.key==='Escape'&&!m.hidden)m.hidden=true})})();
 
 /* ---- rodziny z drzewa: dzieci do dopisania + duble; eksport do drzewa ---- */
 let TD={kids:{},dups:{}},FMV='kids',FMQ='',FMMIN=85,FMOPEN=true;
