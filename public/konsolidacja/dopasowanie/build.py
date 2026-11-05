@@ -12,6 +12,15 @@ def num(x):
     m = re.search(r'\d+', x or ''); return int(m.group()) if m else 0
 B = [[r['id'], num(r['rok']), r['nr'], r['dziecko_nazwisko'], r['dziecko_imiona'], r['miejscowosc'], r['ojciec_imiona'], r['ojciec_nazwisko'], num(r['ojciec_wiek']), r['matka_imiona'], r['matka_nazwisko'], num(r['matka_wiek']), r['uwagi']] for r in rd('blinow_akty.csv') if num(r['rok'])]
 D = [[r['id_archiwalne'], num(r['rok']), r['nazwisko'], r['imie'], r['plec'], r['miejscowosc'], num(r['wiek']), r['jednostka_wieku'], r['stan'], r['ojciec_imie'], r['matka_imie'], r['matka_nazwisko'], r['rodowe'], r['zyjacy_malzonek'], yr(r['rok_ur_wyliczony']), r['nr_wpisu']] for r in rd('zgony.csv') if num(r['rok'])]
+# zgony z zatwierdzonych odczytów skanów (1935, 1943-45) – tylko status ok; dane z katalogu haiku (opcjonalnie)
+_zv = os.path.join(up, 'haiku', 'ZGONY_zweryfikowane_AKTUALNE.csv')
+if os.path.exists(_zv):
+    for r in csv.DictReader(open(_zv, encoding='utf-8-sig'), delimiter=';'):
+        if r.get('verification_status') != 'ok' or not num(r.get('death_year')): continue
+        a = (r.get('age') or '').strip(); unit = 'lat' if re.fullmatch(r'\d+', a) else ('mies' if 'mies' in a else ('dni' if re.search(r'dn|dzie', a) else ''))
+        y = num(r['death_year']); ry = y - int(a) if re.fullmatch(r'\d+', a) else 0
+        cl = lambda v: '' if (v or '').startswith('[') else (v or '').strip()
+        D.append([f"Z-{y}/{num(r['death_act_number'])}", y, cl(r['deceased_last_name']), cl(r['deceased_first_name']), {'M': 'm', 'K': 'k'}.get(r.get('deceased_sex'), ''), cl(r['death_place']), num(a), unit, cl(r['deceased_status']), cl(r['father_first_name']), cl(r['mother_first_name']), cl(r['mother_last_name']), cl(r['deceased_maiden_name']), cl(r['deceased_spouse']), ry, str(num(r['death_act_number']))])
 M = [[f"{r['rok']}/{r['nr']}", num(r['rok']), r['nr'], r['data_tekst'], r['pan_nazwisko'], r['pan_imie'], r['pan_stan'], r['pan_ojciec_imie'], r['pan_ojciec_nazwisko'], r['pan_matka_imie'], r['pan_matka_nazwisko'], r['pan_miejscowosc'], num(r['pan_wiek']), num(r['pan_rok_ur_przyb']),
       r['panna_nazwisko'], r['panna_imie'], r['panna_stan'], r['panna_ojciec_imie'], r['panna_ojciec_nazwisko'], r['panna_matka_imie'], r['panna_matka_nazwisko'], r['panna_miejscowosc'], num(r['panna_wiek']), num(r['panna_rok_ur_przyb']),
       r['pan_poprzednia_zona_imie'], r['wdowa_poprzedni_maz_imie']] for r in rd('malzenstwa_mal.csv') if num(r['rok'])]
