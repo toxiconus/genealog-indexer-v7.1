@@ -676,7 +676,7 @@ function tbRender(){const el=document.getElementById('tbBody');if(!TREE){el.inne
   right=`<div style="overflow:auto;padding-bottom:6px">${tbTree(id)}</div>${tbChrono(id)}<div class="cd">${treePerson(id)}</div>${sec('📜 Chrzest / urodzenie','B')}${sec('📜 Małżeństwo','M')}${sec('📜 Zgon','D')}`}
  el.innerHTML=`<div style="display:grid;grid-template-columns:minmax(200px,260px) 1fr;gap:12px"><div style="max-height:75vh;overflow:auto;border:1px solid var(--ln);border-radius:8px;padding:4px">${tbCtl()}${lst||'<div class="leg">Brak wyników.</div>'}${ids.length>TB.lim?`<div class="leg">pokazano ${TB.lim} z ${ids.length}</div><div style="display:flex;gap:6px;flex-wrap:wrap;margin:4px"><button class="b sm" data-more="400">+400</button><button class="b sm" data-more="all">pokaż wszystkie (${ids.length})</button></div>`:`<div class="leg">${ids.length} os.</div>`}</div><div>${right}</div></div>`}
 (function(){const m=document.createElement('div');m.id='tbModal';m.hidden=true;m.setAttribute('role','dialog');m.style.cssText='position:fixed;inset:0;z-index:1100;background:rgba(5,10,16,.8);padding:2vh 2vw;overflow:auto';
- m.innerHTML='<div class="fm-sheet"><div class="fm-h"><h2>🌳→📜 Osoba z drzewa → akty w bazie</h2><input type="text" id="tbQ" placeholder="szukaj osoby w drzewie…" style="background:var(--p2);border:1px solid var(--ln);color:var(--tx);border-radius:6px;padding:5px 8px"><button id="tbRepC" class="b" title="Zbiorczy raport błędów chronologii w całym drzewie (CSV)">⚠ Raport chronologii</button><button id="tbClose" class="b">Zamknij ✕</button></div><div class="leg" style="margin-bottom:8px">Ramka: zielona ≥80% / żółta ≥60% / szara = brak aktu w bazie. Kliknij osobę w drzewie, by ją wycentrować.</div><div id="tbBody"></div></div>';document.body.appendChild(m);
+ m.innerHTML='<div class="fm-sheet"><div class="fm-h"><h2>🌳→📜 Osoba z drzewa → akty w bazie</h2><input type="text" id="tbQ" placeholder="szukaj osoby w drzewie…" style="background:var(--p2);border:1px solid var(--ln);color:var(--tx);border-radius:6px;padding:5px 8px"><button id="tbTodo" class="b" title="Osoby bez rodziców z podpowiedzią z bazy i osoby bez aktu urodzenia">📋 Do zbadania</button><button id="tbRepC" class="b" title="Zbiorczy raport błędów chronologii w całym drzewie (CSV)">⚠ Raport chronologii</button><button id="tbClose" class="b">Zamknij ✕</button></div><div class="leg" style="margin-bottom:8px">Ramka: zielona ≥80% / żółta ≥60% / szara = brak aktu w bazie. Kliknij osobę w drzewie, by ją wycentrować.</div><div id="tbBody"></div></div>';document.body.appendChild(m);
  document.getElementById('bTb').onclick=()=>{if(!TREE){alert('Najpierw wczytaj drzewo (🌳 Drzewo → plik .ged lub .json).');return}m.hidden=false;tbRender()};
  document.getElementById('tbClose').onclick=()=>m.hidden=true;
  document.getElementById('tbQ').oninput=e=>{TB.q=e.target.value;tbRender()};
@@ -882,4 +882,40 @@ function tbCtl(){
  el.addEventListener('change',e=>{if(e.target.id==='tbSort'){TB.sort=e.target.value;TB.lim=400;tbRender()}});
  el.addEventListener('click',e=>{const l=e.target.closest('[data-let]');if(l){TB.letter=l.dataset.let;TB.lim=400;tbRender();return}
   const m=e.target.closest('[data-more]');if(m){TB.lim=m.dataset.more==='all'?1e9:TB.lim+400;tbRender()}})})();
+
+/* ---- „Do zbadania": skraj drzewa (brak rodziców) + brak aktu urodzenia ---- */
+(function(){
+ const m=document.createElement('div');m.id='todoModal';m.hidden=true;m.setAttribute('role','dialog');m.style.cssText='position:fixed;inset:0;z-index:1150;background:rgba(5,10,16,.85);padding:3vh 3vw;overflow:auto';
+ m.innerHTML='<div class="fm-sheet"><div class="fm-h"><h2>📋 Do zbadania</h2><button id="tdCsv" class="b" disabled>⬇ CSV</button><button id="tdClose" class="b">Zamknij ✕</button></div>'+
+ '<div class="leg" style="margin-bottom:8px">Zakres: osoby z drzewa <b>bez rodziców</b>, urodzone 1783–1908 (zakres aktów urodzeń w bazie). To tropy do sprawdzenia w aktach – nie rozstrzygnięcia. „Brak w bazie" nie znaczy, że aktu nie ma, tylko że indeks go nie zawiera.</div>'+
+ '<div id="tdProg" class="leg"></div><div id="tdBody"></div></div>';
+ document.body.appendChild(m);
+ const g=i=>document.getElementById(i);let ROWS=[],RUN=0;
+ const q=v=>'"'+String(v==null?'':v).replace(/"/g,'""')+'"';
+ function draw(done){
+  const sec=(t,cls,rs)=>`<h3 style="margin:12px 0 4px">${t} <span style="color:var(--mu);font-weight:400">(${rs.length})</span></h3>`+(rs.length?`<div class="net-table-wrap" style="overflow:auto"><table class="net-table" style="width:100%;border-collapse:collapse"><tbody>${rs.map(r=>`<tr data-go="${esc(r.id)}" style="cursor:pointer;border-top:1px solid var(--ln)"><td style="padding:4px 6px;white-space:nowrap"><b>${esc(r.name)}</b> <span style="color:var(--mu)">${esc(r.life)}</span></td><td style="padding:4px 6px;color:${r.pct>=80?'var(--ok)':r.pct?'var(--md)':'var(--mu)'}">${r.pct?r.pct+'%':''}</td><td style="padding:4px 6px">${esc(r.txt)}</td></tr>`).join('')}</tbody></table></div>`:'<div class="leg">–</div>');
+  g('tdBody').innerHTML=sec('Rodzice do uzupełnienia – kandydat aktu urodzenia z rodzicami','a',ROWS.filter(r=>r.k==='A').sort((a,b)=>b.pct-a.pct))+
+   sec('Brak aktu urodzenia w bazie (rok ma akty w indeksie)','b',ROWS.filter(r=>r.k==='B').sort((a,b)=>a.y-b.y))+
+   sec('Rok poza indeksem bazy (luka w danych, nie w drzewie)','c',ROWS.filter(r=>r.k==='C').sort((a,b)=>a.y-b.y));
+  if(done)g('tdCsv').disabled=false}
+ function start(){
+  if(!TREE){g('tdProg').textContent='Najpierw wczytaj drzewo.';g('tdBody').innerHTML='';return}
+  const my=++RUN;ROWS=[];g('tdCsv').disabled=true;
+  const yrsB=new Set(B.map(r=>r[1]));
+  const ids=Object.keys(TREE.P).filter(i=>{if(TREE.par[i])return false;const y=tyr(TREE.P[i].b)||tyr(TREE.P[i].b2);return y>=1783&&y<=1908});
+  let k=0;
+  (function step(){if(my!==RUN)return;const t0=performance.now();
+   while(k<ids.length&&performance.now()-t0<60){const id=ids[k++],p=TREE.P[id],y=tyr(p.b)||tyr(p.b2),o=tbRec(id),top=o.B[0],life=tbLife(p),name=tnm(p);
+    if(top&&top.pct>=75){ROWS.push({k:'A',id,name,life,y,pct:top.pct,txt:top.t})}
+    else if(!yrsB.has(y))ROWS.push({k:'C',id,name,life,y,pct:0,txt:'w indeksie bazy nie ma aktów urodzenia z roku '+y})
+    else ROWS.push({k:'B',id,name,life,y,pct:top?top.pct:0,txt:top?'najlepszy kandydat słaby: '+top.t:'brak kandydata ≥60%'})}
+   g('tdProg').textContent=(k<ids.length?'Liczę… ':'Gotowe: ')+k+' / '+ids.length+' osób';
+   draw(k>=ids.length);if(k<ids.length)setTimeout(step,0)})()}
+ g('tbTodo').onclick=()=>{m.hidden=false;start()};
+ g('tdClose').onclick=()=>{RUN++;m.hidden=true};
+ g('tdBody').addEventListener('click',e=>{const tr=e.target.closest('[data-go]');if(!tr)return;RUN++;m.hidden=true;TB.sel=tr.dataset.go;TB.q='';TB.letter='';tbRender()});
+ g('tdCsv').onclick=()=>{const L={A:'rodzice do uzupełnienia',B:'brak aktu ur. w bazie',C:'rok poza indeksem'};
+  const rows=[['kategoria','osoba','id','lata życia','zgodność %','opis']].concat(ROWS.slice().sort((a,b)=>a.k.localeCompare(b.k)||b.pct-a.pct).map(r=>[L[r.k],r.name,r.id,r.life,r.pct||'',r.txt]));
+  dl('do_zbadania.csv',rows.map(r=>r.map(q).join(';')).join('\r\n'),'text/csv')}
+})();
 </script></body></html>
