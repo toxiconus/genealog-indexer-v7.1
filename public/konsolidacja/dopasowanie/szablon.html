@@ -61,7 +61,7 @@ button:focus-visible,input:focus-visible,select:focus-visible,.mi:focus-visible{
 </style></head><body>
 <header><h1>🧬 <b>Dopasowanie osób</b> · Blinów · v7</h1><button id="bBack" disabled>◀ wstecz</button><span id="crumb" style="color:var(--mu);font-size:12.5px"></span><span class="sp"></span>
 <button id="zm">🔍−</button><button id="zp">🔍+</button><span id="stat" style="color:var(--mu)"></span>
-<button id="bRep" title="Raport spójności indeksu zgonów">⚠ Raport zgonów</button><button id="bNetwork">Sieć powiązań</button><button id="bFamilies">Rodziny i gałęzie</button><button id="bBridges">Śluby rodziców</button><button id="bPersonIndex">Indeks osób</button><button id="bFam" title="Rodziny z drzewa: dzieci do dopisania i duble (wymaga wczytanego drzewa)">👪 Rodziny</button><button id="bTree" title="Wczytaj lokalny plik drzewa (GED / JSON) – zostaje tylko w przeglądarce">🌳 Drzewo</button><button id="bTb" title="Osoba z drzewa → akty w bazie (po wczytaniu drzewa)">🌳→📜 Drzewo w bazie</button><input type="file" id="fTree" accept=".json,.ged,.gedcom" hidden><button id="bCsv">⬇ CSV</button><button id="bJson">⬇ JSON</button><button id="bLoad">⬆ JSON</button><input type="file" id="fLoad" accept=".json" hidden></header>
+<button id="bRep" title="Raport spójności indeksu zgonów">⚠ Raport zgonów</button><button id="bNetwork">Sieć powiązań</button><button id="bFamilies">Rodziny i gałęzie</button><button id="bBridges">Śluby rodziców</button><button id="bPersonIndex">Indeks osób</button><button id="bFam" title="Rodziny z drzewa: dzieci do dopisania i duble (wymaga wczytanego drzewa)">👪 Rodziny</button><button id="bTree" title="Wczytaj lokalny plik drzewa (GED / JSON) – zostaje tylko w przeglądarce">🌳 Drzewo</button><button id="bTb" title="Osoba z drzewa → akty w bazie (po wczytaniu drzewa)">🌳→📜 Drzewo w bazie</button><input type="file" id="fTree" accept=".json,.ged,.gedcom" hidden><button id="bCsv">⬇ CSV</button><button id="bJson">⬇ JSON</button><button id="bLoad">⬆ JSON</button><input type="file" id="fLoad" accept=".json" hidden><button id="bWipe" title="Usuń zapisane decyzje / wczytane drzewo (wymaga wpisania 1111)" style="border-color:#7a2f2f">🗑 Usuń dane</button></header>
 <main>
 <aside id="list"><div class="tabs"><button data-md="M">Małżeństwa</button><button data-md="B">Urodzenia</button><button data-md="D">Zgony</button></div><input id="q" placeholder="szukaj: nazwisko, imię, rok…"><div id="lst"></div></aside>
 <section id="mid"><h2 id="ttl"></h2><div id="sub"></div><svg id="map" viewBox="0 0 960 500"></svg><div id="cen"></div><div id="tl"></div><div id="treeBox"></div>
@@ -745,4 +745,61 @@ document.getElementById('fmKids').onclick=()=>{FMV='kids';fmRender()};document.g
  const mm=h.match(/^([MBD]):(.*)$/);if(mm){m=mm[1];id=mm[2]}else if(h){id=h}
  if(!id||!rec(m,id)){m='M';id=(M.find(x=>x[0]==='1864/15')||M[0])[0]}
  listMode=m;go(m,id)})();
+
+/* ---- usuwanie danych (zabezpieczone kodem 1111) ---- */
+const WIPE_PIN='1111';
+(function(){
+ const m=document.createElement('div');m.id='wipeModal';m.hidden=true;m.setAttribute('role','dialog');m.style.cssText='position:fixed;inset:0;z-index:1200;background:rgba(5,10,16,.85);padding:4vh 3vw;overflow:auto';
+ m.innerHTML='<div class="fm-sheet" style="max-width:640px;margin:0 auto"><div class="fm-h"><h2>🗑 Usuń dane</h2><button id="wpClose" class="b">Anuluj ✕</button></div>'+
+ '<div class="leg" style="color:var(--md);margin-bottom:10px">⚠ Operacja jest nieodwracalna. Dane z bazy aktów (urodzenia, zgony, małżeństwa) <b>nie zostaną ruszone</b> – kasujesz tylko to, co zapisano w tej przeglądarce. Przed usunięciem pobierze się plik kopii zapasowej (można nim później przywrócić decyzje przyciskiem ⬆ JSON).</div>'+
+ '<div id="wpOpts" style="display:grid;gap:8px;margin-bottom:12px"></div>'+
+ '<div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap"><label for="wpPin">Aby potwierdzić, wpisz <b>1111</b>:</label><input id="wpPin" type="text" inputmode="numeric" autocomplete="off" maxlength="4" style="width:80px;background:var(--p2);border:1px solid var(--ln);color:var(--tx);border-radius:6px;padding:5px 8px"><button id="wpGo" class="b" disabled style="border-color:#7a2f2f">Usuń zaznaczone</button></div></div>';
+ document.body.appendChild(m);
+ const g=i=>document.getElementById(i);
+ const nDec=()=>{let n=0;Object.values(DEC).forEach(o=>Object.values(o).forEach(v=>{n+=(v.acc||[]).length}));return n};
+ function opts(){
+  const nT=Object.keys(TD.kids).length+Object.keys(TD.dups).length;
+  g('wpOpts').innerHTML=
+  `<label><input type="checkbox" id="wpDec"> <b>Decyzje dopasowania</b> – ${Object.keys(DEC).length} rekordów, ${nDec()} przyjętych powiązań</label>`+
+  `<label><input type="checkbox" id="wpTd"> <b>Decyzje z widoku „Rodziny z drzewa"</b> – ${nT} wpisów (dzieci do dodania, duble)</label>`+
+  `<label><input type="checkbox" id="wpTree"> <b>Wczytane drzewo (GED/JSON)</b> – ${TREE?Object.keys(TREE.P).length+' osób':'nic nie wczytano'} (drzewo i tak znika po odświeżeniu strony)</label>`;
+  ['wpDec','wpTd','wpTree'].forEach(i=>g(i).onchange=chk);chk()}
+ function chk(){g('wpGo').disabled=!(g('wpPin').value.trim()===WIPE_PIN&&(g('wpDec').checked||g('wpTd').checked||g('wpTree').checked))}
+ g('wpPin').oninput=chk;
+ g('bWipe').onclick=()=>{g('wpPin').value='';opts();m.hidden=false};
+ g('wpClose').onclick=()=>m.hidden=true;
+ g('wpGo').onclick=()=>{
+  if(g('wpPin').value.trim()!==WIPE_PIN)return;
+  const d=g('wpDec').checked,t=g('wpTd').checked,tr=g('wpTree').checked;
+  if(!(d||t||tr))return;
+  dl('kopia_przed_usunieciem.json',JSON.stringify({decyzje:DEC,drzewo_decyzje:TD},null,1),'application/json');
+  if(d){DEC={};save();}
+  if(t){TD={kids:{},dups:{}};tdSave();}
+  if(tr){TREE=null;if(typeof TB!=='undefined'){TB.cache.clear();TB.sel=null}}
+  m.hidden=true;try{go(cur.mode,cur.id,true)}catch(e){try{render()}catch(e2){}}
+  try{stat();treeBox()}catch(e){}
+  const fm=document.getElementById('fmBody');try{if(typeof fmRender==='function'&&document.getElementById('fmModal')&&!document.getElementById('fmModal').hidden)fmRender()}catch(e){}
+  try{if(document.getElementById('tbModal')&&!document.getElementById('tbModal').hidden)tbRender()}catch(e){}
+  toast2('Usunięto zaznaczone dane (kopia została pobrana)')}
+})();
+
+/* usuń osobę / gałąź z wczytanego drzewa (tylko w pamięci, plik źródłowy bez zmian) */
+function treeDescendants(id,acc){acc=acc||new Set();(TREE.sp[id]||[]).forEach(fid=>((TREE.F[fid]||{}).k||[]).forEach(c=>{if(!acc.has(c)){acc.add(c);treeDescendants(c,acc)}}));return acc}
+function treeRemove(ids){
+ const rm=new Set(ids),P={},F={};
+ for(const i in TREE.P)if(!rm.has(i))P[i]=TREE.P[i];
+ for(const fid in TREE.F){const f=Object.assign({},TREE.F[fid]);f.k=(f.k||[]).filter(c=>!rm.has(c));if(rm.has(f.h))f.h=null;if(rm.has(f.w))f.w=null;if(f.h||f.w||f.k.length)F[fid]=f}
+ treeLoad({p:P,f:F,miss:TREE.miss,dups:TREE.dups});TB.sel=null}
+function tbDelUi(){
+ if(!TREE||!TB.sel||!TREE.P[TB.sel])return;
+ const el=document.getElementById('tbBody');const right=el&&el.firstElementChild&&el.firstElementChild.lastElementChild;if(!right||right.querySelector('#tbDelRow'))return;
+ const row=document.createElement('div');row.id='tbDelRow';row.style.cssText='display:flex;gap:8px;justify-content:flex-end;margin-bottom:6px';
+ row.innerHTML='<button class="b sm" id="tbDel1" title="Usuń tę osobę z wczytanego drzewa" style="border-color:#7a2f2f">🗑 usuń osobę</button><button class="b sm" id="tbDel2" title="Usuń osobę i wszystkich jej potomków" style="border-color:#7a2f2f">🗑 usuń z potomkami</button>';
+ right.insertBefore(row,right.firstChild);
+ const run=desc=>{const id=TB.sel,p=TREE.P[id],ids=[id].concat(desc?[...treeDescendants(id)]:[]);
+  const msg='UWAGA – nieodwracalne (do ponownego wczytania pliku).\nUsuwane z drzewa: '+ids.length+' os.'+(ids.length<=6?'\n'+ids.map(i=>tnm(TREE.P[i])).join('\n'):'\n'+tnm(p)+' i potomkowie')+'\nBaza aktów nie zostanie ruszona.\n\nWpisz 1111 aby usunąć:';
+  const v=prompt(msg);if(v===null)return;if(v.trim()!==WIPE_PIN){toast2('Nie usunięto – zły kod');return}
+  treeRemove(ids);tbRender();try{treeBox()}catch(e){}toast2('Usunięto z drzewa: '+ids.length+' os.')};
+ document.getElementById('tbDel1').onclick=()=>run(false);document.getElementById('tbDel2').onclick=()=>run(true)}
+(function(){const o=tbRender;tbRender=function(){o.apply(this,arguments);try{tbDelUi()}catch(e){console.warn(e)}}})();
 </script></body></html>
