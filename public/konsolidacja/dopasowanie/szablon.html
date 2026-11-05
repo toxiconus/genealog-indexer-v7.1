@@ -647,16 +647,24 @@ function tbLife(p){const b=tyr(p.b)||tyr(p.b2),d=tyr(p.d)||tyr(p.d2);return (b||
 function tbBox(id,x,y,hl){const p=TREE.P[id];if(!p)return'';const o=tbRec(id),best=tbBest(o),col=best>=80?'#3fb27f':best>=60?'#d9a441':'#5b6b7c';
  const bd=['B','D','M'].filter(k=>o[k].length).map(k=>({B:'ur',D:'zg',M:'ślub'})[k]).join(' · ');
  return`<g data-id="${esc(id)}" style="cursor:pointer" transform="translate(${x},${y})"><rect width="150" height="50" rx="8" fill="${hl?'#1a3550':'#111b27'}" stroke="${col}" stroke-width="${hl?3:1.5}"/><text x="75" y="19" text-anchor="middle" fill="#e6edf5" font-size="12" font-weight="600">${esc(tnm(p).slice(0,22))}</text><text x="75" y="33" text-anchor="middle" fill="#8ea1b5" font-size="10.5">${esc(tbLife(p))}${p.sex==='F'?' ♀':p.sex==='M'?' ♂':''}</text><text x="75" y="45" text-anchor="middle" fill="${col}" font-size="10">${bd?'📜 '+esc(bd)+' '+best+'%':'brak w bazie'}</text></g>`}
-function tbTree(id){const pr=TREE.par[id],fams=(TREE.sp[id]||[]).slice(0,3),W=170;
- const row1=[id];fams.forEach(f=>{const F=TREE.F[f],sp=F.h===id?F.w:F.h;if(sp)row1.push(sp)});
- const kids=[];fams.forEach(f=>(TREE.F[f].k||[]).forEach(c=>kids.push([c,f])));const row0=pr?[pr[0],pr[1]].filter(i=>i&&TREE.P[i]):[];
- const n=Math.max(row0.length,row1.length,Math.min(kids.length,10),1),Wd=n*W+20;let h='',ln='';const cx=(arr,i)=>(Wd-arr.length*W)/2+i*W+10;
- const pos1={};row1.forEach((i,k)=>{pos1[i]=cx(row1,k)});
- row0.forEach((i,k)=>{h+=tbBox(i,cx(row0,k),10,0)});
- if(row0.length){const xs=row0.map((i,k)=>cx(row0,k)+75);const mx=(Math.min(...xs)+Math.max(...xs))/2;if(row0.length>1)ln+=`<line x1="${xs[0]}" y1="35" x2="${xs[1]}" y2="35" stroke="#5b6b7c"/>`;ln+=`<path d="M${mx} ${row0.length>1?35:60} V80 H${pos1[id]+75} V110" fill="none" stroke="#5b6b7c"/>`}
- row1.forEach((i,k)=>{h+=tbBox(i,pos1[i],110,i===id);if(k>0)ln+=`<line x1="${pos1[row1[k-1]]+150}" y1="135" x2="${pos1[i]}" y2="135" stroke="#c25b8b" stroke-width="2"/>`});
- const ks=kids.slice(0,10);ks.forEach(([c,f],k)=>{const x=cx(ks,k);h+=tbBox(c,x,230,0);const F=TREE.F[f],sp=F.h===id?F.w:F.h,mx=((sp&&pos1[sp]!=null)?(pos1[id]+pos1[sp]+150)/2:pos1[id]+75);ln+=`<path d="M${mx} 135 V190 H${x+75} V230" fill="none" stroke="#5b6b7c"/>`});
- return`<svg viewBox="0 0 ${Wd} ${kids.length?295:185}" style="width:${Wd}px;height:${kids.length?295:185}px;max-width:none;display:block;margin:0 auto">${ln}${h}</svg>`+(kids.length>10?`<div class="leg">+ ${kids.length-10} dzieci nie pokazano</div>`:'')}
+function tbTree(id){const W=170,pr=TREE.par[id],fams=(TREE.sp[id]||[]).slice(0,3),boxes=[],lines=[],add=(i,x,y,hl)=>boxes.push([i,x,y,hl]),ln=(d,c)=>lines.push([d,c||'#5b6b7c']);
+ const Y={g:10,p:100,c:200,k:300},allSib=pr?(TREE.F[pr[2]].k||[]).filter(c=>c!==id&&TREE.P[c]):[],sibs=allSib.slice(0,4);
+ const sps=[];fams.forEach(f=>{const F=TREE.F[f],sp=F.h===id?F.w:F.h;if(sp&&TREE.P[sp])sps.push([sp,f])});
+ const row=[...sibs,id,...sps.map(x=>x[0])],px={};row.forEach((i,k)=>{px[i]=k*W;add(i,k*W,Y.c,i===id)});
+ let prev=id;sps.forEach(([sp])=>{ln(`M${px[prev]+150} ${Y.c+25} H${px[sp]}`,'#c25b8b');prev=sp});
+ let hasG=false;
+ if(pr){const ps=[pr[0],pr[1]].filter(i=>i&&TREE.P[i]);if(ps.length){const bl=[...sibs,id],pm=(px[bl[0]]+px[bl[bl.length-1]]+150)/2,gp=ps.some(i=>TREE.par[i]&&[TREE.par[i][0],TREE.par[i][1]].some(j=>j&&TREE.P[j])),half=gp?185:85,pcx={};
+  if(ps.length===2){pcx[ps[0]]=pm-half;pcx[ps[1]]=pm+half}else pcx[ps[0]]=pm;
+  ps.forEach(i=>add(i,pcx[i]-75,Y.p,0));if(ps.length===2)ln(`M${pcx[ps[0]]+75} ${Y.p+25} H${pcx[ps[1]]-75}`,'#c25b8b');
+  const jy=Y.c-30,xs=bl.map(i=>px[i]+75);ln(`M${pm} ${ps.length===2?Y.p+25:Y.p+50} V${jy}`);ln(`M${Math.min(...xs,pm)} ${jy} H${Math.max(...xs,pm)}`);xs.forEach(x=>ln(`M${x} ${jy} V${Y.c}`));
+  ps.forEach(i=>{const g=TREE.par[i];if(!g)return;const gs=[g[0],g[1]].filter(j=>j&&TREE.P[j]);if(!gs.length)return;hasG=true;const c=pcx[i],gx=gs.length===2?[c-160,c+10]:[c-75];gs.forEach((j,k)=>add(j,gx[k],Y.g,0));
+   if(gs.length===2)ln(`M${gx[0]+150} ${Y.g+25} H${gx[1]}`,'#c25b8b');ln(`M${c} ${gs.length===2?Y.g+25:Y.g+50} V${Y.p}`)})}}
+ const kids=[];fams.forEach(f=>(TREE.F[f].k||[]).forEach(c=>{if(TREE.P[c])kids.push([c,f])}));const ks=kids.slice(0,10);
+ if(ks.length){const sp1=sps[0]?px[sps[0][0]]+150:px[id]+150,cc=(px[id]+sp1)/2,x0=cc-ks.length*W/2+10,jy=Y.k-30;ln(`M${cc} ${Y.c+25} V${jy}`);
+  const xs=ks.map((k,n)=>x0+n*W+75);ln(`M${Math.min(...xs,cc)} ${jy} H${Math.max(...xs,cc)}`);ks.forEach(([c],n)=>{add(c,x0+n*W,Y.k,0);ln(`M${xs[n]} ${jy} V${Y.k}`)})}
+ const minx=Math.min(...boxes.map(b=>b[1])),maxx=Math.max(...boxes.map(b=>b[1]+150)),top=hasG?Y.g:pr?Y.p:Y.c,bot=(ks.length?Y.k:Y.c)+50,Wd=maxx-minx+20,H=bot-top+20;
+ const extra=[allSib.length>4?`+ ${allSib.length-4} rodzeństwa nie pokazano`:'',kids.length>10?`+ ${kids.length-10} dzieci nie pokazano`:''].filter(Boolean).join(' · ');
+ return`<svg viewBox="0 0 ${Wd} ${H}" style="width:${Wd}px;height:${H}px;max-width:none;display:block;margin:0 auto"><g transform="translate(${10-minx},${10-top})">${lines.map(l=>`<path d="${l[0]}" fill="none" stroke="${l[1]}" stroke-width="${l[1]==='#c25b8b'?2:1.2}"/>`).join('')}${boxes.map(b=>tbBox(b[0],b[1],b[2],b[3])).join('')}</g></svg>`+(extra?`<div class="leg">${extra}</div>`:'')}
 function tbRender(){const el=document.getElementById('tbBody');if(!TREE){el.innerHTML='<div class="leg">Najpierw wczytaj drzewo (🌳 Drzewo → plik .ged lub .json).</div>';return}
  const q=TB.q.trim().toLowerCase();const ids=Object.keys(TREE.P).filter(i=>!q||(tnm(TREE.P[i])+' '+(TREE.P[i].ms||'')).toLowerCase().includes(q)).sort((a,b)=>(TREE.P[a].sn||'').localeCompare(TREE.P[b].sn||'','pl')||(TREE.P[a].fn||'').localeCompare(TREE.P[b].fn||'','pl'));
  if(!TB.sel||!TREE.P[TB.sel])TB.sel=ids[0]||null;
