@@ -37,3 +37,5 @@ Pudło i Kopiwoda: brak w spisach Blinowa; Brzozówka 1864 – poz. 11, 31, 44 (
 - skany_41 = AOZ 71/7.5.1.3/1685, skany_42 = 1681: plan parcelacji Brzozówki 1931 + rejestr pomiarowy (kolonie 1–37, bez nazwisk na skanie 7). Opis w ODCZYTY/BRZOZOWKA_parcelacja_1931….md
 - 202 skan 9: ogrody i początek „Powinności gromady blinowskiej" – BLINOW_inwentarz_1705_202_powinnosci_i_ogrody.md; skany 10–19 do odczytu.
 - KATALOG: KATALOG_PACZEK_ARCHIWALNYCH.csv + ODCZYTY/KATALOG_PACZEK.md (wszystkie paczki, rok, folder, stan). UWAGA: BLINOW_spis_poddanych_1701_… i inwentarz 201 = kopia inwentarza 1658, nie 1701.
+
+- DO POBRANIA z SzwA (wyszukiwanie „Blinów zamojski"): 71/3.3.6/3015 (tab. likw. Blinów 1865, 62 skany), 71/3.3.5/2695 (tabella 1846, 21), 71/7.4.1/130 (plan 1835, 5), 71/7.4/122 (plan 1837, 5), 71/5.8/20793 (Szłapa 1934–37, 11).
