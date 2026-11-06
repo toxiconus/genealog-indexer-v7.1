@@ -44,3 +44,9 @@ Pudło i Kopiwoda: brak w spisach Blinowa; Brzozówka 1864 – poz. 11, 31, 44 (
 ## Lata potwierdzone SzwA (2026-11-06)
 - 71/2.1.2/201 = **1704** (treść: kopia inwentarza 1658); 202 = 1705; 205 = 1753; 206 = 1756; 208 = 1799; 204 = 1742 (brak skanów).
 - 71/2.1.13/1342 = 1701; 1343 = 1719 (Poniki+Blinów, brak skanów); 1344 = 1731; 1345 = 1733; **1346 = 1734** (plik 173x_1346); 1347 = 1736; 1348 = 1737; 1349 = 1739; 1350 = 1740; 1351 = 1741 (skany_49, nieczytane); 1352 = 1744; 1353 = 1745; **1354 = 1752** (skany_32, nieczytane).
+
+## 2026-11-06 – regeneracja
+- `gen_zbiorcze_nowe_zrodla.py`: do ZBIORCZE dopisuje kolumny nowe_1658/1705/1719/1741/1752/1846/1865/1872 (liczba wierszy z nazwiskiem; tylko 247 rodzin z aktów).
+- `gen_mini_dodaj_zrodla.py`: do `SPISY_BLINOW_weryfikacja_mini.html` dodaje wiersze z nowych odczytów (etykiety lat: 1658 oryg., 1705, 1719, 1741, 1752, 1846, 1865, 1872).
+- Nowe odczyty: rewizja 1719 (1343), 1741 (1351), 1752 (1354), tabella 1846 (2695), tabela likwidacyjna 1865 (3015), materiały leśne 1872 (3557: Blinów, Brzozówka, Błażek, Moczydła).
+- Nieczytane: 1346 skany 6–8, 1354 skany 6–7, 1733 skany 6–16, tabella 1846 skany 6–21, 3229 (1867), 168/6/1054, 3015 skany 32–62, 3557 skan 58.
