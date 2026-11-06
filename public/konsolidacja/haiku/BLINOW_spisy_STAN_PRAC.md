@@ -39,3 +39,8 @@ Pudło i Kopiwoda: brak w spisach Blinowa; Brzozówka 1864 – poz. 11, 31, 44 (
 - KATALOG: KATALOG_PACZEK_ARCHIWALNYCH.csv + ODCZYTY/KATALOG_PACZEK.md (wszystkie paczki, rok, folder, stan). UWAGA: BLINOW_spis_poddanych_1701_… i inwentarz 201 = kopia inwentarza 1658, nie 1701.
 
 - DO POBRANIA z SzwA (wyszukiwanie „Blinów zamojski"): 71/3.3.6/3015 (tab. likw. Blinów 1865, 62 skany), 71/3.3.5/2695 (tabella 1846, 21), 71/7.4.1/130 (plan 1835, 5), 71/7.4/122 (plan 1837, 5), 71/5.8/20793 (Szłapa 1934–37, 11).
+
+
+## Lata potwierdzone SzwA (2026-11-06)
+- 71/2.1.2/201 = **1704** (treść: kopia inwentarza 1658); 202 = 1705; 205 = 1753; 206 = 1756; 208 = 1799; 204 = 1742 (brak skanów).
+- 71/2.1.13/1342 = 1701; 1343 = 1719 (Poniki+Blinów, brak skanów); 1344 = 1731; 1345 = 1733; **1346 = 1734** (plik 173x_1346); 1347 = 1736; 1348 = 1737; 1349 = 1739; 1350 = 1740; 1351 = 1741 (skany_49, nieczytane); 1352 = 1744; 1353 = 1745; **1354 = 1752** (skany_32, nieczytane).
