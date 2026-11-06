@@ -64,3 +64,14 @@ Układ: lewa kolumna = „Osiadłość" (dawna zagroda wg nazwiska poprzedniego 
 - Nazwiska zagród („osiadłości") z 1731 r.: Żołtoniowski, Rycerzowski, Reszczyński, Kaczyński, Andryszowski, Świtoski, Rzepczyński, Marcinkowski, Dylowski, Ratajowski, Ligowski, Gurniakowski(?).
 - Osadnicy: Kisiel, Kiełbasa, Samulkowa/Samulak, Pcion, Baraniakowa, Kaczyński (Stach, Marcin), Zaremba, Kopyt, Woytowicz, Łysak, Ratay, Sokalski, Kudrelowa.
 - Zgodność z Twoją bazą aktów (od 1783, Blinów i okolice): **Kaczyński** (59 wystąpień), **Kudrelek** (89; wdowa Kudrelowa), **Wojtowicz/Woytowicz** (35+12), **Pcion** (21, głównie Moczydła), **Kopyt** (13), Zaremba (1), Sokalski (1). Kisiel, Kiełbasa, Samulak, Baraniak, Łysak nie występują w bazie – możliwe, że wygasły albo zmieniły nazwisko.
+
+### 1731, skan 3 – dolne wiersze strony (dopisane)
+| Osiadłość | Osadnik | Staja | Sprzężaj | Robota | Czynsz | Owies | Kapłony | Kury | Jaja | Przędza |
+|---|---|---|---|---|---|---|---|---|---|---|
+| Gurniakowski? | Wdowa Kudrelowa | 4 | – | – | 4 zł 24 gr | – | – | – | – | – |
+| (Gurniakowski?) | Szymon Kudrel Leśny | 3 | – | – | 3 zł 18 gr | – | – | – | – | – |
+| (Gurniakowski?) | Woytek Łysak | 2 | – | – | 2 zł 12 gr | – | – | – | – | – |
+| Bez przezwiska | do Arendy | – | – | – | – | – | – | – | – | – |
+| Reszczyński | Stanisław Sobutka robi | – | woły 1 | 2 | 18 gr | 2 | 2 | 1 | 1 | 8 / 3 |
+| (Reszczyński) | Sobocina Wdowa robi | – | 1 | 1 | 9 gr | 1 | 1 | ½ | ½ | 4 / 1½ |
+Suma strony (odczyt niepewny): 11 · 3 · 12 · 2 · 5½ · 5½ · 42(?) ; czerwona numeracja archiwalna „687-C”.
