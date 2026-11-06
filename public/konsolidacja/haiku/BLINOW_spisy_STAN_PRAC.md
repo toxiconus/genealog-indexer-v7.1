@@ -36,3 +36,4 @@ Pudło i Kopiwoda: brak w spisach Blinowa; Brzozówka 1864 – poz. 11, 31, 44 (
 - skany_36 = AP 115/1.2/60 „Acta specialia … Blinowa, kościoła, funduszu i awulsa" 1837–1840, 122 skany; tylko opis (ODCZYTY/BLINOW_kosciol_fundusz_115-1.2-60_opis.md).
 - skany_41 = AOZ 71/7.5.1.3/1685, skany_42 = 1681: plan parcelacji Brzozówki 1931 + rejestr pomiarowy (kolonie 1–37, bez nazwisk na skanie 7). Opis w ODCZYTY/BRZOZOWKA_parcelacja_1931….md
 - 202 skan 9: ogrody i początek „Powinności gromady blinowskiej" – BLINOW_inwentarz_1705_202_powinnosci_i_ogrody.md; skany 10–19 do odczytu.
+- KATALOG: KATALOG_PACZEK_ARCHIWALNYCH.csv + ODCZYTY/KATALOG_PACZEK.md (wszystkie paczki, rok, folder, stan). UWAGA: BLINOW_spis_poddanych_1701_… i inwentarz 201 = kopia inwentarza 1658, nie 1701.

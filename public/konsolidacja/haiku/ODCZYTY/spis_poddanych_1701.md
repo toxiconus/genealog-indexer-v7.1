@@ -1,3 +1,5 @@
+> **UWAGA:** ten odczyt pochodzi z AOZ 71/2.1.2/201 = kopia inwentarza z 1658 (nie 1701). Patrz KATALOG_PACZEK.md.
+
 # Spis poddanych wsi Blinów 1701 (str. 2–5)
 
 - **Sygnatura / skany:** AOZ 71/2.1.13/(1342 – patrz rewizja) / wcześniejszy odczyt

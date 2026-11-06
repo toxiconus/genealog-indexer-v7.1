@@ -10,3 +10,8 @@ Poddani wyżej wyrażeni, ponieważ żaden na robotę całego [półłanka] nie 
 (Dalszy ciąg: skan 10 – do odczytu.)
 
 Wniosek: w 1705 pańszczyzna z **ćwierci = 2 dni w tygodniu pociężne** (dużo mniej niż 4–5 dni z półłanka z inwentarza 1658/201), czynsz ćwierci wg tabel 18 gr + stacja.
+
+## Skan 10 – dalszy ciąg powinności i początek „Circumscriptio Dworu" (odczyt częściowy)
+- … z drugimi gromadami klucza kraśnickiego odbywać powinni; także dzielnice w parkanach zwierzynieckich oprawiać mają. **Święt**, gdy się trafi w tygodniu troje, jedno im Dwór opuszcza, a dwoje odrobić powinni.
+- **Zagrodnicy** powinności wszystkie odprawiają, oprócz kur, kapłonów i jaj nie dają; jednak sami przędą tokci trzy. Powinni zwyczajną pomoc, osobliwie którzy straż odbywają: odrabiać, którym kiedy każą radłem, bronami lub piechotą – dzień w tygodniu; zagrodnikom pół dnia w tydzień naznaczone (od św. Wojciecha do św. Marcina). Młócić oziminy po snopów jedenaście (?), a jarzyny po osiemdziesiąt (?) powinni.
+- **Circumscriptio Dworu** (skan 10 prawa, str. 14): opis zabudowań dworu (komnata z dwojgiem okien, piekarnia, sień, komora, gumno, stodoła, spichlerz z drewna; „Brogów pięć X. Stefana Potockiego, w które dziesięciny składa [= dziesięcina], a dworskich trzy").
