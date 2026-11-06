@@ -47,8 +47,8 @@
 35/71/0/7.4.1/112;71 AOZ, seria 7.4.1;1826;1826;Mapa dóbr klucza batorskiego (Aleksandrówka, Batorz, Błażek, Otrocz, Piłatka, Ponikwy, Wólki, Zdziłowice);— (DO POBRANIA);9;nie pobrane;—;niski (mapa)
 35/71/0/7.4.1/113;71 AOZ, seria 7.4.1;1827;1827;Mapa regulacyjna klucza batorskiego (Aleksandrówka, Batorz, Błażek);— (DO POBRANIA);5;nie pobrane;—;niski (mapa)
 35/71/0/7.5.1.6/1879;71 AOZ, seria 7.5.1.6;1929;1929;Odrys planu dóbr klucza struskiego (Batorz, Chrzanów, Wólka Batorska, Otrocz, Zdziłowice, Aleksandrówka, Błażek, Pilatka, Ponikwy);— (DO POBRANIA);5;nie pobrane;—;niski (plan)
-58/44/0/30.9/2667;APR (Radom), zespół 44;1821-1822;1821-1822;Zaanszlagowania dóbr Brzozówka;— (DO POBRANIA);29;nie pobrane;—;DO WERYFIKACJI: APR Radom (nie Lublin) – może być inna Brzozówka; sprawdzić zespół/sąsiednie wsie w opisie SzwA
-58/44/0/30.9/2679;APR (Radom), zespół 44;1824-1829;1824-1829;Zapomogi włościan dóbr Brzozówka;— (DO POBRANIA);80;nie pobrane;—;DO WERYFIKACJI: APR Radom (nie Lublin) – może być inna Brzozówka; jeśli w opisie Blinów/Moczydła/Batorz/Kraśnik → nasza, wtedy WYSOKI
+58/44/0/30.9/2667;APR (Radom), zespół 44;1821-1822;1821-1822;Zaanszlagowania dóbr Brzozówka;— (DO POBRANIA);29;nie pobrane;—;PRAWDOPODOBNIE INNA Brzozówka (APR Radom, dobra skonfiskowane po 1831, por. 2677; AGAD i Łódź mają Brzozówkę w woj. mazowieckim/obw. rawskim) – niski priorytet
+58/44/0/30.9/2679;APR (Radom), zespół 44;1824-1829;1824-1829;Zapomogi włościan dóbr Brzozówka;— (DO POBRANIA);80;nie pobrane;—;PRAWDOPODOBNIE INNA Brzozówka (APR Radom; „dobra skonfiskowane” 1838 – woj. mazowieckie/rawskie) – niski priorytet; podnieść tylko jeśli opis wskaże Kraśnik/Blinów/Batorz
 35/168/0/6/1119;168 Tabele likwidacyjne;1867-1924;1867-1924;Majdan Stary, gm. Brzozówka – tabela likwidacyjna;— (DO POBRANIA);12;nie pobrane;—;średni
 35/168/0/6/1170;168 Tabele likwidacyjne;1869-1930;1869-1930;Struża, gm. Struża [Brzozówka] – tabela likwidacyjna;— (DO POBRANIA);16;nie pobrane;—;średni
 35/168/0/6/1143;168 Tabele likwidacyjne;1911;1911;Polichna Górna – rejestr pomiarowy;— (DO POBRANIA);8;nie pobrane;—;średni
@@ -59,3 +59,6 @@
 35/168/0/6/1193;168 Tabele likwidacyjne;1867-1915;1867-1915;Wierzchowiska I-II – tabela likwidacyjna;— (DO POBRANIA);21;nie pobrane;—;niski/średni
 35/168/0/6/1164;168 Tabele likwidacyjne;1869-1929;1869-1929;Słodków I-II – tabela likwidacyjna;— (DO POBRANIA);36;nie pobrane;—;niski/średni
 35/168/0/6/1096;168 Tabele likwidacyjne;1867-1910;1867-1910;Karpiówka I-II – tabela likwidacyjna;— (DO POBRANIA);13;nie pobrane;—;niski/średni
+35/71/0/3.7/3556;71 AOZ, seria 3.7;1871-1883;1871-1883;Kontrola wydawanych materiałów leśnych z mocy serwitutów dla włościan gm. Brzozówka (bliźniacza do 3557, dłuższy zakres lat);— (DO POBRANIA);66;nie pobrane;—;WYSOKI: kolejna lista gospodarzy Brzozówki/Blinowa/Błażka/Moczydeł (Pudło, Kopiwoda)
+35/168/0/6/1176;168 Tabele likwidacyjne;1869-1890;1869-1890;Szastarka I-II, gm. Struża [Brzozówka] – tabela likwidacyjna + rejestr pomiarowy;— (DO POBRANIA);15;nie pobrane;—;średni
+35/168/0/6/1142;168 Tabele likwidacyjne;1867-1915;1867-1915;Polichna Dolna I-II, gm. Brzozówka – tabela likwidacyjna;— (DO POBRANIA);16;nie pobrane;—;niski/średni
