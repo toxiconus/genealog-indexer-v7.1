@@ -21,22 +21,66 @@
 1 (skan 3);Rzepczyńskie;Andrzej Pawłasek z spółką;robi;
 1 (skan 3);Rzepczyńskie;Wojtek Sobutka;robi;
 1 (skan 3);Kuczyńskie;Maciek Kozaczek;robi;
-2 (skan 4);;Pasternak;?;"tylko nazwisko z notatek; tryb do weryfikacji"
-2 (skan 4);;Kudrelek;?;"tylko nazwisko z notatek; tryb do weryfikacji"
-2 (skan 4);;Wcisło;?;"tylko nazwisko z notatek; tryb do weryfikacji"
-2 (skan 4);;Paciorek;?;"tylko nazwisko z notatek; tryb do weryfikacji"
-2 (skan 4);;Machała;?;"tylko nazwisko z notatek; tryb do weryfikacji"
-2 (skan 4);;Piotr Gryta z ogrodem;?;"tylko nazwisko z notatek; tryb do weryfikacji"
-2 (skan 4);;Adam Brzozek;?;"tylko nazwisko z notatek; tryb do weryfikacji"
-2 (skan 4);;Pcion;?;"tylko nazwisko z notatek; tryb do weryfikacji"
-2 (skan 4);;Wojcik;?;"tylko nazwisko z notatek; tryb do weryfikacji"
-2 (skan 4);;Machulek;?;"tylko nazwisko z notatek; tryb do weryfikacji"
-2 (skan 4);;Kurczak;?;"tylko nazwisko z notatek; tryb do weryfikacji"
-2 (skan 4);;Ciećkowa;?;"tylko nazwisko z notatek; tryb do weryfikacji"
-2 (skan 4);;Satur;?;"tylko nazwisko z notatek; tryb do weryfikacji"
-3 (skan 5);;Adam Brozek (Broszkowskie);?;"tylko nazwisko z notatek; tryb do weryfikacji"
-3 (skan 5);;Paweł Machulek (Kozłowskie);?;"tylko nazwisko z notatek; tryb do weryfikacji"
-3 (skan 5);;Barbarzak;?;"tylko nazwisko z notatek; tryb do weryfikacji"
+2 (skan 4);Pasternakowskie;Stach Pasternak;robi;
+2 (skan 4);Pasternakowskie;Tenże Pasternak;czynsz;"1½ ćw.; 1 zł 24 gr"
+2 (skan 4);Pasternakowskie 2ga;Andrzej Pasternak;robi;
+2 (skan 4);Pasternakowskie 2ga;Tenże Pasternak;czynsz;1 zł 24 gr
+2 (skan 4);;Wygon gromadzki;;
+2 (skan 4);Susińskie;Józef Kudrelek;czynsz;"3½ ćw.; 4 zł 6 gr"
+2 (skan 4);Susińskie;Tenże Kudrelek;robi;
+2 (skan 4);Susińskie;Stach Kudrelek;robi;
+2 (skan 4);Wojciechowskie;Stach Wcisło;robi;
+2 (skan 4);Wojciechowskie;Tenże Wcisło;czynsz;1 zł 6 gr
+2 (skan 4);Wojciechowskie 2ga;Jakub Paciorek;robi;
+2 (skan 4);Wojciechowskie 2ga;Tenże Paciorek;czynsz;1 zł 6 gr
+2 (skan 4);Żołtuńskie;Szymon Machała;robi;
+2 (skan 4);Żołtuńskie;Tenże Machała;czynsz;1 zł 6 gr
+2 (skan 4);Żołtuńskie;Piotr Gryta z ogrodem;ogród;
+2 (skan 4);Żołtuńskie;Tamże Adam Brzozek;czynsz;3 zł 18 gr
+2 (skan 4);Pcionowskie;Maciek Pcion z ogrodem;robi;reszta pusto
+2 (skan 4);Pcionowskie;Matus Pcion;robi;
+2 (skan 4);Pcionowskie;Tenże Pcion;czynsz;1 zł 6 gr
+2 (skan 4);Pcionowskie;Matus Wojcik;robi;
+2 (skan 4);Pcionowskie;Tenże Wojcik;czynsz;1 zł 24 gr
+2 (skan 4);Burakowskie;Sobek Machulek z spółką;czynsz;4 zł 24 gr
+2 (skan 4);Klimkowskie;Adam Brzozek;czynsz;3 zł 18 gr
+2 (skan 4);Kalabiszowskie;Maciek Kurczak;czynsz;1 zł 24 gr
+2 (skan 4);Kalabiszowskie;Sobek Machulek;robi;
+2 (skan 4);Sienkowskie;Ciećkowa wdowa;robi;mieszka?
+2 (skan 4);Sienkowskie;Tażże Ciećkowa z spółką;czynsz;4 zł 6 gr
+2 (skan 4);Sienkowskie 2ga;;pusto zarośl;
+2 (skan 4);Błażkowskie;Maciek Paciorek;robi;ćw. 2ga pusto zarośl
+2 (skan 4);Kołodziejskie;Tomek Satur z ogrodem;ogród;reszta pusto
+2 (skan 4);Garczyńskie;Maciek Kurczak;czynsz;"2½ ćw.; 3 zł; Latus 39 zł 9 gr"
+3 (skan 5);Broszkowskie;Adam Brzozek;robi;
+3 (skan 5);Orchowskie;Jan Dobrzyński z ogrodem;ogród;
+3 (skan 5);Orchowskie 2ga;Marcin Czerepa;czynsz;"1 zł 24 gr; reszta ugór"
+3 (skan 5);Chudzińskie;Tomek Gnat;czynsz;"1 zł 6 gr; reszta ugór"
+3 (skan 5);Kędzierskie;Marcin Czerepa;czynsz;"2½ ćw.; 3 zł"
+3 (skan 5);Kucińskie;Wygon gromadzki;;
+3 (skan 5);Kucińskie 2ga;Tomek Gnat z Połowy(?);robi;reszta pusto
+3 (skan 5);Paciorkowskie;Jan Pcion;czynsz;"pusta; 2 zł 12 gr"
+3 (skan 5);Paciorkowskie 2ga;Tenże Pcion;robi;
+3 (skan 5);Kędzierskie;Kędzierowa wdowa;komorna;
+3 (skan 5);Kędzierskie;Wojtek Machulek;robi;
+3 (skan 5);Kędzierskie 2ga;Wawrzyniec Wstępień;robi;
+3 (skan 5);Ciećkowskie;Wojciech Ciećek;robi;
+3 (skan 5);Ciećkowskie 2ga;Tenże Ciećek;czynsz;"1 zł 24 gr; pusto"
+3 (skan 5);Landowskie(?);Wawrzyniec Wstępień;czynsz;7 zł 6 gr
+3 (skan 5);Wcisłowskie;Jan Czerepa;robi;
+3 (skan 5);Wcisłowskie;Tenże Czerepa z spółką;czynsz;1 zł 24 gr
+3 (skan 5);Wcisłowskie;Wcisłowa wdowa;robi;
+3 (skan 5);Wcisłowskie;Tasz Wcisłowa;czynsz;2 zł 12 gr
+3 (skan 5);Obydzińskie;Matus Brzozek;robi;"biedny; pusto"
+3 (skan 5);Obydzińskie;Jan Obydź;robi komorny;
+3 (skan 5);Obydzińskie;Tenże Obydź;czynsz;18 gr
+3 (skan 5);Garoszkowskie;Bartosz Czerepa;leśny (służy);
+3 (skan 5);Garoszkowskie;Franek Wcisło;robi;reszta pusta
+3 (skan 5);Radwańskie;Szymon Wcisło;robi;pusto na Dwór zasiano
+3 (skan 5);Radwańskie 2ga;Paweł Machulek;robi;
+3 (skan 5);Kozłowskie;Paweł Machulek;czynsz;"2½ ćw.; 3 zł"
+3 (skan 5);Kozłowskie;Antoni Barbarzak;robi;sierota
+3 (skan 5);Kozłowskie;Tamże Paweł Machulek;czynsz;"1 zł 6 gr; Latus 35 zł 21 gr"
 4 (skan 6 lewa);Radwańskie;Jan Machulek;robi;
 4 (skan 6 lewa);Radwańskie;Tenże Machulek;czynsz;2 zł 12 gr
 4 (skan 6 lewa);Radwańskie;Janowa Wcisłowa wdowa;komorna;
