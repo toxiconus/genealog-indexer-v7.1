@@ -1,0 +1,63 @@
+# Część wsi Poniki (klucz kraśnicki) – spis „opisana A° 1701" (AOZ 71/2.1.13/1342, skany 10–11)
+
+- **UWAGA:** skany 10–12 paczki 1342 dotyczą wsi **Poniki** („Część Poników należąca do Klucza Kraśnickiego w osiadłości z powinnościami opisana 1701"), a nie Blinowa. Skan 10 lewa strona: „Powinności gromady Blinowskiej… jednej, co w Stróży y Stodkowie [= Stodółkowie?] … a w Blinowie groszy osiemnaście… takie jako tamtych dwóch gromad".
+- **Skan 13:** „Compendium Fruktyfikacyi klucza Kraśnickiego in Anno 1701" – zestawienie miasto Kraśnik, wsie Stróża, Stodków, Blinów, część wsi Poników (woły, konie, pieszo, czynsz zł/gr, owies, kapłony, kury, jaja, przędza), „Summa effecit … Arenda na rok 9000 zł".
+- **Zakres odczytu:** skan 10 prawa, skan 11 lewa i prawa; skan 12 i szczegóły skanu 13 do odczytu. Odczyt częściowy, kwoty niepewne.
+- Źródło: `../PONIKI_rewizja_1701_odczyt_reczny.csv`.
+
+| zrodlo | dzial | lp | osadnik | tryb | uwagi |
+|---|---|---|---|---|---|
+| AOZ 71/2.1.13/1342 skan 10 (prawa) | Poniki – czynszowi | 1 | Sołtys (sołtysi) | sołtys | 00 |
+| AOZ 71/2.1.13/1342 skan 10 (prawa) | Poniki – czynszowi | 2 | Kokoszczyńska – Wójt | czynsz | 12 gr? |
+| AOZ 71/2.1.13/1342 skan 10 (prawa) | Poniki – czynszowi | 3 | Saralińska – Wasiel Wojtowicz z półćwiartką | czynsz | 6; drugi półćwiartek na robocie |
+| AOZ 71/2.1.13/1342 skan 10 (prawa) | Poniki – czynszowi |  | Łysko | czynsz | 12 |
+| AOZ 71/2.1.13/1342 skan 10 (prawa) | Poniki – czynszowi | 4 | Kazimierz Skąd(?) | czynsz | 6 |
+| AOZ 71/2.1.13/1342 skan 10 (prawa) | Poniki – czynszowi | 5 | Paweł Kowalczyk z jednej ćwierci do roku (do św. Marcina) – wolny, bo się de novo buduje | wolny / czynsz | z drugiej ćwierci: Winiarowska Kurdziel i Magdaś 12 + 12 |
+| AOZ 71/2.1.13/1342 skan 10 (prawa) | Poniki – czynszowi | 7 | Żarowskiego Kurdziel Maciek | czynsz | 6 |
+| AOZ 71/2.1.13/1342 skan 10 (prawa) | Poniki – czynszowi | 8 | Kozikowa wdowa | czynsz | 12 |
+| AOZ 71/2.1.13/1342 skan 10 (prawa) | Poniki – czynszowi | 9 | Budziczyńska – Maciek Wojtów syn | czynsz | 12 |
+| AOZ 71/2.1.13/1342 skan 10 (prawa) | Poniki – czynszowi | 10 | Wojciechowski – Janek Wojtek | czynsz | 24 |
+| AOZ 71/2.1.13/1342 skan 10 (prawa) | Poniki – czynszowi |  | Szymek Chudziszek | czynsz | 6 |
+| AOZ 71/2.1.13/1342 skan 10 (prawa) | Poniki – czynszowi |  | Pańsyk Wojtek | czynsz | 6 |
+| AOZ 71/2.1.13/1342 skan 10 (prawa) | Poniki – czynszowi | 15 | Winiarowska – Żyśiek Wojtek z Botowskiej wólki z półćwiartką | czynsz | 6; drugi półćwiartek odłogiem, teraz ugór |
+| AOZ 71/2.1.13/1342 skan 10 (prawa) | Poniki – czynszowi |  | Kurdziel z ogrodu świętnego | czynsz | 1 zł 15 |
+| AOZ 71/2.1.13/1342 skan 10 (prawa) | Poniki – zagroda/ogród | 16 | Zagroda Kondratowska – Pańsyk Wojtek | czynsz | 3 |
+| AOZ 71/2.1.13/1342 skan 10 (prawa) | Poniki – zagroda/ogród |  | Ogród Ławczyński – Franek Czekay | czynsz | 1 |
+| AOZ 71/2.1.13/1342 skan 10 (prawa) | Poniki – czynszowi | 18 | Marchewska – Maciek | czynsz | 12 |
+| AOZ 71/2.1.13/1342 skan 10 (prawa) | Poniki – czynszowi | 19 | Suchanowska – Pańsyk Wojtek | czynsz | 12 |
+| AOZ 71/2.1.13/1342 skan 10 (prawa) | Poniki – czynszowi | 20 | Tenże Pańsyk | czynsz | 10; Latus effecit 25 zł 1 gr 15 |
+| AOZ 71/2.1.13/1342 skan 11 (lewa) | Poniki – czynszowi cd. | 21 | Maciek Kurdziel | czynsz | 12 |
+| AOZ 71/2.1.13/1342 skan 11 (lewa) | Poniki – czynszowi cd. |  | Tenże Kurdziel z łasku (trzecia część) | czynsz | 3 gr |
+| AOZ 71/2.1.13/1342 skan 11 (lewa) | Poniki – czynszowi cd. | 22 | Wojtonisowie Żyskowie (trzecia część) | czynsz | 27 |
+| AOZ 71/2.1.13/1342 skan 11 (lewa) | Poniki – czynszowi cd. |  | Cisz z popiełarki | czynsz | 2 |
+| AOZ 71/2.1.13/1342 skan 11 (lewa) | Poniki – czynszowi cd. | 23 | Rusinowska – Żyśiek Żyskowie z 7 staj z Miaskowego | czynsz | 9 zł 15 / 7 |
+| AOZ 71/2.1.13/1342 skan 11 (lewa) | Poniki – czynszowi cd. |  | Miasdyk Maciek i Jędrzej Bogdek z trzeciej części Miaskowskiego | czynsz | 7 |
+| AOZ 71/2.1.13/1342 skan 11 (lewa) | Poniki – czynszowi cd. |  | Czołowska sztuka – Bogdek Jędrzej | czynsz | 2 |
+| AOZ 71/2.1.13/1342 skan 11 (lewa) | Poniki – czynszowi cd. | 24 | Szramek(?) Wojtek | czynsz | 12 |
+| AOZ 71/2.1.13/1342 skan 11 (lewa) | Poniki – komornicy | 1 | Kuśnierka wdowa | komorne | 2 |
+| AOZ 71/2.1.13/1342 skan 11 (lewa) | Poniki – komornicy | 2 | Alisek Gisek(?) | komorne | 2 |
+| AOZ 71/2.1.13/1342 skan 11 (lewa) | Poniki – komornicy | 3 | Szarata Wojtek | komorne | 1; Latus effecit 66 zł 15 gr |
+| AOZ 71/2.1.13/1342 skan 11 (prawa) | Poniki – pańszczyźniani | 1 | Mizmotkowska – Szymek Sołtys z półwiartką | robi | półćwiartka: czynsz 1 zł 12 gr; przędza 1½ |
+| AOZ 71/2.1.13/1342 skan 11 (prawa) | Poniki – pańszczyźniani |  | Stach Kozik z drugiego półłanka | robi |  |
+| AOZ 71/2.1.13/1342 skan 11 (prawa) | Poniki – pańszczyźniani |  | Gaik Wojtek | robi |  |
+| AOZ 71/2.1.13/1342 skan 11 (prawa) | Poniki – pańszczyźniani |  | Wasiel Wojtów syn | robi | woły 2, konie 2 |
+| AOZ 71/2.1.13/1342 skan 11 (prawa) | Poniki – pańszczyźniani |  | Paweł Zarowski; Danilo Wojtek | robi |  |
+| AOZ 71/2.1.13/1342 skan 11 (prawa) | Poniki – pańszczyźniani |  | Bartek Żarowski | robi |  |
+| AOZ 71/2.1.13/1342 skan 11 (prawa) | Poniki – pańszczyźniani |  | Jędrzej Pikuła z całej ćwierci | robi | 2 zł 24 gr; przędza 3 |
+| AOZ 71/2.1.13/1342 skan 11 (prawa) | Poniki – pańszczyźniani |  | Czekay Franek | robi | 2 zł 24 |
+| AOZ 71/2.1.13/1342 skan 11 (prawa) | Poniki – pańszczyźniani |  | Maciek Stępiak | robi | 2 zł 24 |
+| AOZ 71/2.1.13/1342 skan 11 (prawa) | Poniki – pańszczyźniani |  | Szymek Chudzik | robi | woły 2, konie 1; 2 zł 24 |
+| AOZ 71/2.1.13/1342 skan 11 (prawa) | Poniki – pańszczyźniani |  | Wojtek Panek | robi | woły 2; 2 zł 24 |
+| AOZ 71/2.1.13/1342 skan 11 (prawa) | Poniki – pańszczyźniani |  | Chudzik Stach | robi | woły 2; 2 zł 24 |
+| AOZ 71/2.1.13/1342 skan 11 (prawa) | Poniki – pańszczyźniani |  | Kasperek Wojtek z synem | robi | 2 zł 24 |
+| AOZ 71/2.1.13/1342 skan 11 (prawa) | Poniki – pańszczyźniani |  | Sobieszek Wojtek | robi | 1 zł 12 |
+| AOZ 71/2.1.13/1342 skan 11 (prawa) | Poniki – pańszczyźniani |  | Skrzypek Sobek | robi | woły 2; 2 zł 24 |
+| AOZ 71/2.1.13/1342 skan 11 (prawa) | Poniki – pańszczyźniani |  | Maciek Kurdziel | robi | woły 2; 2 zł 24 |
+| AOZ 71/2.1.13/1342 skan 11 (prawa) | Poniki – pańszczyźniani |  | Włodarczyk | robi | woły 2; 2 zł 24 |
+| AOZ 71/2.1.13/1342 skan 11 (prawa) | Poniki – pańszczyźniani |  | Stach Kozik z synem | robi | woły 2, konie 2; 2 zł 24 |
+| AOZ 71/2.1.13/1342 skan 11 (prawa) | Poniki – pańszczyźniani |  | Janek Wojcik | robi | woły 2; 2 zł 24 |
+| AOZ 71/2.1.13/1342 skan 11 (prawa) | Poniki – pańszczyźniani |  | Miazdyk Janek | robi | woły 2; 2 zł 24 |
+| AOZ 71/2.1.13/1342 skan 11 (prawa) | Poniki – pańszczyźniani |  | Maciek Miazdyk | robi | woły 2; 1 zł 12 |
+| AOZ 71/2.1.13/1342 skan 11 (prawa) | Poniki – pańszczyźniani |  | Bogdek Jędrzej | robi | woły 2, konie 1; 1 zł 12 |
+| AOZ 71/2.1.13/1342 skan 11 (prawa) | Poniki – pańszczyźniani |  | Stach Kowalczyk | robi | woły 2, konie 1; 2 zł 24 |
+| AOZ 71/2.1.13/1342 skan 11 (prawa) | Poniki – pańszczyźniani |  | Marcin Kowalczyk | robi | konie 1; 1 zł 12; Latus effecit 20/16/13½/5/53/6/50½ |
