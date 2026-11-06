@@ -5,3 +5,7 @@ Skany leżą poza repo (skany_NN w katalogu roboczym sesji) – w razie utraty p
 Zbiorcze: BLINOW_spisy_1701-1799_vs_akty_ZBIORCZE.csv (liczba wpisów rodziny w spisie vs akty z bazy).
 Uwaga: kolumny liczbowe (owies, kury, jaja, przędza) niepewne; pewne są nazwiska, tryb, czynsz.
 Pudło i Kopiwoda: brak w spisach Blinowa; Brzozówka 1864 – poz. 11, 31, 44 (zob. PUDLO_KOPIWODA_Brzozowka_ustalenia.md).
+
+## Uzupełnienie 2026-11-06
+- 1745 (71/2.1.13/1353): str. 1, 4, 5 odczytane (tryb), str. 2–3 tylko nazwiska; skany 7–8 (zagrody, Compendium) nieodczytane.
+- Dalej: 1733, reszta 1701/1799, 1342; regeneracja ZBIORCZE z 1737–1745.
