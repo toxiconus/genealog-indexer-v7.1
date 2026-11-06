@@ -12,3 +12,7 @@ Stan: sygn. 1054 (Blinów) — skany 1–29 odczytane. Sygn. 1067 (Brzozówka I-
 - `TABELE_LIKWIDACYJNE_REJESTR_JEDNOSTEK.csv` — jedna jednostka = jeden wiersz: archiwum, zespół, sygnatura, miejscowość/zawartość, rodzaj dokumentu, status.
 - `TABELE_LIKWIDACYJNE_REJESTR_SKANOW.csv` — jeden skan = jeden wiersz.
 - Uwaga: zespół 44 AP Radom (sygn. 2667, dobra Brzozówka 1815–1829) to nie tabele likwidacyjne; może dotyczyć innej Brzozówki — do weryfikacji.
+
+
+## Priorytety (decyzja użytkownika 2026-11-06)
+Główne: Moczydła, Blinów, Szastarka, Brzozówka, Polichna Górna. Poboczne „na kiedyś”: Błażek (1056), Majdan Stary (1119), Bilsko-Putyk (1053).
