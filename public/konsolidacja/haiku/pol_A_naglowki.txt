@@ -1,0 +1,18 @@
+Skan 5 (lewa strona oznaczona ok. "23", prawa "43"), skan 6 (lewa "45", prawa "65") - Межевой реестръ, wieś Połichna Górna (Полихна Гурна), gm. Brzozówka, pow. janowski, ok. 1911.
+
+Nagłówki kolumn tabeli (od lewej, jak widać na skanach):
+1. № по порядку - numer porządkowy właściciela (czerwony, na lewym marginesie; powtarza się przy nazwisku i przy pozycjach gruntów nad nim)
+2. Имена и фамилии владельцевъ усадебъ - imiona i nazwiska właścicieli siedlisk
+3. Количество земли въ десятинахъ и саженяхъ (ilość ziemi w dziesięcinach i sążniach), podkolumny dес. / саж.:
+   3a. Подъ жилымъ строеніемъ съ огородомъ или безъ огорода (pod zabudowaniami z ogrodem lub bez)
+   3b. Подъ пахатными полями (pod polami ornymi)
+   3c. Подъ лугами (pod łąkami)
+   3d. Подъ выгономъ (pod wygonem)
+   3e. Неудобной (nieużytki)
+   3f. Всей вообще (ogółem)
+4. Примѣчанія (uwagi)
+
+Uwaga: w tabeli zapisywane są tylko kolumny 3d (Подъ выгономъ) i 3f (Всей вообще) - w CSV powierzchnia_1 = 3d, powierzchnia_2 = 3f. Kolumny 3a-3c i 3e są puste na tych skanach.
+Nad nazwiskiem właściciela znajdują się wiersze pozycji gruntów (np. Малы Лясъ / Стоименнеря Нива / При мосце) - zapisane w uwagach jako pola.
+Zapis wartości: "2 1811" = 2 dес. 1811 саж. (dес. i саж. oddzielone spacją, tak jak w tabeli).
+nr_pozycji = kolejność wiersza właściciela na skanie (od góry lewej strony, potem prawej); na tych skanach pokrywa się z lp.

@@ -1,0 +1,7 @@
+Skan 8 (pojedyncza strona, tabela glowna).
+Zawiera: wiersz 'переносъ' (przeniesienie) na poczatku tabeli: 49 1398 / 49 1398 (cyfra dziesiatek niepewna, moze byc 42; [niecz.]).
+Wiersze lp 19-30 (nr pozycji 19-30), kazdy: 2 1811 w obu kolumnach (wiersze 19-30 w pliku CSV).
+Pod tabela: 'неудобной' (nieudobne): 1 1439 / 1 1439.
+'Итого' (suma): 82 1530 | 1 1439 | 84 569 (kolumny: pod wyg. / nieudobnej / wszystkiego; odczyt pewny, cyfry 1530 i 569 zaznaczone przez pisarza).
+Podpis pod tabela (rosyjski, transkrypcja): 'Сей Межевой реестръ составилъ, имѣющій разрѣшеніе на производство межевыхъ работъ частный землемѣръ Осипъ Дорантъ' (Sporzadzil ten rejestr granicy, posiadajacy zezwolenie na prowadzenie prac granicznych, prywatny geometra Osip Dorant [niecz. nazwisko]).
+Brak tabeli w czesci dolnej strony: puste linie.

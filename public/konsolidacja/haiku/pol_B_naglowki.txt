@@ -1,0 +1,8 @@
+Skan 7 (lewa strona, tabela glowna, lp 25-30):
+- № по порядку (numer porzadkowy, czerwony)
+- Имена и фамилии владельцев усадеб (imiona i nazwiska wlascicieli siedlisk)
+- Количество земли в десятинах и саженях (powierzchnia w dziesiatinach i sazhenach), podkolumny: Под жилым строением с огородом или без огорода / Под пахатными полями / Под лугами / Под выгоном / Неудобной / Всей вообще (kazda: дес. / саж.)
+- Примечания (uwagi)
+Skan 7 (prawa strona): Неудобныя земли (ziemie niewygodne) — pozycje a-л, Итого неудобной; Собраніе итоговъ (zestawienie) lp 1-18 — w kolumnach Под выгономъ i Всей вообще po "2 1811".
+
+Skan 8: te same kolumny glowne co skan 7 (Имена и фамилии / Количество земли: жилым, пахотным, лугам, выгону, неудобной, всей вообще; Примечания).
