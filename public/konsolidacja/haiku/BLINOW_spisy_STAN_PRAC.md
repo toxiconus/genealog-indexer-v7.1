@@ -28,3 +28,5 @@ Pudło i Kopiwoda: brak w spisach Blinowa; Brzozówka 1864 – poz. 11, 31, 44 (
 - 71/2.1.2/202 = „Wieś Blinów … A° 1705": skany 4–5 odczytane (lp 1–24); skany 6–19 do odczytu. 71/1.1/4 = 1658 (oryginał kopii 201).
 
 - UWAGA: 71/2.1.13/1342 skany 10–12 = wieś PONIKI (klucz kraśnicki) 1701; skan 13 = Compendium klucza kraśnickiego 1701. Odczyt: PONIKI_rewizja_1701_odczyt_reczny.csv. Skany 4–9 (Blinów) zgodnie z wcześniejszym odczytem.
+
+- Inwentarz 1658 (71/1.1/4): skany 9–11 odczytane (CSV); skan 12 do odczytu.
