@@ -10,7 +10,7 @@ Skróty: AOZ = Archiwum Ordynacji Zamojskiej ze Zwierzyńca (zespół 71, AP Lub
 |---|---|---|---|---|
 | [spis_poddanych_1701.md](spis_poddanych_1701.md) | Spis poddanych wsi Blinów 1701 (str. 2–5) | AOZ 71/2.1.13/(1342 – patrz rewizja) / wcześniejszy odczyt | pełny dla str. 2–5 | 95 |
 | [rewizja_1701.md](rewizja_1701.md) | Rewizja wsi Blinów „opisana 1701" (osiadłości 45–67, zagrody 2–25, przymiarki) | AOZ 71/2.1.13/1342, skany 4–9 | pełny odczyt skanów 4–9; skany 10–12 nieprzejrzane | 89 |
-| [inwentarz_201_poddani.md](inwentarz_201_poddani.md) | Inwentarz wsi Blinów (kmiecie, zagrodnicy, przymiarki) str. 12–27 | AOZ 71/2.1.2/201, skany 11–19 | pełny odczyt tabel; data inwentarza do ustalenia | 120 |
+| [inwentarz_201_poddani.md](inwentarz_201_poddani.md) | Inwentarz wsi Blinów 1658 – kopia (kmiecie, zagrodnicy, przymiarki) str. 12–27 | AOZ 71/2.1.2/201, skany 11–19 | pełny odczyt tabel; data 1658 (kopia inwentarza AOZ 71/1.1/4) | 120 |
 | [spis_poddanych_1731.md](spis_poddanych_1731.md) | Spis poddanych Blinów 1731 | AOZ 71/2.1.13/1347?, skany 4–6 | skany 4–6 (skan 3 tylko w md) | 203 |
 | [spis_poddanych_1733.md](spis_poddanych_1733.md) | Spis poddanych Blinów 1733 (str. 2–3) | AOZ 71/2.1.13/1345, skany 4–5 | częściowy (str. 1 w md, skany 6–16 nieodczytane) | 59 |
 | [spis_poddanych_1736.md](spis_poddanych_1736.md) | Spis poddanych Blinów 1736 | AOZ 71/2.1.13 | pełny | 181 |
@@ -26,3 +26,8 @@ Skróty: AOZ = Archiwum Ordynacji Zamojskiej ze Zwierzyńca (zespół 71, AP Lub
 Inne opisowe odczyty (w folderze wyżej): `BLINOW_spisy_poddanych_1731_1733_str1_odczyt_reczny.md`, `BLINOW_inwentarz_201_powinnosci_kmieci.md`, `BLINOW_spisy_LEGENDA.md`, `BLINOW_spisy_STAN_PRAC.md`, `PUDLO_KOPIWODA_Brzozowka_ustalenia.md`, `TABELE_LIKWIDACYJNE_168_1067_Brzozowka_odczyt_AI.csv`.
 
 | [spis_poddanych_173x_1346.md](spis_poddanych_173x_1346.md) | Rewizja Blinowska 173? (rok niepewny) | AOZ 71/2.1.13/1346 skan 5 | str. 4–5 | 55 |
+
+
+> **Ustalenie:** ten inwentarz (AOZ 71/2.1.2/201) to kopia inwentarza z 12 maja 1658 (AOZ 71/1.1/4) – nie 1701. Patrz `BLINOW_inwentarz_1658_71-1.1-4_opis_i_porownanie.md`.
+
+| [../BLINOW_inwentarz_1658_71-1.1-4_opis_i_porownanie.md](../BLINOW_inwentarz_1658_71-1.1-4_opis_i_porownanie.md) | Inwentarz Blinowa 12 maja 1658 (oryginał; 201 jest jego kopią) | AOZ 71/1.1/4 skany 5–9 | opis dworu + identyfikacja | – |

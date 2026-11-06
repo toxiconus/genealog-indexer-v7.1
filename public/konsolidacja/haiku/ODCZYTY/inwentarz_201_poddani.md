@@ -1,7 +1,7 @@
-# Inwentarz wsi Blinów (kmiecie, zagrodnicy, przymiarki) str. 12–27
+# Inwentarz wsi Blinów 1658 – kopia (kmiecie, zagrodnicy, przymiarki) str. 12–27
 
 - **Sygnatura / skany:** AOZ 71/2.1.2/201, skany 11–19
-- **Zakres odczytu:** pełny odczyt tabel; data inwentarza do ustalenia
+- **Zakres odczytu:** pełny odczyt tabel; data 1658 (kopia inwentarza AOZ 71/1.1/4)
 - **Źródło danych:** `../BLINOW_inwentarz_201_poddani_odczyt_reczny.csv` (odczyt ręczny, AP Lublin)
 - **Uwaga:** liczby w kolumnach to hipoteza; pewne są nazwiska, tryb i czynsz; „(?)" = odczyt niepewny.
 
@@ -127,3 +127,6 @@
 | 27 | AOZ 71/2.1.2/201 skan 19 | Przymiarki | Zimiatkow(?) przymiarek | pusty |  |
 | 27 | AOZ 71/2.1.2/201 skan 19 | Przymiarki | Sieńka z Łechowskiego | czynsz | 2 zł |
 | 27 | AOZ 71/2.1.2/201 skan 19 | Przymiarki | Tomski z Andrzejowego | czynsz | 2 zł; inne przymiarki w Kiwy(?) dworskie obrócone |
+
+
+> **Ustalenie:** ten inwentarz (AOZ 71/2.1.2/201) to kopia inwentarza z 12 maja 1658 (AOZ 71/1.1/4) – nie 1701. Patrz `BLINOW_inwentarz_1658_71-1.1-4_opis_i_porownanie.md`.

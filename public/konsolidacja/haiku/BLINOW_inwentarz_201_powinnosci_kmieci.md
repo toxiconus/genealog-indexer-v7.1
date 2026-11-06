@@ -22,3 +22,6 @@ Uwaga: odczyt częściowy, kilka słów niepewnych. Czynsz „10 zł" z półła
 - **Powinność zagrodników:** robić dwa dni w tydzień pieszo, prząść toki trzy raz w rok; czynszu roboczego groszy dwanaście.
 - **Powinność komorników:** robić w tydzień dzień przy sprawie dworskiej; a który nie robi przez cały rok, powinien dać czynszu złotych dwa, prząść toki trzy.
 - Wszyscy poddani wsi Blinowa, gdy się orzechy(?) zwożą, powinni oddawać z półłanka po (…); zagrodnicy i komornicy po półtorej(?).
+
+
+> **Ustalenie:** ten inwentarz (AOZ 71/2.1.2/201) to kopia inwentarza z 12 maja 1658 (AOZ 71/1.1/4) – nie 1701. Patrz `BLINOW_inwentarz_1658_71-1.1-4_opis_i_porownanie.md`.
