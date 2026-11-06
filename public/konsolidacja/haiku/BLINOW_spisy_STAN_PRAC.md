@@ -30,3 +30,6 @@ Pudło i Kopiwoda: brak w spisach Blinowa; Brzozówka 1864 – poz. 11, 31, 44 (
 - UWAGA: 71/2.1.13/1342 skany 10–12 = wieś PONIKI (klucz kraśnicki) 1701; skan 13 = Compendium klucza kraśnickiego 1701. Odczyt: PONIKI_rewizja_1701_odczyt_reczny.csv. Skany 4–9 (Blinów) zgodnie z wcześniejszym odczytem.
 
 - Inwentarz 1658 (71/1.1/4): skany 9–11 odczytane (CSV); skan 12 do odczytu.
+
+- Nowe paczki 2026-11-06 10:27: skany_37 = duplikat 71/2.1.2/201; skany_35(2) = duplikat 1342; skany_38 = duplikat 71/1.1/4 (1658); skany_40 = AP 168/6/1126 Moczydła – wpis do tabeli likwidacyjnej (bez nazwisk).
+- Lata z SzwA (potwierdzone przez użytkownika): 1342=1701, 1.1/4=1658, 206=1756. Czekamy na SzwA dla 201, 202, 1346, 1354.
