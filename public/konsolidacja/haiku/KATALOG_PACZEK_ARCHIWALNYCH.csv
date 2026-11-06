@@ -6,7 +6,7 @@
 71/2.1.2/206;71 AOZ, seria 2.1.2;1756;1756;Inwentarz wsi Blinowa 1756;skany_30;10;odczytany;BLINOW_inwentarz_1756_poddani_odczyt_reczny.csv;
 71/2.1.2/208;71 AOZ, seria 2.1.2;1799;—;Inwentarz części Blinowa 1799 (arenda Tranowski);skany_26;12;"skan 7 (lista) odczytany; 6, 8, 9 bez nazwisk";BLINOW_inwentarz_1799_poddani_odczyt_reczny.csv;
 71/2.1.13/1342;71 AOZ, seria 2.1.13;1701;1701;Rewizja Blinowa (skany 4–9), Poniki (skany 10–12), Compendium klucza kraśnickiego (13);skany_27 (=35);13;skany 4–11 odczytane;BLINOW_rewizja_1701_odczyt_reczny.csv + PONIKI_rewizja_1701_odczyt_reczny.csv;skan 12 nieodczytany
-71/2.1.13/1345;71 AOZ, seria 2.1.13;1733;—;Spis Blinowa 1733;skany_20;16;str. 2–3 odczytane (skany 4–5);BLINOW_spis_poddanych_1733_odczyt_reczny.csv;skany 6–16 do odczytu
+71/2.1.13/1345;71 AOZ, seria 2.1.13;1733;—;Spis Blinowa 1733;skany_20;16;str. 2–3 odczytane (skany 4–5);BLINOW_spis_poddanych_1733_odczyt_reczny.csv;skany 6–16 odczytane ręcznie (2026-11-06): BLINOW_spis_poddanych_1733_1345_skany_6-16_odczyt_reczny.csv; Pudło/Kopiwoda brak; skan 16 = Compendium klucza kraśnickiego (bez Brzozówki)
 71/2.1.13/1346;71 AOZ, seria 2.1.13;173? (1737/38?);1734;Rewizja Blinowska 173?;skany_33;8;skan 5 odczytany;BLINOW_spis_poddanych_173x_1346_odczyt_reczny.csv;skany 6–8 do odczytu; SzwA: 1734 – plik nazwany 173x
 71/2.1.13/1347;71 AOZ, seria 2.1.13;1731 / 1736;—;Spisy Blinowa 1731 (skany 4–6) i 1736;skany_23, skany_25/28;?;odczytane;BLINOW_spis_poddanych_1731_… i _1736_…;
 71/2.1.13/1348;71 AOZ, seria 2.1.13;1737;—;Spis Blinowa 1737;skany_22;?;odczytany;BLINOW_spis_poddanych_1737_odczyt_reczny.csv;

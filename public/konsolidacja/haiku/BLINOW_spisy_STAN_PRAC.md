@@ -50,3 +50,5 @@ Pudło i Kopiwoda: brak w spisach Blinowa; Brzozówka 1864 – poz. 11, 31, 44 (
 - `gen_mini_dodaj_zrodla.py`: do `SPISY_BLINOW_weryfikacja_mini.html` dodaje wiersze z nowych odczytów (etykiety lat: 1658 oryg., 1705, 1719, 1741, 1752, 1846, 1865, 1872).
 - Nowe odczyty: rewizja 1719 (1343), 1741 (1351), 1752 (1354), tabella 1846 (2695), tabela likwidacyjna 1865 (3015), materiały leśne 1872 (3557: Blinów, Brzozówka, Błażek, Moczydła).
 - Nieczytane: 1346 skany 6–8, 1354 skany 6–7, 1733 skany 6–16, tabella 1846 skany 6–21, 3229 (1867), 168/6/1054, 3015 skany 32–62, 3557 skan 58.
+
+- 2026-11-06: spis 1733 (1345) skany 6–16 odczytane ręcznie (235 wierszy); dwie kopie; Pudło/Kopiwoda brak; Compendium Generale klucza kraśnickiego 1733 (skan 16) nie zawiera Brzozówki → Brzozówka nie była wsią klucza w 1733.
