@@ -10,3 +10,4 @@ Pudło i Kopiwoda: brak w spisach Blinowa; Brzozówka 1864 – poz. 11, 31, 44 (
 - 1745 (71/2.1.13/1353): str. 1–5 odczytane z trybem; skany 7–8 (zagrody, Compendium) nieodczytane.
 - Dalej: 1733, reszta 1701/1799, 1342; regeneracja ZBIORCZE z 1737–1745.
 - 1733 (71/2.1.13/1345): str. 2–3 odczytane (CSV); str. 1 w md; skany 6–16 nieodczytane.
+- ZBIORCZE zregenerowane (1701–1799, 12 źródeł, nazwiska znormalizowane automatycznie; warianty pisowni mogą rozdzielać rodziny).
