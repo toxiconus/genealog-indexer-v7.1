@@ -1,9 +1,9 @@
-# Wieś Blinów „w osiadłości z powinnościami A° 1705" (AOZ 71/2.1.2/202)
+# Wieś Blinów „z powinnościami A° 1705" (AOZ 71/2.1.2/202)
 
-- **Dokument:** inwentarz/spis powinności Blinowa „Anno 1705", nagłówek „Continuantur Powinności Wsi Blinowa A° 1705"; kolumny: Denominationes (dawna osiadłość), ćwierci, Specificatio osiadłości, staja, sprzężaj (woły, konie), robota, czynsz zł/gr, owies, stacja (kapłony, kury, jaja), przędza.
-- **Zakres odczytu:** skany 4–5 (lp 1–24); skany 6–19 do odczytu.
-- **Źródło:** `../BLINOW_inwentarz_1705_202_poddani_odczyt_reczny.csv`
-- **Uwaga:** część wierszy lp 8 i 11 pominięta (nieczytelna w miniaturze).
+- **Zakres odczytu:** skany 4–6 (lp 1–56); skany 7–19 do odczytu.
+- Nagłówek: „Continuantur Powinności Wsi Blinowa A° 1705"; kolumny: denominatio (dawna osiadłość), ćwierci, osadnik, staja, sprzężaj, robota, czynsz zł/gr, owies, stacja, przędza.
+- Rok wg SzwA: do potwierdzenia.
+- Źródło: `../BLINOW_inwentarz_1705_202_poddani_odczyt_reczny.csv`
 
 | zrodlo | lp | osiadlosc_dawna | osadnik | tryb | uwagi |
 |---|---|---|---|---|---|
@@ -47,3 +47,46 @@
 | AOZ 71/2.1.2/202 skan 5 | 22 | Pcionowski | Jan Pcion | robi | ćw. ½; 18 gr |
 | AOZ 71/2.1.2/202 skan 5 | 23 | Klimkowska | Mackowa Brzozkowa(?) | czynsz | ćw. 1; staj 3; 3 zł 18 gr |
 | AOZ 71/2.1.2/202 skan 5 | 24 | Burakowski | Maciej Pcion | gumienny do służby liber | ćw. 1; ćw. 1 zarosła; Latus 33½ … |
+| AOZ 71/2.1.2/202 skan 6 | 39 | Jaraszowski | Andrzej Wcisło | robi | ćw. 1; woły 2, robota 2; 18 gr; „ten był leśnym, teraz od św. Marcina robi, jednak lasu pilnować powinien" |
+| AOZ 71/2.1.2/202 skan 6 | 40 | Radwanowski | Wawrzek Ziętak | robi | ćw. ½; 9 gr |
+| AOZ 71/2.1.2/202 skan 6 | 40 | Radwanowski | Jan Wcisło | robi | ćw. ½; 9 gr |
+| AOZ 71/2.1.2/202 skan 6 | 40 | Radwanowski | Szymon Kosidło | robi | ćw. 1; 18 gr |
+| AOZ 71/2.1.2/202 skan 6 | 41 | Radwanowski | Andrzej Radwan | robi | ćw. 1; woły 1; 18 gr |
+| AOZ 71/2.1.2/202 skan 6 | 41 | Radwanowski | Paweł Machulek | robi | ćw. 1; 18 gr |
+| AOZ 71/2.1.2/202 skan 6 | 42 | Kozłowski | Maciek Kaczyński | robi | ćw. 1; konie 1; 18 gr |
+| AOZ 71/2.1.2/202 skan 6 | 42 | Kozłowski | Wojciech Kaczyński | robi | ćw. 1; 18 gr |
+| AOZ 71/2.1.2/202 skan 6 | 43 | Wcisłowski | Stach Wcisło | robi | ćw. ½; woły 2, konie 1; 9 gr |
+| AOZ 71/2.1.2/202 skan 6 | 43 | Wcisłowski | Maciek Wcisło | robi | ćw. 1; 18 gr |
+| AOZ 71/2.1.2/202 skan 6 | 43 | Wcisłowski | Grzech Wcisło | robi | ćw. ½; 9 gr |
+| AOZ 71/2.1.2/202 skan 6 | 44 | Kuczyński | Jakub Kuczba(?) | robi | ćw. 1; woły 2; 18 gr |
+| AOZ 71/2.1.2/202 skan 6 | 44 | Kuczyński | Wojtek Kuczba(?) | robi | ćw. ½; 9 gr |
+| AOZ 71/2.1.2/202 skan 6 | 44 | Kuczyński | Andrzej Kuczba(?) | czynsz | ćw. ½; staj 3; 3 zł 18 gr; ostatek ugorem |
+| AOZ 71/2.1.2/202 skan 6 | 45 | Kosidłowski | Kazimierz Kosidło | robi | ćw. 1; woły 2, konie 2; 18 gr |
+| AOZ 71/2.1.2/202 skan 6 | 45 | Kosidłowski | Tomek Kosidło | robi | ćw. ½; 12 gr |
+| AOZ 71/2.1.2/202 skan 6 | 45 | Kosidłowski | Adam Dąbrowa | czynsz | ćw. ½; staj 2; 2 zł 12 gr; ostatek ugorem |
+| AOZ 71/2.1.2/202 skan 6 | 46 | Skoczylasowski | Wojciech Kosidło z Marcinem Kosidłem z ćwierci | robi | ćw. 1; 18 gr |
+| AOZ 71/2.1.2/202 skan 6 | 46 | Skoczylasowski | Adam Dąbrowa | robi | ćw. ½; 9 gr |
+| AOZ 71/2.1.2/202 skan 6 | 46 | Skoczylasowski | Tenże Dąbrowa | czynsz i ogród | ćw. ½; staj 4; 5 zł 24 gr |
+| AOZ 71/2.1.2/202 skan 6 | 47 | Pieturzyński | Jan Pastwa(?) | robi | ćw. 1; 18 gr |
+| AOZ 71/2.1.2/202 skan 6 | 47 | Pieturzyński | Tenże | czynsz z nadwornemi | ćw. 1; staj 12½; 17 zł 12 gr; Latus 24½ 17 6 … |
+| AOZ 71/2.1.2/202 skan 6 | 48 | Kosidłowski | Jan Kosidło | robi | ćw. 1; woły 2; 18 gr |
+| AOZ 71/2.1.2/202 skan 6 | 48 | Kosidłowski | Tenże | czynsz | ćw. 1; staj 2; 2 zł 12 gr |
+| AOZ 71/2.1.2/202 skan 6 | 49 | Kołodziejski | Szymon Kudrela | robi | ćw. 1; woły 2, konie 1; 18 gr |
+| AOZ 71/2.1.2/202 skan 6 | 49 | Kołodziejski | Wygon |  | ćw. 1 |
+| AOZ 71/2.1.2/202 skan 6 | 50 | Morowski | Jan Rzepka | robi | ćw. 1; 18 gr |
+| AOZ 71/2.1.2/202 skan 6 | 50 | Morowski | Matyasz Kozaczek | robi | ćw. ½; 9 gr |
+| AOZ 71/2.1.2/202 skan 6 | 50 | Morowski | Tenże Kozaczek | czynsz | ćw. ½; staj 5; 6 zł |
+| AOZ 71/2.1.2/202 skan 6 | 50 | Morowski | Tamże Jan Rzepka | czynsz | staj 1; 1 zł 6 gr |
+| AOZ 71/2.1.2/202 skan 6 | 50 | Morowski | Tamże Szymon Kudrel | czynsz | staj 1½; 18 gr; pustka |
+| AOZ 71/2.1.2/202 skan 6 | 51 | Kozaczkowski | Paweł Kozaczek | do arendy | ćw. 1 |
+| AOZ 71/2.1.2/202 skan 6 | 51 | Kozaczkowski | Grzech Kozaczek | robi | ćw. ½; 9 gr |
+| AOZ 71/2.1.2/202 skan 6 | 51 | Kozaczkowski | Tenże Kozaczek | czynsz | ćw. ½; staj 4½; 5 zł 12 gr |
+| AOZ 71/2.1.2/202 skan 6 | 52 | Marcinkowski | Marcin Samel do arendy | do arendy | ćw. 1 |
+| AOZ 71/2.1.2/202 skan 6 | 52 | Marcinkowski | Paweł Piech | robi | ćw. ½; 9 gr |
+| AOZ 71/2.1.2/202 skan 6 | 52 | Marcinkowski | Tenże Piech | czynsz | staj 2; 2 zł 12 gr |
+| AOZ 71/2.1.2/202 skan 6 | 53 | Piechowski | Paweł Piech | robi | ćw. ½; 9 gr |
+| AOZ 71/2.1.2/202 skan 6 | 53 | Piechowski | Szymon Kudrel | do roboty dodano | ćw. ½ |
+| AOZ 71/2.1.2/202 skan 6 | 54 | Sapaliński(?) | Wojciech Kozaczek | robi | ćw. 1; konie 1, robota 2; 18 gr; reszta zarośla |
+| AOZ 71/2.1.2/202 skan 6 | 55 | Kaczkowski | Jędrzej Sobotka z Pawłem Krawczykiem | robi | ćw. 1; 18 gr; zarostlina |
+| AOZ 71/2.1.2/202 skan 6 | 56 | Rzepczyński | Wawrzek Wałasek(?) | robi | ćw. ½; 9 gr |
+| AOZ 71/2.1.2/202 skan 6 | 56 | Rzepczyński | Rzepce do roboty przydano |  | ćw. ½; reszta zarośla; Latus effecit 15 8 5 11 5 16… |
