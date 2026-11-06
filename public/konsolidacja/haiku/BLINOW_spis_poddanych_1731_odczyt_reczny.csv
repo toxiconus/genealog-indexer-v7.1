@@ -81,3 +81,81 @@
 1731;4;prawa(3);;Matyaszowa Weisłowa;robi;;;;1;;;;;;;;"wdowa Matyasza; 1½ przędzy"
 1731;4;prawa(3);;Tasz;czynszuje;1;;;;1 zł 6 gr;;;;;;;
 1731;4;prawa(3);;SUMA STRONY;suma;62;15;20;3;11;11;92;37(?);;;;odczyt niepewny
+1731;5;lewa(4);Kuczyński;Jakub Kuczka;robi;;;2;;18;2;2;1;1;8;3;
+1731;5;lewa(4);;Jędrzej Kuczka (tamże);robi;;;1;;9;1;1;½;½;4;1½;
+1731;5;lewa(4);;Bartek Kuczka;czynszuje;4;;;;4 zł 24 gr;;;;;;;
+1731;5;lewa(4);Kosidłowski;Matyasz Kosidło;robi;;1;2;;9;1;1;½;½;4;1½;"„pogorzał"" = pogorzelec, ofiara pożaru"
+1731;5;lewa(4);;Matyasz Cimek(?);robi;;1;1;;9;1;1;½;½;4;1½;
+1731;5;lewa(4);;Woytek Kosidło;czynszuje;3;;;;3 zł 18 gr;;;;;;;Kosidło ≈ Kosidło/Kossidło w bazie (18 wzmianek przed 1800)
+1731;5;lewa(4);;Reszta ugór;ugór;;;;;;;;;;;;
+1731;5;lewa(4);Skoczylasowski;Woyciech Kosidło;robi;1;1;2;;18;2;2;1;1;8;3;
+1731;5;lewa(4);;Matyasz Pastyga ubogi;robi;1;;2;;9;1;1;½;½;4;3;"Pastyga w bazie (4 wzm. przed 1800); „ubogi"""
+1731;5;lewa(4);Pietrzyński;Stanisław Rajda Leśny;leśny;;;;;;;;;;;;leśny = gajowy/leśnik, bez danin
+1731;5;lewa(4);;Tenże;czynszuje;2½;;;;3 zł;;;;;;;
+1731;5;lewa(4);;Matyasz Kosidło;czynszuje;3;;;;3 zł 18 gr;;;;;;;
+1731;5;lewa(4);Kosidłowski;Matyasz Kosidło Wójt;wójt;;;;;;;;;;;;wójt wsi – zwolniony z danin
+1731;5;lewa(4);Kołodziejowski;Matyasz Kipa;robi;2;;1;;9;1;1;½;½;4;1½;
+1731;5;lewa(4);;Szymon Kudrel;robi;1;1;1;;9;1;1;½;½;4;1½;Kudrel = Kudrelek w bazie
+1731;5;lewa(4);Morowski;Jan Woytowicz;robi;2;1;1;;9;1;1;½;½;4;1½;Wojtowicz w bazie
+1731;5;lewa(4);;Matyasz Kozaczek Połowy(?);?;;;;;;;;;;;;"„połowy"" – pół zagrody? bez liczb"
+1731;5;lewa(4);Kozachowski;Szym. Kozaczek;robi;2;1;1;;9;1;1;½;½;4;1½;
+1731;5;lewa(4);;Marcin Kozaczek;robi;1;1;1;;9;1;1;½;½;4;1½;
+1731;5;lewa(4);Marcinkowski;Jan Weisło;do arendy;;;;;18;2;2;1;1;8;3;
+1731;5;lewa(4);;Tenże za Dołem;czynszuje;1;;;;1 zł 6 gr;;;;;;;za Dołem = pole za Dołem (miejscowa nazwa)
+1731;5;lewa(4);Piechowski;Wawrzeniec Piech;robi;;1;1;;9;1;1;½;½;4;1½;
+1731;5;lewa(4);;Tenże za Dołem;czynszuje;½;;;;18 gr;;;;;;;
+1731;5;lewa(4);;Wygon Gromadzki;wygon;;;;;;;;;;;;wspólne pastwisko gromady
+1731;5;lewa(4);Czapaliński;Woytek Kozaczek;robi;1;;1;;9;1;1;½;½;4;1½;
+1731;5;lewa(4);;Tenże;czynszuje;5½;;;;6 zł 18 gr;;;;;;;
+1731;5;lewa(4);;Reszta ugór;ugór;;;;;;;;;;;;
+1731;5;lewa(4);Kaskowski;Jan Krawczyk;robi;2;;2;;18;2;2;1;1;8;3;
+1731;5;lewa(4);;Paweł Krawczyk z Ogroda;ogród;;;1;;;;;;;;1½;
+1731;5;lewa(4);;Tenże;czynszuje;4;;;;4 zł 24 gr;;;;;;;
+1731;5;lewa(4);Rzepczyński;Jan Stępnik;robi;2;;1;;9;1;1;½;½;4;1½;
+1731;5;lewa(4);;Tenże;czynszuje;2;;;;2 zł 12 gr;;;;;;;
+1731;5;lewa(4);Kowalikowski;Woyciech Ratay;czynszuje;4;;;;4 zł 24 gr;;;;;;;Ratay = Rataj (8 wzm. 1783–87)
+1731;5;lewa(4);;Tenże z Ogroda;robi;;;1;;;;;;;;1½;
+1731;5;lewa(4);;Z drugiej Jan Ratay;robi;;1;1;;9;1;1;½;½;4;1½;
+1731;5;lewa(4);Kowalikowski;Drugi Woyciech Kurczak z Zięciem;robi;2;1;2;;18;2;2;1;1;8;3;z zięciem
+1731;5;lewa(4);Gadajowski;Woyciech Kisiel;robi;;;1;;9;1;1;½;½;4;1½;
+1731;5;lewa(4);;Tenże;czynszuje;5;;;;6 zł;;;;;;;
+1731;5;lewa(4);Milaszowski(?);Ćwierć do arendy;arenda;;;;;;;;;;;;
+1731;5;lewa(4);;SUMA STRONY;suma;41;10;29;;12;12;96;4½;;;;odczyt niepewny
+1731;5;prawa(5);;Jan Palucki;robi;1;;1;;9;1;1;½;½;4;1½;Paluchowski w bazie (3 wzm.)
+1731;5;prawa(5);;Tenże za Dołem;czynszuje;1½;;;;1 zł 24 gr;;;;;;;
+1731;5;prawa(5);Milaszowski;Wdowa Kudrelkowa;robi z Stajni;2½;;;1;;;;;;;1½;robi ze stajni(?) – komornica
+1731;5;prawa(5);;Tasz;czynszuje z Spółką;6½;;;;7 zł 24 gr;;;;;;;czynsz razem ze Spółką/wspólnikami
+1731;5;prawa(5);Wiartowski;Jan Popek;robi;1;;2;;18;2;2;1;1;8;3;
+1731;5;prawa(5);;Stanisław Samułek;robi;2;1;2;;18;2;2;1;1;8;3;Samułek – nie ma w bazie
+1731;5;prawa(5);Burzelowski;Stanisław Burzel;robi;1;;1;;9;1;1;½;½;4;1½;
+1731;5;prawa(5);;Tenże za Dołem;czynszuje;1½;;;;1 zł 24 gr;;;;;;;
+1731;5;prawa(5);Kulikowski;Matyasz Woytusiak;robi;1;1;1;;9;1;1;½;½;4;1½;Wojtusiak w bazie (6 wzm. przed 1800)
+1731;5;prawa(5);;Tenże za Dołem;czynszuje;½;;;;18 gr;;;;;;;
+1731;5;prawa(5);Ratajowski;Jan Ratay z Spółką;czynszuje;6½;;;;7 zł 24 gr;;;;;;;
+1731;5;prawa(5);;Tenże z Ogroda;ogród;;;1;;;;;;;;;
+1731;5;prawa(5);Dylowski;Kazimierz Palak;do arendy;;;;;9;1;1;½;½;4;1½;
+1731;5;prawa(5);;Tenże za Dołem;czynszuje;½;;;;18 gr;;;;;;;
+1731;5;prawa(5);;Z drugiej ćwierci Woyciech Pazdraczek;robi;;;2;;18;1;1;½;½;4;3;"ubogi; Pazdrak w bazie (10 wzm. przed 1800)"
+1731;5;prawa(5);Parczyński;Marcin Piech;robi;2;;2;;18;2;2;1;1;8;3;
+1731;5;prawa(5);;Stach Steplik;robi;;;1;;9;1;1;½;½;4;1½;
+1731;5;prawa(5);;Wdowa Grecina;robi;1;;1;;9;1;1;½;½;4;1½;
+1731;5;prawa(5);Mitoszewski;Paweł Michałek;robi;2;1;2;;18;2;2;1;1;8;3;
+1731;5;prawa(5);;Z drugiej Jakub Michałek;w udarze(?);;;;;;;;;;;;"nieczytelne; bez liczb"
+1731;5;prawa(5);Kozakowski;Jan Pawłosek;robi;;1;1;;9;1;1;½;½;4;1½;Pawłasek w bazie
+1731;5;prawa(5);;Matyasz Woytalas;robi;1;;1;;9;1;1;½;½;4;1½;
+1731;5;prawa(5);ZAGRODY BLINOWSKIE;(nagłówek sekcji: zagrodnicy/komornicy);nagłówek;;;;;;;;;;;;"mniejsze chałupy; obowiązki skromne"
+1731;5;prawa(5);Greczyńska;Wdowa Kudrelkowa;zagrodnik;1;1;;;6;;;;;;1½;wdowa
+1731;5;prawa(5);;Z drugiej połowy Szym. Kudrelek Leśny;zagrodnik;;;;;;;;;;;;"leśny; bez liczb"
+1731;5;prawa(5);Olechowska;Wdowa Kiełbasina;zagrodnik;;;2;;12;;;;;3;;Kiełbasa: nie ma w bazie
+1731;5;prawa(5);Piechowska;Grzech Pcion;zagrodnik;1;1;;;6;;;;;;1½;
+1731;5;prawa(5);;Walenty Sieyka;zagrodnik;2;1;;;6;;;;;;1½;
+1731;5;prawa(5);Kudrelowska;Stanisław Kaczyński;zagrodnik;2;1;;;6;;;;;;1½;
+1731;5;prawa(5);;Woyciech Łysak;zagrodnik;2;1;;;6;;;;;;1½;
+1731;5;prawa(5);Rycerzowska;Wdowa Kowalczykowa;zagrodnik;;;1;;6;;;;;;1½;
+1731;5;prawa(5);;Jan Kisiel;zagrodnik;2;1;;;6;;;;;;1½;
+1731;5;prawa(5);Samułowska;Jakub Samuł;zagrodnik;2;1;;;6;;;;;;1½;
+1731;5;prawa(5);;Wdowa Samułowa;zagrodnik;;;1;;6;;;;;;1½;
+1731;5;prawa(5);Białaszowska(?);Wdowa Żołtoniowa;zagrodnik;2;1;2;;12;;;;;3;;
+1731;5;prawa(5);Kaczyńska;Jan Kaczyński;czynszuje;5;;;;6;;;;;;;czynsz
+1731;5;prawa(5);Kaczyńska;Marcin Kaczyński;zagrodnik;2;1;;;6;;;;;;1½;
+1731;5;prawa(5);;SUMA STRONY;suma;35;12;20;1;0½;0½;60(?);;;;;odczyt niepewny
