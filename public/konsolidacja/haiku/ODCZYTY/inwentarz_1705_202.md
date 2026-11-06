@@ -1,7 +1,7 @@
 # Wieś Blinów „z powinnościami A° 1705" (AOZ 71/2.1.2/202)
 
-- **Zakres odczytu:** skany 4–6 (lp 1–56); skany 7–19 do odczytu.
-- Nagłówek: „Continuantur Powinności Wsi Blinowa A° 1705"; kolumny: denominatio (dawna osiadłość), ćwierci, osadnik, staja, sprzężaj, robota, czynsz zł/gr, owies, stacja, przędza.
+- **Zakres odczytu:** skany 4–8 (lp 1–67 = wszyscy kmiecie, z sumą); skany 9–19 (zagrody, przymiarki, opis powinności itd.) do odczytu.
+- Kolumny: denominatio (dawna osiadłość), ćwierci, osadnik, staja, sprzężaj, robota, czynsz zł/gr, owies, stacja, przędza.
 - Rok wg SzwA: do potwierdzenia.
 - Źródło: `../BLINOW_inwentarz_1705_202_poddani_odczyt_reczny.csv`
 
@@ -47,6 +47,26 @@
 | AOZ 71/2.1.2/202 skan 5 | 22 | Pcionowski | Jan Pcion | robi | ćw. ½; 18 gr |
 | AOZ 71/2.1.2/202 skan 5 | 23 | Klimkowska | Mackowa Brzozkowa(?) | czynsz | ćw. 1; staj 3; 3 zł 18 gr |
 | AOZ 71/2.1.2/202 skan 5 | 24 | Burakowski | Maciej Pcion | gumienny do służby liber | ćw. 1; ćw. 1 zarosła; Latus 33½ … |
+| AOZ 71/2.1.2/202 skan 5 (prawa) | 25 | Kalabiszowski | Jan Wojcik | robi | ćw. ½; robota 2; 9 gr |
+| AOZ 71/2.1.2/202 skan 5 (prawa) | 25 | Kalabiszowski | Józef Paciorek | czynsz | ćw. 1½; staj 3; 3 zł 18 gr; ostatek zarosło |
+| AOZ 71/2.1.2/202 skan 5 (prawa) | 26 | Sienkowski | Wojtek Ciećek | do arendy | ćw. 2 |
+| AOZ 71/2.1.2/202 skan 5 (prawa) | 27 | Kłuszewski(?) | Stach Paciorek, leśny do służby (tylko staj 8) | leśny | ćw. 2 |
+| AOZ 71/2.1.2/202 skan 5 (prawa) | 28 | Kołodziejowski | Jan Zacny | czynsz | ćw. 2; staj 7; 10 zł 12 gr; z ogrodu 1 zł |
+| AOZ 71/2.1.2/202 skan 5 (prawa) | 29 | Parczyński | Tomek Szaszerek(?) | robi | ćw. 2; robota 2; 18 gr |
+| AOZ 71/2.1.2/202 skan 5 (prawa) | 30 | Broszkowski | Broszkowska | do arendy | ćw. 2 |
+| AOZ 71/2.1.2/202 skan 5 (prawa) | 31 | Orchowski | Wojciech Orchowski z ogrodem | czynsz | ćw. 2; staj 4; 4 zł 24 gr |
+| AOZ 71/2.1.2/202 skan 5 (prawa) | 32 | Kasprowski | Jan Kasperek | czynsz | ćw. 2; staj 9½; 11 zł 12 gr; ostatek ugorem |
+| AOZ 71/2.1.2/202 skan 5 (prawa) | 33 | Kuczyński | Kazimierz Kosidło | czynsz | ćw. 2; staj 8½; 10 zł 6 gr; ostatek ugorem |
+| AOZ 71/2.1.2/202 skan 5 (prawa) | 34 | Pcionowski | Szymon Pcionek | robi | ćw. ½; woły 1, konie 1, robota 2; 9 gr |
+| AOZ 71/2.1.2/202 skan 5 (prawa) | 34 | Pcionowski | Wojtek Paciorek, włodarz do służby | włodarz | ćw. 1; ostatek zarosło |
+| AOZ 71/2.1.2/202 skan 5 (prawa) | 35 | Wstępniowski | Wojtek Wstępień | robi | ćw. 1; woły 2, konie 1; 18 gr |
+| AOZ 71/2.1.2/202 skan 5 (prawa) | 35 | Wstępniowski | Kędziora włodarz liber | włodarz liber | ćw. 1 |
+| AOZ 71/2.1.2/202 skan 5 (prawa) | 36 | Burzelowski | Wojtek Wstępień | czynsz | ćw. 1; staj 8½; 10 zł 6 gr |
+| AOZ 71/2.1.2/202 skan 5 (prawa) | 36 | Burzelowski | Adam Ciećek | robi | ćw. 1; 18 gr |
+| AOZ 71/2.1.2/202 skan 5 (prawa) | 37 | Piszkowski | Wojciech Wcisło | robi | ćw. 1; woły 4, konie 2; 18 gr |
+| AOZ 71/2.1.2/202 skan 5 (prawa) | 37 | Piszkowski | Tenże Wcisło | czynsz | ćw. 1; staj 8; 9 zł 18 gr |
+| AOZ 71/2.1.2/202 skan 5 (prawa) | 38 | Obidzowski | Jan Obydź z ogrodem | czynsz | ćw. 1; staj 5; 7 zł 18 gr |
+| AOZ 71/2.1.2/202 skan 5 (prawa) | 38 | Obidzowski | Stach Kozaczek | robi | ćw. 1; 18 gr; Latus 54 10 6 10 4 65… |
 | AOZ 71/2.1.2/202 skan 6 | 39 | Jaraszowski | Andrzej Wcisło | robi | ćw. 1; woły 2, robota 2; 18 gr; „ten był leśnym, teraz od św. Marcina robi, jednak lasu pilnować powinien" |
 | AOZ 71/2.1.2/202 skan 6 | 40 | Radwanowski | Wawrzek Ziętak | robi | ćw. ½; 9 gr |
 | AOZ 71/2.1.2/202 skan 6 | 40 | Radwanowski | Jan Wcisło | robi | ćw. ½; 9 gr |
