@@ -944,6 +944,7 @@ function tbCtl(){
   g('tdBody').innerHTML=sec('Rodzice do uzupełnienia – kandydat aktu urodzenia z rodzicami','a',ROWS.filter(r=>r.k==='A').sort((a,b)=>b.pct-a.pct))+
    sec('Brak aktu urodzenia w bazie (rok ma akty w indeksie)','b',ROWS.filter(r=>r.k==='B').sort((a,b)=>a.y-b.y))+
    sec('Rok poza indeksem bazy (luka w danych, nie w drzewie)','c',ROWS.filter(r=>r.k==='C').sort((a,b)=>a.y-b.y))+
+   sec('Osoby z drzewa dopasowane do gospodarzy z tabel likwidacyjnych 1864 (trop, nie dowód)','g',ROWS.filter(r=>r.k==='H').sort((a,b)=>b.pct-a.pct));
    sec('Gospodarze z tabel likwidacyjnych 1864 bez dopasowania w drzewie (tropy do dopisania; odczyt AI wstępny)','g',ROWS.filter(r=>r.k==='G').sort((a,b)=>a.name.localeCompare(b.name,'pl')));
   if(done)g('tdCsv').disabled=false}
  function start(){
@@ -961,18 +962,19 @@ function tbCtl(){
    if(k<ids.length){draw(false);setTimeout(step,0);return}
    // faza 2: gospodarze z 1864 bez dopasowania w drzewie
    if(typeof G==='undefined'||!G.length){draw(true);return}
-   const all=Object.keys(TREE.P),hit=new Set();let j=0;
+   const all=Object.keys(TREE.P),hit=new Set(),HM=[];let j=0;
    (function ph2(){if(my!==RUN)return;const t1=performance.now();
-    while(j<all.length&&performance.now()-t1<60){let mm=GC.get(all[j]);if(!mm){mm=gMatch(TREE.P[all[j]]);GC.set(all[j],mm)}mm.forEach(x=>hit.add(x.g[0]+'|'+x.g[1]));j++}
+    while(j<all.length&&performance.now()-t1<60){let mm=GC.get(all[j]);if(!mm){mm=gMatch(TREE.P[all[j]]);GC.set(all[j],mm)}mm.forEach(x=>hit.add(x.g[0]+'|'+x.g[1]));if(mm.length)HM.push([all[j],mm]);j++}
     g('tdProg').textContent='Gospodarze 1864: '+j+' / '+all.length+' osób drzewa';
     if(j<all.length){setTimeout(ph2,0);return}
-    ROWS=ROWS.filter(r=>r.k!=='G');
+    ROWS=ROWS.filter(r=>r.k!=='G'&&r.k!=='H');
+    HM.forEach(([id,mm])=>{const p=TREE.P[id],x=mm[0];ROWS.push({k:'H',id,name:tnm(p),life:tbLife(p),y:tyr(p.b)||tyr(p.b2),pct:x.pct,txt:'gospodarz 1864: '+x.g[0]+' '+x.g[1]+' · skan '+x.g[3].slice(0,3).map(e=>e[0]+'/poz. '+e[1]+(e[2]&&e[2]!=='-'?' razem '+e[2]+(e[3]&&e[3]!=='-'?'/'+e[3]:''):'')).join(', ')+(x.g[2]?' · odczyt niepewny':'')+(mm.length>1?' · +'+(mm.length-1)+' innych kandydatów':'')})});
     G.forEach(e=>{if(hit.has(e[0]+'|'+e[1]))return;if(/owa$|ina$/i.test(e[0]))return;const ent=e[3];ROWS.push({k:'G',id:'',name:e[0]+' '+e[1],life:'',y:ent[0]?ent[0][0]:0,pct:0,txt:'skan '+ent.slice(0,3).map(x=>x[0]+'/poz. '+x[1]).join(', ')+(e[2]?' · odczyt niepewny':'')})});
     g('tdProg').textContent='Gotowe: '+ids.length+' osób bez rodziców; gospodarzy 1864 bez dopasowania: '+ROWS.filter(r=>r.k==='G').length;draw(true)})()})()}
  g('tbTodo').onclick=()=>{m.hidden=false;start()};
  g('tdClose').onclick=()=>{RUN++;m.hidden=true};
  g('tdBody').addEventListener('click',e=>{const tr=e.target.closest('[data-go]');if(!tr)return;RUN++;m.hidden=true;TB.sel=tr.dataset.go;TB.q='';TB.letter='';tbRender()});
- g('tdCsv').onclick=()=>{const L={A:'rodzice do uzupełnienia',B:'brak aktu ur. w bazie',C:'rok poza indeksem',G:'gospodarz 1864 bez dopasowania w drzewie'};
+ g('tdCsv').onclick=()=>{const L={A:'rodzice do uzupełnienia',B:'brak aktu ur. w bazie',C:'rok poza indeksem',G:'gospodarz 1864 bez dopasowania w drzewie',H:'osoba z drzewa = gospodarz 1864 (dopasowanie)'};
   const rows=[['kategoria','osoba','id','lata życia','zgodność %','opis']].concat(ROWS.slice().sort((a,b)=>a.k.localeCompare(b.k)||b.pct-a.pct).map(r=>[L[r.k],r.name,r.id,r.life,r.pct||'',r.txt]));
   dl('do_zbadania.csv',rows.map(r=>r.map(q).join(';')).join('\r\n'),'text/csv')}
 })();
