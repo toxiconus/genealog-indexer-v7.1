@@ -14,3 +14,10 @@ Pudło i Kopiwoda: brak w spisach Blinowa; Brzozówka 1864 – poz. 11, 31, 44 (
 - 1799 (71/2.1.2/208): skany 6, 8, 9 sprawdzone – brak nazwisk poddanych (ogrody/łąki/naczynia folwarku, zasady powinności). Lista nazwisk (skan 7) kompletna.
 - Rewizja 1701 (71/2.1.13/1342): skany 4–9 odczytane (lp 45–67, zagrody, przymiarki); skany 10–12 (podsumowanie) do odczytu (crop /tmp/w5_*).
 - Inwentarz 201: str. 12–13 w CSV (BLINOW_inwentarz_201_poddani_odczyt_reczny.csv), str. 14 w md (powinności). Str. 15–16 (powinności) w md; str. 17–27 w CSV (kompletny odczyt tabel); zostaje opis powinności po str. 27 (skan 20 to okładka) do odczytu.
+
+## Nowe skany 2026-11-06 (skany_31–35)
+- 71/2.1.13/1346 (skany_33, 8 skanów): „Rewizya Blinowska 173?" (rok niepewny: 1737/1738?); odczytane str. 4–5 (skan 5) -> BLINOW_spis_poddanych_173x_1346_odczyt_reczny.csv; skany 6–8 do odczytu.
+- 71/2.1.13/1354 (skany_32, 7 skanów): spis „opisana 175?" (rok nieczytelny, lata 50. XVIII w.); nieodczytany.
+- 71/2.1.2/202 (skany_31, 19 skanów): inwentarz; nieodczytany.
+- 71/1.1/4 (skany_34, 12 skanów): „Inventarz wsi Blinowa, roku Pańskiego 1 ? 5? ósmego, dnia 12 maja" (1658 lub 1708 – do ustalenia); nieodczytany.
+- skany_35 = duplikat 71/2.1.13/1342 (skany_27).

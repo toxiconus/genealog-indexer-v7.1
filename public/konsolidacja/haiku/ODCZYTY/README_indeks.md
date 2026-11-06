@@ -24,3 +24,5 @@ Skróty: AOZ = Archiwum Ordynacji Zamojskiej ze Zwierzyńca (zespół 71, AP Lub
 | [inwentarz_1799_poddani.md](inwentarz_1799_poddani.md) | Inwentarz części Blinowa 1799 – poddani | AOZ 71/2.1.2/208, skan 7 | lista osiadłości kompletna (skany 6, 8, 9 bez nazwisk) | 45 |
 
 Inne opisowe odczyty (w folderze wyżej): `BLINOW_spisy_poddanych_1731_1733_str1_odczyt_reczny.md`, `BLINOW_inwentarz_201_powinnosci_kmieci.md`, `BLINOW_spisy_LEGENDA.md`, `BLINOW_spisy_STAN_PRAC.md`, `PUDLO_KOPIWODA_Brzozowka_ustalenia.md`, `TABELE_LIKWIDACYJNE_168_1067_Brzozowka_odczyt_AI.csv`.
+
+| [spis_poddanych_173x_1346.md](spis_poddanych_173x_1346.md) | Rewizja Blinowska 173? (rok niepewny) | AOZ 71/2.1.13/1346 skan 5 | str. 4–5 | 55 |
