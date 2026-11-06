@@ -1,0 +1,174 @@
+# Spis poddanych Blinów 1737
+
+- **Sygnatura / skany:** AOZ 71/2.1.13
+- **Zakres odczytu:** pełny
+- **Źródło danych:** `../BLINOW_spis_poddanych_1737_odczyt_reczny.csv` (odczyt ręczny, AP Lublin)
+- **Uwaga:** liczby w kolumnach to hipoteza; pewne są nazwiska, tryb i czynsz; „(?)" = odczyt niepewny.
+
+| rok | zrodlo | strona | osiadlosc_dawna | osadnik | tryb | staja | czynsz_zl_gr | uwagi |
+|---|---|---|---|---|---|---|---|---|
+| 1737 | AOZ 71/2.1.13/1348 skan 3 str.1 | 1 | Żołtoniowskie | pusto |  |  |  |
+| 1737 | AOZ 71/2.1.13/1348 skan 3 str.1 | 1 | 2ga | Grzegorz Żołton | czynsz | 1½ | 1 zł 24 gr |
+| 1737 | AOZ 71/2.1.13/1348 skan 3 str.1 | 1 | Ryczerzowskie | Matyasz Kisiel | robi |  | 18 gr; woły 1, robota 2; kapłony ½… |
+| 1737 | AOZ 71/2.1.13/1348 skan 3 str.1 | 1 | 2ga | Jan Kisiel | czynsz | 2½ | 3 zł |
+| 1737 | AOZ 71/2.1.13/1348 skan 3 str.1 | 1 |  | Tamże Grzegorz Żołton | czynsz | 1 | 1 zł 6 gr |
+| 1737 | AOZ 71/2.1.13/1348 skan 3 str.1 | 1 |  | Wawrzyniec Popek | czynsz | 1 | 1 zł 6 gr |
+| 1737 | AOZ 71/2.1.13/1348 skan 3 str.1 | 1 | Reszczyńskie | Wdowa Samułowa | robi |  | 9; robota 1 |
+| 1737 | AOZ 71/2.1.13/1348 skan 3 str.1 | 1 |  | Taż Samułowa | czynsz | ½ | 18 gr |
+| 1737 | AOZ 71/2.1.13/1348 skan 3 str.1 | 1 | Kaczyńskie | Wdowa Baranowa | robi |  | 9 |
+| 1737 | AOZ 71/2.1.13/1348 skan 3 str.1 | 1 | 2ga | Marcin Kaczyński | czynsz | 1½ | 1 zł 24 gr |
+| 1737 | AOZ 71/2.1.13/1348 skan 3 str.1 | 1 | Kaczyńskie 2ga | Adam Baran | czynsz | 1½ | 1 zł 24 gr |
+| 1737 | AOZ 71/2.1.13/1348 skan 3 str.1 | 1 |  | Grzegorz Pcion | czynsz | 1 | 1 zł 6 gr |
+| 1737 | AOZ 71/2.1.13/1348 skan 3 str.1 | 1 | Andrzejowskie | Grzegorz Żołton | czynsz | 1 | 1 zł 6 gr |
+| 1737 | AOZ 71/2.1.13/1348 skan 3 str.1 | 1 |  | Tamże Maciej Kisiel | czynsz | 1½ | 1 zł 24 gr |
+| 1737 | AOZ 71/2.1.13/1348 skan 3 str.1 | 1 |  | Jan Kopyt ogrodek do roboty |  |  |  |
+| 1737 | AOZ 71/2.1.13/1348 skan 3 str.1 | 1 | Świtowskie | Jan Kopyt | robi |  | 9; reszta pusto |
+| 1737 | AOZ 71/2.1.13/1348 skan 3 str.1 | 1 | Rzepczyńskie | Grzegorz Żołton | czynsz | 3 | 3 zł 18 gr |
+| 1737 | AOZ 71/2.1.13/1348 skan 3 str.1 | 1 | Marcinkowskie | pusto |  |  |  |
+| 1737 | AOZ 71/2.1.13/1348 skan 3 str.1 | 1 | Dylowskie | Wojciech Łysak | czynsz | 1 | 1 zł 6 gr |
+| 1737 | AOZ 71/2.1.13/1348 skan 3 str.1 | 1 | Ratajowskie | Jan Kopyt | czynsz | 1 | 1 zł 6 gr |
+| 1737 | AOZ 71/2.1.13/1348 skan 3 str.1 | 1 | Ligowskie | Michał Sokalski | robi mało siał |  |  |
+| 1737 | AOZ 71/2.1.13/1348 skan 3 str.1 | 1 | Reszczyńskie | Na Dwór |  |  |  |
+| 1737 | AOZ 71/2.1.13/1348 skan 3 str.1 | 1 | Gurniakowskie | Jan Puzyński | czynsz | 3 | 3 zł 18 gr |
+| 1737 | AOZ 71/2.1.13/1348 skan 3 str.1 | 1 |  | Tamże Grzegorz Pcion | czynsz | 3 | 3 zł 18 gr |
+| 1737 | AOZ 71/2.1.13/1348 skan 3 str.1 | 1 | Lipińskie | Do Arendy |  |  |  |
+| 1737 | AOZ 71/2.1.13/1348 skan 3 str.1 | 1 | Reszczyńskie | Na Dwór; tamże Bartosz Kozaczek | czynsz | 1 | 1 zł 6 gr |
+| 1737 | AOZ 71/2.1.13/1348 skan 3 str.1 | 1 | Reszczyńskie | Wdowa Sobocina | robi |  | 9 |
+| 1737 | AOZ 71/2.1.13/1348 skan 3 str.1 | 1 |  | Taż czynszuje | czynsz | 1 | 1 zł 6 gr |
+| 1737 | AOZ 71/2.1.13/1348 skan 3 str.1 | 1 | Kaczyńskie | Bartosz Kozaczek | robi |  | 9; owies 1; ½ ½ 4 1½ |
+| 1737 | AOZ 71/2.1.13/1348 skan 3 str.1 | 1 |  | SUMA Latus 1 |  |  | 33 zł 9 gr |
+| 1737 | AOZ 71/2.1.13/1348 skan 4 str.2 | 2 | 2ga | Do Arendy |  |  |  |
+| 1737 | AOZ 71/2.1.13/1348 skan 4 str.2 | 2 | Pasternakowskie | Stach Pasternak | robi |  | 9; owies 1+1 |
+| 1737 | AOZ 71/2.1.13/1348 skan 4 str.2 | 2 | 2ga | Andrzej Pasternak | robi |  | 9 |
+| 1737 | AOZ 71/2.1.13/1348 skan 4 str.2 | 2 |  | Wygon gromadzki |  |  |  |
+| 1737 | AOZ 71/2.1.13/1348 skan 4 str.2 | 2 | Siusińskie | Józef Kudrelek | czynsz | ½ | 18 gr |
+| 1737 | AOZ 71/2.1.13/1348 skan 4 str.2 | 2 |  | pusto |  |  |  |
+| 1737 | AOZ 71/2.1.13/1348 skan 4 str.2 | 2 | Wojcikowskie | Józef Kudrelek | robi |  | 9 |
+| 1737 | AOZ 71/2.1.13/1348 skan 4 str.2 | 2 |  | Tenże czynszuje | czynsz | 2 | 2 zł 12 gr |
+| 1737 | AOZ 71/2.1.13/1348 skan 4 str.2 | 2 |  | Stachowa Wcisłowa | komorne robi |  |  |
+| 1737 | AOZ 71/2.1.13/1348 skan 4 str.2 | 2 |  | Tamże Jan Piech | czynsz | 2½ | 3 zł |
+| 1737 | AOZ 71/2.1.13/1348 skan 4 str.2 | 2 | Kołtunowskie | Bartosz Kozaczek z inne | czynsz | 3½ | 4 zł 8 gr |
+| 1737 | AOZ 71/2.1.13/1348 skan 4 str.2 | 2 |  | Reszta na Dwór |  |  |  |
+| 1737 | AOZ 71/2.1.13/1348 skan 4 str.2 | 2 | Pcionowskie 2ga | Michał Pcion | czynsz | 2 | 2 zł 12 gr |
+| 1737 | AOZ 71/2.1.13/1348 skan 4 str.2 | 2 |  | Maciej Pcion | robi |  | 9; woły 1,konie 1,robota 1 |
+| 1737 | AOZ 71/2.1.13/1348 skan 4 str.2 | 2 |  | Pcionowa wdowa | komorne robi |  | 9 |
+| 1737 | AOZ 71/2.1.13/1348 skan 4 str.2 | 2 |  | Taż czynsz | czynsz | 1½ | 1 zł 24 gr |
+| 1737 | AOZ 71/2.1.13/1348 skan 4 str.2 | 2 |  | Solarowa wdowa | komorne robi |  |  |
+| 1737 | AOZ 71/2.1.13/1348 skan 4 str.2 | 2 | Burakowskie | Matyasz Pcion | czynsz | 3 | 3 zł 18 gr |
+| 1737 | AOZ 71/2.1.13/1348 skan 4 str.2 | 2 | Klimkowskie | Adam Brzozek | czynsz | 1 | 1 zł 6 gr |
+| 1737 | AOZ 71/2.1.13/1348 skan 4 str.2 | 2 | Kalabiszowskie | Matyasz Kurczak | czynsz | 2 | 2 zł 12 gr |
+| 1737 | AOZ 71/2.1.13/1348 skan 4 str.2 | 2 |  | Tamże Kazimierz Paciorek | do roboty |  |  |
+| 1737 | AOZ 71/2.1.13/1348 skan 4 str.2 | 2 | 2ga | Sebastian Machulek | robi |  | 9 |
+| 1737 | AOZ 71/2.1.13/1348 skan 4 str.2 | 2 | Sienkowskie | Jan Ciećko | robi do arendy |  | 18 |
+| 1737 | AOZ 71/2.1.13/1348 skan 4 str.2 | 2 | Tłuczkowskie | Matyasz Paciorek | robi |  | 18 |
+| 1737 | AOZ 71/2.1.13/1348 skan 4 str.2 | 2 | Kołodziejskie | Tomasz Satur(?) | robi komorne |  |  |
+| 1737 | AOZ 71/2.1.13/1348 skan 4 str.2 | 2 | Parczyńskie | Matyasz Kurczak | czynsz | 2½ | 3 zł |
+| 1737 | AOZ 71/2.1.13/1348 skan 4 str.2 | 2 | Burakowskie 2 | Adam Brzozek | robi |  | 18; woły 2 |
+| 1737 | AOZ 71/2.1.13/1348 skan 4 str.2 | 2 | Orchowskie | Jan Szwiec | robi komorne |  |  |
+| 1737 | AOZ 71/2.1.13/1348 skan 4 str.2 | 2 | 2ga | Jan Pcionek | czynsz | 1 | 1 zł 6 gr |
+| 1737 | AOZ 71/2.1.13/1348 skan 4 str.2 | 2 |  | Tamże Józef Czerepa | czynsz | ½ | 18 gr |
+| 1737 | AOZ 71/2.1.13/1348 skan 4 str.2 | 2 | Kasprowskie | Tomasz Gnat | czynsz | 1½ | 1 zł 24 gr |
+| 1737 | AOZ 71/2.1.13/1348 skan 4 str.2 | 2 |  | Tamże Józef Czerepa | czynsz | 1 | 1 zł 6 gr |
+| 1737 | AOZ 71/2.1.13/1348 skan 4 str.2 | 2 |  | Tamże Paweł Machulek | czynsz | ½ | 18 gr |
+| 1737 | AOZ 71/2.1.13/1348 skan 4 str.2 | 2 |  | SUMA Latus 2 |  |  | 33 zł 18 gr |
+| 1737 | AOZ 71/2.1.13/1348 skan 5 str.3 | 3 | 2ga | Tenże włodarz |  | ½ | 18 gr |
+| 1737 | AOZ 71/2.1.13/1348 skan 5 str.3 | 3 | Kosidłowskie | Matyasz Kosidło | robi komorne |  |  |
+| 1737 | AOZ 71/2.1.13/1348 skan 5 str.3 | 3 |  | Tamże Matyasz Kurczak | czynsz | 2½ | 3 zł |
+| 1737 | AOZ 71/2.1.13/1348 skan 5 str.3 | 3 |  | Tamże gumienny |  | ½ | 18 gr |
+| 1737 | AOZ 71/2.1.13/1348 skan 5 str.3 | 3 | Skoczylasowskie | Wojciech Kosidło | robi |  | 18; woły 2,konie 1,robota 2 |
+| 1737 | AOZ 71/2.1.13/1348 skan 5 str.3 | 3 |  | Maciej Pastyga | robi |  | robota 1 |
+| 1737 | AOZ 71/2.1.13/1348 skan 5 str.3 | 3 |  | Gumienny | czynsz | 1 | 1 zł 6 gr |
+| 1737 | AOZ 71/2.1.13/1348 skan 5 str.3 | 3 | Pietrzyńskie | Stanisław Kajda | robi |  | 9; pole pusto |
+| 1737 | AOZ 71/2.1.13/1348 skan 5 str.3 | 3 | 2ga | Maciej Kosidło | czynsz | 3 | 3 zł 18 gr |
+| 1737 | AOZ 71/2.1.13/1348 skan 5 str.3 | 3 | Kosidłowskie | Maciej Kosidło gumienny dworski |  |  |  |
+| 1737 | AOZ 71/2.1.13/1348 skan 5 str.3 | 3 | Kołodziejskie | Matyasz Kipa | robi |  | 9; woły 1,konie 1 |
+| 1737 | AOZ 71/2.1.13/1348 skan 5 str.3 | 3 | 2ga | Szymon Kurczak | robi |  | 9; woły 2 |
+| 1737 | AOZ 71/2.1.13/1348 skan 5 str.3 | 3 | Morowskie | Jan Wojtowicz | robi komorne |  |  |
+| 1737 | AOZ 71/2.1.13/1348 skan 5 str.3 | 3 | W | y | g | o | n |
+| 1737 | AOZ 71/2.1.13/1348 skan 5 str.3 | 3 | Kozachowskie | Szymon Kozaczek | robi |  | 9 |
+| 1737 | AOZ 71/2.1.13/1348 skan 5 str.3 | 3 | 2ga | Marcin Kozaczek | robi |  | 9 |
+| 1737 | AOZ 71/2.1.13/1348 skan 5 str.3 | 3 | Marcinkowskie | Wcisłowa wdowa | robi do arendy |  |  |
+| 1737 | AOZ 71/2.1.13/1348 skan 5 str.3 | 3 | Piechowskie | Michał Pcion | robi |  | 9 |
+| 1737 | AOZ 71/2.1.13/1348 skan 5 str.3 | 3 | 2ga | Na Dwór zasiana |  |  |  |
+| 1737 | AOZ 71/2.1.13/1348 skan 5 str.3 | 3 | Czapalińskie | Wojciech Kozaczek | robi komorne |  |  |
+| 1737 | AOZ 71/2.1.13/1348 skan 5 str.3 | 3 |  | Tamże Marcin Kozaczek | czynsz | 1 | 1 zł 6 gr |
+| 1737 | AOZ 71/2.1.13/1348 skan 5 str.3 | 3 | Kozłowskie | Jan Krawczyk | robi |  |  |
+| 1737 | AOZ 71/2.1.13/1348 skan 5 str.3 | 3 | na 2ga | Wojciech Pazdrak |  | ½ | 18 gr |
+| 1737 | AOZ 71/2.1.13/1348 skan 5 str.3 | 3 | Rzepczyńskie | Marcin Kozaczek | czynsz | 1½ | 1 zł 24 gr |
+| 1737 | AOZ 71/2.1.13/1348 skan 5 str.3 | 3 |  | Tamże Paweł Machulek z ogroda |  |  | 1 zł |
+| 1737 | AOZ 71/2.1.13/1348 skan 5 str.3 | 3 | Kowalikowskie | Szymon Babcia | robi komorne |  |  |
+| 1737 | AOZ 71/2.1.13/1348 skan 5 str.3 | 3 | 2ga | Jan Ratay wójt do usług |  |  |  |
+| 1737 | AOZ 71/2.1.13/1348 skan 5 str.3 | 3 |  | Tamże Wojciech Ciećko |  | ½ | 18 gr |
+| 1737 | AOZ 71/2.1.13/1348 skan 5 str.3 | 3 | Kowalikowskie | Stanisław Kosidło | do arendy |  | 9 |
+| 1737 | AOZ 71/2.1.13/1348 skan 5 str.3 | 3 |  | SUMA Latus 3 |  |  | 16 zł 27 gr… |
+| 1737 | AOZ 71/2.1.13/1348 skan 6 str.4 | 4 |  | Tenże Kosidło | czynsz | 2 | 2 zł 12 gr |
+| 1737 | AOZ 71/2.1.13/1348 skan 6 str.4 | 4 |  | Tamże Puzyński |  | ½ | 18 gr |
+| 1737 | AOZ 71/2.1.13/1348 skan 6 str.4 | 4 |  | Ogród Stach Kosidło |  |  | 1 zł |
+| 1737 | AOZ 71/2.1.13/1348 skan 6 str.4 | 4 | Gadajowskie | Puzyński | czynsz | 1 | 1 zł 6 gr |
+| 1737 | AOZ 71/2.1.13/1348 skan 6 str.4 | 4 |  | Tamże Tomkowa Białkowa |  | ½ | 18 gr |
+| 1737 | AOZ 71/2.1.13/1348 skan 6 str.4 | 4 | 2ga | Do arendy |  |  |  |
+| 1737 | AOZ 71/2.1.13/1348 skan 6 str.4 | 4 | Milaszowskie | Stach Burzel ogród |  |  | 18 gr |
+| 1737 | AOZ 71/2.1.13/1348 skan 6 str.4 | 4 |  | Tamże Stach Pasternak |  |  | 18 gr |
+| 1737 | AOZ 71/2.1.13/1348 skan 6 str.4 | 4 |  | Bartkowi Kozaczkowi do roboty |  | 1 |  |
+| 1737 | AOZ 71/2.1.13/1348 skan 6 str.4 | 4 | Milaszowskie 2 | Józefowa Wcisłowa | czynsz | 2 | 2 zł 12 gr |
+| 1737 | AOZ 71/2.1.13/1348 skan 6 str.4 | 4 | 2ga | Wawrzyniec Popek | czynsz | 2 | 2 zł 12 gr |
+| 1737 | AOZ 71/2.1.13/1348 skan 6 str.4 | 4 | Burzelowskie | Stanisław Samuł | robi |  | 9 |
+| 1737 | AOZ 71/2.1.13/1348 skan 6 str.4 | 4 | 2ga | Stanisław Burzel | robi |  | 9 |
+| 1737 | AOZ 71/2.1.13/1348 skan 6 str.4 | 4 | Kulikowskie | Jan Ratay | czynsz | 1 | 1 zł 6 gr |
+| 1737 | AOZ 71/2.1.13/1348 skan 6 str.4 | 4 | Tłuszczkowskie | Jan Ratay wójt stróż |  |  |  |
+| 1737 | AOZ 71/2.1.13/1348 skan 6 str.4 | 4 | Dylowskie | Wojciech Ratay | robi |  | 9 |
+| 1737 | AOZ 71/2.1.13/1348 skan 6 str.4 | 4 | 2ga | Wojciech Pazdrak włodarz |  |  |  |
+| 1737 | AOZ 71/2.1.13/1348 skan 6 str.4 | 4 | Parczyńskie | Marcin Piech połowy |  |  |  |
+| 1737 | AOZ 71/2.1.13/1348 skan 6 str.4 | 4 |  | Wygon gromadzki |  |  |  |
+| 1737 | AOZ 71/2.1.13/1348 skan 6 str.4 | 4 |  | Gryciana wdowa komorne robi |  |  |  |
+| 1737 | AOZ 71/2.1.13/1348 skan 6 str.4 | 4 | Milaszowskie | Paweł Michałek | robi |  | 9 |
+| 1737 | AOZ 71/2.1.13/1348 skan 6 str.4 | 4 | 2ga | Jakub Michałek | robi |  | 9 |
+| 1737 | AOZ 71/2.1.13/1348 skan 6 str.4 | 4 | Kozakowskie | Jan Pawłasek | robi |  |  |
+| 1737 | AOZ 71/2.1.13/1348 skan 6 str.4 | 4 | 2ga | Maciej Samuł | robi |  | 9 |
+| 1737 | AOZ 71/2.1.13/1348 skan 6 str.4 | 4 | ZAGRODY BLINOWSKIE: Gryczyńska | pusto |  |  |  |
+| 1737 | AOZ 71/2.1.13/1348 skan 6 str.4 | 4 |  | Tamże Szymon Kudrelek leśny do usług |  |  |  |
+| 1737 | AOZ 71/2.1.13/1348 skan 6 str.4 | 4 | Olechowska | Na Dwór zasiana; reszta pusto |  |  |  |
+| 1737 | AOZ 71/2.1.13/1348 skan 6 str.4 | 4 |  | SUMA Latus 4 |  |  | 15 zł 4 gr; kapłony 3, kury 3, jaja 24 |
+| 1737 | AOZ 71/2.1.13/1348 skan 6 str.6 | 6 | Piechowskie | Grzegorz Pcion | robi |  | 6 gr |
+| 1737 | AOZ 71/2.1.13/1348 skan 6 str.6 | 6 | 2ga | Michał Pcion |  | ½ | 18 gr |
+| 1737 | AOZ 71/2.1.13/1348 skan 6 str.6 | 6 |  | Tamże Szymon Pcion |  | 1 | 1 zł 6 gr |
+| 1737 | AOZ 71/2.1.13/1348 skan 6 str.6 | 6 | Kudrelowskie | Stachowa Kaczyńska | komorne robi |  |  |
+| 1737 | AOZ 71/2.1.13/1348 skan 6 str.6 | 6 | 2ga | Wojciech Łysak | robi |  | 6 |
+| 1737 | AOZ 71/2.1.13/1348 skan 6 str.6 | 6 | Ryczerzowskie | Wdowa Kowalczykowa | komorne |  | 6 |
+| 1737 | AOZ 71/2.1.13/1348 skan 6 str.6 | 6 | 2ga | Jan Kisiel | robi |  | 6 |
+| 1737 | AOZ 71/2.1.13/1348 skan 6 str.6 | 6 | Samułowskie | Jakub Samuł | robi |  | 12 |
+| 1737 | AOZ 71/2.1.13/1348 skan 6 str.6 | 6 | Białaszowskie | Grzegorz Żołton | robi do arendy |  | 12 |
+| 1737 | AOZ 71/2.1.13/1348 skan 6 str.6 | 6 | Kaczyńskie | Jakub Samuł | czynsz | 1 | 1 zł 6 gr |
+| 1737 | AOZ 71/2.1.13/1348 skan 6 str.6 | 6 | Kaczyńskie 2ga | Marcin Kaczyński | robi |  | 6 |
+| 1737 | AOZ 71/2.1.13/1348 skan 6 str.6 | 6 | Betniowskie | Jakub Samuł | czynsz | 2 | 2 zł 12 gr |
+| 1737 | AOZ 71/2.1.13/1348 skan 6 str.6 | 6 |  | Tamże Grzegorz Żołton | czynsz | 1 | 1 zł 6 gr |
+| 1737 | AOZ 71/2.1.13/1348 skan 6 str.6 | 6 | Przymiarek pod Niwą | Grzegorz Żołton | czynsz | 1½ | 1 zł 24 gr |
+| 1737 | AOZ 71/2.1.13/1348 skan 6 str.6 | 6 | Grzelowskie | pusto |  |  |  |
+| 1737 | AOZ 71/2.1.13/1348 skan 6 str.6 | 6 | Ratajowskie | Wojtowi Pazdrakowi do usług |  |  |  |
+| 1737 | AOZ 71/2.1.13/1348 skan 6 str.6 | 6 | 2ga | pusto |  |  |  |
+| 1737 | AOZ 71/2.1.13/1348 skan 6 str.6 | 6 |  | Kazimierz Ratay do arendy |  |  |  |
+| 1737 | AOZ 71/2.1.13/1348 skan 6 str.6 | 6 |  | Maciej Ratay | robi |  | 12 |
+| 1737 | AOZ 71/2.1.13/1348 skan 6 str.6 | 6 | Kusiowskie | Wojciech Pazdrak | czynsz | 1½ | 1 zł 24 gr |
+| 1737 | AOZ 71/2.1.13/1348 skan 6 str.6 | 6 | Bartnikowskie | pusto |  |  |  |
+| 1737 | AOZ 71/2.1.13/1348 skan 6 str.6 | 6 | Świtowskie | Bartosz Kozaczek | czynsz | ½ | 18 gr |
+| 1737 | AOZ 71/2.1.13/1348 skan 6 str.6 | 6 | Zimniakowskie | Tenże Kozaczek | czynsz | 1 | 1 zł 6 gr |
+| 1737 | AOZ 71/2.1.13/1348 skan 6 str.6 | 6 | Grzelowskie | pusto |  |  |  |
+| 1737 | AOZ 71/2.1.13/1348 skan 6 str.6 | 6 | Betniowskie | Matyasz Pysz komorne robi |  |  |  |
+| 1737 | AOZ 71/2.1.13/1348 skan 6 str.6 | 6 | Kasprowskie | Marcinowa Urtowcowa robi |  |  |  |
+| 1737 | AOZ 71/2.1.13/1348 skan 6 str.6 | 6 | Paciorkowskie | Grzegorz Paciorek | robi |  |  |
+| 1737 | AOZ 71/2.1.13/1348 skan 6 str.6 | 6 | Czerepińskie | Józef Czerepa | robi |  | 6 |
+| 1737 | AOZ 71/2.1.13/1348 skan 6 str.6 | 6 | Grzymkowskie | Maciej Kurczak | robi |  | 12 |
+| 1737 | AOZ 71/2.1.13/1348 skan 6 str.6 | 6 | Chudego | Maciej Kurczak | czynsz | 2½ | 3 zł |
+| 1737 | AOZ 71/2.1.13/1348 skan 6 str.6 | 6 |  | Tenże Kurczak | czynsz | 2 | 2 zł 12 gr |
+| 1737 | AOZ 71/2.1.13/1348 skan 6 str.6 | 6 | Krawczyńskie | Jan Czerepa | czynsz | 1 | 1 zł 6 gr |
+| 1737 | AOZ 71/2.1.13/1348 skan 6 str.6 | 6 | Gunińskie | SUMA Latus 6 |  |  | 21 zł 12 gr |
+| 1737 | AOZ 71/2.1.13/1348 skan 6 str.7 | 7 | PRZYMIARKI ZA CZEREPĄ: Tokarzowskie | Jan Szwiec | czynsz | 1 | 1 zł 6 gr |
+| 1737 | AOZ 71/2.1.13/1348 skan 6 str.7 | 7 |  | Józef Czerepa | czynsz | 2 | 2 zł 12 gr |
+| 1737 | AOZ 71/2.1.13/1348 skan 6 str.7 | 7 | Kasprowskie | Jan Pcionek | czynsz | ½ | 18 gr |
+| 1737 | AOZ 71/2.1.13/1348 skan 6 str.7 | 7 | Dudzińskie | pusto |  |  |  |
+| 1737 | AOZ 71/2.1.13/1348 skan 6 str.7 | 7 | W Niwie w Zedl. | obłogiem |  |  |  |
+| 1737 | AOZ 71/2.1.13/1348 skan 6 str.7 | 7 | Przy Niwie | Wojciech Jędrzejczak |  | ½ | 18 gr |
+| 1737 | AOZ 71/2.1.13/1348 skan 6 str.7 | 7 | PRZYMIARKI OD SUŁOWA | pusto |  |  |  |
+| 1737 | AOZ 71/2.1.13/1348 skan 6 str.7 | 7 | OGRODY BLINOWSKIE | przy Browarze, za Karczmą, Jana Wojtowicza, przy Ogrodzie Dworskim, Jana Pawłaska, Matyasza Pyszka, Ratajowskie – wszystkie PUSTO |  |  |  |
+| 1737 | AOZ 71/2.1.13/1348 skan 6 str.7 | 7 |  | Po Baraniaku: Grzegorz Pcion |  |  | 18 gr |
+| 1737 | AOZ 71/2.1.13/1348 skan 6 str.7 | 7 | COMPENDIUM wsi Blinowa 1737 | Summa effici |  |  | 162 zł 13 gr; kapłony 22, kury 22, jaja 182, przędza 103½ |

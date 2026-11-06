@@ -1,0 +1,68 @@
+# Spis poddanych Blinów 1733 (str. 2–3)
+
+- **Sygnatura / skany:** AOZ 71/2.1.13/1345, skany 4–5
+- **Zakres odczytu:** częściowy (str. 1 w md, skany 6–16 nieodczytane)
+- **Źródło danych:** `../BLINOW_spis_poddanych_1733_odczyt_reczny.csv` (odczyt ręczny, AP Lublin)
+- **Uwaga:** liczby w kolumnach to hipoteza; pewne są nazwiska, tryb i czynsz; „(?)" = odczyt niepewny.
+
+| str | denominatio | osadnik | tryb | uwagi |
+|---|---|---|---|---|
+| 2 (skan 4) | (Kaczyńskie, ciąg dalszy) | Tenże | czynsz | 4 zł 24 gr |
+| 2 (skan 4) |  | Wdowa Sobocina | robi |  |
+| 2 (skan 4) |  | Tasz (Tenże) | czynsz | 4 zł 12 gr |
+| 2 (skan 4) | Kaczyńskie | Stanisław Kozaczek | robi |  |
+| 2 (skan 4) | Kaczyńskie | Tenże Kozaczek | czynsz | 3 zł 18 gr |
+| 2 (skan 4) | Kaczyńskie ćwierć |  | do arendy |  |
+| 2 (skan 4) | Pasternakowskie | Stanisław Pasternak | robi |  |
+| 2 (skan 4) | Pasternakowskie 2ga ćw. | Jędrzej Pasternak | robi |  |
+| 2 (skan 4) | Pasternakowskie | Tenże Stanisław Pasternak z bratem | czynsz | 4 zł 24 gr |
+| 2 (skan 4) | Susińskie | Adamowi Wojciechowi | do roboty |  |
+| 2 (skan 4) | Susińskie 2ga ćw. | Szymonowi Kudrelkowi | do usług |  |
+| 2 (skan 4) | Wojciechowskie | Wdowa Kudrelkowa | robi | 1/2 ćw. |
+| 2 (skan 4) | Wojciechowskie 2ga ćw. | Wojciech Wojcik | robi |  |
+| 2 (skan 4) | Żołtuńskie | Janowi Krawczykowi | do roboty |  |
+| 2 (skan 4) | Żołtuńskie 2ga ćw. | Tomasz Wojcik | robi | reszta zarośl |
+| 2 (skan 4) | Żołtuńskie 3cia ćw. | Jakub Kasperek | robi |  |
+| 2 (skan 4) | Żołtuńskie | Tenże Kasperek | czynsz | 3 zł 18 gr; reszta zarośl |
+| 2 (skan 4) | Pcionowskie | Matyasz Pcion | robi | 1/2 ćw. |
+| 2 (skan 4) | Pcionowskie 2ga ćw. | Wojciech Pcion | robi |  |
+| 2 (skan 4) | Pcionowskie 3cia ćw. | Adam Wojcik | robi |  |
+| 2 (skan 4) | Burakowskie | Matyasz Pcion | czynsz | 5 ćw.; 6 gr; reszta zarośl |
+| 2 (skan 4) | Klimkowskie | Adam Brzozek | czynsz | 2 zł 12 gr; reszta zarośl |
+| 2 (skan 4) | Kalabiszowskie | Szymon Kurczak | czynsz | 2½ ćw.; 3 zł; reszta zarośl |
+| 2 (skan 4) | Kalabiszowskie 2ga ćw. | Sobek Machulek | czynsz | 4 zł 24 gr |
+| 2 (skan 4) | Sienkowskie | Jan Ciećek | robi | do arendy; reszta zarośl |
+| 2 (skan 4) | Błażkowskie(?) | Maciek Paciorek | robi |  |
+| 2 (skan 4) | Kołodziejskie | Tomasz Szuszorek | czynsz | 5 ćw.; 6 gr |
+| 2 (skan 4) | Kołodziejskie | Jego żona z ogrodem | robi | Latus |
+| 3 (skan 5) | Garczyńskie | Szymon Kurczak | czynsz | 6 ćw.; 7 zł; reszta zarośl |
+| 3 (skan 5) | Broszkowskie | Adam Brzozek | robi | do arendy |
+| 3 (skan 5) | Orłowskie | Jan Szewc z chałupy i ogrodem | ogród |  |
+| 3 (skan 5) | Orłowskie | Tenże Szewc | czynsz | 2 zł 12 gr |
+| 3 (skan 5) | Orłowskie 2ga ćw. na Świe(rzewie?) | Jan Kędziora | czynsz | 4½ ćw.; 5 zł 12 gr |
+| 3 (skan 5) | Kasprowskie | Stanisław Chudy | czynsz | 4 zł 24 gr |
+| 3 (skan 5) | Kasprowskie 2ga ćw. | Szymon Kędziora | robi |  |
+| 3 (skan 5) | Kuczyńskie | Tomasz Gnat | robi | 1/2 ćw. |
+| 3 (skan 5) | Pcionowskie | Jan Pcion | robi |  |
+| 3 (skan 5) | Pcionowskie | Tenże Pcion | czynsz | 3 zł 18 gr |
+| 3 (skan 5) | Stępniowskie | Szymon Kędziora | robi |  |
+| 3 (skan 5) | Stępniowskie 2ga ćw. | Wawrzyniec Stępnik | robi |  |
+| 3 (skan 5) | Stępniowskie 1/2 ćw. | Wdowa Ciećkowa | robi | z ogrodu i staja |
+| 3 (skan 5) | Stępniowskie | Tamże Wojciech Kosidło | czynsz | 5 ćw.; 6 zł |
+| 3 (skan 5) | Stępniowskie | Tamże Matyasz Kipa z innemi | czynsz | 4 zł 24 gr |
+| 3 (skan 5) | Landowskie(?) | Wawrzyniec Stępnik | czynsz | 6 ćw.; 7 zł 6 gr |
+| 3 (skan 5) | Pyszkowskie(?) | Wojciech Wcisło | robi |  |
+| 3 (skan 5) | Pyszkowskie | Tenże Wcisło | czynsz | 2 zł 12 gr |
+| 3 (skan 5) | Pyszkowskie na 2gą ćw. | Stach Wcisło | czynsz | 5 ćw.; 6 zł; reszta zarośl |
+| 3 (skan 5) | Pyszkowskie | Tamże Wojciech Kosidło z żoną(?) | czynsz | 1½ ćw.; 1 zł 24 gr |
+| 3 (skan 5) | Obydzkie | Jan Machulek | czynsz | 3½ ćw.; 4 zł 6 gr |
+| 3 (skan 5) | Obydzkie 2ga połowy | Stach Chudy | robi |  |
+| 3 (skan 5) | Obydzkie | Jan Obydź Skaz(?) | robi | 1/2 ćw. |
+| 3 (skan 5) | Jaroszowskie | Bartosz Czerepka | robi |  |
+| 3 (skan 5) | Jaroszowskie | Tenże Czerepka | czynsz | 2 zł 12 gr |
+| 3 (skan 5) | Jaroszowskie 2ga ćw. | Franek Wcisło | czynsz | 4 zł 24 gr; reszta ugór |
+| 3 (skan 5) | Radwańskie | Adam Radwan | robi |  |
+| 3 (skan 5) | Radwańskie 1/2 ćw. | Jan Machulek | robi |  |
+| 3 (skan 5) | Kozłowskie 1/2 ćw. | Machulek | gumienny wolny |  |
+| 3 (skan 5) | Kozłowskie | Paweł | gumienny do usług |  |
+| 3 (skan 5) | Kozłowskie | Tamże Marcin Barbarzak | czynsz | 2 zł 12 gr; Latus |

@@ -1,0 +1,129 @@
+# Inwentarz wsi Blinów (kmiecie, zagrodnicy, przymiarki) str. 12–27
+
+- **Sygnatura / skany:** AOZ 71/2.1.2/201, skany 11–19
+- **Zakres odczytu:** pełny odczyt tabel; data inwentarza do ustalenia
+- **Źródło danych:** `../BLINOW_inwentarz_201_poddani_odczyt_reczny.csv` (odczyt ręczny, AP Lublin)
+- **Uwaga:** liczby w kolumnach to hipoteza; pewne są nazwiska, tryb i czynsz; „(?)" = odczyt niepewny.
+
+| strona | zrodlo | osiadlosc_dawna | osadnik | tryb | uwagi |
+|---|---|---|---|---|---|
+| 12 | AOZ 71/2.1.2/201 skan 11 | Kisielowski | Jan Kisiel z ćwierci; druga ćwierć | robi / czynsz |  |
+| 12 | skan 11 | Ryczerzowski | Matys Ryczer z ćwierci | robi |  |
+| 12 | skan 11 | Ryczerzowski | Wojciech Kowal z drugiej ćwierci | robi |  |
+| 12 | skan 11 | Samulowski | Kisiel Samulik z ćwierci czynszowej | czynsz | druga ćwierć pusta |
+| 12 | skan 11 | Kaczyński | Wojciech Kaczyński z ćwierci | robi | Latus 12 12 15 … |
+| 13 | AOZ 71/2.1.2/201 skan 12 (lewa) | Kaczyński (druga ćw.) | Maciej Kaczyński staj 4 posiał | czynsz? | ostatek półłanka pusto leży |
+| 13 | skan 12 | Kaczyński (półłanek drugi) | Wojciech Samulik staj 2 | czynsz? | ostatek pusto |
+| 13 | skan 12 | Jędrzejowski | Jędrzejek Thomek z spółćwiartką | robi | ostatek pusto |
+| 13 | skan 12 | Świtowski | Samulik z Kaczyńskim | czynsz |  |
+| 13 | skan 12 | Rzepczyński | Maciek Żysak ćwierć | czynsz | druga pusto leży |
+| 13 | skan 12 | Marcinkowski | Samulik staj 2 | czynsz | ostatek pusto leży |
+| 13 | skan 12 | Dylowski | Samulik staj 2 | czynsz | ostatek pusto |
+| 13 | skan 12 | Ratajowski | Jakub Rataj staj 2 | czynsz | ostatek pusto |
+| 13 | skan 12 | Ligowski | Sieka(?) staj 2 | czynsz | ostatek pusto |
+| 13 | skan 12 | Reszczyński |  | pusty |  |
+| 13 | skan 12 | Gorniakowski | Thomas Gorniarek ćwierć | czynsz | druga pusto leży; Latus 26 29 … |
+| 17 | AOZ 71/2.1.2/201 skan 14 | Dylowski |  | pusty |  |
+| 17 | AOZ 71/2.1.2/201 skan 14 | Rzepczyński | Sobodka(?) z półćwiartką | robi |  |
+| 17 | AOZ 71/2.1.2/201 skan 14 | Rzepczyński | Stach Rzepka staj 2 | czynsz | ostatek pusto |
+| 17 | AOZ 71/2.1.2/201 skan 14 | Kaczyński | Sebest(?) Kucka ćwierć | czynsz | druga ćwierć pusta |
+| 17 | AOZ 71/2.1.2/201 skan 14 | Pasternakowski | Jakub Pastern(ak) | ogród | Sieć(?) ostatek pusto |
+| 17 | AOZ 71/2.1.2/201 skan 14 | Wołoszyński(?) | Wojtek z półłanka, włodarz liber | włodarz liber |  |
+| 17 | AOZ 71/2.1.2/201 skan 14 | Wołoszyński(?) | Mikołaj Wojtek z drugiej półćwiarki | robi | druga ćwierć pusta |
+| 17 | AOZ 71/2.1.2/201 skan 14 | Wojtkowski | Marcin(?) Stanisław Wojtkowie z ćwierci | robi | druga ćwierć czynsz |
+| 17 | AOZ 71/2.1.2/201 skan 14 | Skowrońskowski(?) | Wojtek Ketłonek(?) staj 3 | czynsz | ostatek pusto |
+| 17 | AOZ 71/2.1.2/201 skan 14 | Pigarowski | Pigarowie(?) | robi pieszo | z ćwierci, druga pusta; Latus 15 19 12½ … |
+| 18 | AOZ 71/2.1.2/201 skan 15 | Burakowski | Jgnowa(?) Pigzona(?) staj 1 | czynsz | ostatek pusto |
+| 18 | AOZ 71/2.1.2/201 skan 15 | Klinkowski | pusty; Samulik staj 5 | czynsz | ostatek pusto |
+| 18 | AOZ 71/2.1.2/201 skan 15 | Kalabiszowski | Thomas Kalabisek z Białą(?) zagrodą | robi | ostatek pusto |
+| 18 | AOZ 71/2.1.2/201 skan 15 | Sienkowski | Mikołaj Wojtek staj 2 | czynsz | ostatek pusto |
+| 18 | AOZ 71/2.1.2/201 skan 15 | Mączkowski(?) | Jan Muczek(?) staj 3 | czynsz | ostatek pusto |
+| 18 | AOZ 71/2.1.2/201 skan 15 | Chudziński | Adam Czerepka z części | robi | ostatek pusto |
+| 18 | AOZ 71/2.1.2/201 skan 15 | Tokarzowski | Walek Parka staj 2 | czynsz | ostatek pusto |
+| 18 | AOZ 71/2.1.2/201 skan 15 | Broskowski | Paweł Brzek z ćwierci | robi | druga ćwierć pusta |
+| 18 | AOZ 71/2.1.2/201 skan 15 | Chudalowski | Orchowski z ćwierci | robi | druga ćwierć pusta |
+| 18 | AOZ 71/2.1.2/201 skan 15 | Pułkowski(?) | Andrzej Wstępnik ćwierć przyjął na zimę | czynsz | ostatek pusto; Latus 9 14 6¼ … |
+| 19 | AOZ 71/2.1.2/201 skan 15 | Kaczyński | Stach Ciesko z kupierzem(?) ćwierć | czynsz | ostatek pusto leży |
+| 19 | AOZ 71/2.1.2/201 skan 15 | Pigarowski | Wawrzek Pigarek z półćwierci | robi |  |
+| 19 | AOZ 71/2.1.2/201 skan 15 | Pigarowski | Marcin Krawczyk Skłaczek staj 2 | czynsz | ostatek pusto |
+| 19 | AOZ 71/2.1.2/201 skan 15 | Wstępnikowski | Czabża(?) z Stępnikiem | robi |  |
+| 19 | AOZ 71/2.1.2/201 skan 15 | Ciękowski | Stach Ciesko z ćwierci | robi | Wstępnik na drugiej ćwierci staj 2 czynsz |
+| 19 | AOZ 71/2.1.2/201 skan 15 | Piszczkowski | Maciej Piszczek z ćwierci; Adam i Łukasz Piszczek z drugiej ćwierci | robi |  |
+| 19 | AOZ 71/2.1.2/201 skan 15 | Obydziowski | Maciej Piszczek z półćwierci | czynsz | Obydź z półćwierci robi, druga pusta |
+| 19 | AOZ 71/2.1.2/201 skan 15 | Jaroszowski | Jaworz(?) staj 1 | czynsz | Piszczek Maciek półtorej ćwierci przyjął na zimę; Latus 16 3 19 … |
+| 20 | AOZ 71/2.1.2/201 skan 16 | Radwanowski | Wojciech Radwan z ćwierci; tenże na drugiej ćwierci posiał staj 4 | robi / czynsz | ostatek pusto |
+| 20 | AOZ 71/2.1.2/201 skan 16 | Kozłowski | Walek Kozieć z ćwierci | robi |  |
+| 20 | AOZ 71/2.1.2/201 skan 16 | Kozłowski | Kalabysek z półćwierci | czynsz | ostatek pusto |
+| 20 | AOZ 71/2.1.2/201 skan 16 | Radwankowski | Jakub Pasternak z ćwierci | robi |  |
+| 20 | AOZ 71/2.1.2/201 skan 16 | Radwankowski | Wojtek z półćwierci | czynsz | drugie półćwierci pusto |
+| 20 | AOZ 71/2.1.2/201 skan 16 | Wcisłowski | Wojciech i Jan Wcisło z ćwierci | robią | druga ćwierć pusta |
+| 20 | AOZ 71/2.1.2/201 skan 16 | Kuczyński | Wawrzyniec Kucka z ćwierci | robi | ostatek pusto |
+| 20 | AOZ 71/2.1.2/201 skan 16 | Kosikowski | Stach i Thomas Kosik | robią |  |
+| 20 | AOZ 71/2.1.2/201 skan 16 | Szkoczylasowski | Andrzej Kosik z półćwierci (robi) i z drugiej półćwierci Thomas Kosik | robi / czynsz | ostatek pusto; Latus 13 20 22¼ … |
+| 21 | AOZ 71/2.1.2/201 skan 16 | Pieturzyński | Mania Kołodziej z półćwierci czynsz; Stach Kosik z półćwierci czynsz | czynsz | ostatek pusto też |
+| 21 | AOZ 71/2.1.2/201 skan 16 | Kosiłów(?) | Synek Kosiło(?) z ćwierci leśny | leśny | druga pusta |
+| 21 | AOZ 71/2.1.2/201 skan 16 | Kołodziejowski | Stach Rzepka z półćwierci, wójt liber | wójt liber | ostatek pusto |
+| 21 | AOZ 71/2.1.2/201 skan 16 | Morowski(?) | Kozaczek na zimę przyjął ćwierć | czynsz | druga pusta |
+| 21 | AOZ 71/2.1.2/201 skan 16 | Kozackowski | Stach Kozaczek z ćwierci | robi | ostatek pusto |
+| 21 | AOZ 71/2.1.2/201 skan 16 | Marcinkowski | Maciek Słaborek z Miłosza z ćwierci | robi | druga pusta |
+| 21 | AOZ 71/2.1.2/201 skan 16 | Piechowski | Piech z Miłosza z ćwierci | robi | ostatek pusto |
+| 21 | AOZ 71/2.1.2/201 skan 16 | Czapaliński | Wojciech Rzepka z półćwierci | robi | ostatek pusto; Latus 7 3 11¼ … |
+| 22 | AOZ 71/2.1.2/201 skan 17 | Kaśkowski(?) | Stach Rzepka z ogrodu | czynsz | ostatek pusto |
+| 22 | AOZ 71/2.1.2/201 skan 17 | Rzepczyński | Stach Rzepka z półćwierci, wójt liber | wójt liber | ostatek pusto |
+| 22 | AOZ 71/2.1.2/201 skan 17 | Rzepczyński | Tenże z półćwierci | czynsz |  |
+| 22 | AOZ 71/2.1.2/201 skan 17 | Kowalików | Adam Kowalik z półćwierci | robi | ostatek pusto |
+| 22 | AOZ 71/2.1.2/201 skan 17 | Kowalików | Gretka staj 3 | czynsz | ostatek pusto |
+| 22 | AOZ 71/2.1.2/201 skan 17 | Gadajowski | Samulik z ćwierci | robi | ostatek pusto |
+| 22 | AOZ 71/2.1.2/201 skan 17 | Miłoszkowski | Kozaczek z Kaczyńskim ćwierć | czynsz | druga pusta |
+| 22 | AOZ 71/2.1.2/201 skan 17 | Miłośkowski | Matys Miłosz z półćwierci | czynsz | druga półćwierć Czerepi(?) puste |
+| 22 | AOZ 71/2.1.2/201 skan 17 | Żarkowski(?) | Stach Burzel z półćwierci | robi | ostatek pusto |
+| 22 | AOZ 71/2.1.2/201 skan 17 | Kłuskowski | Marcin Rataj z półćwierci | robi | ostatek pusto; Latus 14 15 17½ … |
+| 23 | AOZ 71/2.1.2/201 skan 17 | Dylowski | Jakub Kozarek(?) z ćwierci | robi | druga pusta |
+| 23 | AOZ 71/2.1.2/201 skan 17 | Kłuskowski | Kłusek z półćwierci robi; Andrzej Gretka z półćwierci | robi | druga ćwierć pusta |
+| 23 | AOZ 71/2.1.2/201 skan 17 | Michałkowski | Andrzej i Stach Michałek z ćwierci | robią | druga pusta |
+| 23 | AOZ 71/2.1.2/201 skan 17 | Kozackowski | Wawrzyniec Kozaczek i Stach Kudrelek ćwierć | czynsz | ostatek pusto |
+| 23 | AOZ 71/2.1.2/201 skan 17 | Zagrodnicy | Wojciech Gretka z zagrody | robi | 12 gr |
+| 23 | AOZ 71/2.1.2/201 skan 17 | Zagrodnicy | Wawrzyniec Szeika(?) z zagrody | robi | 12 gr |
+| 23 | AOZ 71/2.1.2/201 skan 17 | Zagrodnicy | Jakub Grylik(?) z zagrody | robi | 12 gr |
+| 23 | AOZ 71/2.1.2/201 skan 17 | Zagrodnicy | Jan Kaczyński z półzagrody | robi | 6 gr |
+| 23 | AOZ 71/2.1.2/201 skan 17 | Zagrodnicy | Matys Żysak półzagrody | czynsz |  |
+| 23 | AOZ 71/2.1.2/201 skan 17 | Zagrodnicy | Konrad i Matys Żysak półzagrody | czynsz |  |
+| 23 | AOZ 71/2.1.2/201 skan 17 | Zagrodnicy | Matys Żysak z zagrody | czynsz |  |
+| 23 | AOZ 71/2.1.2/201 skan 17 | Zagrodnicy | Samulik z zagrody | czynsz robi | 12 gr |
+| 23 | AOZ 71/2.1.2/201 skan 17 | Zagrodnicy | Łukasz Rataj z zagrody | czynsz | Latus 18 18 10 … |
+| 24 | AOZ 71/2.1.2/201 skan 18 | Kasperkowska zagroda |  | pusta |  |
+| 24 | AOZ 71/2.1.2/201 skan 18 | zagrody | Łukasz Rataj z zagrody | robi | 12 gr |
+| 24 | AOZ 71/2.1.2/201 skan 18 | zagrody | Wojciech Rataj z zagrody | robi | 12 gr |
+| 24 | AOZ 71/2.1.2/201 skan 18 | zagrody | Thomasz Gorniak z zagrody | robi | 12 gr |
+| 24 | AOZ 71/2.1.2/201 skan 18 | zagrody | Ryczerzykowa z zagrody | robi | 12 gr |
+| 24 | AOZ 71/2.1.2/201 skan 18 | Bartnikowska zagroda |  | pusta |  |
+| 24 | AOZ 71/2.1.2/201 skan 18 | Dziniatowska(?) zagroda |  | pusta |  |
+| 24 | AOZ 71/2.1.2/201 skan 18 | Kuśnego zagroda | pusta; zagroda kuśn(ego) | czynsz | 6 gr |
+| 24 | AOZ 71/2.1.2/201 skan 18 | Gizińska zagroda |  | pusta |  |
+| 24 | AOZ 71/2.1.2/201 skan 18 | Żelowska zagroda |  | pusta |  |
+| 24 | AOZ 71/2.1.2/201 skan 18 | zagrody | Wojciech Bokura(?) z półzagrody | robi | 6 gr |
+| 24 | AOZ 71/2.1.2/201 skan 18 | zagrody | Łukasz Rataj z półzagrody | czynsz |  |
+| 24 | AOZ 71/2.1.2/201 skan 18 | zagrody | Jan Kasperek z półzagrody | robi |  |
+| 24 | AOZ 71/2.1.2/201 skan 18 | zagrody | Maciek Hurek(?) z półzagrody | robi | 6 gr |
+| 24 | AOZ 71/2.1.2/201 skan 18 | zagrody | Czerepka z drugiej półzagrody | czynsz | Latus 7 12 19½ |
+| 25 | AOZ 71/2.1.2/201 skan 18 | zagrody | Kobielarz(?) z półzagrody robi; zatem czynsz | robi | 6 gr |
+| 25 | AOZ 71/2.1.2/201 skan 18 | zagrody | Rzepka z zagrody | czynsz | 4 zł |
+| 25 | AOZ 71/2.1.2/201 skan 18 | zagrody | Wawrzyniec Czabża z zagrody | czynsz | 4 zł |
+| 25 | AOZ 71/2.1.2/201 skan 18 | zagrody | Marcin Krawczyk z półzagrody | robi | ostatek pusto; 6 gr |
+| 25 | AOZ 71/2.1.2/201 skan 18 | zagrody | kowal z Żyszczakiem z ogrodu | czynsz | 1 zł 10 gr |
+| 25 | AOZ 71/2.1.2/201 skan 18 | komornice | Powinność: dzień odrabiać przy … |  |  |
+| 26 | AOZ 71/2.1.2/201 skan 19 | Przymiarki | Stach Rzepka z przymiarku | czynsz | 2 zł |
+| 26 | AOZ 71/2.1.2/201 skan 19 | Przymiarki | Maciek Hurek z przymiarku | czynsz | 1 zł 20 gr |
+| 26 | AOZ 71/2.1.2/201 skan 19 | Przymiarki | Tenże Hurek z przymiarku | czynsz | 1 zł |
+| 26 | AOZ 71/2.1.2/201 skan 19 | Przymiarki | Charyna(?) z przymiarku | czynsz | 3 zł |
+| 26 | AOZ 71/2.1.2/201 skan 19 | Przymiarki | Kobielarz z przymiarku | czynsz | 4 zł |
+| 26 | AOZ 71/2.1.2/201 skan 19 | Przymiarki | Marcin Wojtek z przymiarku | czynsz | 1 zł 10 gr |
+| 26 | AOZ 71/2.1.2/201 skan 19 | Przymiarki | Wojtkowski przymiarek | pusty |  |
+| 26 | AOZ 71/2.1.2/201 skan 19 | Przymiarki | Ryczerowie z przymiarku | czynsz | 6 zł |
+| 26 | AOZ 71/2.1.2/201 skan 19 | Przymiarki | Kudrelik z przymiarku | czynsz | 2 zł |
+| 26 | AOZ 71/2.1.2/201 skan 19 | Przymiarki | Wstępnik z Żabińskiego | czynsz | 3 zł |
+| 26 | AOZ 71/2.1.2/201 skan 19 | Przymiarki | Czabża Leignowski przymiarek na zimę przyjął | czynsz | Latus 24 zł |
+| 27 | AOZ 71/2.1.2/201 skan 19 | Przymiarki | Adam Kupczyk włodarz liber | włodarz liber |  |
+| 27 | AOZ 71/2.1.2/201 skan 19 | Przymiarki | Zimiatkow(?) przymiarek | pusty |  |
+| 27 | AOZ 71/2.1.2/201 skan 19 | Przymiarki | Sieńka z Łechowskiego | czynsz | 2 zł |
+| 27 | AOZ 71/2.1.2/201 skan 19 | Przymiarki | Tomski z Andrzejowego | czynsz | 2 zł; inne przymiarki w Kiwy(?) dworskie obrócone |

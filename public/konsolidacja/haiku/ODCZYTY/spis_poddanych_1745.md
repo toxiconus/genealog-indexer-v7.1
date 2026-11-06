@@ -1,0 +1,154 @@
+# Spis poddanych Blinów 1745
+
+- **Sygnatura / skany:** AOZ 71/2.1.13/1353, skany 3–6
+- **Zakres odczytu:** str. 1–5; zagrody/Compendium (skany 7–8) nieodczytane
+- **Źródło danych:** `../BLINOW_spis_poddanych_1745_odczyt_reczny.csv` (odczyt ręczny, AP Lublin)
+- **Uwaga:** liczby w kolumnach to hipoteza; pewne są nazwiska, tryb i czynsz; „(?)" = odczyt niepewny.
+
+| str | denominatio | osadnik | tryb | uwagi |
+|---|---|---|---|---|
+| 1 (skan 3) | Żołtoniowskie | Maciek Kisiel z spółką | robi |  |
+| 1 (skan 3) | Ryczerzowskie | Matyasz Kisiel | do arendy |  |
+| 1 (skan 3) | Ryczerzowskie | Michałowa Wcisłowa z ogrodem | ogród |  |
+| 1 (skan 3) | Ryczerzowskie | Jan Kisiel | robi |  |
+| 1 (skan 3) | Reszczyńskie | Stach Samuel | robi |  |
+| 1 (skan 3) | Reszczyńskie | Tenże Samuel | czynsz |  |
+| 1 (skan 3) | Kaczyńskie | Adam Baran | robi |  |
+| 1 (skan 3) | Kaczyńskie | Marcin Kaczyński | robi |  |
+| 1 (skan 3) | Kaczyńskie | Stach Kaczyński | robi |  |
+| 1 (skan 3) | Andrzejowskie | Jan Kosidło | robi |  |
+| 1 (skan 3) | Świtowskie | Jan Kopyt z Putew. | robi |  |
+| 1 (skan 3) | Rzepczyńskie | Józef Kosidło | robi |  |
+| 1 (skan 3) | Marcinkowskie | Tomek Nuszka | robi |  |
+| 1 (skan 3) | Dylowskie | Jan Kosidło | robi |  |
+| 1 (skan 3) | Ratajowskie | Tenże Kosidło | robi |  |
+| 1 (skan 3) | Ligowskie | Magda Sokalska | robi |  |
+| 1 (skan 3) | Reszczyńskie | Matyasz Kosidło z spółką | robi |  |
+| 1 (skan 3) | Gurniakowskie | Jan Kosidło z spółką | robi |  |
+| 1 (skan 3) | Lipińskie |  | do arendy |  |
+| 1 (skan 3) | Rzepczyńskie | Andrzej Pawłasek z spółką | robi |  |
+| 1 (skan 3) | Rzepczyńskie | Wojtek Sobutka | robi |  |
+| 1 (skan 3) | Kuczyńskie | Maciek Kozaczek | robi |  |
+| 2 (skan 4) | Pasternakowskie | Stach Pasternak | robi |  |
+| 2 (skan 4) | Pasternakowskie | Tenże Pasternak | czynsz | 1½ ćw.; 1 zł 24 gr |
+| 2 (skan 4) | Pasternakowskie 2ga | Andrzej Pasternak | robi |  |
+| 2 (skan 4) | Pasternakowskie 2ga | Tenże Pasternak | czynsz | 1 zł 24 gr |
+| 2 (skan 4) |  | Wygon gromadzki |  |  |
+| 2 (skan 4) | Susińskie | Józef Kudrelek | czynsz | 3½ ćw.; 4 zł 6 gr |
+| 2 (skan 4) | Susińskie | Tenże Kudrelek | robi |  |
+| 2 (skan 4) | Susińskie | Stach Kudrelek | robi |  |
+| 2 (skan 4) | Wojciechowskie | Stach Wcisło | robi |  |
+| 2 (skan 4) | Wojciechowskie | Tenże Wcisło | czynsz | 1 zł 6 gr |
+| 2 (skan 4) | Wojciechowskie 2ga | Jakub Paciorek | robi |  |
+| 2 (skan 4) | Wojciechowskie 2ga | Tenże Paciorek | czynsz | 1 zł 6 gr |
+| 2 (skan 4) | Żołtuńskie | Szymon Machała | robi |  |
+| 2 (skan 4) | Żołtuńskie | Tenże Machała | czynsz | 1 zł 6 gr |
+| 2 (skan 4) | Żołtuńskie | Piotr Gryta z ogrodem | ogród |  |
+| 2 (skan 4) | Żołtuńskie | Tamże Adam Brzozek | czynsz | 3 zł 18 gr |
+| 2 (skan 4) | Pcionowskie | Maciek Pcion z ogrodem | robi | reszta pusto |
+| 2 (skan 4) | Pcionowskie | Matus Pcion | robi |  |
+| 2 (skan 4) | Pcionowskie | Tenże Pcion | czynsz | 1 zł 6 gr |
+| 2 (skan 4) | Pcionowskie | Matus Wojcik | robi |  |
+| 2 (skan 4) | Pcionowskie | Tenże Wojcik | czynsz | 1 zł 24 gr |
+| 2 (skan 4) | Burakowskie | Sobek Machulek z spółką | czynsz | 4 zł 24 gr |
+| 2 (skan 4) | Klimkowskie | Adam Brzozek | czynsz | 3 zł 18 gr |
+| 2 (skan 4) | Kalabiszowskie | Maciek Kurczak | czynsz | 1 zł 24 gr |
+| 2 (skan 4) | Kalabiszowskie | Sobek Machulek | robi |  |
+| 2 (skan 4) | Sienkowskie | Ciećkowa wdowa | robi | mieszka? |
+| 2 (skan 4) | Sienkowskie | Tażże Ciećkowa z spółką | czynsz | 4 zł 6 gr |
+| 2 (skan 4) | Sienkowskie 2ga |  | pusto zarośl |  |
+| 2 (skan 4) | Błażkowskie | Maciek Paciorek | robi | ćw. 2ga pusto zarośl |
+| 2 (skan 4) | Kołodziejskie | Tomek Satur z ogrodem | ogród | reszta pusto |
+| 2 (skan 4) | Garczyńskie | Maciek Kurczak | czynsz | 2½ ćw.; 3 zł; Latus 39 zł 9 gr |
+| 3 (skan 5) | Broszkowskie | Adam Brzozek | robi |  |
+| 3 (skan 5) | Orchowskie | Jan Dobrzyński z ogrodem | ogród |  |
+| 3 (skan 5) | Orchowskie 2ga | Marcin Czerepa | czynsz | 1 zł 24 gr; reszta ugór |
+| 3 (skan 5) | Chudzińskie | Tomek Gnat | czynsz | 1 zł 6 gr; reszta ugór |
+| 3 (skan 5) | Kędzierskie | Marcin Czerepa | czynsz | 2½ ćw.; 3 zł |
+| 3 (skan 5) | Kucińskie | Wygon gromadzki |  |  |
+| 3 (skan 5) | Kucińskie 2ga | Tomek Gnat z Połowy(?) | robi | reszta pusto |
+| 3 (skan 5) | Paciorkowskie | Jan Pcion | czynsz | pusta; 2 zł 12 gr |
+| 3 (skan 5) | Paciorkowskie 2ga | Tenże Pcion | robi |  |
+| 3 (skan 5) | Kędzierskie | Kędzierowa wdowa | komorna |  |
+| 3 (skan 5) | Kędzierskie | Wojtek Machulek | robi |  |
+| 3 (skan 5) | Kędzierskie 2ga | Wawrzyniec Wstępień | robi |  |
+| 3 (skan 5) | Ciećkowskie | Wojciech Ciećek | robi |  |
+| 3 (skan 5) | Ciećkowskie 2ga | Tenże Ciećek | czynsz | 1 zł 24 gr; pusto |
+| 3 (skan 5) | Landowskie(?) | Wawrzyniec Wstępień | czynsz | 7 zł 6 gr |
+| 3 (skan 5) | Wcisłowskie | Jan Czerepa | robi |  |
+| 3 (skan 5) | Wcisłowskie | Tenże Czerepa z spółką | czynsz | 1 zł 24 gr |
+| 3 (skan 5) | Wcisłowskie | Wcisłowa wdowa | robi |  |
+| 3 (skan 5) | Wcisłowskie | Tasz Wcisłowa | czynsz | 2 zł 12 gr |
+| 3 (skan 5) | Obydzińskie | Matus Brzozek | robi | biedny; pusto |
+| 3 (skan 5) | Obydzińskie | Jan Obydź | robi komorny |  |
+| 3 (skan 5) | Obydzińskie | Tenże Obydź | czynsz | 18 gr |
+| 3 (skan 5) | Garoszkowskie | Bartosz Czerepa | leśny (służy) |  |
+| 3 (skan 5) | Garoszkowskie | Franek Wcisło | robi | reszta pusta |
+| 3 (skan 5) | Radwańskie | Szymon Wcisło | robi | pusto na Dwór zasiano |
+| 3 (skan 5) | Radwańskie 2ga | Paweł Machulek | robi |  |
+| 3 (skan 5) | Kozłowskie | Paweł Machulek | czynsz | 2½ ćw.; 3 zł |
+| 3 (skan 5) | Kozłowskie | Antoni Barbarzak | robi | sierota |
+| 3 (skan 5) | Kozłowskie | Tamże Paweł Machulek | czynsz | 1 zł 6 gr; Latus 35 zł 21 gr |
+| 4 (skan 6 lewa) | Radwańskie | Jan Machulek | robi |  |
+| 4 (skan 6 lewa) | Radwańskie | Tenże Machulek | czynsz | 2 zł 12 gr |
+| 4 (skan 6 lewa) | Radwańskie | Janowa Wcisłowa wdowa | komorna |  |
+| 4 (skan 6 lewa) | Wcisłowskie | Maciek Kosidło | robi |  |
+| 4 (skan 6 lewa) | Wcisłowskie | Antoni Wcisło | robi |  |
+| 4 (skan 6 lewa) | Wcisłowskie | Tenże Wcisło | czynsz | 3 zł 18 gr |
+| 4 (skan 6 lewa) | Wcisłowskie | Maciek Wcisło | robi |  |
+| 4 (skan 6 lewa) | Kucińskie | Wawrzek Sobutka | robi |  |
+| 4 (skan 6 lewa) | Kucińskie |  | pusto zarośl |  |
+| 4 (skan 6 lewa) | Kucińskie | Sobek Krupka | robi |  |
+| 4 (skan 6 lewa) | Kucińskie | Matyasz Kosidło | czynsz | 3 zł 18 gr; reszta ugór |
+| 4 (skan 6 lewa) | Kosidłowskie | Maćkowa Kosidłowa | komorna |  |
+| 4 (skan 6 lewa) | Kosidłowskie | Tenże Maciek Kosidło | czynsz | 4 zł 24 gr |
+| 4 (skan 6 lewa) | Kosidłowskie | Maciek Kurczak | czynsz | 2 zł 12 gr; reszta ugór |
+| 4 (skan 6 lewa) | Kosidłowskie | Stach Jędrzejczak | robi |  |
+| 4 (skan 6 lewa) | Kosidłowskie | Tenże Jędrzejczak | czynsz | 3 zł 18 gr |
+| 4 (skan 6 lewa) | Moczyłaskie 2ga | Wojtek Jędrzejczak | robi |  |
+| 4 (skan 6 lewa) | Moczyłaskie 2ga | Maciek Pastuch z Putew. | robi |  |
+| 4 (skan 6 lewa) | Moczyłaskie 2ga | Tenże Pastuch | czynsz | 2 zł 12 gr |
+| 4 (skan 6 lewa) | Pieturzyńskie | Maciek Kurczak | robi | do arendy? |
+| 4 (skan 6 lewa) | Pieturzyńskie | Tamże Józef Kosidło | robi |  |
+| 4 (skan 6 lewa) | Pieturzyńskie | Tenże Kosidło | czynsz | 3 zł 18 gr |
+| 4 (skan 6 lewa) | Kosidłowskie 2 | Matyasz Kosidło | gumienny (służy) |  |
+| 4 (skan 6 lewa) | Kołodziejskie | Piotr Kipa | robi |  |
+| 4 (skan 6 lewa) | Kołodziejskie | Szymon Kurczak | wójt (służy) |  |
+| 4 (skan 6 lewa) | Mordzkie | Jan Rzepka | komorne |  |
+| 4 (skan 6 lewa) | Mordzkie | Tenże Rzepka z spółką | czynsz | 1 zł 24 gr |
+| 4 (skan 6 lewa) | Mordzkie | Kazimierz Pawłasek(?) | służy | nazwisko niepewne |
+| 4 (skan 6 lewa) | Kozakowskie | Szymon Kozaczek | robi |  |
+| 4 (skan 6 lewa) | Kozakowskie | Marcin Kozaczek | robi |  |
+| 4 (skan 6 lewa) | Marcinowskie | Bartek Kozaczek | robi | do arendy; Latus 33 zł 18 gr |
+| 5 (skan 6 prawa) | Piechowskie | Michał Pcion | robi |  |
+| 5 (skan 6 prawa) | Piechowskie | Wygon gromadzki |  |  |
+| 5 (skan 6 prawa) | Czapalińskie | Maciek Kozaczek | robi |  |
+| 5 (skan 6 prawa) | Czapalińskie | Wojtek Kozaczek | robi | reszta pusto |
+| 5 (skan 6 prawa) | Kraszkowskie(?) | Jan Krawczyk | robi |  |
+| 5 (skan 6 prawa) | Kraszkowskie(?) | Tamże Szymon Kurczak | czynsz |  |
+| 5 (skan 6 prawa) | Rzepczyńskie | Marcin Kozaczek z spółką | czynsz | reszta pusto |
+| 5 (skan 6 prawa) | Rzepczyńskie | Jan Kozaczek | robi |  |
+| 5 (skan 6 prawa) | Kowalskie | Szymon Babej | robi |  |
+| 5 (skan 6 prawa) | Kowalskie | Tamże Szymon Babej z spółką | czynsz | 4 zł 24 gr |
+| 5 (skan 6 prawa) | Kowalskie 2 | Wojtek Wcisło | robi |  |
+| 5 (skan 6 prawa) | Kowalskie 2 | Tenże Wcisło | czynsz | 2 zł 12 gr; reszta pusto |
+| 5 (skan 6 prawa) | Gadajskie(?) | Józef Pazdrak | robi |  |
+| 5 (skan 6 prawa) | Gadajskie(?) | Tenże Pazdrak | czynsz | reszta ugór |
+| 5 (skan 6 prawa) | Miłosińskie |  | do arendy Blinowskiej |  |
+| 5 (skan 6 prawa) | Miłosińskie | Kazimierz Pawłasek | robi |  |
+| 5 (skan 6 prawa) | Miłosińskie 2ga | Michał Pcionek | robi |  |
+| 5 (skan 6 prawa) | Miłosińskie 2ga | Wawrzek Popek | robi |  |
+| 5 (skan 6 prawa) | Słabosińskie | Stach Samuel | robi |  |
+| 5 (skan 6 prawa) | Słabosińskie | Stach Burzel | robi |  |
+| 5 (skan 6 prawa) | Kłodzkie | Maciek Wojtusiak | robi komorny |  |
+| 5 (skan 6 prawa) | Kłodzkie | Tenże Wojtek Wojtusiak | czynsz | 4 zł 24 gr |
+| 5 (skan 6 prawa) | Kłodzkie | Jan Kosidło | robi |  |
+| 5 (skan 6 prawa) | Dereńskie(?) | Wojciech Rataj | robi |  |
+| 5 (skan 6 prawa) | Dereńskie(?) | Wojtek Pazdrak | robi |  |
+| 5 (skan 6 prawa) | Kłodzkie 2 | Wawrzek Piech | robi |  |
+| 5 (skan 6 prawa) | Kłodzkie 2 | Grycina wdowa | komorna |  |
+| 5 (skan 6 prawa) | Kłodzkie 2 | Wygon gromadzki |  |  |
+| 5 (skan 6 prawa) | Michałowskie | Paweł Michałek | robi |  |
+| 5 (skan 6 prawa) | Michałowskie | Andrzej Michałek | włodarz (służy) |  |
+| 5 (skan 6 prawa) | Reszczyńskie | Jan Kozaczek | robi |  |
+| 5 (skan 6 prawa) | Reszczyńskie | Maciek Samuel | włodarz (służy) | Latus |

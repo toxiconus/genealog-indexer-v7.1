@@ -1,0 +1,98 @@
+# Rewizja wsi Blinów „opisana 1701" (osiadłości 45–67, zagrody 2–25, przymiarki)
+
+- **Sygnatura / skany:** AOZ 71/2.1.13/1342, skany 4–9
+- **Zakres odczytu:** pełny odczyt skanów 4–9; skany 10–12 nieprzejrzane
+- **Źródło danych:** `../BLINOW_rewizja_1701_odczyt_reczny.csv` (odczyt ręczny, AP Lublin)
+- **Uwaga:** liczby w kolumnach to hipoteza; pewne są nazwiska, tryb i czynsz; „(?)" = odczyt niepewny.
+
+| rok | zrodlo | lp | osiadlosc | osadnik | tryb | uwagi |
+|---|---|---|---|---|---|---|
+| 1701 rewizja | AOZ 71/2.1.13/1342 skan 4 | 45 | Kosidłowski | Tomek Kosidło z jednej części | robi | czynsz 12 gr? |
+| 1701 rewizja | AOZ 71/2.1.13/1342 skan 4 | 45 | Kosidłowski | Kazimierz Kosidło z drugiej części | robi |  |
+| 1701 rewizja | AOZ 71/2.1.13/1342 skan 4 | 45 | Kosidłowski | Stefan(?) Kosidło z postej części | robi |  |
+| 1701 rewizja | AOZ 71/2.1.13/1342 skan 4 | 45 | Kosidłowski | Adam Dąbrowa na pustej osiadłości z staja | czynsz | 6 gr |
+| 1701 rewizja | AOZ 71/2.1.13/1342 skan 4 | 46 | Skołasowski(?) Wojciech | Marcin Kosidłowicz z synem | robi |  |
+| 1701 rewizja | AOZ 71/2.1.13/1342 skan 4 | 46 | Skołasowski(?) Wojciech | Adam Dąbrowa z ćwierci | robi |  |
+| 1701 rewizja | AOZ 71/2.1.13/1342 skan 4 | 47 | Pieturzyński | Jan Zastwa z ćwierci | robi |  |
+| 1701 rewizja | AOZ 71/2.1.13/1342 skan 4 | 47 | Pieturzyński | Tenże na drugiej ćwierci pustej | czynsz | 12 gr |
+| 1701 rewizja | AOZ 71/2.1.13/1342 skan 4 | 48 | Kosidłowski | Jan Kosidło z ćwierci | robi | ostatek zarosło |
+| 1701 rewizja | AOZ 71/2.1.13/1342 skan 4 | 49 | Pieturzyński | Stanisław na Rzeczynie(?) z ćwierci | robi | Żółtowska/Piechowskiego ćwierć wydana; Wygon Gromadzki; Latus effecit |
+| 1701 rewizja | AOZ 71/2.1.13/1342 skan 5 | 50 | Mgrowski(?) | Jan Rzepka z półwłókiem | robi |  |
+| 1701 rewizja | AOZ 71/2.1.13/1342 skan 5 | 50 | Mgrowski(?) | Kozaczek z półwłókiem | robi |  |
+| 1701 rewizja | AOZ 71/2.1.13/1342 skan 5 | 50 | Mgrowski(?) | Tenże na drugiej ćwierci z staja | czynsz | 5 zł? |
+| 1701 rewizja | AOZ 71/2.1.13/1342 skan 5 | 51 | Kozackowski Paweł Kozaczek | do arendy | robi | pełna ćwierć |
+| 1701 rewizja | AOZ 71/2.1.13/1342 skan 5 | 51 | Kozackowski | Gwiec Kozaczek z półwłókiem | robi |  |
+| 1701 rewizja | AOZ 71/2.1.13/1342 skan 5 | 51 | Kozackowski | Piotrowa z półwłókiem | robi | wdowa |
+| 1701 rewizja | AOZ 71/2.1.13/1342 skan 5 | 52 | Marcinkowski Samuel Maciek | z ćwierci niepełnej do arendy | robi |  |
+| 1701 rewizja | AOZ 71/2.1.13/1342 skan 5 | 52 | Marcinkowski | Tenże na drugiej ćw. z staja | czynsz | 6 zł 10 gr |
+| 1701 rewizja | AOZ 71/2.1.13/1342 skan 5 | 53 | Piechowski Paweł Piech | z półwłókiem | robi |  |
+| 1701 rewizja | AOZ 71/2.1.13/1342 skan 5 | 53 | Piechowski | drugi półwłók Rzępny(?) na robotę wydany | robi | ostatek zarosło |
+| 1701 rewizja | AOZ 71/2.1.13/1342 skan 5 | 54 | Czarnińskie(?) Wojciech Kozaczek | z półwłókiem | robi |  |
+| 1701 rewizja | AOZ 71/2.1.13/1342 skan 5 | 54 | Czarnińskie(?) | Tenże na ostatku półłanka z staja i ogrodu | czynsz | 6½ stai; 0 zł 24 gr |
+| 1701 rewizja | AOZ 71/2.1.13/1342 skan 5 | 55 | Łazkowski(?) Stanisław Liwniec | z ogroda komorne | robi |  |
+| 1701 rewizja | AOZ 71/2.1.13/1342 skan 5 | 55 | Łazkowski(?) | Tenże na ostatku półłanka z staja | czynsz | 1 zł 36 gr?; Latus effecit |
+| 1701 rewizja | AOZ 71/2.1.13/1342 skan 6 | 56 | Rzeczyński(?) | Mackowa Rzeczyna(?) z półwłókiem | robi | wdowa |
+| 1701 rewizja | AOZ 71/2.1.13/1342 skan 6 | 56 | Rzeczyński(?) | Tasz z staja 6½ na ostatku półłanka i ogrodzie | czynsz | 0 zł 9 gr |
+| 1701 rewizja | AOZ 71/2.1.13/1342 skan 6 | 57 | Kowalikowski | Wojtek Rataj na całym z staja 14½ | czynsz | 17 zł 12 gr |
+| 1701 rewizja | AOZ 71/2.1.13/1342 skan 6 | 58 | Kowalikowski drugi | Wojciech Kurczak z ćwierci | robi | ostatek zarosło |
+| 1701 rewizja | AOZ 71/2.1.13/1342 skan 6 | 59 | Gadajowski(?) | Maciek Kisiel z ćwierci | robi | ostatek zarosło |
+| 1701 rewizja | AOZ 71/2.1.13/1342 skan 6 | 60 | Miłosińskie | Paweł Kozaczek z jednej części półłanka z staja 5 | czynsz | 6 zł; + 20 gr z ogrodu |
+| 1701 rewizja | AOZ 71/2.1.13/1342 skan 6 | 60 | Miłosińskie | Szymon Zaludecki(?) na drugiej części z staja 2 i ogrodu małego | czynsz | 2 zł 12 gr |
+| 1701 rewizja | AOZ 71/2.1.13/1342 skan 6 | 61 | Miłosińskie drugi | Maciek z półłanka | robi |  |
+| 1701 rewizja | AOZ 71/2.1.13/1342 skan 6 | 61 | Miłosińskie drugi | Wiercach(?) z półłanka | robi |  |
+| 1701 rewizja | AOZ 71/2.1.13/1342 skan 6 | 61 | Miłosińskie drugi | Tasz na drugiej ćwierci z staja 6½ | czynsz | 7 zł 24 gr |
+| 1701 rewizja | AOZ 71/2.1.13/1342 skan 6 | 62 | Mazikowski(?) | Wojtek Samuel z półłanka | robi |  |
+| 1701 rewizja | AOZ 71/2.1.13/1342 skan 6 | 62 | Mazikowski(?) | Tenże na półłanku z staja 5½ | czynsz | 0 zł 18 gr |
+| 1701 rewizja | AOZ 71/2.1.13/1342 skan 6 | 62 | Mazikowski(?) | Jan Burzel z półwłókiem | robi |  |
+| 1701 rewizja | AOZ 71/2.1.13/1342 skan 6 | 62 | Mazikowski(?) | Tenże na półłanku z staja 1½ | czynsz | 1 zł 24 gr; Latus effecit |
+| 1701 rewizja | AOZ 71/2.1.13/1342 skan 7 | 63 | Kłoźkowski(?) | Maciek Wojtysiak z półćwierci | robi |  |
+| 1701 rewizja | AOZ 71/2.1.13/1342 skan 7 | 63 | Kłoźkowski(?) | Tenże z staja 2 na ostatku półłanka | czynsz | 2 zł 12 gr |
+| 1701 rewizja | AOZ 71/2.1.13/1342 skan 7 | 63 | Kłoźkowski(?) | Sobek Rataj z ćwierci | robi |  |
+| 1701 rewizja | AOZ 71/2.1.13/1342 skan 7 | 64 | Belonski(?) | Kaszlowa(?) z ogroda i staja | robi | komorne |
+| 1701 rewizja | AOZ 71/2.1.13/1342 skan 7 | 64 | Belonski(?) | Augustyn z ćwierci | robi |  |
+| 1701 rewizja | AOZ 71/2.1.13/1342 skan 7 | 65 | Greczyński | Kaczyński z półwłókiem | robi |  |
+| 1701 rewizja | AOZ 71/2.1.13/1342 skan 7 | 65 | Greczyński | Tenże na drugiej z staja 2½ | czynsz | 3 zł |
+| 1701 rewizja | AOZ 71/2.1.13/1342 skan 7 | 65 | Greczyński | Andrzej Greta z półwłókiem | robi |  |
+| 1701 rewizja | AOZ 71/2.1.13/1342 skan 7 | 65 | Greczyński | Wojtek Związek z półwłókiem | robi | do arendy |
+| 1701 rewizja | AOZ 71/2.1.13/1342 skan 7 | 66 | Michałkowski | Gumienny z ćwierci | służy (liber) |  |
+| 1701 rewizja | AOZ 71/2.1.13/1342 skan 7 | 66 | Michałkowski | Tenże z półwłókiem | czynsz | staja 3½; 4 zł 6 gr |
+| 1701 rewizja | AOZ 71/2.1.13/1342 skan 7 | 66 | Michałkowski | Michałkowa z półwłókiem | robi | wdowa |
+| 1701 rewizja | AOZ 71/2.1.13/1342 skan 7 | 67 | Kozaczkowski | Stach Kudrel z ćwierci | robi |  |
+| 1701 rewizja | AOZ 71/2.1.13/1342 skan 7 | 67 | Kozaczkowski | Tenże z ogroda | daje | 1 zł 20 gr |
+| 1701 rewizja | AOZ 71/2.1.13/1342 skan 7 | 67 | Kozaczkowski | Paweł Kozaczek na drugiej ćwierci z staja 4 i ogrodem | czynsz | 5 zł 12 gr |
+| 1701 rewizja | AOZ 71/2.1.13/1342 skan 7 | zagrody | Zagrody wedle Dworu – Białowska | Katarzynie(?) z staja 1½ | czynsz | 1 zł 24 gr; Latus effecit |
+| 1701 rewizja | AOZ 71/2.1.13/1342 skan 8 | zagroda 2 | Gzielowska(?) | Grzeć(?) z całej zagrody | robi | 2 zł 12 gr |
+| 1701 rewizja | AOZ 71/2.1.13/1342 skan 8 | zagroda 3 | Rataiowska | Maciek Rataj | robi | 2 zł 12 gr |
+| 1701 rewizja | AOZ 71/2.1.13/1342 skan 8 | zagroda 4 | Rataiowska druga | Matyas Rataj | robi | do trzymania(?); 2 zł 12 gr |
+| 1701 rewizja | AOZ 71/2.1.13/1342 skan 8 | zagroda 5 | Gurniakowska | Tomek (Maciek) Gurniak z półzagrody | robi | 1 zł 16 gr |
+| 1701 rewizja | AOZ 71/2.1.13/1342 skan 8 | zagroda 5 | Gurniakowska | półzagrody drugie do Gurniakowskiego na robotę wydane |  |  |
+| 1701 rewizja | AOZ 71/2.1.13/1342 skan 8 | zagroda 6 | Kuźnego(?) | Józef Zrotowy(?) służy | służy | 1 zł 6 gr; ostatek woda zarwała |
+| 1701 rewizja | AOZ 71/2.1.13/1342 skan 8 | zagroda 7 | Bartnikowa | Jakub(?) kuśny czynsz z staja 1 | czynsz | 1 zł 6 gr |
+| 1701 rewizja | AOZ 71/2.1.13/1342 skan 8 | zagroda 8 | Świtowska | Gumienny z staja 1 | gumienny | 1 zł 6 gr |
+| 1701 rewizja | AOZ 71/2.1.13/1342 skan 8 | zagroda 9 | Kosidłowa | Kosidłowa wdowa z ogrodu | komorne robi | 2 zł; + Jakub Kopyt z staja 1½: 1 zł 24 gr |
+| 1701 rewizja | AOZ 71/2.1.13/1342 skan 8 | zagroda 10 |  | Szymek Zmijak(?) stróż z synem | robi | 1 zł 12 gr |
+| 1701 rewizja | AOZ 71/2.1.13/1342 skan 8 | zagroda 11 | Gzielowska | Grzeć ma przydane do pierwszej zagrody |  |  |
+| 1701 rewizja | AOZ 71/2.1.13/1342 skan 8 | zagroda 12 |  | Szadki(?) | robi | 2 zł 12 gr |
+| 1701 rewizja | AOZ 71/2.1.13/1342 skan 8 | zagroda 13 | Kaszowska(?) | Kaszerek(?) | robi | 2 zł 12 gr |
+| 1701 rewizja | AOZ 71/2.1.13/1342 skan 8 | zagroda 14 | Czereśniowska(?) | Wojtek Paciorek z półzagrody | robi | 1 zł 8 gr; półzagrody Czerepce do roboty wydano |
+| 1701 rewizja | AOZ 71/2.1.13/1342 skan 8 | zagroda 15 | Gąsymkowska(?) | Stach Kurczak z całej | robi | 2 zł 12 gr; Latus effecit |
+| 1701 rewizja | AOZ 71/2.1.13/1342 skan 9 | zagroda 16 | Kotońska(?) | Jan Chudy z półzagrody | robi | 1 zł 6 gr; ostatek woda zerwała |
+| 1701 rewizja | AOZ 71/2.1.13/1342 skan 9 | zagroda 17 | Krawconska | Adamowi Czerepce półzagrody na ćwierć stronę do Czereńskiej(?) | robi | dają owsa korcy 2 i kapłony, jaja; 2½ zł 10 gr |
+| 1701 rewizja | AOZ 71/2.1.13/1342 skan 9 | zagroda 18 | Chłopowska(?) | Wdowa Kaszerkowa | robi | 2 zł 12 gr |
+| 1701 rewizja | AOZ 71/2.1.13/1342 skan 9 | zagroda 19 |  | Grecina Kudrelek na półzagrodę z staja 1 | czynsz | 1 zł 6 gr |
+| 1701 rewizja | AOZ 71/2.1.13/1342 skan 9 | zagroda 19 |  | Stanisław Greta z ogrodem | komorne robi | 1 zł 6 gr |
+| 1701 rewizja | AOZ 71/2.1.13/1342 skan 9 | zagroda 20 | Siekowska(?) | Siekowa wdowa z półzagrody | robi | 1 zł 6 gr; na półzagrodzie tasz z staja 1 niesiano |
+| 1701 rewizja | AOZ 71/2.1.13/1342 skan 9 | zagroda 21 | Zieconska(?) | Zuber(?) z ćwierci | robi | 1 zł 6 gr |
+| 1701 rewizja | AOZ 71/2.1.13/1342 skan 9 | zagroda 21 | Zieconska(?) | Stach Siecha(?) z ćwierci | robi | 1 zł 6 gr |
+| 1701 rewizja | AOZ 71/2.1.13/1342 skan 9 | zagroda 22 | Łuberlowska(?) | Jan Kaczyński z całej | robi | 2 zł 12 gr |
+| 1701 rewizja | AOZ 71/2.1.13/1342 skan 9 | zagroda 23 | Łysowska | Marcin Kowalczyk z całej | robi | 2 zł 12 gr |
+| 1701 rewizja | AOZ 71/2.1.13/1342 skan 9 | zagroda 24 | Samałowska | Jędrzej Samuł z całej | robi | 2 zł 12 gr |
+| 1701 rewizja | AOZ 71/2.1.13/1342 skan 9 | zagroda 25 | Łysowska | Samuł Maciek z całej | robi | 2 zł 12 gr |
+| 1701 rewizja | AOZ 71/2.1.13/1342 skan 9 | przymiarki | Rzepczyński | Wojtowa Rzepczyna staj 3 | czynsz | 3 zł 10 gr |
+| 1701 rewizja | AOZ 71/2.1.13/1342 skan 9 | przymiarki | Kaszowski | staj 2 | czynsz | 2 zł |
+| 1701 rewizja | AOZ 71/2.1.13/1342 skan 9 | przymiarki | Krawcowski | staj 1⅓ | czynsz | 2 zł 3 gr |
+| 1701 rewizja | AOZ 71/2.1.13/1342 skan 9 | przymiarki | Paciorkowski | Wojtek Paciorek staja ½ | czynsz | 10 gr |
+| 1701 rewizja | AOZ 71/2.1.13/1342 skan 9 | przymiarki |  | Wojtowa Szymkowa staj 1½ | czynsz | 1 zł 24 gr |
+| 1701 rewizja | AOZ 71/2.1.13/1342 skan 9 | przymiarki dalsze | Bereźnicki(?) | Marcin Kowalczyk | czynsz | staj 5; 6 zł |
+| 1701 rewizja | AOZ 71/2.1.13/1342 skan 9 | przymiarki dalsze | Bereźnicki(?) | Tenże | czynsz | staj 4; 4 zł 24 gr |
+| 1701 rewizja | AOZ 71/2.1.13/1342 skan 9 | przymiarki dalsze | Bereźnicki(?) | Jędrzej Samuł | czynsz | staj 3½; 4 zł 6 gr; Latus effecit 15 |
