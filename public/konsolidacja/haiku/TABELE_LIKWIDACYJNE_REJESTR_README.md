@@ -5,4 +5,4 @@ Skan identyfikuje nazwa pliku `35_168_0_6_<sygnatura>_<nr skanu>_<id skanu>.jpg`
 Przed dodaniem nowych skanów: porównać nazwy plików z kolumną `plik`/`id_skanu_szukajwarchiwach`; już odczytane (status „odczytany") pomijać.
 Nowe jednostki: dopisać wiersze ze statusem „do odczytu", po odczycie zmienić status i wpisać liczbę wierszy.
 
-Stan: sygn. 1054 (Blinów) — skany 1–29 odczytane. Inne sygnatury (m.in. Brzozówka) — do uzupełnienia po wklejeniu listy z szukajwarchiwach.
+Stan: sygn. 1054 (Blinów) — skany 1–29 odczytane. Sygn. 1067 (Brzozówka I-II, gm. Brzozówka, 1867–1932) — 16 skanów, do odczytu. Kolejne jednostki — do uzupełnienia po wklejeniu listy z szukajwarchiwach.
