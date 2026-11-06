@@ -52,3 +52,4 @@ Pudło i Kopiwoda: brak w spisach Blinowa; Brzozówka 1864 – poz. 11, 31, 44 (
 - Nieczytane: 1346 skany 6–8, 1354 skany 6–7, 1733 skany 6–16, tabella 1846 skany 6–21, 3229 (1867), 168/6/1054, 3015 skany 32–62, 3557 skan 58.
 
 - 2026-11-06: spis 1733 (1345) skany 6–16 odczytane ręcznie (235 wierszy); dwie kopie; Pudło/Kopiwoda brak; Compendium Generale klucza kraśnickiego 1733 (skan 16) nie zawiera Brzozówki → Brzozówka nie była wsią klucza w 1733.
+- 2026-11-06: SzwA „Błażek” – nowe: 168/6/1056 (1867–1930, 21 skanów), 71/3.3.5/2696 (Błażek 1846, 19), mapy 71/7.4.1/112, /113, plan 71/7.5.1.6/1879. Uwaga: Błażek w XIX w. należał do klucza batorskiego (par. Batorz), gmina Brzozówka dopiero od tabel likwidacyjnych. 3016 i 3557 – już w katalogu.
