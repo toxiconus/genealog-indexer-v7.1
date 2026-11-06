@@ -1,0 +1,49 @@
+# Wieś Blinów „w osiadłości z powinnościami A° 1705" (AOZ 71/2.1.2/202)
+
+- **Dokument:** inwentarz/spis powinności Blinowa „Anno 1705", nagłówek „Continuantur Powinności Wsi Blinowa A° 1705"; kolumny: Denominationes (dawna osiadłość), ćwierci, Specificatio osiadłości, staja, sprzężaj (woły, konie), robota, czynsz zł/gr, owies, stacja (kapłony, kury, jaja), przędza.
+- **Zakres odczytu:** skany 4–5 (lp 1–24); skany 6–19 do odczytu.
+- **Źródło:** `../BLINOW_inwentarz_1705_202_poddani_odczyt_reczny.csv`
+- **Uwaga:** część wierszy lp 8 i 11 pominięta (nieczytelna w miniaturze).
+
+| zrodlo | lp | osiadlosc_dawna | osadnik | tryb | uwagi |
+|---|---|---|---|---|---|
+| AOZ 71/2.1.2/202 skan 4 | 1 | Żołtniowski | Wawrzyniec Kisiel z ogrodem | czynsz | ćw. 2; staj 16; 20 zł; ostatek ugorem |
+| AOZ 71/2.1.2/202 skan 4 | 2 | Ryczerzowski | Wawrzyniec Kisiel | robi | ćw. 1; woły 4, konie 1, robota 2; 18 gr; owies 2; kapłony 1; kury 1; jaja 8; przędza 3 |
+| AOZ 71/2.1.2/202 skan 4 | 2 | Ryczerzowski | Wawrzyniec Kietbasa | robi | woły 1, robota 2; 18 gr |
+| AOZ 71/2.1.2/202 skan 4 | 3 | Reszczyński | Andrzej Samał | czynsz | ćw. 2; staj 14; 16 zł 24 gr; ostatek ugorem |
+| AOZ 71/2.1.2/202 skan 4 | 4 | Kaczyński | Stanisław Kaczyński | robi | ćw. ½; robota 2; 9 gr |
+| AOZ 71/2.1.2/202 skan 4 | 4 | Kaczyński | Tenże | czynsz | ćw. ½; staj 4½; 5 zł 22 gr |
+| AOZ 71/2.1.2/202 skan 4 | 4 | Kaczyński | Tamże Kaczyńska Piotrowa wdowa | czynsz | ćw. 1; staj 5½; 6 zł 18 gr |
+| AOZ 71/2.1.2/202 skan 4 | 4 | Kaczyński | Tejże wdowie z ogrodem | do roboty | robota 2; ostatek ugorem |
+| AOZ 71/2.1.2/202 skan 4 | 5 | Kaczyński | Maciej Kaczyński | czynsz | ćw. 2; staj 11½; 13 zł 24 gr; ostatek ugorem |
+| AOZ 71/2.1.2/202 skan 4 | 6 | Andrzejkowski | Tomska wdowa | robi | ćw. ½; 9 gr |
+| AOZ 71/2.1.2/202 skan 4 | 6 | Andrzejkowski | Tasz | czynsz | ćw. ½; staj 5; 7 zł 3 gr; et quarta sors staja |
+| AOZ 71/2.1.2/202 skan 4 | 7 | Świtowski | Jakub Zuber | czynsz | ćw. 2; staj 9½; 11 zł 12 gr; ostatek ugorem i zarośl |
+| AOZ 71/2.1.2/202 skan 4 | 9 | Rzepczyński | Jan Wojtowi Rzepka | czynsz | ćw. 2; staj 3½; 4 zł 6 gr; ostatek ugorem i zarośl |
+| AOZ 71/2.1.2/202 skan 4 | 10 | Marcinkowski | Jakub Zuber | czynsz | ćw. 2; staj 6; 7 zł 6 gr |
+| AOZ 71/2.1.2/202 skan 4 | 11 | Dylowski(?) | Matyasz Piwowar | czynsz | ćw. 2; staj 8½; 10 zł 6 gr; ostatek ugorem |
+| AOZ 71/2.1.2/202 skan 4 | 11 | Ratajowski | Matyasz Rataj | czynsz | ćw. 2; staj 9; 10 zł 24 gr; ostatek ugorem |
+| AOZ 71/2.1.2/202 skan 4 | 12 | Ligowski | Matyasz Grzel | robi | ćw. 1; woły 1, konie 1, robota 2; 18 gr |
+| AOZ 71/2.1.2/202 skan 4 | 12 | Ligowski | Tenże | czynsz | ćw. 1; staj 5; 6 zł; Latus 99 … |
+| AOZ 71/2.1.2/202 skan 5 | 13 | Reszczyński | Andrzej Samał | czynsz | ćw. 2; staj 7½; 9 zł; ostatek ugorem i zarośl |
+| AOZ 71/2.1.2/202 skan 5 | 14 | Gorniakowski | Józef Gorniak | robi | ćw. 2; konie 1, robota 2; 18 gr; ostatek zarosło |
+| AOZ 71/2.1.2/202 skan 5 | 15 | Lipiński |  | do arendy kontraktem | ćw. 2 |
+| AOZ 71/2.1.2/202 skan 5 | 16 | Rzepczyński | Jan Sobodła | robi | ćw. 1; konie 1, robota 2; 18 gr |
+| AOZ 71/2.1.2/202 skan 5 | 16 | Rzepczyński | Wojtek Sobodła | robi | ćw. 1; 18 gr |
+| AOZ 71/2.1.2/202 skan 5 | 17 | Kuczyński |  | do arendy | ćw. 1 |
+| AOZ 71/2.1.2/202 skan 5 | 17 | Kuczyński | Stanisław Kozaczek | czynsz | ćw. 1½; staj 7½; 9 zł; ćw. ½ ugorem |
+| AOZ 71/2.1.2/202 skan 5 | 18 | Pasternakowski | Sobek Pasternak | robi | ćw. 1; 18 gr |
+| AOZ 71/2.1.2/202 skan 5 | 18 | Pasternakowski | Tenże | czynsz | ćw. 1; staj 4; 4 zł 24 gr; ostatek zarośl |
+| AOZ 71/2.1.2/202 skan 5 | 19 | Susiński | Stach Kudrel | robi | ćw. 1; 18 gr |
+| AOZ 71/2.1.2/202 skan 5 | 19 | Susiński | Tenże | czynsz | ćw. ½; staj 3; 4 zł; et quartam |
+| AOZ 71/2.1.2/202 skan 5 | 19 | Susiński | Wojtek Wojcik | czynsz | ćw. ½; staj 3½; 4 zł 6 gr; ostatek ugór |
+| AOZ 71/2.1.2/202 skan 5 | 20 | Wojcikowski | Adam Wojcik | robi | ćw. 1; 9 gr |
+| AOZ 71/2.1.2/202 skan 5 | 20 | Wojcikowski | Tenże | czynsz | ćw. ½; staj 5; 6 zł |
+| AOZ 71/2.1.2/202 skan 5 | 20 | Wojcikowski | Maciej Wojcik | robi | ćw. 1; 18 gr |
+| AOZ 71/2.1.2/202 skan 5 | 21 | Kołtunowski | Wojtek Wojcik | robi | ćw. 1; 18 gr |
+| AOZ 71/2.1.2/202 skan 5 | 21 | Kołtunowski | Stanisław Kasperek | robi | ćw. 1; 18 gr |
+| AOZ 71/2.1.2/202 skan 5 | 22 | Pcionowski | Marcin Wojcik | robi | ćw. 1; 18 gr |
+| AOZ 71/2.1.2/202 skan 5 | 22 | Pcionowski | Maciej Pcion | gumienny liber | ćw. ½ |
+| AOZ 71/2.1.2/202 skan 5 | 22 | Pcionowski | Jan Pcion | robi | ćw. ½; 18 gr |
+| AOZ 71/2.1.2/202 skan 5 | 23 | Klimkowska | Mackowa Brzozkowa(?) | czynsz | ćw. 1; staj 3; 3 zł 18 gr |
+| AOZ 71/2.1.2/202 skan 5 | 24 | Burakowski | Maciej Pcion | gumienny do służby liber | ćw. 1; ćw. 1 zarosła; Latus 33½ … |

@@ -31,3 +31,4 @@ Inne opisowe odczyty (w folderze wyżej): `BLINOW_spisy_poddanych_1731_1733_str1
 > **Ustalenie:** ten inwentarz (AOZ 71/2.1.2/201) to kopia inwentarza z 12 maja 1658 (AOZ 71/1.1/4) – nie 1701. Patrz `BLINOW_inwentarz_1658_71-1.1-4_opis_i_porownanie.md`.
 
 | [../BLINOW_inwentarz_1658_71-1.1-4_opis_i_porownanie.md](../BLINOW_inwentarz_1658_71-1.1-4_opis_i_porownanie.md) | Inwentarz Blinowa 12 maja 1658 (oryginał; 201 jest jego kopią) | AOZ 71/1.1/4 skany 5–9 | opis dworu + identyfikacja | – |
+| [inwentarz_1705_202.md](inwentarz_1705_202.md) | Blinów z powinnościami A° 1705 | AOZ 71/2.1.2/202 skany 4–5 | lp 1–24 | 40 |

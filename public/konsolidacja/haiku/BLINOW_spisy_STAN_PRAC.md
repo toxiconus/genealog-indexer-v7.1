@@ -24,3 +24,5 @@ Pudło i Kopiwoda: brak w spisach Blinowa; Brzozówka 1864 – poz. 11, 31, 44 (
 
 
 > **Ustalenie:** ten inwentarz (AOZ 71/2.1.2/201) to kopia inwentarza z 12 maja 1658 (AOZ 71/1.1/4) – nie 1701. Patrz `BLINOW_inwentarz_1658_71-1.1-4_opis_i_porownanie.md`.
+
+- 71/2.1.2/202 = „Wieś Blinów … A° 1705": skany 4–5 odczytane (lp 1–24); skany 6–19 do odczytu. 71/1.1/4 = 1658 (oryginał kopii 201).
