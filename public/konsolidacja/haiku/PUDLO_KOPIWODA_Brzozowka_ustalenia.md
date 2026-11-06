@@ -10,3 +10,6 @@
 | 42 | Звисло Иванъ | Wcisło Jan | |
 
 Baza aktów: Pudło – 151 wzm. (Brzozówka 113, Blinów 30), ojcowie: Michał 15, Wawrzyniec 15, Józef 9, Wojciech 7; Kopiwoda – 90 wzm. (Brzozówka 81), ojcowie: Jan 10, Andrzej 6, Wawrzyniec 4. Wawrzyniec jest imieniem w obu rodzinach → zgodne z gospodarzami 1864 (2× Pudło, 1× Kopiwoda).
+
+## Dodatek 2026-11-06 – materiały leśne 1872 (AOZ 71/3.7/3557, skany 5–13)
+Brzozówka ok. 1872: Kopiwoda Andrzej (nr 1), Pudło Wawrzyniec (nr 11 i 31), Kopiwoda Wawrzyniec (nr 44). Potwierdza obecność obu nazwisk w Brzozówce w 1872 r.; w Blinowie 1658–1872 brak.
