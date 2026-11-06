@@ -8,3 +8,10 @@ Zmiany względem 1865: np. nr 4 Lenard? Tomasz; 61 Dobrzejańska wdowa; 65 Kozyr
 
 ## UWAGA – Brzozówka (skany 5–13) w tej samej paczce
 **PUDŁO i KOPIWODA znalezione**: nr 1 **Kopiwoda Andrzej**; nr 11 i 31 **Pudło Wawrzyniec**; nr 44 **Kopiwoda Wawrzyniec** (stan ok. 1872, Brzozówka, gospodarze wg tabeli likwidacyjnej). Odczyt: `../BRZOZOWKA_materialy_lesne_1872_3557_odczyt_reczny.csv` (nr 1–49, w tym Rembur, Sprypak, Machulak, Marur, Bruń, Ogoń, Białkowski, Krzysztoń, Kogut, Wós, Wcisło).
+
+## Błażek (skany 36–49, nr 1–68) i Moczydła (skany 50–57, nr 1–43)
+Odczyt nazwisk: `../BLAZEK_materialy_lesne_1872_3557_odczyt_reczny.csv`, `../MOCZYDLA_materialy_lesne_1872_3557_odczyt_reczny.csv`.
+Błażek: Paszkowski, Głaz, Lenard, Marur, Surma, Wierzchowiak/Wierzchuk, Smyk, Krzysztoń, Sulowski, Misiak, Tylus, Sokół, Dziewa, Małysiak, Paszkucha…
+Moczydła: Nieciór, Łuś, Sokół, Krawczyk, Zachurowa, Jurgielło, Wcisło, Chmiel, Wielebor, Janik, Pcion, Dąbrowski…
+**Pudło / Kopiwoda w Błażku i Moczydłach: brak.** Moczydła nr 1–43 zamykają lukę po tabeli 168/6/1126 (same numery).
+Skan 58 – nieczytany.
