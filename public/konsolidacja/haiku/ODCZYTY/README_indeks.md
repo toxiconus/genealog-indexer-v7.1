@@ -36,3 +36,4 @@ Inne opisowe odczyty (w folderze wyżej): `BLINOW_spisy_poddanych_1731_1733_str1
 | [inwentarz_1658_71-1.1-4.md](inwentarz_1658_71-1.1-4.md) | Inwentarz Blinowa 1658 (oryginał) – poddani | AOZ 71/1.1/4 skany 9–11 | str. 8–13 | 56 |
 | [MOCZYDLA_tabela_likwidacyjna_168-6-1126.md](MOCZYDLA_tabela_likwidacyjna_168-6-1126.md) | Moczydła – wpis dodatkowy do tabeli likwidacyjnej (bez nazwisk) | AP Lublin 168/6/1126 | opis | – |
 | [BLINOW_kosciol_fundusz_115-1.2-60_opis.md](BLINOW_kosciol_fundusz_115-1.2-60_opis.md) | Blinów – kościół, fundusz i awuls 1837–1840 (akta administracyjne) | AP Lublin 115/1.2/60 (122 skany) | opis | – |
+| [BRZOZOWKA_parcelacja_1931_plan_i_rejestr_71-7.5.1.3-1681_1685.md](BRZOZOWKA_parcelacja_1931_plan_i_rejestr_71-7.5.1.3-1681_1685.md) | Brzozówka 1931 – plan parcelacji i rejestr pomiarowy | AOZ 71/7.5.1.3/1681, 1685 | opis | – |

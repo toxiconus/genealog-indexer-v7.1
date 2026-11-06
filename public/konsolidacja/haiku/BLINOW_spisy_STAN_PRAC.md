@@ -34,3 +34,4 @@ Pudło i Kopiwoda: brak w spisach Blinowa; Brzozówka 1864 – poz. 11, 31, 44 (
 - Nowe paczki 2026-11-06 10:27: skany_37 = duplikat 71/2.1.2/201; skany_35(2) = duplikat 1342; skany_38 = duplikat 71/1.1/4 (1658); skany_40 = AP 168/6/1126 Moczydła – wpis do tabeli likwidacyjnej (bez nazwisk).
 - Lata z SzwA (potwierdzone przez użytkownika): 1342=1701, 1.1/4=1658, 206=1756. Czekamy na SzwA dla 201, 202, 1346, 1354.
 - skany_36 = AP 115/1.2/60 „Acta specialia … Blinowa, kościoła, funduszu i awulsa" 1837–1840, 122 skany; tylko opis (ODCZYTY/BLINOW_kosciol_fundusz_115-1.2-60_opis.md).
+- skany_41 = AOZ 71/7.5.1.3/1685, skany_42 = 1681: plan parcelacji Brzozówki 1931 + rejestr pomiarowy (kolonie 1–37, bez nazwisk na skanie 7). Opis w ODCZYTY/BRZOZOWKA_parcelacja_1931….md
