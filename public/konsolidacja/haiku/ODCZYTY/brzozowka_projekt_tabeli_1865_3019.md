@@ -14,3 +14,12 @@ Zgodne z tabelą 1864/1872 (nr 11, 31 Pudło; nr 1, 44 Kopiwoda) – projekt 186
 - Wpisy mają relacje: „z dobrowolnego odstąpienia przez X” (przekazanie osady), „syn Y”, „zięć”, „wdowa po”, „dzieci po”. To są powiązania osobowe do wykorzystania w wyszukiwaniu (patrz STAN_PRAC).
 - Warianty zapisu: Rębacz/Rebacz, Kogut/Kogud, Machulak/Madulak/Machułak, Ogoń/Ogon.
 - Skany 12+ (nr 47 i dalej, Uwagi) nieodczytane.
+
+## Uzupełnienie: skany 12–14 (Dział II – grunty z ukazu 19 II 1864)
+Skan 12: tekst o serwitutach (drzewo/las), przekreślony – bez nazwisk.
+Skany 13–14: **Dział II** (nr 47–54) – dodatkowe grunty drzewne posiadaczy osad z działu I, z podanym numerem osady:
+- nr 52 **Kopiwoda Andrzej** → osada nr 1, 2 morgi
+- nr 54 **Kopiwoda Wawrzyniec** → osada nr 44, 5 mórg 284 pręty
+- nr 49 Bigos Andrzej → osada nr 7; nr 47 Brzyski Franciszek → nr 26; nr 51 Woś Jan → nr 42; nr 53 Brzęczkiewicz Szczepan i Stefan → nr 19; nr 50 Dobrzański(?) Wojciech → nr 9
+- nr 55 grunty gromadzkie (pastwisko).
+Wniosek: osada nr 1 = Kopiwoda Andrzej, nr 44 = Kopiwoda Wawrzyniec – potwierdzone dwukrotnie (dział I i II).
