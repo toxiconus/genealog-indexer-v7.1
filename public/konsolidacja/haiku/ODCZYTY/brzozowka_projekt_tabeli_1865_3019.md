@@ -46,3 +46,8 @@ Wniosek: osada nr 1 = Kopiwoda Andrzej, nr 44 = Kopiwoda Wawrzyniec – potwierd
 ## Korekta po wersji rosyjskiej (skany 23–26)
 Skan 23: okładka „Проект Ликвидационной таблицы села Брзозовка, Замойской Ординации”. Skan 26 (rosyjska kopia tabeli): nr 6 = **Буцонь Войцех** → **Bucoń Wojciech** (nie „Bucior”); tak samo nr 48 (dział II). Nr 12 = **Bucoń Antoni** (zgodne z porównaniem 1864/1872).
 Wniosek: w Brzozówce w 1865 r. Buconiowie mają dwie osady (nr 6 Wojciech, nr 12 Antoni); „Buconiowa” z wpisu nr 11 mogła być wdową po jednym z nich, nie tylko Teresą Bucoń z drzewa.
+
+## Skany 27–29 (rosyjska kopia, nr 7–30) – potwierdzenia i korekty
+- **Nr 11: „Пудло Лаврентий по наследству от Буцоновой”** = „Pudło Wawrzyniec po dziedzictwie od Buconiowej” – potwierdza odczyt właściciela projektu.
+- Korekty nazwisk wg cyrylicy: nr 9 Dobrzański (nie Dębowiński), nr 18 Pawłowski Józef (nie Pasternak), nr 28 Tymus Jan syn Kaspra, nr 27 Dembicki Adam, nr 29/39 Krzysztoń(?) Wojciech.
+- Formuły „по добровольной сделке съ …” = „z dobrowolnej sprzedaży/umowy z …”.

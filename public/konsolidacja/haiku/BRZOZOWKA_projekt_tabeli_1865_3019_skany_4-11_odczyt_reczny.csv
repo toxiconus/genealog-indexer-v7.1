@@ -7,7 +7,7 @@ skan;nr_osady;osadnik;relacja_i_uwagi;morgi_pretow_wartosc;czynsz_rb_kop_wg_odcz
 5;6;Bucoń Wojciech (wersja rosyjska: Буцонь Войцех – potwierdza nazwisko);25 mórg 177 prętów; uwaga o osadzie dzielonej i zatwierdzeniu 14 lutego 1864(?);25 177;14.82;niska
 6;7;Bigos Andrzej;syn Jana;25 239;16.28;wysoka
 6;8;Ogoń Wojciech;;15 235;10.7;wysoka
-6;9;Dębowiński(?) Wojciech;syn Antoniego;15 240;10.8;średnia
+6;9;Dobrzański Wojciech;syn Antoniego (wersja ros.: Добрзанский Войцех Антонов сын);15 240;10.8;średnia
 6;10;Rębacz(?) Jan;z dobrowolnego odstąpienia przez Marię Józef.(?);15 245;10.9;niska
 6;11;PUDŁO Wawrzyniec;„Prawem sukcesji od Buconiowej otrzymał ją” (odczyt właściciela projektu); Buconiowa = prawdopodobnie teściowa (żona Wawrzyńca: Franciszka Bucoń);15 276;10.10;wysoka (nazwisko i imię)
 6;12;Bucoń Antoni;;15 260;10.12;średnia (zgodne z BRZOZOWKA_1864_vs_1872: Bucoń Antoni nr 12)
@@ -15,20 +15,20 @@ skan;nr_osady;osadnik;relacja_i_uwagi;morgi_pretow_wartosc;czynsz_rb_kop_wg_odcz
 7;14;Białkowski Marcin;;15 246;9.35;wysoka
 7;15;Gołąb(?) Walenty;;15 150;9.26;niska
 7;16;Sprysak Jan;syn Wincentego;15 188;9.29;średnia
-7;17;Machulak Jan;z dobrowolnego odstąpienia przez Ozub.(?);15 204;9.30;średnia
-7;18;Pasternak Józef;po przeniesieniu(?) na ... ;16;9.40;niska
-7;19;Brzęczkiewicz(?) Szczepan;syn Marcina(?);15 162;9.26;niska
+7;17;Machulak Jan;z dobrowolnej sprzedaży (ros.: по добровольной сделке) z Czubem(?) Janem;15 204;9.30;średnia
+7;18;Pawłowski Józef (ros.: Павловскій Іосифъ);wdowa po Janie (ros.: …на вдову … Ивана);16;9.40;niska
+7;19;Brzęczkiewicz Szczepan (ros.: Бржушкевичъ Степанъ);z Błażejem(?);15 162;9.26;niska
 7;20;Szabat(?) Józef;syn Wojciecha;15 135;9.24;niska
 7;21;Machulak Szymon;;15 245;9.35;średnia
-8;22;Sprysak Michał;odstąpiona Michałowi(?) / brat Michał;15 246;9.10;niska
-8;23;Rębacz Walenty;z dobrowolnego odstąpienia przez Krzemińskiego Andrzeja(?);15 247;9.10;niska
+8;22;Sprysak Michał;po bracie Michale (ros.: по брату Михаила);15 246;9.10;niska
+8;23;Rębacz Walenty;z dobrowolnej sprzedaży z Krzemińskim Andrzejem;15 247;9.10;niska
 8;24;Reban(?) Paweł;;15 263;9.12;niska
 8;25;Szymka(?) Stanisław;;15 214;9.8;niska
-8;26;Brzyki(?) Franciszek;z dobrowolnego odstąpienia przez ... ;15 187;9.1;niska
-8;27;Obłocki(?) Adam;z dobrowolnego odstąpienia przez Andrzeja(?);15 226;9.4;niska
-8;28;Tyfus(?) Jan;;15 238;9.5;niska
-8;29;Skrzypek Wojciech;;15 176;8.9;średnia
-9;30;Mazur Jan;z dobrowolnego odstąpienia przez Ogoń Tomasza(?);15 230;9.4;niska
+8;26;Brzyski Franciszek;z dobrowolnej sprzedaży z Wierzchowskim(?) Piotrem;15 187;9.1;niska
+8;27;Dembicki/Dębicki Adam (ros.: Дембицкій Адамъ);z dobrowolnej sprzedaży z Ogoniem Andrzejem;15 226;9.4;niska
+8;28;Tymus Jan (ros.: Тымосъ Иванъ);syn Kaspra (ros.: сынъ Гаспара);15 238;9.5;niska
+8;29;Krzysztoń(?) Wojciech (ros.: Кржиштонъ Войцехъ);syn Mazura(?);15 176;8.9;średnia
+9;30;Mazur Jan;z dobrowolnej sprzedaży z Ogoniem Tomaszem;15 230;9.4;niska
 9;31;PUDŁO Wawrzek (zapis: „Wawrzek”, prawdopodobnie = Wawrzyniec);syn Michała (patronimik wyraźnie czytelny w zapisie „syn Michała”);15 151;8.96;wysoka (nazwisko, patronimik); imię: zapis „Wawrzek”
 9;32;Kowal(?) Stanisław;;15 89;8.52;niska
 9;33;Dzieci po Frydonie(?) / Bartłomieju;sieroty;15 74;8.51;niska
@@ -37,7 +37,7 @@ skan;nr_osady;osadnik;relacja_i_uwagi;morgi_pretow_wartosc;czynsz_rb_kop_wg_odcz
 9;36;Ogoń Jan;z dobrowolnego odstąpienia przez Bruna(?);15 230;8.21;niska
 10;37;Białkowski Wojciech;z dobrowolnego odstąpienia przez Kolasa Macieja;15 220;8.20;średnia
 10;38;Machulakowa (wdowa);z dobrowolnego odstąpienia przez Gaz(?) Macieja;16 130;9.32;niska
-10;39;Skrzypek Wojciech;z dobrowolnego odstąpienia przez Kolasa(?) Wojciecha;16 58;8.41;niska
+10;39;Krzysztoń(?) Wojciech;z dobrowolnego odstąpienia przez Kolasa(?) Wojciecha;16 58;8.41;niska
 10;40;Rębacz Paweł;syn pierwszej(?) żony Jana; uwaga: osada pod nr 24 działu II;15 126;8.96;niska
 10;41;Kogut Wojciech;z dobrowolnego odstąpienia przez Wojciecha Macieja(?);8 130;6.38;średnia
 10;42;Woś Jan;syn Andrzeja;10;7;średnia
