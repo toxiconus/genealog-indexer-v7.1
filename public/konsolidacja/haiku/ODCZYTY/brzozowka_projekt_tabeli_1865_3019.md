@@ -51,3 +51,9 @@ Wniosek: w Brzozówce w 1865 r. Buconiowie mają dwie osady (nr 6 Wojciech, nr 1
 - **Nr 11: „Пудло Лаврентий по наследству от Буцоновой”** = „Pudło Wawrzyniec po dziedzictwie od Buconiowej” – potwierdza odczyt właściciela projektu.
 - Korekty nazwisk wg cyrylicy: nr 9 Dobrzański (nie Dębowiński), nr 18 Pawłowski Józef (nie Pasternak), nr 28 Tymus Jan syn Kaspra, nr 27 Dembicki Adam, nr 29/39 Krzysztoń(?) Wojciech.
 - Formuły „по добровольной сделке съ …” = „z dobrowolnej sprzedaży/umowy z …”.
+
+## Skany 30–32 (rosyjska kopia, nr 31–54)
+- **Nr 31: „Пудло Лаврентий Михаилов сынъ”** = Pudło Wawrzyniec, syn Michała – **potwierdzone** (w polskim projekcie „Wawrzek”). Z drzewa: Wawrzyniec ur. 1838, syn Michała Pudły (1797–1852) i Jadwigi Ogoń.
+- Nr 36 Ogoń Jan – „z dobrowolnej sprzedaży z **Buconiem Walentym**” (dalsza wzmianka o Buconiach w Brzozówce).
+- Nr 41, 46 Kogut Wojciech (po Wosiu / po Mazurku Wojciechu); nr 42 Woś Jan syn Andrzeja; nr 43 Woś Antoni po Gerbarze(?).
+- Dział II (nr 47–54) po rosyjsku z numerami osad działu I: Брыский Францишекъ (nr 26), Буцонь Войцехъ (nr 6), Бигосъ Андрей (nr 7), Добрзанский Войцех (nr 9), Вощъ Иванъ (nr 42), Копивода Андрей (nr 1), Бржушкевичъ Степанъ (nr 19), Копивода Лаврентий (nr 44) – zgodne z działem II w polskim projekcie.

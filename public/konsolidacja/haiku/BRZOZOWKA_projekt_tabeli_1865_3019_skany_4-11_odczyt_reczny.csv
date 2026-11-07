@@ -9,7 +9,7 @@ skan;nr_osady;osadnik;relacja_i_uwagi;morgi_pretow_wartosc;czynsz_rb_kop_wg_odcz
 6;8;Ogoń Wojciech;;15 235;10.7;wysoka
 6;9;Dobrzański Wojciech;syn Antoniego (wersja ros.: Добрзанский Войцех Антонов сын);15 240;10.8;średnia
 6;10;Rębacz(?) Jan;z dobrowolnego odstąpienia przez Marię Józef.(?);15 245;10.9;niska
-6;11;PUDŁO Wawrzyniec;„Prawem sukcesji od Buconiowej otrzymał ją” (odczyt właściciela projektu); Buconiowa = prawdopodobnie teściowa (żona Wawrzyńca: Franciszka Bucoń);15 276;10.10;wysoka (nazwisko i imię)
+6;11;PUDŁO Wawrzyniec;„Prawem sukcesji od Buconiowej otrzymał ją” (odczyt właściciela); ros.: Пудло Лаврентий по наследству от Буцоновой; Buconiowa = prawdopodobnie teściowa (żona: Franciszka Bucoń) lub wdowa po Buconiu;15 276;10.10;wysoka (nazwisko, imię, relacja)
 6;12;Bucoń Antoni;;15 260;10.12;średnia (zgodne z BRZOZOWKA_1864_vs_1872: Bucoń Antoni nr 12)
 6;13;Igaś(?) Tadeusz;;15 244;10.10;niska
 7;14;Białkowski Marcin;;15 246;9.35;wysoka
@@ -29,22 +29,22 @@ skan;nr_osady;osadnik;relacja_i_uwagi;morgi_pretow_wartosc;czynsz_rb_kop_wg_odcz
 8;28;Tymus Jan (ros.: Тымосъ Иванъ);syn Kaspra (ros.: сынъ Гаспара);15 238;9.5;niska
 8;29;Krzysztoń(?) Wojciech (ros.: Кржиштонъ Войцехъ);syn Mazura(?);15 176;8.9;średnia
 9;30;Mazur Jan;z dobrowolnej sprzedaży z Ogoniem Tomaszem;15 230;9.4;niska
-9;31;PUDŁO Wawrzek (zapis: „Wawrzek”, prawdopodobnie = Wawrzyniec);syn Michała (patronimik wyraźnie czytelny w zapisie „syn Michała”);15 151;8.96;wysoka (nazwisko, patronimik); imię: zapis „Wawrzek”
-9;32;Kowal(?) Stanisław;;15 89;8.52;niska
-9;33;Dzieci po Frydonie(?) / Bartłomieju;sieroty;15 74;8.51;niska
+9;31;PUDŁO Wawrzyniec (pol.: „Wawrzek”; ros.: Пудло Лаврентий);syn Michała (ros.: Михаилов сын – potwierdzone);15 151;8.96;wysoka
+9;32;Komsa Stanisław;zięć Brzyskiego (ros.: зять Брыскаго);15 89;8.52;średnia
+9;33;Dzieci po Szydłowskim (ros.: Дѣти послѣ Шидловскаго) Bartłomieju(?);sieroty;15 74;8.51;niska
 9;34;Wdowa po Dzielińskim Macieju;wdowa; osada wg uwagi jak nr 6;31 171;16.13;średnia
 9;35;Mazurek Stanisław;odstąpienie przez Orzeła(?) Jana;15 172;8.15;niska
-9;36;Ogoń Jan;z dobrowolnego odstąpienia przez Bruna(?);15 230;8.21;niska
+9;36;Ogoń Jan;z dobrowolnej sprzedaży z Buconiem Walentym (ros.: съ Буцонемъ Валентиномъ);15 230;8.21;średnia
 10;37;Białkowski Wojciech;z dobrowolnego odstąpienia przez Kolasa Macieja;15 220;8.20;średnia
 10;38;Machulakowa (wdowa);z dobrowolnego odstąpienia przez Gaz(?) Macieja;16 130;9.32;niska
 10;39;Krzysztoń(?) Wojciech;z dobrowolnego odstąpienia przez Kolasa(?) Wojciecha;16 58;8.41;niska
 10;40;Rębacz Paweł;syn pierwszej(?) żony Jana; uwaga: osada pod nr 24 działu II;15 126;8.96;niska
-10;41;Kogut Wojciech;z dobrowolnego odstąpienia przez Wojciecha Macieja(?);8 130;6.38;średnia
-10;42;Woś Jan;syn Andrzeja;10;7;średnia
-10;43;Woś Antoni;z dobrowolnego odstąpienia przez Wojciecha Dąbrowskiego(?);9 191;5.52;niska
+10;41;Kogut Wojciech;po Wosiu Wojciechu (ros.: послѣ Вося Войцеха);8 130;6.38;średnia
+10;42;Woś Jan;Andrzejów syn (ros.: Андреевъ сынъ);10;7;średnia
+10;43;Woś Antoni;po Gerbarze(?) (ros.: послѣ Гербара);9 191;5.52;niska
 11;44;KOPIWODA Wawrzyniec;;8 262;5.54;wysoka (nazwisko i imię)
 11;45;Marzec(?) Marcin;;9 238;5.72;niska
-11;46;Kogut Wojciech;z dobrowolnego odstąpienia przez Marcina(?) Wojciecha;9 230;5.43;średnia
+11;46;Kogut Wojciech;po Mazurku Wojciechu (ros.: послѣ Мазурка Войцеха);9 230;5.43;średnia
 13;47;Brzyski Franciszek;Dział II (ukaz 19 lutego 1864, dopisane grunty); posiada osadę nr 26 działu I; 1 morga 129 prętów drzewnych;1 129;1.43;wysoka
 13;48;Bucoń Wojciech;Dział II; posiada osadę nr 6 (?) działu I; 10 mórg 210 prętów drzewnych;10 210;3.18;niska
 13;49;Bigos Andrzej;Dział II; posiada osadę nr 7 działu I; 6 mórg drzewnych;6;1.26;wysoka
