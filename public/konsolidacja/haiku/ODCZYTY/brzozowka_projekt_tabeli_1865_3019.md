@@ -25,3 +25,9 @@ Skany 13–14: **Dział II** (nr 47–54) – dodatkowe grunty drzewne posiadacz
 Wniosek: osada nr 1 = Kopiwoda Andrzej, nr 44 = Kopiwoda Wawrzyniec – potwierdzone dwukrotnie (dział I i II).
 
 **Korekta po sprawdzeniu skanu:** Michał jest tylko patronimikiem przy nr 31 (jako osobny gospodarz w tym spisie nie występuje). Zapis imienia przy nr 31 to „Wawrzek”, nie „Wawrzyniec”.
+
+## Do sprawdzenia na skanie (Pudło nr 11 – Bucoń)
+- Chrzest Franciszki Bucoń 1829, akt nr 42 (CH.LUB.BLIN.1829.042): w indeksie tylko matka „Teresa Bucoń?”, brak ojca – sprawdzić na skanie, czy ojciec jest w akcie (skan nie jest w repo).
+- Ślub Pudło Wawrzyniec – Bucoń Franciszka 1846, nr 2 (malzenstwa_mal.csv, wiersz 76): panna córka Teresy Bucoń, ojciec „x”; data ślubu nieczytelna w odczycie (drzewo: 24 V 1846).
+- Zgon Teresy Bucoń: nie znaleziony w zgony.csv 1797–1880 (rok 1865 ma tylko 19 wpisów, luka).
+- Hipoteza: „Buconiowa” (wpis nr 11, 3019) = Teresa Bucoń, teściowa Wawrzyńca; sukcesja po niej.
