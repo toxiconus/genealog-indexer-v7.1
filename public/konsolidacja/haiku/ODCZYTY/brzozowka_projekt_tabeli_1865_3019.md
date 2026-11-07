@@ -31,3 +31,14 @@ Wniosek: osada nr 1 = Kopiwoda Andrzej, nr 44 = Kopiwoda Wawrzyniec – potwierd
 - Ślub Pudło Wawrzyniec – Bucoń Franciszka 1846, nr 2 (malzenstwa_mal.csv, wiersz 76): panna córka Teresy Bucoń, ojciec „x”; data ślubu nieczytelna w odczycie (drzewo: 24 V 1846).
 - Zgon Teresy Bucoń: nie znaleziony w zgony.csv 1797–1880 (rok 1865 ma tylko 19 wpisów, luka).
 - Hipoteza: „Buconiowa” (wpis nr 11, 3019) = Teresa Bucoń, teściowa Wawrzyńca; sukcesja po niej.
+
+## Skany 15–21 (przegląd)
+- Skany 15–16: sumy działów i uwagi (Dział III – „W wsi Brzozówce osad takich nie ma”), bez nazwisk.
+- Skan 17–18: tekst/uwagi i „Ogólny wykaz” (nie czytane szczegółowo).
+- Skany 19–22: **czysty formularz „Tabella likwidacyjna wsi Brzozówki”** (okładka ze skanu 19/18) z kolumną „Uwagi” po prawej, w której nazwiska są wpisane **cyrylicą** (wersja rosyjska, ta sama kolejność 1–46 + dział II):
+  - nr 1 Копивода Андрей (Kopiwoda Andrzej)
+  - nr 11 Пудло Лаврентий; nr 31 Пудло Лаврентий (Pudło Wawrzyniec ×2)
+  - nr 44 Копивода Лаврентий (Kopiwoda Wawrzyniec)
+- **Лаврентий = Wawrzyniec** (Ławrentij), Андрей = Andrzej, Иван = Jan, Войцех = Wojciech, Павел = Paweł, Антон = Antoni, Станислав = Stanisław.
+- Przy lewej krawędzi strony z uwagami są czerwone liczby przy każdym wierszu (np. przy Pudło nr 31 – 149, przy Kopiwoda Wawrzyniec nr 44 – 38). Znaczenie nieustalone (prawdopodobnie numer z tabeli prestacyjnej 1846 lub z innego rejestru) – do weryfikacji na pełnym skanie.
+- Skany 23–35: dalsze formularze z wpisami (pole uwag/wykaz), nieodczytane.
