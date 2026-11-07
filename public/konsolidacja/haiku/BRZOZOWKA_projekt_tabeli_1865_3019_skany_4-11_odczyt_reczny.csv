@@ -4,13 +4,13 @@ skan;nr_osady;osadnik;relacja_i_uwagi;morgi_pretow_wartosc;czynsz_rb_kop_wg_odcz
 5;3;Kogut(?) Wojciech;;15 223;10.5;niska (nazwisko)
 5;4;Machulakowa (wdowa po Macieju Machulaku);wdowa;15 212;10.6;średnia
 5;5;Woś Paweł;zięć Machulaka(?);15 223;10.7;średnia
-5;6;Bucior(?) Wojciech;25 mórg 177 prętów; uwaga o osadzie dzielonej i zatwierdzeniu 14 lutego 1864(?);25 177;14.82;niska
+5;6;Bucoń Wojciech (wersja rosyjska: Буцонь Войцех – potwierdza nazwisko);25 mórg 177 prętów; uwaga o osadzie dzielonej i zatwierdzeniu 14 lutego 1864(?);25 177;14.82;niska
 6;7;Bigos Andrzej;syn Jana;25 239;16.28;wysoka
 6;8;Ogoń Wojciech;;15 235;10.7;wysoka
 6;9;Dębowiński(?) Wojciech;syn Antoniego;15 240;10.8;średnia
 6;10;Rębacz(?) Jan;z dobrowolnego odstąpienia przez Marię Józef.(?);15 245;10.9;niska
 6;11;PUDŁO Wawrzyniec;„Prawem sukcesji od Buconiowej otrzymał ją” (odczyt właściciela projektu); Buconiowa = prawdopodobnie teściowa (żona Wawrzyńca: Franciszka Bucoń);15 276;10.10;wysoka (nazwisko i imię)
-6;12;Bernat(?) Antoni;;15 260;10.12;niska
+6;12;Bucoń Antoni;;15 260;10.12;średnia (zgodne z BRZOZOWKA_1864_vs_1872: Bucoń Antoni nr 12)
 6;13;Igaś(?) Tadeusz;;15 244;10.10;niska
 7;14;Białkowski Marcin;;15 246;9.35;wysoka
 7;15;Gołąb(?) Walenty;;15 150;9.26;niska
@@ -46,7 +46,7 @@ skan;nr_osady;osadnik;relacja_i_uwagi;morgi_pretow_wartosc;czynsz_rb_kop_wg_odcz
 11;45;Marzec(?) Marcin;;9 238;5.72;niska
 11;46;Kogut Wojciech;z dobrowolnego odstąpienia przez Marcina(?) Wojciecha;9 230;5.43;średnia
 13;47;Brzyski Franciszek;Dział II (ukaz 19 lutego 1864, dopisane grunty); posiada osadę nr 26 działu I; 1 morga 129 prętów drzewnych;1 129;1.43;wysoka
-13;48;Bucior(?) Wojciech;Dział II; posiada osadę nr 6 (?) działu I; 10 mórg 210 prętów drzewnych;10 210;3.18;niska
+13;48;Bucoń Wojciech;Dział II; posiada osadę nr 6 (?) działu I; 10 mórg 210 prętów drzewnych;10 210;3.18;niska
 13;49;Bigos Andrzej;Dział II; posiada osadę nr 7 działu I; 6 mórg drzewnych;6;1.26;wysoka
 13;50;Dobrzański(?) Wojciech;Dział II; posiada osadę nr 9 działu I (w dziale I zapisany jako Dębowiński?); 2 morgi drzewne;2;1.14;średnia
 13;51;Woś Jan;Dział II; posiada osadę nr 42 działu I; 8 mórg drzewnych;8;2.7;wysoka
