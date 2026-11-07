@@ -5,7 +5,7 @@ Użycie: python3 buduj_ged_blinow.py [katalog_wyjsciowy]
 Etapy: 1) osoby-dzieci z chrztów, 2) rodziny z rodziców (ojciec+matka+panieńskie, miejscowość, rozstęp lat),
 3) śluby -> rodziny (dopasowanie do grup chrztów), 4) łączenie małżonków z własnymi chrztami (imię+nazwisko+rok+rodzice),
 5) zgony -> osoby (tylko jednoznacznie), 6) eksport GED i statystyki."""
-import csv,re,sys,os,collections,itertools
+import csv,re,sys,os,collections,itertools,difflib
 sys.path.insert(0,os.path.dirname(os.path.abspath(__file__)))
 from osoby_dopasowanie import stem_nazwisko,kanon_imie
 KONS=os.path.join(os.path.dirname(os.path.abspath(__file__)),'..')
@@ -17,6 +17,10 @@ def sk(n):
     if not n or n in('.','-','[---]'):return ''
     s=stem_nazwisko(n)
     return re.sub(r'(ianka|owna|owa)$','',s)
+def like(a,b):
+    if a==b:return True
+    if not a or not b:return True
+    return difflib.SequenceMatcher(None,a,b).ratio()>=0.8
 def kim(n):
     n=(n or '').strip().rstrip('?')
     return kanon_imie(n) if n and n not in('.','-','[---]') else ''
@@ -55,14 +59,15 @@ for r in ch:
 # ---------- 2. rodziny z grup rodziców ----------
 bucket=collections.defaultdict(list)
 for b in BIR:
-    if b['oi'] and b['mi']:bucket[(b['oi'],b['on'],b['mi'])].append(b)
+    if b['oi'] and b['mi']:bucket[(b['oi'],b['on'][:4],b['mi'])].append(b)
 par={}
 def find(x):
     while par.setdefault(x,x)!=x:par[x]=par[par[x]];x=par[x]
     return x
 def kompat(a,b):
-    if a['mn'] and b['mn'] and a['mn']!=b['mn']:return False
-    if a['miej'] and b['miej'] and a['miej']!=b['miej']:return False
+    if not like(a['on'],b['on']):return False
+    if not like(a['mn'],b['mn']):return False
+    if a['miej'] and b['miej'] and a['miej']!=b['miej'] and not(a['mn'] and b['mn']):return False
     return abs(a['rok']-b['rok'])<=24
 for k,lst in bucket.items():
     for a,b in itertools.combinations(lst,2):
@@ -82,7 +87,7 @@ for (k,_),lst in grupy.items():
     f=nowa_rodzina(fid,mid,miej=miej);FAM[f]['klucz']=k
     for x in lst:
         FAM[f]['dzieci'].append(x['p']);P[x['p']]['famc']=f
-    GR.append(dict(f=f,oi=k[0],on=k[1],mi=k[2],mn=maid,min=min(x['rok'] for x in lst),max=max(x['rok'] for x in lst),miej=miej,lst=lst))
+    GR.append(dict(f=f,oi=k[0],on=lst[0]['on'],mi=k[2],mn=maid,min=min(x['rok'] for x in lst),max=max(x['rok'] for x in lst),miej=miej,lst=lst))
 # dzieci bez pary rodziców: osoby bez rodziny (zostają)
 byname=collections.defaultdict(list)
 for b in BIR:byname[(kim(b['r']['imie']),sk(b['r']['nazwisko']))].append(b)
@@ -96,7 +101,7 @@ def rodzina_rodzicow(oi,on,mi,mn,miej,rok_dziecka):
     if not(oi and mi):return None
     najl=None
     for g in GR:
-        if g['oi']==oi and g['on']==on and g['mi']==mi and (not mn or not g['mn'] or g['mn']==mn) and g['min']<=rok_dziecka+2 and g['min']>=rok_dziecka-30:
+        if g['oi']==oi and like(g['on'],on) and g['mi']==mi and like(g['mn'],mn) and g['min']<=rok_dziecka+2 and g['min']>=rok_dziecka-30:
             if najl is None or abs(g['min']-rok_dziecka)<abs(najl['min']-rok_dziecka):najl=g
     return najl['f'] if najl else None
 def wiek_ur(r,pref):
@@ -109,7 +114,7 @@ for r in MAL:
     rok=int(r['rok']);
     hi,hn=kim(r['pan_imie']),sk(r['pan_nazwisko']);wi,wn=kim(r['panna_imie']),sk(r['panna_nazwisko'])
     # grupa chrztów, w której H i W są rodzicami
-    gz=[g for g in GR if g['oi']==hi and g['on']==hn and g['mi']==wi and (not g['mn'] or g['mn']==wn) and g['min']>=rok-1 and g['min']<=rok+14]
+    gz=[g for g in GR if g['oi']==hi and like(g['on'],hn) and g['mi']==wi and like(g['mn'],wn) and g['min']>=rok-1 and g['min']<=rok+25]
     gz.sort(key=lambda g:g['min'])
     zrod=[('MAL',f"mał. {r['rok']} nr {r['nr']}")]
     if gz and len(gz)==1 or (gz and gz[0]['min']-rok<=3):

@@ -23,3 +23,13 @@ Porównanie z drzewem (prywatnym, poza repo): `skrypty/porownaj_ged_z_indeksami.
 - Zgody rodziców oparte na imieniu ojca+matki+nazwisku panieńskim+miejscowości i rozstępie ≤24 lat; popularne pary mogą się zlewać.
 - Chrzty 1797–1825 nie istnieją w indeksie; zgony nie mają wieku, więc nie łączą się z chrztami.
 - Brak rozróżnienia drugich małżeństw poza datą i imionami.
+
+## Etap 2: scalenie z drzewem użytkownika (dane prywatne zostają poza repo)
+Skrypt: `skrypty/scal_ged_z_indeksami.py <ged_z_indeksow> <ged_uzytkownika> <katalog>`. Baza = GED z indeksów; drzewo użytkownika jest dopasowywane
+(rodziny po parze + roku ślubu z rozmytą pisownią nazwisk, potem dzieci, potem osoby po imieniu, nazwisku, roku i rodzicach) i dopisywane; sprzeczności trafiają do CSV, nic nie jest nadpisywane po cichu.
+- Dopasowano 3 093 z 7 169 osób i 1 228 z 2 632 rodzin; reszta dopisana jako nowe (4 076 osób, 1 404 rodziny).
+- Po scaleniu: 16 406 osób, 3 584 rodziny, 0 zerwanych odwołań, 0 duplikatów xref, żadna osoba nie ma dwóch FAMC.
+- Duplikaty w samych indeksach (ta sama para rodziców jako 2 rodziny, potwierdzona przez drzewo): scalono 123 rodziny i 246 osób.
+  Dzięki temu „inni rodzice” spadli z 312 do 20 (reszta to prawdziwe różnice w nazwiskach rodziców).
+- Raport sprzeczności (`analiza_sprzecznosci.csv`): rok ur. inny 250, rok zg. inny, płeć inna 12, niejednoznaczne rodziny 135 i osoby 792,
+  osoby z nazwiskami z parafii bez aktu w indeksach 902 (inna parafia: Szastarka, Kraśnik, Majdan Grabina/Skotnik; błąd roku; luki indeksu).
