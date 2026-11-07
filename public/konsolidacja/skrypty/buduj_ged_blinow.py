@@ -96,6 +96,7 @@ for b in BIR:byname[(kim(b['r']['imie']),sk(b['r']['nazwisko']))].append(b)
 MAL=rd('malzenstwa_mal.csv')
 stat=collections.Counter()
 STUB={}
+MARFAM=[]
 def rodzina_rodzicow(oi,on,mi,mn,miej,rok_dziecka):
     """znajdź grupę chrztów albo stub rodziców; zwróć id rodziny"""
     if not(oi and mi):return None
@@ -163,36 +164,99 @@ for r in MAL:
         if pref=='pan':h=osoba
         else:w=osoba
     for pp in(h,w):zr(pp,'MAL',f"mał. {r['rok']} nr {r['nr']}")
+    MARFAM.append((r,f))
+
+
+# ---------- 4b. wdowiec: poprzednia żona z aktu ślubu -> ten sam mężczyzna co ojciec dzieci z tą żoną ----------
+def scal_osoby(src,dst):
+    if src==dst or P[src]['scal'] is not None or P[dst]['scal'] is not None:return False
+    P[src]['scal']=dst
+    for ff in P[src]['fams']:
+        if FAM[ff]['m']==src:FAM[ff]['m']=dst
+        if FAM[ff]['z']==src:FAM[ff]['z']=dst
+        if ff not in P[dst]['fams']:P[dst]['fams'].append(ff)
+    P[src]['fams']=[]
+    if P[src]['famc'] is not None:
+        if P[dst]['famc'] is None:
+            P[dst]['famc']=P[src]['famc'];FAM[P[src]['famc']]['dzieci']=[dst if c==src else c for c in FAM[P[src]['famc']]['dzieci']]
+        else:FAM[P[src]['famc']]['dzieci']=[c for c in FAM[P[src]['famc']]['dzieci'] if c!=src]
+        P[src]['famc']=None
+    for k in('rb','miej'):
+        if not P[dst][k]:P[dst][k]=P[src][k]
+    P[dst]['zr']+=P[src]['zr'];P[dst]['uwagi']+=P[src]['uwagi'];return True
+for r,f in MARFAM:
+    pi,pn=kim(r['pan_poprzednia_zona_imie']),sk(r['pan_poprzednia_zona_nazwisko'])
+    if not pi:continue
+    H=FAM[f]['m'];hi,hn=kim(r['pan_imie']),sk(r['pan_nazwisko'])
+    cand=[g for g in GR if g['oi']==hi and like(g['on'],hn) and g['mi']==pi and like(g['mn'],pn) and g['max']<=int(r['rok'])+1 and g['f']!=f]
+    if len(cand)==1:
+        Fp=FAM[cand[0]['f']]['m']
+        if scal_osoby(H,Fp):stat['wdowiec_zlaczony']+=1
+        # poprzednia żona: ślub rodziny z dziećmi -> data zgonu z aktu ślubu
+        W0=FAM[cand[0]['f']]['z'];d=r['pan_poprzednia_zona_data_iso']
+        if d and P[W0]['dz'] is None:P[W0]['dz']=dict(rok=int(d[:4]),data=d,wiek='',miej='');P[W0]['zr'].append(('MAL',f"zgon wg aktu ślubu męża {r['rok']} nr {r['nr']}"))
+    elif len(cand)>1:stat['wdowiec_niejednoznaczny']+=1
 
 # ---------- 5. zgony ----------
 ZG=rd('zgony.csv')
 akt=[p for p in P if p['scal'] is None]
 byn=collections.defaultdict(list)
-for p in akt:byn[(kim(p['imie']),sk(p['nazw']))].append(p)
+kids=collections.defaultdict(list)
+for f in FAM:
+    for c in f['dzieci']:
+        if P[c]['rb']:
+            for par in(f['m'],f['z']):
+                if par is not None:kids[par].append(P[c]['rb'])
+for p in akt:
+    byn[(kim(p['imie']),sk(p['nazw']))].append(p)
+    # kobiety z rodzin: także pod nazwiskiem męża (zgon bywa zapisany po mężu)
+    for fid in p['fams']:
+        f=FAM[fid]
+        if f['z']==p['id'] and f['m'] is not None:byn[(kim(p['imie']),sk(P[f['m']]['nazw']))].append(p)
 def rb_zg(z):
     m=re.search(r'\d{4}',z.get('rok_ur_wyliczony') or '');return int(m.group()) if m else None
 rodzic_imie=lambda p,r:(kim(P[FAM[p['famc']]['m']]['imie']) if r=='o' else kim(P[FAM[p['famc']]['z']]['imie'])) if p['famc'] is not None else ''
-zg_nowe=0
+def rodzice_stub(pid,z):
+    """z zgonu znamy imiona rodziców -> rodzina rodziców (stub), jeśli osoba nie ma jeszcze rodziców"""
+    p=P[pid]
+    if p['famc'] is not None or not(z['ojciec_imie'] and z['matka_imie']):return
+    kl=(kim(z['ojciec_imie']),sk(p['nazw']),kim(z['matka_imie']),sk(z['matka_nazwisko']))
+    if kl not in STUB:
+        fi=nowa(z['ojciec_imie'],p['nazw'],'M');mi_=nowa(z['matka_imie'],z['matka_nazwisko'],'F')
+        STUB[kl]=nowa_rodzina(fi,mi_);FAM[STUB[kl]]['zr'].append(('ZG',f"rodzice z zgonu {z['rok']} {z['id_archiwalne']}"))
+    FAM[STUB[kl]]['dzieci'].append(pid);p['famc']=STUB[kl];stat['rodzice_z_zgonu']+=1
 for z in ZG:
     if not z['rok'].isdigit() or not z['imie'] or not z['nazwisko']:stat['zg_pominiete']+=1;continue
     rok=int(z['rok']);k=(kim(z['imie']),sk(z['nazwisko']));rb=rb_zg(z)
-    kand=[]
+    kand=[];seen=set()
     for p in byn.get(k,[]):
-        if p['dz'] is not None:continue
+        if p['id'] in seen or p['dz'] is not None:continue
+        seen.add(p['id'])
+        ky=kids.get(p['id'])
         if p['rb'] and rok<p['rb']:continue
         if rb and p['rb'] and abs(rb-p['rb'])>2:continue
         if not rb and p['rb'] and rok-p['rb']>95:continue
+        if ky:
+            if rok<max(ky)-1:continue
+            if rb and not p['rb'] and not(14<=min(ky)-rb<=50):continue
         if z['ojciec_imie'] and p['famc'] is not None and kim(z['ojciec_imie'])!=rodzic_imie(p,'o'):continue
         if z['matka_imie'] and p['famc'] is not None and kim(z['matka_imie'])!=rodzic_imie(p,'m'):continue
         if z['miejscowosc'] and p['miej'] and z['miejscowosc']!=p['miej'] and not rb:continue
         kand.append(p)
-    # ścisły filtr: gdy znamy wiek -> kandydaci z zgodnym rokiem ur; gdy brak, tylko jednoznaczni z potwierdzeniem rodziców/miejsca
-    pewne=[p for p in kand if rb and p['rb']] if rb else [p for p in kand if p['famc'] is not None and z['miejscowosc'] and p['miej']==z['miejscowosc']]
+    if rb:pewne=[p for p in kand if p['rb'] or kids.get(p['id'])]
+    else:pewne=[p for p in kand if p['famc'] is not None and z['miejscowosc'] and p['miej']==z['miejscowosc']]
+    if len(pewne)>1:
+        # preferuj osobę z zgodnym rokiem ur.; potem z rodzicami z aktu
+        c2=[p for p in pewne if p['rb'] and rb and p['rb']==rb] or pewne
+        if len(c2)==1:pewne=c2
     if len(pewne)==1:
         p=pewne[0];p['dz']=dict(rok=rok,data=z['data_surowa'],wiek=z['wiek'],miej=z['miejscowosc']);zr(p['id'],'ZG',f"zgon {z['rok']} nr {z['nr_wpisu'] or z['id_archiwalne']}");stat['zg_dopasowany']+=1
+        if not p['rb'] and rb:p['rb']=rb;p['uwagi'].append(f"rok ur. ok. {rb} wyliczony z wieku w zgonie {z['rok']}")
+        rodzice_stub(p['id'],z)
     else:
         pid=nowa(z['imie'],z['nazwisko'],z['plec'] or plec(z['imie']),rb=rb,miej=z['miejscowosc'])
         P[pid]['dz']=dict(rok=rok,data=z['data_surowa'],wiek=z['wiek'],miej=z['miejscowosc']);zr(pid,'ZG',f"zgon {z['rok']} nr {z['nr_wpisu'] or z['id_archiwalne']}")
+        rodzice_stub(pid,z)
         P[pid]['uwagi'].append('zgon bez dopasowania do chrztu/ślubu' if not kand else f'zgon niejednoznaczny ({len(kand)} kandydatów)');stat['zg_samodzielny' if not kand else 'zg_niejedn']+=1
 
 # ---------- 6. eksport GED ----------
