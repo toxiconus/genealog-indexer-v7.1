@@ -100,3 +100,17 @@ Potwierdzenia użytkownika (2026-11-08): w akcie 12 VII 1801 panna młoda to **M
 | 1802-01-24 | 16 | Marcin Boich(?), 37 | Franciszka Pawłaskówna, 20 | Kazimierz Król, **Wojciech Kędziora** |
 | 1811-02-25(?) | 17 | Marcin Bogoń, 24 | Helena Chmielówna, 16 | Kazimierz Rogus(?), (ucięte) |
 Hipotezy: Magdalena Mcionek (ur. ok. 1783) – kandydatka na Magdalenę Mcion ur. 1785 (Majdan, córka Marcina i Agnieszki); Tomasz Tomiło z Błażka (ur. ok. 1776): użytkownik nie zna innej pisowni nazwiska Tomiło w okolicy, więc Tumiło (świadek Tomasz Tumiło, ślub Stanisława Tumiły z Marianną Buconiówną 1814, Brzozówka) to osobny zapis do sprawdzenia, nie potwierdzony wariant; Wojciech Kędziora (świadek 1801, 1802, w Moczydłach) może być przodkiem Kędziorów (Wojciech Kędziora ur. 1838 to wnuk?). Nagłówek strony: Moczydła, nie Brzozówka.
+
+## Uzupełnienie: lc-14, s.78 (lewa) i s.79 (prawa), Brzozówka, 1821–1824 (odczyt częściowy, do weryfikacji)
+Potwierdzenia użytkownika (2026-11-08): **15 II 1824 Grzegorz Brzeski, 22 l., × Marianna Charasówna, 18 l.**; Charasówna może być wariantem nazwiska Haraś (w drzewie: Maryanna Harac/Haraś); nazwisko ostatniego świadka jest ucięte na skanie.
+Pozostałe wpisy – mój odczyt, niepotwierdzony:
+| data | mąż | żona | świadkowie |
+|---|---|---|---|
+| 1824-02-15 | **Grzegorz Brzeski, 22** | **Marianna Charasówna, 18** | Krzysztof Spryszak, Jan Okoń, (ucięty) |
+| 1824-02-?? | Andrzej Orłowski | Marianna Bosówna(?), 16 | **Bartłomiej Bucoń, Wojciech Bucoń** |
+| 1824-02-?? | Andrzej Lewek(?), 21 | Jadwiga Surdewna alias Zdyblowa | Jan Okoń, Adam Zdybel |
+| 1824-01-25 | Walenty Kawecki | Rozalia Koguciówna | Jan Bozak(?), Michał Lata |
+| 1823-11-16 | Wojciech Mazurek | Ewa Sokalska/Pęk | Krzysztof Spryszak, Wojciech Sokalski |
+| 1822-10-20 | Jan Babiarz, 26 | Jadwiga de Tupay, 22 | Bartłomiej Bucoń(?), … |
+| s.78, 7 VII | Krzysztof Spryszak | Franciszka (Turmacka?) | Paweł (Kopiwoda?), Andrzej Bigos |
+Hipotezy: Grzegorz Brzeski wg wieku 22 ur. ok. 1802, a drzewo ma IV 1799 (sprzeczność 3 lat); żona Marianna Charas = Haraś (ur. ok. 1806, drzewo ok. 1795 – też różnica). Wojciech Bucoń świadek 1824 zbiega się z Wojciechem Buconiem z wcześniejszych hipotez (Bąk 1818). Krzysztof Spryszak świadek w 1823 i 1824 – jest aktywny w Brzozówce.
