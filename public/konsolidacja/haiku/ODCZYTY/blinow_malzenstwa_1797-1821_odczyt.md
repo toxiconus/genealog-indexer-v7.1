@@ -83,8 +83,8 @@ Rok pierwszych wpisów 1797 (nagłówek), potem 1798. Potwierdzenie użytkownika
 | 1797-01-29 | 25 | Andrzej Goch, 20 | Agnieszka Spryszakówna, 16 | Wojciech Goch, Jan Okoń |
 | 1797-02-12 | 20 | Walenty Brzeski z Błażka, 19 | Jadwiga Gochówna z Brzozówki, 15 | Andrzej Pasternak, Łukasz Dziewa(?) z Błażka |
 | 1797-02-26 | 4 | Walenty Babiarz, 30 | Agnieszka Paruchówna(?), 18 | Maciej Kudy(?), **Antoni Pudło** |
-| 1797-03-07 | 23 | **Franciszek Brzeski, 32** | Marianna Tylusówna(?), 20 | **Bartłomiej Bucoń**, Walenty Brzeski z Błażka |
+| 1797-03-07 | 23 | **Franciszek Brzeski, 32** | Marianna Tylusówna, 20 (potwierdził użytkownik) | **Bartłomiej Bucoń**, Walenty Brzeski z Błażka |
 | 1798-02-04 | 20 | Wojciech Goch, 35 | Marianna Pawłaskówna, 23 | Jan Okoń, Wojciech Michał |
 | 1798-02-04(?) | 8 | Maciej Kołada z Godziszowa, 24 | Katarzyna Wosiówna, 20 | Piotr Krzysztoń, Wojciech Moszeń(?) |
 | 1798-05-26 | 4 | Szymon Zielonka ze Szatarki(?), 30 | Agnieszka Pawłaskówna, 20 | Jan Okoń, Szymon Szabat(?) |
-Hipotezy: Franciszek Brzeski (dom 23, ur. ok. 1765) i Marianna – możliwi rodzice Grzegorza Brzeskiego (ur. IV 1799 Brzozówka); Walenty Brzeski z Błażka (ur. ok. 1778) może być bratem Franciszka. Agnieszka Spryszakówna (ur. ok. 1781) – najstarszy wpis Spryszaków w Brzozówce. Nazwisko panny młodej przy Franciszku Brzeskim („Tylusowna?”) niepewne.
+Hipotezy: Franciszek Brzeski (dom 23, ur. ok. 1765) i Marianna – możliwi rodzice Grzegorza Brzeskiego (ur. IV 1799 Brzozówka); Walenty Brzeski z Błażka (ur. ok. 1778) może być bratem Franciszka. Agnieszka Spryszakówna (ur. ok. 1781) – najstarszy wpis Spryszaków w Brzozówce. Nazwisko panny młodej przy Franciszku Brzeskim: Tylus (potwierdził użytkownik).
