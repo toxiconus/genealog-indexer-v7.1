@@ -22,3 +22,15 @@ Numeracja: lc-10 = s.70 (1798–1800), lc-11 = s.72–73 (1806–1812), lc-12 = 
 - Świadkowie Bucoń przy innych ślubach: Kazimierz (1798), Jakub (1807, 1809, 1811), Piotr (1808, 1811, 1812, 1814), Bartłomiej (1811, 1814, 1819), Mateusz (1811). Szczegóły w CSV.
 
 Pewność: rok z nagłówka tabeli – wysoka; nazwiska żon z (?) i wiek – do weryfikacji na pełnej rozdzielczości.
+
+## Uzupełnienie: zgony Brzozówka (Liber mortuorum, skany lm-35, lm-36)
+| data zgonu | dom | zmarły | wiek | uwagi | skan |
+|---|---|---|---|---|---|
+| 1815-06-11 | 31 | Łukasz Kopiwoda | 60 (ur. ok. 1755) | imię Sebastianus przekreślone, poprawione na Lucas | lm-35 s.66 |
+| 1820-04-30 | 41 | Wawrzyniec (Laurentius) Tupaj | 46 (ur. ok. 1774) | paraliż; w domu 41 zm. 1820-02-11 córka Franciszka | lm-36 s.68 |
+| 1822-03-28 | 23 | Elżbieta Kopiwodzina | 60 (ur. ok. 1762) | naturalis | lm-36 s.69 |
+| 1823-02-16 | 29 | Jan Buczoń | 1 rok | | lm-36 s.69 |
+| 1823-02-25 | 25 | Wojciech (Adalbert) Kopiwoda | 1 rok | dom 25 = dom Antoniego Kopiwody | lm-36 s.69 |
+
+Wiek: Łukasz 60 w 1815 i Elżbieta 60 w 1822 są orientacyjne (w aktach wiek zaokrąglany). Księga zgonów nie podaje rodziców dorosłych, więc pochodzenia Łukasza z niej nie ustalimy.
+Wawrzyniec Tupaj (zm. 1820) to prawdopodobnie ojciec Zofii Tupaj, żony Wawrzyńca Kopiwody (akt zgonu Zofii 1871: rodzice Wawrzyniec i Franciszka Tupaj).
