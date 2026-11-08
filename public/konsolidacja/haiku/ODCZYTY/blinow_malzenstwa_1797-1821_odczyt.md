@@ -34,3 +34,14 @@ Pewność: rok z nagłówka tabeli – wysoka; nazwiska żon z (?) i wiek – do
 
 Wiek: Łukasz 60 w 1815 i Elżbieta 60 w 1822 są orientacyjne (w aktach wiek zaokrąglany). Księga zgonów nie podaje rodziców dorosłych, więc pochodzenia Łukasza z niej nie ustalimy.
 Wawrzyniec Tupaj (zm. 1820) to prawdopodobnie ojciec Zofii Tupaj, żony Wawrzyńca Kopiwody (akt zgonu Zofii 1871: rodzice Wawrzyniec i Franciszka Tupaj).
+
+## Uzupełnienie: s.71 (skan lc-10), 1800–1805
+| data | dom | mąż | żona | świadkowie |
+|---|---|---|---|---|
+| 1800-02-16 | 45 | Tomasz Kamieniak, 20 | Ewa Sitarzówna, 17 | Kazimierz Bryton(?), **Piotr Bucoń** |
+| 1800-02-23 | 4 | Sebastian Janik, 26 | Agnieszka Babiarzówna, 13 | Błażej Kawecki, Szymon Szabat |
+| 1801-01-16 | 19 | Szymon Rembacz, 30 | Małgorzata Szwedowa, 25 | Krzysztof Spryszak, **Kazimierz Bucoń** |
+| 1802-02-07 | 32 | Jakub Bigos, 19 | **Katarzyna Tupajówna**, 20 | Mateusz Ogoń(?), Mateusz Kowalski(?) |
+| 1802-08-01 | 13 | Łukasz Gancarz, 20 | Marianna Dobrzyńska, 16 | Szymon Szabat, **Piotr Bucoń** |
+| 1803-02-06 | 19 | (?) Tutka, 20 | **Rozalia Mcionkówna**, 17 | Franciszek Gąsiak(?), Tomasz Kamieniak |
+| 1805-02-17 | – | Walenty Bożny(?), 26 | **Katarzyna Buconiówna** | Jakub Bogoń(?), Krzysztof Spryszak |

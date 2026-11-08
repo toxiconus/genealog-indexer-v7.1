@@ -8,7 +8,7 @@ Wyniki odczytu: ten sam folder `ODCZYTY/` (pliki md/csv) oraz GED `J:\Genealog\G
 | skan | strony | lata | status | co znaleziono / uwagi | gdzie szukać dalej |
 |---|---|---|---|---|---|
 | lc-9 | 68–69 | 1797 | Cz (lewa, 3 wpisy) | brak naszych nazwisk w odczytanych (Goch, Brzeski, Babiarz) | prawa strona s.69 i reszta lewej |
-| lc-10 | 70–71 | 1798–1800 | Cz (lewa s.70) | **1800 Piotr Bucoń × Franciszka Kopiwoda; Mateusz Bucoń × Dorota Gil** | **prawa s.71 (1800–1806) – NIE czytana** |
+| lc-10 | 70–71 | 1798–1805 | P | **1800 Piotr Bucoń × Franciszka Kopiwoda; Mateusz Bucoń × Dorota Gil**; s.71: 1802 Jakub Bigos × Katarzyna Tupaj, 1803 Tutka × Rozalia Mcion, 1805 Walenty Bożny(?) × Katarzyna Bucoń; świadkowie Piotr i Kazimierz Bucoń | koniec s.71 (1805, 1 wpis do dokończenia), s.72 dalej gotowe |
 | lc-11 | 72–73 | 1806–1812 | P | **1812 Sebastian Kopiwoda × Cecylia Paluch (32/19)**; świadkowie Bucoń, Pudło | – |
 | lc-12 | 74–75 | 1811–1814 | Cz (lewa s.74) | Jakub Bucoń × (1811?), Józef Paluch 1814; świadkowie Bucoń | **prawa s.75 (1814–1817) – NIE czytana** |
 | lc-13 | 76–77 | 1817–1821 | P | **1817 Mateusz Pudło, 1819 Michał Pudło, 1821 Antoni Kopiwoda × Marianna Woś** | świadkowie 1821 na s.78 (lc-14 góra) |
@@ -31,5 +31,7 @@ Wyniki odczytu: ten sam folder `ODCZYTY/` (pliki md/csv) oraz GED `J:\Genealog\G
 - Księga urodzeń 1783–1797 (`CH\Liber natorum-urodzonych 1783-1797\blinow_ln-N.jpg`): czytane wcześniej głównie pod kątem chrztów Majdan/Kopiwoda (ln-4, 1784 itd.); chrzestni większości stron – nie wyciągnięci.
 - Skany **Biała (Janów Lubelski)**: brak na dysku (chrzest Macieja Pudło 1793 k.116, ślub Bucoń × Bąk 1814/1818, zgon Marianny Bucoń 1825 akt 140).
 - Sprawdzone: Szastarka USC (tylko 1917–1945), GenBaza (1886–1908), tablice likwidacyjne Brzozówki 1865 (opracowane wcześniej).
+
+Zasada zapisu: w GED przy każdym odczytanym wpisie dopisujemy treść w języku skanu (łac.) i tłumaczenie po polsku, oraz świadków jako wydarzenia.
 
 Aktualizuj ten plik przy każdym nowym odczycie.
