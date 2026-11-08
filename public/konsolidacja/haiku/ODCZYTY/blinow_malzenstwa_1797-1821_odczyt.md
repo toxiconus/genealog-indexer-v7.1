@@ -45,3 +45,17 @@ Wawrzyniec Tupaj (zm. 1820) to prawdopodobnie ojciec Zofii Tupaj, żony Wawrzyń
 | 1802-08-01 | 13 | Łukasz Gancarz, 20 | Marianna Dobrzyńska, 16 | Szymon Szabat, **Piotr Bucoń** |
 | 1803-02-06 | 19 | (?) Tutka, 20 | **Rozalia Mcionkówna**, 17 | Franciszek Gąsiak(?), Tomasz Kamieniak |
 | 1805-02-17 | – | Walenty Bożny(?), 26 | **Katarzyna Buconiówna** | Jakub Bogoń(?), Krzysztof Spryszak |
+
+## Uzupełnienie: s.75 (skan lc-12, prawa strona), Brzozówka, 1814–1817
+Rok pierwszych 4 wpisów (nagłówek nieczytelny) – przyjęto 1814 (następny wpis ma jawnie 1815-01-30). Odczyt ze skanu, wiek/nazwiska do weryfikacji w pełnej rozdzielczości.
+| data | dom | mąż | żona | świadkowie |
+|---|---|---|---|---|
+| 1814-07-23 | 36 | Stanisław Tumiło(?), 24 | **Marianna Buconiówna**(?), 17 panna | **Mateusz Bucoń**, Tomasz Tumiło(?) |
+| 1814-08-01 | 34 | Kazimierz Rogus(?), 22 | Zofia Czubionka, 18 | Szymon Szabat, Kacper Rzeszutko |
+| 1814-10-24 | 22 | Kacper Rzeszutko, 30 | Rozalia Tutkowa, 27 (wdowa?) | Jan Okoń, Michał Woś |
+| 1814-11-26 | 8(?) | Józef Brodowski(?), 26 | Katarzyna Brzyska, 18 | Jakub Bros(?), Jan Okoń |
+| 1815-01-30 | 42 | Mateusz Siżyński(?), 24 | Anna Cu…ianka, 19 | Andrzej Bigos, Szymon Szabat |
+| 1817-01-22 | 3 | Bartłomiej Janik, 27 | Elżbieta Kawecka, 20 | Sebastian Janik, Ignacy Kamieniak |
+| 1817-01-26 | 30 | Antoni Gliniecki(?), 28 | Marianna Chwatkówna, 25 | Walenty Cyryk(?), **Bartłomiej Bucoń** |
+Podpis: „Benedixit Paulus Stadolski Comm. Loci". Uwaga: Marianna Buconiówna 1814 (17 l., ur. ~1797) – kandydatka na córkę Piotra/Mateusza/Kazimierza Buconia; do sprawdzenia. Brak wpisów z 1816 na tej stronie (może na s.76 lub luka).
+Potwierdzenie użytkownika (2026-11-08): „Mcion" (1803 Rozalia Mcionkówna) jest wariantem nazwiska Pcion/Pcionek.
