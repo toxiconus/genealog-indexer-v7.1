@@ -34,4 +34,4 @@ Hipotezy (niepotwierdzone):
 ## Dodatek 2026-11-08 – zgony 1873 (księga Blinów, skany P_0580–0582)
 - Akt 21/1873, Moczydła: Antoni **Pcion**, 48 l., syn Marcina i Teresy (Łata), wdowiec po Annie ze Szwedów [odczyt użytkownika].
 - Akt 50/1873, Moczydła: Barbara **Pcion(ówna)**, 3 l., córka Antoniego i Anny ze Szwedów – w akcie «Pcion» (rosyjskie П), choć indeks/rejestr ma «Pcionek». Wniosek: ojciec i córka noszą to samo nazwisko Pcion; „Pcionek” w indeksie to wariant zapisu indeksera, nie odrębna forma w akcie.
-- Akt 49/1873, Blinów: Katarzyna Pcionek(?), 37 l., córka Jana i Rozalii Wiechników, wdowa po Pawle Pcionku – nazwisko do sprawdzenia na skanie.
+- Akt 49/1873, Blinów: Katarzyna Pcionkowa (nazwisko potwierdzone przez użytkownika na skanie), 37 l., córka Jana i Rozalii Wiechników, wdowa po Pawle Pcionku – forma Pcionek (Pcionkowa), odrębna od Pcion z aktów 21 i 50.
