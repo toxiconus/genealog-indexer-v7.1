@@ -26,3 +26,12 @@ Z aktu ślubu 1812 Sebastian 32 l. (ur. ok. 1780), Cecylia Paluch 19 l. (ur. 179
 - Chrzty Blinów 1780–1783 (jeśli istnieją) pod kątem Sebastiana Kopiwody.
 - Ślub Bartłomieja Buconia ze Zofią Torba (przed 1797).
 - Zgon Zofii Torba / Bartłomieja Bucon (lm-30…34, lm-37).
+
+## 7. Tupajowie i Bigosowie (dodane później)
+- Odczyt ślubu 1802 (Jakub Bigos 19 × Katarzyna Tupajówna 20, dom 32) pokrywa się z małżeństwem już obecnym w drzewie (Jakub † 1810, Katarzyna † 1811, 4 dzieci). Duble z mojego wcześniejszego dodania usunąłem w GED v15, a odczyt dopisałem jako notatkę przy rodzinie.
+- Katarzyna Tupaj ur. ok. 1782 nie może być córką Wawrzyńca Tupaja (ur. ok. 1774, † 1820, żona Franciszka Bigos † 1820): różnica 8 lat. Hipoteza: jego siostra. Wtedy Jakub Bigos (ur. ok. 1783) mógł być bratem Franciszki Bigos, czyli podwójne małżeństwa Tupajów z Bigosami.
+- Dzieci Wawrzyńca i Franciszki: Andrzej 1799, Katarzyna 1814, Zofia ok. 1818, Franciszka 1820 (matka i ojciec zmarli w 1820, możliwe że matka po porodzie).
+
+## 8. Spryszakowie (Sprysak) z Brzozówki
+- Krzysztof Spryszak jest świadkiem na ślubach 1800 (Mateusz Bucoń), 1801 (Kazimierz Bucoń świadek), 1805. W GED: Krzysztof Sprysak, ojciec Wincentego (ur. 1798, Blinów) z Agnieszką Goch; osobno Krzysztof Spryszak ur. ok. 1776 z Katarzyną Żurek(?). Albo dwa małżeństwa jednego Krzysztofa, albo dwóch Krzysztofów.
+- Katarzyna Sprysak ur. ok. 1793 (ślub z Andrzejem Bigosem 17.02.1811) to prawdopodobnie jego siostra lub córka; Jan Bigos ur. ok. 1821 (przodek) jest ich synem.
