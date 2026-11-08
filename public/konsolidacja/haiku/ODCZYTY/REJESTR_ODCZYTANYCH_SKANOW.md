@@ -40,3 +40,5 @@ Aktualizuj ten plik przy każdym nowym odczycie.
 - 2026-11-08: P_0588–P_0591 – Blinów, zgony 1875 (ASC) + początek 1876; odczytane akty 2, 3, 8, 16, 25.
 - 2026-11-08: P_0592–P_0598 – Blinów, zgony 1876, 1877 (akty 1–20), 1878 (akty 21–31) + skorowidze 1876/1878; odczytane 1876/19,21,25, 1878/27,29,30. Brak skanów 1877/21–33 i 1878/1–20.
 - 2026-11-08: lista braków skanów w BRAKI_SKANOW.md (mogą nie istnieć na stronie GenBaza).
+
+- 2026-11-08 GED v32: naprawa 363 zdublowanych id FAM (@GFFD1..363@, przepięte linki FAMS/FAMC), +405 brakujących linków zwrotnych INDI→FAM, 247 linii >255 znaków podzielone CONC. Skrypty: skrypty/fix_fam_dup.py, fix_ged2.py
