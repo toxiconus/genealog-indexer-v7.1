@@ -16,6 +16,7 @@ def stem_nazwisko(x):
     x=strip(translit(x)); x=re.sub(r'[^a-z]','',x)
     x=x.replace('y','i').replace('rz','z').replace('ch','h').replace('ó','u')
     x=re.sub(r'(owna|owa|ska|cka|dzka)$',lambda m:{'ska':'ski','cka':'cki','dzka':'dzki'}.get(m.group(1),''),x)
+    if x in('pcionek','mcionek'): x=x[0]+'cion'  # Pcion=Pcionek (potwierdzone 2026-11-08)
     if x.startswith('mcion'): x='p'+x[1:]  # Mcion(ek) = wariant Pcion(ek) (potwierdzone przez użytkownika 2026-11-08)
     return x
 # imiona: grupa -> warianty (łacina, rosyjski, zdrobnienia)

@@ -38,3 +38,6 @@
 - Księga ślubów lc-15 i brakujące karty (1815–1816).
 - Księga zgonów lm-30…34 (1797–1807) i lm-37 (po 1823).
 - Chrzty Blinów po 1810, w tym dzieci Marcina Mcion.
+
+## Uwaga o wariantach nazwiska (użytkownik, 2026-11-08)
+Pcion i Pcionek mieszały się już u poprzednika (osoby te same pod oboma zapisami), a Mcion to wariant Pcion. Dlatego Pcion = Pcionek = Mcion(ek) przy dopasowaniu osób (skrypt `osoby_dopasowanie.py`). Pscion/Pścionek na razie osobno, bo tego nie potwierdzono. W GED nie scalałem osób na tej podstawie, tylko dopisałem hipotezy.
