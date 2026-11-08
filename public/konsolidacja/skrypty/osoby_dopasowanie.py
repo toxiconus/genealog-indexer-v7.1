@@ -16,6 +16,7 @@ def stem_nazwisko(x):
     x=strip(translit(x)); x=re.sub(r'[^a-z]','',x)
     x=x.replace('y','i').replace('rz','z').replace('ch','h').replace('ó','u')
     x=re.sub(r'(owna|owa|ska|cka|dzka)$',lambda m:{'ska':'ski','cka':'cki','dzka':'dzki'}.get(m.group(1),''),x)
+    x=x.replace('spriszak','sprisak')  # Spryszak = Sprysak (potwierdzone 2026-11-08)
     return x
 def mozliwy_wariant(a,b):
     """Pcion/Mcion/Mcionek/Pcionek/Pscionek – możliwe warianty zapisu, NIE tożsame; tylko flaga do zbadania (nie do automatycznego scalania)."""
