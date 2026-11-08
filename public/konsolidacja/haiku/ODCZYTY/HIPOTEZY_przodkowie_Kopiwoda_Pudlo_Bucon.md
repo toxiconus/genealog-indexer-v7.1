@@ -35,3 +35,11 @@ Z aktu ślubu 1812 Sebastian 32 l. (ur. ok. 1780), Cecylia Paluch 19 l. (ur. 179
 ## 8. Spryszakowie (Sprysak) z Brzozówki
 - Krzysztof Spryszak jest świadkiem na ślubach 1800 (Mateusz Bucoń), 1801 (Kazimierz Bucoń świadek), 1805. W GED: Krzysztof Sprysak, ojciec Wincentego (ur. 1798, Blinów) z Agnieszką Goch; osobno Krzysztof Spryszak ur. ok. 1776 z Katarzyną Żurek(?). Albo dwa małżeństwa jednego Krzysztofa, albo dwóch Krzysztofów.
 - Katarzyna Sprysak ur. ok. 1793 (ślub z Andrzejem Bigosem 17.02.1811) to prawdopodobnie jego siostra lub córka; Jan Bigos ur. ok. 1821 (przodek) jest ich synem.
+
+## 9. Kandydaci do scalenia (duble w GED), pozostałe gałęzie
+Rodzice większości przodków z tej listy są już w drzewie (Tomasz Jachura ← Paweł i Jadwiga Jachura; Michał Piech ← Jan Piech i Katarzyna Kosidło; Stanisław Komsa ← Franciszek Komsa i Anastazja Smel; Jan Wcisło ← Andrzej Wcisło i Katarzyna Tupaj; Andrzej Rębecki ← Józef Rębecki i Marianna Kamieniak). Brak chrztu Grzegorza Brzeskiego (ur. IV 1799 Brzozówka) i Wojciecha Kędziory (ur. 1838) w rodzinach z rodzicami – tu nic nie da się ustalić z danych, szukać aktów.
+Duble osób (ta sama osoba w dwóch rekordach), do scalenia po decyzji użytkownika:
+- Stanisław Komsa ur. ok. 1838: @GII7289@ (Brzozówka, rodzice Franciszek i Anastazja Smel) = @GIII500826@ (Błażek, bez rodziców) – ten sam wiek, to samo nazwisko; miejsce (Błażek) może być miejscem zamieszkania w innym akcie.
+- Mateusz Sulowski ur. ok. 1867 Blinów: @GII8473@ (matka Marianna Sulowska z domu Machulak) = @GII3171@ „Suloski" (1867, Blinów) – zapis Suloski/Sulowski.
+- Wawrzyniec Tupaj ur. ok. 1774: @GIII2234@ (z żoną Franciszką Bigos) = @GII11409@ „Tupai" (Brzozówka) – zapis Tupaj/Tupai.
+- Andrzej Rębecki ur. ok. 1857: @GII7983@ (Brzozówka) = @GIII501096@ (Cieślanki), ci sami rodzice.
