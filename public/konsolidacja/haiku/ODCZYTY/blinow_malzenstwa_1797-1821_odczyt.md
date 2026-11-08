@@ -74,3 +74,4 @@ Dni potwierdził użytkownik (2026-11-08): pierwszy i trzeci wpis to **21 listop
 | 1824-11-21 (przekreślony) | Paweł Spryszak, 19 | Zofia (Sophia) Jagiełłówna | Jan Okoń, Krzysztof Spryszak | pierwsza wersja wpisu, przekreślona |
 | 1824-11-21 | Paweł Spryszak, 19 | Zofia Jagiełłówna, 20 | Wincenty Spryszak, Józef Jagieło(?) | wersja poprawiona (zmieniono świadków) |
 Hipoteza: Paweł Spryszak (ur. ok. 1805) to syn Krzysztofa Spryszaka (świadek w pierwszej wersji) i Agnieszki Goch; Wincenty Spryszak (świadek) to jego brat (Wincenty ur. 1798). Franciszek Goch × Marianna Jagiełłówna wskazuje na związki Spryszaków i Gochów z Jagiełłami. Wieś nie ustalona.
+Potwierdzenie użytkownika 2026-11-08: rok wpisów na stronie lc-15 to 1824.
