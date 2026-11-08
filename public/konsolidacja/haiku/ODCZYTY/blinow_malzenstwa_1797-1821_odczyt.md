@@ -65,3 +65,12 @@ W odczytach z lc-10…lc-13 imię „Mathias” zostało błędnie przełożone 
 Potwierdzenie użytkownika 2026-11-08 (powiększony skan): panna młoda 1817 to Mcionkówna; odczyt „Niewiar” błędny.
 Potwierdzenie użytkownika 2026-11-08 (skan s.74): świadkowie ślubu 8 XI 1811 to „Mathias Bucon” (Maciej) i „Jacobus Bucon”. Świadek ślubu 17 XII 1811 (s.73) „… Pudło” – imię do potwierdzenia na pełnym skanie lc-11.
 Uwaga: imię świadka „… Pudło” 1811-12-17 (s.73) pozostaje nieczytelne: Matheus (Mateusz), Mathias (Maciej) lub podobne; nie przypisywać do konkretnego Pudły. Odczyt z Groka (strony 72–73) jest częściowo błędny (np. Gajowski 66 l. nie 16; Katarzyna Sprysak, nie Tupajówna, 1811 przy Andrzeju Bigosie wg indeksu) – nie importowany poza Sebastianem Kopiwodą, który zgadza się z moim odczytem.
+
+## Uzupełnienie: lc-15, strona z rokiem 1824 (nagłówek wsi ucięty), 3 wpisy
+Dni potwierdził użytkownik (2026-11-08): pierwszy i trzeci wpis to **21 listopada**; pierwszy przepisano ponownie (przekreślony). Nazwisko panien: Jagieło (Jagiełło).
+| data | mąż | żona | świadkowie | uwagi |
+|---|---|---|---|---|
+| 1824-08-01 | Franciszek Goch, wdowiec | Marianna Jagiełłówna | Andrzej Goch, Jan Jagieło | dom nie wpisany |
+| 1824-11-21 (przekreślony) | Paweł Spryszak, 19 | Zofia (Sophia) Jagiełłówna | Jan Okoń, Krzysztof Spryszak | pierwsza wersja wpisu, przekreślona |
+| 1824-11-21 | Paweł Spryszak, 19 | Zofia Jagiełłówna, 20 | Wincenty Spryszak, Józef Jagieło(?) | wersja poprawiona (zmieniono świadków) |
+Hipoteza: Paweł Spryszak (ur. ok. 1805) to syn Krzysztofa Spryszaka (świadek w pierwszej wersji) i Agnieszki Goch; Wincenty Spryszak (świadek) to jego brat (Wincenty ur. 1798). Franciszek Goch × Marianna Jagiełłówna wskazuje na związki Spryszaków i Gochów z Jagiełłami. Wieś nie ustalona.

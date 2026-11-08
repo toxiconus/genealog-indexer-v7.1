@@ -13,7 +13,7 @@ Wyniki odczytu: ten sam folder `ODCZYTY/` (pliki md/csv) oraz GED `J:\Genealog\G
 | lc-12 | 74–75 | 1811–1817 | P | Jakub Bucoń × (1811?), Józef Paluch 1814; świadkowie Bucoń; s.75: Marianna Buconiówna×Tumiło 1814 (świadek Mateusz Bucoń), świadek Bartłomiej Bucoń 1817 | – |
 | lc-13 | 76–77 | 1817–1821 | P | **1817 Mateusz Pudło, 1819 Michał Pudło, 1821 Antoni Kopiwoda × Marianna Woś** | świadkowie 1821 na s.78 (lc-14 góra) |
 | lc-14 | 78–79 | 1821–1824 | P | 1822 Jan Babiarz × Jadwiga Tupaj; 1824 Orłowski; świadkowie Bartłomiej/Wojciech Bucoń | – |
-| lc-15 | 80–81 | 1824–25 | Cz (tylko fragment) | – | **czytać całość** |
+| lc-15 | 80–81 | 1824–25 | Cz (tylko fragment) | – | **czytać całość**; strona 1824 (nagłówek ucięty): Spryszak × Jagieło 21 XI 1824, Goch × Jagieło 1 VIII 1824 |
 | lc-16 | ? | 1797–1801 | Cz (góra) | **inna sekcja (Moczydła?)**, wpisy 1797–98 | czytać, jeśli szukamy Moczydeł |
 | lc-1…8, 17–19 | – | – | — | inne wsie/sekcje (nie sprawdzone) | zajrzeć do nagłówka wsi na każdej |
 
