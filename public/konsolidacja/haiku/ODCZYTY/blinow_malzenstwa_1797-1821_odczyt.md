@@ -88,3 +88,15 @@ Rok pierwszych wpisów 1797 (nagłówek), potem 1798. Potwierdzenie użytkownika
 | 1798-02-04(?) | 8 | Maciej Kołada z Godziszowa, 24 | Katarzyna Wosiówna, 20 | Piotr Krzysztoń, Wojciech Moszeń(?) |
 | 1798-05-26 | 4 | Szymon Zielonka ze Szatarki(?), 30 | Agnieszka Pawłaskówna, 20 | Jan Okoń, Szymon Szabat(?) |
 Hipotezy: Franciszek Brzeski (dom 23, ur. ok. 1765) i Marianna – możliwi rodzice Grzegorza Brzeskiego (ur. IV 1799 Brzozówka); Walenty Brzeski z Błażka (ur. ok. 1778) może być bratem Franciszka. Agnieszka Spryszakówna (ur. ok. 1781) – najstarszy wpis Spryszaków w Brzozówce. Nazwisko panny młodej przy Franciszku Brzeskim: Tylus (potwierdził użytkownik).
+
+## Uzupełnienie: s.147 (lc-16), **Moczydła**, 1797–1802 (+ wpis 1811)
+Potwierdzenia użytkownika (2026-11-08): w akcie 12 VII 1801 panna młoda to **Mcionek**, 18 l.; pan młody to **Tomiło**; świadkowie nie mają podanych lat; „Adalbertus Kędziora” (Wojciech Kędziora) jest świadkiem w akcie 8 II 1801 i w akcie 24 I 1802.
+| data | dom | mąż | żona | świadkowie |
+|---|---|---|---|---|
+| 1797-02-19 | 2 | Jakub Kalinowski, 27 | Agnieszka Chmielówna, 40 | Andrzej Lach, Antoni Krupa |
+| 1798-06-04(?) | 9 | Kazimierz Kasperek, 45 | Małgorzata Wiślonka, 25 | Wawrzyniec Kosiełło(?), Wawrzyniec Nieściór |
+| 1801-02-08 | 13 | Wojciech Haber, 20 | Agnieszka Czerpionka(?), 24 | Jakub Chmiel, **Wojciech Kędziora** |
+| 1801-07-12 | 30 | **Tomasz Tomiło z Błażka**, 25 | **Magdalena Mcionek z Moczydeł**, 18 | Jakub Sokół(?), Tomasz Sakuta(?) |
+| 1802-01-24 | 16 | Marcin Boich(?), 37 | Franciszka Pawłaskówna, 20 | Kazimierz Król, **Wojciech Kędziora** |
+| 1811-02-25(?) | 17 | Marcin Bogoń, 24 | Helena Chmielówna, 16 | Kazimierz Rogus(?), (ucięte) |
+Hipotezy: Magdalena Mcionek (ur. ok. 1783) – kandydatka na Magdalenę Mcion ur. 1785 (Majdan, córka Marcina i Agnieszki); Tomasz Tomiło z Błażka (ur. ok. 1776) to prawdopodobnie ten sam Tomasz Tumiło, świadek ślubu Stanisława Tumiły z Marianną Buconiówną (1814, Brzozówka) – Tumiło/Tomiło warianty jednego nazwiska; Wojciech Kędziora (świadek 1801, 1802, w Moczydłach) może być przodkiem Kędziorów (Wojciech Kędziora ur. 1838 to wnuk?). Nagłówek strony: Moczydła, nie Brzozówka.
