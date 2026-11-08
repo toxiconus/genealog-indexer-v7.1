@@ -22,3 +22,9 @@ Poboczne (nie nasze): pozostałe 20 aktów – tylko w indeksie.
 7. **Spryszak**: Pędzio Tekla †1875 (l.30) c. Mateusza i Magdaleny Spryszaków; Spryszak Antoni †1876 (l.7) s. Walentego i Agnieszki; Spryszak Antoni †1879 (l.7) s. Michała i Katarzyny z Koguców.
 8. **Pudło**: Jadwiga Pudło †1878 (l.70) wd., c. Jana i Marianny z Czubów, żona Ogona.
 9. **Kędziora**: Jan †1878 (l.66) s. Marcina i Anastazji; Jędrzejczak Franciszka (1873) c. Marcina i Katarzyny z Kędziorów.
+
+## Zgony 1875 (P_0588–P_0591) – akty naszych rodzin
+- Akt 16: **Anna Piech, 59 l., c. zmarłych Andrzeja i Katarzyny z Bigosów**, wdowa po Michale Piechu (zm. 28 VIII 1875) – POTWIERDZONE w akcie: Andrzej Bigos × Katarzyna miał córkę Annę (~1816). Zgłaszali Jakub Sobótka 59, Paweł Dziewa 47.
+- Akt 2 (Brzozówka): Tekla Pędzio, 30 l., c. Mateusza i Magdaleny Spryszaków; zgłaszali Antoni Bucoń 52 i Michał Spryszak 38 (brat?).
+- Akt 3: Józef Pcionek 2 mies., s. Pawła (33) i Agnieszki z Sekułów. Akt 8: Tomasz Pcionek 4 mies., nieślubny syn Magdaleny Pcionkówny. Akt 25: Jadwiga Pcionek, wdowa, 67 l., c. Antoniego i Katarzyny z Rębaków (czytam) vs indeks Marianny z Pawłasków – ROZBIEŻNOŚĆ.
+- Brak przyczyn zgonu w aktach. GED v30.
