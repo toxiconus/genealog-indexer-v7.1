@@ -21,3 +21,12 @@ Spośród 71 rodzin w **20** dzieci i/lub ojciec występują pod więcej niż je
 ## Do zbadania
 - Zbiór dzieci Marcina Mcion (dom 14, Brzozówka) w księdze chrztów Blinów (ur. po 1811) i ślub Marcina ze Zofią (przed 1817).
 - Czy Antoni Pcion (@GFF828@, ur. 1826) i Antoni Pcionek są jedną osobą (ta sama rodzina w dwóch aktach).
+
+## Rodziny Mcion/Mcionek z chrztów Blinów/Moczydeł 1783–1797 vs odczyty z Brzozówki 1800–1817
+Z indeksów chrztów (GED): Antoni i Zofia Mcionek (Antonina 1784, Hiacynt 1787, Blinów); Marcin i Małgorzata Mcionek (Małgorzata 1785, Mateusz 1787, Blinów); Marcin i Agnieszka Mcion (Magdalena 1785, Rozalia 1787, Moczydła Majdan); Tomasz i Zofia Mcion (Marianna 1786, Moczydła Majdan).
+Hipotezy (niepotwierdzone):
+1. **Rozalia Mcionkówna, 17 l., ślub 1803 z (?) Tutką (dom 19)** = Rozalia Mcionek ur. 1787, córka Marcina i Agnieszki (Majdan): wiek (16 l. w 1803), imię i parafia pasują; różnią się tylko zapisem Mcion/Mcionek/Mcionkówna. W GED to dwie osoby (@C2Z@ i @GII233@), kandydaci do scalenia.
+2. **Tomasz i Zofia Mcion** (Marianna 1786): Anna, panna 19 l., zm. 1809 w domu 14, córka Tomasza i Zofii, pasuje do tej rodziny (ur. ok. 1790). W tym samym domu 14 w 1811 mieszkał Marcin Mcion z żoną Marianną (21 l.). Hipoteza: Marcin (ur. ok. 1788–90) to syn Tomasza i Zofii, brat Marianny (1786) i Anny; Zofia Mcionowa 50 l. († 1812, dom 7, ur. ok. 1762) to jego matka (wdowa).
+3. **Dwóch Marcinów**: Marcin+Agnieszka (Majdan) i Marcin+Małgorzata (Blinów) mają dzieci w tych samych latach (1785, 1787). To raczej dwóch różnych Marcinów (krewnych, np. braci) niż jedna rodzina, ale możliwe też, że ta sama para została zindeksowana z różnymi imionami żony. Do sprawdzenia w akcie (imiona żony, wieś, rodzice chrzestni).
+4. Marcin z domu 14 (żona Marianna † 1811, potem Zofia) jest za młody (ur. ok. 1789) na ojca dzieci z 1785–1787, więc **nie** jest żadnym z powyższych dwóch Marcinów.
+5. Bartłomiej Mcion († 1814, ok. 40 l., dom 12, ur. ok. 1774) nie ma chrztu w indeksie 1783–97 (za wcześnie): szukać chrztu ok. 1774 (parafia Biała lub Blinów przed 1783), możliwy syn Antoniego lub Marcina.
