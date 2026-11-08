@@ -8,7 +8,7 @@ Numeracja: lc-10 = s.70 (1798–1800), lc-11 = s.72–73 (1806–1812), lc-12 = 
 | 1800-01-26 | 20 | Piotr Bucoń, 21 | Franciszka Kopiwoda, 16 | Antoni Pudło; Andrzej Jach(?) | lc-10 s.70 |
 | 1800-01-26 | 33 | Mateusz Bucoń, 20 | Dorota Gil, 18 | Krzysztof Spryszak; Mateusz Białkowski | lc-10 s.70 |
 | 1812-02-09 | 24 | Sebastian Kopiwoda, 32 | Cecylia Paluch, 19 | Jan Okoń; Piotr Bucoń | lc-11 s.73 |
-| 1817-10-05 | 9 | Mateusz Pudło, 26 | Katarzyna Niewiar(?), 19 | Józef Kania(?); Marcin Niewiar(?) | lc-13 s.75 |
+| 1817-10-05 | 9 | Mateusz Pudło, 26 | Katarzyna Niewiar(?), 19 | Józef Kania(?); Marcin Niewiar(?) | lc-13 s.76 |
 | 1819-05-11 | 11 | Michał Pudło, 22 | Zofia Łach, 33 | Jan Okoń; Bartłomiej Bucoń | lc-13 s.76 |
 | 1821-02-25 | 25 | Antoni Kopiwoda, 28 | Marianna Woś | (świadkowie na s.78, nie odczytani) | lc-13 s.77 |
 
