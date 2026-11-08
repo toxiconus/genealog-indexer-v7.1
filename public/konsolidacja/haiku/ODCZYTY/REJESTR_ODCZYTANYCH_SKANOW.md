@@ -35,3 +35,5 @@ Wyniki odczytu: ten sam folder `ODCZYTY/` (pliki md/csv) oraz GED `J:\Genealog\G
 Zasada zapisu: w GED przy każdym odczytanym wpisie dopisujemy treść w języku skanu (łac.) i tłumaczenie po polsku, oraz świadków jako wydarzenia.
 
 Aktualizuj ten plik przy każdym nowym odczycie.
+
+- 2026-11-08: P_0583–P_0587 – Blinów, zgony 1874 (ASC): akty 1–26, odczytane akty 2, 10, 11, 15, 23, 25 (nasze rodziny); reszta wg indeksu. Zob. blinow_zgony_1874_odczyt_i_wnioski_1870-79.md
