@@ -41,3 +41,6 @@
 
 ## Uwaga o wariantach nazwiska (użytkownik, 2026-11-08)
 Pcion, Pcionek, Mcion i Mcionek to **nie jedno nazwisko**, ale w księgach pisano je różnie i trzeba zbadać, czy i gdzie oznaczają te same rodziny (wcześniejszy indeksator mieszał Pcion i Pcionek). Dlatego osoby się nie scalają automatycznie. Skrypt `osoby_dopasowanie.py` ma funkcję `mozliwy_wariant()`, która tylko oznacza takie pary do ręcznego sprawdzenia. Pscion/Pścionek też do zbadania. Hipotezy powyżej o Mcionach (domy 12, 14, 19) to więc kandydaci na pokrewieństwo z Pcionkami, nie ustalenie.
+
+## POPRAWKA (2026-11-08): ślub 1817, dom 9
+Pan młody to **Maciej** Pudło (łac. Mathias), nie Mateusz; panna młoda 19 l. to najpewniej Katarzyna Mcionek/Pcionek (indeks Lubgens: Mcionek Katarzyna, Brzozówka 5 X 1817), nie Niewiarówna. Hipoteza o pokrewieństwie z Niewiarami (dom 20) odpada. Dom 9 (Kasperkowie): Maciej Pudło mieszkał w domu Kasperków – pokrewieństwo nadal możliwe (nie sprawdzone). Świadek Marcin (…) może być ojcem panny młodej, Marcinem Mcionem (drzewo: rodzice Marcin i Zofia).
