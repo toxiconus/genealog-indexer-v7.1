@@ -8,7 +8,7 @@ Numeracja: lc-10 = s.70 (1798–1800), lc-11 = s.72–73 (1806–1812), lc-12 = 
 | 1800-01-26 | 20 | Piotr Bucoń, 21 | Franciszka Kopiwoda, 16 | Antoni Pudło; Andrzej Jach(?) | lc-10 s.70 |
 | 1800-01-26 | 33 | Maciej Bucoń, 20 | Dorota Gil, 18 | Krzysztof Spryszak; Maciej Białkowski | lc-10 s.70 |
 | 1812-02-09 | 24 | Sebastian Kopiwoda, 32 | Cecylia Paluch, 19 | Jan Okoń; Piotr Bucoń | lc-11 s.73 |
-| 1817-10-05 | 9 | Maciej Pudło, 26 | Katarzyna (Mcionek? wg indeksu Lubgens; odczyt „Niewiar(?)” niepewny), 19 | Józef Kania(?); Marcin (…) | lc-13 s.76 |
+| 1817-10-05 | 9 | Maciej Pudło, 26 | Katarzyna Mcionkówna (potwierdził użytkownik na skanie), 19 | Józef Kania(?); Marcin (…) | lc-13 s.76 |
 | 1819-05-11 | 11 | Michał Pudło, 22 | Zofia Łach, 33 | Jan Okoń; Bartłomiej Bucoń | lc-13 s.76 |
 | 1821-02-25 | 25 | Antoni Kopiwoda, 28 | Marianna Woś | (świadkowie na s.78, nie odczytani) | lc-13 s.77 |
 
@@ -62,3 +62,4 @@ Potwierdzenie użytkownika (2026-11-08): „Mcion" (1803 Rozalia Mcionkówna) je
 
 ## POPRAWKA (2026-11-08): łacińskie „Mathias” = Maciej, nie Mateusz
 W odczytach z lc-10…lc-13 imię „Mathias” zostało błędnie przełożone jako Mateusz. Poprawnie: Maciej (Matthaeus = Mateusz). Poprawione wpisy: 1800 Maciej Bucoń × Dorota Gil (tożsamy z Maciejem Buconiem z drzewa, dzieci Józef 1804, Walenty 1806, Marianna 1807, Ignacy 1809), świadek Maciej Białkowski; 1802 świadkowie Maciej Ogoń(?) i Maciej Kowalski(?); 1814 świadek Maciej Bucoń; 1815 Maciej Siżyński(?); **1817-10-05 Maciej Pudło (26) × Katarzyna (…) (19), dom 9** – to małżeństwo Macieja Pudły z drzewa (5 X 1817); odczyt nazwiska panny młodej „Niewiar(?)” niepewny, indeks Lubgens podaje Mcionek Katarzyna. Wpisy 1811 (Pudło, Bucoń) wymagają sprawdzenia Latin. Zgony (Matthaeus Bogoń) zostają Mateuszem.
+Potwierdzenie użytkownika 2026-11-08 (powiększony skan): panna młoda 1817 to Mcionkówna; odczyt „Niewiar” błędny.
