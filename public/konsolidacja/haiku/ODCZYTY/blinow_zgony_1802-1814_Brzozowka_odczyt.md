@@ -35,3 +35,15 @@ Przyczyny zgonu zapisywać zawsze (polecenie użytkownika).
 - Wojciech Bigos 31 III 1806: ospa złośliwa (in variolis malignis)
 - Kazimierz Bucoń II 1813: naturalis; Zofia Bucoń, Marcin Bucoń 1812–13: epidemia
 - Anna Spryszak 1804, Zofia Spryszakowa 1812: naturalis; Marcin Spryszak 1806: (dolor pectoris? – niepewne)
+
+## lm-35 (1814–1817) i lm-36 (1818–1823) – odczyt 2026-11-08, potwierdzenia użytkownika
+- 11 VI 1815, dom 31: **Łukasz (Lucas) Kopiwoda**, 60 l., naturalna (wcześniej skreślone „Sebastianus”) [P użytk.].
+- 10 VII **1817** (rok z kolejności wpisów; nagłówek strony 1816, wpis po „1817 6 Febr”), dom 37: **Marianna, 2 l. (jedynka skreślona)**, córka Jakuba i Katarzyny Bigos – inna rodzina Bigosów niż dom 32.
+- 16 I 1819, dom 32: **Marianna, 3 l.**, córka **Andrzeja** i Katarzyny Bigos → Katarzyna (Tupaj) żyła po 1811, żona Andrzeja Bigosa.
+- 30 IV 1820, dom 41: Wawrzyniec Tupaj, 46 l., porażenie (morbus paralyticus).
+- 10 II 1822, dom 24: Agnieszka Spryszakowa, 50 l., suchoty (phthisis) [P użytk.].
+- 28 III 1822, dom 23: Elżbieta Kopiwodzina, 60 l., naturalna.
+- 25 II 1823, dom 25: Wojciech (Adalbertus) Kopiwoda, 1 r., naturalna (wpis ucięty w dół).
+- 1 IV 1823, dom 46: Franciszka Kamieniarska? (indeks: Kamieniak), 70 l., naturalna.
+- 23 VIII 1814, dom 17: Sebastian Spry…ka, 66 l., zgon zwyczajny – brak w indeksie zgonów w bazie.
+- 22 VII 1814, dom 21: Jan Barbarzak, 1 r., ospa złośliwa (w indeksie 5 Barbarzaków zm. 1814).
