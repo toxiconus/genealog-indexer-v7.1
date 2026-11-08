@@ -43,3 +43,6 @@ Duble osób (ta sama osoba w dwóch rekordach), do scalenia po decyzji użytkown
 - Mateusz Sulowski ur. ok. 1867 Blinów: @GII8473@ (matka Marianna Sulowska z domu Machulak) = @GII3171@ „Suloski" (1867, Blinów) – zapis Suloski/Sulowski.
 - Wawrzyniec Tupaj ur. ok. 1774: @GIII2234@ (z żoną Franciszką Bigos) = @GII11409@ „Tupai" (Brzozówka) – zapis Tupaj/Tupai.
 - Andrzej Rębecki ur. ok. 1857: @GII7983@ (Brzozówka) = @GIII501096@ (Cieślanki), ci sami rodzice.
+
+## Potwierdzenie (użytkownik, 2026-11-08): Sprysak = Spryszak
+To to samo nazwisko w dwóch zapisach. Konsekwencje: Krzysztof Spryszak (świadek 1800–1805) i Krzysztof Sprysak (ojciec Wincentego ur. 1798) mogą być jedną osobą, a Katarzyna Sprysak (ur. ok. 1793, ślub z Andrzejem Bigosem 17 II 1811) jest tą samą rodziną co Spryszakowie z Brzozówki. Dopasowanie osób w `osoby_dopasowanie.py` traktuje je teraz jako to samo nazwisko.
