@@ -20,3 +20,18 @@ Nie wpisane do GED (czeka na potwierdzenie). lm-34 i lm-37 jeszcze nieczytane.
 ## Do potwierdzenia ze skanu (pokazane użytkownikowi)
 - lm-30: wiek i nr domu Anny (Spryszak) 1804; Michał Brzeski dom 9 – wiek (10? / 110?).
 
+
+## lm-34 (1814) i lm-37 (1823–1825) – odczyt 2026-11-08, potwierdzenia użytkownika
+Przyczyny zgonu zapisywać zawsze (polecenie użytkownika).
+- III 1814 (6 III), dom 17: dzieci **Martina i Anny Pękow** (nazwisko wg użytkownika „Pękow/Pęk…”, nie Pcionek): Jakub (5 l.), Jan (2 l.), Katarzyna (~8 l.); wcześniej 28 II Bartłomiej, 8 l. (syn Martina i Anny). Przyczyna: epidemia [P]. Rodzina Pęk – nie wiązać z Pcionami.
+- 28 VII 1823: **Marianna Koprowska** (użytkownik: „raczej Koprowska, może Koper”), 1/2 roku – NIE Kopiwoda.
+- 3 XII 1824: **Katarzyna Pudło (Pudlina), mężatka, 58 l.** [P], przyczyna: hydropico morbo (puchlina wodna). Hipoteza: wdowa po Antonim Pudle (zm. 1813, 50 l.) – do sprawdzenia; ur. ~1766.
+- 1814: Franciszka Bucoń 36 l. (29 I), Marianna Brzeska 46 l. dom 25 (16 II), Mateusz Ogon 60 l. dom 31 (12 III) – przyczyna: epidemia. [Ogon = nazwisko żony Michała Pudły, Jadwigi.]
+- 1823–24 (lm-37): Maciej Machulak, Antoni Chmiel i in.; od 1825 wpisy „z roku 1825 do Blinowa wpisane”.
+
+## Przyczyny zgonu dotychczas odczytanych (lm-30…33)
+- Antoni Pudło 19 IV 1813: morbus hungaricus (tyfus plamisty)
+- Jakub Bigos 13 I 1810: „typhus” (odczyt wstępny)
+- Wojciech Bigos 31 III 1806: ospa złośliwa (in variolis malignis)
+- Kazimierz Bucoń II 1813: naturalis; Zofia Bucoń, Marcin Bucoń 1812–13: epidemia
+- Anna Spryszak 1804, Zofia Spryszakowa 1812: naturalis; Marcin Spryszak 1806: (dolor pectoris? – niepewne)
