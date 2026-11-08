@@ -40,4 +40,4 @@
 - Chrzty Blinów po 1810, w tym dzieci Marcina Mcion.
 
 ## Uwaga o wariantach nazwiska (użytkownik, 2026-11-08)
-Pcion i Pcionek mieszały się już u poprzednika (osoby te same pod oboma zapisami), a Mcion to wariant Pcion. Dlatego Pcion = Pcionek = Mcion(ek) przy dopasowaniu osób (skrypt `osoby_dopasowanie.py`). Pscion/Pścionek na razie osobno, bo tego nie potwierdzono. W GED nie scalałem osób na tej podstawie, tylko dopisałem hipotezy.
+Pcion, Pcionek, Mcion i Mcionek to **nie jedno nazwisko**, ale w księgach pisano je różnie i trzeba zbadać, czy i gdzie oznaczają te same rodziny (wcześniejszy indeksator mieszał Pcion i Pcionek). Dlatego osoby się nie scalają automatycznie. Skrypt `osoby_dopasowanie.py` ma funkcję `mozliwy_wariant()`, która tylko oznacza takie pary do ręcznego sprawdzenia. Pscion/Pścionek też do zbadania. Hipotezy powyżej o Mcionach (domy 12, 14, 19) to więc kandydaci na pokrewieństwo z Pcionkami, nie ustalenie.

@@ -16,9 +16,11 @@ def stem_nazwisko(x):
     x=strip(translit(x)); x=re.sub(r'[^a-z]','',x)
     x=x.replace('y','i').replace('rz','z').replace('ch','h').replace('ó','u')
     x=re.sub(r'(owna|owa|ska|cka|dzka)$',lambda m:{'ska':'ski','cka':'cki','dzka':'dzki'}.get(m.group(1),''),x)
-    if x in('pcionek','mcionek'): x=x[0]+'cion'  # Pcion=Pcionek (potwierdzone 2026-11-08)
-    if x.startswith('mcion'): x='p'+x[1:]  # Mcion(ek) = wariant Pcion(ek) (potwierdzone przez użytkownika 2026-11-08)
     return x
+def mozliwy_wariant(a,b):
+    """Pcion/Mcion/Mcionek/Pcionek/Pscionek – możliwe warianty zapisu, NIE tożsame; tylko flaga do zbadania (nie do automatycznego scalania)."""
+    f=lambda x:re.sub(r'^[pm]s?c?ion(ek)?$','pcion',stem_nazwisko(x))
+    return f(a)==f(b) and stem_nazwisko(a)!=stem_nazwisko(b)
 # imiona: grupa -> warianty (łacina, rosyjski, zdrobnienia)
 IMIONA={'wawrzyniec':['wawrzyniec','wawrzek','wawrzyn','laurentius','лаврентий','лаврентiй','ławrentij'],
 'jan':['jan','janek','joannes','иван','iwan','іоанн'],'wojciech':['wojciech','adalbertus','войцех','войцъх','woyciech'],
