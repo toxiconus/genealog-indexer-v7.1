@@ -75,3 +75,16 @@ Dni potwierdził użytkownik (2026-11-08): pierwszy i trzeci wpis to **21 listop
 | 1824-11-21 | Paweł Spryszak, 19 | Zofia Jagiełłówna, 20 | Wincenty Spryszak, Józef Jagieło(?) | wersja poprawiona (zmieniono świadków) |
 Hipoteza: Paweł Spryszak (ur. ok. 1805) to syn Krzysztofa Spryszaka (świadek w pierwszej wersji) i Agnieszki Goch; Wincenty Spryszak (świadek) to jego brat (Wincenty ur. 1798). Franciszek Goch × Marianna Jagiełłówna wskazuje na związki Spryszaków i Gochów z Jagiełłami. Wieś nie ustalona.
 Potwierdzenie użytkownika 2026-11-08: rok wpisów na stronie lc-15 to 1824.
+
+## Uzupełnienie: s.69 (lc-9), Brzozówka, 1797–1798
+Rok pierwszych wpisów 1797 (nagłówek), potem 1798. Potwierdzenie użytkownika: dom 4 – Walenty Babiarz, panna młoda 18 l.
+| data | dom | mąż | żona | świadkowie |
+|---|---|---|---|---|
+| 1797-01-29 | 25 | Andrzej Goch, 20 | Agnieszka Spryszakówna, 16 | Wojciech Goch, Jan Okoń |
+| 1797-02-12 | 20 | Walenty Brzeski z Błażka, 19 | Jadwiga Gochówna z Brzozówki, 15 | Andrzej Pasternak, Łukasz Dziewa(?) z Błażka |
+| 1797-02-26 | 4 | Walenty Babiarz, 30 | Agnieszka Paruchówna(?), 18 | Maciej Kudy(?), **Antoni Pudło** |
+| 1797-03-07 | 23 | **Franciszek Brzeski, 32** | Marianna Tylusówna(?), 20 | **Bartłomiej Bucoń**, Walenty Brzeski z Błażka |
+| 1798-02-04 | 20 | Wojciech Goch, 35 | Marianna Pawłaskówna, 23 | Jan Okoń, Wojciech Michał |
+| 1798-02-04(?) | 8 | Maciej Kołada z Godziszowa, 24 | Katarzyna Wosiówna, 20 | Piotr Krzysztoń, Wojciech Moszeń(?) |
+| 1798-05-26 | 4 | Szymon Zielonka ze Szatarki(?), 30 | Agnieszka Pawłaskówna, 20 | Jan Okoń, Szymon Szabat(?) |
+Hipotezy: Franciszek Brzeski (dom 23, ur. ok. 1765) i Marianna – możliwi rodzice Grzegorza Brzeskiego (ur. IV 1799 Brzozówka); Walenty Brzeski z Błażka (ur. ok. 1778) może być bratem Franciszka. Agnieszka Spryszakówna (ur. ok. 1781) – najstarszy wpis Spryszaków w Brzozówce. Nazwisko panny młodej przy Franciszku Brzeskim („Tylusowna?”) niepewne.

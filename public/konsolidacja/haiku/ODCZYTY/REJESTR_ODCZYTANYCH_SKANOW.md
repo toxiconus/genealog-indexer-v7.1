@@ -7,7 +7,7 @@ Wyniki odczytu: ten sam folder `ODCZYTY/` (pliki md/csv) oraz GED `J:\Genealog\G
 ## Księga ślubów 1797–1825 (`MŻ\Liber copulatorum-malzenstwa 1797-1825\blinow_lc-N.jpg`), sekcja Brzozówka ok. s.68–82
 | skan | strony | lata | status | co znaleziono / uwagi | gdzie szukać dalej |
 |---|---|---|---|---|---|
-| lc-9 | 68–69 | 1797 | Cz (lewa, 3 wpisy) | brak naszych nazwisk w odczytanych (Goch, Brzeski, Babiarz) | prawa strona s.69 i reszta lewej |
+| lc-9 | 68–69 | 1797 | Cz (lewa, 3 wpisy) | brak naszych nazwisk w odczytanych (Goch, Brzeski, Babiarz) | prawa strona s.69 i reszta lewej; s.69 odczytana w całości (1797–98) |
 | lc-10 | 70–71 | 1798–1805 | P | **1800 Piotr Bucoń × Franciszka Kopiwoda; Mateusz Bucoń × Dorota Gil**; s.71: 1802 Jakub Bigos × Katarzyna Tupaj, 1803 Tutka × Rozalia Mcion, 1805 Walenty Bożny(?) × Katarzyna Bucoń; świadkowie Piotr i Kazimierz Bucoń | koniec s.71 (1805, 1 wpis do dokończenia), s.72 dalej gotowe |
 | lc-11 | 72–73 | 1806–1812 | P | **1812 Sebastian Kopiwoda × Cecylia Paluch (32/19)**; świadkowie Bucoń, Pudło | – |
 | lc-12 | 74–75 | 1811–1817 | P | Jakub Bucoń × (1811?), Józef Paluch 1814; świadkowie Bucoń; s.75: Marianna Buconiówna×Tumiło 1814 (świadek Mateusz Bucoń), świadek Bartłomiej Bucoń 1817 | – |
