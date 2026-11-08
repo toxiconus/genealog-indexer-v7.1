@@ -11,10 +11,12 @@ Nie wpisane do GED (czeka na potwierdzenie). lm-34 i lm-37 jeszcze nieczytane.
 - 1808 VIII, dom 28: Adalbertus, 1 r., syn Piotra i Franciszki Bucoń (lm-32) → Piotr Bucoń × Franciszka. [?] numer i wiek.
 - 1811 I, dom 41: Marianna, 10 l., córka Kazimierza i Zofii Bucoń; 1812 II: Marcin (2 l., dom 41) syn Kazimierza i Zofii Bucoń; Zofia Bucoń (20 l.?, dom 41); 9 II 1813 Casimirus Bucon, 60 l., dom 41 (lm-33) → Kazimierz Bucoń ur. ~1753, rodzina Buconiów dom 41, epidemia 1812–13.
 - 1802: Paulum Bucoń (8 l., dom 28), Stanislaum Bucoń (2 l., dom 41) (lm-30).
-- 1804 [?]: Catharina, 2 l., dom 35, córka Mateusza i Marianny **Pcionek/Mcionek** (nazwisko po powiększeniu: „Pcionkow/Mcionkow” – do pokazania).
+- XII 1804, dom 35: Catharina, 2 l., córka Mateusza i Marianny **Siemionów** (odczyt użytkownika: „Siemionow”; NIE Pcionek – poprzedni odczyt błędny) [P].
 - 1812 VIII: Zofia Spryszakowa, 80 l., dom 25 (lm-33).
 
+## Potwierdzone przez użytkownika 2026-11-08
+- Antoni Pudło wiek 50 – tak. Rok nagłówka lm-33 prawa nieczytelny; ustalany z sąsiednich dat = 1813 (po nim I 1814). Nazwisko matki 1804 = Siemionow.
+
 ## Do potwierdzenia ze skanu (pokazane użytkownikowi)
-- lm-30 prawa: wpis dzieci Mateusza i Marianny Pcionek/Mcionek (1804) – pierwsza litera nazwiska.
 - lm-30: wiek i nr domu Anny (Spryszak) 1804; Michał Brzeski dom 9 – wiek (10? / 110?).
-- lm-33: Antoni Pudło – wiek 50 (cyfra).
+
