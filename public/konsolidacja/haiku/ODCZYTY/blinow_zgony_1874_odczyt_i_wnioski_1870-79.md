@@ -28,3 +28,10 @@ Poboczne (nie nasze): pozostałe 20 aktów – tylko w indeksie.
 - Akt 2 (Brzozówka): Tekla Pędzio, 30 l., c. Mateusza i Magdaleny Spryszaków; zgłaszali Antoni Bucoń 52 i Michał Spryszak 38 (brat?).
 - Akt 3: Józef Pcionek 2 mies., s. Pawła (33) i Agnieszki z Sekułów. Akt 8: Tomasz Pcionek 4 mies., nieślubny syn Magdaleny Pcionkówny. Akt 25: Jadwiga Pcionek, wdowa, 67 l., c. Antoniego i Katarzyny z Rębaków (czytam) vs indeks Marianny z Pawłasków – ROZBIEŻNOŚĆ.
 - Brak przyczyn zgonu w aktach. GED v30.
+
+## Zgony 1876–1878 (P_0592–P_0598) – akty naszych rodzin (GED v31; przyczyn zgonu w aktach brak)
+- 1876/19 Antoni Spryszak, Brzozówka, s. Walentego(?) i Agnieszki z Frykowych(?), **wdowa Anna z Pudłów**; wiek wg skanu „37” (indeks l.7) – nie pasuje do syna Wojciecha †1873 (l.19) → do potwierdzenia (57?). Zgłaszali Walenty Jachura 55, Walenty Rębacz 42.
+- 1876/21 Jan Rębacz 43 l., s. Pawła i Katarzyny z Saganów, **wdowa Anna z Buconiów**; zgłaszali Michał Bucoń ~53 i brat Rębacz.
+- 1876/25 Mikołaj Pcionek 41 l., s. Marcina (indeks Mateusza) i Anastazji z Jachurów, wdowiec po Anieli z Mrozów; zgłaszali Józef Kurek? 57, Franciszek Mróz 34.
+- 1878/27 Paweł Pcionek 16 l., s. Walentego i Marianny z Kudrelków (zgł. Michał Kudrelek 37, Adam Pawłasek 44). 1878/29 Jan Jachura 6 mies., s. Tomasza i Marianny z Pcionków (zgł. Piotr Kozyra 43, Antoni Jachura 28). 1878/30 Marianna Bucoń, wdowa, ~70 l., c. Antoniego i Anastazji z Kołotów (zgł. Walenty Jachura 54, Walenty Rębacz 45).
+- Brak skanów: 1877 akty 21–33, 1878 akty 1–20.
