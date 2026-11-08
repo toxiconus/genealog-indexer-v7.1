@@ -40,3 +40,8 @@ Poboczne (nie nasze): pozostałe 20 aktów – tylko w indeksie.
 - 1876/19 Antoni Spryszak: **37 lat** (indeks l.7 błędny); „землевладелец” = właściciel gruntu/gospodarz. ROZBIEŻNOŚĆ z Wojciechem Spryszakiem †1873 (l.19, s. Antoniego i Anny z Pudłów): ojciec miałby 15 lat → inny Antoni albo błąd wieku.
 - 1876/25 Mikołaj Pcionek: ojciec **Marcin** (indeks Mateusz błędny), matka Anastazja z Jachurów. HIPOTEZA: Marcin Pcion miał też Antoniego (ur. 1826) z Teresą Łatą – druga żona Anastazja albo dwaj Marcinowie.
 - 1878/30 Marianna Buconiowa: dopisek w nawiasie to ta sama nazwa po polsku (bez aliasu).
+
+### Potwierdzenia użytkownika, cz. 2 (2026-11-08)
+- 1875/3 Józef Pcionek: matka **Agnieszka**, nazwisko panieńskie niepewne – prawdopodobnie Sękuła/Sekuła. Czy Paweł Pcionek z aktów 10/1874 (żona Katarzyna Szabat) i 3/1875 (Agnieszka Sękuła) to ta sama osoba – nadal otwarte.
+- 1874/10: użytkownik nie widzi pewnie, kto zmarł i w jakim wieku – szuka w księdze urodzeń.
+- 1875/25 Jadwiga Pcionek: matki nie da się odczytać; nazwisko panieńskie matki wg użytkownika **Rybak** (Rybaków), nie Rębacz (Rębacz = „Рембачъ”). Indeks (Pawłasków) odrzucony.
