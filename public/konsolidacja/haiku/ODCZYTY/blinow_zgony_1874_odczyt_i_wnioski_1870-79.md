@@ -35,3 +35,8 @@ Poboczne (nie nasze): pozostałe 20 aktów – tylko w indeksie.
 - 1876/25 Mikołaj Pcionek 41 l., s. Marcina (indeks Mateusza) i Anastazji z Jachurów, wdowiec po Anieli z Mrozów; zgłaszali Józef Kurek? 57, Franciszek Mróz 34.
 - 1878/27 Paweł Pcionek 16 l., s. Walentego i Marianny z Kudrelków (zgł. Michał Kudrelek 37, Adam Pawłasek 44). 1878/29 Jan Jachura 6 mies., s. Tomasza i Marianny z Pcionków (zgł. Piotr Kozyra 43, Antoni Jachura 28). 1878/30 Marianna Bucoń, wdowa, ~70 l., c. Antoniego i Anastazji z Kołotów (zgł. Walenty Jachura 54, Walenty Rębacz 45).
 - Brak skanów: 1877 akty 21–33, 1878 akty 1–20.
+
+### Potwierdzenia użytkownika (2026-11-08)
+- 1876/19 Antoni Spryszak: **37 lat** (indeks l.7 błędny); „землевладелец” = właściciel gruntu/gospodarz. ROZBIEŻNOŚĆ z Wojciechem Spryszakiem †1873 (l.19, s. Antoniego i Anny z Pudłów): ojciec miałby 15 lat → inny Antoni albo błąd wieku.
+- 1876/25 Mikołaj Pcionek: ojciec **Marcin** (indeks Mateusz błędny), matka Anastazja z Jachurów. HIPOTEZA: Marcin Pcion miał też Antoniego (ur. 1826) z Teresą Łatą – druga żona Anastazja albo dwaj Marcinowie.
+- 1878/30 Marianna Buconiowa: dopisek w nawiasie to ta sama nazwa po polsku (bez aliasu).
