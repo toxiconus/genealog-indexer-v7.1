@@ -30,3 +30,8 @@ Hipotezy (niepotwierdzone):
 3. **Dwóch Marcinów**: Marcin+Agnieszka (Majdan) i Marcin+Małgorzata (Blinów) mają dzieci w tych samych latach (1785, 1787). To raczej dwóch różnych Marcinów (krewnych, np. braci) niż jedna rodzina, ale możliwe też, że ta sama para została zindeksowana z różnymi imionami żony. Do sprawdzenia w akcie (imiona żony, wieś, rodzice chrzestni).
 4. Marcin z domu 14 (żona Marianna † 1811, potem Zofia) jest za młody (ur. ok. 1789) na ojca dzieci z 1785–1787, więc **nie** jest żadnym z powyższych dwóch Marcinów.
 5. Bartłomiej Mcion († 1814, ok. 40 l., dom 12, ur. ok. 1774) nie ma chrztu w indeksie 1783–97 (za wcześnie): szukać chrztu ok. 1774 (parafia Biała lub Blinów przed 1783), możliwy syn Antoniego lub Marcina.
+
+## Dodatek 2026-11-08 – zgony 1873 (księga Blinów, skany P_0580–0582)
+- Akt 21/1873, Moczydła: Antoni **Pcion**, 48 l., syn Marcina i Teresy (Łata), wdowiec po Annie ze Szwedów [odczyt użytkownika].
+- Akt 50/1873, Moczydła: Barbara **Pcion(ówna)**, 3 l., córka Antoniego i Anny ze Szwedów – w akcie «Pcion» (rosyjskie П), choć indeks/rejestr ma «Pcionek». Wniosek: ojciec i córka noszą to samo nazwisko Pcion; „Pcionek” w indeksie to wariant zapisu indeksera, nie odrębna forma w akcie.
+- Akt 49/1873, Blinów: Katarzyna Pcionek(?), 37 l., córka Jana i Rozalii Wiechników, wdowa po Pawle Pcionku – nazwisko do sprawdzenia na skanie.
