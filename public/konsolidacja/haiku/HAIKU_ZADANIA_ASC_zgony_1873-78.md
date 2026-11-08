@@ -1,8 +1,10 @@
-# ZADANIA HAIKU – odczyt zgonów ASC Blinów 1873–1878 (łatwiejsze skany)
+# ZADANIA HAIKU – odczyt zgonów ASC Blinów 1873–1878
+
+> **WYNIK PRÓBY 2026-11-08: Haiku NIE nadaje się do odczytu aktów ASC.** Przy pełnych stronach skanu (4000 px) nie rozpoznaje rosyjskiej kursywy: 1873 i 1874 – zero odczytów, 1875–78 – 73 akty, ale daty puste i prawie wszystkie pola `?`. Nie wnosić tych wyników do aplikacji. Akty ASC czyta Claude (Sonnet) z fragmentami skanów do weryfikacji. Haiku zlecać tylko skany polskojęzyczne (np. akty 1935–45). Poniżej tryb pracy zachowany jako wzór formatu CSV.
 
 Cel: Haiku czyta akty zgonów z prostych, formułkowych skanów i wpisuje je do CSV w formacie aplikacji `narzedzia/weryfikacja_zgonow_ASC_1870-79.html`. Rafał weryfikuje je w aplikacji (skan obok pól), dopiero potem dane idą do GED i opisów. Haiku niczego nie scala i nie dopisuje do GED.
 
-## Dlaczego te skany są łatwe
+## Charakter skanów (formularz ASC)
 - Akty ASC 1873–78 to druk formularzowy: rosyjska kursywa, ale stała kolejność (data, zgłaszający z wiekiem, zmarły, wiek, rodzice z nazwiskiem panieńskim matki, małżonek). Aktu zgonu nie zawiera przyczyny zgonu – wpisz `brak w akcie`.
 - Odczytane wcześniej akty (22 w pliku `odczyty_AI_ASC_start.csv`) służą jako wzorzec – nie czytać ich ponownie.
 - Trudniejsze (NIE dla Haiku): lata 1870–72 (tylko indeks, brak skanów), akty z lat 1810–1860, łacina.
