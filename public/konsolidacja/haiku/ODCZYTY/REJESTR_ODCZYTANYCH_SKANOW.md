@@ -43,3 +43,4 @@ Aktualizuj ten plik przy każdym nowym odczycie.
 
 - 2026-11-08 GED v32: naprawa 363 zdublowanych id FAM (@GFFD1..363@, przepięte linki FAMS/FAMC), +405 brakujących linków zwrotnych INDI→FAM, 247 linii >255 znaków podzielone CONC. Skrypty: skrypty/fix_fam_dup.py, fix_ged2.py
 - 2026-11-08 GED v33: skrócone formuły w 324 notkach z treścią aktów (usunięte formuły „Po przekonaniu się naocznie…”, „Akt ten przeczytany…”, „obaj rolnicy pełnoletni…zamieszkali i oświadczyli”; wszystkie fakty zostają), −38 tys. znaków. Skrypt skrypty/skroc_ged.py
+- 2026-11-08 GED v34: daty/godziny/wiek w tekstach aktów zamienione na cyfry (136 not.); 2782 ogólne wskazówki „brak rodziców; szukać chrztu…” przeniesione z GED do haiku/ODCZYTY/DO_SZUKANIA_chrzty_z_GED.csv (id, osoba, wskazówka). W GED zostały 31 merytorycznych hipotez/rozbieżności. Skrypt skrypty/liczby_hipotezy.py
