@@ -36,7 +36,7 @@ table{border-collapse:collapse;width:100%}th,td{padding:3px 6px;border-bottom:1p
 const DATA=/*DATA*/null;
 const KEY='bazazgonow1';
 let recs=DATA.recs, cols=DATA.cols;
-let S={edits:{},scan:{},added:[],status:{},note:{}}; // zmiany użytkownika
+let S={edits:{},scan:{},added:[],status:{},note:{},url:{},tpl:{}}; // zmiany użytkownika
 try{S=Object.assign(S,JSON.parse(localStorage.getItem(KEY)||'{}'))}catch(e){}
 function save(){try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){};stat()}
 S.added.forEach(r=>recs.push(r));
@@ -101,19 +101,23 @@ function open(r){cur=r;drawList();
   <button id="pv">←</button><button id="nx">→</button> <select id="stsel"><option value="">stan: wg źródła</option><option value="ok" ${S.status[r.id]=='ok'?'selected':''}>✓ zweryfikowane</option><option value="bad" ${S.status[r.id]=='bad'?'selected':''}>⚠ wątpliwe/błąd</option></select></div>
   <div id="view"><div id="vtools"><button data-z="1.25">+</button><button data-z="0.8">−</button><button data-z="0">⟲</button><button id="rot">↻</button></div></div>
   <div id="thumbs">${p.length?p.map((x,i)=>`<img src="${x.url}" title="${esc(x.name)}" data-i="${i}" class="${S.scan[r.id]==x.name||(!S.scan[r.id]&&r.scan==x.name)?'on':''}">`).join(''):'<span class="dim">Brak zdjęć dla dekady '+d+'–'+(d+9)+'. Zaznacz dekadę i użyj „📷 Zdjęcia dekady…".</span>'}</div>
+  <div class="pad" style="padding-bottom:0"><div class="row"><label>Skan z internetu</label><input id="uurl" placeholder="adres obrazu albo sam numer strony (z szablonem)" value="${esc(S.url[r.id]||'')}"></div><div class="row"><label>Szablon dekady ${d}–${d+9}</label><input id="utpl" placeholder="https://…/blinow_lm-{n}.jpg" value="${esc(S.tpl[d]||'')}"></div><div class="dim" style="font-size:12px">Wpisz numer strony → obraz z szablonu; albo wklej pełny adres pliku. ${webUrl(r)?`<a href="${esc(webUrl(r))}" target="_blank" rel="noopener">otwórz w nowej karcie</a>`:''}</div></div>
   <div class="pad">${r.f.notes_org?`<div class="dim">Indeks: ${esc(r.f.notes_org)}</div>`:''}${r.f.act_text?`<details><summary>Tekst aktu</summary><div>${esc(r.f.act_text)}</div></details>`:''}${rows}</div>`;
   $('#det').querySelectorAll('input[data-k],textarea[data-k]').forEach(el=>el.onchange=()=>{(S.edits[r.id]=S.edits[r.id]||{})[el.dataset.k]=el.value;el.closest('.row').classList.add('ch');save();drawList()});
+  $('#uurl').onchange=e=>{const v=e.target.value.trim();if(v)S.url[r.id]=v;else delete S.url[r.id];save();open(r)};
+  $('#utpl').onchange=e=>{const v=e.target.value.trim();if(v)S.tpl[d]=v;else delete S.tpl[d];save();open(r)};
   $('#stsel').onchange=e=>{S.status[r.id]=e.target.value;if(!e.target.value)delete S.status[r.id];save();drawList()};
   $('#pv').onclick=()=>step(-1);$('#nx').onclick=()=>step(1);
   $('#thumbs').onclick=e=>{const i=e.target.dataset.i;if(i==null)return;S.scan[r.id]=p[+i].name;save();show(p[+i].url);open(r)};
-  const nm=S.scan[r.id]||r.scan,f=p.find(x=>x.name==nm);
-  if(f)show(f.url);else $('#view').insertAdjacentHTML('beforeend','<div class="hint" style="color:#aaa">'+(nm?'Plik skanu: '+esc(nm)+' — wczytaj zdjęcia dekady.':'Brak przypisanego skanu — kliknij miniaturę poniżej, aby przypisać.')+'</div>');
+  const nm=S.scan[r.id]||r.scan,f=p.find(x=>x.name==nm),wu=webUrl(r);
+  if(f)show(f.url);else if(wu)show(wu);else $('#view').insertAdjacentHTML('beforeend','<div class="hint" style="color:#aaa">'+(nm?'Plik skanu: '+esc(nm)+' — wczytaj zdjęcia dekady.':'Brak przypisanego skanu — kliknij miniaturę poniżej, aby przypisać.')+'</div>');
 }
+function webUrl(r){const u=S.url[r.id];if(u){if(/^\d+$/.test(u)){const t=S.tpl[dec(r.y)];return t?t.replace('{n}',u):''}return u}return ''}
 function step(d){const i=view.findIndex(x=>x.id==cur.id);const n=view[i+d];if(n)open(n)}
 document.onkeydown=e=>{if(/INPUT|TEXTAREA|SELECT/.test(e.target.tagName))return;if(e.key=='ArrowRight')step(1);if(e.key=='ArrowLeft')step(-1);if(e.key=='+')zoom(1.25);if(e.key=='-')zoom(.8)};
 // viewer
 let T={x:0,y:0,k:1,r:0},img=null;
-function show(url){const v=$('#view');v.querySelectorAll('img,.hint').forEach(x=>x.remove());img=new Image();img.onload=()=>{const k=Math.min(v.clientWidth/img.naturalWidth,v.clientHeight/img.naturalHeight);T={x:0,y:0,k:k,r:0,k0:k};ap()};img.src=url;v.appendChild(img)}
+function show(url){const v=$('#view');v.querySelectorAll('img,.hint').forEach(x=>x.remove());img=new Image();img.onload=()=>{const k=Math.min(v.clientWidth/img.naturalWidth,v.clientHeight/img.naturalHeight);T={x:0,y:0,k:k,r:0,k0:k};ap()};img.onerror=()=>{v.insertAdjacentHTML('beforeend','<div class="hint" style="color:#f99">Nie udało się załadować obrazu z adresu (serwis może blokować osadzanie lub wymaga logowania). Użyj „otwórz w nowej karcie" i pobierz plik.</div>')};img.src=url;v.appendChild(img)}
 function ap(){if(img)img.style.transform=`translate(${T.x}px,${T.y}px) scale(${T.k}) rotate(${T.r}deg)`}
 function zoom(f,cx,cy){const v=$('#view');if(!img)return;if(f==0){T.x=0;T.y=0;T.k=T.k0;T.r=0;ap();return}
   cx=cx??v.clientWidth/2;cy=cy??v.clientHeight/2;T.x=cx-(cx-T.x)*f;T.y=cy-(cy-T.y)*f;T.k*=f;ap()}
