@@ -1,5 +1,5 @@
 ﻿nr_wpisu_DB;rok;data_mm-dd;dom;nazwisko;imie;plec;wiek;rodzice;przyczyna_lac;przyczyna_pl;uwagi;pewnosc;strona_ksiegi;skan;miejscowosc
-1;1797;01-02;40;Gręda;Stanisław;M;3 mens.?;;Agricola Naturali / Morbus Naturalis;śmierć naturalna;stan: rolnik, wiek nieczytelny (Mens. Tria?);?;P;lm-2;Blinów
+1;1797;01-02;40;Gręda;Stanisław;M;3 dni?;;Agricola Naturali / Morbus Naturalis;śmierć naturalna;stan: rolnik, wiek: Tria - jednostka niepewna (mens. czy dies), urodzony wg bazy 30.12.1796 (id CH.LUB.BLIN.1796.a5, rodzice brak w bazie) = 3 dni;?;P;lm-2;Blinów
 2;1797;01-28;62;Piechowa;Agnieszka;K;22 annor.;;Agricola Naturali;śmierć naturalna;stan: rolnik;P;P;lm-2;Blinów
 3;1797;02-04;79;Kosidłowna;Marianna;K;5 dies;Francisci Kosidło;Agricola Naturali;śmierć naturalna;stan: rolnik, dziecko;P;P;lm-2;Blinów
 4;1797;02-12;3;Kurczak;Zofia;K;2 annor.?;Mathiae Kurczak;Agricola Naturali;śmierć naturalna;stan: rolnik, jednostka wieku niewidoczna, dziecko;?;P;lm-2;Blinów
