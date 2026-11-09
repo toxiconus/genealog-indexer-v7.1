@@ -1,0 +1,1124 @@
+﻿id_zgon_indeks;osoba;rok_zgonu;wiek;miejsce;kand_wg_dopasowania;kand_teraz;najlepszy_kandydat;jego_ur;jego_zm;klasa
+@GII12478@;Bartłomiej Szydłoski;1860;49;Brzozówka;4;2;@GII9681@;1812;;A: mocny (wiek zgodny, jedyny pasujący)
+@GII12852@;Walenty Chmiel;1871;55;Moczydła;3;4;@GII7329@;1817;;A: mocny (wiek zgodny, jedyny pasujący)
+@GII12942@;Wojciech Ogon;1872;60;Brzozówka;2;3;@GII7057@;1812;1872;A: mocny (wiek zgodny, jedyny pasujący)
+@GII13014@;Rozalia Kosidło;1873;6;;1;3;@GII3198@;1868;;A: mocny (wiek zgodny, jedyny pasujący)
+@GII13020@;Wawrzyniec Ładziak;1873;66;;2;1;@GII6771@;1808;1873;A: mocny (wiek zgodny, jedyny pasujący)
+@GII13199@;Jakub Obydź;1876;75;;2;1;@GII7303@;1800;1876;A: mocny (wiek zgodny, jedyny pasujący)
+@GII13255@;Antoni Kosidło;1877;32;;3;20;@GII1912@;1846;;A: mocny (wiek zgodny, jedyny pasujący)
+@GII13288@;Wincenty Pikuła;1877;40;;2;3;@GII7305@;1837;1877;A: mocny (wiek zgodny, jedyny pasujący)
+@GII13303@;Marianna Bucoń;1878;70;;3;16;@GIII5784@;1807;;A: mocny (wiek zgodny, jedyny pasujący)
+@GII13329@;Tomasz Kosidło;1878;2;;6;10;@GII3571@;1878;;A: mocny (wiek zgodny, jedyny pasujący)
+@GII13390@;Marcin Kosidło;1880;58;;3;12;@GII9111@;1823;;A: mocny (wiek zgodny, jedyny pasujący)
+@GII13394@;Marianna Kosidło;1880;27;;7;52;@GII2234@;1851;;A: mocny (wiek zgodny, jedyny pasujący)
+@GII13428@;Aleksander Sagan;1880;1;;2;3;@GII3703@;1880;;A: mocny (wiek zgodny, jedyny pasujący)
+@GII10556@;Stanisław Gręda;1797;;Blinów;1;1;@GII708@;1796;;B: jedyny kandydat
+@GII10583@;Jan Kopyt;1798;;Blinów;1;1;@GII712@;1796;;B: jedyny kandydat
+@GII10596@;Jakub Sobotka;1798;;Blinów;1;1;@GII5975@;;;B: jedyny kandydat (słabszy)
+@GII10603@;Anna Zdybel;1798;;Moczydła;1;1;@GII634@;1795;;B: jedyny kandydat
+@GII10606@;Jadwiga Babiarz;1799;;Brzozówka;1;1;@GII597@;1794;;B: jedyny kandydat
+@GII10613@;Antoni Gręda;1799;;Blinów;1;1;@GII6299@;;;B: jedyny kandydat (słabszy)
+@GII10632@;Tomasz Michałek;1799;;Blinów;1;1;@GII9237@;;;B: jedyny kandydat (słabszy)
+@GII10643@;Agnieszka Solarz;1799;;Blinów;2;1;@GII537@;1793;;B: jedyny kandydat
+@GII10647@;Paweł Wojtalas;1799;;Blinów;1;1;@GII502@;1793;;B: jedyny kandydat
+@GII10656@;Andrzej Bogoń;1800;;Moczydła;1;1;@GIII2188@;;;B: jedyny kandydat (słabszy)
+@GII10661@;Anastazja Kania;1800;;Moczydła;1;1;@GII584@;1794;;B: jedyny kandydat
+@GII10680@;Agnieszka Boczek;1801;;Moczydła;1;1;@GII505@;1793;;B: jedyny kandydat
+@GII10683@;Marianna Chmiel;1801;;Moczydła;1;1;@GII347@;1790;;B: jedyny kandydat
+@GII10691@;Marianna Kaczynska;1801;;Blinów;1;1;@GII7534@;;;B: jedyny kandydat (słabszy)
+@GII10709@;Antoni Mcionek;1801;;Blinów;1;1;@GII6103@;;;B: jedyny kandydat (słabszy)
+@GII10710@;Tomasz Michałek;1801;;Blinów;1;1;@GII9237@;;;B: jedyny kandydat (słabszy)
+@GII10715@;Stanisław Paciorek;1801;;Blinów;1;1;@GII9545@;;;B: jedyny kandydat (słabszy)
+@GII10717@;Antoni Piech;1801;;Blinów;1;1;@GII527@;1793;;B: jedyny kandydat
+@GII10739@;Kazimierz Kozaczek;1802;;Blinów;1;1;@GII508@;1793;;B: jedyny kandydat
+@GII10742@;Marcin Mcionek;1802;;Blinów;1;1;@GII6201@;;;B: jedyny kandydat (słabszy)
+@GII10747@;Stanisław Samuel;1802;;Blinów;1;1;@GII5985@;;;B: jedyny kandydat (słabszy)
+@GII10753@;Antoni Baron;1803;;Blinów;1;1;@GII704@;1796;;B: jedyny kandydat
+@GII10757@;Michał Czarny;1803;;Brzozówka;1;1;@GII409@;1791;;B: jedyny kandydat
+@GII10767@;Mateusz Kolasa;1803;;Brzozówka;1;1;@GII9343@;;;B: jedyny kandydat (słabszy)
+@GII10788@;Kazimierz Kosidło;1804;;Blinów;1;1;@GII6221@;;;B: jedyny kandydat (słabszy)
+@GII10814@;Antoni Gręda;1805;;Blinów;1;1;@GII6299@;;;B: jedyny kandydat (słabszy)
+@GII10848@;Antoni Mcionek;1806;;Blinów;1;1;@GII6103@;;;B: jedyny kandydat (słabszy)
+@GII10869@;Franciszka Czarna;1807;;Brzozówka;1;1;@GII667@;1796;;B: jedyny kandydat
+@GII10874@;Marianna Kaczynska;1807;;Blinów;1;1;@GII7534@;;;B: jedyny kandydat (słabszy)
+@GII10898@;Marianna Dobrzynska;1808;;Blinów;1;1;@GII216@;1787;;B: jedyny kandydat
+@GII10900@;Tomasz Dziura;1808;;Blinów;1;1;@GII6247@;;;B: jedyny kandydat (słabszy)
+@GII10923@;Franciszka Pazdrak;1808;;Blinów;1;1;@GII282@;1788;;B: jedyny kandydat
+@GII10957@;Marianna Rzeszutko;1809;;Brzozówka;1;1;@GII438@;1791;;B: jedyny kandydat
+@GII10976@;Jan Kopyt;1810;;Blinów;1;1;@GII712@;1796;;B: jedyny kandydat
+@GII11016@;Szymon Krupa;1811;;Blinów;1;1;@GII6005@;;;B: jedyny kandydat (słabszy)
+@GII11026@;Antoni Mcionek;1811;;Blinów;1;1;@GII6103@;;;B: jedyny kandydat (słabszy)
+@GII11028@;Michał Mcionek;1811;;Blinów;1;1;@GII362@;1790;;B: jedyny kandydat
+@GII11029@;Marianna Mcionek;1811;;Blinów;1;1;@GII471@;1792;;B: jedyny kandydat
+@GII11035@;Antoni Pazdrak;1811;;Blinów;1;1;@GII6029@;;;B: jedyny kandydat (słabszy)
+@GII11066@;Michał Machulek;1812;;Brzozówka;1;1;@GII719@;1796;;B: jedyny kandydat
+@GII11071@;Andrzej Mcionek;1812;;Blinów;1;1;@GII318@;1789;;B: jedyny kandydat
+@GII11082@;Anastazja Boczek;1813;;Moczydła;1;1;@GII9218@;;;B: jedyny kandydat (słabszy)
+@GII11119@;Szymon Barbarzak;1814;;Blinów;1;1;@GII316@;1789;;B: jedyny kandydat
+@GII11120@;Tomasz Barbarzak;1814;;Blinów;1;1;@GII648@;1795;;B: jedyny kandydat
+@GII11143@;Marianna Kaczynska;1814;;Blinów;1;1;@GII7534@;;;B: jedyny kandydat (słabszy)
+@GII11147@;Jakub Kasperek;1814;;Moczydła;1;1;@GII257@;1788;;B: jedyny kandydat
+@GII11152@;Wawrzyniec Kosidło;1814;;Blinów;1;1;@GII6101@;;;B: jedyny kandydat (słabszy)
+@GII11159@;Katarzyna Kozaczek;1814;;Blinów;2;1;@GII6280@;1809;;B: jedyny kandydat
+@GII11161@;Katarzyna Kozaczek;1814;;Blinów;2;1;@GII6280@;1809;;B: jedyny kandydat
+@GII11170@;Jan Kurczak;1814;;Blinów;1;1;@GII9453@;;;B: jedyny kandydat (słabszy)
+@GII11184@;Marcin Mcionek;1814;;Blinów;1;1;@GII6201@;;;B: jedyny kandydat (słabszy)
+@GII11185@;Marcin Mcionek;1814;;Blinów;1;1;@GII6201@;;;B: jedyny kandydat (słabszy)
+@GII11206@;Zofia Obydz;1814;;Blinów;1;1;@GII6976@;;;B: jedyny kandydat (słabszy)
+@GII11215@;Krzysztof Pasternak;1814;;Blinów;1;1;@GII6151@;;;B: jedyny kandydat (słabszy)
+@GII11221@;Anna Pawłasek;1814;;Blinów;2;1;@GII13264@;;;B: jedyny kandydat (słabszy)
+@GII11234@;Marianna Rataj;1814;;Blinów;1;1;@GII9082@;;;B: jedyny kandydat (słabszy)
+@GII11235@;Marianna Rataj;1814;;Blinów;1;1;@GII9082@;;;B: jedyny kandydat (słabszy)
+@GII11236@;Marianna Rataj;1814;;Blinów;1;1;@GII9082@;;;B: jedyny kandydat (słabszy)
+@GII11237@;Marianna Rataj;1814;;Brzozówka;1;1;@GII9082@;;;B: jedyny kandydat (słabszy)
+@GII11241@;Małgorzata Rzeszutko;1814;;Brzozówka;1;1;@GII477@;1792;;B: jedyny kandydat
+@GII11257@;Zofia Tutka;1814;;Brzozówka;1;1;@GII403@;1791;;B: jedyny kandydat
+@GII11264@;Anna Boczek;1815;;Blinów;1;1;@GII571@;1794;;B: jedyny kandydat
+@GII11278@;Piotr Machulek;1815;;Blinów;1;1;@GII6041@;;;B: jedyny kandydat (słabszy)
+@GII11295@;Marianna Bosak;1816;;Blinów;1;1;@GII396@;1791;;B: jedyny kandydat
+@GII11341@;Jakub Kurczak;1817;;Blinów;1;1;@GII636@;1795;;B: jedyny kandydat
+@GII11373@;Katarzyna Dziura;1819;;Blinów;1;1;@GII9236@;;;B: jedyny kandydat (słabszy)
+@GII11428@;Marianna Mcionek;1821;;Blinów;1;1;@GII471@;1792;;B: jedyny kandydat
+@GII11433@;Wawrzyniec Solarz;1821;;Blinów;1;1;@GII6031@;;;B: jedyny kandydat (słabszy)
+@GII11438@;Marcin Gnat;1822;;Blinów;1;1;@GII655@;1795;;B: jedyny kandydat
+@GII11472@;Konstancja Kurczak;1823;;Blinów;1;1;@GII325@;1789;;B: jedyny kandydat
+@GII11475@;Mateusz Machulak;1823;;Brzozówka;1;1;@GII9627@;1784;;B: jedyny kandydat
+@GII11493@;Jadwiga Pazdrak;1824;;Moczydła;1;1;@GII417@;1791;;B: jedyny kandydat
+@GII11526@;Stanisław Pawłasek;1826;;;2;1;@GII408@;1791;;B: jedyny kandydat
+@GII11529@;Wojciech Pazdrak;1826;;;1;1;@GII9449@;;;B: jedyny kandydat (słabszy)
+@GII11530@;Stanisław Pcionek;1826;;;1;1;@GII9@;1783;;B: jedyny kandydat
+@GII11538@;Krzysztof Spryszak;1826;;;1;1;@GII6401@;1776;;B: jedyny kandydat
+@GII11543@;Jan Barbarzak;1827;;;1;1;@GII6131@;;;B: jedyny kandydat (słabszy)
+@GII11545@;Tomasz Biały;1827;;;1;1;@GII6319@;;;B: jedyny kandydat (słabszy)
+@GII11592@;Tomasz Kopyt;1828;;;1;1;@GII9173@;;1828;B: jedyny kandydat (słabszy)
+@GII11604@;Wojciech Pazdrak;1828;;;1;1;@GII9449@;;;B: jedyny kandydat (słabszy)
+@GII11619@;Andrzej Gnat;1829;;;1;1;@GII5995@;;;B: jedyny kandydat (słabszy)
+@GII11646@;Piotr Jachura;1830;;;1;1;@GII872@;1829;;B: jedyny kandydat
+@GII11656@;Jan Pcion;1830;15;;1;1;@GII963@;1830;;B: jedyny kandydat (słabszy)
+@GII11690@;Maciej Pazdrak;1831;;;1;1;@GII9249@;;;B: jedyny kandydat (słabszy)
+@GII11737@;Michał Nikolas;1832;;;1;1;@GII6377@;1786;;B: jedyny kandydat
+@GII11745@;Wojciech Rębecki;1832;;;1;1;@GII846@;1828;;B: jedyny kandydat
+@GII11753@;Andrzej Wiąckowski;1832;;;1;1;@GII915@;1829;;B: jedyny kandydat
+@GII11754@;Michał Wieleba;1832;;;1;1;@GII916@;1829;;B: jedyny kandydat
+@GII11755@;Jan Zaręba;1832;;;1;1;@GII917@;1829;;B: jedyny kandydat
+@GII11759@;Jan Bosak;1833;;;1;1;@GII6677@;;;B: jedyny kandydat (słabszy)
+@GII11760@;Bartłomiej Bucoń;1833;;;1;1;@GIII501046@;;;B: jedyny kandydat (słabszy)
+@GII11764@;Bartłomiej Dziura;1833;;;1;1;@GII9091@;;;B: jedyny kandydat (słabszy)
+@GII11765@;Jakub Gałka;1833;;;1;1;@GII927@;1830;;B: jedyny kandydat
+@GII11766@;Łukasz Gancarz;1833;;;1;1;@GII9129@;;;B: jedyny kandydat (słabszy)
+@GII11772@;Anna Kamieniak;1833;;;1;1;@GII1102@;1833;;B: jedyny kandydat
+@GII11773@;Paweł Kopiwoda;1833;;Brzozówka;1;1;@GII1106@;1833;1833;B: jedyny kandydat
+@GII11782@;Tomasz Michałek;1833;;;1;1;@GII9237@;;;B: jedyny kandydat (słabszy)
+@GII11784@;Franciszek Mochulak;1833;;;1;1;@GII1003@;1831;;B: jedyny kandydat
+@GII11789@;Katarzyna Zielińska;1833;;;2;1;@GII9932@;1827;;B: jedyny kandydat
+@GII11796@;Wojciech Janik;1847;;;1;1;@GII9139@;1818;1847;B: jedyny kandydat
+@GII11822@;Andrzej Stępień;1847;;;1;1;@GII275@;1788;;B: jedyny kandydat
+@GII11823@;Michał Szuba;1847;;;1;1;@GII1375@;1837;;B: jedyny kandydat
+@GII11827@;Onufry Szumlański;1847;;;1;1;@GII2002@;1847;;B: jedyny kandydat
+@GII11832@;Marcin Woś;1847;;;1;1;@GII662@;1795;;B: jedyny kandydat
+@GII11833@;Marianna Woytowiczowna;1847;;;1;1;@GII1683@;1842;;B: jedyny kandydat
+@GII11838@;Andrzej Ćwiek;1848;;;1;1;@GII1836@;1845;;B: jedyny kandydat
+@GII11855@;Jan Kurczak;1848;;;1;1;@GII9453@;;;B: jedyny kandydat (słabszy)
+@GII11864@;Michał Pścionek;1848;;;2;1;@GII1989@;1847;;B: jedyny kandydat
+@GII11873@;Anna Szubstarska;1848;;;1;1;@GII2061@;1848;;B: jedyny kandydat
+@GII11876@;Kazimierz Barbarzak;1849;;;1;1;@GII1563@;1841;;B: jedyny kandydat
+@GII11888@;Jan Król;1849;;;2;1;@GII9259@;1801;1849;B: jedyny kandydat
+@GII11903@;Antoni Szydłoski;1849;;;1;1;@GII9207@;;;B: jedyny kandydat (słabszy)
+@GII11907@;Wincenty Wieleba;1849;;;1;1;@GII2132@;1849;;B: jedyny kandydat
+@GII11911@;Franciszka Zielińska;1849;;;1;1;@GII2007@;1847;;B: jedyny kandydat
+@GII11921@;Józef Jopek;1850;;;1;1;@GII2028@;1848;;B: jedyny kandydat
+@GII11922@;Wojciech Kaczyński;1850;;;2;1;@GII6799@;;;B: jedyny kandydat (słabszy)
+@GII11923@;Agata Kolasa;1850;;;1;1;@GII1849@;1845;;B: jedyny kandydat
+@GII11943@;Wojciech Pścionek;1850;;;5;1;@GII1942@;1846;;B: jedyny kandydat
+@GII11948@;Bartłomiej Szabat;1850;;;1;1;@GII2129@;1849;;B: jedyny kandydat
+@GII11954@;Zofia Zielińska;1850;;;1;1;@GII1565@;1841;;B: jedyny kandydat
+@GII11956@;Szymon Baran;1851;;;1;1;@GII2071@;1849;;B: jedyny kandydat
+@GII11958@;Franciszek Biały;1851;;;1;1;@GII2214@;1851;;B: jedyny kandydat
+@GII11959@;Marianna Chmiel;1851;;;3;1;@GII347@;1790;;B: jedyny kandydat
+@GII11960@;Marianna Dąbska;1851;;;1;1;@GII2079@;1849;;B: jedyny kandydat
+@GII11966@;Agata Jachura;1851;;;1;1;@GII2228@;1851;;B: jedyny kandydat
+@GII11975@;Dominik Machulak;1851;;;1;1;@GII1408@;1838;;B: jedyny kandydat
+@GII11986@;Jadwiga Pazdrak;1851;;;1;1;@GII417@;1791;;B: jedyny kandydat
+@GII11997@;Wincenty Szyszka;1851;;;1;1;@GII2003@;1847;;B: jedyny kandydat
+@GII12002@;Dominik Wnuk;1851;;;1;1;@GII1881@;1845;;B: jedyny kandydat
+@GII12003@;Paweł Wnuk;1851;;;1;1;@GII2272@;1851;;B: jedyny kandydat
+@GII12004@;Zofia Wójtowicz;1851;;;3;1;@GII9080@;1811;;B: jedyny kandydat
+@GII12005@;Franciszek Baran;1852;;;1;1;@GII2070@;1849;;B: jedyny kandydat
+@GII12010@;Tekla Dobrzyńska;1852;;;2;1;@GII2142@;1850;;B: jedyny kandydat
+@GII12011@;Walenty Dobrzyński;1852;;;1;1;@GII2221@;1851;;B: jedyny kandydat
+@GII12012@;Kazimierz Dziewa;1852;;;1;1;@GII6591@;;;B: jedyny kandydat (słabszy)
+@GII12014@;Paweł Głaz;1852;;;1;1;@GII2145@;1850;;B: jedyny kandydat
+@GII12021@;Kasper Kosidło;1852;;;1;1;@GII9113@;;;B: jedyny kandydat (słabszy)
+@GII12027@;Ewa Kudrelkowna;1852;;;1;1;@GII1177@;1834;;B: jedyny kandydat
+@GII12040@;Piotr Pścionek;1852;;;2;1;@GII1368@;1837;;B: jedyny kandydat
+@GII12044@;Franciszek Sprysak;1852;;;1;1;@GII2262@;1851;;B: jedyny kandydat
+@GII12045@;Mateusz Szczuka;1852;;;1;1;@GII2265@;1851;;B: jedyny kandydat
+@GII12050@;Katarzyna Woytowiczowna;1852;;;3;1;@GII1427@;1838;;B: jedyny kandydat
+@GII12051@;Franciszek Zieliński;1852;;;1;1;@GII2276@;1851;;B: jedyny kandydat
+@GII12063@;Paweł Machulak;1853;;;2;1;@GII6543@;1799;;B: jedyny kandydat
+@GII12066@;Kazimierz Michałko;1853;;;1;1;@GII1726@;1843;;B: jedyny kandydat
+@GII12071@;Piotr Pścionek;1853;;;2;1;@GII1368@;1837;;B: jedyny kandydat
+@GII12078@;Magdalena Szydłoska;1853;;;1;1;@GII2267@;1851;;B: jedyny kandydat
+@GII12079@;Franciszek Szydłoski;1853;;;1;1;@GII2062@;1848;;B: jedyny kandydat
+@GII12084@;Michał Wścisło;1853;;;1;1;@GII696@;1796;;B: jedyny kandydat
+@GII12099@;Tomasz Głaz;1854;;;1;1;@GII2345@;1853;;B: jedyny kandydat
+@GII12100@;Bartłomiej Jachura;1854;;;1;1;@GII1395@;1838;;B: jedyny kandydat
+@GII12105@;Agnieszka Janik;1854;;;2;1;@GIII7193@;1812;;B: jedyny kandydat
+@GII12109@;Agnieszka Jędrzejczak;1854;;;2;1;@GII770@;1827;;B: jedyny kandydat
+@GII12111@;Stanisław Kamieniak;1854;;;1;1;@GII9351@;1825;;B: jedyny kandydat
+@GII12112@;Rozalia Kamieniak;1854;;;1;1;@GII2292@;1852;;B: jedyny kandydat
+@GII12114@;Agata Kędziora;1854;;;2;1;@GII9114@;;;B: jedyny kandydat (słabszy)
+@GII12124@;Tekla Kosidło;1854;;;2;1;@GII2362@;1853;;B: jedyny kandydat
+@GII12127@;Szymon Kozaczek;1854;;;1;1;@GII2368@;1853;;B: jedyny kandydat
+@GII12129@;Jakub Kudrelek;1854;;;1;1;@GII171@;1786;;B: jedyny kandydat
+@GII12131@;Tomasz Linczak;1854;;;1;1;@GII9331@;1798;;B: jedyny kandydat
+@GII12136@;Marcin Mędrek;1854;;;1;1;@GII2380@;1853;;B: jedyny kandydat
+@GII12148@;Michał Sikora;1854;;;1;1;@GII1944@;1846;;B: jedyny kandydat
+@GII12154@;Wincenty Szuba;1854;;;1;1;@GII6467@;1787;;B: jedyny kandydat
+@GII12156@;Stanisław Wcisło;1854;;;1;1;@GII6079@;;;B: jedyny kandydat (słabszy)
+@GII12159@;Paweł Babiarz;1855;;;1;1;@GII2277@;1852;;B: jedyny kandydat
+@GII12165@;Walenty Biały;1855;;;1;1;@GII6821@;;;B: jedyny kandydat (słabszy)
+@GII12172@;Tomasz Dobrzyński;1855;;;1;1;@GII9417@;;;B: jedyny kandydat (słabszy)
+@GII12176@;Szymon Gancarz;1855;;;2;1;@GII7011@;1809;1855;B: jedyny kandydat
+@GII12177@;Anna Gancarz;1855;;;1;1;@GII2082@;1849;;B: jedyny kandydat
+@GII12178@;Jadwiga Gancarz;1855;;;1;1;@GII2344@;1853;;B: jedyny kandydat
+@GII12179@;Marianna Gancarz;1855;;;4;1;@GII1700@;1843;;B: jedyny kandydat
+@GII12181@;Ewa Gnat;1855;;;1;1;@GII1567@;1841;;B: jedyny kandydat
+@GII12189@;Jakub Jędrzejczak;1855;;;1;1;@GII2231@;1851;;B: jedyny kandydat
+@GII12193@;Benedykt Jędrzejczak;1855;;;1;1;@GII2355@;1853;;B: jedyny kandydat
+@GII12194@;Zofia Jędrzejczak;1855;;;4;1;@GII2150@;1850;;B: jedyny kandydat
+@GII12203@;Agnieszka Kędziora;1855;;;2;1;@GII1042@;1832;;B: jedyny kandydat
+@GII12204@;Agnieszka Kędziora;1855;;;2;1;@GII1042@;1832;;B: jedyny kandydat
+@GII12217@;Agata Kosidło;1855;;;5;1;@GII9226@;;;B: jedyny kandydat (słabszy)
+@GII12246@;Józef Machulak;1855;;;1;1;@GII9107@;1800;;B: jedyny kandydat
+@GII12255@;Marek Pasternak;1855;;;1;1;@GII7063@;1829;1855;B: jedyny kandydat
+@GII12260@;Małgorzata Pawłasek;1855;;;2;1;@GII1365@;1837;;B: jedyny kandydat
+@GII12261@;Krzysztof Pawłasek;1855;;;1;1;@GII6963@;;;B: jedyny kandydat (słabszy)
+@GII12267@;Anastazja Pawłasek;1855;;;2;1;@GII6718@;;;B: jedyny kandydat (słabszy)
+@GII12274@;Wojciech Pścionek;1855;;;5;1;@GII1942@;1846;;B: jedyny kandydat
+@GII12281@;Walenty Siembida;1855;;;1;1;@GII395@;1791;;B: jedyny kandydat
+@GII12287@;Agata Solarz;1855;;;1;1;@GII163@;1786;;B: jedyny kandydat
+@GII12288@;Józef Stępień;1855;;;1;1;@GII9559@;;;B: jedyny kandydat (słabszy)
+@GII12291@;Anastazja Szabat;1855;;;1;1;@GII1562@;1841;;B: jedyny kandydat
+@GII12308@;Wojciech Zieliński;1855;;;2;1;@GII9247@;;;B: jedyny kandydat (słabszy)
+@GII12312@;Szymon Zyśko;1855;;;1;1;@GII1750@;1843;;B: jedyny kandydat
+@GII12313@;Kasper Albiniak;1856;;;1;1;@GII9659@;;1856;B: jedyny kandydat (słabszy)
+@GII12314@;Piotr Bigos;1856;;;1;1;@GII2485@;1856;;B: jedyny kandydat
+@GII12320@;Jakub Jachura;1856;;;2;1;@GII933@;1830;1856;B: jedyny kandydat
+@GII12321@;Jadwiga Janik;1856;;;1;1;@GII2463@;1855;;B: jedyny kandydat
+@GII12323@;Marianna Kamieniak;1856;;;2;1;@GII1168@;1834;;B: jedyny kandydat
+@GII12335@;Anna Kudrelek;1856;;;2;1;@GII7446@;;;B: jedyny kandydat (słabszy)
+@GII12345@;Franciszek Matacz;1856;;;1;1;@GII9455@;1824;;B: jedyny kandydat
+@GII12349@;Jakub Pazdrak;1856;;;1;1;@GII1669@;1842;;B: jedyny kandydat
+@GII12354@;Agnieszka Stręciwilk;1856;;;1;1;@GIII501033@;1796;;B: jedyny kandydat
+@GII12356@;Franciszka Wieleba;1856;;;2;1;@GII8356@;;;B: jedyny kandydat (słabszy)
+@GII12362@;Łukasz Jachura;1857;;;1;1;@GII2492@;1856;;B: jedyny kandydat
+@GII12363@;Zofia Kędziora;1857;;;2;1;@GII6676@;1808;;B: jedyny kandydat
+@GII12364@;Antonina Koguc;1857;;;1;1;@GII2497@;1856;;B: jedyny kandydat
+@GII12365@;Aniela Koguc;1857;;;1;1;@GII2533@;1857;;B: jedyny kandydat
+@GII12371@;Katarzyna Mróz;1857;;;2;1;@GII2508@;1856;;B: jedyny kandydat
+@GII12374@;Małgorzata Pawłasek;1857;;;2;1;@GII1365@;1837;;B: jedyny kandydat
+@GII12375@;Ludwik Pawłasek;1857;;;1;1;@GII6965@;1823;;B: jedyny kandydat
+@GII12380@;Katarzyna Wnuk;1857;;;7;1;@GII9132@;;;B: jedyny kandydat (słabszy)
+@GII12381@;Jakub Woś;1857;;;1;1;@GII6565@;1802;1857;B: jedyny kandydat
+@GII12386@;Wojciech Dąbrowski;1858;;;2;1;@GII8631@;;;B: jedyny kandydat (słabszy)
+@GII12387@;Emilian Franciszek Dębicki;1858;;;1;1;@GII2339@;1853;1858;B: jedyny kandydat
+@GII12389@;Jan Gaior;1858;;;1;1;@GII9461@;1828;1858;B: jedyny kandydat
+@GII12390@;Antoni Jantonik;1858;;;1;1;@GII2532@;1857;;B: jedyny kandydat
+@GII12404@;Agnieszka Suloska;1858;;;4;1;@GII2199@;1850;1858;B: jedyny kandydat
+@GII12413@;Tomasz Dziewa;1859;;;1;1;@GII6887@;1807;1859;B: jedyny kandydat
+@GII12414@;Marcin Dziuba;1859;;;1;1;@GII2461@;1855;;B: jedyny kandydat
+@GII12421@;Andrzej Kornacki;1859;;;2;1;@GII9643@;1803;1859;B: jedyny kandydat
+@GII12435@;Piotr Michałko;1859;;;1;1;@GII1931@;1846;;B: jedyny kandydat
+@GII12442@;Andrzej Rębacz;1859;;;1;1;@GII1810@;1844;;B: jedyny kandydat
+@GII12446@;Tomasz Szyszka;1859;;;1;1;@GII2621@;1858;;B: jedyny kandydat
+@GII12453@;Katarzyna Dąbroska;1860;;;1;1;@GII2634@;1859;;B: jedyny kandydat
+@GII12454@;Anna Dobrzyńska;1860;;;2;1;@GII1894@;1846;;B: jedyny kandydat
+@GII12456@;Marianna Huda;1860;;;1;1;@GII2347@;1853;;B: jedyny kandydat
+@GII12469@;Wawrzyniec Kurczak;1860;;;1;1;@GII2655@;1859;;B: jedyny kandydat
+@GII12475@;Anna Samuelowna;1860;;;4;1;@GII1318@;1836;;B: jedyny kandydat
+@GII12488@;Józef Janik;1861;;;1;1;@GII2494@;1856;;B: jedyny kandydat
+@GII12505@;Bartłomiej Nikolas;1861;;;1;1;@GII2607@;1858;;B: jedyny kandydat
+@GII12514@;Marianna Solarzowna;1861;;;8;1;@GII2676@;1859;;B: jedyny kandydat
+@GII12517@;Marianna Zuniowna;1861;;;1;1;@GII2802@;1861;;B: jedyny kandydat
+@GII12519@;Wojciech Brzeski;1862;;;1;1;@GII2747@;1861;1862;B: jedyny kandydat
+@GII12521@;Mikołaj Goch;1862;;;1;1;@GII2760@;1861;;B: jedyny kandydat
+@GII12527@;Michał Kogutowski;1862;;;1;1;@GII9755@;1785;;B: jedyny kandydat
+@GII12535@;Maciej Machulak;1862;;;2;1;@GII9863@;;;B: jedyny kandydat (słabszy)
+@GII12547@;Antonina Sikorowna;1862;;;1;1;@GII2615@;1858;;B: jedyny kandydat
+@GII12560@;Antoni Zieliński;1862;;;1;1;@GII2686@;1859;;B: jedyny kandydat
+@GII12561@;Wawrzyniec Zysko;1862;;;1;1;@GII2803@;1861;;B: jedyny kandydat
+@GII12567@;Szymon Jachura;1863;;;2;1;@GII7093@;1823;1863;B: jedyny kandydat
+@GII12570@;Antoni Kaczyński;1863;;;2;1;@GII1576@;1841;;B: jedyny kandydat
+@GII12588@;Piotr Pścionek;1863;;;3;1;@GII1368@;1837;;B: jedyny kandydat
+@GII12591@;Józef Siembieda;1863;;;1;1;@GII9357@;1820;;B: jedyny kandydat
+@GII12594@;Franciszka Stępniowna;1863;;;1;1;@GII2679@;1859;;B: jedyny kandydat
+@GII12595@;Marianna Stępniowna;1863;;;1;1;@GII1679@;1842;;B: jedyny kandydat
+@GII12597@;Tomasz Szuba;1863;;;1;1;@GII2793@;1861;;B: jedyny kandydat
+@GII12598@;Józefa Wielebionka;1863;;;1;1;@GII2856@;1862;;B: jedyny kandydat
+@GII12604@;Zofia Zielińska;1863;;;2;1;@GII1565@;1841;;B: jedyny kandydat
+@GII12605@;Szymon Zieliński;1863;;;2;1;@GII2919@;1863;;B: jedyny kandydat
+@GII12621@;Wincenty Kaczynski;1864;;;2;1;@GII1711@;1843;;B: jedyny kandydat
+@GII12651@;Maciej Zieliński;1864;;;1;1;@GII7003@;1825;1864;B: jedyny kandydat
+@GII12652@;Karol Baran;1865;;;1;1;@GII2922@;1864;;B: jedyny kandydat
+@GII12654@;Ewa Dobrzynska;1865;;;3;1;@GII6868@;1826;;B: jedyny kandydat
+@GII12655@;Katarzyna Dobrzynska;1865;;;2;1;@GII1698@;1843;;B: jedyny kandydat
+@GII12658@;Wawrzyniec Jachura;1865;;;1;1;@GII1634@;1842;1865;B: jedyny kandydat
+@GII12663@;Ignacy Kudrelek;1865;;;1;1;@GII2889@;1863;1865;B: jedyny kandydat
+@GII12665@;Katarzyna Nieścior;1865;;;5;1;@GII720@;1796;;B: jedyny kandydat
+@GII12669@;Mateusz Suloski;1865;;;2;1;@GII6989@;1823;1865;B: jedyny kandydat
+@GII12670@;Walenty Wnuk;1865;;;1;1;@GII3052@;1865;1865;B: jedyny kandydat
+@GII12696@;Tekla Pasternak;1866;;;1;1;@GII3036@;1865;;B: jedyny kandydat
+@GII12707@;Mikołaj Suloski;1866;;;1;1;@GII3047@;1865;;B: jedyny kandydat
+@GII12709@;Katarzyna Tylus;1866;;;4;1;@GII7168@;1827;;B: jedyny kandydat
+@GII12711@;Józef Barbarzak;1867;;;2;1;@GII6@;1783;;B: jedyny kandydat
+@GII12712@;Wawrzyniec Barbarzak;1867;;;1;1;@GII3058@;1866;;B: jedyny kandydat
+@GII12715@;Antoni Gnat;1867;;;1;1;@GII3009@;1865;;B: jedyny kandydat
+@GII12716@;Kacper Gnat;1867;;;2;1;@GII10105@;1798;;B: jedyny kandydat
+@GII12735@;Paweł Pcion;1867;;;1;1;@GII2315@;1852;;B: jedyny kandydat
+@GII12738@;Stanisław Rębacz;1867;;;1;1;@GII2978@;1864;;B: jedyny kandydat
+@GII12740@;Wojciech Suloski;1867;;;1;1;@GII3113@;1866;;B: jedyny kandydat
+@GII12743@;Józefa Zarzeczna;1867;;;1;1;@GII3120@;1866;;B: jedyny kandydat
+@GII12744@;Antoni Zych;1867;;;1;1;@GII3055@;1865;;B: jedyny kandydat
+@GII12752@;Walenty Jaskuła;1868;;;1;1;@GII3136@;1867;;B: jedyny kandydat
+@GII12757@;Augustyn Kosidło;1868;;;1;1;@GII3022@;1865;;B: jedyny kandydat
+@GII12765@;Maciej Pazdrak;1868;;;1;1;@GII9249@;;;B: jedyny kandydat (słabszy)
+@GII12766@;Tomasz Pazdrak;1868;;;1;1;@GII6643@;;;B: jedyny kandydat (słabszy)
+@GII12767@;Wawrzyniec Pscionek;1868;;;1;1;@GII6971@;;;B: jedyny kandydat (słabszy)
+@GII12771@;Jan Szydłoski;1868;;;1;1;@GII6993@;1829;;B: jedyny kandydat
+@GII12777@;Franciszek Boczek;1869;;;1;1;@GII3182@;1868;;B: jedyny kandydat
+@GII12790@;Wojciech Kaczyński;1869;;;4;1;@GII6799@;;;B: jedyny kandydat (słabszy)
+@GII12807@;Franciszek Pscionek;1869;;;1;1;@GII9565@;1832;;B: jedyny kandydat
+@GII12810@;Piotr Sikora;1869;;;1;1;@GII3108@;1866;;B: jedyny kandydat
+@GII12811@;Dominik Sikora;1869;;;1;1;@GII3282@;1869;;B: jedyny kandydat
+@GII12814@;Jadwiga Szydłoska;1869;;;1;1;@GII3225@;1868;;B: jedyny kandydat
+@GII12818@;Tekla Zygułowna;1869;;;1;1;@GII3056@;1865;1869;B: jedyny kandydat
+@GII12824@;Antoni Chudy;1870;;;1;1;@GII3239@;1869;;B: jedyny kandydat
+@GII12826@;Zofia Dobrzyńska;1870;;;5;1;@GII2018@;1848;;B: jedyny kandydat
+@GII12829@;Marcin Jędrzejczak;1870;;;1;1;@GII7177@;1828;;B: jedyny kandydat
+@GII12839@;Antoni Nikolas;1870;;;1;1;@GII3034@;1865;;B: jedyny kandydat
+@GII12844@;Józefa Sokół;1870;;;3;1;@GII9970@;1841;;B: jedyny kandydat
+@GII12850@;Tomasz Zarzeczny;1870;;;1;1;@GII3301@;1869;;B: jedyny kandydat
+@GII12991@;Wojciech Boczek;1873;;;1;1;@GII3423@;1873;;B: jedyny kandydat
+@GII13034@;Tomasz Paciorek;1873;;;1;1;@GII3273@;1869;;B: jedyny kandydat
+@GII13065@;Anna Jaskuła;1874;9;;1;1;@GII3434@;1873;;B: jedyny kandydat (słabszy)
+@GII13147@;Józef Pcionek;1875;2;;1;1;@GII3041@;1865;;B: jedyny kandydat (słabszy)
+@GII13236@;Jadwiga Dziewa;1877;;;2;1;@GII3065@;1866;;B: jedyny kandydat
+@GII13265@;Józef Ładziak;1877;3;;1;1;@GII3505@;1877;1877;B: jedyny kandydat
+@GII13358@;Stanisław Dąbrowski;1879;;;1;1;@GII7231@;;;B: jedyny kandydat (słabszy)
+@GII13359@;Marianna Gąska;1879;;;2;1;@GII2693@;1860;;B: jedyny kandydat
+@GII13360@;Agnieszka Jędrzejczak;1879;;;3;1;@GII770@;1827;;B: jedyny kandydat
+@GII13365@;Zofia Krawczyk;1879;;;5;1;@GIII7366@;;;B: jedyny kandydat (słabszy)
+@GII13367@;Jan Michalak;1879;;;1;1;@GII1236@;1835;;B: jedyny kandydat
+@GII13377@;Ludwik Wcisło;1879;;;1;1;@GII3599@;1878;;B: jedyny kandydat
+@GII13433@;Maciej Wcisło;1880;9;;1;1;@GII3712@;1880;;B: jedyny kandydat (słabszy)
+@GII10549@;Jan Babiarz;1797;;Brzozówka;1;2;@GII697@;1796;;C: wielu kandydatów (2)
+@GII10550@;Marianna Brzeska;1797;;Brzozówka;3;3;@GII276@;1788;;C: wielu kandydatów (3)
+@GII10554@;Marianna Goch;1797;;Brzozówka;1;3;@GII67@;1784;;C: wielu kandydatów (3)
+@GII10565@;Paweł Pawłasek;1797;;Blinów;1;3;@GII288@;1789;;C: wielu kandydatów (3)
+@GII10568@;Marianna Samuel;1797;;Blinów;2;2;@GII638@;1795;;C: wielu kandydatów (2)
+@GII10585@;Andrzej Kozaczek;1798;;Blinów;2;2;@GII490@;1792;;C: wielu kandydatów (2)
+@GII10588@;Marianna Kurczak;1798;;Blinów;9;11;@GII43@;1783;;C: wielu kandydatów (11)
+@GII10612@;Szymon Gnat;1799;;Blinów;1;2;@GII415@;1791;;C: wielu kandydatów (2)
+@GII10616@;Józef Kopyt;1799;;Blinów;1;2;@GII569@;1794;;C: wielu kandydatów (2)
+@GII10617@;Michał Kosidło;1799;;Blinów;2;5;@GII266@;1788;;C: wielu kandydatów (5)
+@GII10619@;Andrzej Kozaczek;1799;;Blinów;2;2;@GII490@;1792;;C: wielu kandydatów (2)
+@GII10624@;Andrzej Kurczak;1799;;Blinów;2;5;@GII326@;1789;;C: wielu kandydatów (5)
+@GII10625@;Marianna Kurczak;1799;;Blinów;9;11;@GII43@;1783;;C: wielu kandydatów (11)
+@GII10630@;Marianna Machulek;1799;;Brzozówka;4;11;@GII90@;1784;;C: wielu kandydatów (11)
+@GII10662@;Marianna Kędziora;1800;;Blinów;1;3;@GII541@;1793;;C: wielu kandydatów (3)
+@GII10664@;Maciej Kurczak;1800;;Blinów;4;8;@GII295@;1789;;C: wielu kandydatów (8)
+@GII10665@;Szymon Kurczak;1800;;Blinów;2;4;@GII717@;1796;;C: wielu kandydatów (4)
+@GII10667@;Józef Machulek;1800;;Blinów;2;4;@GII211@;1787;;C: wielu kandydatów (4)
+@GII10671@;Paweł Pasternak;1800;;Blinów;2;2;@GII92@;1784;;C: wielu kandydatów (2)
+@GII10672@;Michał Pazdrak;1800;;Blinów;2;2;@GII269@;1788;;C: wielu kandydatów (2)
+@GII10681@;Franciszka Brzeska;1801;;Brzozówka;2;2;@GII292@;1789;;C: wielu kandydatów (2)
+@GII10704@;Zofia Kurczak;1801;;Blinów;3;4;@GII455@;1792;;C: wielu kandydatów (4)
+@GII10716@;Andrzej Pasternak;1801;;Blinów;1;2;@GII6283@;;;C: wielu kandydatów (2)
+@GII10736@;Katarzyna Jakubaszek;1802;;Blinów;1;2;@GIII5441@;1797;;C: wielu kandydatów (2)
+@GII10738@;Jan Kosidło;1802;;Blinów;1;7;@GII498@;1792;;C: wielu kandydatów (7)
+@GII10740@;Michał Kozaczek;1802;;Blinów;3;4;@GII311@;1789;;C: wielu kandydatów (4)
+@GII10746@;Bartłomiej Pawłasek;1802;;Blinów;1;2;@GII6193@;;;C: wielu kandydatów (2)
+@GII10750@;Anna Szyszka;1802;;Brzozówka;1;3;@GII692@;1796;;C: wielu kandydatów (3)
+@GII10770@;Maciej Kurczak;1803;;Blinów;4;8;@GII295@;1789;;C: wielu kandydatów (8)
+@GII10781@;Marianna Dobrzyńska;1804;;Blinów;1;2;@GII9130@;;;C: wielu kandydatów (2)
+@GII10791@;Paweł Kudrelek;1804;;Blinów;1;3;@GII6149@;;;C: wielu kandydatów (3)
+@GII10793@;Marianna Kurczak;1804;;Blinów;9;11;@GII43@;1783;;C: wielu kandydatów (11)
+@GII10794@;Marianna Kurczak;1804;;Blinów;9;11;@GII43@;1783;;C: wielu kandydatów (11)
+@GII10796@;Agnieszka Machulek;1804;;Brzozówka;2;4;@GII379@;1790;;C: wielu kandydatów (4)
+@GII10809@;Jakub Czuba;1805;;Brzozówka;1;2;@GII351@;1790;;C: wielu kandydatów (2)
+@GII10815@;Michał Kosidło;1805;;Blinów;2;5;@GII266@;1788;;C: wielu kandydatów (5)
+@GII10818@;Paweł Kurczak;1805;;Blinów;2;5;@GII242@;1788;;C: wielu kandydatów (5)
+@GII10819@;Marianna Kurczak;1805;;Blinów;9;11;@GII43@;1783;;C: wielu kandydatów (11)
+@GII10829@;Stanisław Stępień;1805;;Blinów;2;3;@GII687@;1796;;C: wielu kandydatów (3)
+@GII10845@;Szymon Kurczak;1806;;Blinów;2;4;@GII717@;1796;;C: wielu kandydatów (4)
+@GII10846@;Zofia Machulek;1806;;Blinów;1;2;@GII513@;1793;;C: wielu kandydatów (2)
+@GII10852@;Marianna Pasternak;1806;;Blinów;1;4;@GII7126@;;;C: wielu kandydatów (4)
+@GII10853@;Marianna Pawłasek;1806;;Blinów;2;10;@GII624@;1795;;C: wielu kandydatów (10)
+@GII10876@;Maciej Kosidło;1807;;Blinów;1;4;@GII664@;1796;;C: wielu kandydatów (4)
+@GII10884@;Szymon Pasternak;1807;;Blinów;2;2;@GII488@;1792;;C: wielu kandydatów (2)
+@GII10885@;Marianna Pawłasek;1807;;Blinów;2;10;@GII624@;1795;;C: wielu kandydatów (10)
+@GII10906@;Marianna Kaczyńska;1808;;Blinów;1;5;@GII682@;1796;;C: wielu kandydatów (5)
+@GII10909@;Marianna Kosidło;1808;;Blinów;2;21;@GII6380@;1794;;C: wielu kandydatów (21)
+@GII10911@;Antoni Kurczak;1808;;Blinów;1;2;@GII407@;1791;;C: wielu kandydatów (2)
+@GII10919@;Marcin Pasternak;1808;;Blinów;1;2;@GII375@;1790;;C: wielu kandydatów (2)
+@GII10921@;Katarzyna Pawłasek;1808;;Blinów;1;3;@GII369@;1790;;C: wielu kandydatów (3)
+@GII10945@;Bartłomiej Kosidło;1809;;Blinów;1;3;@GII6097@;;;C: wielu kandydatów (3)
+@GII10981@;Anna Kurczak;1810;;Blinów;3;3;@GII520@;1793;;C: wielu kandydatów (3)
+@GII10986@;Agnieszka Michałek;1810;;Blinów;1;3;@GII426@;1791;;C: wielu kandydatów (3)
+@GII10989@;Szymon Pasternak;1810;;Blinów;2;2;@GII488@;1792;;C: wielu kandydatów (2)
+@GII10990@;Katarzyna Pasternak;1810;;Blinów;1;3;@GII698@;1796;;C: wielu kandydatów (3)
+@GII11014@;Marianna Kosidło;1811;;Blinów;2;21;@GII6380@;1794;;C: wielu kandydatów (21)
+@GII11018@;Katarzyna Kudrelek;1811;;Blinów;3;3;@GII534@;1793;;C: wielu kandydatów (3)
+@GII11019@;Marianna Kurczak;1811;;Blinów;9;13;@GII43@;1783;;C: wielu kandydatów (13)
+@GII11020@;Paweł Kurczak;1811;;Blinów;2;5;@GII242@;1788;;C: wielu kandydatów (5)
+@GII11022@;Józef Machulek;1811;;Blinów;2;4;@GII211@;1787;;C: wielu kandydatów (4)
+@GII11034@;Jadwiga Pawłasek;1811;;Blinów;1;2;@GII9490@;;;C: wielu kandydatów (2)
+@GII11053@;Anastazja Bogoń;1812;;Moczydła;1;3;@GII9216@;1808;;C: wielu kandydatów (3)
+@GII11062@;Jan Kurczak;1812;;Blinów;1;2;@GIII500325@;1811;1812;C: wielu kandydatów (2)
+@GII11063@;Antoni Kurczak;1812;;Blinów;1;2;@GII407@;1791;;C: wielu kandydatów (2)
+@GII11083@;Anastazja Bogoń;1813;;Moczydła;1;3;@GII9216@;1808;;C: wielu kandydatów (3)
+@GII11092@;Tomasz Kosidło;1813;;Blinów;1;5;@GII542@;1793;;C: wielu kandydatów (5)
+@GII11093@;Tomasz Kozaczek;1813;;Blinów;1;2;@GII6531@;1792;;C: wielu kandydatów (2)
+@GII11094@;Katarzyna Kudrelek;1813;;Blinów;3;3;@GII534@;1793;;C: wielu kandydatów (3)
+@GII11100@;Marianna Pawłasek;1813;;Blinów;3;10;@GII624@;1795;;C: wielu kandydatów (10)
+@GII11101@;Marianna Pawłasek;1813;;Blinów;3;10;@GII624@;1795;;C: wielu kandydatów (10)
+@GII11102@;Tomasz Pawłasek;1813;;Blinów;1;6;@GII424@;1791;;C: wielu kandydatów (6)
+@GII11112@;Katarzyna ?;1814;;Brzozówka;1;4;@GII9168@;;;C: wielu kandydatów (4)
+@GII11115@;Agnieszka Baran;1814;;Blinów;1;2;@GII504@;1793;;C: wielu kandydatów (2)
+@GII11126@;Marianna Brzeska;1814;;Brzozówka;3;3;@GII276@;1788;;C: wielu kandydatów (3)
+@GII11150@;Józef Kopyt;1814;;Blinów;1;3;@GII569@;1794;;C: wielu kandydatów (3)
+@GII11155@;Katarzyna Kosidło;1814;;Blinów;3;7;@GII470@;1792;;C: wielu kandydatów (7)
+@GII11156@;Marianna Kosidło;1814;;Blinów;2;22;@GII6380@;1794;;C: wielu kandydatów (22)
+@GII11158@;Michał Kozaczek;1814;;Blinów;3;4;@GII311@;1789;;C: wielu kandydatów (4)
+@GII11160@;Zofia Kozaczek;1814;;Blinów;1;3;@GII462@;1792;;C: wielu kandydatów (3)
+@GII11162@;Maciej Krupa;1814;;Blinów;1;2;@GII9873@;;;C: wielu kandydatów (2)
+@GII11164@;Zofia Krupa;1814;;Moczydła;1;4;@GII75@;1784;;C: wielu kandydatów (4)
+@GII11165@;Marianna Kudrelek;1814;;Blinów;1;5;@GII7472@;;;C: wielu kandydatów (5)
+@GII11166@;Marcin Kurczak;1814;;Blinów;2;5;@GII374@;1790;;C: wielu kandydatów (5)
+@GII11167@;Katarzyna Kurczak;1814;;Blinów;2;4;@GII6750@;;;C: wielu kandydatów (4)
+@GII11169@;Marianna Kurczak;1814;;Blinów;9;13;@GII43@;1783;;C: wielu kandydatów (13)
+@GII11171@;Paweł Kurczak;1814;;Blinów;2;5;@GII242@;1788;;C: wielu kandydatów (5)
+@GII11172@;Katarzyna Kurczak;1814;;Blinów;2;4;@GII6750@;;;C: wielu kandydatów (4)
+@GII11173@;Kazimierz Kurczak;1814;;Blinów;2;3;@GII386@;1790;;C: wielu kandydatów (3)
+@GII11174@;Katarzyna Kurczak;1814;;Blinów;2;4;@GII6750@;;;C: wielu kandydatów (4)
+@GII11178@;Agnieszka Machulek;1814;;Blinów;2;4;@GII379@;1790;;C: wielu kandydatów (4)
+@GII11198@;Marianna Michałek;1814;;Blinów;3;4;@GII591@;1794;;C: wielu kandydatów (4)
+@GII11201@;Marianna Michałek;1814;;Blinów;3;4;@GII591@;1794;;C: wielu kandydatów (4)
+@GII11210@;Marianna Paciorek;1814;;Blinów;1;2;@GII685@;1796;;C: wielu kandydatów (2)
+@GII11216@;Katarzyna Pasternak;1814;;Blinów;1;3;@GII698@;1796;;C: wielu kandydatów (3)
+@GII11217@;Anna Pasternak;1814;;Blinów;5;6;@GII305@;1789;;C: wielu kandydatów (6)
+@GII11220@;Katarzyna Pawłasek;1814;;Blinów;1;5;@GII369@;1790;;C: wielu kandydatów (5)
+@GII11223@;Katarzyna Pawłasek;1814;;Blinów;1;5;@GII369@;1790;;C: wielu kandydatów (5)
+@GII11270@;Anna Kosidło;1815;;Blinów;3;2;@GII8802@;;;C: wielu kandydatów (2)
+@GII11271@;Paweł Kosidło;1815;;Blinów;1;5;@GII273@;1788;;C: wielu kandydatów (5)
+@GII11275@;Katarzyna Kudrelek;1815;;Blinów;4;3;@GII534@;1793;;C: wielu kandydatów (3)
+@GII11276@;Paweł Kurczak;1815;;Blinów;2;5;@GII242@;1788;;C: wielu kandydatów (5)
+@GII11277@;Katarzyna Kurczak;1815;;Blinów;2;4;@GII6750@;;;C: wielu kandydatów (4)
+@GII11282@;Tomasz Pawłasek;1815;;Blinów / skreślone;1;6;@GII424@;1791;;C: wielu kandydatów (6)
+@GII11284@;Tomasz Pawłasek;1815;;Blinów;1;6;@GII424@;1791;;C: wielu kandydatów (6)
+@GII11285@;Michał Pawłasek;1815;;Blinów;1;2;@GII6211@;;;C: wielu kandydatów (2)
+@GII11287@;Katarzyna Pawłasek;1815;;Blinów;1;5;@GII369@;1790;;C: wielu kandydatów (5)
+@GII11288@;Józef Pazdrak;1815;;Blinów;2;2;@GII464@;1792;;C: wielu kandydatów (2)
+@GII11297@;Anna Czuba;1816;;Brzozówka;1;2;@GII652@;1795;;C: wielu kandydatów (2)
+@GII11307@;Katarzyna Kosidło;1816;;Blinów;3;7;@GII470@;1792;;C: wielu kandydatów (7)
+@GII11308@;Anna Kosidło;1816;;Blinów;4;2;@GII8802@;;;C: wielu kandydatów (2)
+@GII11312@;Katarzyna Kurczak;1816;;Blinów;2;4;@GII6750@;;;C: wielu kandydatów (4)
+@GII11313@;Anna Kurczak;1816;;Blinów;3;4;@GII520@;1793;;C: wielu kandydatów (4)
+@GII11314@;Marianna Kurczak;1816;;Blinów;10;13;@GII43@;1783;;C: wielu kandydatów (13)
+@GII11316@;Katarzyna Pasternak;1816;;Blinów;1;3;@GII698@;1796;;C: wielu kandydatów (3)
+@GII11330@;Katarzyna ?;1817;;Brzozówka;1;4;@GII9168@;;;C: wielu kandydatów (4)
+@GII11331@;Marianna Bigos;1817;;Brzozówka;1;3;@GII256@;1788;;C: wielu kandydatów (3)
+@GII11334@;Anna Jachura;1817;;Blinów;1;3;@GIII4089@;1783;;C: wielu kandydatów (3)
+@GII11339@;Michał Kozaczek;1817;;Blinów;3;4;@GII311@;1789;;C: wielu kandydatów (4)
+@GII11340@;Anna Kurczak;1817;;Blinów;3;4;@GII520@;1793;;C: wielu kandydatów (4)
+@GII11342@;Franciszek Łach;1817;;Brzozówka;1;2;@GII410@;1791;;C: wielu kandydatów (2)
+@GII11343@;Agnieszka Machulek;1817;;Blinów;2;4;@GII379@;1790;;C: wielu kandydatów (4)
+@GII11344@;Paweł Machulek;1817;;Blinów;2;4;@GII287@;1789;;C: wielu kandydatów (4)
+@GII11347@;Michał Pawłasek;1817;;Blinów;1;2;@GII6211@;;;C: wielu kandydatów (2)
+@GII11348@;Marianna Pawłasek;1817;;Blinów;3;10;@GII624@;1795;;C: wielu kandydatów (10)
+@GII11365@;Katarzyna Paciorek;1818;;Blinów;2;4;@GII6550@;1798;;C: wielu kandydatów (4)
+@GII11366@;Katarzyna Pawłasek;1818;;Blinów;1;5;@GII369@;1790;;C: wielu kandydatów (5)
+@GII11371@;Katarzyna ?;1819;;Brzozówka;1;4;@GII9168@;;;C: wielu kandydatów (4)
+@GII11372@;Marianna Bigos;1819;;Brzozówka;1;3;@GII256@;1788;;C: wielu kandydatów (3)
+@GII11380@;Marianna Michałek;1819;;Blinów;3;4;@GII591@;1794;;C: wielu kandydatów (4)
+@GII11393@;Józef Kaczynski;1820;;Blinów;2;2;@GII6329@;1800;;C: wielu kandydatów (2)
+@GII11396@;Marianna Kędziora;1820;;Blinów;1;4;@GII541@;1793;;C: wielu kandydatów (4)
+@GII11397@;Zofia Kosidło;1820;;Blinów;4;11;@GII300@;1789;;C: wielu kandydatów (11)
+@GII11402@;Marcin Pasternak;1820;;Blinów;1;2;@GII375@;1790;;C: wielu kandydatów (2)
+@GII11404@;Maciej Pawłasek;1820;;Blinów;2;3;@GII7533@;;;C: wielu kandydatów (3)
+@GII11405@;Jakub Pawłasek;1820;;Blinów;1;4;@GII523@;1793;;C: wielu kandydatów (4)
+@GII11406@;Zofia Pawłasek;1820;;Blinów;2;6;@GII6788@;1815;;C: wielu kandydatów (6)
+@GII11412@;Marianna Wieleba;1820;;Moczydła;1;7;@GI775@;;;C: wielu kandydatów (7)
+@GII11415@;Agnieszka Barbarzak;1821;;Brzozówka;2;2;@GII500@;1793;;C: wielu kandydatów (2)
+@GII11418@;Marianna Gnat;1821;;Blinów;2;4;@GII397@;1791;;C: wielu kandydatów (4)
+@GII11419@;Józef Gnat;1821;;Blinów;1;2;@GII6017@;;;C: wielu kandydatów (2)
+@GII11423@;Marianna Kosidło;1821;;Blinów;3;22;@GII6380@;1794;;C: wielu kandydatów (22)
+@GII11425@;Jan Kosidło;1821;;Blinów;1;7;@GII498@;1792;;C: wielu kandydatów (7)
+@GII11426@;Marianna Kurczak;1821;;Blinów;11;14;@GII43@;1783;;C: wielu kandydatów (14)
+@GII11427@;Maciej Kurczak;1821;;Blinów;5;8;@GII295@;1789;;C: wielu kandydatów (8)
+@GII11430@;Michał Pawłasek;1821;;Blinów;1;2;@GII6211@;;;C: wielu kandydatów (2)
+@GII11434@;Marianna Solarz;1821;;Blinów;1;4;@GII439@;1791;;C: wielu kandydatów (4)
+@GII11440@;Marianna Kosidło;1822;;Blinów;3;22;@GII6380@;1794;;C: wielu kandydatów (22)
+@GII11441@;Katarzyna Kosidło;1822;;Blinów;4;7;@GII470@;1792;;C: wielu kandydatów (7)
+@GII11442@;Katarzyna Kosidło;1822;;Blinów;4;7;@GII470@;1792;;C: wielu kandydatów (7)
+@GII11446@;Katarzyna Kurczak;1822;;Blinów;2;5;@GII9524@;1822;;C: wielu kandydatów (5)
+@GII11447@;Katarzyna Paciorek;1822;;Blinów;3;4;@GII6550@;1798;;C: wielu kandydatów (4)
+@GII11450@;Jadwiga Pawłasek;1822;;Blinów;1;2;@GII9490@;;;C: wielu kandydatów (2)
+@GII11451@;Katarzyna Pazdrak;1822;;Blinów;2;2;@GII9478@;1792;;C: wielu kandydatów (2)
+@GII11452@;Katarzyna Sagan;1822;;Moczydła;1;2;@GII13215@;;;C: wielu kandydatów (2)
+@GII11465@;Marianna Kania;1823;;Moczydła;1;2;@GII359@;1790;;C: wielu kandydatów (2)
+@GII11469@;Katarzyna Kosidło;1823;;Blinów;5;8;@GII470@;1792;;C: wielu kandydatów (8)
+@GII11474@;Paweł Kurczak;1823;;Blinów;2;5;@GII242@;1788;;C: wielu kandydatów (5)
+@GII11476@;Antoni Ogon;1823;;Brzozówka;1;4;@GII436@;1791;;C: wielu kandydatów (4)
+@GII11478@;Agnieszka Pawłasek;1823;;Blinów;1;3;@S69WG@;1778;;C: wielu kandydatów (3)
+@GII11479@;Marianna Pawłasek;1823;;Blinów;4;10;@GII624@;1795;;C: wielu kandydatów (10)
+@GII11487@;Marianna Czuba;1824;;Brzozówka;2;2;@GII6400@;;;C: wielu kandydatów (2)
+@GII11492@;Katarzyna Mazurek;1824;;Brzozówka;1;5;@GIII1446@;1787;;C: wielu kandydatów (5)
+@GII11496@;Marcin Wieleba;1824;;Moczydła;1;4;@GI1031@;;;C: wielu kandydatów (4)
+@GII11508@;Józef Kaczyński;1826;;;2;6;@GII677@;1796;;C: wielu kandydatów (6)
+@GII11510@;Marcin Kędziora;1826;;;1;5;@GII8555@;;;C: wielu kandydatów (5)
+@GII11521@;Franciszka Kurczak;1826;;;2;4;@GII207@;1787;;C: wielu kandydatów (4)
+@GII11527@;Tomasz Pawłasek;1826;;;3;7;@GII424@;1791;;C: wielu kandydatów (7)
+@GII11546@;Zofia Bigos;1827;;;1;3;@GII732@;1826;;C: wielu kandydatów (3)
+@GII11565@;Marianna Kolasa;1827;;;1;2;@GII9706@;1826;;C: wielu kandydatów (2)
+@GII11567@;Marianna Kurczak;1827;;;16;15;@GII43@;1783;;C: wielu kandydatów (15)
+@GII11568@;Marianna Kurczak;1827;;;12;15;@GII43@;1783;;C: wielu kandydatów (15)
+@GII11574@;Józef Obydź;1827;;;1;2;@GII734@;1826;;C: wielu kandydatów (2)
+@GII11576@;Anna Pasternak;1827;;;5;6;@GII305@;1789;;C: wielu kandydatów (6)
+@GII11578@;Katarzyna Pazdrak;1827;;;3;2;@GII9478@;1792;;C: wielu kandydatów (2)
+@GII11593@;Maciej Kopyt;1828;;;1;2;@GII670@;1796;;C: wielu kandydatów (2)
+@GII11594@;Stanisław Kosidło;1828;;;5;7;@GII823@;1828;;C: wielu kandydatów (7)
+@GII11600@;Jan Pasternak;1828;;;1;2;@GII6145@;;;C: wielu kandydatów (2)
+@GII11620@;Szymon Gnat;1829;8;;1;2;@GII7373@;;;C: wielu kandydatów (2)
+@GII11623@;Tomasz Igras;1829;;;2;2;@GII6051@;;;C: wielu kandydatów (2)
+@GII11630@;Jan Ogon;1829;;;2;2;@GII6399@;1781;1829;C: wielu kandydatów (2)
+@GII11631@;Jakub Pawłasek;1829;;;4;5;@GII523@;1793;;C: wielu kandydatów (5)
+@GII11654@;Jan Pasternak;1830;;;1;2;@GII6145@;;;C: wielu kandydatów (2)
+@GII11678@;Rozalia Jachura;1831;;;1;2;@GII932@;1830;;C: wielu kandydatów (2)
+@GII11679@;Franciszek Kania;1831;;;1;2;@GII6599@;;;C: wielu kandydatów (2)
+@GII11683@;Paweł Kosidło;1831;;;4;5;@GII273@;1788;;C: wielu kandydatów (5)
+@GII11684@;Szymon Kurczak;1831;;;6;6;@GII717@;1796;;C: wielu kandydatów (6)
+@GII11687@;Maciej Pasternak;1831;;;3;3;@GII679@;1796;;C: wielu kandydatów (3)
+@GII11689@;Maciej Pawłasek;1831;;;3;4;@GII1008@;1831;;C: wielu kandydatów (4)
+@GII11726@;Jan Kosidło;1832;;;5;7;@GII498@;1792;;C: wielu kandydatów (7)
+@GII11727@;Stanisław Kosidło;1832;;;6;8;@GII823@;1828;;C: wielu kandydatów (8)
+@GII11728@;Michał Kosidło;1832;;;4;6;@GII266@;1788;;C: wielu kandydatów (6)
+@GII11738@;Filip Paciorek;1832;;;1;3;@GII895@;1829;;C: wielu kandydatów (3)
+@GII11752@;Tomasz Wcisło;1832;;;2;2;@GII1076@;1832;;C: wielu kandydatów (2)
+@GII11761@;Michał Bucoń;1833;;;2;2;@GII862@;1829;;C: wielu kandydatów (2)
+@GII11767@;Marianna Gnat;1833;;;5;6;@GII397@;1791;;C: wielu kandydatów (6)
+@GII11771@;Ignacy Kamieniak;1833;;;3;3;@GII231@;1787;1833;C: wielu kandydatów (3)
+@GII11775@;Franciszka Kosidło;1833;;;4;2;@GII267@;1788;;C: wielu kandydatów (2)
+@GII11787@;Wojciech Wieleba;1833;;;3;3;@GII9161@;1796;;C: wielu kandydatów (3)
+@GII11790@;Wojciech Baran;1847;;;3;4;@GII747@;1826;;C: wielu kandydatów (4)
+@GII11793@;Szymon Gnat;1847;;;4;4;@GII415@;1791;;C: wielu kandydatów (4)
+@GII11794@;Szymon Gnat;1847;;;4;4;@GII415@;1791;;C: wielu kandydatów (4)
+@GII11795@;Franciszek Goch;1847;;;3;4;@GII309@;1789;;C: wielu kandydatów (4)
+@GII11798@;Józef Kolasa;1847;;;3;3;@GII1972@;1847;1847;C: wielu kandydatów (3)
+@GII11799@;Andrzej Kosidło;1847;;;6;12;@GII714@;1796;;C: wielu kandydatów (12)
+@GII11803@;Michał Kozaczek;1847;;;4;4;@GII311@;1789;;C: wielu kandydatów (4)
+@GII11807@;Józef Kurczak;1847;;;7;8;@GII194@;1786;;C: wielu kandydatów (8)
+@GII11808@;Maciej Kurczak;1847;;;7;8;@GII295@;1789;;C: wielu kandydatów (8)
+@GII11809@;Wojciech Kurczak;1847;;;16;16;@GII123@;1785;;C: wielu kandydatów (16)
+@GII11810@;Jadwiga Kurczak;1847;;;2;3;@GII831@;1828;;C: wielu kandydatów (3)
+@GII11812@;Marcin Machulak;1847;;;1;2;@GII1789@;1844;;C: wielu kandydatów (2)
+@GII11830@;Tomasz Wieleba;1847;;;4;3;@GII320@;1789;;C: wielu kandydatów (3)
+@GII11835@;Jan Baran;1848;;;2;2;@GII1752@;1844;;C: wielu kandydatów (2)
+@GII11841@;Tomasz Goch;1848;;;1;2;@GII1901@;1846;;C: wielu kandydatów (2)
+@GII11842@;Tomasz Jachura;1848;;;4;7;@GII1038@;1832;;C: wielu kandydatów (7)
+@GII11843@;Jan Jachura;1848;;;1;4;@GII1606@;1841;;C: wielu kandydatów (4)
+@GII11854@;Szczepan Kozyra;1848;;;2;2;@GII9089@;1790;;C: wielu kandydatów (2)
+@GII11870@;Józef Sobutka;1848;;;2;2;@GII1874@;1845;;C: wielu kandydatów (2)
+@GII11882@;Michał Głaz;1849;;;2;2;@GII1702@;1843;;C: wielu kandydatów (2)
+@GII11884@;Wawrzyniec Janik;1849;;;1;2;@GII2090@;1849;;C: wielu kandydatów (2)
+@GII11885@;Franciszek Kolasa;1849;;;1;3;@GI1237@;1800;;C: wielu kandydatów (3)
+@GII11886@;Wojciech Kolasa;1849;;;3;3;@GII9213@;1797;;C: wielu kandydatów (3)
+@GII11887@;Stanisław Kosidło;1849;;;15;15;@GII823@;1828;;C: wielu kandydatów (15)
+@GII11889@;Antoni Kurczak;1849;;;4;3;@GII407@;1791;;C: wielu kandydatów (3)
+@GII11890@;Zofia Kurczak;1849;;;11;6;@GII455@;1792;;C: wielu kandydatów (6)
+@GII11891@;Andrzej Machulak;1849;;;1;2;@GII1234@;1835;;C: wielu kandydatów (2)
+@GII11893@;Jan Mazurek;1849;;;1;2;@GII2045@;1848;;C: wielu kandydatów (2)
+@GII11897@;Stanisław Sagan;1849;;;3;4;@GII411@;1791;;C: wielu kandydatów (4)
+@GII11900@;Marcin Sobutka;1849;;;2;4;@GII1196@;1834;;C: wielu kandydatów (4)
+@GII11904@;Józef Szyszka;1849;;;3;3;@GII1550@;1840;;C: wielu kandydatów (3)
+@GII11924@;Michał Kosidło;1850;;;8;9;@GII266@;1788;;C: wielu kandydatów (9)
+@GII11925@;Stanisław Kosidło;1850;;;16;16;@GII823@;1828;;C: wielu kandydatów (16)
+@GII11930@;Józef Kozik;1850;;;1;2;@GII2165@;1850;;C: wielu kandydatów (2)
+@GII11931@;Bartłomiej Kudrelek;1850;;;2;2;@GII433@;1791;;C: wielu kandydatów (2)
+@GII11933@;Andrzej Kurczak;1850;;;5;7;@GII326@;1789;;C: wielu kandydatów (7)
+@GII11934@;Jan Kurczak;1850;;;2;2;@GII2104@;1849;;C: wielu kandydatów (2)
+@GII11935@;Franciszka Kurczak;1850;;;5;5;@GII207@;1787;;C: wielu kandydatów (5)
+@GII11945@;Wawrzyniec Sobutka;1850;;;3;3;@GII1320@;1836;;C: wielu kandydatów (3)
+@GII11947@;Andrzej Szabat;1850;;;2;2;@GII1598@;1841;;C: wielu kandydatów (2)
+@GII11952@;Michał Woś;1850;;;2;2;@GII2067@;1848;;C: wielu kandydatów (2)
+@GII11955@;Zofia Baran;1851;;;6;2;@GII1387@;1838;;C: wielu kandydatów (2)
+@GII11961@;Marianna Dobrzyńska;1851;;;8;6;@GII1438@;1839;;C: wielu kandydatów (6)
+@GII11963@;Agnieszka Dziewa;1851;;;2;2;@GII8968@;;;C: wielu kandydatów (2)
+@GII11964@;Agnieszka Dziura;1851;;;3;3;@GII154@;1785;;C: wielu kandydatów (3)
+@GII11967@;Katarzyna Jędrzejczak;1851;;;1;2;@GII1906@;1846;;C: wielu kandydatów (2)
+@GII11969@;Marianna Kosidło;1851;;;39;42;@GII1046@;1832;;C: wielu kandydatów (42)
+@GII11970@;Paweł Kosidło;1851;;;7;9;@GII273@;1788;;C: wielu kandydatów (9)
+@GII11972@;Zofia Kurczak;1851;;;11;6;@GII455@;1792;;C: wielu kandydatów (6)
+@GII11973@;Marcin Kurczak;1851;;;6;7;@GII374@;1790;;C: wielu kandydatów (7)
+@GII11974@;Franciszek Machulak;1851;;;3;3;@GII1113@;1833;;C: wielu kandydatów (3)
+@GII11976@;Marianna Mazurek;1851;;;1;4;@GII731@;1826;;C: wielu kandydatów (4)
+@GII11979@;Stanisław Ogon;1851;;;2;3;@GII112@;1785;;C: wielu kandydatów (3)
+@GII11980@;Michał Ogon;1851;;;1;2;@GII2250@;1851;;C: wielu kandydatów (2)
+@GII11981@;Marianna Pasternak;1851;;;6;6;@GII1573@;1841;;C: wielu kandydatów (6)
+@GII11983@;Katarzyna Pawłasek;1851;;;13;13;@GII369@;1790;;C: wielu kandydatów (13)
+@GII11984@;Antoni Pawłasek;1851;;;9;14;@GII129@;1785;;C: wielu kandydatów (14)
+@GII11985@;Zofia Pazdrak;1851;;;3;3;@GII437@;1791;;C: wielu kandydatów (3)
+@GII11987@;Andrzej Pazdrak;1851;;;2;2;@GII593@;1794;;C: wielu kandydatów (2)
+@GII11993@;Wincenty Sprysak;1851;;;2;2;@GII1821@;1844;;C: wielu kandydatów (2)
+@GII11995@;Wojciech Szabat;1851;;;3;6;@GII253@;1788;;C: wielu kandydatów (6)
+@GII11999@;Wawrzyniec Tylus;1851;;;3;3;@GII2204@;1850;;C: wielu kandydatów (3)
+@GII12009@;Wojciech Czuba;1852;;;3;3;@GII249@;1788;;C: wielu kandydatów (3)
+@GII12015@;Marcin Jachura;1852;;;3;4;@GII2226@;1851;;C: wielu kandydatów (4)
+@GII12017@;Zofia Kaczyńska;1852;;;1;3;@GII8284@;;;C: wielu kandydatów (3)
+@GII12018@;Andrzej Kaczyński;1852;;;3;4;@GII2232@;1851;;C: wielu kandydatów (4)
+@GII12022@;Łukasz Kosidło;1852;;;1;2;@GII2099@;1849;;C: wielu kandydatów (2)
+@GII12025@;Wojciech Kozaczek;1852;;;4;4;@GII170@;1786;;C: wielu kandydatów (4)
+@GII12028@;Franciszek Kurczak;1852;;;2;2;@GII1180@;1834;;C: wielu kandydatów (2)
+@GII12029@;Marianna Kurczak;1852;;;29;22;@GII43@;1783;;C: wielu kandydatów (22)
+@GII12030@;Anna Kurczak;1852;;;8;8;@GII520@;1793;;C: wielu kandydatów (8)
+@GII12043@;Wojciech Sobutka;1852;;;2;2;@GII1421@;1838;;C: wielu kandydatów (2)
+@GII12057@;Andrzej Kaczyński;1853;;;3;4;@GII2232@;1851;;C: wielu kandydatów (4)
+@GII12059@;Walenty Kosidło;1853;;;7;7;@GII1351@;1837;;C: wielu kandydatów (7)
+@GII12070@;Jan Pścionek;1853;;;2;2;@GII2316@;1852;;C: wielu kandydatów (2)
+@GII12074@;Maciej Samuel;1853;;;3;3;@GII283@;1788;;C: wielu kandydatów (3)
+@GII12075@;Wojciech Sobonieski;1853;;;2;2;@GII9437@;;;C: wielu kandydatów (2)
+@GII12082@;Ewa Wscisłowna;1853;;;3;2;@GII1492@;1839;;C: wielu kandydatów (2)
+@GII12088@;Marianna Baran;1854;;;12;5;@GII1832@;1845;;C: wielu kandydatów (5)
+@GII12089@;Agnieszka Baran;1854;;;7;6;@GII504@;1793;;C: wielu kandydatów (6)
+@GII12090@;Józefa Baran;1854;;;2;2;@GII1430@;1839;;C: wielu kandydatów (2)
+@GII12091@;Szymon Baran;1854;;;2;2;@GII2071@;1849;;C: wielu kandydatów (2)
+@GII12092@;Grzegorz Brzeski;1854;;;1;2;@GIII1405@;1799;1854;C: wielu kandydatów (2)
+@GII12096@;Wojciech Czuba;1854;;;4;4;@GII249@;1788;;C: wielu kandydatów (4)
+@GII12098@;Wojciech Głaz;1854;;;1;2;@GII2023@;1848;;C: wielu kandydatów (2)
+@GII12101@;Szczepan Jachura;1854;;;2;2;@GII2026@;1848;;C: wielu kandydatów (2)
+@GII12104@;Stanisław Janik;1854;;;1;2;@GII773@;1827;;C: wielu kandydatów (2)
+@GII12106@;Józef Jędrzejczak;1854;;;6;5;@GII1448@;1839;;C: wielu kandydatów (5)
+@GII12107@;Anna Jędrzejczak;1854;;;6;4;@GII1099@;1833;;C: wielu kandydatów (4)
+@GII12108@;Józef Jędrzejczak;1854;;;6;5;@GII1448@;1839;;C: wielu kandydatów (5)
+@GII12113@;Antoni Kamieniak;1854;;;2;2;@GII2153@;1850;;C: wielu kandydatów (2)
+@GII12115@;Wojciech Koguc;1854;;;2;5;@GII628@;1795;;C: wielu kandydatów (5)
+@GII12117@;Andrzej Kosidło;1854;;;9;14;@GII714@;1796;;C: wielu kandydatów (14)
+@GII12118@;Marianna Kosidło;1854;;;45;42;@GII1046@;1832;;C: wielu kandydatów (42)
+@GII12119@;Anna Kosidło;1854;;;11;7;@GII763@;1826;;C: wielu kandydatów (7)
+@GII12120@;Antoni Kosidło;1854;;;13;18;@GII778@;1827;;C: wielu kandydatów (18)
+@GII12121@;Wojciech Kosidło;1854;;;16;36;@GII826@;1828;;C: wielu kandydatów (36)
+@GII12122@;Jadwiga Kosidło;1854;;;6;7;@GII883@;1829;;C: wielu kandydatów (7)
+@GII12123@;Marianna Kosidło;1854;;;45;42;@GII1046@;1832;;C: wielu kandydatów (42)
+@GII12125@;Nikodem Kozaczek;1854;;;3;4;@GII241@;1788;;C: wielu kandydatów (4)
+@GII12126@;Katarzyna Kozaczek;1854;;;5;2;@GII1049@;1832;;C: wielu kandydatów (2)
+@GII12128@;Antonina Kozyra;1854;;;2;2;@GII1778@;1844;;C: wielu kandydatów (2)
+@GII12132@;Wojciech Machulak;1854;;;7;10;@GII1233@;1835;;C: wielu kandydatów (10)
+@GII12133@;Marianna Machulak;1854;;;9;17;@GII1362@;1837;;C: wielu kandydatów (17)
+@GII12139@;Katarzyna Pawłasek;1854;;;14;14;@GII369@;1790;;C: wielu kandydatów (14)
+@GII12140@;Zofia Pawłasek;1854;;;16;8;@GII805@;1827;;C: wielu kandydatów (8)
+@GII12141@;Marianna Pawłasek;1854;;;18;19;@GII624@;1795;;C: wielu kandydatów (19)
+@GII12142@;Marianna Pazdrak;1854;;;12;8;@GII281@;1788;;C: wielu kandydatów (8)
+@GII12143@;Marcin Pcion;1854;;;3;2;@GII6395@;;;C: wielu kandydatów (2)
+@GII12155@;Marianna Wcisło;1854;;;4;8;@GII914@;1829;;C: wielu kandydatów (8)
+@GII12158@;Katarzyna Zielińska;1854;;;4;2;@GII2008@;1847;;C: wielu kandydatów (2)
+@GII12160@;Dominik Baran;1855;;;1;2;@GII858@;1829;1855;C: wielu kandydatów (2)
+@GII12161@;Jan Baran;1855;;;2;2;@GII1752@;1844;;C: wielu kandydatów (2)
+@GII12162@;Paweł Baran;1855;;;4;5;@GII6869@;1823;;C: wielu kandydatów (5)
+@GII12163@;Marianna Baran;1855;;;12;5;@GII1832@;1845;;C: wielu kandydatów (5)
+@GII12164@;Michał Baran;1855;;;2;2;@GII807@;1828;;C: wielu kandydatów (2)
+@GII12167@;Marianna Bucoń;1855;;;10;12;@GII733@;1826;;C: wielu kandydatów (12)
+@GII12171@;Antoni Dobrzyński;1855;;;6;4;@GII468@;1792;;C: wielu kandydatów (4)
+@GII12182@;Marianna Jachura;1855;;;14;10;@GII746@;1826;;C: wielu kandydatów (10)
+@GII12183@;Marianna Jachura;1855;;;14;10;@GII746@;1826;;C: wielu kandydatów (10)
+@GII12184@;Marianna Jachura;1855;;;14;10;@GII746@;1826;;C: wielu kandydatów (10)
+@GII12188@;Walenty Jędrzejczak;1855;;;2;2;@GII1968@;1847;;C: wielu kandydatów (2)
+@GII12191@;Franciszka Jędrzejczak;1855;;;3;3;@GII1098@;1833;;C: wielu kandydatów (3)
+@GII12192@;Maciej Jędrzejczak;1855;;;3;4;@GII676@;1796;;C: wielu kandydatów (4)
+@GII12195@;Jadwiga Jędrzejczak;1855;;;4;4;@GII1597@;1841;;C: wielu kandydatów (4)
+@GII12196@;Jadwiga Jędrzejczak;1855;;;4;4;@GII1597@;1841;;C: wielu kandydatów (4)
+@GII12198@;Katarzyna Kaczyńska;1855;;;2;2;@GII8698@;;;C: wielu kandydatów (2)
+@GII12200@;Krzysztof Kamieniak;1855;;;2;2;@GII9263@;1822;;C: wielu kandydatów (2)
+@GII12201@;Jan Kania;1855;;;2;2;@GII1638@;1842;;C: wielu kandydatów (2)
+@GII12206@;Paweł Kosidło;1855;;;8;11;@GII273@;1788;;C: wielu kandydatów (11)
+@GII12207@;Katarzyna Kosidło;1855;;;20;13;@GII470@;1792;;C: wielu kandydatów (13)
+@GII12208@;Bartłomiej Kosidło;1855;;;2;3;@GII6097@;;;C: wielu kandydatów (3)
+@GII12209@;Andrzej Kosidło;1855;;;10;15;@GII714@;1796;;C: wielu kandydatów (15)
+@GII12210@;Katarzyna Kosidło;1855;;;20;13;@GII470@;1792;;C: wielu kandydatów (13)
+@GII12211@;Walenty Kosidło;1855;;;7;8;@GII1351@;1837;;C: wielu kandydatów (8)
+@GII12212@;Jadwiga Kosidło;1855;;;6;7;@GII883@;1829;;C: wielu kandydatów (7)
+@GII12213@;Marianna Kosidło;1855;;;45;43;@GII783@;1827;1855;C: wielu kandydatów (43)
+@GII12214@;Katarzyna Kosidło;1855;;;20;13;@GII470@;1792;;C: wielu kandydatów (13)
+@GII12215@;Stanisław Kosidło;1855;;;16;16;@GII823@;1828;;C: wielu kandydatów (16)
+@GII12216@;Jadwiga Kosidło;1855;;;6;7;@GII883@;1829;;C: wielu kandydatów (7)
+@GII12218@;Marianna Kosidło;1855;;;45;43;@GII783@;1827;1855;C: wielu kandydatów (43)
+@GII12219@;Wojciech Kosidło;1855;;;16;36;@GII826@;1828;;C: wielu kandydatów (36)
+@GII12220@;Walenty Kosidło;1855;;;7;8;@GII1351@;1837;;C: wielu kandydatów (8)
+@GII12221@;Marianna Kosidło;1855;;;45;43;@GII783@;1827;1855;C: wielu kandydatów (43)
+@GII12222@;Michał Kosidło;1855;;;8;9;@GII266@;1788;;C: wielu kandydatów (9)
+@GII12223@;Paweł Kosidło;1855;;;8;11;@GII273@;1788;;C: wielu kandydatów (11)
+@GII12224@;Stanisław Kosidło;1855;;;16;16;@GII823@;1828;;C: wielu kandydatów (16)
+@GII12225@;Paweł Kozaczek;1855;;;2;2;@GII6397@;1793;;C: wielu kandydatów (2)
+@GII12227@;Marianna Kozyra;1855;;;4;3;@GII1649@;1842;;C: wielu kandydatów (3)
+@GII12230@;Wojciech Kudrelek;1855;;;4;5;@GII2371@;1853;;C: wielu kandydatów (5)
+@GII12231@;Józef Kurczak;1855;;;8;9;@GII194@;1786;;C: wielu kandydatów (9)
+@GII12232@;Wojciech Kurczak;1855;;;16;16;@GII123@;1785;;C: wielu kandydatów (16)
+@GII12233@;Antoni Kurczak;1855;;;4;2;@GII407@;1791;;C: wielu kandydatów (2)
+@GII12234@;Antonina Kurczak;1855;;;2;3;@GII330@;1789;;C: wielu kandydatów (3)
+@GII12235@;Marianna Kurczak;1855;;;30;24;@GII43@;1783;;C: wielu kandydatów (24)
+@GII12236@;Marcin Kurczak;1855;;;6;7;@GII374@;1790;;C: wielu kandydatów (7)
+@GII12237@;Marianna Kurczak;1855;;;30;24;@GII43@;1783;;C: wielu kandydatów (24)
+@GII12238@;Wojciech Kurczak;1855;;;16;16;@GII123@;1785;;C: wielu kandydatów (16)
+@GII12239@;Tomasz Kurczak;1855;;;4;4;@GII180@;1786;;C: wielu kandydatów (4)
+@GII12240@;Marianna Kurczak;1855;;;30;24;@GII43@;1783;;C: wielu kandydatów (24)
+@GII12242@;Jakub Kurczak;1855;;;2;2;@GII636@;1795;;C: wielu kandydatów (2)
+@GII12243@;Katarzyna Kurczak;1855;;;12;10;@GII790@;1827;;C: wielu kandydatów (10)
+@GII12244@;Wojciech Łach;1855;;;2;2;@GII218@;1787;;C: wielu kandydatów (2)
+@GII12245@;Zofia Machulak;1855;;;2;2;@GII1790@;1844;;C: wielu kandydatów (2)
+@GII12247@;Paweł Machulak;1855;;;2;2;@GII6543@;1799;;C: wielu kandydatów (2)
+@GII12249@;Józef Mazurek;1855;;;4;3;@GII514@;1793;1855;C: wielu kandydatów (3)
+@GII12250@;Katarzyna Mazurek;1855;;;3;5;@GIII1446@;1787;;C: wielu kandydatów (5)
+@GII12254@;Józefa Pasternak;1855;;;1;3;@GII2440@;1854;;C: wielu kandydatów (3)
+@GII12256@;Tomasz Pawłasek;1855;;;9;12;@GII424@;1791;;C: wielu kandydatów (12)
+@GII12257@;Marianna Pawłasek;1855;;;18;19;@GII624@;1795;;C: wielu kandydatów (19)
+@GII12258@;Jadwiga Pawłasek;1855;;;8;6;@GII1188@;1834;;C: wielu kandydatów (6)
+@GII12259@;Katarzyna Pawłasek;1855;;;14;14;@GII369@;1790;;C: wielu kandydatów (14)
+@GII12262@;Zofia Pawłasek;1855;;;16;8;@GII805@;1827;;C: wielu kandydatów (8)
+@GII12263@;Marianna Pawłasek;1855;;;18;19;@GII624@;1795;;C: wielu kandydatów (19)
+@GII12264@;Zofia Pawłasek;1855;;;16;8;@GII805@;1827;;C: wielu kandydatów (8)
+@GII12265@;Jan Pawłasek;1855;;;1;3;@GII842@;1828;;C: wielu kandydatów (3)
+@GII12266@;Wojciech Pawłasek;1855;;;3;6;@GII1474@;1839;;C: wielu kandydatów (6)
+@GII12268@;Marianna Pawłasek;1855;;;18;19;@GII624@;1795;;C: wielu kandydatów (19)
+@GII12270@;Wojciech Pazdrak;1855;;;2;2;@GII1479@;1839;;C: wielu kandydatów (2)
+@GII12271@;Marianna Pazdrak;1855;;;12;8;@GII281@;1788;;C: wielu kandydatów (8)
+@GII12275@;Katarzyna Pudło;1855;60;Brzozówka;2;41;@GI555@;1798;;C: wielu kandydatów (41)
+@GII12276@;Wojciech Sagan;1855;;;2;2;@GIII4120@;1790;;C: wielu kandydatów (2)
+@GII12285@;Marianna Sobótka;1855;;;2;2;@GII7204@;1822;;C: wielu kandydatów (2)
+@GII12290@;Andrzej Sulowski;1855;;;1;2;@GII9035@;1782;;C: wielu kandydatów (2)
+@GII12297@;Filip Wcisło;1855;;;2;5;@GII6661@;;;C: wielu kandydatów (5)
+@GII12298@;Zofia Wcisło;1855;;;1;4;@GII7122@;1835;;C: wielu kandydatów (4)
+@GII12303@;Jacek Wnuk;1855;;;2;4;@GII9163@;1797;;C: wielu kandydatów (4)
+@GII12304@;Agnieszka Zaręba;1855;;;4;4;@GII427@;1791;;C: wielu kandydatów (4)
+@GII12305@;Paweł Zaręba;1855;;;2;2;@GII642@;1795;;C: wielu kandydatów (2)
+@GII12315@;Marianna Brzeska;1856;;;5;4;@GII276@;1788;;C: wielu kandydatów (4)
+@GII12316@;Antoni Bucoń;1856;;;3;6;@GII1835@;1845;;C: wielu kandydatów (6)
+@GII12318@;Katarzyna Igras;1856;;;2;3;@GII1602@;1841;;C: wielu kandydatów (3)
+@GII12319@;Andrzej Jachura;1856;;;1;3;@GII2493@;1856;;C: wielu kandydatów (3)
+@GII12322@;Antonina Kaczyńska;1856;;;5;3;@GII818@;1828;;C: wielu kandydatów (3)
+@GII12325@;Marianna Kolasa;1856;;;6;2;@GII9706@;1826;;C: wielu kandydatów (2)
+@GII12326@;Maciej Kolasa;1856;;;1;2;@GII9211@;1824;1856;C: wielu kandydatów (2)
+@GII12327@;Józef Kosidło;1856;;;9;16;@GII1227@;1835;;C: wielu kandydatów (16)
+@GII12328@;Jan Kosidło;1856;;;7;9;@GII498@;1792;;C: wielu kandydatów (9)
+@GII12329@;Tomasz Kosidło;1856;;;6;8;@GII542@;1793;;C: wielu kandydatów (8)
+@GII12330@;Wojciech Kosidło;1856;;;16;36;@GII826@;1828;;C: wielu kandydatów (36)
+@GII12331@;Anna Kozik;1856;;;2;3;@GII9488@;1803;;C: wielu kandydatów (3)
+@GII12334@;Wojciech Kudrelek;1856;;;4;5;@GII2371@;1853;;C: wielu kandydatów (5)
+@GII12336@;Marianna Kurczak;1856;;;30;23;@GII43@;1783;;C: wielu kandydatów (23)
+@GII12337@;Zofia Kurczak;1856;;;13;7;@GII455@;1792;;C: wielu kandydatów (7)
+@GII12338@;Andrzej Kurczak;1856;;;5;7;@GII326@;1789;;C: wielu kandydatów (7)
+@GII12339@;Szymon Kurczak;1856;;;6;7;@GII717@;1796;;C: wielu kandydatów (7)
+@GII12340@;Jan Machulak;1856;;;3;4;@GII6949@;1822;;C: wielu kandydatów (4)
+@GII12341@;Walenty Machulak;1856;;;4;4;@GII1617@;1841;;C: wielu kandydatów (4)
+@GII12343@;Franciszka Machulak;1856;;;6;8;@GII836@;1828;;C: wielu kandydatów (8)
+@GII12344@;Zofia Machulak;1856;;;2;2;@GII1790@;1844;;C: wielu kandydatów (2)
+@GII12347@;Antoni Pawłasek;1856;;;9;13;@GII129@;1785;;C: wielu kandydatów (13)
+@GII12348@;Michał Pawłasek;1856;;;2;2;@GII6211@;;;C: wielu kandydatów (2)
+@GII12352@;Maciej Stępień;1856;;;2;3;@GII6559@;1798;;C: wielu kandydatów (3)
+@GII12355@;Marianna Wcisło;1856;;;4;8;@GII914@;1829;;C: wielu kandydatów (8)
+@GII12357@;Józef Wieleba;1856;;;2;3;@GII6739@;;;C: wielu kandydatów (3)
+@GII12358@;Józef Woś;1856;;;1;3;@GIII7281@;1818;;C: wielu kandydatów (3)
+@GII12359@;Jan Babiarz;1857;;;2;2;@GII697@;1796;;C: wielu kandydatów (2)
+@GII12361@;Antoni Dobrzyński;1857;;;6;3;@GII468@;1792;;C: wielu kandydatów (3)
+@GII12366@;Marianna Kosidło;1857;;;46;43;@GII1046@;1832;;C: wielu kandydatów (43)
+@GII12367@;Jakub Kosidło;1857;;;4;4;@GII1455@;1839;;C: wielu kandydatów (4)
+@GII12368@;Józef Kozik;1857;;;2;3;@GII2165@;1850;;C: wielu kandydatów (3)
+@GII12372@;Wojciech Paciorek;1857;;;3;3;@GII623@;1795;;C: wielu kandydatów (3)
+@GII12373@;Walenty Pawłasek;1857;;;10;10;@GII280@;1788;;C: wielu kandydatów (10)
+@GII12377@;Andrzej Sikora;1857;;;1;2;@GII2479@;1855;;C: wielu kandydatów (2)
+@GII12397@;Antonina Kurczak;1858;;;4;5;@GII330@;1789;;C: wielu kandydatów (5)
+@GII12398@;Jan Machulak;1858;;;4;5;@GII1927@;1846;1858;C: wielu kandydatów (5)
+@GII12401@;Walenty Paciorek;1858;;;3;3;@GII839@;1828;;C: wielu kandydatów (3)
+@GII12402@;Tomasz Pawłasek;1858;;;9;12;@GII424@;1791;;C: wielu kandydatów (12)
+@GII12403@;Ignacy Pawłasek;1858;;;1;2;@GII2385@;1853;;C: wielu kandydatów (2)
+@GII12405@;Walenty Suloski;1858;;;2;2;@GII2398@;1853;1858;C: wielu kandydatów (2)
+@GII12410@;Wojciech Dąbroski;1859;;;2;2;@GII2579@;1858;;C: wielu kandydatów (2)
+@GII12416@;Walenty Jachura;1859;;;3;6;@GII1343@;1837;;C: wielu kandydatów (6)
+@GII12420@;Józef Kopyt;1859;;;2;3;@GII569@;1794;;C: wielu kandydatów (3)
+@GII12424@;Szymon Kosidło;1859;;;6;6;@GII1460@;1839;;C: wielu kandydatów (6)
+@GII12426@;Antoni Kozyra;1859;;;1;2;@GII2540@;1857;;C: wielu kandydatów (2)
+@GII12427@;Szczepan Kozyra;1859;;;3;2;@GII2597@;1858;;C: wielu kandydatów (2)
+@GII12436@;Józef Paciorek;1859;;;2;2;@GII6359@;1796;;C: wielu kandydatów (2)
+@GII12445@;Franciszek Suloski;1859;;;3;2;@GII1948@;1846;1859;C: wielu kandydatów (2)
+@GII12450@;Wojciech Zieliński;1859;;;3;2;@GII2572@;1857;;C: wielu kandydatów (2)
+@GII12461@;Franciszek Janik;1860;;;1;5;@GII2530@;1857;;C: wielu kandydatów (5)
+@GII12471@;Paweł Pawłasek;1860;;;4;4;@GII288@;1789;;C: wielu kandydatów (4)
+@GII12480@;Marianna Zielińska;1860;;;4;4;@GII1960@;1846;;C: wielu kandydatów (4)
+@GII12486@;Franciszek Goch;1861;;;4;5;@GII309@;1789;;C: wielu kandydatów (5)
+@GII12491@;Michał Kaczyński;1861;;;2;5;@GII2152@;1850;;C: wielu kandydatów (5)
+@GII12492@;Paweł Kaczyński;1861;;;2;2;@GII819@;1828;;C: wielu kandydatów (2)
+@GII12493@;Jan Kolasa;1861;;;1;2;@GI1054@;1815;1861;C: wielu kandydatów (2)
+@GII12497@;Stanisław Kudrelek;1861;;;1;2;@GII2600@;1858;;C: wielu kandydatów (2)
+@GII12498@;Szymon Kurczak;1861;;;8;7;@GII717@;1796;;C: wielu kandydatów (7)
+@GII12502@;Marianna Michałkowna;1861;;;2;2;@GII1002@;1831;;C: wielu kandydatów (2)
+@GII12507@;Stanisław Ogon;1861;;;3;5;@GII112@;1785;;C: wielu kandydatów (5)
+@GII12508@;Piotr Pawłasek;1861;;;5;5;@GII899@;1829;;C: wielu kandydatów (5)
+@GII12511@;Franciszka Samuelowna;1861;;;2;2;@GII1135@;1833;;C: wielu kandydatów (2)
+@GII12515@;Józef Suloski;1861;;;3;2;@GII2446@;1854;;C: wielu kandydatów (2)
+@GII12522@;Tomasz Jachura;1862;;;7;10;@GII1038@;1832;;C: wielu kandydatów (10)
+@GII12523@;Marcin Jachura;1862;;;3;4;@GII2226@;1851;;C: wielu kandydatów (4)
+@GII12532@;Jan Kozyra;1862;;;3;4;@GII9087@;1823;;C: wielu kandydatów (4)
+@GII12540@;Paweł Pawłasek;1862;;;5;5;@GII288@;1789;;C: wielu kandydatów (5)
+@GII12541@;Józef Pawłasek;1862;;;6;7;@GII1802@;1844;;C: wielu kandydatów (7)
+@GII12542@;Mateusz Pawłasek;1862;;;5;4;@GII2725@;1860;;C: wielu kandydatów (4)
+@GII12543@;Marcin Pawłasek;1862;;;4;5;@GII1413@;1838;;C: wielu kandydatów (5)
+@GII12553@;Agnieszka Szydłoska;1862;;;1;2;@GII2568@;1857;;C: wielu kandydatów (2)
+@GII12554@;Franciszek Szydłoski;1862;;;2;2;@GII2062@;1848;;C: wielu kandydatów (2)
+@GII12557@;Marcin Woytowicz;1862;;;2;2;@GII1208@;1834;;C: wielu kandydatów (2)
+@GII12569@;Maciej Kaczyński;1863;;;4;5;@GII1907@;1846;;C: wielu kandydatów (5)
+@GII12571@;Maciej Kosidło;1863;;;5;5;@GII664@;1796;;C: wielu kandydatów (5)
+@GII12572@;Wojciech Kosidło;1863;;;22;42;@GII826@;1828;;C: wielu kandydatów (42)
+@GII12579@;Jan Machulak;1863;;;5;4;@GII6949@;1822;;C: wielu kandydatów (4)
+@GII12599@;Marianna Wielebionka;1863;;;3;2;@GII1560@;1841;;C: wielu kandydatów (2)
+@GII12606@;Jan Baran;1864;;;2;2;@GII1752@;1844;;C: wielu kandydatów (2)
+@GII12615@;Jan Gnat;1864;;;2;2;@GII1165@;1834;;C: wielu kandydatów (2)
+@GII12616@;Jan Gnat;1864;;;2;2;@GII1165@;1834;;C: wielu kandydatów (2)
+@GII12617@;Jan Janik;1864;;;4;5;@GII2353@;1853;;C: wielu kandydatów (5)
+@GII12618@;Jan Jantonik;1864;;;3;2;@GII7125@;;;C: wielu kandydatów (2)
+@GII12620@;Paweł Jędrzejczak;1864;;;2;2;@GII507@;1793;;C: wielu kandydatów (2)
+@GII12625@;Antonina Kosidło;1864;;;7;10;@GII1456@;1839;;C: wielu kandydatów (10)
+@GII12645@;Antoni Suloski;1864;;;2;2;@GII777@;1827;;C: wielu kandydatów (2)
+@GII12647@;Katarzyna Wcisło;1864;;;3;3;@GIII6888@;1852;;C: wielu kandydatów (3)
+@GII12648@;Zofia Wcisło;1864;;;2;5;@GII2739@;1860;1864;C: wielu kandydatów (5)
+@GII12649@;Paweł Woś;1864;;;2;2;@GII2326@;1852;;C: wielu kandydatów (2)
+@GII12656@;Jan Gnat;1865;;;2;3;@GII1165@;1834;;C: wielu kandydatów (3)
+@GII12661@;Anna Krawczyk;1865;;;2;3;@GII1856@;1845;;C: wielu kandydatów (3)
+@GII12662@;Zofia Krawczyk;1865;;;5;2;@GII3025@;1865;1865;C: wielu kandydatów (2)
+@GII12668@;Józef Suloski;1865;;;3;2;@GII2321@;1852;1865;C: wielu kandydatów (2)
+@GII12671@;Marianna Brzeska;1866;;;6;5;@GII276@;1788;;C: wielu kandydatów (5)
+@GII12672@;Franciszka Brzeska;1866;;;3;3;@GII292@;1789;;C: wielu kandydatów (3)
+@GII12673@;Stanisław Brzeski;1866;;;1;2;@GII2574@;1858;1866;C: wielu kandydatów (2)
+@GII12679@;Marianna Gnat;1866;71;;3;7;@GII601@;1794;;C: wielu kandydatów (7)
+@GII12684@;Marianna Jędrzejczak;1866;;;8;10;@GII79@;1784;;C: wielu kandydatów (10)
+@GII12685@;Zofia Kosidło;1866;62;;5;20;@GII6992@;;;C: wielu kandydatów (20)
+@GII12688@;Franciszek Mazur;1866;;;1;2;@GII3094@;1866;;C: wielu kandydatów (2)
+@GII12697@;Marianna Pawłasek;1866;;;25;23;@GII624@;1795;;C: wielu kandydatów (23)
+@GII12698@;Michał Pawłasek;1866;;;3;3;@GII3098@;1866;;C: wielu kandydatów (3)
+@GII12701@;Paweł Rębacz;1866;;;1;2;@GII6973@;;;C: wielu kandydatów (2)
+@GII12705@;Jadwiga Stępień;1866;;;1;2;@GII479@;1792;;C: wielu kandydatów (2)
+@GII12706@;Ewa Suloska;1866;;;2;2;@GII2001@;1847;;C: wielu kandydatów (2)
+@GII12720@;Mateusz Kędziora;1867;;;2;2;@GII7025@;;;C: wielu kandydatów (2)
+@GII12721@;Wincenty Kosidło;1867;;;3;4;@GII7341@;1823;;C: wielu kandydatów (4)
+@GII12722@;Józef Kosidło;1867;;;11;17;@GII1227@;1835;;C: wielu kandydatów (17)
+@GII12727@;Wojciech Machulak;1867;;;9;11;@GII1233@;1835;;C: wielu kandydatów (11)
+@GII12748@;Jan Czuba;1868;;;2;3;@GII7009@;1825;1868;C: wielu kandydatów (3)
+@GII12751@;Jan Jantonik;1868;;;3;2;@GII7125@;;;C: wielu kandydatów (2)
+@GII12755@;Marcin Kędziora;1868;;;2;6;@GII2940@;1864;;C: wielu kandydatów (6)
+@GII12758@;Marcin Kosidło;1868;;;6;10;@GII796@;1827;;C: wielu kandydatów (10)
+@GII12764@;Jan Pawłasek;1868;;;4;5;@GII842@;1828;;C: wielu kandydatów (5)
+@GII12768@;Antoni Sobutka;1868;;;2;4;@GII1246@;1835;;C: wielu kandydatów (4)
+@GII12779@;Wojciech Bucoń;1869;;;7;5;@GII1435@;1839;;C: wielu kandydatów (5)
+@GII12784@;Szczepan Jachura;1869;;;2;2;@GII2026@;1848;;C: wielu kandydatów (2)
+@GII12803@;Andrzej Pasternak;1869;;;1;2;@GII6283@;;;C: wielu kandydatów (2)
+@GII12804@;Franciszek Pasternak;1869;;;3;2;@GII10041@;1817;;C: wielu kandydatów (2)
+@GII12815@;Stanisław Wieleba;1869;;;1;5;@GII3230@;1868;;C: wielu kandydatów (5)
+@GII12821@;Wojciech Barbarzak;1870;;;3;3;@GII1157@;1834;;C: wielu kandydatów (3)
+@GII12822@;Anna Boczek;1870;;;3;3;@GII571@;1794;;C: wielu kandydatów (3)
+@GII12827@;Katarzyna Gnat;1870;;;3;2;@GII184@;1786;;C: wielu kandydatów (2)
+@GII12830@;Katarzyna Jędrzejczak;1870;;;5;3;@GII1906@;1846;;C: wielu kandydatów (3)
+@GII12831@;Jan Jędrzejczak;1870;;;2;3;@GII1396@;1838;;C: wielu kandydatów (3)
+@GII12832@;Katarzyna Kędziora;1870;;;4;6;@GII1043@;1832;;C: wielu kandydatów (6)
+@GII12834@;Katarzyna Kosidło;1870;;;31;23;@GII470@;1792;;C: wielu kandydatów (23)
+@GII12835@;Michał Kosidło;1870;;;9;10;@GII266@;1788;;C: wielu kandydatów (10)
+@GII12840@;Katarzyna Pawłasek;1870;;;18;16;@GII369@;1790;;C: wielu kandydatów (16)
+@GII12841@;Tomasz Pcionek;1870;;;1;3;@GII3279@;1869;;C: wielu kandydatów (3)
+@GII12846@;Anna Szabat;1870;;;1;2;@GII3289@;1869;;C: wielu kandydatów (2)
+@GII12847@;Stanisław Szyszka;1870;;;3;3;@GII2794@;1861;;C: wielu kandydatów (3)
+@GII12848@;Katarzyna Wcisło;1870;;;3;3;@GIII6888@;1852;;C: wielu kandydatów (3)
+@GII12856@;Walenty Goch;1871;;;3;4;@GII1091@;1833;;C: wielu kandydatów (4)
+@GII12863@;Marcin Kaczyński;1871;56;Blinów;2;5;@GII7917@;;;C: wielu kandydatów (5)
+@GII12866@;Wojciech Koguc;1871;;;4;6;@GII628@;1795;;C: wielu kandydatów (6)
+@GII12867@;Marcin Kosidło;1871;63;Blinów;3;10;@GII6921@;;;C: wielu kandydatów (10)
+@GII12870@;Józef Kosidło;1871;;;13;19;@GII1227@;1835;;C: wielu kandydatów (19)
+@GII12871@;Paweł Kosidło;1871;;;11;11;@GII273@;1788;;C: wielu kandydatów (11)
+@GII12879@;Katarzyna Pcionek;1871;65;Moczydła;2;2;@GII8804@;;;C: wielu kandydatów (2)
+@GII12882@;Franciszek Szot;1871;;;2;3;@GII9787@;1836;1871;C: wielu kandydatów (3)
+@GII12914@;Antoni Kosidło;1872;;Blinów;11;20;@GII778@;1827;;C: wielu kandydatów (20)
+@GII12922@;Katarzyna Kurczak;1872;71;Blinów;3;11;@GII6750@;;;C: wielu kandydatów (11)
+@GII12948@;Marianna Pawłasek;1872;8;Blinów;2;23;@GII2971@;1864;;C: wielu kandydatów (23)
+@GII12981@;Marianna Wcisło;1872;60;Blinów;3;9;@GII7440@;;;C: wielu kandydatów (9)
+@GII12988@;Paweł Boczek;1873;2;;2;4;@GII3352@;1871;;C: wielu kandydatów (4)
+@GII12992@;Paweł Boczek;1873;;;3;4;@GII3352@;1871;;C: wielu kandydatów (4)
+@GII13000@;Jan Jędrzejczak;1873;;;2;3;@GII1396@;1838;;C: wielu kandydatów (3)
+@GII13017@;Marianna Kosidło;1873;;;61;50;@GII1046@;1832;;C: wielu kandydatów (50)
+@GII13027@;Katarzyna Mróz;1873;48;;2;2;@GII2508@;1856;;C: wielu kandydatów (2)
+@GII13032@;Stanisław Mróz;1873;;;2;2;@GII2381@;1853;;C: wielu kandydatów (2)
+@GII13047@;Marianna Szabat;1873;;;4;3;@GII78@;1784;;C: wielu kandydatów (3)
+@GII13053@;Marianna Wcisło;1873;;;8;9;@GII914@;1829;;C: wielu kandydatów (9)
+@GII13071@;Michał Kaczyński;1874;50;;2;6;@GII7021@;;;C: wielu kandydatów (6)
+@GII13080@;Jan Kosidlak;1874;5;;1;3;@GII3436@;1873;;C: wielu kandydatów (3)
+@GII13083@;Michał Kosidło;1874;77;;2;10;@GII485@;1792;;C: wielu kandydatów (10)
+@GII13086@;Józef Kosidło;1874;5;;7;19;@GII3199@;1868;;C: wielu kandydatów (19)
+@GII13087@;Kazimierz Kosidło;1874;6;;1;2;@GII6221@;;;C: wielu kandydatów (2)
+@GII13093@;Marianna Mróz;1874;36;;1;4;@GII7582@;;;C: wielu kandydatów (4)
+@GII13097@;Zofia Pawłasek;1874;67;;9;9;@GII9776@;1811;;C: wielu kandydatów (9)
+@GII13103@;Katarzyna Wcisło;1874;61;;2;3;@GII6668@;;;C: wielu kandydatów (3)
+@GII13116@;Franciszek Karczmarczyk;1875;45;;2;2;@GII10197@;;1875;C: wielu kandydatów (2)
+@GII13122@;Andrzej Kosidło;1875;55;;3;18;@GII7491@;;;C: wielu kandydatów (18)
+@GII13139@;Józef Paciorek;1875;71;;2;2;@GII6823@;;;C: wielu kandydatów (2)
+@GII13144@;Marianna Pasternak;1875;67;;4;6;@GII7126@;;;C: wielu kandydatów (6)
+@GII13174@;Tekla Chmiel;1876;6;;1;2;@GII7276@;;;C: wielu kandydatów (2)
+@GII13180@;Antonina Gnat;1876;75;;3;2;@GII13296@;;;C: wielu kandydatów (2)
+@GII13181@;Agnieszka Kosidło;1876;67;;4;8;@GII7836@;;;C: wielu kandydatów (8)
+@GII13184@;Katarzyna Kosidło;1876;18;;2;25;@GII2592@;1858;;C: wielu kandydatów (25)
+@GII13187@;Katarzyna Kosidło;1876;56;;3;25;@GII9638@;1823;;C: wielu kandydatów (25)
+@GII13196@;Tekla Machulak;1876;62;;4;3;@GIII5883@;1825;;C: wielu kandydatów (3)
+@GII13205@;Mateusz Pawłasek;1876;68;;4;4;@GII6715@;;;C: wielu kandydatów (4)
+@GII13208@;Marcin Pawłasek;1876;5;;3;5;@GII13415@;;;C: wielu kandydatów (5)
+@GII13216@;Sebastian Samuel;1876;73;;2;2;@GII6653@;;;C: wielu kandydatów (2)
+@GII13248@;Agnieszka Jachura;1877;8;;3;5;@GII8772@;;;C: wielu kandydatów (5)
+@GII13276@;Anna Pawłasek;1877;63;;1;6;@GII13264@;;;C: wielu kandydatów (6)
+@GII13282@;Marianna Pcionek;1877;3;;6;14;@GII3522@;1877;;C: wielu kandydatów (14)
+@GII13313@;Jan Jachura;1878;6;;2;4;@GII6755@;;;C: wielu kandydatów (4)
+@GII13326@;Antoni Kosidło;1878;4;;13;21;@GII3569@;1878;;C: wielu kandydatów (21)
+@GII13332@;Katarzyna Machulak;1878;60;;4;5;@GII1115@;1833;;C: wielu kandydatów (5)
+@GII13335@;Stanisław Pawłasek;1878;3;;1;7;@GII2183@;1850;;C: wielu kandydatów (7)
+@GII13341@;Stanisław Sikora;1878;9;;2;3;@GIII1499@;;;C: wielu kandydatów (3)
+@GII13361@;Wojciech Jędrzejczak;1879;;;6;4;@GII1568@;1841;;C: wielu kandydatów (4)
+@GII13362@;Wojciech Jędrzejczak;1879;;;6;4;@GII1568@;1841;;C: wielu kandydatów (4)
+@GII13363@;Marianna Kolasa;1879;;;7;3;@GII3563@;1878;;C: wielu kandydatów (3)
+@GII13364@;Paweł Kosidło;1879;;;11;12;@GII273@;1788;;C: wielu kandydatów (12)
+@GII13366@;Wawrzyniec Machulak;1879;;;4;4;@GII2376@;1853;;C: wielu kandydatów (4)
+@GII13370@;Zofia Samuel;1879;;;5;3;@GII7362@;;;C: wielu kandydatów (3)
+@GII13372@;Katarzyna Spryszak;1879;;;4;5;@GII3531@;1877;;C: wielu kandydatów (5)
+@GII13378@;Katarzyna Wcisło;1879;;;3;3;@GIII6888@;1852;;C: wielu kandydatów (3)
+@GII13379@;Marianna Wieleba;1879;;;10;12;@GI1033@;1857;;C: wielu kandydatów (12)
+@GII13414@;Walenty Pawłasek;1880;8;;7;12;@GII6843@;;;C: wielu kandydatów (12)
+@GII13420@;Paweł Pcionek;1880;6;;2;4;@GII3337@;1870;;C: wielu kandydatów (4)
+@GII13436@;Marianna Wieleba;1880;66;;4;12;@GI775@;;;C: wielu kandydatów (12)
+@GII13439@;Franciszek Wójtowicz;1880;10;;1;2;@GII3657@;1879;;C: wielu kandydatów (2)
+@GII10557@;Maciej Kaczynski;1797;;Blinów;1;0;;;;D: brak kandydata w drzewie
+@GII10563@;Katarzyna Niescior;1797;;Moczydła;1;0;;;;D: brak kandydata w drzewie
+@GII10575@;Jan Dobrzynski;1798;;Brzozówka;1;0;;;;D: brak kandydata w drzewie
+@GII10586@;Agnieszka Kozakowa;1798;;Blinów;1;0;;;;D: brak kandydata w drzewie
+@GII10594@;Marianna Pękowa;1798;;Brzozówka;1;0;;;;D: brak kandydata w drzewie
+@GII10611@;Maciej Dobrzynski;1799;;Blinów;1;0;;;;D: brak kandydata w drzewie
+@GII10638@;Katarzyna Pasternakowa;1799;;Blinów;1;0;;;;D: brak kandydata w drzewie
+@GII10653@;Szymon Wscisło;1799;;Blinów;1;0;;;;D: brak kandydata w drzewie
+@GII10762@;Jan Dobrzynski;1803;;Brzozówka;1;0;;;;D: brak kandydata w drzewie
+@GII10771@;Marianna Pasternakowa;1803;;Blinów;1;0;;;;D: brak kandydata w drzewie
+@GII10782@;Michał Gnat?;1804;;Blinów;1;0;;;;D: brak kandydata w drzewie
+@GII10797@;Marianna Machulek?;1804;;Blinów;6;0;;;;D: brak kandydata w drzewie
+@GII10810@;Marianna Dobrzyńska ?;1805;;Blinów;1;0;;;;D: brak kandydata w drzewie
+@GII10816@;Bartłomiej Kosidło ?;1805;;Blinów;1;0;;;;D: brak kandydata w drzewie
+@GII10823@;Antonina Pazdrak;1805;;Blinów;1;0;;;;D: brak kandydata w drzewie
+@GII10837@;Józef Jagosiak ?;1806;;Brzozówka;2;0;;;;D: brak kandydata w drzewie
+@GII10838@;Anna Jędrzyczak;1806;;Blinów;1;0;;;;D: brak kandydata w drzewie
+@GII10841@;Agnieszka Kaczynska;1806;;Blinów;1;0;;;;D: brak kandydata w drzewie
+@GII10894@;Franciszka Baran;1808;;Blinów;1;0;;;;D: brak kandydata w drzewie
+@GII10946@;Magdalena Kosidło;1809;;Blinów;1;0;;;;D: brak kandydata w drzewie
+@GII10948@;Dorota Krupa;1809;;Blinów;1;0;;;;D: brak kandydata w drzewie
+@GII10953@;Anna Pawłasek ?;1809;;Blinów;1;0;;;;D: brak kandydata w drzewie
+@GII10974@;Agnieszka Kaczynska;1810;;Blinów;1;0;;;;D: brak kandydata w drzewie
+@GII10979@;Kazimierz Krol;1810;;Moczydła;1;0;;;;D: brak kandydata w drzewie
+@GII10991@;Anna Pastyga;1810;;Blinów;1;0;;;;D: brak kandydata w drzewie
+@GII11010@;Anna Jędrzyczak;1811;;Blinów;1;0;;;;D: brak kandydata w drzewie
+@GII11023@;Anna Machulek ?;1811;;Blinów;1;0;;;;D: brak kandydata w drzewie
+@GII11067@;Józef Machulek ?;1812;;Brzozówka;2;0;;;;D: brak kandydata w drzewie
+@GII11074@;Paweł Obydz;1812;;Blinów;1;0;;;;D: brak kandydata w drzewie
+@GII11144@;Agata Kaczynska;1814;;Blinów;1;0;;;;D: brak kandydata w drzewie
+@GII11211@;Katarzyna Paciorek ?;1814;;Blinów;1;0;;;;D: brak kandydata w drzewie
+@GII11273@;Anna Kozaczek;1815;;Blinów;2;0;;;;D: brak kandydata w drzewie
+@GII11328@;Agnieszka ?;1817;;Blinów;7;0;;;;D: brak kandydata w drzewie
+@GII11398@;Barbara Kozaczek;1820;;Blinów;1;0;;;;D: brak kandydata w drzewie
+@GII11501@;Franciszka Bosakowa;1826;;;1;0;;;;D: brak kandydata w drzewie
+@GII11507@;Andrzej Kaczynski;1826;;;2;0;;;;D: brak kandydata w drzewie
+@GII11511@;Marianna Kopytowa;1826;;;2;0;;;;D: brak kandydata w drzewie
+@GII11549@;Marianna Bosakówna;1827;;;1;0;;;;D: brak kandydata w drzewie
+@GII11573@;Franciszka Nieściór;1827;;;1;0;;;;D: brak kandydata w drzewie
+@GII11605@;Anna Pcionowa;1828;;;1;0;;;;D: brak kandydata w drzewie
+@GII11609@;Jadwiga Barbażak;1829;5;;1;0;;;;D: brak kandydata w drzewie
+@GII11648@;Marianna Kuszay;1830;;;1;0;;;;D: brak kandydata w drzewie
+@GII11667@;Agnieszka Baranowa;1831;;;5;0;;;;D: brak kandydata w drzewie
+@GII11675@;Anna Dobrzańska;1831;;;1;0;;;;D: brak kandydata w drzewie
+@GII11682@;Zofia Kogucowa;1831;;;4;0;;;;D: brak kandydata w drzewie
+@GII11685@;Tekla Kurczak;1831;;;1;0;;;;D: brak kandydata w drzewie
+@GII11688@;Marianna Pasternakowa;1831;;;3;0;;;;D: brak kandydata w drzewie
+@GII11691@;Marianna Pazdrakowa;1831;;;11;0;;;;D: brak kandydata w drzewie
+@GII11698@;Jozef Sikora;1831;;;2;0;;;;D: brak kandydata w drzewie
+@GII11700@;Katarzyna Solarzowna;1831;;;5;0;;;;D: brak kandydata w drzewie
+@GII11707@;Krystyna Baranowa;1832;;;1;0;;;;D: brak kandydata w drzewie
+@GII11708@;Agnieszka Baranowa;1832;;;5;0;;;;D: brak kandydata w drzewie
+@GII11710@;Piotr Bucon;1832;;;2;0;;;;D: brak kandydata w drzewie
+@GII11742@;Jozef Pcionek;1832;;;1;0;;;;D: brak kandydata w drzewie
+@GII11744@;Walenty Pyc;1832;;;1;0;;;;D: brak kandydata w drzewie
+@GII11747@;Szymon Stępień;1832;;;1;0;;;;D: brak kandydata w drzewie
+@GII11758@;Marianna Barbażak;1833;;;2;0;;;;D: brak kandydata w drzewie
+@GII11770@;Agata Kamieniak;1833;40;;2;0;;;;D: brak kandydata w drzewie
+@GII11797@;Franciszka Janikowna;1847;;;1;0;;;;D: brak kandydata w drzewie
+@GII11811@;Brygida Kurczak;1847;;;4;0;;;;D: brak kandydata w drzewie
+@GII11813@;Barbara Machulakowa;1847;;;1;0;;;;D: brak kandydata w drzewie
+@GII11814@;Agnieszka Machulakowa;1847;;;3;0;;;;D: brak kandydata w drzewie
+@GII11816@;Łukasz Nieścior;1847;;;1;0;;;;D: brak kandydata w drzewie
+@GII11819@;Walenty Pawlasek;1847;;;8;0;;;;D: brak kandydata w drzewie
+@GII11836@;Jozef Baran;1848;;;1;0;;;;D: brak kandydata w drzewie
+@GII11840@;Katarzyna Garbaczowna;1848;;;1;0;;;;D: brak kandydata w drzewie
+@GII11850@;Zofia Kopytowa;1848;;;2;0;;;;D: brak kandydata w drzewie
+@GII11856@;Katarzyna Machulakowa;1848;;;6;0;;;;D: brak kandydata w drzewie
+@GII11859@;Jan Nieścior;1848;;;2;0;;;;D: brak kandydata w drzewie
+@GII11860@;Paweł Obydz;1848;;;2;0;;;;D: brak kandydata w drzewie
+@GII11863@;Franciszek Pścionek;1848;;;1;0;;;;D: brak kandydata w drzewie
+@GII11865@;Kazimierz Pścionek;1848;;;1;0;;;;D: brak kandydata w drzewie
+@GII11866@;Marianna Pyzowna;1848;;;1;0;;;;D: brak kandydata w drzewie
+@GII11867@;Marianna Siembiedowna;1848;;;1;0;;;;D: brak kandydata w drzewie
+@GII11874@;Andrzej Wścisło;1848;;;2;0;;;;D: brak kandydata w drzewie
+@GII11883@;Agnieszka Gnatowna;1849;;;3;0;;;;D: brak kandydata w drzewie
+@GII11892@;Anna Machulakowna;1849;;;2;0;;;;D: brak kandydata w drzewie
+@GII11894@;Franciszek Pawlasek;1849;;;1;0;;;;D: brak kandydata w drzewie
+@GII11896@;Antoni Pścionek;1849;;;3;0;;;;D: brak kandydata w drzewie
+@GII11898@;Marianna Saganowa;1849;;;4;0;;;;D: brak kandydata w drzewie
+@GII11908@;Tekla Wnukowa;1849;;;1;0;;;;D: brak kandydata w drzewie
+@GII11909@;Andrzej Wścisło;1849;;;2;0;;;;D: brak kandydata w drzewie
+@GII11910@;Marianna Wścisłowa;1849;;;1;0;;;;D: brak kandydata w drzewie
+@GII11912@;Franciszka Babiarzowna;1850;;;3;0;;;;D: brak kandydata w drzewie
+@GII11913@;Agnieszka Baranowna;1850;;;7;0;;;;D: brak kandydata w drzewie
+@GII11914@;Zofia Białkoska;1850;;;1;0;;;;D: brak kandydata w drzewie
+@GII11938@;Marianna Ogonowa;1850;;;5;0;;;;D: brak kandydata w drzewie
+@GII11939@;Marianna Ogonowa;1850;;;5;0;;;;D: brak kandydata w drzewie
+@GII11941@;Bartłomiej Pawlasek;1850;;;2;0;;;;D: brak kandydata w drzewie
+@GII11942@;Mateusz Pawlasek;1850;;;4;0;;;;D: brak kandydata w drzewie
+@GII11944@;Katarzyna Pścionkowna;1850;;;2;0;;;;D: brak kandydata w drzewie
+@GII11946@;Agnieszka Sobutkowna;1850;;;1;0;;;;D: brak kandydata w drzewie
+@GII11951@;Marianna Wnukowa;1850;;;4;0;;;;D: brak kandydata w drzewie
+@GII11971@;Małgorzata Kurczak;1851;;;1;0;;;;D: brak kandydata w drzewie
+@GII11982@;Marianna Pawlas;1851;;;1;0;;;;D: brak kandydata w drzewie
+@GII11988@;Antonina Pścionek;1851;;;1;0;;;;D: brak kandydata w drzewie
+@GII11989@;Stanisław Pścionek;1851;;;1;0;;;;D: brak kandydata w drzewie
+@GII12006@;Marianna Baranowa;1852;;;11;0;;;;D: brak kandydata w drzewie
+@GII12008@;Katarzyna Bigosowna;1852;;;6;0;;;;D: brak kandydata w drzewie
+@GII12016@;Katarzyna Janikowna;1852;;;1;0;;;;D: brak kandydata w drzewie
+@GII12031@;Franciszka Machulakowna;1852;;;6;0;;;;D: brak kandydata w drzewie
+@GII12032@;Franciszek Nieścior;1852;;;1;0;;;;D: brak kandydata w drzewie
+@GII12033@;Anna Ogonowna;1852;;;1;0;;;;D: brak kandydata w drzewie
+@GII12034@;Marianna Ogonowna;1852;;;5;0;;;;D: brak kandydata w drzewie
+@GII12036@;Marcin Pawlasek;1852;;;3;0;;;;D: brak kandydata w drzewie
+@GII12038@;Józef Pścionek;1852;;;4;0;;;;D: brak kandydata w drzewie
+@GII12039@;Franciszek Pścionek;1852;;;1;0;;;;D: brak kandydata w drzewie
+@GII12041@;Paweł Pścionek;1852;;;2;0;;;;D: brak kandydata w drzewie
+@GII12055@;Jadwiga Jędrzeyczakowa;1853;;;1;0;;;;D: brak kandydata w drzewie
+@GII12064@;Katarzyna Machulakowa;1853;;;9;0;;;;D: brak kandydata w drzewie
+@GII12065@;Józefa Machulakowna;1853;;;2;0;;;;D: brak kandydata w drzewie
+@GII12069@;Franciszek Pawlasek;1853;;;1;0;;;;D: brak kandydata w drzewie
+@GII12073@;Teresa Pścionowa;1853;;;1;0;;;;D: brak kandydata w drzewie
+@GII12080@;Anna Szyszkowa;1853;;;3;0;;;;D: brak kandydata w drzewie
+@GII12083@;Tomasz Wścisło;1853;;;1;0;;;;D: brak kandydata w drzewie
+@GII12085@;Marianna Wścisłowna;1853;;;1;0;;;;D: brak kandydata w drzewie
+@GII12086@;Agnieszka Wścisłowna;1853;;;1;0;;;;D: brak kandydata w drzewie
+@GII12116@;Jadwiga Kolasa;1854;;;1;0;;;;D: brak kandydata w drzewie
+@GII12135@;Barbara Mazurek;1854;;;3;0;;;;D: brak kandydata w drzewie
+@GII12137@;Marianna Nieścior;1854;;;6;0;;;;D: brak kandydata w drzewie
+@GII12138@;Anna Olech;1854;;;3;0;;;;D: brak kandydata w drzewie
+@GII12144@;Jacek Pścionek;1854;;;1;0;;;;D: brak kandydata w drzewie
+@GII12147@;Agnieszka Sikora;1854;;;1;0;;;;D: brak kandydata w drzewie
+@GII12151@;Anna Sulowska;1854;;;1;0;;;;D: brak kandydata w drzewie
+@GII12153@;Agnieszka Szot;1854;;;1;0;;;;D: brak kandydata w drzewie
+@GII12170@;Marianna Ciecko;1855;;;3;0;;;;D: brak kandydata w drzewie
+@GII12190@;Ewa Jędrzejczak;1855;;;2;0;;;;D: brak kandydata w drzewie
+@GII12197@;Salomea Kaczyńska;1855;;;1;0;;;;D: brak kandydata w drzewie
+@GII12226@;Tekla Kozaczek;1855;;;1;0;;;;D: brak kandydata w drzewie
+@GII12229@;Józefa Kudrelek;1855;;;1;0;;;;D: brak kandydata w drzewie
+@GII12241@;Brygida Kurczak;1855;;;4;0;;;;D: brak kandydata w drzewie
+@GII12251@;Franciszka Nieścior;1855;;;2;0;;;;D: brak kandydata w drzewie
+@GII12273@;Marcin Pścionek;1855;;;3;0;;;;D: brak kandydata w drzewie
+@GII12283@;Rozalia Soboniewska;1855;;;1;0;;;;D: brak kandydata w drzewie
+@GII12293@;Katarzyna Szczuka;1855;;;1;0;;;;D: brak kandydata w drzewie
+@GII12302@;Magdalena Wnuk;1855;;;1;0;;;;D: brak kandydata w drzewie
+@GII12306@;Katarzyna Zaręba;1855;;;1;0;;;;D: brak kandydata w drzewie
+@GII12309@;Jadwiga Zych;1855;;;1;0;;;;D: brak kandydata w drzewie
+@GII12310@;Marianna Zyśko;1855;;;1;0;;;;D: brak kandydata w drzewie
+@GII12324@;Franciszek Kedziora;1856;;;3;0;;;;D: brak kandydata w drzewie
+@GII12350@;Rozalia Piech;1856;;;1;0;;;;D: brak kandydata w drzewie
+@GII12353@;Dorota Stępień;1856;;;2;0;;;;D: brak kandydata w drzewie
+@GII12369@;Magdalena Kozik;1857;;;1;0;;;;D: brak kandydata w drzewie
+@GII12399@;Katarzyna Machulakowa;1858;;;10;0;;;;D: brak kandydata w drzewie
+@GII12407@;Józef Zysko;1858;;;2;0;;;;D: brak kandydata w drzewie
+@GII12418@;Wincenty Kaczyński;1859;;;1;0;;;;D: brak kandydata w drzewie
+@GII12422@;Wojciech Kosidlo;1859;;;20;0;;;;D: brak kandydata w drzewie
+@GII12428@;Zofia Krolowa;1859;;;1;0;;;;D: brak kandydata w drzewie
+@GII12430@;Agnieszka Machulakowa;1859;;;4;0;;;;D: brak kandydata w drzewie
+@GII12431@;Józefa Machulakowna;1859;;;4;0;;;;D: brak kandydata w drzewie
+@GII12432@;Józefa Machulakowna;1859;;;4;0;;;;D: brak kandydata w drzewie
+@GII12433@;Franciszka Machulakowna;1859;;;6;0;;;;D: brak kandydata w drzewie
+@GII12447@;Marianna Wosiowa;1859;;;1;0;;;;D: brak kandydata w drzewie
+@GII12448@;Tomasz Wścisło;1859;;;1;0;;;;D: brak kandydata w drzewie
+@GII12449@;Tekla Wścisłowna;1859;;;2;0;;;;D: brak kandydata w drzewie
+@GII12452@;Jadwiga Chmielowa;1860;;;1;0;;;;D: brak kandydata w drzewie
+@GII12457@;Michal Jachura;1860;;;4;0;;;;D: brak kandydata w drzewie
+@GII12458@;Michal Jachura;1860;;;4;0;;;;D: brak kandydata w drzewie
+@GII12462@;Marianna Janikowa;1860;;;2;0;;;;D: brak kandydata w drzewie
+@GII12467@;Piotr Krol;1860;;;1;0;;;;D: brak kandydata w drzewie
+@GII12482@;Walenty Zysko;1860;;;1;0;;;;D: brak kandydata w drzewie
+@GII12495@;Zofia Krawczykowa;1861;;;3;0;;;;D: brak kandydata w drzewie
+@GII12500@;Marianna Machulakowna;1861;;;14;0;;;;D: brak kandydata w drzewie
+@GII12503@;Stanisław Mroz;1861;;;2;0;;;;D: brak kandydata w drzewie
+@GII12504@;Stanisław Nieścior;1861;;;3;0;;;;D: brak kandydata w drzewie
+@GII12510@;Anna Pścionkowna;1861;;;1;0;;;;D: brak kandydata w drzewie
+@GII12525@;Zofia Kogucowna;1862;;;5;0;;;;D: brak kandydata w drzewie
+@GII12533@;Ewa Kurczakowna;1862;;;3;0;;;;D: brak kandydata w drzewie
+@GII12534@;Józefa Kurczakowna;1862;;;2;0;;;;D: brak kandydata w drzewie
+@GII12536@;Józefa Machulakowna;1862;;;5;0;;;;D: brak kandydata w drzewie
+@GII12539@;Marianna Paszkoska;1862;;;1;0;;;;D: brak kandydata w drzewie
+@GII12550@;Zofia Sprysakowa?;1862;;;1;0;;;;D: brak kandydata w drzewie
+@GII12552@;Franciszka Szydloska;1862;;;1;0;;;;D: brak kandydata w drzewie
+@GII12558@;Andrzej Wścisło;1862;;;2;0;;;;D: brak kandydata w drzewie
+@GII12559@;Tekla Wścisłowna;1862;;;3;0;;;;D: brak kandydata w drzewie
+@GII12562@;Marianna Barbarzakowa;1863;;;3;0;;;;D: brak kandydata w drzewie
+@GII12575@;Magdalena Krawczykowa;1863;;;1;0;;;;D: brak kandydata w drzewie
+@GII12577@;Agnieszka Kurczakowa;1863;;;5;0;;;;D: brak kandydata w drzewie
+@GII12580@;Agnieszka Machulakowa;1863;;;4;0;;;;D: brak kandydata w drzewie
+@GII12581@;Franciszka Machulakowna;1863;;;7;0;;;;D: brak kandydata w drzewie
+@GII12583@;Stanisław Nieścior;1863;;;3;0;;;;D: brak kandydata w drzewie
+@GII12589@;Katarzyna Pścionkowa;1863;;;2;0;;;;D: brak kandydata w drzewie
+@GII12590@;Franciszek Pyc;1863;;;1;0;;;;D: brak kandydata w drzewie
+@GII12601@;Andrzej Wścisło;1863;;;2;0;;;;D: brak kandydata w drzewie
+@GII12610@;Katarzyna Chmielowa;1864;;;1;0;;;;D: brak kandydata w drzewie
+@GII12640@;Antoni Pawlasek;1864;;;12;0;;;;D: brak kandydata w drzewie
+@GII12641@;Antoni Pawlasek;1864;;;12;0;;;;D: brak kandydata w drzewie
+@GII12653@;Katarzyna Barbarzakowna;1865;;;5;0;;;;D: brak kandydata w drzewie
+@GII12675@;Andrzej Bucon;1866;;;1;0;;;;D: brak kandydata w drzewie
+@GII12694@;Anna Mróz;1866;;;1;0;;;;D: brak kandydata w drzewie
+@GII12695@;Tekla Nieścior;1866;;;1;0;;;;D: brak kandydata w drzewie
+@GII12699@;Antoni Pścionek;1866;;;3;0;;;;D: brak kandydata w drzewie
+@GII12717@;Marianna Gochowna;1867;;;6;0;;;;D: brak kandydata w drzewie
+@GII12719@;Zofia Kaczynska;1867;;;2;0;;;;D: brak kandydata w drzewie
+@GII12724@;Jozef Krawczyk;1867;;;1;0;;;;D: brak kandydata w drzewie
+@GII12726@;Katarzyna Kurczakowna;1867;;;14;0;;;;D: brak kandydata w drzewie
+@GII12730@;Paweł Niescior;1867;;;1;0;;;;D: brak kandydata w drzewie
+@GII12731@;Zofia Niesciorowna;1867;;;2;0;;;;D: brak kandydata w drzewie
+@GII12739@;Jozef Sikora;1867;;;4;0;;;;D: brak kandydata w drzewie
+@GII12742@;Antonina Szidłoska;1867;;;1;0;;;;D: brak kandydata w drzewie
+@GII12749@;Anna Gochowa;1868;;;2;0;;;;D: brak kandydata w drzewie
+@GII12759@;Marianna Kotowa;1868;;;1;0;;;;D: brak kandydata w drzewie
+@GII12762@;Walenty Mroz;1868;;;1;0;;;;D: brak kandydata w drzewie
+@GII12763@;Zofia Niesciorowa;1868;;;2;0;;;;D: brak kandydata w drzewie
+@GII12769@;Katarzyna Stępniowa;1868;;;1;0;;;;D: brak kandydata w drzewie
+@GII12770@;Marianna Szabatowa;1868;;;4;0;;;;D: brak kandydata w drzewie
+@GII12775@;Anastazja Baranowna;1869;;;1;0;;;;D: brak kandydata w drzewie
+@GII12780@;Anna Chmielowna;1869;;;3;0;;;;D: brak kandydata w drzewie
+@GII12782@;Franciszek Dobrzyński;1869;;;1;0;;;;D: brak kandydata w drzewie
+@GII12783@;Tadeusz Igraś;1869;;;1;0;;;;D: brak kandydata w drzewie
+@GII12785@;Marianna Janikowna;1869;;;4;0;;;;D: brak kandydata w drzewie
+@GII12786@;Franciszka Janikowna;1869;;;2;0;;;;D: brak kandydata w drzewie
+@GII12787@;Marianna Jantonikowa;1869;;;3;0;;;;D: brak kandydata w drzewie
+@GII12793@;Wojciech Kosidłak;1869;;;3;0;;;;D: brak kandydata w drzewie
+@GII12797@;Agnieszka Łachowna;1869;;;1;0;;;;D: brak kandydata w drzewie
+@GII12800@;Salomea Michałkowa;1869;;;1;0;;;;D: brak kandydata w drzewie
+@GII12806@;Jozef Pscionek;1869;;;4;0;;;;D: brak kandydata w drzewie
+@GII12813@;Marianna Stępniowa;1869;;;2;0;;;;D: brak kandydata w drzewie
+@GII12816@;Zofia Zuniowa;1869;;;1;0;;;;D: brak kandydata w drzewie
+@GII12820@;Anna Zyśkowna;1869;;;1;0;;;;D: brak kandydata w drzewie
+@GII12833@;Waleria Kogutowska;1870;;;1;0;;;;D: brak kandydata w drzewie
+@GII12849@;Marianna Wosiowa;1870;;;1;0;;;;D: brak kandydata w drzewie
+@GII12853@;Anastazja Dąbrowska;1871;71;Moczydła;2;0;;;;D: brak kandydata w drzewie
+@GII13039@;Józefa Samuel;1873;;;1;0;;;;D: brak kandydata w drzewie
+@GII13162@;Zofia Sobótka;1875;43;;2;0;;;;D: brak kandydata w drzewie
+@GII13368@;Anna Mróz;1879;;;1;0;;;;D: brak kandydata w drzewie
