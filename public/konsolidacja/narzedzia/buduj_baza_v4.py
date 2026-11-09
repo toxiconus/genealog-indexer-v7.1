@@ -126,6 +126,17 @@ def male_surname(sn,sex):
     if m and sex!='M':
         return sn[:-1]+'i',('ska')
     return None
+def is_child(age):
+    a=(age or '').lower()
+    if re.search(r'mies|mens|dies|dn\.|dni|tyg|hebd|m\.\d',a):return True
+    m=re.search(r'\d+',a);return bool(m and int(m.group())<15)
+def fill_markers(ai):
+    ch=is_child(ai.get('age'))
+    for f in ('house','age','deceased_status','deceased_last_name','profession'):
+        if not ai.get(f):ai[f]='[-]' if (f=='profession' and ch) else '[_]'
+    hasp=bool(ai.get('parents_raw') or ai.get('father_first_name'))
+    for f in ('father_first_name','father_last_name','mother_first_name','mother_last_name','parents_raw'):
+        if not ai.get(f):ai[f]='[_]' if (ch and (f in('parents_raw','father_first_name','father_last_name') or not hasp or f.startswith('mother'))) else '[-]'
 bynr={}
 for (y,n),a in idxact.items():bynr.setdefault(n,[]).append(a)
 nov=0;newn=0
@@ -164,6 +175,7 @@ for fn in sorted(glob.glob(R+'haiku/ODCZYTY/*_dom_przyczyny.csv'))+sorted(glob.g
             if st!='brak w akcie':ai['deceased_status']=st
             un=(un[:ms.start()]+un[ms.end():]).strip(', ').strip()
         ai['notes']=', '.join(t for t in (_ntf,un) if t)
+        fill_markers(ai)
         unc=[f for f,v in ai.items() if '?' in str(v)]
         if _unres and 'deceased_last_name' not in unc:unc.append('deceased_last_name')
         if x['pewnosc']=='?' and not unc:unc=['notes']
@@ -182,7 +194,7 @@ print('nakladka',nov,'nowe',newn)
 acts.sort(key=lambda a:(a['year'],0 if a.get('kind')=='prot' else 1 if a.get('kind')=='rej' else 2,a['act'],a['id']))
 FL=D35['fields']+[{'id':'house','label':'Nr domu'},{'id':'cause_of_death','label':'Przyczyna zgonu / choroba'},{'id':'parents_raw','label':'Rodzice (z rubryki przyczyny)'}]
 D=dict(fieldsProt=D35['fieldsProt'],fieldsRej=D35['fieldsRej'],fields=FL,acts=acts,counts=cnt,scans=SCANS,cols=D35['cols']+['house','parents_raw'],fix=D43['fix'],
-       scanFiles=SF,scanBase=BASE,ord=D35['ord'],gz=D35['gz'],pairs=D35['pairs'],lata=[1797,1945],zakres='1797–1945',tytul='Baza zgonów Blinów 1797–1945',key='bazazgonow2')
+       scanFiles=SF,scanBase=BASE,ord=D35['ord'],gz=D35['gz'],pairs=D35['pairs'],lata=[1797,1945],zakres='1797–1945',tytul='Baza zgonów Blinów 1797–1945',key='bazazgonow3')
 t=open(SZ,encoding='utf-8').read()
 def sub(old,new,cnt=1):
     global t
