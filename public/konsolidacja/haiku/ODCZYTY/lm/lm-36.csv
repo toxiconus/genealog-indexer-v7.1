@@ -1,0 +1,30 @@
+﻿nr_wpisu_DB;rok;data_mm-dd;dom;nazwisko;imie;plec;wiek;rodzice;przyczyna_lac;przyczyna_pl;uwagi;pewnosc;strona_ksiegi;skan;miejscowosc
+845;1818;02-01;11;Szabat;Simon;M;46 lat;;Ordinaria;zwyczajna (śmierć zwyczajna);dzień niepewny (1 lub 2);?;68 L;lm-36;Brzozówka
+846;1818;08-21;31;Dobrzynski;Stanisław;M;1 rok;;Ordinaria;zwyczajna;wiek 1 (jednostka niewpisana, prawdop. rok);P;68 L;lm-36;Brzozówka
+847;1818;10-09;12;Machul;Kasper;M;60 lat;;Ab altero recisus? (nieczytelne);"?; może: zmarł nagle/ścięty? lekcja niepewna";"przyczyna nieczytelna; miesiąc 8bris=październik";?;68 L;lm-36;Brzozówka
+848;1819;01-16;32;Bigos;Marianna;F;3 lata;Andrzeja? i Katarzyny Bigosów;Ordinaria;zwyczajna;"dziecko; imię ojca niepewne; płeć z imienia";?;68 L;lm-36;Brzozówka
+849;1819;02-06;36;Koguc;Józef;M;0 mies.;Kazimierza i Zofii Koguców;Ordinaria;zwyczajna;"wiek 'm. 0' (niemowlę); imię ojca Casimiri";?;68 L;lm-36;Brzozówka
+850;1819;04-08;48;Paluch;Józef;M;30 lat;;Ordinaria;zwyczajna;;P;68 L;lm-36;Brzozówka
+851;1819;10-12;1;Koprowska;Katarzyna;F;1 rok?;Pawła i Marianny Koprowskich;Ordinaria;zwyczajna;wiek niepewny (d. 1 / 1);?;68 L;lm-36;Brzozówka
+852;1820;02-11;41;Tupaj;Franciszka;F;2 mies.;Wawrzyńca i Franciszki Tupajów;Ordinaria;zwyczajna;"dziecko; nazwisko z rodziców";P;68 L;lm-36;Brzozówka
+853;1820;02-14;32;Gnat;Tekla;F;22 lata;;Phtysis morbus? (nieczytelny początek);suchoty (gruźlica);żona Michała Gnata (uxor Michaelis Gnat);?;68 L;lm-36;Brzozówka
+854;1820;03-11;50;Gołębicki;Marcin;M;60 lat;;Naturalis;śmierć naturalna;"dzień niepewny; numer domu 50 lub 60";?;68 L;lm-36;Brzozówka
+;1820;03-30;1;Gochowa;Anastazja;F;30 lat;;Ordinaria;zwyczajna;"żona/wdowa Gocha (Gochowa); brak w DB";?;68 L;lm-36;Brzozówka
+855;1820;04-30;41;Tupaj;Wawrzyniec;M;46 lat;;Morbus paralyticus;paraliż (udar);dopisek o wizytacji/dacie '9 Maji 1820' nieczytelny;?;68 L;lm-36;Brzozówka
+856;1820;08-0?;14;Czernicka;Anna;F;36 lat;;Tempore partus;w czasie porodu;dzień nieczytelny (3 lub 6?);?;68 L;lm-36;Brzozówka
+;1820;08-10;24;Dobrzynski;Sebastian;M;37 lat;;Ordinaria;zwyczajna;brak w DB;P;68 L;lm-36;Brzozówka
+857;1820;08-16;39;Machul;Antonina;F;2 lata;Kacpra i Zofii Machulów;Ordinaria;zwyczajna;"imię dziecka Antonina/Antonius niepewne; w DB Antonina";?;68 L;lm-36;Brzozówka
+858;1820;11-??;14;Czernicka;Rozalia;F;3 mies.;Tomasza i Anny Czernickich;Ordinaria;zwyczajna;"miesiąc '9bris'=listopad, dzień nieczytelny; dopisek pod stroną: Pawel Słowicki? Comm. Loc.";?;68 L;lm-36;Brzozówka
+859;1821;01-15;43;Chorzymski;Józef;M;44 lata;;Repentina morte, ordinaria;nagła śmierć;;?;69 P;lm-36;Brzozówka
+860;1821;03-28;7;Zieliński;Józef;M;2 mies.;Wojciecha i Katarzyny Zielińskich;Ordinaria;zwyczajna;"dziecko; Josephus Adalberti";P;69 P;lm-36;Brzozówka
+861;1821;04-21;16;Dobrzynska;Katarzyna;F;5 lat;Wawrzyńca i Franciszki Dobrzyńskich;Ordinaria;zwyczajna;dziecko;?;69 P;lm-36;Brzozówka
+862;1821;04-21;46;Kamieniak;Wojciech;M;4 mies.;Ignacego i Agaty Kamieniaków;Ordinaria;zwyczajna;"Adalbertus=Wojciech; wiek 'm.4'";?;69 P;lm-36;Brzozówka
+863;1821;10-07;22;Barbarzak;Agnieszka;F;30 lat;;Cancer;rak;"Barbarzakowa; wiek 30 lub 36";?;69 P;lm-36;Brzozówka
+864;1822;02-10;24;Spryszak;Agnieszka;F;50 lat;;Phthisis;suchoty (gruźlica);Spryszakowa;P;69 P;lm-36;Brzozówka
+865;1822;03-28;23;Kopiwoda;Elżbieta;F;60 lat;;Naturalis;śmierć naturalna;Kopiwodzina;P;69 P;lm-36;Brzozówka
+866;1822;04-01;46;Kamieniak;Franciszka;F;70 lat;;Naturalis;śmierć naturalna;"rok niepewny: nagłówek 1823 pod datą; w DB rok 1823; Kamieniakowa";?;69 P;lm-36;Brzozówka
+867;1823;02-25;25;Kopiwoda;Wojciech;M;1 (dzień?);;Nata/Natu? (nieczytelne);?;"Adalbertus; wiek 1 bez jednostki (może dzień); rok 1823 nagłówek";?;69 P;lm-36;Brzozówka
+868;1823;02-16;29;Buczon;Jan;M;1 rok?;;Naturali;śmierć naturalna;wiek 1 bez jednostki;?;69 P;lm-36;Brzozówka
+869;1823;03-25;1;Soboniewska;Rozalia;F;30 hebd.?;;Naturali;śmierć naturalna;wiek 'Heb. 30' niepewny;?;69 P;lm-36;Brzozówka
+870;1823;03-27;30;Ogon;Antoni;M;1,5 roku;;Naturali;śmierć naturalna;wiek 1½;P;69 P;lm-36;Brzozówka
+871;1823;04-15;31;Chwetek;Kasper;M;60 lat;;Naturali;śmierć naturalna;;P;69 P;lm-36;Brzozówka
