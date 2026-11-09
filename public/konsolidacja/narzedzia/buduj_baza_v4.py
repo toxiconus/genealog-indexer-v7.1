@@ -132,6 +132,9 @@ def is_child(age):
     m=re.search(r'\d+',a);return bool(m and int(m.group())<15)
 def fill_markers(ai):
     ch=is_child(ai.get('age'))
+    ln=(ai.get('deceased_last_name') or '').strip()
+    if ai.get('father_first_name') and not ai.get('father_last_name') and ln and not ln.startswith('['):
+        ai['father_last_name']=ln
     for f in ('house','age','deceased_status','deceased_last_name','profession'):
         if not ai.get(f):ai[f]='[-]' if (f=='profession' and ch) else '[_]'
     hasp=bool(ai.get('parents_raw') or ai.get('father_first_name'))
