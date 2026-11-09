@@ -551,7 +551,7 @@ function renderAct(){ const a = AM[S.cur]; const m = $('main'); if (!a){ m.inner
   bOkLabel();
   const s = st(a.id), FS = fieldsOf(a); const nm = a.kind ? titleOf(a) : nmOf(a);
   const unc = a.ai ? FS.filter(f => isUnc(a,f.id) && !s.f[f.id]?.ok && !s.f[f.id]?.skip).length : 0; const qa = a.kind ? null : missingAudit(a, FS), nRel = a.kind ? 0 : relFor(a).length, nOkF = FS.filter(f => s.f[f.id]?.ok).length;
-  let h = `<div class="card ahd"><div class="hd"><b>${a.kind?'':a.year+' · akt '+a.act+' · '}${nm}</b><span class="muted">${s.done?'✓ zatwierdzony':'do weryfikacji'}${a.ai?'':' · tylko indeks Lubgens'}</span></div>${qa ? `<div class="cnt"><span class="${qa.conflicts.length?'c1':''}">${qa.conflicts.length} konfl.</span><span class="${qa.gaps.length?'c2':''}">${qa.gaps.length} braków</span><span class="${qa.uncertain.length?'c3':''}">${qa.uncertain.length} niepewn.</span><span>${nRel} rodz.</span><span>${nOkF}/${FS.length} pól ✓</span></div>` : ''}
+  let h = `<div class="card ahd"><div class="hd"><b>${a.kind?'':a.year+' · akt '+a.act+' · '}${nm}</b><span class="muted">${s.done?'✓ zatwierdzony':'do weryfikacji'}${a.ai?'':' · tylko indeks Lubgens'}</span></div>${qa ? `<div class="cnt" data-sigopen="1" style="cursor:pointer" title="Pokaż listę braków i kontroli"><span class="${qa.conflicts.length?'c1':''}">${qa.conflicts.length} konfl.</span><span class="${qa.gaps.length?'c2':''}">${qa.gaps.length} braków</span><span class="${qa.uncertain.length?'c3':''}">${qa.uncertain.length} niepewn.</span><span>${nRel} rodz.</span><span>${nOkF}/${FS.length} pól ✓</span></div>` : ''}
    ${a.cmp?`<div class="muted" style="margin-top:4px">Porównanie: ${esc(a.cmp)}</div>`:''}
    <div class="chips"><label class="muted">Skan:&nbsp;<select id="selScan">${Object.keys(allScans()).map(k => `<option ${k===scanOf(a)?'selected':''}>${k}</option>`).join('')}<option value="">— brak —</option></select></label>
    ${a.tekst?`<button class="sm pri" id="cText">Aa Tekst aktu (pola w tekście)</button>`:''}<button class="sm chip ${S.hideOk?'sel':''}" id="tHideOk">👁 Ukryj zatwierdzone pola</button><button class="sm chip ${S.hideMk!==false?'sel':''}" id="tHideMk">∅ Ukryj puste [_] [-]</button><button class="sm chip ${S.onlyFix?'sel':''}" id="tOnlyFix" title="Pokaż tylko pola niepewne, ze znakiem ? lub wskazane przez audyt">⚠ Tylko do poprawy</button></div>
@@ -596,6 +596,7 @@ function renderAct(){ const a = AM[S.cur]; const m = $('main'); if (!a){ m.inner
   m.innerHTML = h.replace('</div><div class="card">', '</div>' + (nSig ? `<details class="sig" ${SIGO ? 'open' : ''}><summary>⚑ Sygnały i kontrole: ${nSig} (audyt, Lubgens, rodzina)</summary>${sigH}</details>` : '') + '<div class="card">') + '</div>';
   m.querySelectorAll('details.rel').forEach(d => d.ontoggle = () => { if (!!S.relOpen !== d.open) { S.relOpen = d.open; save(); } });
   { const sg = m.querySelector('details.sig'); if (sg) sg.ontoggle = () => { SIGO = sg.open; }; }
+  m.querySelectorAll('[data-sigopen]').forEach(c => c.onclick = () => { const sg = m.querySelector('details.sig'); if (!sg) { toast('Brak sygnałów do pokazania', 2500); return; } sg.open = true; SIGO = true; const aud = sg.querySelector('details.card'); if (aud) aud.open = true; sg.scrollIntoView({block:'start', behavior:'smooth'}); });
   m.querySelectorAll('.grp .gh').forEach(hd => hd.onclick = e => { if (e.target.closest('button')) return; const g = hd.parentElement; g.classList.toggle('shut'); GO[a.id + ':' + g.dataset.gid] = g.classList.contains('shut') ? 0 : 1; });
 
   m.querySelectorAll('.chip[data-f]').forEach(b => b.onclick = () => setf(a, b.dataset.f, b.dataset.v, b.dataset.s));
@@ -912,7 +913,7 @@ const missingAudit = (a, FS) => {
   const label = id => FS.find(f => f.id === id)?.label || (D.fields.find(f => f.id === id)?.label) || id;
   const val = id => clean(getv(a,id));
   const baseVal = id => clean(a.lub?.[id]);
-  const addGap = (id, why) => { if (!val(id) && !gaps.some(x=>x.id===id)) gaps.push({id,label:label(id),why}); };
+  const addGap = (id, why) => { if (!FS.some(f => f.id === id)) return; if (!val(id) && !gaps.some(x=>x.id===id)) gaps.push({id,label:label(id),why}); };
   const addGapMaiden = () => { if (val('deceased_sex') === 'K' && !val('deceased_maiden_name') && val('father_last_name')) addGap('deceased_maiden_name', 'brak nazwiska rodowego – wynika z nazwiska ojca (' + val('father_last_name') + ')'); };
   const addCheck = (id, why) => { if (!checks.some(x=>x.id===id&&x.why===why)) checks.push({id,label:label(id),why}); };
   addGapMaiden();
