@@ -72,6 +72,8 @@ for fn in sorted(glob.glob(R+'haiku/ODCZYTY/*_dom_przyczyny.csv'))+sorted(glob.g
             n=int(x['nr_wpisu_DB']);a=idxact.get((yr,n))
             if not a and len(bynr.get(n,[]))==1 and abs(bynr[n][0]['year']-yr)<=1:a=bynr[n][0]
         loc=(x.get('miejscowosc') or 'Blinów').strip() or 'Blinów'
+        lac=x['przyczyna_lac'];mag=re.match(r'^\s*(Agricola|Agricolarum)\b[\s,/-]*(.*)$',lac,re.I)
+        if mag:x=dict(x);x['przyczyna_lac']=mag.group(2).strip(' /,-');x['_stan']='Agricola'
         ai={'deceased_last_name':x['nazwisko'],'deceased_first_name':x['imie'],'deceased_sex':x['plec'][:1] if x['plec'][:1] in 'MK' else '',
             'death_place':loc,'deceased_residence':loc,'age':x['wiek'],'house':x['dom'],'cause_of_death':x['przyczyna_pl']+(' ('+x['przyczyna_lac']+')' if x['przyczyna_lac'] else '')}
         if not ai['cause_of_death'].strip() or ai['cause_of_death']=='brak przyczyny':ai['cause_of_death']='brak w akcie'
@@ -79,7 +81,13 @@ for fn in sorted(glob.glob(R+'haiku/ODCZYTY/*_dom_przyczyny.csv'))+sorted(glob.g
         elif x['data_mm-dd']:ai['death_date']='%s-%s'%(x['rok'],x['data_mm-dd'])
         pr=x['rodzice'].strip()
         if pr:ai['parents_raw']=pr
-        ai['notes']=x['uwagi']
+        if x.get('_stan'):ai['deceased_status']=x['_stan']
+        un=x['uwagi'];ms=re.search(r'(?:^|, )stan: ([^,]+)',un)
+        if ms:
+            st=ms.group(1).strip()
+            if st!='brak w akcie':ai['deceased_status']=st
+            un=(un[:ms.start()]+un[ms.end():]).strip(', ').strip()
+        ai['notes']=un
         unc=[f for f,v in ai.items() if '?' in str(v)]
         if x['pewnosc']=='?' and not unc:unc=['notes']
         if not a:

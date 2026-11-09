@@ -1,14 +1,14 @@
 ﻿nr_wpisu_DB;rok;data_mm-dd;dom;nazwisko;imie;plec;wiek;rodzice;przyczyna_lac;przyczyna_pl;uwagi;pewnosc;strona_ksiegi;skan;miejscowosc
-22;1798;04-13;42;Solarz;Ewa;F;76?;;Agricola Morbus Naturalis;śmierć naturalna;stan: Agricola (rolnik), jednostka wieku: Ann., wiek 76 lub 78, dopisek proboszcza Michał Pawlikowski pochował na miejscu (Ego Michael Pawlikowski ... loci sepelivi) i adnotacja komendanta z 25 kwietnia;?;L;lm-4;Blinów
-23;1798;05-06;81?;Jędrzyczak;Stanisław;M;21;;Agricola Naturalis;śmierć naturalna;stan: Agricola (rolnik), jednostka wieku: Ann., dzień 6 niepewny, dom 81 niepewny, przy nazwisku znak przed Jędrzyczak;?;L;lm-4;Blinów
-24;1798;05-20;46;Kurczakowa;Wiktoria;F;11;;Agricola Naturalis;śmierć naturalna;stan: Agricola (rolnik), jednostka wieku: Ann., zapis Kurczahowa przy wieku 11 lat (córka?);P;L;lm-4;Blinów
-25;1798;07-26;8?;Kopyt;Jan;M;2;;Agricola Naturalis;śmierć naturalna;stan: Agricola (rolnik), jednostka wieku: Ann., dom 8 niepewny;?;L;lm-4;Blinów
-26;1798;08-20;105;Kożakowa;Agnieszka;F;30;;Agricola Morbus Naturalis;śmierć naturalna;stan: Agricola (rolnik), jednostka wieku: Ann.;P;L;lm-4;Blinów
-27;1798;08-20;26;Wołoszynowna;Zofia;F;9;;Agricola Morbus;śmierć naturalna;stan: Agricola (rolnik), jednostka wieku: Ann., bez słowa Naturalis;P;L;lm-4;Blinów
-28;1798;09-15;;Kurczakowna;Marianna;F;3;;Agricola Morbus Naturalis;śmierć naturalna;stan: Agricola (rolnik), jednostka wieku: Ann., brak numeru domu;P;L;lm-4;Blinów
-29;1798;11-28;44;Cieckowa;Zofia;F;70;;Agricola Morbus Naturalis;śmierć naturalna;stan: Agricola (rolnik), jednostka wieku: Ann.;P;P;lm-4;Blinów
-30;1798;12-03;27;Pawłasek;Andrzej;M;m.1;;Agricola Morbus Naturalis;śmierć naturalna;stan: Agricola (rolnik), jednostka wieku: Mens., dzień 3 odczyt prawdopodobny;P;P;lm-4;Blinów
-31;1798;12-23;30;Sobotka;Jakub;M;2;;Agricola Morbus Naturalis;śmierć naturalna;stan: Agricola (rolnik), jednostka wieku: Ann. (odczyt jednostki niepewny);?;P;lm-4;Blinów
+22;1798;04-13;42;Solarz;Ewa;F;76?;;Agricola Morbus Naturalis;śmierć naturalna;stan: Agricola, jednostka wieku: Ann., wiek 76 lub 78, dopisek proboszcza Michał Pawlikowski pochował na miejscu (Ego Michael Pawlikowski ... loci sepelivi) i adnotacja komendanta z 25 kwietnia;?;L;lm-4;Blinów
+23;1798;05-06;81?;Jędrzyczak;Stanisław;M;21;;Agricola Naturalis;śmierć naturalna;stan: Agricola, jednostka wieku: Ann., dzień 6 niepewny, dom 81 niepewny, przy nazwisku znak przed Jędrzyczak;?;L;lm-4;Blinów
+24;1798;05-20;46;Kurczakowa;Wiktoria;F;11;;Agricola Naturalis;śmierć naturalna;stan: Agricola, jednostka wieku: Ann., zapis Kurczahowa przy wieku 11 lat (córka?);P;L;lm-4;Blinów
+25;1798;07-26;8?;Kopyt;Jan;M;2;;Agricola Naturalis;śmierć naturalna;stan: Agricola, jednostka wieku: Ann., dom 8 niepewny;?;L;lm-4;Blinów
+26;1798;08-20;105;Kożakowa;Agnieszka;F;30;;Agricola Morbus Naturalis;śmierć naturalna;stan: Agricola, jednostka wieku: Ann.;P;L;lm-4;Blinów
+27;1798;08-20;26;Wołoszynowna;Zofia;F;9;;Agricola Morbus;śmierć naturalna;stan: Agricola, jednostka wieku: Ann., bez słowa Naturalis;P;L;lm-4;Blinów
+28;1798;09-15;;Kurczakowna;Marianna;F;3;;Agricola Morbus Naturalis;śmierć naturalna;stan: Agricola, jednostka wieku: Ann., brak numeru domu;P;L;lm-4;Blinów
+29;1798;11-28;44;Cieckowa;Zofia;F;70;;Agricola Morbus Naturalis;śmierć naturalna;stan: Agricola, jednostka wieku: Ann.;P;P;lm-4;Blinów
+30;1798;12-03;27;Pawłasek;Andrzej;M;m.1;;Agricola Morbus Naturalis;śmierć naturalna;stan: Agricola, jednostka wieku: Mens., dzień 3 odczyt prawdopodobny;P;P;lm-4;Blinów
+31;1798;12-23;30;Sobotka;Jakub;M;2;;Agricola Morbus Naturalis;śmierć naturalna;stan: Agricola, jednostka wieku: Ann. (odczyt jednostki niepewny);?;P;lm-4;Blinów
 32;1799;01-03;56;Pcionek;Szymon;M;7;;Morbus et Mors Naturalis;śmierć naturalna;stan: brak w akcie, jednostka wieku: Ann.;P;P;lm-4;Blinów
 33;1799;02-06;47;Kupiec;Antoni;M;18;;In Variolis Malignis;ospa złośliwa;stan: brak w akcie, jednostka wieku: Ann., dzień 6 niepewny;?;P;lm-4;Blinów
 34;1799;02-06;46;Kurczak;Andrzej;M;40;;Morbus et Mors Naturalis;śmierć naturalna;stan: brak w akcie, jednostka wieku: Ann., dzień 6 (ditto) niepewny;?;P;lm-4;Blinów
