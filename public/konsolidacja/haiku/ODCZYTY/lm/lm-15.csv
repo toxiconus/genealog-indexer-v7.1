@@ -1,0 +1,31 @@
+﻿nr_wpisu_DB;rok;data_mm-dd;dom;nazwisko;imie;plec;wiek;rodzice;przyczyna_lac;przyczyna_pl;uwagi;pewnosc;strona_ksiegi;skan;miejscowosc
+290;1809;12-13;120;Woytalas;Joannes;M;54;;Agricola ratio mortis Epidemia;epidemia;rolnik;P;26;lm-15;Blinów
+291;1810;01-14;112;Kaczyńska;Agnes;F;2;Andreae et Agathae Kaczyńskich;;;nagłówek roku 1810 w rubryce;P;26;lm-15;Blinów
+292;1810;01-17;46;Machawina;Catharina;F;80;;Naturalis;śmierć naturalna;nazwisko Machawina? wiek 80 lub 86;?;26;lm-15;Blinów
+293;1810;02-08;112;Michałkowa;Agnes;F;70;;Naturalis;śmierć naturalna;dzień 8 niepewny;?;26;lm-15;Blinów
+294;1810;02-09;104;Kurczakowa;Anna;F;70;;Naturalis;śmierć naturalna;dzień 9 niepewny;?;26;lm-15;Blinów
+295;1810;03-05;;Michałek;Blasius;M;36;;Epidemicus morbus;choroba epidemiczna;w księdze wpisano rok 1809 Anno (pomyłka pisarza?), numer domu pusty;?;26;lm-15;Blinów
+296;1810;03-07;77;Bosak;Michael;M;11;Francisci et Annae Bosakow;Naturalis;śmierć naturalna;;P;26;lm-15;Blinów
+297;1810;03-15;31;Pasternak;Simon;M;90;;Naturalis;śmierć naturalna;;P;26;lm-15;Blinów
+298;1810;03-16;79;Graboszczonka;Hedwigis;F;1;Josephi? et Mariannae Graboszczonków;Naturalis;śmierć naturalna;imię rodzica niepewne;?;26;lm-15;Blinów
+299;1810;03-20;79;Graboska;Marianna;F;26;;Laboriosa? Naturalis;śmierć naturalna;Virgo=panna, pierwsze słowo przyczyny niepewne;?;26;lm-15;Blinów
+300;1810;03-21;61;Bosak;Anna;F;1;Joannis et Franciscae Bosakow;Hectica;suchoty;;P;26;lm-15;Blinów
+301;1810;05-16;21;Szast?;Matthaeus;M;2;Matthiae et Annae Szastów?;Typhus?;tyfus;nazwisko niepewne;?;26;lm-15;Blinów
+302;1810;05-26;100;Pasternakowa;Catharina;F;70;;Agricola Senectus;starość;miesiąc czytany jako Mai (wygląda jak Mart.) wg kolejności;?;26;lm-15;Blinów
+303;1810;07-29;101;Kosidło;Simon;M;80;;Agricola commotio sanguinis?;wstrząs lub krwotok? (niepewne);przyczyna niepewna;?;26;lm-15;Blinów
+304;1810;08-05;12;Kopyt;Joannes;M;60;;Agricola Ordinaria;zwykła śmierć?;;P;26;lm-15;Blinów
+305;1810;08-21;82;Pastygowa;Anna;F;70;;Agricola Senectus;starość;;P;27;lm-15;Blinów
+306;1810;08-26;41;Krupa?;Antonius;M;3 mens.;Matthiae et Agnetis Krupów? Agricolarum;Variolis Malignis;ospa złośliwa;nazwisko wg rodziców niepewne;?;27;lm-15;Blinów
+307;1810;09-02;111;Samul;Thomas;M;4;Gregorii et Salomeae Samulów Agricolarum;Diaria?;biegunka? (niepewne);przyczyna niepewna;?;27;lm-15;Blinów
+308;1810;09-18;28;Piech;Marianna;F;1;Andreae et Mariannae Piechów;Naturalis;śmierć naturalna;dzień 18 niepewny;?;27;lm-15;Blinów
+309;1810;09-25;7;Kaczyński;Casimirus;M;70;;Naturalis;śmierć naturalna;data zapisana jako ditto (25 7bris);P;27;lm-15;Blinów
+310;1810;10-09;1;Pepesonów?;Pelagia;F;6;Francisci et Franciscae Semonow? Pepesonów? Blinoviensis;Typhus?;tyfus;nazwisko i rodzice nieczytelni, przyczyna wg Thuf?;?;27;lm-15;Blinów
+311;1810;10-22;1;Mazurowa;Apolonia;F;36;;Agricola tempore partus;w czasie porodu;;P;27;lm-15;Blinów
+312;1810;10-29;30;Sobudkowa;Catharina;F;41;;Agricola Epidemia;epidemia;;P;27;lm-15;Blinów
+313;1810;11-20;98;Samulowa;Hedwigis;F;60;;Agricola Naturalis;śmierć naturalna;dom 98 lub 90;?;27;lm-15;Blinów
+314;1811;02-27;23;Samolów;Matthaeus;M;2;Laurentii et Anastasiae Samolów Agricolarum;;;nagłówek roku 1811 nad datą, brak przyczyny;P;27;lm-15;Blinów
+315;1811;03-25;117;Pazdrak;Antonius;M;30;;Agricola Naturalis;śmierć naturalna;wiek 30 lub 36;?;27;lm-15;Blinów
+316;1811;03-29;70;Wcisłowa;Regina;F;70;;Agricola Ordinaria;zwykła śmierć?;;P;27;lm-15;Blinów
+317;1811;03-09;20;Samulowa;Catharina;F;56;;Agricola Ordinaria;zwykła śmierć?;miesiąc czytany jako Mart. choć po 29 III (może IV);?;27;lm-15;Blinów
+318;1811;04-19;65;Kurczakowa;Marianna;F;66;;Agricola Ordinaria;zwykła śmierć?;;P;27;lm-15;Blinów
+319;1811;06-14;87;Woytowicz;Marianna;F;1;Joannis et Agnetis Woytowiczów;ratio mortis Diaria?;biegunka? (niepewne);przyczyna niepewna;?;27;lm-15;Blinów

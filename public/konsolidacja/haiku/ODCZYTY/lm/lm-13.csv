@@ -1,0 +1,28 @@
+﻿nr_wpisu_DB;rok;data_mm-dd;dom;nazwisko;imie;plec;wiek;rodzice;przyczyna_lac;przyczyna_pl;uwagi;pewnosc;strona_ksiegi;skan;miejscowosc
+235;1807;11-03;77;Mazur;Katarzyna;K;56?;;morbus hectica;suchoty;Mazurowa, rolniczka? stan nie wyraznie;?;22L;lm-13;Blinów
+236;1807;11-03;41;Krupa;Maciej;M;6?;Mathiae et Agnetis Krupow;post prolixam debilitatem;po dlugotrwalym oslabieniu;imie Mathias, wiek niepewny (cyfra z dopiskiem), przyczyna niepewna;?;22L;lm-13;Blinów
+237;1808;01-03;5;Dziura;Tomasz;M;86;;senectus;starosc;Thomas Dziura, rolnik;P;22L;lm-13;Blinów
+238;1808;01-05;83;Paciorek;Szymon;M;76;;senectus;starosc;rolnik;P;22L;lm-13;Blinów
+239;1808;01-13;80;Graboska?;Marianna;K;76;;senectus;starosc;Graboska lub Grabowska, rolniczka;?;22L;lm-13;Blinów
+240;1808;01-29;10;Samul;Agnieszka;K;76;;senectus;starosc;Agnes Samulowa, rolniczka;P;22L;lm-13;Blinów
+241;1808;02-03;73;Wcisło;Franciszka;K;5;Josephi et Mariannae Wcisłow;morbus hydropicus;puchlina wodna;rolnicy;P;22L;lm-13;Blinów
+242;1808;03-06?;34;Pasternak;Małgorzata;K;42;;dolor ventris;bol brzucha;Margaritha Pasternakowa, rolniczka, dzien 6 lub 9;?;22L;lm-13;Blinów
+243;1808;03-14;44;Kendziora;Józef;M;6;Antonii et Theclae Kendziorow;dolor gutturis;bol gardla;rolnicy;P;22L;lm-13;Blinów
+244;1808;03-24;28;Baran;Franciszka;K;90;;senectus;starosc;Franciscа Baranowa, rolniczka;P;22L;lm-13;Blinów
+245;1808;03-24;34;Pasternak;Marcin;M;5 mens.;Christophori et Margarithae Pasternak;thysis;tyfus;rolnicy;P;22L;lm-13;Blinów
+246;1808;03-26;79;Besacka?;Regina;K;18;;dolor ventris;bol brzucha;nazwisko niepewne (DB: B...ka), rolniczka;?;22L;lm-13;Blinów
+247;1808;03-30;44;Kendziora;Stanisław;M;4;Antonii et Theclae Kendziorow;dolor gutturis;bol gardla;rolnicy;P;22L;lm-13;Blinów
+248;1808;04-02;63;Dobrzyńska;Marianna;K;1?;Josephi et Agnetis Dobrzynskich;ante tempus nata;urodzona przedwczesnie;rolnicy, wiek niepewny (1 z dopiskiem 6 nad cyfra);?;23P;lm-13;Blinów
+249;1808;04-13;90;Pawłasek;Zuzanna;K;49;;morbus hectica;suchoty;Pawlaskowa, rolniczka;P;23P;lm-13;Blinów
+250;1808;04-15;35;Kudrelek;Andrzej;M;28;;dolor stomachi;bol zoladka;rolnik;P;23P;lm-13;Blinów
+251;1808;08-03;86;Michałek;Szymon;M;4;Adalberti et Catharinae Michałków;thysis;tyfus;rolnicy, data 3 lub 5 sierpnia;?;23P;lm-13;Blinów
+252;1808;08-15;59?;Kurczak;Antoni;M;1;Joannis et Agathae Kurczakow;thysis;tyfus;rolnicy, numer domu 53 lub 59;?;23P;lm-13;Blinów
+253;1808;08-15;78?;Jakubaszek;Marianna;K;1;Bartholomaei et Sophiae Jakubaszków;dolor ventris;bol brzucha;rolnicy, numer domu 76 lub 78;?;23P;lm-13;Blinów
+254;1808;08-18;100;Ratai;Katarzyna;K;5 mens.?;Valentini et Mariannae Ratajów;dolor ventris?;bol brzucha?;wiek i przyczyna niepewne, w kolumnie plci zaznaczone obie;?;23P;lm-13;Blinów
+255;1808;08-18;118;Pawłasek;Katarzyna;K;1;Josephi et Catharinae Pawłasków;dolor dentis?;bol zebow?;przyczyna niepewna;?;23P;lm-13;Blinów
+256;1808;08-19;94?;Kosidło;Marianna;K;1;Joannis et Franciscae Kosidłów;dolor ventris;bol brzucha;rolnicy, numer domu 84 lub 94;?;23P;lm-13;Blinów
+257;1808;08-19;29;Pcionek;Mateusz;M;8?;Stanislai et Hedvigis Pcionków?;dolor ventris;bol brzucha;imie matki i nazwisko niepewne, wiek 8 bez jednostki;?;23P;lm-13;Blinów
+258;1808;08-20;116;Michałek;Józef;M;6;Thomae et Mariannae Michałków;dolor ventris;bol brzucha;rolnicy;P;23P;lm-13;Blinów
+259;1808;08-22;89;Paciorek;Anna;K;4 mens.;Mathiae et Franciscae Paciorków;thysis;tyfus;rolnicy;P;23P;lm-13;Blinów
+260;1808;08-23;19;Gurzela?;Anna;K;66;;senectus;starosc;Anna Gurzelowa, rolniczka;?;23P;lm-13;Blinów
+261;1808;08-23;88;Dobrzyński;Szymon;M;1;Andreae et Anastasiae? Dobrzynskich;dolor ventris?;bol brzucha?;tekst blady, imie matki i przyczyna niepewne;?;23P;lm-13;Blinów

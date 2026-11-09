@@ -1,0 +1,28 @@
+﻿nr_wpisu_DB;rok;data_mm-dd;dom;nazwisko;imie;plec;wiek;rodzice;przyczyna_lac;przyczyna_pl;uwagi;pewnosc;strona_ksiegi;skan;miejscowosc
+208;1806;03-16;16;Kaczyńska;Agnes;F;60?;;ratio mortis morbus paralyticus;paraliż;wiek 60 niepewny, rolnik (agricola);?;L;lm-12;Blinów
+209;1806;03-16;11;;Andreas;M;1;Caroli et Dorothae Kosidłów (?);ratio mortis in variolis malignis;ospa złośliwa;nazwisko z rodziców, rolnicy, odczyt rodziców niepewny;?;L;lm-12;Blinów
+210;1806;03-17;75;Wcisło;Lucas;M;2;Bartholomaei et Agnetis Wcisłów;in variolis malignis mortuus;ospa złośliwa;rolnicy;?;L;lm-12;Blinów
+211;1806;04-21;169;Bożak;Sophia;F;m.1;Adalberti et Annae Bożaków;ratio mortis debilitas post partum;osłabienie po porodzie;rolnicy, dom 169 niepewny;?;L;lm-12;Blinów
+212;1806;04-28;43;Jędrzyczak;Anna;F;70;;ratio mortis senectus;starość;nazwisko Jędrzyczakowa;P;L;lm-12;Blinów
+213;1806;04-28;56;Mciorek;Antonius;M;60;;ratio mortis senectus;starość;rolnik, nazwisko niepewne (Mcionek/Mciorek);?;L;lm-12;Blinów
+214;1806;06-06;11;Kosidło;Simon;M;1;Pauli et Catharinae Kosidłów;ratio mortis mortus paralyticus;paraliż;rolnicy;?;L;lm-12;Blinów
+215;1806;06-29;20;Jędrzyczak;Marianna;F;m.3;Adalberti et Catharinae Jędrzyczaków;ratio mortis morbus hecticus;suchoty;;?;L;lm-12;Blinów
+216;1806;06-29;34;Pasternak;Marianna;F;1;Christophori et Margarithae Pasternaków;ratio mortis ordinaria;śmierć zwykła;;P;L;lm-12;Blinów
+217;1806;07-29;61;Kosidło;Josephus;M;60;;ratio mortis senectus;starość;rolnik;P;L;lm-12;Blinów
+218;1806;10-03;58;Kurczak;Simon;M;3;Jacobi et Annae Kurczaków;morbus febris? - nieczytelne;gorączka?;dom i przyczyna niepewne;?;L;lm-12;Blinów
+219;1806;10-26;9;Pawłasek;Marianna;F;60;;morbus paralyticus;paraliż;Pawłaskowa, rolnik;P;L;lm-12;Blinów
+220;1806;11-04;100;Rataj;Catharina;F;m.3;Valentini et Mariannae Ratajów;przyczyna nieczytelna;?;dzień 4 niepewny;?;L;lm-12;Blinów
+221;1806;11-13;4;Sokół;Josephus;M;m.9;Andreae et Mariannae Sokołów;in variolis malignis;ospa złośliwa;dzień 13 niepewny;?;L;lm-12;Blinów
+222;1806;12-22;96;Pawłasek;Adam;M;56;;morbus hydropicus;puchlina wodna;rolnik;P;P;lm-12;Blinów
+223;1807;01-07;12;Kopyt;Marianna;F;m.4;Thomae et Mariannae Kopytów;in variolis malignis;ospa złośliwa;rolnicy, wiek niepewny;?;P;lm-12;Blinów
+224;1807;01-12;6;Partyga;Michael;M;1;Adalberti et Hedwigis Partygów;in variolis malignis;ospa złośliwa;rolnicy;P;P;lm-12;Blinów
+225;1807;02-27;49;Pazdrak;Matthaeus;M;26;;ratio mortis dolor capitis;ból głowy;miles S.R.C.Mtis (żołnierz);?;P;lm-12;Blinów
+226;1807;05-15;27;Pawłasek;Marianna;F;m.2;Stanislai et Sophiae Pawłasków;ratio mortis debilitas post partum;osłabienie po porodzie;rolnicy;P;P;lm-12;Blinów
+227;1807;05-24;62;Piech;Thomas;M;m.6;Joannis et Catharinae Piechów;ratio mortis thypsis;tyfus;rolnicy;P;P;lm-12;Blinów
+228;1807;05-28;74;Kosidło;Mathias;M;54;;ratio mortis morbus S. Valentini;padaczka;rolnik, pod aktem dopisek o spisie konskrypcji Blinów 4 Jan 1807 z podpisem, odczyt niepewny;?;P;lm-12;Blinów
+229;1807;06-10;7;Kaczyńska;Marianna;F;m.2?;Mathiae et Franciscae Kaczyńskich;ratio mortis thypsis;tyfus;rolnicy, dzień niepewny;?;P;lm-12;Blinów
+230;1807;06-26;68;Dobrzyńska;Anna;F;m.12?;Josephi et Agnetis Dobrzyńskich;ratio mortis thypsis;tyfus;wiek niepewny;?;P;lm-12;Blinów
+231;1807;07-01;62;Machulek;Thomas;M;m.6;Adalberti et Catharinae Machulków;ratio mortis thypsis;tyfus;rolnicy;P;P;lm-12;Blinów
+232;1807;07-19;8;Pasternak;Agnes;F;2;Adalberti et Hedwigis Pasternaków;ratio mortis thypsis;tyfus;;P;P;lm-12;Blinów
+233;1807;08-16;42;;Anna;F;m.6;Francisci Kapłowy?;ratio mortis thypsis;tyfus;nazwisko rodziców nieczytelne;?;P;lm-12;Blinów
+234;1807;09-12;33;Pasternak;Simon;M;m.11?;Joannis et Annae Pasternaków;ratio mortis dolor ventris?;ból brzucha?;przyczyna i wiek niepewne;?;P;lm-12;Blinów

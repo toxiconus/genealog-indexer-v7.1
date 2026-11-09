@@ -1,0 +1,29 @@
+﻿nr_wpisu_DB;rok;data_mm-dd;dom;nazwisko;imie;plec;wiek;rodzice;przyczyna_lac;przyczyna_pl;uwagi;pewnosc;strona_ksiegi;skan;miejscowosc
+351;1812;02-16;10;Michałek;Franciszka;K;?;Josephi et Franciscae Michałków;ratio mortis Diarea;biegunka;dziecko, wiek nieczytelny (M.D?), rodzice wg odczytu niepewni;?;L;lm-17;Blinów
+352;1812;03-17;85;Kozaczek;Stanisław;M;60;;Mors Naturalis;śmierć naturalna;;P;L;lm-17;Blinów
+353;1812;04-03;1;Osmulski;Jan;M;46;;Morbus Hydropicus;puchlina wodna;;P;L;lm-17;Blinów
+354;1812;04-12;102;Maruzka;Błażej (Blasius);M;42;;ratio mortis Thypsis;tyfus;imię Blasius wg odczytu;P;L;lm-17;Blinów
+355;1812;04-19;3;Zaręba;Katarzyna;K;48;;Agricola Thypsis;rolnik, tyfus;nazwisko Zarębina, zapis nazwiska niepewny;?;L;lm-17;Blinów
+356;1812;04-29;102;Kosidło;Agnieszka;K;26;;Agricola Thypsis;rolnik, tyfus;Kosidłowa;P;L;lm-17;Blinów
+357;1812;06-07;82;Michałek;Wojciech;M;36;;Agricola Diarea;rolnik, biegunka;Adalbertus;P;L;lm-17;Blinów
+358;1812;07-23;60;Obydz;Paweł;M;60;;Ordinaria;zwykła naturalna;nazwisko Obyde/Obydz;P;L;lm-17;Blinów
+359;1812;10-14;109;Mcionek;Andrzej;M;66;;Naturalis;naturalna;wiek 66 lub 86;?;L;lm-17;Blinów
+360;1812;10-17;60;Mcionek;Małgorzata;K;56;;Naturalis;naturalna;Mcionkowa;P;L;lm-17;Blinów
+361;1812;11-12;26;Jarzyńska;Zofia;K;66;;Naturali;naturalna;;P;L;lm-17;Blinów
+362;1812;12-17;56;Kurczak;Antoni;M;36;;Thypsis;tyfus;;P;L;lm-17;Blinów
+363;1812;12-26;39;Samul;Jadwiga;K;36;;Hectica;suchoty;Samulowa;P;L;lm-17;Blinów
+364;1812;12-29;16;Bogoń;Katarzyna;K;3;Matthiae et Marianne Bogoń;Thypsis;tyfus;imię matki i nazwisko niepewne;?;L;lm-17;Blinów
+365;1813;01-28;6;Sięgczyna;Marianna;K;60;;Naturalis;naturalna;data 28 niepewna, nazwisko niepewne;?;P;lm-17;Blinów
+366;1813;03-13;63;Kozaczek;Tomasz;M;1;Mathiae et Catharinae Kozaczków;in Variolis malignis;ospa złośliwa;nazwisko rodziców niepewne;?;P;lm-17;Blinów
+367;1813;03-19;36;Sobudka;Jakub;M;4;Casimiri et Catharinae Sobudków;Naturalis;naturalna;;P;P;lm-17;Blinów
+368;1813;04-05;6;Sięgka;Wojciech;M;60;;Naturalis Agricola;naturalna, rolnik;Adalbertus Sięgka, nazwisko niepewne;?;P;lm-17;Blinów
+369;1813;04-14;9;Pawłasek;Marianna;K;2;Adalberti et Marianne Pawłasków;in Variolis malignis;ospa złośliwa;;P;P;lm-17;Blinów
+370;1813;04-29;31;Pawłasek;Marianna;K;60;;Naturalis;naturalna;Pawłasiowa;P;P;lm-17;Blinów
+371;1813;05-13;88;Pawłasek;Tomasz;M;16;Blasii et Susanne Pawłasków;Morbus paraliticus;paraliż;numer domu niepewny;?;P;lm-17;Blinów
+;1813;06-15;34;Pastornak;Andrzej;M;?;Christophori et Catharinae Pastornaków;Ordinaria;zwykła naturalna;nazwisko rodziców niepewne, wiek M.8? nieczytelny, brak w bazie;?;P;lm-17;Blinów
+372;1813;06-12;48;Jędrzyczak;Wojciech;M;40;;febris putrida;febra gnilna;wiek 40 lub 46, kolejność dat w księdze 15.06 przed 12.06;?;P;lm-17;Blinów
+373;1813;07-02;103;Kosidło;Agnieszka Zofia;K;2;;inflammatio Gutturis;zapalenie gardła;Kosidłówna;P;P;lm-17;Blinów
+374;1813;07-12;22;Bato;Katarzyna;K;56;;Epidemia;choroba epidemiczna;nazwisko Batoiowa, niepewne;?;P;lm-17;Blinów
+375;1813;08-17;168;Kosidło;Tomasz;M;3;Adalberti et Marianne Kosidłów;Dolor Capitis;ból głowy;numer domu i nazwisko niepewne;?;P;lm-17;Blinów
+376;1813;08-26;24;Ratai;Stanisław;M;90;;Naturalis;naturalna;;P;P;lm-17;Blinów
+377;1813;09-22;44;Jędrzyczak;Andrzej;M;1;Adalberti et Catharinae Jędrzyczaków;Ordinaria;zwykła naturalna;nazwisko rodziców wg odczytu;?;P;lm-17;Blinów

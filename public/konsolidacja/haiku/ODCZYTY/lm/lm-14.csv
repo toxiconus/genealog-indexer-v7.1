@@ -1,0 +1,30 @@
+﻿nr_wpisu_DB;rok;data_mm-dd;dom;nazwisko;imie;plec;wiek;rodzice;przyczyna_lac;przyczyna_pl;uwagi;pewnosc;strona_ksiegi;skan;miejscowosc
+262;1808;08-29;59;;Adalbertus;M;1;Thomae et Mariannae Hegnicow? Agricolarum;ratio mortis dentitio dolorosa?;ząbkowanie bolesne?;nazwisko dziecka nie podane, wg DB Stępień? odczyt przyczyny i rodziców niepewny;?;L;lm-14;Blinów
+263;1808;09-12;103;;Agnes;F;3;Adalberti et Annae Pazdrakow? Agricolarum;ratio mortis diaria;biegunka;;?;L;lm-14;Blinów
+264;1808;09-22;37;;Sophia;F;1;Andreae et Agnetis Gnatow Agricolarum;ratio mortis diaria;biegunka;;P;L;lm-14;Blinów
+265;1808;09-24;62;;Matthaeus;M;1?;Joannis et Catharinae Piechow;ratio mortis ordinaria;zwykła przyczyna śmierci;wiek zapisany jako 1 z dopiskiem, np. 1 rok lub 1 mies.;?;L;lm-14;Blinów
+266;1808;11-10;50;;Catharina;F;2;Martini et Anastasiae Kodziog? Agricolarum;ratio mortis ordinaria;zwykła przyczyna śmierci;miesiąc 9bris=listopad, odczyt miesiąca z wątpliwością;?;L;lm-14;Blinów
+267;1808;11-19;2;;Jacobus;M;4;Martini et Catharinae Zarebow Agricolarum;ratio mortis inflammatio pectoris;zapalenie piersi (płuc);;P;L;lm-14;Blinów
+268;1808;12-01;115;;Francisca Virgo;F;10;Antonii et Catharinae Pazdrakow Agricolarum;ratio obstructio stomachi;zatkanie żołądka;Virgo=panna, wiek 10 lat;P;L;lm-14;Blinów
+269;1808;12-29;7;Kaczyńska?;Marianna;F;86;;Agricola ratio mortis senectus;starość;;P;L;lm-14;Blinów
+270;1809;01-11;12;Kopytowa;Agnes;F;26;;Agricola ratio mortis morbus hydropicus;puchlina wodna;;P;L;lm-14;Blinów
+271;1809;01-24;71;Machulek;Nicolaus;M;80;;Agricola ratio mortis senectus;starość;;P;L;lm-14;Blinów
+272;1809;03-17;78;Kosidło?;Bartholomaeus;M;30;;Agricola ratio mortis dolor intrinsecus;ból wewnętrzny;nazwisko nieczytelne, wg DB Kosidło, dzień 17 lub 11;?;L;lm-14;Blinów
+273;1809;03-18;82;Pemielki?;Josephus;M;6?;Elisabethae Pa?yszek? Agricolae;;;bliźnięta Josephus et Adalbertus gemelli, jeden wpis, wiek niepewny, brak przyczyny;?;L;lm-14;Blinów
+;1809;03-18;82;Pemielki?;Adalbertus;M;6?;Elisabethae Pa?yszek? Agricolae;;;bliźniak Józefa, wspólny wpis, brak w DB;?;L;lm-14;Blinów
+274;1809;04-17;111;Samulowa;Salomea;F;36;;Agricola ratio mortis inflammatio gutturis;zapalenie gardła;;P;L;lm-14;Blinów
+275;1809;04-23;78;Krupina;Dorotha;F;70;;Agricola ratio mortis senectus;starość;;P;L;lm-14;Blinów
+276;1809;05-07;74;Kosidłowa;Magdalena;F;70;;Agricola ratio mortis senectus;starość;;P;P;lm-14;Blinów
+277;1809;05-28;85;;Stanislaus;M;1?;Michaelis et Mariannae Woytalasow Agricolarum;;;brak przyczyny, wiek niepewny (1 z dopiskiem), wg DB Woytalas;?;P;lm-14;Blinów
+278;1809;06-22;23;Woytalas;Laurentius;M;40;;Agricola ratio mortis typhus;tyfus;;P;P;lm-14;Blinów
+279;1809;07-28;52;Kurcielowa?;Catharina;F;18;;Agricola ab angina? suffocata;uduszona przez anginę?;nazwisko i przyczyna niepewne;?;P;lm-14;Blinów
+280;1809;08-11;36;;Matthias;M;7;Josephi et Mariannae Stępniow;ratio mortis diaria;biegunka;;P;P;lm-14;Blinów
+281;1809;09-08;;;Catharina;F;6;Thomae et Catharinae Konieczkow?;ratio mortis diaria;biegunka;brak numeru domu, nazwisko rodziców niepewne;?;P;lm-14;Blinów
+282;1809;09-10;28;;Sophia;F;1?;Laurentii et Mariannae Baranow;ratio mortis diaria;biegunka;wiek niepewny, np. 1 mies.;?;P;lm-14;Blinów
+283;1809;09-11;109;;Adalbertus;M;1;Adalberti et Annae Bosakow Agricolarum;mors naturalis;śmierć naturalna;;P;P;lm-14;Blinów
+284;1809;09-14;21;;Sophia;F;1;Adalberti et Petronillae Kopytow;mors naturalis;śmierć naturalna;;P;P;lm-14;Blinów
+285;1809;10-16;119;;Paulus Thomas;M;9?;Adalberti et Mariannae Kosidłow;mors naturalis;śmierć naturalna;data i wiek niepewne;?;P;lm-14;Blinów
+286;1809;10-20;41;;Agnes;F;1;Mathiae Krup?ae Agricolae;naturalis;śmierć naturalna;nazwisko rodziców niepewne;?;P;lm-14;Blinów
+287;1809;10-26;41;Wcisłowa;Hedwigis;F;61?;;Naturalis;śmierć naturalna;wiek 61 lub 64;?;P;lm-14;Blinów
+288;1809;11-01;111;Woytysiak;Joannes;M;54;;Febris putrida;gorączka gnilna;;P;P;lm-14;Blinów
+289;1809;11-28;90;;Anna;F;1?;Blasii et Mariannae Pawłaskow?;;;przyczyna ucięta u dołu skanu, wiek niepewny;?;P;lm-14;Blinów

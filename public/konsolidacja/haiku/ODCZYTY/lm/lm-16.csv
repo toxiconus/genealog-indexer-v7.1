@@ -1,0 +1,31 @@
+﻿nr_wpisu_DB;rok;data_mm-dd;dom;nazwisko;imie;plec;wiek;rodzice;przyczyna_lac;przyczyna_pl;uwagi;pewnosc;strona_ksiegi;skan;miejscowosc
+320;1811;06-26;72;Kosidło;Józef;M;10;Mathiae et Sophiae Kosidłow;Diaria (ratio mortis);biegunka;dziecko rolników, odczyt nazwiska ?;?;L;lm-16;Blinów
+321;1811;06-30;46;Jędrzyczak;Walenty;M;8;Mathiae et Agnetis Fedorczakow;Do (jak wyżej, Diaria);biegunka;dziecko rolników;P;L;lm-16;Blinów
+322;1811;06-30;86;Paciorek;Wawrzyniec;M;1;Mathiae et Catharinae Paciorkow;Do (jak wyżej, Diaria);biegunka;numer domu ?;?;L;lm-16;Blinów
+323;1811;07-02;95;Machulek;Józef;M;8;Pauli et Annae Machulkow;Do (jak wyżej, Diaria);biegunka;dziecko rolników;P;L;lm-16;Blinów
+324;1811;07-06;76;Wcisło;Marianna;F;1;Simonis et Hedwigis Wcisłow;Do (jak wyżej, Diaria);biegunka;dom 70 lub 76;?;L;lm-16;Blinów
+325;1811;07-07;100;Mcionek;Katarzyna;F;5;Bartholomaei et Sophiae Mcionkow;Do (jak wyżej, Diaria);biegunka;dziecko rolników;P;L;lm-16;Blinów
+326;1811;07-07;66;Stępień;Katarzyna;F;1;Thomae et Mariannae Stępniow;Do (jak wyżej, Diaria);biegunka;odczyt nazwiska ?;?;L;lm-16;Blinów
+327;1811;07-10;62;Bosak;Agnieszka;F;9;Joannis et Franciscae Bosakow;Do (jak wyżej, Diaria);biegunka;data 10 lub 16;?;L;lm-16;Blinów
+328;1811;07-16;69;Machulek;Anna;F;3;Adalberti et Catharinae Machulkow;Do (jak wyżej, Diaria);biegunka;dziecko rolników;P;L;lm-16;Blinów
+329;1811;07-18;70;Sobudka;Jadwiga;F;2;Jacobi et Annae Sobudkow;Do (jak wyżej, Diaria);biegunka;odczyt nazwiska ?;?;L;lm-16;Blinów
+330;1811;07-22;51;Jakubaszek;Agnieszka;F;2;Bartholomaei et Sophiae Jakubaszkow;Do (jak wyżej, Diaria);biegunka;dziecko rolników;P;L;lm-16;Blinów
+331;1811;07-23;102;Mcionek;Antoni;M;5;Stanislai et Hedwigis Mcionkow;Do (jak wyżej, Diaria);biegunka;dziecko rolników;P;L;lm-16;Blinów
+332;1811;07-28;46;Jędrzyczak;Maciej;M;50;;Agricola Do (jak wyżej, Diaria);biegunka;rolnik;P;L;lm-16;Blinów
+333;1811;07-28;107;Gnat;Wiktoria;F;40;;brak (agricola);brak;rolniczka, drobny dopisek pod nazwiskiem: uxor Bartholomaei Gnat (żona Bartłomieja Gnata), odczyt dopisku ?;P;L;lm-16;Blinów
+335;1811;07-28;102;Mcionek;Tomasz;M;1;Stanislai et Hedwigis Mcionkow;Do (jak wyżej, Diaria);biegunka;dziecko rolników;P;L;lm-16;Blinów
+336;1811;07-28;77;Mcionek;Michał;M;26;;brak (agricola);brak;rolnik, odczyt nazwiska ?;?;L;lm-16;Blinów
+337;1811;07-29;62;Kozak;Zofia;F;2;Joannis et Franciscae Bosakow;Diaria;biegunka;w DB Kozak lub Kosak, w księdze rodzice Bosakow (dom 62 jak Bosak Agnieszka), data 29 ?;?;P;lm-16;Blinów
+338;1811;07-28;8;Pasternak;Jadwiga;F;26;;brak (agricola);brak;Pasternakowa, rolniczka, data 28 lub 29;?;P;lm-16;Blinów
+339;1811;07-31;100;Mcionek;Marianna;F;1;Bartholomaei et Sophiae Mcionkow;Diaria;biegunka;dziecko rolników;P;P;lm-16;Blinów
+340;1811;08-03;100;Goch;Walenty;M;1;Francisci et Anastasiae Gochow;Do (jak wyżej, Diaria);biegunka;numer domu 100 ?;?;P;lm-16;Blinów
+341;1811;08-05;107;Felek;Wojciech;M;4;Andreae et Franciscae Felkow;morbus hectic? (odczyt ?);suchoty? (hectica);odczyt nazwiska i przyczyny ?;?;P;lm-16;Blinów
+342;1811;08-05;109;Pawłasek;Małgorzata;F;2;Josephi et Catharinae Pawłaskow;Do (jak wyżej);jak wyżej, suchoty? (hectica);odczyt nazwiska ?;?;P;lm-16;Blinów
+343;1811;08-12;9;Pawłasek;Jadwiga;F;1;Jacobi et Sophiae Pawłaskow;Do (jak wyżej);jak wyżej, suchoty? (hectica);odczyt nazwiska ?;?;P;lm-16;Blinów
+344;1811;08-16;75;Krupa;Szymon;M;60;;brak (agricola);brak;rolnik;P;P;lm-16;Blinów
+345;1811;08-21;32;Pasternak;Józef;M;1;Mathiae et Franciscae Pasternak;morbus Hecticus;suchoty (hectica);w rubryce Sexus zaznaczona Foemina mimo imienia Josephus;?;P;lm-16;Blinów
+346;1811;08-25;15;Kurczak;Paweł;M;2;Andreae et Dorotheae Kurczakow;brak (agricolarum);brak;imię matki ?;?;P;lm-16;Blinów
+347;1811;08-30;81;Kosidło;Marianna;F;7;Casimiri et Catharinae Kosidłow;Diaria (czerwony atrament, odczyt ?);biegunka;przyczyna ?;?;P;lm-16;Blinów
+348;1811;09-18;82;Jędrzyczak;Anna;F;76;;Senectus;starość;Jędrzyczakowa, rolniczka, pod datą zamazany dopisek Obiit ... 20, data ?;?;P;lm-16;Blinów
+349;1811;10-24;36;Kudrelek;Katarzyna;F;63;;Senectus;starość;miesiąc (8bris lub 9bris) i wiek 63 lub 68 ?;?;P;lm-16;Blinów
+350;1812;02-07;32;Kurczak;Jan;M;1/2?;Pauli et Teklae Kurczakow;morbus Hecticus;suchoty (hectica);data (7 Februarii) wiek i dom 32 lub 52 ?;?;P;lm-16;Blinów

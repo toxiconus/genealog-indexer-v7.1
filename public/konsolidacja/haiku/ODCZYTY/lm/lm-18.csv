@@ -1,0 +1,29 @@
+﻿nr_wpisu_DB;rok;data_mm-dd;dom;nazwisko;imie;plec;wiek;rodzice;przyczyna_lac;przyczyna_pl;uwagi;pewnosc;strona_ksiegi;skan;miejscowosc
+378;1813;11-04;118;Kaczyńska;Anna;F;36;;Epidemia;epidemia;;P;32;lm-18;Blinów
+379;1813;11-22;49;Gnat;Paweł;M;48;;Epidemia;epidemia;;P;32;lm-18;Blinów
+380;1813;12-06;35;Kudrelek;Katarzyna;F;11.2?;Martini? et Mariannae Kudrelków;Ordinaria;zwyczajna;wiek odczytany jako 11.2 - miesiące? niepewne, imię ojca niepewne;?;32;lm-18;Blinów
+381;1813;12-07;60;Mcionek;Marcin;M;11.1?;Joannis et Constantiae Mcionków;Ordinaria;zwyczajna;wiek niepewny, w bazie wpis 381 ma rok 1814;?;32;lm-18;Blinów
+382;1813;12-16;79;Sobudka;Stanisław;M;60;;Naturalis;naturalna;dzień niepewny (16 lub 10), w bazie rok 1814;?;32;lm-18;Blinów
+383;1813;12-20;76;Wcisło;Anna;F;4;Josephi et Mariannae Wcisłów;Nuspis?;nieczytelna;przyczyna nieczytelna, w bazie rok 1814;?;32;lm-18;Blinów
+384;1813;12-30;38;Baran;Agnieszka;F;11.1?;Laurentii et Mariannae Baranów;Ordinaria;zwyczajna;wiek niepewny, w bazie rok 1814;?;32;lm-18;Blinów
+385;1814;01-13;60;Mcionek;Marcin;M;70;;Epidemia;epidemia;;P;32;lm-18;Blinów
+386;1814;01-15;67;Obydz;Katarzyna;F;28;;Epidemia;epidemia;wiek 28 lub 20;?;32;lm-18;Blinów
+387;1814;01-19;99;Kurczak?;Walenty;M;50;;Epidemia;epidemia;nazwisko w bazie Kozaczek, odczyt na skanie podobny do Kurczak;?;32;lm-18;Blinów
+388;1814;01-21;57;Kurczak;Marcin;M;60;;Epidemia;epidemia;;P;32;lm-18;Blinów
+389;1814;01-22;46;Pawłasek;Wojciech;M;26;;Epidemia;epidemia;imię Adalbertus;P;32;lm-18;Blinów
+390;1814;01-22;34;Pasternak;Krzysztof;M;70;;Epidemia;epidemia;;P;32;lm-18;Blinów
+391;1814;01-22;103;Mcionek;Jadwiga;F;40?;;Epidemia;epidemia;Mcionkowa, wiek 40 lub 48;?;32;lm-18;Blinów
+392;1814;01-27;61;Machulek;Antoni;M;50;;Epidemia;epidemia;;P;33;lm-18;Blinów
+393;1814;01-27;66;Mcionek;Konstancja;F;26;;Epidemia;epidemia;Mcionkowa;P;33;lm-18;Blinów
+394;1814;01-28;41;Krupa;Maciej;M;46;;Epidemia;epidemia;nazwisko Krypa lub Krupa;?;33;lm-18;Blinów
+395;1814;02-03;101;Ratai;Walenty;M;40;;Epidemia;epidemia;;P;33;lm-18;Blinów
+396;1814;02-04;101;Ratai;Jakub;M;3;Valentini et Mariannae Ratajów;Epidemia;epidemia;;P;33;lm-18;Blinów
+397;1814;02-05;118;Kaczyńska;Marianna;F;70;;Epidemia;epidemia;;P;33;lm-18;Blinów
+398;1814;02-06;121;Jarzyński;Mikołaj;M;70;;Epidemia;epidemia;;P;33;lm-18;Blinów
+399;1814;02-07;57;Kurczak;Katarzyna;F;36;;Epidemia;epidemia;Kurczakowa;P;33;lm-18;Blinów
+400;1814;02-07;27;Machulek;Walenty;M;12;Antonii et Dorotheae Machulków;Epidemia;epidemia;;P;33;lm-18;Blinów
+401;1814;02-09;27;Machulek;Dorota;F;56?;;Epidemia;epidemia;Machulkowa, wiek 56 lub 50;?;33;lm-18;Blinów
+402;1814;02-09;27;Machulek;Agnieszka;F;20;;Epidemia;epidemia;virgo=panna;P;33;lm-18;Blinów
+403;1814;02-09;27;Machulek;Jakub;M;3;Antonii et Dorotheae Machulków;Epidemia;epidemia;;P;33;lm-18;Blinów
+404;1814;02-13;26;Mcionek;Agnieszka;F;3;Hiacynthi et Franciscae Mcionków;Epidemia;epidemia;;P;33;lm-18;Blinów
+405;1814;02-13;118;Kaczyński;Stefan;M;70;;Epidemia;epidemia;imię Stephanus, w bazie Stanisław;?;33;lm-18;Blinów
