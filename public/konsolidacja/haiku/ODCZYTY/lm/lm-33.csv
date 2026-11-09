@@ -1,0 +1,29 @@
+﻿nr_wpisu_DB;rok;data_mm-dd;dom;nazwisko;imie;plec;wiek;rodzice;przyczyna_lac;przyczyna_pl;uwagi;pewnosc;strona_ksiegi;skan;miejscowosc
+763;1812;01-??;10;Machulek;Michał;M;15?;Michała i Anny Machulków;Agricola(e) Epidemia;rolnik; epidemia;dzień stycznia nieczytelny; w kolumnie przyczyny rodzice (dziecko?);?;62;lm-33;Brzozówka
+764;1812;02-16;41;Bucoń;Zofia (Buconiowa);F;30;;Agricola ratio mortis Epidemica;rolniczka; epidemia;;P;62;lm-33;Brzozówka
+765;1812;02-??;41;Bucoń;Marcin;M;2;Kazimierza i Zofii Buconiów;Agricola Morbus Hectica;rolnik; suchoty;dzień nieczytelny (ucięty brzegiem);P;62;lm-33;Brzozówka
+766;1812;02-??;47;Janik;Marianna;F;1,5?;Sebastiana i Agnieszki Janików;Agricola Ordinaria;rolnik; śmierć zwykła;dzień nieczytelny; wiek niepewny;?;62;lm-33;Brzozówka
+767;1812;02-21;13;Machulek;Józef;M;20;;Agricola ratio mortis Epidemia;rolnik; epidemia;;P;62;lm-33;Brzozówka
+768;1812;03-30;5;Zielińska;Anna;F;80;;Naturalis Agricola;śmierć naturalna; rolniczka;;P;62;lm-33;Brzozówka
+769;1812;05-04;7;Krzowski;Szymon;M;40?;;Hectica Agricola;suchoty; rolnik;wiek niepewny (40/10);?;62;lm-33;Brzozówka
+770;1812;05-19;30;Chwałek;Sebastian;M;40;;Phthisis Agricola;suchoty; rolnik;;P;62;lm-33;Brzozówka
+771;1812;05-21;39;Mazurek;Kazimierz;M;50;;Hectica Agricola;suchoty; rolnik;;P;62;lm-33;Brzozówka
+772;1812;06-03;32;Bigos;Wojciech (Adalbertus);M;1,5?;Andrzeja i Katarzyny Bigosów;Agricola Ordinaria;rolnik; śmierć zwykła;wiek niepewny;?;62;lm-33;Brzozówka
+773;1812;08-18;25;Spryszak;Zofia (Spryszakowa);F;80;;Agricola Naturalis;rolniczka; śmierć naturalna;;P;62;lm-33;Brzozówka
+774;1812;10-11;11;Szabat;Marcin;M;34;;Agricola Thypsis;rolnik; tyfus;miesiąc niepewny (7bris/8bris/9bris); wiek 34?;?;62;lm-33;Brzozówka
+775;1813;02-11;56?;Mikulas;Marianna;F;2;Michała i Magdaleny Mikolasów;Thypsis;tyfus;nagłówek 1813 w wierszu; nr domu niepewny;?;62;lm-33;Brzozówka
+776;1813;02-09?;41;Bucoń;Kazimierz;M;60;;Naturalis Agricola;śmierć naturalna; rolnik;dzień niepewny (9/19); pod wierszem adnotacja Sepelivit Paulus Stadelski, Parochus Lan?;?;62;lm-33;Brzozówka
+777;1813;02-14;23;Brzyski;Kasper;M;2;Franciszka i Marianny Brzyskich;Febris putrida;gorączka gnilna;;P;63;lm-33;Brzozówka
+778;1813;02-14;29;Mazurek;Antoni;M;2;Kazimierza i Wer?pal? Mazurków;Ordinaria;śmierć zwykła;imię matki nieczytelne;?;63;lm-33;Brzozówka
+779;1813;04-07;44;Kamieniak;Tomasz;M;40;;Agricola ratio mortis alien?;rolnik; przyczyna nieczytelna;przyczyna niepewna;?;63;lm-33;Brzozówka
+;1813;04-19;9;Pudło;Antoni;M;50;;Morbus Hydropicus Agricola;puchlina wodna; rolnik;nazwisko Pudło/Pusto?; brak w bazie;?;63;lm-33;Brzozówka
+781;1813;06-04?;27;Tutka;Stanisław;M;60;;Naturalis Agricola;śmierć naturalna; rolnik;dzień niepewny;?;63;lm-33;Brzozówka
+782;1813;09-22;22;Rzeszutko;Andrzej;M;60;;Naturalis Agricola;śmierć naturalna; rolnik;;P;63;lm-33;Brzozówka
+783;1813;11-02;29;Tutka;Michał;M;30;;Epidemia;epidemia;;P;63;lm-33;Brzozówka
+784;1813;11-04;29;Tutka;Anna (Tutkowa);F;60;;Epidemia;epidemia;w bazie Łatka?;P;63;lm-33;Brzozówka
+785;1813;11-15;29;Tutka;Marianna;F;3;Michała i Rozalii Tutków;Epidemia;epidemia;;P;63;lm-33;Brzozówka
+786;1814;01-08?;46;Tupaj;Agnieszka;F;5;Wawrzyńca i Franciszki Tupajów;Epidemia;epidemia;nagłówek 1814; dzień niepewny;?;63;lm-33;Brzozówka
+787;1814;01-11;28;Rataj;Marianna (Ratajowa);F;46;;Epidemia;epidemia;;P;63;lm-33;Brzozówka
+788;1814;01-24;28?;Barbarzak;Krystyna (Barbarzakowa);F;30?;;Epidemia;epidemia;dom i wiek niepewne;?;63;lm-33;Brzozówka
+789;1814;01-25;23;Brzyska;Anastazja;F;5;Franciszka i Marianny Brzyskich;Epidemia;epidemia;;P;63;lm-33;Brzozówka
+790;1814;01-29;30;Bucoń;Franciszka (Buconiowa?);F;30?;;Epidemia;epidemia;wiersz przekreślony w księdze; wiek niepewny;?;63;lm-33;Brzozówka

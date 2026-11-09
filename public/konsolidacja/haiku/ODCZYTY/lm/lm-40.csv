@@ -1,0 +1,31 @@
+﻿nr_wpisu_DB;rok;data_mm-dd;dom;nazwisko;imie;plec;wiek;rodzice;przyczyna_lac;przyczyna_pl;uwagi;pewnosc;strona_ksiegi;skan;miejscowosc
+917;1808;03-02;17;Bogoń;Sophia (Zofia, Bogoniowa);F;60;;Agricola. Ratio mortis senectus;rolnik, starość;przy akcie dopisek na marginesie (21 April, Strazza?) nieczytelny;P;146;lm-40;Moczydła
+918;1808;06-06;16;Wieleba;Martinus (Marcin);M;6?;Martini et Franciscae (Wieleba?);Agricolae... ratio mortis variolis (?);dziecko rolników, ospa(?);wiek nieczytelny (zasłonięty dopiskiem), dopisek 'Vidi...' na marginesie, dzień niepewny;?;146;lm-40;Moczydła
+919;1808;08-24;5;Wieleba;Marianna;F;1;Martini et Mariannae Wielebów;Agricolae. ratio mortis dolor ventris;rolnicy, ból brzucha;;P;146;lm-40;Moczydła
+920;1808;10-12;10;Sikora;Marianna (Sikorowa);F;50;;Naturalis;śmierć naturalna;dopisek przy akcie 'Blinow d. 29 ...' (inna ręka);P;146;lm-40;Moczydła
+921;1809;02-01;14;Pcion;Anna (Virgo);F;19;Thomae et Sophiae Pcionow;Naturalis;śmierć naturalna;panna;P;146;lm-40;Moczydła
+922;1809;02-15;17;Bogoń;Elisabeth (Elżbieta, Bogoniowa);F;22;;Naturalis;śmierć naturalna;;P;146;lm-40;Moczydła
+923;1809;06-02;6;Kędziora;Antonius (Antoni);M;43?;Adalberti et Theclae Kędziorow;(brak przyczyny);brak;wiek 43 lub zapis ułamkowy, rodzice podani w rubryce stanu;?;146;lm-40;Moczydła
+924;1810;02-06;4;Król;Casimirus (Kazimierz);M;56;;Agricola. Naturalis;rolnik, śmierć naturalna;;P;146;lm-40;Moczydła
+925;1810;02-10;3;Chmiel;Sophia (Chmielowa);F;50;;Agricola. Naturalis;rolnik, śmierć naturalna;;P;146;lm-40;Moczydła
+926;1810;03-22;2;Bzdyrak;Adalbertus (Wojciech);M;54;;Agricola. Epidemia;rolnik, epidemia;nazwisko Bzdyrak/Brdzak? (DB Bzdyrak);?;146;lm-40;Moczydła
+927;1810;04-15;20;Łach;Helena (Łachowa);F;56;;Agricola. Epidemia;rolnik, epidemia;;P;146;lm-40;Moczydła
+928;1810;07-07;20;Stefański;Michael (Michał);M;58;;Agricola. Naturalis;rolnik, śmierć naturalna;;P;146;lm-40;Moczydła
+929;1810;08-21;21;Niescior;Ignatius (Ignacy);M;1 r. 6 m.?;Stanislai et Franciscae Niesciorow;Naturalis;śmierć naturalna;wiek zapisany '1/6' (zagniecenie papieru);?;146;lm-40;Moczydła
+930;1811;04-17;14;Mcion;Marianna (Mcionowa);F;21?;;Agricola post partum;rolnik, po porodzie;wiek 21 lub 24;?;146;lm-40;Moczydła
+931;1811;04-20;12;Krupa;Antonius (Antoni);M;56;;Agricola. Ordinaria;rolnik, zwykła śmierć;pod aktem: 'sepelivit Paulus Stodolski Comm. Loci';P;146;lm-40;Moczydła
+932;1811;06-26;14;Mcion;Adalbertus (Wojciech);M;m.3;Martini et Mariannae Mcionow;Agricolarum. Ordinaria;dziecko rolników, zwykła śmierć;;P;147;lm-40;Moczydła
+933;1811;07-14;10;Sikora;Adalbertus (Wojciech);M;m.6;Adalberti et Franciscae (Mi?) Gaspar filius Sikorow;Agricolarum;dziecko rolników;zapis rodziców niejasny ('Gaspar filius'?);?;147;lm-40;Moczydła
+934;1812;01-09;7;Mcion;Sophia (Mcionowa);F;50;;Agricola. Ordinaria;rolnik, zwykła śmierć;;P;147;lm-40;Moczydła
+935;1812;08-07;16;Bogoń;Matthaeus (Mateusz);M;56;;Agricola. Ordinaria;rolnik, zwykła śmierć;wiek 56 lub 50;?;147;lm-40;Moczydła
+936;1812;10-30;17;Łach;Martinus (Marcin);M;42?;Andreae et Catharinae Łachow;Agricolarum;rolnik;wiek 42 niepewny, rodzice podani;?;147;lm-40;Moczydła
+937;1812;10-29;16;Bogoń;Catharina (Katarzyna);F;3;Matthaei et Mariannae Bogoniow;Thypsis;tyfus;;P;147;lm-40;Moczydła
+938;1812;10-31;16;Bogoń;Anastasia (Anastazja);F;7;Matthaei et Mariannae Bogoniow;Thypsis;tyfus;;P;147;lm-40;Moczydła
+939;1813;01-05;15;Bogoń;Anastasia (Anastazja);F;5;Martini et Elisabethae Bogoniow;Thypsis;tyfus;;P;147;lm-40;Moczydła
+940;1813;01-20;14;Boczek;Anastasia (Anastazja);F;2;Martini et Franciscae Boczków;Thypsis;tyfus;;P;147;lm-40;Moczydła
+941;1813;06-08;20;Niescior;Stanislaus (Stanisław);M;m.2;Stanislai et Franciscae Niesciorow;Ordinaria;zwykła śmierć;dzień 8 (lub 3);?;147;lm-40;Moczydła
+942;1814;01-16;13;Haber;Gregorius (Grzegorz);M;32;;Epidemia;epidemia;;P;147;lm-40;Moczydła
+943;1814;03-16;9;Kasperek;Jacobus (Jakub);M;26;;Epidemia;epidemia;;P;147;lm-40;Moczydła
+;1814;03-24;17;Łach;Catharina (Łachowa);F;26;;Epidemia;epidemia;brak w zgony.csv dla Moczydeł 1814;P;147;lm-40;Moczydła
+944;1814;06-02;12;Mcionek;Sophia (Mcionkowa);F;40;;Epidemia;epidemia;;P;147;lm-40;Moczydła
+945;1814;06-14;12;Mcionek;Bartholomaeus (Bartłomiej);M;40;;Epidemia;epidemia;pod aktem: 'sepelivit Paulus Stodolski Comm. Loci';P;147;lm-40;Moczydła

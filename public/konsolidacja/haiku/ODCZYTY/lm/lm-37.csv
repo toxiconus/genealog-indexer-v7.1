@@ -1,0 +1,16 @@
+﻿nr_wpisu_DB;rok;data_mm-dd;dom;nazwisko;imie;plec;wiek;rodzice;przyczyna_lac;przyczyna_pl;uwagi;pewnosc;strona_ksiegi;skan;miejscowosc
+872;1823;05-20;;Szamota;Franciszek;M;50 lat;;;brak przyczyny;stan: possessor (posesor);P;70/L;lm-37;Brzozówka
+873;1823;07-23;;Kuflowna;Zofia;F;4 lata;;;brak przyczyny;;P;70/L;lm-37;Brzozówka
+874;1823;07-25;;Machulak;Mateusz;M;6 lat;;;brak przyczyny;;P;70/L;lm-37;Brzozówka
+875;1823;07-28;;Koprowska;Marianna;F;1/2 roku;;;brak przyczyny;Wizytacja dziekańska 26 Octobris 1823 (nota o wizytacji: Thomas Sabłoński kanonik katedralny kielecki, prepozyt i dziekan lubelski); koniec zapisów 1823;P;70/L;lm-37;Brzozówka
+876;1824;03-04;;Chmiel;Antoni;M;7 lat;Jakuba syn (Jacobi filius);Naturali;śmierć naturalna;margines: z Moczydeł;P;70/L;lm-37;Brzozówka
+877;1824;03-08;;Czuba;Marianna;F;1 rok;Wojciecha (Adalberti);Tussi (tussis);kaszel;Adalberti między imieniem a nazwiskiem = ojciec; margines przy 03-08 nieczytelny;?;70/L;lm-37;Brzozówka
+878;1824;03-18;;Mazurek;Katarzyna;F;6 lat;;;brak przyczyny;zapis Mazurkówna;P;70/L;lm-37;Brzozówka
+879;1824;04-04;;Kosidło;Mateusz;M;1/2 roku;;;brak przyczyny;margines: z Blinowa;P;70/L;lm-37;Brzozówka
+880;1824;04-06;;Goch;Ewa;F;5 lat;;;brak przyczyny;zapis Gochówna;P;70/L;lm-37;Brzozówka
+881;1824;04-20;;Zieliński;Szymon;M;60 lat;;;brak przyczyny;stan: mendicans (żebrak);P;70/L;lm-37;Brzozówka
+882;1824;05-14;;Barbonak;Marcin;M;16 lat;;Phtysi (phthisis);suchoty;DB: Barbarzak; nazwisko odczytane Barbonak/Barbarak;?;70/L;lm-37;Brzozówka
+883;1824;06-12;;Zieliński;Franciszek;M;1/2 roku;;;brak przyczyny;;P;70/L;lm-37;Brzozówka
+884;1824;10-18;;Goch;Paweł;M;16 lat;;;brak przyczyny;8bris=październik;P;70/L;lm-37;Brzozówka
+885;1824;12-03;;Pudło;Katarzyna;F;58 lat;;Hydropico morbo;puchlina wodna;stan: maritata (zamężna); zapis Pudlina;P;71/P;lm-37;Brzozówka
+886;1824;12-12;;Zielińska;Franciszka;F;58 lat;;Colica (Kolki);kolka;stan: maritata (zamężna); przyczyna odczytana Koloki/Kolici;?;71/P;lm-37;Brzozówka

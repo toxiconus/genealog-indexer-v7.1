@@ -1,0 +1,30 @@
+﻿nr_wpisu_DB;rok;data_mm-dd;dom;nazwisko;imie;plec;wiek;rodzice;przyczyna_lac;przyczyna_pl;uwagi;pewnosc;strona_ksiegi;skan;miejscowosc
+734;1808;01-01;25;Goch;Andrzej (Andreas);M;90;;Agricola, ratio mortis senectus;"rolnik; starość";;P;66;lm-32;Brzozówka
+735;1808;01-05;39;Mazurek?;Jan (Joannes);M;2;Casimiri et Theresiae Mazurków? Agricolarum;ratio mortis Thypsis?;tyfus?;nazwisko rodziców nieczytelne, wg DB Mazurek;?;66;lm-32;Brzozówka
+736;1808;04-10;18;Szabat;Michał (Michael);M;40;;Agricola, ratio mortis dolor stomachi;"rolnik; ból żołądka";;P;66;lm-32;Brzozówka
+737;1808;05-05;29;Ogon;Rozalia (Rosalia);F;66;;Agricola, ratio mortis senectus;"rolniczka; starość";"Ogonowa (żona Ogona); dzień 5 lub 9 (kropka/cyfra niepewna)";?;66;lm-32;Brzozówka
+738;1808;05-24;31;Białkowski;Maciej (Mathias);M;40;;Agricola, ratio mortis dolor capitis;"rolnik; ból głowy";;P;66;lm-32;Brzozówka
+739;1808;08-03;28;Bucoń;Wojciech (Adalbertus);M;1;Petri et Franciscae Buconiow Agricolarum;ratio mortis dentitio?;ząbkowanie?;"Pod wpisem dopisek (Stat. Minow? 20 Februar 809?) nieczytelny; przyczyna słabo czytelna";?;66;lm-32;Brzozówka
+740;1809;02-27;12;Machulek?;Katarzyna (Catharina);F;3?;Gasparis et Sophiae Machulow;ratio mortis Morbus S. Valentini;padaczka (choroba św. Walentego);"Rok 1809 wpisany pod wierszem; w rubryce wieku dopisek nieczytelny (Claus? / tygodnie?); wiek niepewny";?;66;lm-32;Brzozówka
+741;1809;05-12;7;Serafin;Anna (Serafinowa);F;40;;Agricola post partum;"rolniczka; po porodzie";Serafinowa (żona Serafina);P;66;lm-32;Brzozówka
+742;1809;05-18;22;Rzeszutko;Anna;F;2?;Thomae et Mariae Rzeszutków;ratio mortis difficilis partus?? (nieczytelne);trudny poród?? (nieczytelne);"W rubryce wieku ""2"" i pod nim ""6"" (może 2 i 6/12?); przyczyna dla dziecka niejasna";?;66;lm-32;Brzozówka
+743;1809;05-28;7;Serafin;Zofia (Sophia);F;6?;Joannis et Annae Serafinow Agricolarum;;;"Wiek: cyfra ""6"" powtórzona (6 mens.?)";?;66;lm-32;Brzozówka
+744;1809;07-02;30;Chwałek;Mikołaj (Nicolaus);M;?;Sebastiani et Ne?golinae (Nepomucenae?) Chwałków Agricolarum;;;Wiek nieczytelny (M.6? mens.);?;66;lm-32;Brzozówka
+745;1809;07-27;22;Rzeszutko;Marianna (Rzeszutkowa);F;24;;Agricola, ratio mortis morbus hecticus;"rolniczka; suchoty";;P;66;lm-32;Brzozówka
+746;1809;10-??;25;Goch;Anna (Gochowa);F;98;;Naturalis;śmierć naturalna;Dzień nieczytelny (29/20?), miesiąc 8bris=październik;?;66;lm-32;Brzozówka
+747;1810;01-13;32;Bigos;Jakub (Jacobus);M;30;;Thepsis? Agricola;tyfus? rolnik;Dopisek pod wpisem: Sepelivit Paulus Ha?dzki Curatus? (pogrzeb);?;66;lm-32;Brzozówka
+748;1810;01-30;44;Krawczyk;Tekla (Thecla);F;2;Laurentii et Franciscae Krawczykow;;;;P;67?;lm-32;Brzozówka
+749;1810;09-16;10;Machulek;Mateusz (Matthaeus);M;45;;Ordinaria, Agricola;"zwykła śmierć; rolnik";;P;67?;lm-32;Brzozówka
+750;1811;01-08;41;Bucoń?;Ewa (Eva);F;13;Casimiri et Mariae Buconiow? Agricolarum;Epidemia;epidemia;"Nazwisko wg DB: z Rumniów?; rok 1811 nad wpisem";?;67?;lm-32;Brzozówka
+751;1811;01-11;32;Bigos;Katarzyna (Catharina Bigosowa);F;56;;Agricola, ordinaria;"rolniczka; zwykła śmierć";Bigosowa (żona Bigosa);P;67?;lm-32;Brzozówka
+752;1811;01-31;41;Bucoń;Marianna;F;10;Casimiri et Sophiae Buconiow Agricolarum;Epidemia;epidemia;;P;67?;lm-32;Brzozówka
+753;1811;03-12;47;Bilski;Aleksy (Alexius);M;50;;Agricola, ordinaria;"rolnik; zwykła śmierć";;P;67?;lm-32;Brzozówka
+754;1811;03-16;7;Serafin;Tomasz (Thomas);M;90;;Agricola, ordinaria;"rolnik; zwykła śmierć";;P;67?;lm-32;Brzozówka
+755;1811;04-02;39;Jgras?;Sebastian (Sebastianus);M;3;Thomae et Justinae Jgrasow? Agricolarum;Ordinaria;zwykła śmierć;Nazwisko niepewne (wg DB Jgras?);?;67?;lm-32;Brzozówka
+756;1811;05-19;;Biała?;Anna;F;1 mens.;Thomae et Ursulae Białych?;Ordinaria;zwykła śmierć;"Brak numeru domu; wiek M.1 (1 miesiąc?)";?;67?;lm-32;Brzozówka
+757;1811;05-28;22;Szabat;Maciej (Mathias);M;16?;Simonis et Joannae Szabatow;Ordinaria;zwykła śmierć;Dom i wiek do potwierdzenia (22/32?, 16/10?);?;67?;lm-32;Brzozówka
+758;1811;07-26;17;Pęk;Marcin (Martinus);M;60;;Agricola;rolnik;"Nazwisko wg DB Pęk; w skanie krótkie (Pek/Ilk?)";?;67?;lm-32;Brzozówka
+759;1811;10-20;19;Jagosiak;Jadwiga (Hedvigis Jagosiakowa);F;60?;;Agricola;rolniczka;"Wiek ""cc""/""60"" (dittum?)";?;67?;lm-32;Brzozówka
+760;1811;11-29;10;Machul;Paweł (Paulus);M;21;Matthiae et Mariae Machulow Ordinaria;Ordinaria;zwykła śmierć;"Miesiąc ""9bris"" (listopad) – skrót słabo czytelny";?;67?;lm-32;Brzozówka
+761;1812;01-03;13;Machul;Zofia (Sophia Machulowa);F;45;;Agricola, ratio mortis epidemia?;"rolniczka; epidemia?";"Machulowa (żona Machula); rok 1812 nad wpisem; przyczyna słabo czytelna";?;67?;lm-32;Brzozówka
+762;1812;01-04;10;Machulek;Wojciech (Adalbertus);M;10;Petri et Annae Machulow Agricolarum;Epidemia?;epidemia?;"DB: Blach.. Wojciech; dopisek: Sepelivit Paulus Ha?dzki Curatus?";?;67?;lm-32;Brzozówka

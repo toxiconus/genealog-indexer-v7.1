@@ -1,0 +1,13 @@
+﻿nr_wpisu_DB;rok;data_mm-dd;dom;nazwisko;imie;plec;wiek;rodzice;przyczyna_lac;przyczyna_pl;uwagi;pewnosc;strona_ksiegi;skan;miejscowosc
+970;1822;03-01;2;Sagan?;Sebastianus;M;70 lat;;Naturalis;śmierć naturalna;nagłówek roku 1822 nad kolumną, Catholica, Mas, nazwisko Sagan(?) niepewne (DB: Sagan ? Sebastian);?;150 (L);lm-42;Moczydła
+971;1823;06-06?;;Koniowska?;Marianna;F;6 lat;;;;margines 'Anno 1823', dzień i nazwisko niepewne (DB: Kania Marianna - możliwe że to ten akt), brak rubryki przyczyny, płeć z imienia;?;150 (L);lm-42;Moczydła
+;1823;07-22;;Kania;Mathias;M;?(1 rok? 'per Rok');Josephi Kania (infans Josephi Kania?);Infans;niemowlę/dziecko;wiek i rodzice niepewne, brak w DB, płeć z imienia;?;150 (L);lm-42;Moczydła
+;1823;10-26?;;;;;;;;;NOTA nie akt: 'Die 26 Octob. 1823 testor. In Visitatione Decanali praedictum verum et subscriptum Thomas Sabatowski? Canonicus Cathedralis Kielcensis, Praepositus et Decanus Kraśnicensis (Zakrzewski?) mpp' - poświadczenie wizytacji dziekańskiej, nazwiska odczytane niepewnie;?;150 (L);lm-42;Moczydła
+972;1824;05-26;;;Catharina;F;4 lata;;Annorum;;rok 1824 nad datą, nazwisko brak, płeć z imienia;P;150 (L);lm-42;Moczydła
+973;1824;05-30;;Sikora;Petrus;M;2 lata;;Annorum;;płeć z imienia;P;150 (L);lm-42;Moczydła
+974;1824;07-04;;Dobrzańska;Marianna;F;1 rok;;Anni;;nazwisko Dobrzańska? (końcówka nieczytelna), płeć z imienia;?;150 (L);lm-42;Moczydła
+975;1824;07-18?;;Pazdrakówna;Hedwigis;F;1 rok;;Anni;;dzień 18(?) niepewny, Pazdrakówna = córka Pazdraka;?;150 (L);lm-42;Moczydła
+976;1824;08-27?;;Wieleba;Martinus;M;50 lat;;Annorum;;dzień 27(?) niepewny;?;150 (L);lm-42;Moczydła
+977;1824;09-16?;;Boczkówna;Francisca;F;3 lata;;Annorum;;dzień 16(?) niepewny, nazwisko Boczkówna?/Boczkowna;?;150 (L);lm-42;Moczydła
+;1824;;;;;;;;;;NOTA nie akt (dół lewej strony): 'Z Roku 1825 do Blinowa wpisane. Niniejszą stronę 150 zawierającą w sobie wszystkich zmarłych od dnia 2 Stycznia 1797 r. do dnia 16 Września 1824 ... [dalej adnotacja o przepisaniu/księdze, ok. 17 maja ... 1843?]' - dalszy tekst niepewny;?;150 (L);lm-42;Moczydła
+;1852;12-09?;;;;;;;;;NOTA nie akt (str. 151 P, pusta rubryka): adnotacja urzędowa - 'Wyżej (zapisane?) dzieci Jana i Izabeli ... nr 678 ... Blinów d. 9? Grudnia 1852 r.' + podpis(y) (A. Chrzanowski/Chmielewski?, Kur(ator) ... Dziekan Zakrzewski?, Proboszcz) - odczyt bardzo niepewny;?;151 (P);lm-42;Moczydła

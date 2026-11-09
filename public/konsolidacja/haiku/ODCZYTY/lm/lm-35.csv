@@ -1,0 +1,28 @@
+﻿nr_wpisu_DB;rok;data_mm-dd;dom;nazwisko;imie;plec;wiek;rodzice;przyczyna_lac;przyczyna_pl;uwagi;pewnosc;strona_ksiegi;skan;miejscowosc
+818;1814;06-20;3;Babiarz;Walenty;M;60 lat;;Naturalis;śmierć naturalna;;P;66 L;lm-35;Brzozówka
+819;1814;06-22;28;Aia?;Walenty;M;80 lat;;Naturalis;śmierć naturalna;nazwisko niepewne (w DB brak nazwiska);?;66 L;lm-35;Brzozówka
+820;1814;07-01;36;Kogucowa;Franciszka;F;54 lat;;Epidemia;epidemia;;P;66 L;lm-35;Brzozówka
+821;1814;07-12;36;Koguc;Antoni;M;60 lat;;Epidemia;epidemia;;P;66 L;lm-35;Brzozówka
+822;1814;07-22;21;Barbarzak;Jan;M;1 rok;Adalberti et Agnetis Barbarzak;in Variolis malignis;ospa złośliwa;;P;66 L;lm-35;Brzozówka
+823;1814;08-13;42;Rzeszutkowa;Magdalena;F;56 lat;;Epidemia;epidemia;;P;66 L;lm-35;Brzozówka
+824;1814;08-23;17;Szyszka;Sebastian;M;66 lat;;Ordinaria;zwykła (śmierć zwykła);;P;66 L;lm-35;Brzozówka
+825;1814;09-22;31;Igras;Kasper;M;13 lat;Thomae et Justinae Igrasow;in Variolis malignis;ospa złośliwa;"DB: Jgras; nazwisko ?";?;66 L;lm-35;Brzozówka
+826;1814;09-27;39;Mazurek;Marianna;F;6 lat;Casimiri et Theresiae Mazurkow;in Variolis malignis;ospa złośliwa;;P;66 L;lm-35;Brzozówka
+827;1814;11-08;1;Gaj;Katarzyna;F;3 lata;Stanislai et Annae Gajow;Ordinaria;zwykła (śmierć zwykła);;P;66 L;lm-35;Brzozówka
+828;1814;11-09;28;Rataj;Małgorzata;F;3 lata;Augustini et Mariannae Rataiow;Ordinaria;zwykła (śmierć zwykła);imię ojca Augustinus (Augustini) - odczyt ?;?;66 L;lm-35;Brzozówka
+829;1815;03-24;26;Goch;Jadwiga;F;1 rok;Adalberti et Mariannae Gochow;Ordinaria;zwykła (śmierć zwykła);;P;66 L;lm-35;Brzozówka
+830;1815;06-11;31;Kopiwoda;Łukasz;M;60 lat;;Naturalis;śmierć naturalna;"wpisano najpierw Sebastianus, przekreślone i poprawione na Lucas (Lucas Kopiwoda); dopisek nad wierszem nieczytelny";?;66 L;lm-35;Brzozówka
+831;1816;01-24;3;Kawecki;Błażej;M;54 lata;;Hydropicus;puchlina wodna;pod wpisem dopisek: Sepelivit Paulus Stodolski Comm. Loci;P;66 L;lm-35;Brzozówka
+832;1816;02-22;29;Rzeszotko;Maciej;M;? dni;Mathaei Caspari et Rosaliae Rzeszotkow;Ordinaria;zwykła (śmierć zwykła);"wiek: ""d.3/5?"" - dni, niepewny; ojciec: Mathaei Caspari (odczyt ?)";?;67 P;lm-35;Brzozówka
+833;1816;03-11;12;Chwałek;Wojciech;M;36 lat;;Phthisis;suchoty (gruźlica);;P;67 P;lm-35;Brzozówka
+834;1816;04-01;15;Gancarz;Józef;M;2 lata;Andreae et Mariannae Gancarzow;Ordinaria;zwykła (śmierć zwykła);;P;67 P;lm-35;Brzozówka
+835;1816;06-27;27;Woś;Józef;M;2 lata;Michaelis et Mariannae Wosiow;Ordinaria;zwykła (śmierć zwykła);;P;67 P;lm-35;Brzozówka
+836;1816;12-14;48?;Czuba;Anna;F;16 lat;;Mors casualis in aqua submersa;śmierć przypadkowa przez utonięcie;"nazwisko Czubionka; nr domu 48 lub 40";?;67 P;lm-35;Brzozówka
+837;1817;02-06;36;Koguc;Marianna;F;1 rok;Casimiri et Sophiae Kogucow;Inflammatio gutturis;zapalenie gardła;data: 6 Febr (odczyt);P;67 P;lm-35;Brzozówka
+838;1817;04-11;30;Chwałek;Anna;F;4 lata;Sebastiani et Magdalenae Chwałkow;Inflammatio gutturis;zapalenie gardła;wiek 4 lub 1 - niepewny;?;67 P;lm-35;Brzozówka
+839;1817;05-28;24;Rembacz;Szymon;M;46 lat;;Ordinaria;zwykła (śmierć zwykła);;P;67 P;lm-35;Brzozówka
+840;1817;07-10;37;Bigos;Marianna;F;12 lat;Jacobi et Catharinae Bigosow;Ordinaria;zwykła (śmierć zwykła);;P;67 P;lm-35;Brzozówka
+841;1817;07-20;1;Tutka;Wojciech;M;24 lata;;Ordinaria;zwykła (śmierć zwykła);;P;67 P;lm-35;Brzozówka
+842;1817;07-26;1;Łach;Franciszek;M;3 lata;Sophiae Lachowny?;Diaria (Diarrhoea?);biegunka (czerwonka?);"imię matki/nazwisko Łachowny - odczyt ?; ojciec nie podany (matka Sophia)";?;67 P;lm-35;Brzozówka
+843;1817;09-15;18;Brzyski;Andrzej;M;16 lat;;Diaria (Diarrhoea?);biegunka;;?;67 P;lm-35;Brzozówka
+844;1817;09-28;6;Czar...?;Katarzyna;F;50 lat;;Naturalis;śmierć naturalna;nazwisko nieczytelne (Czarnecka? Czarnicka?);?;67 P;lm-35;Brzozówka

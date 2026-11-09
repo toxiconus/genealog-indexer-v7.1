@@ -1,0 +1,26 @@
+﻿nr_wpisu_DB;rok;data_mm-dd;dom;nazwisko;imie;plec;wiek;rodzice;przyczyna_lac;przyczyna_pl;uwagi;pewnosc;strona_ksiegi;skan;miejscowosc
+682;1802;03-30;28;Bucon;Paulus;M;8 mies.;;Mors naturalis;śmierć naturalna;wpis: Paulum Bucon; adnotacja pochowku: Ego Michael Pawlikowski Commendarius sepelivi;P;56;lm-30;Brzozówka
+683;1802;05-16;41;Bucon;Stanislaus;M;2;;Mors naturalis;śmierć naturalna;;P;56;lm-30;Brzozówka
+684;1802;06-07;39;Bryton;Laurentius;M;1;;Mors naturalis;śmierć naturalna;data: 'Junius die 7' (cyfra mało wyraźna);?;56;lm-30;Brzozówka
+685;1803;01-12;;Dobrzyńska;Catharina;F;60;;Mors naturalis;śmierć naturalna;brak numeru domu;P;56;lm-30;Brzozówka
+686;1803;07-26;32;Białkowska;Sophia;F;3;filia Mathiae Białkowski;Morbus S. Valentini;choroba św. Walentego (padaczka);;P;56;lm-30;Brzozówka
+687;1803;08-13;2;Kolasa;Marianna;F;6 mies.;Matthiae et Hedwigis Kolasów;Ordinaria;zwyczajna (naturalna);podpis: Paulus Stadolski Administrator;P;56;lm-30;Brzozówka
+688;1803;08-20;30;Chwałek;Thomas;M;4;Sebastiani et Magdalenae Chwałków;Ordinaria;zwyczajna (naturalna);wpis: Thomas Sebastiani et Magdalenae Chwałków;P;56;lm-30;Brzozówka
+689;1803;09-07;34;Czarny;Michael;M;12;Jacobi et Reginae Czarnych;Dolor gutturis;ból gardła (angina/dławiec);;P;56;lm-30;Brzozówka
+690;1803;09-08;42;?;Laurentius;M;1;Jacobi et Magdalenae '?Orbów';Ordinaria;zwyczajna (naturalna);nazwisko z rodziców nieczytelne (Orbów?);?;56;lm-30;Brzozówka
+691;1803;09-10;14;Czernecki;Valentinus;M;1;Thomae et Annae Czerneckich;Dolor gutturis;ból gardła (angina/dławiec);;P;56;lm-30;Brzozówka
+692;1803;09-23;13;Atlow?;Martinus;M;9;Adalberti et Agnetis Atlow?;Ordinaria;zwyczajna (naturalna);nazwisko Atlow? niepewne;?;56;lm-30;Brzozówka
+693;1803;09-24;26;?Hać;Gregorius;M;9;Sebastiani et Mariannae '?ciow';Ordinaria;zwyczajna (naturalna);nazwisko rodziców zawinięte w końcu wiersza, nieczytelne;?;56;lm-30;Brzozówka
+694;1803;09-25;14;Czernecki;Christophorus;M;5;Thomae et Annae Czerneckich;Dolor gutturis;ból gardła (angina/dławiec);data 25 niepewna (może 28);?;56;lm-30;Brzozówka
+695;1803;09-29;15;Dobrzyński;Joannes;M;5;Laurentii et Franciscae Dobrzyńskich;Dolor gutturis;ból gardła (angina/dławiec);;P;57;lm-30;Brzozówka
+696;1803;10-07;15;Dobrzyńska;Marianna;F;7;Laurentii et Franciscae Dobrzyńskich;Dolor gutturis;ból gardła (angina/dławiec);;P;57;lm-30;Brzozówka
+697;1803;11-06;19;Brzeski;Michael;M;40?;;Morbus hydropicus;puchlina wodna;wiek niepewny (40?);?;57;lm-30;Brzozówka
+698;1803;12-07;13;Spytek;Hedvigis;F;56;;Naturalis;naturalna;nazwisko Spytek? niepewne;?;57;lm-30;Brzozówka
+699;1803;12-14;2;Kolasa;Matthaeus;M;45;;Naturalis;naturalna;;P;57;lm-30;Brzozówka
+700;1804;03-15;18;Spryszak;Anna;F;10?;Christophori et Agnetis Spryszaków;Naturalis;naturalna;adnotacja: Paulus Stadolski Commendarius; wiek niepewny;?;57;lm-30;Brzozówka
+701;1804;07-02;40;Grudzień;Helisabeth;F;54;wdowa, agricola;Naturalis; mortua per senectutem;naturalna; zmarła ze starości;Vidua agricola;P;57;lm-30;Brzozówka
+702;1804;12-04;35;Siemion;Catharina;F;2;Matthiae et Mariannae Siemionów agricolarum;per Variolis malignis;ospa złośliwa;;P;57;lm-30;Brzozówka
+703;1804;12-15;10;Machulek;Agnes;F;2;Matthiae et Annae Machulków agricolarum;per Variolis malignis;ospa złośliwa;;P;57;lm-30;Brzozówka
+704;1804;12-27;34;Czarna;Catharina;F;2;Jacobi et Agnetis Czarnych agricolarum;per Variolis malignis;ospa złośliwa;;P;57;lm-30;Brzozówka
+705;1805;02-03;18;Spryszak;Valentinus;M;4;Christophori et Agnetis Spryszaków agricolarum;Morbus umbilici?;choroba pępka? (niepewne);przyczyna niepewna;?;57;lm-30;Brzozówka
+706;1805;02-12;8;?;Marianna;F;3;Thomae et Mariannae ? (nieczytelne);febris? ratione morbi ... umbilici?;gorączka? z powodu choroby pępka? (niepewne);przyczyna i rodzice nieczytelni;?;57;lm-30;Brzozówka

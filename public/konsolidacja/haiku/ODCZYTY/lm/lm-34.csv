@@ -1,0 +1,30 @@
+﻿nr_wpisu_DB;rok;data_mm-dd;dom;nazwisko;imie;plec;wiek;rodzice;przyczyna_lac;przyczyna_pl;uwagi;pewnosc;strona_ksiegi;skan;miejscowosc
+790;1814;01-29;30;Bucon(iowa);Francisca;K;36;;Epidemia;epidemia;nazwisko: Buconiowa (łamane w wierszu);P;L (s.64);lm-34;Brzozówka
+791;1814;02-01;29;Tutkowna;Sophia;K;17;;Epidemia;epidemia;panna;P;L (s.64);lm-34;Brzozówka
+792;1814;02-02;12;Dętczyna;Anna;K;30;;Epidemia;epidemia;"Detczyna; odczyt nazwiska ok.";P;L (s.64);lm-34;Brzozówka
+793;1814;02-08;40;Paluchowa;Hedwigis;K;56;;Epidemia;epidemia;;P;L (s.64);lm-34;Brzozówka
+794;1814;02-08;20;Mcion?;Anna;K;6;Sebastiani et Mariannae Mcion?;Epidemia;epidemia;"córka Sebastiana i Marianny; nazwisko niepewne (Ucion/Mcion/Ucisa)";?;L (s.64);lm-34;Brzozówka
+;1814;02-08;40;Paluchowa;Hedwigis;K;56;;Epidemia;epidemia;wpis SKREŚLONY - duplikat poprzedniego wiersza (ta sama osoba, dom 40, wiek 56);P;L (s.64);lm-34;Brzozówka
+795;1814;02-13?;36;Czarny;Jacobus;M;66;;Epidemia;epidemia;"dzień niepewny (13/12/19), między 8 a 16 II; wiek 66 lub 60";?;L (s.64);lm-34;Brzozówka
+796;1814;02-16;25;Brzeska;Marianna;K;46;;Epidemia;epidemia;;P;L (s.64);lm-34;Brzozówka
+797;1814;02-26;20;Goch;Adalbertus;M;70;;Epidemia;epidemia;Goch/Gach;P;L (s.64);lm-34;Brzozówka
+798;1814;02-28;17;Pękowa;Anna;K;46;;Epidemia;epidemia;"Pękowa (Pekowa); matka dzieci z tego samego domu 17";P;L (s.64);lm-34;Brzozówka
+799;1814;02-28;22;Pinlat?;Lucas;M;50;;Epidemia;epidemia;"nazwisko niepewne (Pinlat/Pintat); przy dacie dopisek na marginesie nieczytelny";?;L (s.64);lm-34;Brzozówka
+800;1814;02-28;17;Martini? / Pęk;Bartholomaeus;M;8;Martini et Annae Pękow;Epidemia;epidemia;"Maxini/Martini - ojciec Marcin; matka Anna Pękowa; nazwisko dziecka w DB: Pęk";P;L (s.64);lm-34;Brzozówka
+801;1814;02-28;13;Paruch?;Joannes;M;60;;Epidemia;epidemia;"nazwisko niepewne; wiek 60 lub 66";?;L (s.64);lm-34;Brzozówka
+802;1814;03-05;22;Rzeszutkowa;Sophia;K;60;;Epidemia;epidemia;Rzeszutkowa (Rzeszutko);P;L (s.64);lm-34;Brzozówka
+803;1814;03-05;22;Ogon;Magdalena;K;2;Joannis et Mariannae Ogonów;Epidemia;epidemia;"pod wpisem adnotacja: ""Sepelivit Paulus Stodolski(?) Comm. Loci"" (pochował; odczyt nazwiska niepewny)";P;L (s.64);lm-34;Brzozówka
+804;1814;03-06;17;Pęk;Jacobus;M;5;Martini et Annae Pękow;Epidemia;epidemia;"Jakub/Julius? imię czytane Jacob; wiek 5 lub 8";?;P (s.65);lm-34;Brzozówka
+805;1814;03-06;17;Pęk;Joannes;M;2;Martini et Annae Pękow;Epidemia;epidemia;;P;P (s.65);lm-34;Brzozówka
+806;1814;03-06;17;Pęk;Catharina;K;8;Martini et Annae Pękow;Epidemia;epidemia;"wiek 8 lub 0 niepewny; w rubryce płci zdaje się Mas (niespójne z imieniem)";?;P (s.65);lm-34;Brzozówka
+807;1814;03-06;16;Czernicki? (rodzice);Thomas?;K?;1;Thomae et Annae Czernickich;Epidemia;epidemia;"imię dziecka niepewne (Thomas/Thomasia?); znacznik płci w kol. Foemina; DB: Czernicki Tomasz";?;P (s.65);lm-34;Brzozówka
+808;1814;03-07;22;Rzeszutko;Thomas;M;30;;Epidemia;epidemia;;P;P (s.65);lm-34;Brzozówka
+809;1814;03-07;22;Rzeszutko;Adalbertus;M;7;Thomae et Mariannae Rzeszutków;Epidemia;epidemia;;P;P (s.65);lm-34;Brzozówka
+810;1814;03-12;31;Ogon;Matthias;M;60;;Epidemia;epidemia;Ogon/Ogoń;P;P (s.65);lm-34;Brzozówka
+811;1814;03-15;16;Pawlakowa;Marianna;K;60;;Epidemia;epidemia;Pawlakowa (Pawłowa?);P;P (s.65);lm-34;Brzozówka
+812;1814;03-15;13;Szabatowa (rodzice);Sophia;K;2;Simonis et Franciscae Szabatów;Epidemia;epidemia;córka Szymona i Franciszki Szabatów;P;P (s.65);lm-34;Brzozówka
+813;1814;03-23;13;Szabatka;Francisca;K;40;;Epidemia;epidemia;Szabatka/Szabatowa;P;P (s.65);lm-34;Brzozówka
+814;1814;03-27;39;Mazurek;Franciscus;M;11 (jednostka?);Theresiae Mazurkowy f(ilius?);Ordinaria;zwykła (zwyczajna) choroba;"wiek: 0? / 11 - jednostka (dni/tyg.) nieczytelna; rodzice: Teresa Mazurkowa (ojciec niewymieniony)";?;P (s.65);lm-34;Brzozówka
+815;1814;04-07;32;Tylusiowa;Catharina;K;90;;Naturalis;śmierć naturalna;"Tylosiowa/Tylusowa; DB: nazwisko ""?""";P;P (s.65);lm-34;Brzozówka
+816;1814;04-18;22;Rzeszutkowna;Margaritha;K;20;;Epidemia;epidemia;"panna; wiek 20 lub 26";?;P (s.65);lm-34;Brzozówka
+817;1814;05-25;32;Tylus;Joannes;M;40;;Epidemia;epidemia;"pod wpisem adnotacja: ""Sepelivit Paulus Stodolski(?) Comm. Loci""";P;P (s.65);lm-34;Brzozówka

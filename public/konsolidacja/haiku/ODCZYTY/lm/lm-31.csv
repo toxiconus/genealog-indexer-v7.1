@@ -1,0 +1,29 @@
+﻿nr_wpisu_DB;rok;data_mm-dd;dom;nazwisko;imie;plec;wiek;rodzice;przyczyna_lac;przyczyna_pl;uwagi;pewnosc;strona_ksiegi;skan;miejscowosc
+707;1805;04-1?;3?;Czernicki;Mathias;M;1;Thomae et Annae Czernickich, agricolae;ratio mortis dolor ? (zatarte);ból ? (nieczytelne);"wiersz wyblakły; data i dom niepewne; nazwisko z rodziców";?;L;lm-31;Brzozówka
+708;1805;08-02;37;Wozicha;Anna;F;76;;agricola, ratio mortis senectus;rolniczka, starość;nazwisko Wozicha/Wozicka;P;L;lm-31;Brzozówka
+709;1805;10-29;37;Woś;Agatha;F;1;Michaelis et Mariannae ?Wosów, agricolae;(brak jawnej przyczyny);;"nazwisko rodziców słabo czytelne; w DB Woś";?;L;lm-31;Brzozówka
+710;1805;10-30;42;Czuba;Jacobus;M;46;;repentina morte se patiens cum testimonio ... ratio mortis apoplexia, agricola;nagła śmierć, apopleksja (udar), rolnik;środek opisu niepewny;?;L;lm-31;Brzozówka
+711;1806;02-17;;Gręda;Adalbertus;M;70;;pauper, ratio mortis senectus;ubogi, starość;"rubryka domu pusta (kreska); nazwisko Gręda/Greda";P;L;lm-31;Brzozówka
+712;1806;02-26;46;Paluch;Stanislaus;M;60;;ratio mortis thypsis;tyfus;;P;L;lm-31;Brzozówka
+713;1806;03-02;19;Jagosiak;Josephus;M;12;Francisci et Hedwigis Jagosiak, agricolae;ratio mortis thypsis;tyfus;;P;L;lm-31;Brzozówka
+714;1806;03-13;17;Pęk;Catharina;F;90;;ratio mortis senectus, agricola;starość, rolniczka;zapis Pękowa/Pekowa;?;L;lm-31;Brzozówka
+715;1806;03-09;35;;Josephus;M;1;Hedwigis Bieniaszowej, agricolae;in variolis malignis;ospa złośliwa;"nazwisko matki ?; w DB nazwisko puste";?;L;lm-31;Brzozówka
+716;1806;03-2?;43;;Andreas;M;1;Adalberti et Sophiae Wolskich(?), agricolae pro...;in variolis malignis;ospa złośliwa;data (20/26 marca) i nazwisko rodziców niepewne;?;L;lm-31;Brzozówka
+717;1806;03-24;38;Jigras;Catharina;F;3;Thomae et Justinae Jgrasów, agricolae;in variolis malignis;ospa złośliwa;nazwisko Jgras/Igras/Jigras;?;L;lm-31;Brzozówka
+718;1806;03-31;32;Bigos;Adalbertus;M;2;Jacobi et Catharinae Bigosów, agricolae;in variolis malignis;ospa złośliwa;;P;L;lm-31;Brzozówka
+719;1806;03-31;11;Sabat;Anna;F;60;;ratio mortis senectus, agricola;starość, rolniczka;Sabatowa;P;L;lm-31;Brzozówka
+720;1806;04-01;11;Sabat;Andreas;M;63;;ratio mortis febris putrida, agricola;gorączka gnilna;;P;L;lm-31;Brzozówka
+721;1806;10-25;12;Spryszak;Martinus;M;5;Christophori et Agnetis Spryszaków;dolor ? (pendris?);ból ? (niepewne);przyczyna niepewna;?;P;lm-31;Brzozówka
+722;1806;11-24;43;Kłoś;Sebastianus;M;26;;dolor ventris, agricola;ból brzucha, rolnik;;P;P;lm-31;Brzozówka
+723;1806;12-10;35;Siemion;Anna;F;86;;senectus;starość;"Siemionowa; wiek 86/36 - w DB Siemion";?;P;lm-31;Brzozówka
+724;1807;03-13;42;Dętczyna;Marianna;F;36;;agricola post partum;po porodzie, rolniczka;nazwisko Dętczyna/Dębczyna/Petezyna niepewne;?;P;lm-31;Brzozówka
+725;1807;04-09;35;Sabat;Marianna;F;40;;agricola, dolor ventris;ból brzucha, rolniczka;Sabatka;P;P;lm-31;Brzozówka
+726;1807;04-14;33;Sabat;Margaretha;F;4;Michaelis et Mariannae Sabat;agricola in variolis malignis;ospa złośliwa;;P;P;lm-31;Brzozówka
+727;1807;06-21;37;Jgras;Marianna;F;5;Joannis et Mariannae Jgrasów, agricolae;ratio mortis thypsis;tyfus;;P;P;lm-31;Brzozówka
+;1807;09-27;8;Skubis;Michael;M;?;Thomae et Mariannae Skubisów, agricolae;ante tempus nati;urodzony przedwcześnie;"bliźnięta (seu gemini) Michael et Francisca, jeden wiersz; Sexus: 2 w kol. M; wiek ?; brak w DB (prawdopodobnie nr 728)";?;P;lm-31;Brzozówka
+;1807;09-27;8;Skubis;Francisca;F;?;Thomae et Mariannae Skubisów, agricolae;ante tempus nati;urodzona przedwcześnie;"bliźniaczka Michaela; brak w DB (prawdopodobnie 728)";?;P;lm-31;Brzozówka
+729;1807;09-27;34;Czarna;Francisca;F;12;Jacobi et Agnetis Czarnych;ratio mortis dolor ventris, agricola;ból brzucha;;P;P;lm-31;Brzozówka
+;1807;09-30;34;Czarna;Sophia;F;10;Jacobi et Agnetis Czarnych (ut supra);ut supra (dolor ventris);jak wyżej: ból brzucha;brak w DB (prawdopodobnie 730);P;P;lm-31;Brzozówka
+731;1807;10-15;6;Cwiek;Theresia;F;1;Simonis et Mariae Ćwików;ratio mortis morbus hectica;suchoty;;P;P;lm-31;Brzozówka
+732;1807;11-04;26;;Sebastianus;M;40;;morbus paralyticus, agricola;paraliż (udar), rolnik;nazwisko (Aca/Ucia?) nieczytelne;?;P;lm-31;Brzozówka
+733;1807;11-22;42;Czuba;Agnes;F;2;Jacobi et Magdalenae Czuba ...;(nieczytelne);;przyczyna nieczytelna;?;P;lm-31;Brzozówka

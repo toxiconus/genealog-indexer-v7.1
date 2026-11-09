@@ -1,0 +1,26 @@
+﻿nr_wpisu_DB;rok;data_mm-dd;dom;nazwisko;imie;plec;wiek;rodzice;przyczyna_lac;przyczyna_pl;uwagi;pewnosc;strona_ksiegi;skan;miejscowosc
+946;1814;06-25;12;Mcionek;Agnes;F;6 mens.;Bartłomieja i Zofii Mcionków;Epidemia;epidemia;wiek 'm.6' (6 mies.);P;148;lm-41;Moczydła
+947;1814;06-26;12;Mcionek;Stanisław;M;2;Bartłomieja i Zofii Mcionków;Epidemia;epidemia;;P;148;lm-41;Moczydła
+948;1814;07-07;12;Drap;Andrzej;M;12;Antoniego i Marianny Drapów;Epidemia;epidemia;nazwisko rodziców Drapów - litery niepewne;?;148;lm-41;Moczydła
+949;1814;08-23;14;Boczek;Zofia;F;1;Marcina i Franciszki Boczków;in variolis malignis;w ospie złośliwej;druga litera przyczyny niepewna;?;148;lm-41;Moczydła
+950;1814;11-03;12;Krupa;Zofia;F;15;Antoniego i Marianny Krupów;Hidropicus;puchlina wodna;miesiąc 9bris=listopad;P;148;lm-41;Moczydła
+951;1815;02-01;15;Bogoń;Walenty;M;11;Mateusza i Marianny Bogoniów;Naturalis;śmierć naturalna;;P;148;lm-41;Moczydła
+952;1815;04-27;20;Nieściur;Marianna;F;1;Stanisława i Franciszki Nieściurów(?);Ordinaria;śmierć zwykła (zwyczajna);nazwisko rodziców niepewne (Niewiarów/Nieściurów);?;148;lm-41;Moczydła
+953;1815;08-18;12;Krupa;Marianna;F;66;;Naturalis;śmierć naturalna;Krupina,  żona/wdowa?;P;148;lm-41;Moczydła
+954;1816;02-??;5;Bogoń;Marcin;M;46?;;Ordinaria;śmierć zwykła (zwyczajna);przed nazwiskiem przekreślone słowo,  dzień nieczytelny,  nagłówek 1816 pod datą;?;148;lm-41;Moczydła
+955;1817;01-02;5;Wieleba;Andrzej;M;40;;Ordinaria;śmierć zwykła (zwyczajna);po przyczynie znak '?';P;148;lm-41;Moczydła
+956;1817;03-24;14;Mcion;Paweł;M;3 mens.;Marcina i Zofii Mcionów;Ordinaria;śmierć zwykła (zwyczajna);dzień 24 lub 14;?;148;lm-41;Moczydła
+957;1817;04-03;16;Ulanicz?;Maciej;M;6 mens.;Kazimierza i Anastazji Ulowiczów(?);Ordinaria;śmierć zwykła (zwyczajna);nazwisko niepewne;?;148;lm-41;Moczydła
+958;1817;07-15;10;Sikora;Wojciech (Adalbertus);M;50;;Paralitica;paraliż;;P;148;lm-41;Moczydła
+959;1818;03-30;3;Chmil;Jakub;M;70;;Naturalis;śmierć naturalna;;P;149;lm-41;Moczydła
+960;1818;06-19;9;Kasperek;Kazimierz;M;70;;Naturalis;śmierć naturalna;;P;149;lm-41;Moczydła
+961;1818;07-29;1;Rzecki?;Antoni;M;26;;a fulmine occisus;zabity piorunem;nazwisko niepewne (DB: Rzek..);?;149;lm-41;Moczydła
+962;1819;01-10;7;Mcion;Tomasz;M;60;;Naturalis;śmierć naturalna;;P;149;lm-41;Moczydła
+963;1819;02-11;13;Sagan;Józef;M;1;Stanisława i Marianny Saganów;Ordinaria;śmierć zwykła (zwyczajna);numer domu 13 lub 18;?;149;lm-41;Moczydła
+964;1820;05-20;12;Kania?;Franciszek;M;70;;Naturalis;śmierć naturalna;nazwisko niepewne,  nad kolumną notatka wizytacji dziekana (Urzędów) 9 maj 1820;?;149;lm-41;Moczydła
+965;1820;12-20;13;Wieleba?;Marianna;F;2;Nowak(?) i Tekli Wielebów;Ordinaria;śmierć zwykła (zwyczajna);nazwisko ojca niepewne,  wpis w DB: Wieleba;?;149;lm-41;Moczydła
+;1820;12-23;13;Wieleba;Tekla;F;28;;Ordinaria;śmierć zwykła (zwyczajna);brak w DB (matka Marianny),  przyczyna nieco niepewna;?;149;lm-41;Moczydła
+966;1820;12-27;5;Kania;Wojciech (Adalbertus);M;9 mens.;Józefa i Zofii Kaniów;Ordinaria;śmierć zwykła (zwyczajna);;P;149;lm-41;Moczydła
+967;1821;03-28;7;Serafin;Barbara;F;70;;Naturalis;śmierć naturalna;Serafinowa;P;149;lm-41;Moczydła
+968;1822;03-03;1;Paluch;Marianna;F;2;Józefa i Konstancji Paluchów;in variolis malignis;w ospie złośliwej;;P;149;lm-41;Moczydła
+969;1822;03-06;2;Sagan;Katarzyna;F;66;;Naturalis;śmierć naturalna;Saganowa;P;149;lm-41;Moczydła
