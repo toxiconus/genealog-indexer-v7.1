@@ -27,7 +27,7 @@ table{border-collapse:collapse;width:100%}th,td{padding:3px 6px;border-bottom:1p
 <button id="bImg" title="Wczytaj zdjęcia dla zaznaczonej dekady">📷 Zdjęcia dekady…</button>
 <button id="bAi">Wczytaj odczyty (CSV)</button>
 <button id="bSave">Zapisz zmiany (JSON)</button><button id="bLoad">Wczytaj zmiany</button>
-<button id="bCsv">Eksport CSV</button><button id="bAdd">+ Dodaj akt</button>
+<button id="bCsv">Eksport CSV</button><button id="bAdd">+ Dodaj akt</button><button id="bOnly" title="Pokaż tylko akty, które mają skan">🖼 Tylko ze skanem</button>
 <span id="st" class="dim"></span>
 <input type="file" id="fImg" accept="image/*" multiple hidden><input type="file" id="fAi" accept=".csv" hidden><input type="file" id="fLoad" accept=".json" hidden>
 </header>
@@ -45,13 +45,16 @@ const dec=y=>Math.floor(y/10)*10, cen=y=>Math.floor(y/100)+1;
 const rom={18:'1700–1799',19:'1800–1899',20:'1900–1999'};
 let sel={lvl:'all',v:null}, cur=null, view=[];
 const $=s=>document.querySelector(s);
+let only=false;function RS(){return only?recs.filter(hasScan):recs}
+for(const d in (DATA.emb||{}))(pool[d]=pool[d]||[]).push(...DATA.emb[d].map(x=>({name:x.name,url:x.data})));
+
 function fld(r,k){const e=S.edits[r.id];return e&&k in e?e[k]:(r.f[k]||'')}
 function name(r){return (fld(r,'deceased_last_name')||'?')+' '+(fld(r,'deceased_first_name')||'')}
 function stat(){const n=Object.keys(S.edits).length;$('#st').textContent=recs.length+' aktów · zmienionych: '+n+' · zdjęć w pamięci: '+Object.values(pool).reduce((a,b)=>a+b.length,0)}
-function by(){const m={};recs.forEach(r=>{(m[r.y]=m[r.y]||[]).push(r)});return m}
+function by(){const m={};RS().forEach(r=>{(m[r.y]=m[r.y]||[]).push(r)});return m}
 function sumYear(l){const o={n:l.length,ok:0,ai:0,idx:0};l.forEach(r=>{const s=S.status[r.id]==='ok'?'ok':r.s;o[s==='ok'?'ok':s==='ai'?'ai':'idx']++});return o}
 function drawTree(){
-  const m=by();let h=`<div class="n ${sel.lvl=='all'?'sel':''}" data-l="all">Wszystkie lata <span class="cnt">${recs.length}</span></div>`;
+  const m=by();let h=`<div class="n ${sel.lvl=='all'?'sel':''}" data-l="all">Wszystkie lata <span class="cnt">${RS().length}</span></div>`;
   for(const c of [18,19,20]){
     const a=(c-1)*100, b=a+99;
     const ys=[];for(let y=Math.max(a,1797);y<=Math.min(b,1945);y++)ys.push(y);
@@ -74,7 +77,7 @@ function badge(r){const st=S.status[r.id];const s=st==='ok'?'ok':st==='bad'?'er'
 function hasScan(r){return S.scan[r.id]||r.scan}
 function drawList(){
   const m=by(),q=$('#q').value.trim().toLowerCase();let h='';
-  if(q){view=recs.filter(r=>(name(r)+' '+fld(r,'mother_last_name')+' '+fld(r,'father_last_name')).toLowerCase().includes(q)).slice(0,500);
+  if(q){view=RS().filter(r=>(name(r)+' '+fld(r,'mother_last_name')+' '+fld(r,'father_last_name')).toLowerCase().includes(q)).slice(0,500);
     h=`<div class="pad dim">Wyniki szukania: ${view.length}${view.length==500?'+':''}</div>`+table(view,true)}
   else if(sel.lvl=='y'){view=m[sel.v]||[];
     h=`<div class="pad"><b>${sel.v}</b> — ${view.length} aktów ${view.length?'':'(brak w bazie — możesz dodać akt lub wczytać odczyty)'}</div>`+(view.length?table(view,false):'')}
@@ -108,18 +111,18 @@ function open(r){cur=r;drawList();
   $('#utpl').onchange=e=>{const v=e.target.value.trim();if(v)S.tpl[d]=v;else delete S.tpl[d];save();open(r)};
   $('#stsel').onchange=e=>{S.status[r.id]=e.target.value;if(!e.target.value)delete S.status[r.id];save();drawList()};
   $('#pv').onclick=()=>step(-1);$('#nx').onclick=()=>step(1);
-  $('#thumbs').onclick=e=>{const i=e.target.dataset.i;if(i==null)return;S.scan[r.id]=p[+i].name;save();show(p[+i].url);open(r)};
+  $('#thumbs').onclick=e=>{const i=e.target.dataset.i;if(i==null)return;S.scan[r.id]=p[+i].name;save();open(r)};
   const nm=S.scan[r.id]||r.scan,f=p.find(x=>x.name==nm),wu=webUrl(r);
-  if(f)show(f.url);else if(wu)show(wu);else $('#view').insertAdjacentHTML('beforeend','<div class="hint" style="color:#aaa">'+(nm?'Plik skanu: '+esc(nm)+' — wczytaj zdjęcia dekady.':'Brak przypisanego skanu — kliknij miniaturę poniżej, aby przypisać.')+'</div>');
+  if(f)show(f.url,r.side);else if(wu)show(wu);else $('#view').insertAdjacentHTML('beforeend','<div class="hint" style="color:#aaa">'+(nm?'Plik skanu: '+esc(nm)+' — wczytaj zdjęcia dekady.':'Brak przypisanego skanu — kliknij miniaturę poniżej, aby przypisać.')+'</div>');
 }
 function webUrl(r){const u=S.url[r.id];if(u){if(/^\d+$/.test(u)){const t=S.tpl[dec(r.y)];return t?t.replace('{n}',u):''}return u}return ''}
 function step(d){const i=view.findIndex(x=>x.id==cur.id);const n=view[i+d];if(n)open(n)}
 document.onkeydown=e=>{if(/INPUT|TEXTAREA|SELECT/.test(e.target.tagName))return;if(e.key=='ArrowRight')step(1);if(e.key=='ArrowLeft')step(-1);if(e.key=='+')zoom(1.25);if(e.key=='-')zoom(.8)};
 // viewer
 let T={x:0,y:0,k:1,r:0},img=null;
-function show(url){const v=$('#view');v.querySelectorAll('img,.hint').forEach(x=>x.remove());img=new Image();img.onload=()=>{const k=Math.min(v.clientWidth/img.naturalWidth,v.clientHeight/img.naturalHeight);T={x:0,y:0,k:k,r:0,k0:k};ap()};img.onerror=()=>{v.insertAdjacentHTML('beforeend','<div class="hint" style="color:#f99">Nie udało się załadować obrazu z adresu (serwis może blokować osadzanie lub wymaga logowania). Użyj „otwórz w nowej karcie" i pobierz plik.</div>')};img.src=url;v.appendChild(img)}
+function show(url,side){const v=$('#view');v.querySelectorAll('img,.hint').forEach(x=>x.remove());img=new Image();img.onload=()=>{const w=side?img.naturalWidth/2:img.naturalWidth,k=Math.min(v.clientWidth/w,v.clientHeight/img.naturalHeight);const cx=side?(v.clientWidth-w*k)/2-(side=='R'?w*k:0):0;T={x:cx,y:0,k:k,r:0,k0:k,x0:cx};ap()};img.onerror=()=>{v.insertAdjacentHTML('beforeend','<div class="hint" style="color:#f99">Nie udało się załadować obrazu z adresu (serwis może blokować osadzanie lub wymaga logowania). Użyj „otwórz w nowej karcie" i pobierz plik.</div>')};img.src=url;v.appendChild(img)}
 function ap(){if(img)img.style.transform=`translate(${T.x}px,${T.y}px) scale(${T.k}) rotate(${T.r}deg)`}
-function zoom(f,cx,cy){const v=$('#view');if(!img)return;if(f==0){T.x=0;T.y=0;T.k=T.k0;T.r=0;ap();return}
+function zoom(f,cx,cy){const v=$('#view');if(!img)return;if(f==0){T.x=T.x0||0;T.y=0;T.k=T.k0;T.r=0;ap();return}
   cx=cx??v.clientWidth/2;cy=cy??v.clientHeight/2;T.x=cx-(cx-T.x)*f;T.y=cy-(cy-T.y)*f;T.k*=f;ap()}
 $('#det').addEventListener('click',e=>{const z=e.target.dataset&&e.target.dataset.z;if(z!=null&&e.target.closest('#vtools'))zoom(+z);if(e.target.id=='rot'){T.r=(T.r+90)%360;ap()}});
 $('#det').addEventListener('wheel',e=>{const v=e.target.closest('#view');if(!v)return;e.preventDefault();const b=v.getBoundingClientRect();zoom(e.deltaY<0?1.15:.87,e.clientX-b.left,e.clientY-b.top)},{passive:false});
@@ -143,6 +146,7 @@ $('#bCsv').onclick=()=>{const l=(sel.lvl=='y'?recs.filter(r=>r.y==sel.v):sel.lvl
   const h=cols.slice();const body=l.map(r=>h.map(k=>k=='id'?r.id:k=='death_year'?r.y:k=='death_act_number'?(r.a??''):k=='verification_status'?(S.status[r.id]=='ok'?'ok':S.status[r.id]=='bad'?'wątpliwe':fld(r,k)):fld(r,k)).map(q).join(';'));
   dl('zgony_'+(sel.lvl=='all'?'wszystkie':sel.v)+'.csv','﻿'+h.join(';')+'\n'+body.join('\n'))};
 function dl(n,t){const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([t]));a.download=n;a.click()}
+$('#bOnly').onclick=()=>{only=!only;$('#bOnly').classList.toggle('p',only);cur=null;draw()};
 $('#bAdd').onclick=()=>{if(sel.lvl!='y'){alert('Zaznacz rok w drzewie.');return}const a=prompt('Numer aktu w roku '+sel.v+'?');if(!a)return;const r={id:'new-'+sel.v+'-'+a,y:sel.v,a:+a,s:'ai',ord:+a,f:{},book:'dodane'};recs.push(r);S.added.push(r);recs.sort((a,b)=>a.y-b.y||(a.a??9999)-(b.a??9999)||a.ord-b.ord);save();draw();open(recs.find(x=>x.id==r.id))};
 function draw(){drawTree();drawList();stat()}
 draw();

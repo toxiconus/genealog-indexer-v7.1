@@ -57,10 +57,17 @@ for fn in sorted(glob.glob(R+'haiku/ODCZYTY/*_dom_przyczyny.csv')):
         if x['uwagi']: f['notes']=(f.get('notes','')+' '+x['uwagi']).strip()
         if x['nazwisko'] and not f.get('deceased_last_name'): f['deceased_last_name']=x['nazwisko']
         if x['pewnosc']=='?': r['unc']=['odczyt do potwierdzenia']
+        pg=int(x['strona_ksiegi']);r['scan']='lm_str16-17.jpg' if pg<=17 else 'lm_str18-19.jpg';r['side']='L' if pg%2==0 else 'R'
         r['s']='ai';r['book']='Liber mortuorum (odczyt Claude, str. %s)'%x['strona_ksiegi']
 recs.sort(key=lambda r:(r['y'],r['a'] if r['a'] is not None else 9999,r['ord']))
 print(len(recs),collections.Counter(r['s'] for r in recs),min(r['y'] for r in recs),max(r['y'] for r in recs))
+import base64,io
+from PIL import Image
+EMB={'1800':[]}
+for nm,src in [('lm_str16-17.jpg','eabeafb5-image.jpg'),('lm_str18-19.jpg','969c52e8-image.jpg')]:
+    im=Image.open('/mnt/user-data/attachments/3e7ce577-16ba-54bc-8dbe-e2ba98a801b3/'+src);im.thumbnail((1700,1700));bf=io.BytesIO();im.save(bf,'JPEG',quality=78)
+    EMB['1800'].append(dict(name=nm,data='data:image/jpeg;base64,'+base64.b64encode(bf.getvalue()).decode()))
 tpl=open('szablon.html',encoding='utf-8').read()
-out=tpl.replace('/*DATA*/null',json.dumps(dict(recs=recs,cols=COLS,scanBase=base),ensure_ascii=False,separators=(',',':')))
+out=tpl.replace('/*DATA*/null',json.dumps(dict(recs=recs,cols=COLS,scanBase=base,emb=EMB),ensure_ascii=False,separators=(',',':')))
 open(R+'narzedzia/baza_zgonow_1797-1945.html','w',encoding='utf-8').write(out)
 print(len(out))
