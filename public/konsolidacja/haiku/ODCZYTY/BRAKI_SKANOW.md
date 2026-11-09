@@ -10,3 +10,6 @@ Skany z GenBazy pobierane przez użytkownika; braki mogą w ogóle NIE istnieć 
 ## Inne
 - Urodzenia 1797–1825 (luka w indeksie Lubgens/Geneteka) – źródło nieznane; film FamilySearch 937476 niepotwierdzony.
 - Księga zgonów łacińska: lm-1…29, lm-38…42 nieodczytane.
+
+## Do sprawdzenia po dołożeniu skanów (dopisane 2026-11-09)
+- Urodzenia 1797–1825: sprawdzić Bartłomieja Kosidłę (zm. 21 VIII 1805, dom 17, wiek „5", jednostka niepewna – raczej mies.; rodzice Wojciech i Franciszka Kosidłowie) – akt 197, Liber mortuorum Blinów str. 19.
