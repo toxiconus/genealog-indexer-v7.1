@@ -175,6 +175,10 @@ for fn in sorted(glob.glob(R+'haiku/ODCZYTY/*_dom_przyczyny.csv'))+sorted(glob.g
             if st!='brak w akcie':ai['deceased_status']=st
             un=(un[:ms.start()]+un[ms.end():]).strip(', ').strip()
         ai['notes']=', '.join(t for t in (_ntf,un) if t)
+        if is_child(ai.get('age')) and ai.get('deceased_status') in (None,'','Agricola'):
+            if ai.get('deceased_status')=='Agricola':ai['notes']=', '.join(t for t in ('stan w akcie: Agricola',ai.get('notes','')) if t)
+            ai['deceased_status']='dziecko'
+        ai['notes']=re.sub(r'(^|, )dziecko(?=,|$)','',ai.get('notes','')).strip(', ').strip()
         fill_markers(ai)
         unc=[f for f,v in ai.items() if '?' in str(v)]
         if _unres and 'deceased_last_name' not in unc:unc.append('deceased_last_name')
@@ -199,6 +203,12 @@ t=open(SZ,encoding='utf-8').read()
 def sub(old,new,cnt=1):
     global t
     assert old in t,old[:70];t=t.replace(old,new,cnt)
+
+sub("  const cellOf = f => { const v = getv(a,f.id), x = s.f[f.id]; if (!appl(a,f.id) && !clean(v)) return '';",
+    "  const HMK = []; const cellOf = f => { const v = getv(a,f.id), x = s.f[f.id]; if (!appl(a,f.id) && !clean(v)) return ''; if (S.hideMk !== false && /^\\[(?:_|-)\\]$/.test(String(v||'').trim()) && !x?.ok && !x?.skip) { HMK.push(f.label + ' ' + String(v).trim()); return ''; }")
+sub("  if (!a.kind) h += `<div class=\"actbar\">","  if (HMK.length) h += `<div class=\"muted hmk\" style=\"margin:8px 0;font-size:13px\">∅ Puste (ukryte): ${HMK.map(esc).join(' · ')} <button class=\"sm\" id=\"tShowMk\">pokaż</button></div>`;\n  if (!a.kind) h += `<div class=\"actbar\">")
+sub("<button class=\"sm chip ${S.hideOk?'sel':''}\" id=\"tHideOk\">👁 Ukryj zatwierdzone pola</button>","<button class=\"sm chip ${S.hideOk?'sel':''}\" id=\"tHideOk\">👁 Ukryj zatwierdzone pola</button><button class=\"sm chip ${S.hideMk!==false?'sel':''}\" id=\"tHideMk\">∅ Ukryj puste [_] [-]</button>")
+sub("  $('tHideOk').onclick = () => { S.hideOk = !S.hideOk; save(); renderAct(); };","  $('tHideOk').onclick = () => { S.hideOk = !S.hideOk; save(); renderAct(); };\n  $('tHideMk').onclick = () => { S.hideMk = S.hideMk === false; save(); renderAct(); };\n  { const sm = $('tShowMk'); if (sm) sm.onclick = () => { S.hideMk = false; save(); renderAct(); }; }")
 # --- zakres/ nawigacja
 sub("const fieldsOf = a => a.kind==='prot' ? D.fieldsProt : a.kind==='rej' ? D.fieldsRej : ORDF;","const LATF = ['death_place','house','deceased_last_name','deceased_first_name','death_date','deceased_sex','age','deceased_status','profession','parents_raw','father_first_name','mother_first_name','mother_last_name','cause_of_death','notes'].map(id => FIELDS.find(f => f.id === id)).filter(Boolean); const CAUSEF = [...ORDF.slice(0,-1), FIELDS.find(f => f.id==='cause_of_death'), ORDF[ORDF.length-1]].filter(Boolean); const fieldsOf = a => a.kind==='prot' ? D.fieldsProt : a.kind==='rej' ? D.fieldsRej : (a.year < 1826 ? LATF : (a.year >= 1870 && a.year <= 1879 ? CAUSEF : ORDF));")
 sub("let S = {acts:{}, cur:null, year:'all', flt:'all',","let S = {acts:{}, cur:null, year:'all', cen:null, dec:null, onlyScan:false, flt:'all',")
