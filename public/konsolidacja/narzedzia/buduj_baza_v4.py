@@ -180,6 +180,13 @@ for fn in sorted(glob.glob(R+'haiku/ODCZYTY/*_dom_przyczyny.csv'))+sorted(glob.g
                 else:ai['profession']=st
             un=(un[:ms.start()]+un[ms.end():]).strip(', ;').strip()
         ai['notes']=', '.join(t for t in (_ntf,un) if t)
+        ai['age']=re.sub(r'^\s*(\d+)\s*(?:annor|anno|anni|annos|ann|lat|lata|l|r)\.?\s*(\??)\s*$',r'\1\2',ai.get('age') or '',flags=re.I)
+        _a=ai.get('age') or ''
+        _a=re.sub(r'^m\.(\d+)(\??)$',r'\1 mies.\2',_a)
+        _a=re.sub(r'^(\d+)\s*dies\.?(\??)$',r'\1 dn.\2',_a,flags=re.I)
+        _a=re.sub(r'^(\d+)\s*mens\.?(\??)$',r'\1 mies.\2',_a,flags=re.I)
+        _a=re.sub(r'^(\d+)\s*hebd\.?(\??)$',r'\1 tyg.\2',_a,flags=re.I)
+        ai['age']=_a
         if is_child(ai.get('age')) and not ai.get('deceased_status'):ai['deceased_status']='dziecko'
         ai['notes']=re.sub(r'(^|, )dziecko(?=,|$)','',ai.get('notes','')).strip(', ').strip()
         fill_markers(ai)
