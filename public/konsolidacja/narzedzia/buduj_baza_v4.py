@@ -159,7 +159,7 @@ for fn in sorted(glob.glob(R+'haiku/ODCZYTY/*_dom_przyczyny.csv'))+sorted(glob.g
         if pr:
             ai['parents_raw']=pr
             for k_,v_ in (parents(pr) or parents_pl(pr)).items():ai[k_]=v_+('?' if '?' in pr else '')
-        if x.get('_stan'):ai['deceased_status']=x['_stan']
+        if x.get('_stan'):ai['profession']=x['_stan']
         _ms=male_surname(ai['deceased_last_name'],ai['deceased_sex']) if ai['deceased_last_name'] else None
         _ntf=''
         _unres=bool(_ms and _ms[1].endswith('?'))
@@ -169,15 +169,15 @@ for fn in sorted(glob.glob(R+'haiku/ODCZYTY/*_dom_przyczyny.csv'))+sorted(glob.g
         if _ms:
             _w=ai['deceased_last_name'];ai['deceased_last_name']=_ms[0]
             _ntf='nazwisko w akcie: '+_w+' ('+{'panna':'forma panieńska','zona':'forma: żona lub wdowa','panna?':'forma panieńska, nazwisko męskie wyprowadzone','zona?':'forma: żona lub wdowa, nazwisko męskie wyprowadzone','ska':'forma żeńska'}[_ms[1]]+')'
-        un=x['uwagi'];ms=re.search(r'(?:^|, )stan: ([^,]+)',un)
+        un=x['uwagi'];ms=re.search(r'(?:^|, )stan: ([^,;]+)',un)
         if ms:
             st=ms.group(1).strip()
-            if st!='brak w akcie':ai['deceased_status']=st
-            un=(un[:ms.start()]+un[ms.end():]).strip(', ').strip()
+            if st!='brak w akcie':
+                if re.search(r'maritata|zamężn|vidua|wdow|virgo|panna|caelebs|kawaler|żonat|coniugat',st,re.I):ai['deceased_status']=st
+                else:ai['profession']=st
+            un=(un[:ms.start()]+un[ms.end():]).strip(', ;').strip()
         ai['notes']=', '.join(t for t in (_ntf,un) if t)
-        if is_child(ai.get('age')) and ai.get('deceased_status') in (None,'','Agricola'):
-            if ai.get('deceased_status')=='Agricola':ai['notes']=', '.join(t for t in ('stan w akcie: Agricola',ai.get('notes','')) if t)
-            ai['deceased_status']='dziecko'
+        if is_child(ai.get('age')) and not ai.get('deceased_status'):ai['deceased_status']='dziecko'
         ai['notes']=re.sub(r'(^|, )dziecko(?=,|$)','',ai.get('notes','')).strip(', ').strip()
         fill_markers(ai)
         unc=[f for f,v in ai.items() if '?' in str(v)]
