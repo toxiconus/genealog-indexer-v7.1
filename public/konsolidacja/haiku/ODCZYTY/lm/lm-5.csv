@@ -1,0 +1,15 @@
+﻿nr_wpisu_DB;rok;data_mm-dd;dom;nazwisko;imie;plec;wiek;rodzice;przyczyna_lac;przyczyna_pl;uwagi;pewnosc;strona_ksiegi;skan;miejscowosc
+36;1799;02-12;67;Obydz;Józef;M;9 dni;;In Variolis Malignis;ospa złośliwa;stan: Agricola (rolnik?) - wpis w rubryce stanu;P;L;lm-5;Blinów
+37;1799;02-26;39;Woytalas;Paweł;M;6 lat;;In Variolis Malignis;ospa złośliwa;;P;L;lm-5;Blinów
+38;1799;02-26;30;Sobothowna?;Małgorzata;K;8 lat;;In Variolis Malignis;ospa złośliwa;zapis: Margarithan So- bothowna, w DB jako Landobothowna?, nazwisko niepewne;?;L;lm-5;Blinów
+39;1799;02-26;12;Machulek;Maciej;M;5 tyg.?;;In Variolis Malignis;ospa złośliwa;zapis imienia: Mathan, jednostka wieku Sept. (tygodnie?) niepewna;?;L;lm-5;Blinów
+40;1799;02-26;40;Brytanowna;Marianna;K;1 rok;;In Variolis Malignis;ospa złośliwa;;P;L;lm-5;Blinów
+41;1799;02-26;15;Kurczakowna;Marianna;K;7 mies.;;In Variolis Malignis;ospa złośliwa;;P;L;lm-5;Blinów
+42;1799;02-26;60;Stępnik;Stanisław;M;3 lata;;In Variolis Malignis;ospa złośliwa;u dołu strony adnotacja wizytacji/kontroli: d. 13? April 1799 + podpis, treść częściowo nieczytelna, nie akt;P;L;lm-5;Blinów
+43;1799;04-20;37;Gnat;Szymon;M;8 lat;;In Variolis Malignis;ospa złośliwa;;P;P;lm-5;Blinów
+44;1799;04-20;21;Kopyt;Józef;M;7 lat;;In Variolis Malignis;ospa złośliwa;;P;P;lm-5;Blinów
+45;1799;04-21;110;Woytusiakowna;Marianna;K;7 mies.;;In Variolis Malignis;ospa złośliwa;;P;P;lm-5;Blinów
+46;1799;04-21;46;Kurczakowna;Jozafat;K;1 mies.;;In Variolis Malignis;ospa złośliwa;zapis: Josephatam Kurczakowna, płeć K wg rubryki, imię męskie?;?;P;lm-5;Blinów
+47;1799;05-09;52;Kurczak;Jakub;M;4 lata;;In Variolis Malignis;ospa złośliwa;;P;P;lm-5;Blinów
+48;1799;05-29;23;Woytalas;Wawrzyniec;M;2 lata;;In Variolis Malignis;ospa złośliwa;;P;P;lm-5;Blinów
+49;1799;05-31;14?;Stępień;Wawrzyniec;M;2 lata;;In Variolis Malignis;ospa złośliwa;numer domu nieczytelny (14 lub 11);?;P;lm-5;Blinów
