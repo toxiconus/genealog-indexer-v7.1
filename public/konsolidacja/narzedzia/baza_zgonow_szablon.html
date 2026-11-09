@@ -17,12 +17,24 @@ button{cursor:pointer}button:hover{border-color:var(--ac)}button.p{background:va
 table{border-collapse:collapse;width:100%}th,td{padding:3px 6px;border-bottom:1px solid var(--ln);text-align:left}th{position:sticky;top:0;background:var(--pn)}tr.r{cursor:pointer}tr.r:hover{background:var(--sel)}tr.sel{background:var(--sel)}
 .card{display:inline-block;margin:4px;padding:6px 10px;border:1px solid var(--ln);border-radius:6px;background:var(--pn);cursor:pointer;min-width:84px;text-align:center}.card:hover{border-color:var(--ac)}.card.e{opacity:.5}
 .pad{padding:10px}.row{display:grid;grid-template-columns:150px 1fr;gap:4px 8px;align-items:center;margin:2px 0}.row label{color:var(--mu);font-size:12px}.row input,.row textarea{width:100%}
-.row.ch input{border-color:var(--wa)}#view{height:46vh;border-bottom:1px solid var(--ln);position:relative;overflow:hidden;background:#222;cursor:grab}#view img{position:absolute;transform-origin:0 0;max-width:none;user-select:none}
+.row.ch input{border-color:var(--wa)}#view{border-bottom:1px solid var(--ln);position:relative;overflow:hidden;background:#222;cursor:grab}#view img{position:absolute;transform-origin:0 0;max-width:none;user-select:none}
 #vtools{position:absolute;top:4px;right:4px;z-index:2;display:flex;gap:3px}#thumbs{display:flex;gap:4px;overflow:auto;padding:4px;border-bottom:1px solid var(--ln)}#thumbs img{height:44px;cursor:pointer;border:2px solid transparent}#thumbs img.on{border-color:var(--ac)}
 .hint{color:var(--mu);padding:12px}
-@media(max-width:900px){#main{grid-template-columns:1fr}#tree{max-height:28vh}}
+#tools{display:contents}body.hide-tools #tools{display:none}.mobonly{display:none}
+#view{height:var(--vh,46vh);touch-action:none}#stk{background:var(--pn)}
+@media(max-width:900px){
+ header{padding:4px 6px;gap:4px}header h1{font-size:13px;margin:0;flex:1}#tools{display:flex;flex-wrap:wrap;gap:4px;width:100%}body.hide-tools #tools{display:none}.mobonly{display:inline-block}
+ button,select,input,textarea{font-size:16px;padding:5px 9px}
+ #main{display:block;overflow:auto}#tree,#list{border-right:0;overflow:visible}
+ #tree{max-height:34vh;overflow:auto;border-bottom:1px solid var(--ln)}body.hide-tree #tree{display:none}
+ body[data-v=det] #tree,body[data-v=det] #list{display:none}body[data-v=list] #det{display:none}
+ body[data-v=det] #main{overflow:hidden}body[data-v=det] #det{height:100%;overflow:auto}
+ #stk{position:sticky;top:0;z-index:5;border-bottom:1px solid var(--ln)}#view{height:var(--vh,36vh)}#thumbs img{height:34px}
+ .row{grid-template-columns:105px 1fr}#st{display:none}.dtop{padding:4px 8px!important}
+ header button{font-size:14px;padding:3px 8px}.dtop{display:flex;flex-wrap:nowrap;align-items:center;gap:4px;overflow:hidden;white-space:nowrap}.dtop .dim,.dtop .b{display:none}.dtop button,.dtop select{font-size:14px;padding:3px 7px}#stsel{max-width:118px}
+}
 </style></head><body>
-<header><h1>Baza zgonów Blinów 1797–1945</h1>
+<header><button id="bMenu" title="Pokaż/ukryj pasek narzędzi">☰</button><button id="bTree" class="mobonly">📂 Drzewo</button><h1>Baza zgonów 1797–1945</h1><div id="tools">
 <input id="q" placeholder="szukaj nazwiska/imienia…" size="22">
 <button id="bImg" title="Wczytaj zdjęcia dla zaznaczonej dekady">📷 Zdjęcia dekady…</button>
 <button id="bAi">Wczytaj odczyty (CSV)</button>
@@ -30,7 +42,7 @@ table{border-collapse:collapse;width:100%}th,td{padding:3px 6px;border-bottom:1p
 <button id="bCsv">Eksport CSV</button><button id="bAdd">+ Dodaj akt</button><button id="bOnly" title="Pokaż tylko akty, które mają skan">🖼 Tylko ze skanem</button>
 <span id="st" class="dim"></span>
 <input type="file" id="fImg" accept="image/*" multiple hidden><input type="file" id="fAi" accept=".csv" hidden><input type="file" id="fLoad" accept=".json" hidden>
-</header>
+</div></header>
 <div id="main"><div id="tree"></div><div id="list"></div><div id="det"><div class="hint">Wybierz akt z listy. Skróty: ← → poprzedni/następny akt, + − powiększenie skanu.</div></div></div>
 <script>
 const DATA=/*DATA*/null;
@@ -72,7 +84,7 @@ function drawTree(){
   }
   $('#tree').innerHTML=h;
 }
-$('#tree').onclick=e=>{const n=e.target.closest('.n');if(!n)return;sel={lvl:n.dataset.l,v:n.dataset.v?+n.dataset.v:null};cur=null;draw()};
+$('#tree').onclick=e=>{const n=e.target.closest('.n');if(!n)return;sel={lvl:n.dataset.l,v:n.dataset.v?+n.dataset.v:null};cur=null;draw();if(MOB&&n.dataset.l=='y')document.body.classList.add('hide-tree')};
 function badge(r){const st=S.status[r.id];const s=st==='ok'?'ok':st==='bad'?'er':r.s;const t={ok:'zweryfikowany',ai:'odczyt AI',idx:'tylko indeks',er:'błąd/wątpliwy'}[s];return `<span class="b ${s}">${t}</span>`}
 function hasScan(r){return S.scan[r.id]||r.scan}
 function drawList(){
@@ -97,19 +109,20 @@ $('#list').onclick=e=>{const c=e.target.closest('.card');if(c){const y=+c.datase
 $('#q').oninput=()=>{drawList()};
 // ---- szczegóły
 const LAB={deceased_last_name:'Nazwisko',deceased_first_name:'Imię',deceased_maiden_name:'Nazwisko rodowe',deceased_sex:'Płeć (M/K)',death_date:'Data zgonu (RRRR-MM-DD)',death_time:'Godzina',death_place:'Miejsce zgonu',age:'Wiek',deceased_status:'Stan',house_number:'Numer domu',parents_text:'Rodzice (z aktu)',deceased_spouse:'Małżonek',deceased_residence:'Zamieszkały',profession:'Zawód',father_first_name:'Ojciec – imię',father_last_name:'Ojciec – nazwisko',mother_first_name:'Matka – imię',mother_last_name:'Matka – nazwisko',informant1:'Zgłaszający 1',informant2:'Zgłaszający 2',cause_of_death:'Przyczyna zgonu',burial_place:'Pochówek',officiant:'Ksiądz/urzędnik',notes:'Uwagi'};
-function open(r){cur=r;drawList();
+function open(r){cur=r;document.body.dataset.v='det';drawList();
   const rows=Object.keys(LAB).map(k=>{const v=fld(r,k),ch=S.edits[r.id]&&k in S.edits[r.id];return `<div class="row ${ch?'ch':''}"><label>${LAB[k]}</label>${k=='notes'?`<textarea data-k="${k}" rows="2">${esc(v)}</textarea>`:`<input data-k="${k}" value="${esc(v)}">`}</div>`}).join('');
   const d=dec(r.y),p=pool[d]||[];
-  $('#det').innerHTML=`<div class="pad" style="padding-bottom:4px"><b>${r.y} · akt ${r.a??'(bez numeru, poz. '+r.ord+')'}</b> ${badge(r)} <span class="dim">${esc(r.book||'')}</span>
+  $('#det').innerHTML=`<div id="stk"><div class="pad dtop" style="padding-bottom:4px"><button id="bk" class="mobonly">← lista</button> <b>${r.y} · akt ${r.a??'(bez numeru, poz. '+r.ord+')'}</b> ${badge(r)} <span class="dim">${esc(r.book||'')}</span>
   <button id="pv">←</button><button id="nx">→</button> <select id="stsel"><option value="">stan: wg źródła</option><option value="ok" ${S.status[r.id]=='ok'?'selected':''}>✓ zweryfikowane</option><option value="bad" ${S.status[r.id]=='bad'?'selected':''}>⚠ wątpliwe/błąd</option></select></div>
-  <div id="view"><div id="vtools"><button data-z="1.25">+</button><button data-z="0.8">−</button><button data-z="0">⟲</button><button id="rot">↻</button></div></div>
+  <div id="view"><div id="vtools"><button id="vh">⇕</button><button data-z="1.25">+</button><button data-z="0.8">−</button><button data-z="0">⟲</button><button id="rot">↻</button></div></div>
   <div id="thumbs">${p.length?p.map((x,i)=>`<img src="${x.url}" title="${esc(x.name)}" data-i="${i}" class="${S.scan[r.id]==x.name||(!S.scan[r.id]&&r.scan==x.name)?'on':''}">`).join(''):'<span class="dim">Brak zdjęć dla dekady '+d+'–'+(d+9)+'. Zaznacz dekadę i użyj „📷 Zdjęcia dekady…".</span>'}</div>
-  <div class="pad" style="padding-bottom:0"><div class="row"><label>Skan z internetu</label><input id="uurl" placeholder="adres obrazu albo sam numer strony (z szablonem)" value="${esc(S.url[r.id]||'')}"></div><div class="row"><label>Szablon dekady ${d}–${d+9}</label><input id="utpl" placeholder="https://…/blinow_lm-{n}.jpg" value="${esc(S.tpl[d]||'')}"></div><div class="dim" style="font-size:12px">Wpisz numer strony → obraz z szablonu; albo wklej pełny adres pliku. ${webUrl(r)?`<a href="${esc(webUrl(r))}" target="_blank" rel="noopener">otwórz w nowej karcie</a>`:''}</div></div>
+  </div><div class="pad" style="padding-bottom:0"><details><summary class="dim">Skan z internetu / szablon dekady</summary><div class="row"><label>Skan z internetu</label><input id="uurl" placeholder="adres obrazu albo sam numer strony (z szablonem)" value="${esc(S.url[r.id]||'')}"></div><div class="row"><label>Szablon dekady ${d}–${d+9}</label><input id="utpl" placeholder="https://…/blinow_lm-{n}.jpg" value="${esc(S.tpl[d]||'')}"></div><div class="dim" style="font-size:12px">Wpisz numer strony → obraz z szablonu; albo wklej pełny adres pliku. ${webUrl(r)?`<a href="${esc(webUrl(r))}" target="_blank" rel="noopener">otwórz w nowej karcie</a>`:''}</div></details></div>
   <div class="pad">${r.f.notes_org?`<div class="dim">Indeks: ${esc(r.f.notes_org)}</div>`:''}${r.f.act_text?`<details><summary>Tekst aktu</summary><div>${esc(r.f.act_text)}</div></details>`:''}${rows}</div>`;
   $('#det').querySelectorAll('input[data-k],textarea[data-k]').forEach(el=>el.onchange=()=>{(S.edits[r.id]=S.edits[r.id]||{})[el.dataset.k]=el.value;el.closest('.row').classList.add('ch');save();drawList()});
   $('#uurl').onchange=e=>{const v=e.target.value.trim();if(v)S.url[r.id]=v;else delete S.url[r.id];save();open(r)};
   $('#utpl').onchange=e=>{const v=e.target.value.trim();if(v)S.tpl[d]=v;else delete S.tpl[d];save();open(r)};
   $('#stsel').onchange=e=>{S.status[r.id]=e.target.value;if(!e.target.value)delete S.status[r.id];save();drawList()};
+  $('#bk').onclick=()=>{document.body.dataset.v='list'};$('#vh').onclick=()=>{const a=[36,56,80],c=parseInt(getComputedStyle(document.documentElement).getPropertyValue('--vh'))||36;const n=a[(a.indexOf(c)+1)%3];document.documentElement.style.setProperty('--vh',n+'vh');open(cur)};
   $('#pv').onclick=()=>step(-1);$('#nx').onclick=()=>step(1);
   $('#thumbs').onclick=e=>{const i=e.target.dataset.i;if(i==null)return;S.scan[r.id]=p[+i].name;save();open(r)};
   const nm=S.scan[r.id]||r.scan,f=p.find(x=>x.name==nm),wu=webUrl(r);
@@ -126,8 +139,14 @@ function zoom(f,cx,cy){const v=$('#view');if(!img)return;if(f==0){T.x=T.x0||0;T.
   cx=cx??v.clientWidth/2;cy=cy??v.clientHeight/2;T.x=cx-(cx-T.x)*f;T.y=cy-(cy-T.y)*f;T.k*=f;ap()}
 $('#det').addEventListener('click',e=>{const z=e.target.dataset&&e.target.dataset.z;if(z!=null&&e.target.closest('#vtools'))zoom(+z);if(e.target.id=='rot'){T.r=(T.r+90)%360;ap()}});
 $('#det').addEventListener('wheel',e=>{const v=e.target.closest('#view');if(!v)return;e.preventDefault();const b=v.getBoundingClientRect();zoom(e.deltaY<0?1.15:.87,e.clientX-b.left,e.clientY-b.top)},{passive:false});
-let drag=null;$('#det').addEventListener('mousedown',e=>{if(e.target.closest('#view')&&!e.target.closest('#vtools'))drag={x:e.clientX-T.x,y:e.clientY-T.y}});
-window.addEventListener('mousemove',e=>{if(drag){T.x=e.clientX-drag.x;T.y=e.clientY-drag.y;ap()}});window.addEventListener('mouseup',()=>drag=null);
+const ptrs=new Map();let drag=null,pinch=null;
+$('#det').addEventListener('pointerdown',e=>{const v=e.target.closest('#view');if(!v||e.target.closest('#vtools'))return;try{v.setPointerCapture(e.pointerId)}catch(_){}ptrs.set(e.pointerId,{x:e.clientX,y:e.clientY});
+ if(ptrs.size==1){drag={x:e.clientX-T.x,y:e.clientY-T.y};pinch=null}else if(ptrs.size==2){drag=null;const [a,b]=[...ptrs.values()];pinch={d:Math.hypot(a.x-b.x,a.y-b.y)}}});
+window.addEventListener('pointermove',e=>{if(!ptrs.has(e.pointerId))return;ptrs.set(e.pointerId,{x:e.clientX,y:e.clientY});
+ if(ptrs.size==2&&pinch){const [a,b]=[...ptrs.values()];const nd=Math.hypot(a.x-b.x,a.y-b.y),v=$('#view'),r=v.getBoundingClientRect();zoom(nd/pinch.d,(a.x+b.x)/2-r.left,(a.y+b.y)/2-r.top);pinch.d=nd}
+ else if(drag&&ptrs.size==1){T.x=e.clientX-drag.x;T.y=e.clientY-drag.y;ap()}});
+const pend=e=>{ptrs.delete(e.pointerId);pinch=null;if(ptrs.size==1){const p=[...ptrs.values()][0];drag={x:p.x-T.x,y:p.y-T.y}}else drag=null};
+window.addEventListener('pointerup',pend);window.addEventListener('pointercancel',pend);
 // pliki
 $('#bImg').onclick=()=>{if(sel.lvl=='all'||sel.lvl=='c'){alert('Najpierw zaznacz dekadę (lub rok) w drzewie.');return}$('#fImg').click()};
 $('#fImg').onchange=e=>{const d=sel.lvl=='d'?sel.v:dec(sel.v);const l=[...e.target.files].sort((a,b)=>a.name.localeCompare(b.name,undefined,{numeric:true}));
@@ -148,6 +167,9 @@ $('#bCsv').onclick=()=>{const l=(sel.lvl=='y'?recs.filter(r=>r.y==sel.v):sel.lvl
 function dl(n,t){const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([t]));a.download=n;a.click()}
 $('#bOnly').onclick=()=>{only=!only;$('#bOnly').classList.toggle('p',only);cur=null;draw()};
 $('#bAdd').onclick=()=>{if(sel.lvl!='y'){alert('Zaznacz rok w drzewie.');return}const a=prompt('Numer aktu w roku '+sel.v+'?');if(!a)return;const r={id:'new-'+sel.v+'-'+a,y:sel.v,a:+a,s:'ai',ord:+a,f:{},book:'dodane'};recs.push(r);S.added.push(r);recs.sort((a,b)=>a.y-b.y||(a.a??9999)-(b.a??9999)||a.ord-b.ord);save();draw();open(recs.find(x=>x.id==r.id))};
+$('#bMenu').onclick=()=>document.body.classList.toggle('hide-tools');
+$('#bTree').onclick=()=>{document.body.classList.toggle('hide-tree');document.body.dataset.v='list'};
+const MOB=matchMedia('(max-width:900px)').matches;if(MOB){document.body.classList.add('hide-tools');document.body.dataset.v='list'}
 function draw(){drawTree();drawList();stat()}
 draw();
 </script></body></html>
