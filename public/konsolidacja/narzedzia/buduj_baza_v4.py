@@ -130,6 +130,36 @@ def is_child(age):
     a=(age or '').lower()
     if re.search(r'mies|mens|dies|dn\.|dni|tyg|hebd|m\.\d',a):return True
     m=re.search(r'\d+',a);return bool(m and int(m.group())<15)
+
+NPL={'jacobus':'Jakub','joannes':'Jan','johannes':'Jan','adalbertus':'Wojciech','woyciech':'Wojciech','stanislaus':'Stanisław','josephus':'Józef','josephatus':'Józefat','josephatam':'Józefata','andreas':'Andrzej','mathias':'Maciej','matthias':'Maciej','matheus':'Mateusz','matthaeus':'Mateusz','mathaeus':'Mateusz','thomas':'Tomasz','martinus':'Marcin','antonius':'Antoni','paulus':'Paweł','valentinus':'Walenty','laurentius':'Wawrzyniec','sebastianus':'Sebastian','franciscus':'Franciszek','blasius':'Błażej','lucas':'Łukasz','bartholomaeus':'Bartłomiej','ignatius':'Ignacy','gregorius':'Grzegorz','christophorus':'Krzysztof','nicolaus':'Mikołaj','casimirus':'Kazimierz','michael':'Michał','alexius':'Aleksy','petrus':'Piotr','simon':'Szymon','stephanus':'Stefan','adamus':'Adam','albertus':'Wojciech','vincentius':'Wincenty','hyacinthus':'Jacek','augustinus':'Augustyn','gasparus':'Kacper','casparus':'Kacper','philippus':'Filip','agnes':'Agnieszka','sophia':'Zofia','hedwigis':'Jadwiga','hedvigis':'Jadwiga','anastasia':'Anastazja','catharina':'Katarzyna','catarina':'Katarzyna','margaretha':'Małgorzata','elisabeth':'Elżbieta','elisabetha':'Elżbieta','eva':'Ewa','rosalia':'Rozalia','theresia':'Teresa','thecla':'Tekla','dorothea':'Dorota','francisca':'Franciszka','apollonia':'Apolonia','victoria':'Wiktoria','mariae':'Maria','agathae':'Agata','agatha':'Agata','dorothae':'Dorota','petronillae':'Petronela','petronilla':'Petronela','susanna':'Zuzanna','ursula':'Urszula','lucia':'Łucja','annae':'Anna','joannae':'Joanna','catharinae':'Katarzyna','sophiae':'Zofia','agnetis':'Agnieszka','virgo':'','dorotha':'Dorota','helisabeth':'Elżbieta','hiacynt':'Jacek','jozafat':'Józefat','konstancji':'Konstancja','marianne':'Marianna','margaritha':'Małgorzata','susanne':'Zuzanna','teklae':'Tekla','ursulae':'Urszula'}
+def polname(v):
+    if not v or v.startswith('['):return v,''
+    q='?' if v.strip().endswith('?') else ''
+    s=v.strip().rstrip('?').strip()
+    extra='';par=''
+    m=re.match(r'^(.*?)\s*\((.*?)\)\s*$',s)
+    if m:s,par=m.group(1).strip(),m.group(2).strip()
+    one=lambda w:NPL.get(w.lower().strip('.,'),w)
+    main=' '.join(x for x in (one(w) for w in s.split()) if x)
+    if not main and par:
+        main=' '.join(one(w) for w in par.split(',')[0].split());par=''
+    if par:
+        for x in [y.strip() for y in par.split(',')]:
+            if not x or x.lower() in NPL or one(x)==main or x==main:continue
+            extra=(extra+', ' if extra else '')+x
+    return main+q,extra
+def polname_ai(ai):
+    ex=[]
+    for f in ('deceased_first_name','father_first_name','mother_first_name'):
+        v=ai.get(f)
+        if v:
+            n,e=polname(v)
+            if n!=v:ai[f]=n
+            if e:ex.append(e)
+    for f in ('deceased_last_name','father_last_name','mother_last_name'):
+        v=ai.get(f)
+        if v and re.match(r'^Woy',v):ai[f]='Woj'+v[3:]
+    if ex:ai['notes']=(ai.get('notes','')+(', ' if ai.get('notes') else '')+'w akcie też: '+'; '.join(ex))
 def fill_markers(ai):
     ch=is_child(ai.get('age'))
     ln=(ai.get('deceased_last_name') or '').strip()
@@ -189,6 +219,7 @@ for fn in sorted(glob.glob(R+'haiku/ODCZYTY/*_dom_przyczyny.csv'))+sorted(glob.g
         ai['age']=_a
         if is_child(ai.get('age')) and not ai.get('deceased_status'):ai['deceased_status']='dziecko'
         ai['notes']=re.sub(r'(^|, )dziecko(?=,|$)','',ai.get('notes','')).strip(', ').strip()
+        polname_ai(ai)
         fill_markers(ai)
         unc=[f for f,v in ai.items() if '?' in str(v)]
         if _unres and 'deceased_last_name' not in unc:unc.append('deceased_last_name')
