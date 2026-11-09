@@ -1,6 +1,6 @@
 import re,json,csv,collections,sys
 R='/home/claude/genealog-indexer-v7.1/public/konsolidacja/'
-COLS=['id','death_year','death_act_number','deceased_first_name','deceased_last_name','deceased_maiden_name','deceased_sex','death_date','death_time','death_place','age','deceased_status','deceased_spouse','deceased_birth_place','deceased_residence','profession','father_first_name','father_last_name','mother_first_name','mother_last_name','informant1','informant2','cause_of_death','burial_place','officiant','notes','notes_org','verification_status','uncertain_fields','source_office']
+COLS=['id','death_year','death_act_number','deceased_first_name','deceased_last_name','deceased_maiden_name','deceased_sex','death_date','death_time','death_place','age','deceased_status','deceased_spouse','deceased_birth_place','deceased_residence','profession','father_first_name','father_last_name','mother_first_name','mother_last_name','informant1','informant2','cause_of_death','burial_place','officiant','notes','notes_org','verification_status','uncertain_fields','source_office','house_number','parents_text']
 recs=[]
 # 1) indeks 1797-1869 + 1880 z zgony.csv (1870-79 bierzemy z indeksu ASC z numerami aktow)
 txt=open(R+'zgony.csv',encoding='utf-8-sig').read()
@@ -41,6 +41,23 @@ for x in rr:
     r=dict(id=x['id'],y=int(x['death_year']),a=int(x['death_act_number']),s='ok',ord=int(x['death_act_number']),f=f,book=x.get('source_office','USC'))
     if x.get('scan_path'): r['scan']=x['scan_path'].split('/')[-1]
     recs.append(r)
+# 4) odczyty reczne ksiegi (dom, przyczyna, rodzice) - nakladka na wpisy indeksu
+import glob
+byk={(r['y'],r['a']):r for r in recs if r['s']=='idx' and r['a'] is not None and r.get('book','').startswith('Liber') and r['f'].get('death_place','Blinów') in ('Blinów','')}
+for fn in sorted(glob.glob(R+'haiku/ODCZYTY/*_dom_przyczyny.csv')):
+    for x in csv.DictReader(open(fn,encoding='utf-8-sig'),delimiter=';'):
+        k=(int(x['rok']),int(x['nr_wpisu_DB']));r=byk.get(k)
+        if not r: print('brak w indeksie',k);continue
+        f=r['f'];f['death_place']='Blinów';f['house_number']=x['dom']
+        if x['data_mm-dd']: f['death_date']='%s-%s'%(x['rok'],x['data_mm-dd'])
+        if x['wiek']: f['age']=x['wiek']
+        if x['plec'] in('M','K'): f['deceased_sex']=x['plec']
+        f['cause_of_death']=(x['przyczyna_pl']+(' ('+x['przyczyna_lac']+')' if x['przyczyna_lac'] else '')).strip()
+        if x['rodzice']: f['parents_text']=x['rodzice']
+        if x['uwagi']: f['notes']=(f.get('notes','')+' '+x['uwagi']).strip()
+        if x['nazwisko'] and not f.get('deceased_last_name'): f['deceased_last_name']=x['nazwisko']
+        if x['pewnosc']=='?': r['unc']=['odczyt do potwierdzenia']
+        r['s']='ai';r['book']='Liber mortuorum (odczyt Claude, str. %s)'%x['strona_ksiegi']
 recs.sort(key=lambda r:(r['y'],r['a'] if r['a'] is not None else 9999,r['ord']))
 print(len(recs),collections.Counter(r['s'] for r in recs),min(r['y'] for r in recs),max(r['y'] for r in recs))
 tpl=open('szablon.html',encoding='utf-8').read()
