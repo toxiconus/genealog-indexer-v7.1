@@ -61,6 +61,29 @@ def rd(fn):
         if len(p)>n:p=p[:u]+[';'.join(p[u:len(p)-tail])]+p[len(p)-tail:]
         p+=['']*(n-len(p));out.append(dict(zip(H,p)))
     return out
+GEN={'francisci':'Franciszek','mathiae':'Maciej','matthiae':'Maciej','joannis':'Jan','johannis':'Jan','adalberti':'Wojciech','josephi':'Józef','andreae':'Andrzej','thomae':'Tomasz','stanislai':'Stanisław','laurentii':'Wawrzyniec','antonii':'Antoni','petri':'Piotr','pauli':'Paweł','michaelis':'Michał','martini':'Marcin','jacobi':'Jakub','simonis':'Szymon','casimiri':'Kazimierz','gregorii':'Grzegorz','valentini':'Walenty','nicolai':'Mikołaj','christophori':'Krzysztof','blasii':'Błażej','sebastiani':'Sebastian','bartholomaei':'Bartłomiej','caroli':'Karol','ignatii':'Ignacy','catharinae':'Katarzyna','mariannae':'Marianna','agnetis':'Agnieszka','annae':'Anna','sophiae':'Zofia','dorotheae':'Dorota','theclae':'Tekla','hedwigis':'Jadwiga','margarithae':'Małgorzata','franciscae':'Franciszka','elisabethae':'Elżbieta','eliesabethae':'Elżbieta','rosaliae':'Rozalia','anastasiae':'Anastazja','salomeae':'Salomea','apolloniae':'Apolonia','magdalenae':'Magdalena','susannae':'Zuzanna','reginae':'Regina','victoriae':'Wiktoria','evae':'Ewa','justinae':'Justyna','barbarae':'Barbara','josephae':'Józefa','constantiae':'Konstancja','theresiae':'Teresa','agnetae':'Agnieszka','sophiae':'Zofia'}
+def parents(pr):
+    m=re.match(r'^\s*([A-ZĄĆĘŁŃÓŚŹŻ][a-ząćęłńóśźż]+)(?:\s+et\s+([A-ZĄĆĘŁŃÓŚŹŻ][a-ząćęłńóśźż]+))?\s*(.*?)\s*$',pr)
+    if not m or m.group(1).lower() not in GEN:return {}
+    o={'father_first_name':GEN[m.group(1).lower()]}
+    if m.group(2):
+        o['mother_first_name']=GEN.get(m.group(2).lower(),m.group(2))
+    sur=re.sub(r'[?()]','',m.group(3)).strip()
+    if sur:o['father_last_name']=sur
+    return o
+PGEN={'józefa':'Józef','pawła':'Paweł','andrzeja':'Andrzej','macieja':'Maciej','jana':'Jan','wojciecha':'Wojciech','tomasza':'Tomasz','marcina':'Marcin','jakuba':'Jakub','szymona':'Szymon','michała':'Michał','stanisława':'Stanisław','kazimierza':'Kazimierz','antoniego':'Antoni','piotra':'Piotr','franciszka':'Franciszek','walentego':'Walenty','wawrzyńca':'Wawrzyniec','mikołaja':'Mikołaj','błażeja':'Błażej','bartłomieja':'Bartłomiej','grzegorza':'Grzegorz','katarzyny':'Katarzyna','agnieszki':'Agnieszka','anastazji':'Anastazja','marianny':'Marianna','anny':'Anna','zofii':'Zofia','doroty':'Dorota','jadwigi':'Jadwiga','małgorzaty':'Małgorzata','elżbiety':'Elżbieta','rozalii':'Rozalia','tekli':'Tekla','ewy':'Ewa','teresy':'Teresa','barbary':'Barbara','salomei':'Salomea','magdaleny':'Magdalena','apolonii':'Apolonia','reginy':'Regina','franciszki':'Franciszka','józefy':'Józefa'}
+def psur(t):
+    t=t.strip()
+    if t.endswith('ów'):return t[:-2]
+    if t.endswith('ich'):return t[:-3]+'i'
+    return t
+def parents_pl(pr):
+    m=re.match(r'^\s*(?:syn|córka|dziecko|filia|filius)\s+(\S+)(?:\s+i\s+(\S+))?\s*(.*?)\s*$',pr,re.I)
+    if not m or m.group(1).lower() not in PGEN:return {}
+    o={'father_first_name':PGEN[m.group(1).lower()]}
+    if m.group(2):o['mother_first_name']=PGEN.get(m.group(2).lower(),m.group(2))
+    if m.group(3):o['father_last_name']=psur(re.sub(r'[?()]','',m.group(3)))
+    return o
 bynr={}
 for (y,n),a in idxact.items():bynr.setdefault(n,[]).append(a)
 nov=0;newn=0
@@ -80,7 +103,9 @@ for fn in sorted(glob.glob(R+'haiku/ODCZYTY/*_dom_przyczyny.csv'))+sorted(glob.g
         if x['data_mm-dd'] and '?' not in x['data_mm-dd']:ai['death_date']='%s-%s'%(x['rok'],x['data_mm-dd'])
         elif x['data_mm-dd']:ai['death_date']='%s-%s'%(x['rok'],x['data_mm-dd'])
         pr=x['rodzice'].strip()
-        if pr:ai['parents_raw']=pr
+        if pr:
+            ai['parents_raw']=pr
+            for k_,v_ in (parents(pr) or parents_pl(pr)).items():ai[k_]=v_+('?' if '?' in pr else '')
         if x.get('_stan'):ai['deceased_status']=x['_stan']
         un=x['uwagi'];ms=re.search(r'(?:^|, )stan: ([^,]+)',un)
         if ms:
