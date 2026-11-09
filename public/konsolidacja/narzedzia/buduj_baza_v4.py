@@ -61,7 +61,7 @@ def rd(fn):
         if len(p)>n:p=p[:u]+[';'.join(p[u:len(p)-tail])]+p[len(p)-tail:]
         p+=['']*(n-len(p));out.append(dict(zip(H,p)))
     return out
-GEN={'francisci':'Franciszek','mathiae':'Maciej','matthiae':'Maciej','joannis':'Jan','johannis':'Jan','adalberti':'Wojciech','josephi':'Józef','andreae':'Andrzej','thomae':'Tomasz','stanislai':'Stanisław','laurentii':'Wawrzyniec','antonii':'Antoni','petri':'Piotr','pauli':'Paweł','michaelis':'Michał','martini':'Marcin','jacobi':'Jakub','simonis':'Szymon','casimiri':'Kazimierz','gregorii':'Grzegorz','valentini':'Walenty','nicolai':'Mikołaj','christophori':'Krzysztof','blasii':'Błażej','sebastiani':'Sebastian','bartholomaei':'Bartłomiej','caroli':'Karol','ignatii':'Ignacy','catharinae':'Katarzyna','mariannae':'Marianna','agnetis':'Agnieszka','annae':'Anna','sophiae':'Zofia','dorotheae':'Dorota','theclae':'Tekla','hedwigis':'Jadwiga','margarithae':'Małgorzata','franciscae':'Franciszka','elisabethae':'Elżbieta','eliesabethae':'Elżbieta','rosaliae':'Rozalia','anastasiae':'Anastazja','salomeae':'Salomea','apolloniae':'Apolonia','magdalenae':'Magdalena','susannae':'Zuzanna','reginae':'Regina','victoriae':'Wiktoria','evae':'Ewa','justinae':'Justyna','barbarae':'Barbara','josephae':'Józefa','constantiae':'Konstancja','theresiae':'Teresa','agnetae':'Agnieszka','sophiae':'Zofia'}
+GEN={'matthaei':'Maciej','mathaei':'Maciej','hiacynthi':'Jacek','augustini':'Augustyn','gasparis':'Kacper','caspari':'Kacper','francisci':'Franciszek','mathiae':'Maciej','matthiae':'Maciej','joannis':'Jan','johannis':'Jan','adalberti':'Wojciech','josephi':'Józef','andreae':'Andrzej','thomae':'Tomasz','stanislai':'Stanisław','laurentii':'Wawrzyniec','antonii':'Antoni','petri':'Piotr','pauli':'Paweł','michaelis':'Michał','martini':'Marcin','jacobi':'Jakub','simonis':'Szymon','casimiri':'Kazimierz','gregorii':'Grzegorz','valentini':'Walenty','nicolai':'Mikołaj','christophori':'Krzysztof','blasii':'Błażej','sebastiani':'Sebastian','bartholomaei':'Bartłomiej','caroli':'Karol','ignatii':'Ignacy','catharinae':'Katarzyna','mariannae':'Marianna','agnetis':'Agnieszka','annae':'Anna','sophiae':'Zofia','dorotheae':'Dorota','theclae':'Tekla','hedwigis':'Jadwiga','margarithae':'Małgorzata','franciscae':'Franciszka','elisabethae':'Elżbieta','eliesabethae':'Elżbieta','rosaliae':'Rozalia','anastasiae':'Anastazja','salomeae':'Salomea','apolloniae':'Apolonia','magdalenae':'Magdalena','susannae':'Zuzanna','reginae':'Regina','victoriae':'Wiktoria','evae':'Ewa','justinae':'Justyna','barbarae':'Barbara','josephae':'Józefa','constantiae':'Konstancja','theresiae':'Teresa','agnetae':'Agnieszka','sophiae':'Zofia'}
 def parents(pr):
     m=re.match(r'^\s*([A-ZĄĆĘŁŃÓŚŹŻ][a-ząćęłńóśźż]+)(?:\s+et\s+([A-ZĄĆĘŁŃÓŚŹŻ][a-ząćęłńóśźż]+))?\s*(.*?)\s*$',pr)
     if not m or m.group(1).lower() not in GEN:return {}
@@ -71,19 +71,61 @@ def parents(pr):
     sur=re.sub(r'[?()]','',m.group(3)).strip()
     if sur:o['father_last_name']=sur
     return o
-PGEN={'józefa':'Józef','pawła':'Paweł','andrzeja':'Andrzej','macieja':'Maciej','jana':'Jan','wojciecha':'Wojciech','tomasza':'Tomasz','marcina':'Marcin','jakuba':'Jakub','szymona':'Szymon','michała':'Michał','stanisława':'Stanisław','kazimierza':'Kazimierz','antoniego':'Antoni','piotra':'Piotr','franciszka':'Franciszek','walentego':'Walenty','wawrzyńca':'Wawrzyniec','mikołaja':'Mikołaj','błażeja':'Błażej','bartłomieja':'Bartłomiej','grzegorza':'Grzegorz','katarzyny':'Katarzyna','agnieszki':'Agnieszka','anastazji':'Anastazja','marianny':'Marianna','anny':'Anna','zofii':'Zofia','doroty':'Dorota','jadwigi':'Jadwiga','małgorzaty':'Małgorzata','elżbiety':'Elżbieta','rozalii':'Rozalia','tekli':'Tekla','ewy':'Ewa','teresy':'Teresa','barbary':'Barbara','salomei':'Salomea','magdaleny':'Magdalena','apolonii':'Apolonia','reginy':'Regina','franciszki':'Franciszka','józefy':'Józefa'}
+PGEN={'kacpra':'Kacper','hiacynta':'Jacek','ignacego':'Ignacy','mateusza':'Mateusz','augustyna':'Augustyn','sebastiana':'Sebastian','agaty':'Agata','joanny':'Joanna','hieronima':'Hieronim','józefa':'Józef','pawła':'Paweł','andrzeja':'Andrzej','macieja':'Maciej','jana':'Jan','wojciecha':'Wojciech','tomasza':'Tomasz','marcina':'Marcin','jakuba':'Jakub','szymona':'Szymon','michała':'Michał','stanisława':'Stanisław','kazimierza':'Kazimierz','antoniego':'Antoni','piotra':'Piotr','franciszka':'Franciszek','walentego':'Walenty','wawrzyńca':'Wawrzyniec','mikołaja':'Mikołaj','błażeja':'Błażej','bartłomieja':'Bartłomiej','grzegorza':'Grzegorz','katarzyny':'Katarzyna','agnieszki':'Agnieszka','anastazji':'Anastazja','marianny':'Marianna','anny':'Anna','zofii':'Zofia','doroty':'Dorota','jadwigi':'Jadwiga','małgorzaty':'Małgorzata','elżbiety':'Elżbieta','rozalii':'Rozalia','tekli':'Tekla','ewy':'Ewa','teresy':'Teresa','barbary':'Barbara','salomei':'Salomea','magdaleny':'Magdalena','apolonii':'Apolonia','reginy':'Regina','franciszki':'Franciszka','józefy':'Józefa'}
 def psur(t):
-    t=t.strip()
-    if t.endswith('ów'):return t[:-2]
-    if t.endswith('ich'):return t[:-3]+'i'
+    t=re.sub(r'[?()]','',t).strip()
+    f=fold(t)
+    for suf in ('iow','ow','ich','ych'):
+        if f.endswith(suf):
+            stem=f[:-len(suf)]
+            for k in (stem,stem+'a',stem+'o',stem+'e',stem+'i'):
+                if k in MALE:return MALE[k]
+            if suf in('ich','ych'):return t[:-len(suf)]+'i'
+            return t[:-len(suf)]
+    if t.endswith('ów'):
+        stem=fold(t[:-2])
+        for k in (stem,stem+'a',stem+'o'):
+            if k in MALE:return MALE[k]
+        return t[:-2]
     return t
 def parents_pl(pr):
-    m=re.match(r'^\s*(?:syn|córka|dziecko|filia|filius)\s+(\S+)(?:\s+i\s+(\S+))?\s*(.*?)\s*$',pr,re.I)
+    m=re.match(r'^\s*(?:(?:syn|córka|dziecko|filia|filius)\s+)?(?:szlachetnych\s+)?(\S+)(?:\s+i\s+(\S+))?\s*(.*?)\s*$',pr,re.I)
     if not m or m.group(1).lower() not in PGEN:return {}
     o={'father_first_name':PGEN[m.group(1).lower()]}
     if m.group(2):o['mother_first_name']=PGEN.get(m.group(2).lower(),m.group(2))
     if m.group(3):o['father_last_name']=psur(re.sub(r'[?()]','',m.group(3)))
     return o
+import unicodedata
+def fold(x):
+    x=x.lower().replace('ł','l').replace('ó','o')
+    return ''.join(c for c in unicodedata.normalize('NFD',x) if unicodedata.category(c)!='Mn')
+MALE={}
+def addm(n):
+    n=n.strip()
+    if not n or ' ' in n or '?' in n or '/' in n:return
+    f=fold(n)
+    if re.search(r'(owa|owna|ina|yna|ska|cka|anka)$',f):return
+    for k in {f,f[:-1] if f[-1] in 'oae' else f,re.sub(r'e([^aeiouy])$',r'\1',f)}:
+        MALE.setdefault(k,n)
+for x in rows:
+    if x['plec']=='m':addm(x['nazwisko'])
+for x in csv.DictReader(open(R+'blinow_akty.csv',encoding='utf-8-sig'),delimiter=';'):addm(x.get('ojciec_nazwisko',''))
+FSUF=[('iowna','panna'),('owna','panna'),('ówna','panna'),('ianka','panna'),('anka','panna'),('onka','panna'),('iowa','zona'),('owa','zona'),('ina','zona'),('yna','zona')]
+def male_surname(sn,sex):
+    sn=sn.strip().rstrip('?').strip()
+    if not sn or ' ' in sn:return None
+    f=fold(sn)
+    if f in MALE or re.sub(r'e([^aeiouy])$',r'\1',f) in MALE and False:return None
+    for suf,typ in FSUF:
+        if f.endswith(suf):
+            stem=f[:-len(suf)]
+            for k in (stem,stem+'a',stem+'o',stem+'e'):
+                if k in MALE:return MALE[k],typ
+            return sn[:-len(suf)],typ+'?'
+    m=re.match(r'^(.*?)(ska|cka|dzka)$',f)
+    if m and sex!='M':
+        return sn[:-1]+'i',('ska')
+    return None
 bynr={}
 for (y,n),a in idxact.items():bynr.setdefault(n,[]).append(a)
 nov=0;newn=0
@@ -107,13 +149,23 @@ for fn in sorted(glob.glob(R+'haiku/ODCZYTY/*_dom_przyczyny.csv'))+sorted(glob.g
             ai['parents_raw']=pr
             for k_,v_ in (parents(pr) or parents_pl(pr)).items():ai[k_]=v_+('?' if '?' in pr else '')
         if x.get('_stan'):ai['deceased_status']=x['_stan']
+        _ms=male_surname(ai['deceased_last_name'],ai['deceased_sex']) if ai['deceased_last_name'] else None
+        _ntf=''
+        _unres=bool(_ms and _ms[1].endswith('?'))
+        if _ms and _unres:
+            _ntf='nazwisko w akcie: '+ai['deceased_last_name']+' ('+('forma panieńska' if _ms[1].startswith('panna') else 'forma: żona lub wdowa')+', nazwisko męskie do ustalenia)'
+            _ms=None
+        if _ms:
+            _w=ai['deceased_last_name'];ai['deceased_last_name']=_ms[0]
+            _ntf='nazwisko w akcie: '+_w+' ('+{'panna':'forma panieńska','zona':'forma: żona lub wdowa','panna?':'forma panieńska, nazwisko męskie wyprowadzone','zona?':'forma: żona lub wdowa, nazwisko męskie wyprowadzone','ska':'forma żeńska'}[_ms[1]]+')'
         un=x['uwagi'];ms=re.search(r'(?:^|, )stan: ([^,]+)',un)
         if ms:
             st=ms.group(1).strip()
             if st!='brak w akcie':ai['deceased_status']=st
             un=(un[:ms.start()]+un[ms.end():]).strip(', ').strip()
-        ai['notes']=un
+        ai['notes']=', '.join(t for t in (_ntf,un) if t)
         unc=[f for f,v in ai.items() if '?' in str(v)]
+        if _unres and 'deceased_last_name' not in unc:unc.append('deceased_last_name')
         if x['pewnosc']=='?' and not unc:unc=['notes']
         if not a:
             newn+=1;ym=yr;a=dict(id='lm-%s-%d'%(x['skan'],newn),year=yr,act=900+newn,ai=None,unc=[],file='',roi=None,lub={},lubRaw='',lubName=(x['nazwisko']+' '+x['imie']).strip()+' (nowy – brak w indeksie)')
