@@ -1,0 +1,30 @@
+﻿nr_wpisu_DB;rok;data_mm-dd;dom;nazwisko;imie;plec;wiek;rodzice;przyczyna_lac;przyczyna_pl;uwagi;pewnosc;strona_ksiegi;skan;miejscowosc
+98;1801;02-23;2;Drążek;Wojciech;M;20;;Mors Naturalis;śmierć naturalna;Nad wierszem formuła Ego Michael Pawlikowski sepelivi (nie akt);P;12L;lm-8;Blinów
+99;1801;03-05;93;Kozak;Walenty;M;10;;Mors Naturalis;śmierć naturalna;;P;12L;lm-8;Blinów
+100;1801;03-09;50;Machulkowna;Marianna;F;5;;Mors Naturalis;śmierć naturalna;;P;12L;lm-8;Blinów
+101;1801;03-09;91;Kozakowna;Marianna;F;6 Mens.;;Mors Naturalis;śmierć naturalna;nazwisko pisane Kozauzkowna/Kozakowna;P;12L;lm-8;Blinów
+102;1801;03-23;105;Kozaczek;Walenty;M;2 Mens.;;Mors Naturalis;śmierć naturalna;;P;12L;lm-8;Blinów
+103;1801;03-23;104;Kosidło;Antoni;M;9;;Mors Naturalis;śmierć naturalna;;P;12L;lm-8;Blinów
+104;1801;03-26;63;Woytusiak;Wojciech;M;9 Dies;;Mors Naturalis;śmierć naturalna;;P;12L;lm-8;Blinów
+105;1801;04-13;104;Kosidłonka;Franciszka;F;5;;Mors Naturalis;śmierć naturalna;;P;12L;lm-8;Blinów
+106;1801;04-18;69;Sobotkowa;Anna;F;40;;Morbus Hydropicus (Mors e Morbo Hydropico);puchlina wodna;dzień 18 lub 10 - niepewny - w DB bez dnia;?;12L;lm-8;Blinów
+107;1801;04-29;74;Mscisło;Kazimierz;M;70;;Mors Naturalis;śmierć naturalna;dom 74 lub 75 niepewny - nazwisko Mscisło/Wscisło;?;12L;lm-8;Blinów
+108;1801;05-09;71;Machulkowna;Anna;F;10;;Morbus Hecticus;suchoty;;P;12L;lm-8;Blinów
+109;1801;06-01;2;Zarębowna;Zofia;F;2 Mens.;;Mors Naturalis;śmierć naturalna;;P;12L;lm-8;Blinów
+110;1801;06-18;12;Michałkowa;Anna;F;70;;Mors Naturalis;śmierć naturalna;dzień 18 lub 10 - niepewny;?;12L;lm-8;Blinów
+111;1801;09-02;76;Jakubaszek;Marcin;M;2;;Mors Naturalis;śmierć naturalna;dom 76 słabo czytelny - w DB imię Mateusz a w akcie Martinum;?;12L;lm-8;Blinów
+112;1801;10-01;64;Baron;Wojciech;M;5;;Mors Naturalis;śmierć naturalna;Nad wierszem formuła Ego Michael Pawlikowski sepelivi (nie akt);P;13P;lm-8;Blinów
+113;1801;10-06;80;Woytowiczowna;Łucja;F;2;;Morbus et Mors Inflammatio Gutturis;choroba i śmierć: zapalenie gardła;dzielą jedną linię z następną - imię Luciam=Łucja - w DB Woytowicz Łukasz;P;13P;lm-8;Blinów
+114;1801;10-06;80;Woytowiczowna;Marianna;F;7;;Inflammatio Gutturis;zapalenie gardła;dzielą jedną linię z poprzednią;P;13P;lm-8;Blinów
+115;1801;10-17;90;Kozakowna;Marianna;F;2;;Inflammatio Gutturis;zapalenie gardła;;P;13P;lm-8;Blinów
+116;1801;10-17;61;Dobrzyszczonka;Marianna;F;1;;Inflammatio Gutturis;zapalenie gardła;;P;13P;lm-8;Blinów
+117;1801;10-31;65;Obydz;Łukasz;M;9;;Inflammatio Gutturis;zapalenie gardła;;P;13P;lm-8;Blinów
+118;1801;11-09;97;Mcionek;Antoni;M;1;;Inflammatio Gutturis;zapalenie gardła;;P;13P;lm-8;Blinów
+119;1801;11-23;112;Michałek;Tomasz;M;2;;Inflammatio Gutturis;zapalenie gardła;;P;13P;lm-8;Blinów
+120;1801;11-23;117;Kaczyńska;Marianna;F;5;;Inflammatio Gutturis;zapalenie gardła;;P;13P;lm-8;Blinów
+121;1801;11-24;95;Kozaczek;Józef;M;7 Mens.;;Inflammatio Gutturis;zapalenie gardła;;P;13P;lm-8;Blinów
+122;1801;12-03;68;Kurczak;Ignacy;M;2;;Inflammatio Gutturis;zapalenie gardła;;P;13P;lm-8;Blinów
+123;1801;12-04;22;Wscisłowa;Zofia;F;2;;Inflammatio Gutturis;zapalenie gardła;;P;13P;lm-8;Blinów
+124;1801;12-09;27;Kozaczek;Szymon;M;2;;Inflammatio Gutturis;zapalenie gardła;;P;13P;lm-8;Blinów
+125;1801;12-09;114;Piech;Antoni;M;?;;Inflammatio Gutturis;zapalenie gardła;wiek nieczytelny (0 lub 6 lub 8);?;13P;lm-8;Blinów
+126;1801;12-11;112;Michałkowna;Marianna;F;4;;Inflammatio Gutturis;zapalenie gardła;;P;13P;lm-8;Blinów

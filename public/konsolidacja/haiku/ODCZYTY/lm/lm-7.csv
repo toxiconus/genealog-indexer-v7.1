@@ -1,0 +1,29 @@
+﻿nr_wpisu_DB;rok;data_mm-dd;dom;nazwisko;imie;plec;wiek;rodzice;przyczyna_lac;przyczyna_pl;uwagi;pewnosc;strona_ksiegi;skan;miejscowosc
+70;1799;10-09;70;Barbarzak;Joannes;M;80;;Mors Naturalis;śmierć naturalna;nad pierwszym wierszem formuła Ego Michael Pawlikowski sepelivi (nie akt);P;10L;lm-7;Blinów
+71;1799;10-18;22;Wscisło;Simon;M;6;;Mors Naturalis;śmierć naturalna;;P;10L;lm-7;Blinów
+72;1799;10-31;19;Burzel;Stanislaus;M;70;;Morte repentina;nagła śmierć;nad przyczyną dopisek Agricola? (rolnik);?;10L;lm-7;Blinów
+73;1799;11-01;62;Piech;Matheus;M;4 Sept.;;Mors Naturalis;śmierć naturalna;Sept.=tygodnie?;?;10L;lm-7;Blinów
+74;1799;12-07;10;Michałkowa;Marianna;F;24;;Mors Naturalis;śmierć naturalna;;P;10L;lm-7;Blinów
+75;1799;12-14;114;Pasternakowa;Catharina;F;70;;Mors Naturalis;śmierć naturalna;;P;10L;lm-7;Blinów
+76;1800;01-14;8?;Woytusiak;Stanislaus;M;78?;;Morte naturali;śmierć naturalna;nagłówek roku 1800 w rubryce daty, dom i wiek niepewne;?;10L;lm-7;Blinów
+77;1800;01-31;15;Kurczak;Magdalena;F;18?;;Morbus Hecticus;suchoty;zapis Kurczakowa, wiek 18 lub 16;?;10L;lm-7;Blinów
+78;1800;01-31;60;Stępień;Martinus;M;1;;Morte naturali;śmierć naturalna;;P;10L;lm-7;Blinów
+79;1800;01-31;48?;Pazdrak;Michael;M;8?;;Morte naturali;śmierć naturalna;dom i wiek niepewne;?;10L;lm-7;Blinów
+80;1800;03-01;15;Kurczak;Mathias;M;1 Sept.;;Mors Naturalis;śmierć naturalna;Sept.=tygodnie? zapis Sept. Unius;?;10L;lm-7;Blinów
+81;1800;03-01;89;Paciorek;Valentinus;M;70;;Mors Naturalis;śmierć naturalna;;P;10L;lm-7;Blinów
+82;1800;03-01;104;Kurczak;Simon;M;76;;Mors Naturalis;śmierć naturalna;;P;10L;lm-7;Blinów
+83;1800;03-21;109;Zaremba;Antonius;M;75;;Mors Naturalis;śmierć naturalna;;P;10L;lm-7;Blinów
+84;1800;03-21;61;Paciorek;Ignatius;M;70;;Mors Naturalis;śmierć naturalna;nad pierwszym wierszem formuła Ego Michael Pawlikowski sepelivi (nie akt);P;11P;lm-7;Blinów
+85;1800;04-21;14;Machulek;Josephus;M;10;;Morbus Hecticus;suchoty;;P;11P;lm-7;Blinów
+86;1800;04-24;63;Mscisłowa;Catharina;F;54;;Mors Naturalis;śmierć naturalna;;P;11P;lm-7;Blinów
+87;1800;05-02;44;Kędziorowna;Marianna;F;2;;Mors Naturalis;śmierć naturalna;;P;11P;lm-7;Blinów
+88;1800;05-05;50;Kędziorowa;Anna;F;75;;Mors Naturalis;śmierć naturalna;;P;11P;lm-7;Blinów
+89;1800;06-04;55;Gnatowa;Sophia;F;2 Mens.;;Mors Naturalis;śmierć naturalna;nazwisko odczyt Gnatowa lub Gratowa;?;11P;lm-7;Blinów
+90;1800;06-07;34;Pasternak;Paulus;M;6 Mens.;;Mors Naturalis;śmierć naturalna;brak nazwy miesiąca przy dacie przyjęto czerwiec;?;11P;lm-7;Blinów
+91;1800;09-03;109;Burzel;Franciscus;M;72;;Mors Naturalis;śmierć naturalna;;P;11P;lm-7;Blinów
+92;1800;10-18;16;Zaremba;Joannes;M;30;;Mors Naturalis;śmierć naturalna;;P;11P;lm-7;Blinów
+93;1800;11-24;54;Kurczak;Blasius;M;10;;Morbus Hecticus;suchoty;;P;11P;lm-7;Blinów
+94;1801;01-06;10;Michałkowa;Agnes;F;70;;Morte naturali;śmierć naturalna;nagłówek roku 1801 w rubryce daty;P;11P;lm-7;Blinów
+95;1801;01-20;50;Wscisłowa;Catharina;F;40;;Mors Naturalis;śmierć naturalna;;P;11P;lm-7;Blinów
+96;1801;01-28;39;Pasternak;Andreas;M;60;;Morte repentina;nagła śmierć;;P;11P;lm-7;Blinów
+97;1801;02-23;45;Paciorek;Stanislaus;M;40;;Mortis ratio gravis oneris sublevatis;przyczyna śmierci podniesienie ciężkiego ciężaru (dosłownie ciężki ciężar uniesiony);odczyt przyczyny niepewny;?;11P;lm-7;Blinów

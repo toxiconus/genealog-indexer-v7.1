@@ -1,0 +1,29 @@
+﻿nr_wpisu_DB;rok;data_mm-dd;dom;nazwisko;imie;plec;wiek;rodzice;przyczyna_lac;przyczyna_pl;uwagi;pewnosc;strona_ksiegi;skan;miejscowosc
+127;1801;12-14;84?;Kosidło;Józef;M;50;;Morbus Hecticus;suchoty;Formuła pogrzebowa nad pierwszym wierszem: Ego Michael Pawlikowski sepelivi - nie akt, dom 84 lub 64;?;14L;lm-9;Blinów
+128;1801;12-15;68;Kurczakowna;Zofia;F;10;;Inflammatio Gutturis;zapalenie gardła;nazwisko czytane Kurzakowna = Kurczakowna;P;14L;lm-9;Blinów
+129;1801;12-16;23;Samuel;Paweł;M;2;;Inflammatio Gutturis;zapalenie gardła;;P;14L;lm-9;Blinów
+130;1801;12-18;71;Machulek;Szymon;M;2;;Inflammatio Gutturis;zapalenie gardła;;P;14L;lm-9;Blinów
+131;1801;12-22;50;Machulkowna;Zofia;F;1;;Inflammatio Gutturis;zapalenie gardła;;P;14L;lm-9;Blinów
+132;1801;12-27;90;Kozakowna;Marianna;F;4;;Inflammatio Gutturis;zapalenie gardła;;P;14L;lm-9;Blinów
+133;1801;12-27;67;Dobrzyszczonka;Agnieszka;F;5;;Inflammatio Gutturis;zapalenie gardła;;P;14L;lm-9;Blinów
+134;1802;01-14;85;Kosidło;Jan;M;90;;Mors Naturalis;śmierć naturalna;;P;14L;lm-9;Blinów
+135;1802;01-10;108;Samuel;Stanisław;M;5;;Mors Naturalis;śmierć naturalna;data odczytana 10 po 14 stycznia - możliwy inny dzień;?;14L;lm-9;Blinów
+136;1802;02-09;7;Mcionek;Marcin;M;46;;Mors Naturalis;śmierć naturalna;;P;14L;lm-9;Blinów
+137;1802;02-09;30;Sobotka;Adam;M;3;;Mors Naturalis;śmierć naturalna;;P;14L;lm-9;Blinów
+138;1802;02-17;90;Kozaczek;Kazimierz;M;96;;Mors Naturalis;śmierć naturalna;;P;14L;lm-9;Blinów
+139;1802;03-17;43;Jędrzejczak;Paweł;M;5 Mens.;;Mors Naturalis;śmierć naturalna;;P;14L;lm-9;Blinów
+140;1802;03-17;83;Jachura;Maciej;M;1;;Mors Naturalis;śmierć naturalna;;P;14L;lm-9;Blinów
+141;1802;04-25;47;Barbarzak;Zofia;F;6 Mens.;;Mors Naturalis;śmierć naturalna;nazwisko czytane Barbarzakowna lub Barbarzakówna, nad pierwszym wierszem str. 15 formuła Ego Michael Pawlikowski sepelivi - nie akt;?;15P;lm-9;Blinów
+142;1802;04-26;60;Stępnik;Wojciech;M;1 Dies;;Mors Naturalis;śmierć naturalna;nazwisko możliwe Stępniak;?;15P;lm-9;Blinów
+143;1802;05-20;45;Paciorek;Marcin;M;1;;Mors Naturalis;śmierć naturalna;;P;15P;lm-9;Blinów
+144;1802;06-02;110;Pawłasek;Wawrzyniec;M;1 Mens.;;Mors Naturalis;śmierć naturalna;jednostka wieku Mens. odczytana niepewnie;?;15P;lm-9;Blinów
+145;1802;06-02;40;Krupionka;Marianna;F;3;;Mors Naturalis;śmierć naturalna;;P;15P;lm-9;Blinów
+146;1802;06-15;30;Baron;Tomasz;M;90;;Mors Naturalis;śmierć naturalna;;P;15P;lm-9;Blinów
+147;1802;09-22;112;Michałek;Paweł;M;80;;Mors Naturalis;śmierć naturalna;;P;15P;lm-9;Blinów
+148;1802;10-20;100;Kozaczek;Michał;M;4 Dies;;Mors Naturalis;śmierć naturalna;;P;15P;lm-9;Blinów
+149;1802;11-25;76;Jakubaszkowa;Katarzyna;F;80;;Mors Naturalis;śmierć naturalna;;P;15P;lm-9;Blinów
+150;1802;12-13;9?;Pawłasek;Bartłomiej;M;56;;Mors Naturalis;śmierć naturalna;numer domu niepewny;?;15P;lm-9;Blinów
+151;1803;02-01;63;Woytusiak;Antoni;M;25;;Morbus Hecticus;suchoty;;P;15P;lm-9;Blinów
+152;1803;02-04;3;Kurczak;Mateusz;M;50;;Morbus Hecticus;suchoty;;P;15P;lm-9;Blinów
+153;1803;02-08;40;Grędzionka;Marianna;F;50;;Morbus Hydropicus;puchlina wodna;;P;15P;lm-9;Blinów
+154;1803;02-08;33;Pasternakowa;Marianna;F;52?;;Mors Naturalis;śmierć naturalna;wpis blady, wiek niepewny. Pod wpisem niedokończony wpis Salomea bez danych (bez daty domu wieku i przyczyny) - nie akt, w DB nr 155;?;15P;lm-9;Blinów
