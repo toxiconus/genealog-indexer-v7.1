@@ -273,6 +273,7 @@ t=t[:i]+newtabs+t[j:]
 sub('.tabs button.on{background:var(--acc);color:#fff}','.tabs button.on{background:var(--acc);color:#fff}.tabs .tsep{flex:0 0 1px;background:var(--line);margin:0 4px;align-self:stretch}')
 sub('Weryfikacja zgonów · v2','Baza zgonów 1797–1945')
 sub('<title>Weryfikacja zgonów</title>','<title>Baza zgonów 1797–1945</title>')
+sub("function commit(a,f,v,src,extra){ if (src === 'edit' &&","const NPLJ = "+json.dumps({k:v for k,v in NPL.items() if v},ensure_ascii=False)+"; const latName = v => String(v).split(/(\\s+)/).map(w => NPLJ[w.toLowerCase().replace(/[.,?]/g,'')] ? NPLJ[w.toLowerCase().replace(/[.,?]/g,'')] + (/\\?$/.test(w) ? '?' : '') : w).join('');\nfunction commit(a,f,v,src,extra){ if (src === 'edit' && /^(deceased_first_name|father_first_name|mother_first_name)$/.test(f)) v = latName(v); if (src === 'edit' &&")
 out=t.replace('const D = /*DATA*/;','const D = '+json.dumps(D,ensure_ascii=False,separators=(',',':'))+';') if 'const D = /*DATA*/;' in t else None
 assert out,'marker'
 open(R+'narzedzia/baza_zgonow_1797-1945.html','w',encoding='utf-8').write(out)
