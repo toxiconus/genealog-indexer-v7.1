@@ -6,6 +6,8 @@ from zbuduj import inline
 import csv, json, os, re
 here = os.path.dirname(os.path.abspath(__file__)); up = os.path.dirname(here)
 def rd(f): return list(csv.DictReader(open(os.path.join(up, f), encoding='utf-8-sig'), delimiter=';'))
+def js(o):  # JSON bezpieczny w bloku <script>: '</' -> '<\/', '<!--' -> '<\!--', U+2028/2029 jako escape
+    return json.dumps(o, ensure_ascii=False, separators=(',', ':')).replace('</', '<\\/').replace('<!--', '<\\!--').replace('\u2028', '\\u2028').replace('\u2029', '\\u2029')
 def yr(x):
     m = re.search(r'\d{4}', x or ''); return int(m.group()) if m else 0
 def num(x):
@@ -29,7 +31,7 @@ for r in M:
     n=seen.get(r[0],0); seen[r[0]]=n+1
     if n: r[0]=r[0]+'-'+str(n+1)
 tpl = open(os.path.join(here, 'szablon.html'), encoding='utf-8').read()
-data = 'const B=' + json.dumps(B, ensure_ascii=False, separators=(',', ':')) + ';const D=' + json.dumps(D, ensure_ascii=False, separators=(',', ':')) + ';const M=' + json.dumps(M, ensure_ascii=False, separators=(',', ':')) + ';'
+data = 'const B=' + js(B) + ';const D=' + js(D) + ';const M=' + js(M) + ';'
 # gospodarze z tabel likwidacyjnych 1864 (AP Lublin 168/1054) – wstępny odczyt AI (opcjonalnie)
 G = []
 _tl = os.path.join(up, 'haiku', 'TABELE_LIKWIDACYJNE_168_1054_odczyt_AI.csv')
@@ -46,7 +48,7 @@ if os.path.exists(_tl):
         if '?' in (r['gospodarz_pl'] or '') or 'niska' in (r['pewnosc'] or ''): e[2] = 1
         e[3].append([int(r['skan'] or 0), (r['lp'] if r['lp'] not in ('', '-') else r['nr_w_tabeli']) or '', r['razem_m'], r['razem_p'], (r['uwaga_przy_nazwisku'] or '')[:40]])
     G = list(_agg.values())
-data += 'const G=' + json.dumps(G, ensure_ascii=False, separators=(',', ':')) + ';'
+data += 'const G=' + js(G) + ';'
 out = tpl.replace('/*DATA*/', data)
 out = inline(out)
 open(os.path.join(here, 'dopasowanie_osob.html'), 'w', encoding='utf-8').write(out)
