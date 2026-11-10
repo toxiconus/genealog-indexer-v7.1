@@ -239,8 +239,8 @@ for fn in sorted(glob.glob(R+'haiku/ODCZYTY/*_dom_przyczyny.csv'))+sorted(glob.g
         nov+=1
 print('nakladka',nov,'nowe',newn)
 acts.sort(key=lambda a:(a['year'],0 if a.get('kind')=='prot' else 1 if a.get('kind')=='rej' else 2,a['act'],a['id']))
-# zatwierdzone przez uzytkownika (eksport z aplikacji, tylko status ok): wartosci nadpisuja odczyt, akty sa oznaczone jako zatwierdzone (D.zatw -> seed w init)
-ZATW=[];_zf=R+'haiku/ODCZYTY/zatwierdzone_ok.csv'
+# eksport uzytkownika z aplikacji (status ok i ai_v1_w_trakcie): niepuste wartosci nadpisuja odczyt (puste nigdy nie kasuja danych); tylko status ok oznacza akt jako zatwierdzony (D.zatw -> seed w init)
+ZATW=[];_zf=R+'haiku/ODCZYTY/zatwierdzenia_uzytkownika.csv'
 if os.path.exists(_zf):
     import csv as _csv
     _skip={'id','verification_status','verification_notes','notes_org','act_text','scan_path','uncertain_fields'}
@@ -251,8 +251,8 @@ if os.path.exists(_zf):
         for _k,_v in _r.items():
             if _k in _skip or _k is None or not (_v or '').strip():continue
             _a['ai'][_k]=_v.strip()
-        ZATW.append(_r['id'])
-print('zatwierdzone',len(ZATW))
+        if _r.get('verification_status')=='ok':ZATW.append(_r['id'])
+print('zatwierdzone',len(ZATW),'wartosci z eksportu naniesione')
 FL=D35['fields']+[{'id':'house','label':'Nr domu'},{'id':'cause_of_death','label':'Przyczyna zgonu / choroba'},{'id':'parents_raw','label':'Rodzice (z rubryki przyczyny)'}]
 D=dict(fieldsProt=D35['fieldsProt'],fieldsRej=D35['fieldsRej'],fields=FL,acts=acts,counts=cnt,scans=SCANS,cols=D35['cols']+['house','parents_raw'],fix=D43['fix'],
        scanFiles=SF,scanBase=BASE,ord=D35['ord'],gz=D35['gz'],pairs=D35['pairs'],lata=[1797,1945],zakres='1797–1945',tytul='Baza zgonów Blinów 1797–1945',key='bazazgonow3',zatw=ZATW)
