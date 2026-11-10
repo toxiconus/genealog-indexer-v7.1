@@ -1,0 +1,7 @@
+/* moduly/db.js – trwały stan roboczy w IndexedDB (z awaryjnym trybem „tylko pamięć”). Jedna baza na aplikację, wersjonowana; nazwa bazy NIE zależy od wersji danych.
+   Magazyny: 'kv' (pojedyncze wartości: dziennik decyzji, ustawienia, znacznik ostatniej kopii). */
+const DB_NAZWA = 'multitool', DB_WERSJA = 1; let DB_TRYB = 'idb';
+function dbOtworz(){ return new Promise((ok, no) => { let r; try { r = indexedDB.open(DB_NAZWA, DB_WERSJA); } catch (e) { return no(e); } r.onupgradeneeded = () => { if (!r.result.objectStoreNames.contains('kv')) r.result.createObjectStore('kv'); }; r.onsuccess = () => ok(r.result); r.onerror = () => no(r.error); r.onblocked = () => no(new Error('baza zablokowana przez inną kartę')); }); }
+const DB_PAMIEC = {};
+async function dbGet(k, dom){ if (DB_TRYB === 'pamiec') return k in DB_PAMIEC ? DB_PAMIEC[k] : dom; try { const db = await dbOtworz(); return await new Promise((ok, no) => { const q = db.transaction('kv').objectStore('kv').get(k); q.onsuccess = () => ok(q.result === undefined ? dom : q.result); q.onerror = () => no(q.error); }); } catch (e) { DB_TRYB = 'pamiec'; return dom; } }
+async function dbPut(k, v){ DB_PAMIEC[k] = v; if (DB_TRYB === 'pamiec') return false; try { const db = await dbOtworz(); return await new Promise((ok, no) => { const t = db.transaction('kv', 'readwrite'); t.objectStore('kv').put(v, k); t.oncomplete = () => ok(true); t.onerror = t.onabort = () => no(t.error); }); } catch (e) { DB_TRYB = 'pamiec'; return false; } }

@@ -1,0 +1,886 @@
+{
+ "format": {
+  "nazwa": "multitool-dane",
+  "wersja": 1
+ },
+ "opis": "Przykład do MODEL_DANYCH.md. Dane archiwalne: chrzest 1877 i ślub 1894 z indeksów oraz zgon 1797 z indeksu i odczytu Liber mortuorum (lm-2). Sekcja „osoby” jest pochodną dziennika „decyzje” (pokazana dla czytelności, aplikacja ją wylicza).",
+ "zrodla": [
+  {
+   "id": "zr:indeks-chrzty",
+   "typ": "indeks",
+   "nazwa": "Indeks chrztów Blinów 1783–1908 (karty)",
+   "plik": "blinow_akty.csv"
+  },
+  {
+   "id": "zr:indeks-zgony",
+   "typ": "indeks",
+   "nazwa": "Indeks zgonów 1797–1880 (Lubgens)",
+   "plik": "zgony.csv"
+  },
+  {
+   "id": "zr:indeks-malzenstwa",
+   "typ": "indeks",
+   "nazwa": "Indeks małżeństw 1841–1894",
+   "plik": "malzenstwa_mal.csv"
+  },
+  {
+   "id": "zr:liber-mortuorum",
+   "typ": "ksiega",
+   "nazwa": "Liber mortuorum 1797–1825 (odczyt skanów)",
+   "plik": "haiku/ODCZYTY/lm/"
+  }
+ ],
+ "skany": [
+  {
+   "id": "sk:0af0e32a2965",
+   "plik": "blinow_lm-2.jpg",
+   "sciezka": "haiku/skany_lm/blinow_lm-2.jpg",
+   "sha256": "0af0e32a29659de5…",
+   "zrodlo": "zr:liber-mortuorum",
+   "strony": "L,P",
+   "uwaga": "id skanu z sumy kontrolnej pliku, nie z nazwy"
+  }
+ ],
+ "akty": [
+  {
+   "id": "CH.LUB.BLIN.1877.012",
+   "typ": "chrzest",
+   "rok": 1877,
+   "nr": "12",
+   "miejsce": "Blinów",
+   "epoka": "ros",
+   "zrodla": [
+    "zr:indeks-chrzty"
+   ],
+   "skan": null,
+   "stan": "z_indeksu",
+   "pola": {
+    "child_last_name": {
+     "value": "Barbarzak",
+     "status": "lub",
+     "unc": false,
+     "source": {
+      "plik": "blinow_akty.csv",
+      "skan": "",
+      "strona": "",
+      "wiersz": "3498"
+     }
+    },
+    "child_first_name": {
+     "value": "Franciszka",
+     "status": "lub",
+     "unc": false,
+     "source": {
+      "plik": "blinow_akty.csv",
+      "skan": "",
+      "strona": "",
+      "wiersz": "3498"
+     }
+    },
+    "child_birth_place": {
+     "value": "Blinów",
+     "status": "lub",
+     "unc": false,
+     "source": {
+      "plik": "blinow_akty.csv",
+      "skan": "",
+      "strona": "",
+      "wiersz": "3498"
+     }
+    },
+    "father_first_name": {
+     "value": "Michał",
+     "status": "lub",
+     "unc": false,
+     "source": {
+      "plik": "blinow_akty.csv",
+      "skan": "",
+      "strona": "",
+      "wiersz": "3498"
+     }
+    },
+    "mother_first_name": {
+     "value": "Zofia",
+     "status": "lub",
+     "unc": false,
+     "source": {
+      "plik": "blinow_akty.csv",
+      "skan": "",
+      "strona": "",
+      "wiersz": "3498"
+     }
+    },
+    "mother_last_name": {
+     "value": "Kudrelek",
+     "status": "lub",
+     "unc": false,
+     "source": {
+      "plik": "blinow_akty.csv",
+      "skan": "",
+      "strona": "",
+      "wiersz": "3498"
+     }
+    }
+   }
+  },
+  {
+   "id": "MA.1894.23",
+   "typ": "malzenstwo",
+   "rok": 1894,
+   "nr": "23",
+   "miejsce": "Brzozówka",
+   "epoka": "ros",
+   "zrodla": [
+    "zr:indeks-malzenstwa"
+   ],
+   "skan": null,
+   "stan": "z_indeksu",
+   "pola": {
+    "marriage_date": {
+     "value": "1894-11-05",
+     "status": "lub",
+     "unc": false,
+     "source": {
+      "plik": "malzenstwa_mal.csv",
+      "skan": "",
+      "strona": "",
+      "wiersz": "771"
+     }
+    },
+    "groom_last_name": {
+     "value": "Woś",
+     "status": "lub",
+     "unc": false,
+     "source": {
+      "plik": "malzenstwa_mal.csv",
+      "skan": "",
+      "strona": "",
+      "wiersz": "771"
+     }
+    },
+    "groom_first_name": {
+     "value": "Wojciech",
+     "status": "lub",
+     "unc": false,
+     "source": {
+      "plik": "malzenstwa_mal.csv",
+      "skan": "",
+      "strona": "",
+      "wiersz": "771"
+     }
+    },
+    "groom_status": {
+     "value": "k",
+     "status": "lub",
+     "unc": false,
+     "source": {
+      "plik": "malzenstwa_mal.csv",
+      "skan": "",
+      "strona": "",
+      "wiersz": "771"
+     }
+    },
+    "groom_age": {
+     "value": "23",
+     "status": "lub",
+     "unc": false,
+     "source": {
+      "plik": "malzenstwa_mal.csv",
+      "skan": "",
+      "strona": "",
+      "wiersz": "771"
+     }
+    },
+    "groom_residence": {
+     "value": "Brzozówka",
+     "status": "lub",
+     "unc": false,
+     "source": {
+      "plik": "malzenstwa_mal.csv",
+      "skan": "",
+      "strona": "",
+      "wiersz": "771"
+     }
+    },
+    "groom_father_first_name": {
+     "value": "Jan",
+     "status": "lub",
+     "unc": false,
+     "source": {
+      "plik": "malzenstwa_mal.csv",
+      "skan": "",
+      "strona": "",
+      "wiersz": "771"
+     }
+    },
+    "groom_father_last_name": {
+     "value": "Woś",
+     "status": "lub",
+     "unc": false,
+     "source": {
+      "plik": "malzenstwa_mal.csv",
+      "skan": "",
+      "strona": "",
+      "wiersz": "771"
+     }
+    },
+    "groom_mother_first_name": {
+     "value": "Zofia",
+     "status": "lub",
+     "unc": false,
+     "source": {
+      "plik": "malzenstwa_mal.csv",
+      "skan": "",
+      "strona": "",
+      "wiersz": "771"
+     }
+    },
+    "groom_mother_last_name": {
+     "value": "Brzeska",
+     "status": "lub",
+     "unc": false,
+     "source": {
+      "plik": "malzenstwa_mal.csv",
+      "skan": "",
+      "strona": "",
+      "wiersz": "771"
+     }
+    },
+    "bride_last_name": {
+     "value": "Barbarzak",
+     "status": "lub",
+     "unc": false,
+     "source": {
+      "plik": "malzenstwa_mal.csv",
+      "skan": "",
+      "strona": "",
+      "wiersz": "771"
+     }
+    },
+    "bride_first_name": {
+     "value": "Franciszka",
+     "status": "lub",
+     "unc": false,
+     "source": {
+      "plik": "malzenstwa_mal.csv",
+      "skan": "",
+      "strona": "",
+      "wiersz": "771"
+     }
+    },
+    "bride_status": {
+     "value": "p",
+     "status": "lub",
+     "unc": false,
+     "source": {
+      "plik": "malzenstwa_mal.csv",
+      "skan": "",
+      "strona": "",
+      "wiersz": "771"
+     }
+    },
+    "bride_age": {
+     "value": "17",
+     "status": "lub",
+     "unc": false,
+     "source": {
+      "plik": "malzenstwa_mal.csv",
+      "skan": "",
+      "strona": "",
+      "wiersz": "771"
+     }
+    },
+    "bride_residence": {
+     "value": "Blinów",
+     "status": "lub",
+     "unc": false,
+     "source": {
+      "plik": "malzenstwa_mal.csv",
+      "skan": "",
+      "strona": "",
+      "wiersz": "771"
+     }
+    },
+    "bride_father_first_name": {
+     "value": "Michał",
+     "status": "lub",
+     "unc": false,
+     "source": {
+      "plik": "malzenstwa_mal.csv",
+      "skan": "",
+      "strona": "",
+      "wiersz": "771"
+     }
+    },
+    "bride_father_last_name": {
+     "value": "Barbarzak",
+     "status": "lub",
+     "unc": false,
+     "source": {
+      "plik": "malzenstwa_mal.csv",
+      "skan": "",
+      "strona": "",
+      "wiersz": "771"
+     }
+    },
+    "bride_mother_first_name": {
+     "value": "Zofia",
+     "status": "lub",
+     "unc": false,
+     "source": {
+      "plik": "malzenstwa_mal.csv",
+      "skan": "",
+      "strona": "",
+      "wiersz": "771"
+     }
+    },
+    "bride_mother_last_name": {
+     "value": "Kudrelek",
+     "status": "lub",
+     "unc": false,
+     "source": {
+      "plik": "malzenstwa_mal.csv",
+      "skan": "",
+      "strona": "",
+      "wiersz": "771"
+     }
+    }
+   }
+  },
+  {
+   "id": "ZG.Z00011",
+   "typ": "zgon",
+   "rok": 1797,
+   "nr": "3",
+   "miejsce": "Blinów",
+   "epoka": "lac",
+   "zestaw_pol": "LATF",
+   "zrodla": [
+    "zr:indeks-zgony",
+    "zr:liber-mortuorum"
+   ],
+   "skan": {
+    "id": "sk:0af0e32a2965",
+    "strona": "P",
+    "roi": {
+     "x": 0.5,
+     "y": 0.0,
+     "w": 0.5,
+     "h": 1.0
+    }
+   },
+   "stan": "w_toku",
+   "id_dawne": [
+    "idx-1797-3",
+    "Z00011"
+   ],
+   "pola": {
+    "death_place": {
+     "value": "Blinów",
+     "status": "ai",
+     "unc": false,
+     "source": {
+      "plik": "haiku/ODCZYTY/lm/lm-2.csv",
+      "skan": "sk:0af0e32a2965",
+      "strona": "P",
+      "wiersz": "4"
+     }
+    },
+    "house": {
+     "value": "79",
+     "status": "ok",
+     "unc": false,
+     "source": {
+      "plik": "haiku/ODCZYTY/lm/lm-2.csv",
+      "skan": "sk:0af0e32a2965",
+      "strona": "P",
+      "wiersz": "4"
+     },
+     "by": "csv"
+    },
+    "deceased_last_name": {
+     "value": "Kosidło",
+     "status": "ok",
+     "unc": false,
+     "source": {
+      "plik": "haiku/ODCZYTY/lm/lm-2.csv",
+      "skan": "sk:0af0e32a2965",
+      "strona": "P",
+      "wiersz": "4"
+     },
+     "raw": "Kosidłowna",
+     "by": "csv",
+     "alt": [
+      {
+       "value": "Kosidłowna",
+       "status": "lub",
+       "unc": false,
+       "source": {
+        "plik": "zgony.csv",
+        "skan": "",
+        "strona": "",
+        "wiersz": "11"
+       }
+      }
+     ],
+     "note": "nazwisko w akcie: Kosidłowna (forma panieńska)"
+    },
+    "deceased_first_name": {
+     "value": "Marianna",
+     "status": "ok",
+     "unc": false,
+     "source": {
+      "plik": "haiku/ODCZYTY/lm/lm-2.csv",
+      "skan": "sk:0af0e32a2965",
+      "strona": "P",
+      "wiersz": "4"
+     },
+     "by": "csv",
+     "alt": [
+      {
+       "value": "Marianna",
+       "status": "lub",
+       "unc": false,
+       "source": {
+        "plik": "zgony.csv",
+        "skan": "",
+        "strona": "",
+        "wiersz": "11"
+       }
+      }
+     ]
+    },
+    "death_date": {
+     "value": "1797-02-04",
+     "status": "ai",
+     "unc": false,
+     "source": {
+      "plik": "haiku/ODCZYTY/lm/lm-2.csv",
+      "skan": "sk:0af0e32a2965",
+      "strona": "P",
+      "wiersz": "4"
+     },
+     "note": "w aktach łacińskich zwykle data zgłoszenia"
+    },
+    "deceased_sex": {
+     "value": "K",
+     "status": "ai",
+     "unc": false,
+     "source": {
+      "plik": "haiku/ODCZYTY/lm/lm-2.csv",
+      "skan": "sk:0af0e32a2965",
+      "strona": "P",
+      "wiersz": "4"
+     }
+    },
+    "age": {
+     "value": "5 dn.",
+     "status": "ai",
+     "unc": false,
+     "source": {
+      "plik": "haiku/ODCZYTY/lm/lm-2.csv",
+      "skan": "sk:0af0e32a2965",
+      "strona": "P",
+      "wiersz": "4"
+     },
+     "raw": "5 dies"
+    },
+    "deceased_status": {
+     "value": "dziecko",
+     "status": "ai",
+     "unc": false,
+     "source": {
+      "plik": "haiku/ODCZYTY/lm/lm-2.csv",
+      "skan": "sk:0af0e32a2965",
+      "strona": "P",
+      "wiersz": "4"
+     },
+     "by": "auto"
+    },
+    "profession": {
+     "value": "agricola",
+     "status": "ai",
+     "unc": false,
+     "source": {
+      "plik": "haiku/ODCZYTY/lm/lm-2.csv",
+      "skan": "sk:0af0e32a2965",
+      "strona": "P",
+      "wiersz": "4"
+     },
+     "raw": "Agricola"
+    },
+    "parents_raw": {
+     "value": "Francisci Kosidło",
+     "status": "ai",
+     "unc": false,
+     "source": {
+      "plik": "haiku/ODCZYTY/lm/lm-2.csv",
+      "skan": "sk:0af0e32a2965",
+      "strona": "P",
+      "wiersz": "4"
+     }
+    },
+    "father_first_name": {
+     "value": "Franciszek",
+     "status": "ai",
+     "unc": false,
+     "source": {
+      "plik": "haiku/ODCZYTY/lm/lm-2.csv",
+      "skan": "sk:0af0e32a2965",
+      "strona": "P",
+      "wiersz": "4"
+     },
+     "raw": "Francisci"
+    },
+    "father_last_name": {
+     "value": "Kosidło",
+     "status": "ai",
+     "unc": false,
+     "source": {
+      "plik": "haiku/ODCZYTY/lm/lm-2.csv",
+      "skan": "sk:0af0e32a2965",
+      "strona": "P",
+      "wiersz": "4"
+     }
+    },
+    "mother_first_name": {
+     "value": "[_]",
+     "status": "ai",
+     "unc": false,
+     "source": {
+      "plik": "haiku/ODCZYTY/lm/lm-2.csv",
+      "skan": "sk:0af0e32a2965",
+      "strona": "P",
+      "wiersz": "4"
+     }
+    },
+    "mother_last_name": {
+     "value": "[_]",
+     "status": "ai",
+     "unc": false,
+     "source": {
+      "plik": "haiku/ODCZYTY/lm/lm-2.csv",
+      "skan": "sk:0af0e32a2965",
+      "strona": "P",
+      "wiersz": "4"
+     }
+    },
+    "cause_of_death": {
+     "value": "śmierć naturalna (Naturali)",
+     "status": "ai",
+     "unc": false,
+     "source": {
+      "plik": "haiku/ODCZYTY/lm/lm-2.csv",
+      "skan": "sk:0af0e32a2965",
+      "strona": "P",
+      "wiersz": "4"
+     }
+    },
+    "notes": {
+     "value": "",
+     "status": "ai",
+     "unc": false,
+     "source": {
+      "plik": "haiku/ODCZYTY/lm/lm-2.csv",
+      "skan": "sk:0af0e32a2965",
+      "strona": "P",
+      "wiersz": "4"
+     }
+    }
+   }
+  }
+ ],
+ "wystapienia": [
+  {
+   "id": "w:CH.LUB.BLIN.1877.012:dziecko",
+   "akt": "CH.LUB.BLIN.1877.012",
+   "rola": "dziecko",
+   "mapa": {
+    "imie": "child_first_name",
+    "nazwisko": "child_last_name",
+    "miejsce": "child_birth_place"
+   }
+  },
+  {
+   "id": "w:CH.LUB.BLIN.1877.012:ojciec",
+   "akt": "CH.LUB.BLIN.1877.012",
+   "rola": "ojciec",
+   "mapa": {
+    "imie": "father_first_name",
+    "miejsce": "child_birth_place"
+   }
+  },
+  {
+   "id": "w:CH.LUB.BLIN.1877.012:matka",
+   "akt": "CH.LUB.BLIN.1877.012",
+   "rola": "matka",
+   "mapa": {
+    "imie": "mother_first_name",
+    "rodowe": "mother_last_name",
+    "miejsce": "child_birth_place"
+   }
+  },
+  {
+   "id": "w:MA.1894.23:pan_mlody",
+   "akt": "MA.1894.23",
+   "rola": "pan_mlody",
+   "mapa": {
+    "imie": "groom_first_name",
+    "nazwisko": "groom_last_name",
+    "wiek": "groom_age",
+    "stan": "groom_status",
+    "miejsce": "groom_residence"
+   }
+  },
+  {
+   "id": "w:MA.1894.23:panna_mloda",
+   "akt": "MA.1894.23",
+   "rola": "panna_mloda",
+   "mapa": {
+    "imie": "bride_first_name",
+    "nazwisko": "bride_last_name",
+    "wiek": "bride_age",
+    "stan": "bride_status",
+    "miejsce": "bride_residence"
+   }
+  },
+  {
+   "id": "w:MA.1894.23:ojciec_pana",
+   "akt": "MA.1894.23",
+   "rola": "ojciec_pana",
+   "mapa": {
+    "imie": "groom_father_first_name",
+    "nazwisko": "groom_father_last_name"
+   }
+  },
+  {
+   "id": "w:MA.1894.23:matka_pana",
+   "akt": "MA.1894.23",
+   "rola": "matka_pana",
+   "mapa": {
+    "imie": "groom_mother_first_name",
+    "rodowe": "groom_mother_last_name",
+    "nazwisko": "groom_father_last_name"
+   }
+  },
+  {
+   "id": "w:MA.1894.23:ojciec_panny",
+   "akt": "MA.1894.23",
+   "rola": "ojciec_panny",
+   "mapa": {
+    "imie": "bride_father_first_name",
+    "nazwisko": "bride_father_last_name"
+   }
+  },
+  {
+   "id": "w:MA.1894.23:matka_panny",
+   "akt": "MA.1894.23",
+   "rola": "matka_panny",
+   "mapa": {
+    "imie": "bride_mother_first_name",
+    "rodowe": "bride_mother_last_name",
+    "nazwisko": "bride_father_last_name"
+   }
+  },
+  {
+   "id": "w:ZG.Z00011:zmarly",
+   "akt": "ZG.Z00011",
+   "rola": "zmarly",
+   "mapa": {
+    "imie": "deceased_first_name",
+    "nazwisko": "deceased_last_name",
+    "plec": "deceased_sex",
+    "wiek": "age",
+    "stan": "deceased_status",
+    "zawod": "profession",
+    "miejsce": "death_place",
+    "dom": "house"
+   }
+  },
+  {
+   "id": "w:ZG.Z00011:ojciec",
+   "akt": "ZG.Z00011",
+   "rola": "ojciec",
+   "mapa": {
+    "imie": "father_first_name",
+    "nazwisko": "father_last_name",
+    "miejsce": "death_place",
+    "dom": "house"
+   }
+  }
+ ],
+ "relacje": [
+  {
+   "id": "r:rodzic-dziecko:CH.LUB.BLIN.1877.012:ojciec:dziecko",
+   "typ": "rodzic-dziecko",
+   "a": "w:CH.LUB.BLIN.1877.012:ojciec",
+   "b": "w:CH.LUB.BLIN.1877.012:dziecko",
+   "status": "hipoteza",
+   "zrodlo": "CH.LUB.BLIN.1877.012"
+  },
+  {
+   "id": "r:rodzic-dziecko:CH.LUB.BLIN.1877.012:matka:dziecko",
+   "typ": "rodzic-dziecko",
+   "a": "w:CH.LUB.BLIN.1877.012:matka",
+   "b": "w:CH.LUB.BLIN.1877.012:dziecko",
+   "status": "hipoteza",
+   "zrodlo": "CH.LUB.BLIN.1877.012"
+  },
+  {
+   "id": "r:malzenstwo:CH.LUB.BLIN.1877.012:ojciec:matka",
+   "typ": "malzenstwo",
+   "a": "w:CH.LUB.BLIN.1877.012:ojciec",
+   "b": "w:CH.LUB.BLIN.1877.012:matka",
+   "status": "hipoteza",
+   "zrodlo": "CH.LUB.BLIN.1877.012"
+  },
+  {
+   "id": "r:malzenstwo:MA.1894.23:pan_mlody:panna_mloda",
+   "typ": "malzenstwo",
+   "a": "w:MA.1894.23:pan_mlody",
+   "b": "w:MA.1894.23:panna_mloda",
+   "status": "hipoteza",
+   "zrodlo": "MA.1894.23"
+  },
+  {
+   "id": "r:rodzic-dziecko:MA.1894.23:ojciec_pana:pan_mlody",
+   "typ": "rodzic-dziecko",
+   "a": "w:MA.1894.23:ojciec_pana",
+   "b": "w:MA.1894.23:pan_mlody",
+   "status": "hipoteza",
+   "zrodlo": "MA.1894.23"
+  },
+  {
+   "id": "r:rodzic-dziecko:MA.1894.23:matka_pana:pan_mlody",
+   "typ": "rodzic-dziecko",
+   "a": "w:MA.1894.23:matka_pana",
+   "b": "w:MA.1894.23:pan_mlody",
+   "status": "hipoteza",
+   "zrodlo": "MA.1894.23"
+  },
+  {
+   "id": "r:rodzic-dziecko:MA.1894.23:ojciec_panny:panna_mloda",
+   "typ": "rodzic-dziecko",
+   "a": "w:MA.1894.23:ojciec_panny",
+   "b": "w:MA.1894.23:panna_mloda",
+   "status": "hipoteza",
+   "zrodlo": "MA.1894.23"
+  },
+  {
+   "id": "r:rodzic-dziecko:MA.1894.23:matka_panny:panna_mloda",
+   "typ": "rodzic-dziecko",
+   "a": "w:MA.1894.23:matka_panny",
+   "b": "w:MA.1894.23:panna_mloda",
+   "status": "hipoteza",
+   "zrodlo": "MA.1894.23"
+  },
+  {
+   "id": "r:rodzic-dziecko:ZG.Z00011:ojciec:zmarly",
+   "typ": "rodzic-dziecko",
+   "a": "w:ZG.Z00011:ojciec",
+   "b": "w:ZG.Z00011:zmarly",
+   "status": "hipoteza",
+   "zrodlo": "ZG.Z00011"
+  }
+ ],
+ "decyzje": [
+  {
+   "n": 1,
+   "t": "2026-11-10T07:10:00.000Z",
+   "typ": "scal",
+   "a": "w:CH.LUB.BLIN.1877.012:dziecko",
+   "b": "w:MA.1894.23:panna_mloda",
+   "wniosek": "sprawdz",
+   "reguly": 1,
+   "why": "",
+   "uzasadnienie": {
+    "zgodnosci": [
+     "nazwisko „Barbarzak”",
+     "imię „Franciszka”",
+     "rok urodzenia zgodny: 1876–1877 i 1874–1879",
+     "ojciec: „Michał”",
+     "matka: „Zofia”",
+     "nazwisko rodowe matki: „Kudrelek”",
+     "miejscowość „Blinów”"
+    ],
+    "rozbieznosci": [],
+    "sprzecznosci": [],
+    "braki": [
+     "małżonek nieznany w jednym wystąpieniu"
+    ]
+   }
+  },
+  {
+   "n": 2,
+   "t": "2026-11-10T07:12:00.000Z",
+   "typ": "cofnij",
+   "cofa": 1,
+   "why": "przykład cofnięcia: wystąpienia, akty i źródła bez zmian"
+  },
+  {
+   "n": 3,
+   "t": "2026-11-10T07:15:00.000Z",
+   "typ": "scal",
+   "a": "w:CH.LUB.BLIN.1877.012:dziecko",
+   "b": "w:MA.1894.23:panna_mloda",
+   "wniosek": "sprawdz",
+   "reguly": 1,
+   "why": "",
+   "uzasadnienie": {
+    "zgodnosci": [
+     "nazwisko „Barbarzak”",
+     "imię „Franciszka”",
+     "rok urodzenia zgodny: 1876–1877 i 1874–1879",
+     "ojciec: „Michał”",
+     "matka: „Zofia”",
+     "nazwisko rodowe matki: „Kudrelek”",
+     "miejscowość „Blinów”"
+    ],
+    "rozbieznosci": [],
+    "sprzecznosci": [],
+    "braki": [
+     "małżonek nieznany w jednym wystąpieniu"
+    ]
+   }
+  },
+  {
+   "n": 4,
+   "t": "2026-11-10T07:20:00.000Z",
+   "typ": "wariant_nazwiska",
+   "a": "Pcionek",
+   "b": "Pscionek",
+   "why": "ci sami rodzice zapisani obiema formami (PCION_warianty_nazwiska_analiza.md)"
+  }
+ ],
+ "osoby": [
+  {
+   "id": "o:3",
+   "wystapienia": [
+    "w:CH.LUB.BLIN.1877.012:dziecko",
+    "w:MA.1894.23:panna_mloda"
+   ],
+   "decyzje": [
+    3
+   ],
+   "aliasy": [],
+   "status": "zatwierdzona"
+  }
+ ],
+ "slowniki": {
+  "nazwiska_klasy": {
+   "pcionek": "kl:pcion",
+   "pscionek": "kl:pcion"
+  },
+  "miejsca": [
+   {
+    "id": "moczydla",
+    "nazwa": "Moczydła",
+    "warianty": [
+     "Mocydła",
+     "Moczyda",
+     "Moczydło"
+    ]
+   }
+  ]
+ }
+}
