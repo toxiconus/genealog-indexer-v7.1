@@ -94,3 +94,7 @@ python3 test/…                    # Playwright: telefon i desktop
 | `prototyp/zbuduj_dane.py` → `dane.json` | zalążek kroku 2 (271 aktów: chrzty, zgony z nakładką `lm`, małżeństwa) |
 | `prototyp/szablon.html` + `zbuduj.py` → `multitool_prototyp.html` | zalążek powłoki i zakładki „Osoby” |
 | `test/test_scalanie.mjs`, `test/test_prototyp.py` | test reguł na rankingu; test dymny aplikacji |
+
+## 6. Stan realizacji (2026-11-10)
+- Krok 1: wspólne słowniki imion (`wspolne/slowniki_imion.json`) i `wspolne/norm.js`; test reguł scalania i prototyp bez zmian wyników. Brak jeszcze: port `MALE`/`polname`/`parents` i test parytetu JS↔Python.
+- Krok 2 (część): `python3 prototyp/zbuduj_dane.py --wszystko` buduje pełny `prototyp/dane_pelne.json` (16,6 MB, w `.gitignore`): 8833 aktów (chrzty 5488, zgony 2624, małżeństwa 721), 23356 wystąpień, 18444 relacji; spójność referencji sprawdzona (0 sierot), 24 akty bez pól (do przejrzenia). Brak jeszcze: akty z ASC 1870–79 i mini 1935/1943–45, nakładka zatwierdzeń `zatwierdzenia_uzytkownika.csv`, tabela skanów (sha256), `id_dawne`.

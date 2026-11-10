@@ -2,13 +2,14 @@
 """Buduje prototyp/dane.json: próbka ok. 200 aktów (rodziny Kudrelek i Pasternak) z indeksów archiwalnych w repo,
 w formacie z MODEL_DANYCH.md (Akt, Źródło, Wystąpienie, Relacja; pole = value/status/unc/source).
 Tylko dane archiwalne (indeksy i odczyty ksiąg); nic z drzewa GED. Uruchom: python3 prototyp/zbuduj_dane.py"""
-import csv, json, os, re, unicodedata, glob
+import csv, json, os, re, sys, unicodedata, glob
 H = os.path.dirname(os.path.abspath(__file__)); K = os.path.join(H, '..', '..')
 NAZWISKA = ('kudrelek', 'pasternak')
 def rd(f): return list(csv.DictReader(open(os.path.join(K, f), encoding='utf-8-sig'), delimiter=';'))
 def fold(x):
     x = (x or '').lower().replace('ł', 'l'); return ''.join(c for c in unicodedata.normalize('NFD', x) if unicodedata.category(c) != 'Mn')
-def trafia(*v): return any(any(fold(x).startswith(n) for n in NAZWISKA) for x in v if x)
+WSZYSTKO = '--wszystko' in sys.argv   # pełny zbiór (cała parafia) zamiast próbki; wynik: dane_pelne.json (duży, nie commitować)
+def trafia(*v): return WSZYSTKO or any(any(fold(x).startswith(n) for n in NAZWISKA) for x in v if x)
 def pole(v, status, plik, wiersz='', skan='', strona='', unc=None):
     v = (v or '').strip()
     return {'value': v, 'status': status, 'unc': ('?' in v) if unc is None else unc, 'source': {'plik': plik, 'skan': skan, 'strona': strona, 'wiersz': str(wiersz)}}
@@ -87,6 +88,7 @@ D = {'format': {'nazwa': 'multitool-dane', 'wersja': 1}, 'opis': 'Próbka: akty 
      'zrodla': [{'id': 'zr:indeks-chrzty', 'typ': 'indeks', 'nazwa': 'Indeks chrztów Blinów 1783–1908 (karty)', 'plik': 'blinow_akty.csv'}, {'id': 'zr:indeks-zgony', 'typ': 'indeks', 'nazwa': 'Indeks zgonów 1797–1880 (Lubgens)', 'plik': 'zgony.csv'},
                 {'id': 'zr:indeks-malzenstwa', 'typ': 'indeks', 'nazwa': 'Indeks małżeństw 1841–1894', 'plik': 'malzenstwa_mal.csv'}, {'id': 'zr:liber-mortuorum', 'typ': 'ksiega', 'nazwa': 'Liber mortuorum 1797–1825 (odczyt skanów)', 'plik': 'haiku/ODCZYTY/lm/'}],
      'akty': akty, 'wystapienia': wyst, 'relacje': rel, 'decyzje': []}
-json.dump(D, open(os.path.join(H, 'dane.json'), 'w', encoding='utf-8'), ensure_ascii=False, separators=(',', ':'))
+WYJ = 'dane_pelne.json' if WSZYSTKO else 'dane.json'
+json.dump(D, open(os.path.join(H, WYJ), 'w', encoding='utf-8'), ensure_ascii=False, separators=(',', ':'))
 from collections import Counter
-print(len(akty), 'aktów', dict(Counter(a['typ'] for a in akty)), len(wyst), 'wystąpień', len(rel), 'relacji', os.path.getsize(os.path.join(H, 'dane.json')) // 1024, 'KB', 'pola ai:', sum(1 for a in akty for p in a['pola'].values() if p['status'] == 'ai'))
+print(len(akty), 'aktów', dict(Counter(a['typ'] for a in akty)), len(wyst), 'wystąpień', len(rel), 'relacji', os.path.getsize(os.path.join(H, WYJ)) // 1024, 'KB', 'pola ai:', sum(1 for a in akty for p in a['pola'].values() if p['status'] == 'ai'))

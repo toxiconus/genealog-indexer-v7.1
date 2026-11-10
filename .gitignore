@@ -9,3 +9,5 @@ dist/
 
 __pycache__/
 *.pyc
+
+public/konsolidacja/PROJEKT_multitool/prototyp/dane_pelne.json
