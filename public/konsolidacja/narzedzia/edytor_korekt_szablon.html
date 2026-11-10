@@ -852,8 +852,8 @@ function skRot(d){ if(!SV.file) return; ST.skan.rot[SV.file] = ((ST.skan.rot[SV.
 function skPt(e){ const r = skCv.getBoundingClientRect(); return [e.clientX - r.left, e.clientY - r.top]; }
 function skList(){
   const list = regsOf(SV.file).sort((a,b) => a.id-b.id);
-  $('#sk_list').innerHTML = list.length ? list.map(r => `<div class="item ${r.id===SV.sel?'sel':''}" data-rid="${r.id}">
-      <div class="krow"><b>#${r.id}</b>
+  $('#sk_list').innerHTML = list.length ? list.map(r => `<div class="item ${r.id===SV.sel?'sel':''}" data-rid="${esc(r.id)}">
+      <div class="krow"><b>#${esc(r.id)}</b>
         <input data-lab value="${esc(r.label)}" placeholder="etykieta, np. wpis 3" style="flex:1;min-width:90px">
         <label class="mut"><input type="checkbox" data-inkr ${r.inKr?'checked':''}> kreator</label>
         <button data-up title="wyżej">↑</button><button data-dn title="niżej">↓</button>

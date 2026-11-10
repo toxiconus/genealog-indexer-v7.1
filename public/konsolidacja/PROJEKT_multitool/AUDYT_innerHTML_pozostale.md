@@ -235,3 +235,33 @@ Bezpieczne: 83 miejsca (w tym wszystkie sinki statyczne).
 - Szablony 1-3 nie zawierają `esc`; oceniono użycie `esc` z modułu `tekst.js` wstawianego przez `zbuduj.py`. Jeśli moduł się zmieni, ocena dotyczy tej wersji `tekst.js` (escapuje `& < > " '`).
 - Numery linii dotyczą plików źródłowych w `public/konsolidacja/` (szablony), nie wygenerowanych odpowiedników w `narzedzia/` ani `haiku/`.
 - Nie audytowano innych szablonów z listy v3 (`weryfikacja_zgonow_ASC_1870-79.html`, `baza_zgonow_1797-1945.html`, `dopasowanie_osob.html`, `narzedzia/dane/*.html`, `multitool_prototyp.html`).
+
+## Wdrożone (2026-11-10, poprawki w szablonach źródłowych)
+
+Zmieniono tylko cztery pliki źródłowe szablonów. Pliki wyjściowe (generowane) nie zostały przebudowane ani ruszone.
+
+Wdrożone:
+
+- `haiku/weryfikacja_szablon.html`: F1–F9 z v3 przeniesione (datalisty nazwisk/imion, `dwHtml` value, `renderSpell` data-go i data-all, zakładki lat, `renderList`, `chipsFor` = H1, nagłówek `renderAct` = H2, opcje skanu, `<pre>` Lubgens = H2, nagłówek kreatora = H3). Dodatkowo N6 (`hlHtml`, `data-f="${esc(it.f)}"`).
+- `dopasowanie/szablon.html`: N1 (`cardHtml`, l. 286–288), N2 (lista osób, l. 346, także `a[6]`), N3 (tabela ślubów, l. 544), N4 (`fmKidsHtml`, l. 700 i 702: `data-f` i rok), N5 (`tbCtl`, l. 879), N6 (`tbGosp`, l. 952). Dodano też `r[1]` w l. 709 (`fm-f` z `data-a`), którego audyt nie wymienił.
+- `narzedzia/edytor_korekt_szablon.html`: N1 (l. 855, `data-rid` i `#id`).
+- `haiku/weryfikacja_malzenstw_szablon.html`: H4 (`renderList`: rok, numer aktu, nazwisko z `nm(a)`, `data-id`), N1 (nagłówek `renderForm`), N2 (rejestr: rok, lp, akt, `data-o`), N3 (`dwHtml`: value i `data-f`), N4 (lokalne `esc` dostało `'` jako `&#39;`, zgodnie z `tekst.js`).
+
+Pominięte i dlaczego:
+
+- `data-f="${f}"` / `data-f="${f.id}"` w `haiku/weryfikacja_szablon.html` (np. l. 345, 455, 485–488, 518–523, 805, 899–904): klucze ze stałej listy pól, nie dane z importu. Zgodnie z audytem zostają bez zmian.
+- `dopasowanie/szablon.html`, `netLabel` (l. 362): zwraca surowe `r[1]`, `r[5]` itd., ale jedyny odbiorca (`networkEdges`, render l. 373) przepuszcza je przez `esc`. Bez zmiany.
+- `haiku/weryfikacja_malzenstw_szablon.html`, `hardRefresh` / `softRefresh`: dziedziczą bezpieczeństwo `genRow`, który już escapuje. Bez zmian.
+- `haiku/weryfikacja_szablon.html`, `cellOf` i `edit()`: zależne od `chipsFor`, naprawionego przez H1. Bez osobnych zmian.
+- Sinki oznaczone w tabeli jako bezpieczne: bez zmian.
+
+Funkcja `esc()`: w `haiku/weryfikacja_szablon.html`, `dopasowanie/szablon.html` i `narzedzia/edytor_korekt_szablon.html` pochodzi z markera `/*MODULE:tekst*/` (`wspolne/tekst.js`, wstawiany przez `wspolne/zbuduj.py`). W `haiku/weryfikacja_malzenstw_szablon.html` jest własna definicja (l. 173).
+
+Przebudowa wymagana (nie uruchamiano):
+
+- `haiku/weryfikacja_szablon.html`: `haiku/build_weryfikacja.py` (plik wyjściowy to 3. argument `out`; generowany plik weryfikacji zgonów).
+- `haiku/weryfikacja_malzenstw_szablon.html`: `haiku/build_weryfikacja_malzenstw.py` (plik wyjściowy to 2. argument `out`).
+- `dopasowanie/szablon.html`: `dopasowanie/build.py` zapisuje `dopasowanie/dopasowanie_osob.html`.
+- `narzedzia/edytor_korekt_szablon.html`: `narzedzia/build.py <dst>` (plik wyjściowy to argument `dst`).
+
+Sprawdzenie: skrypty `<script>` wszystkich czterech szablonów przechodzą `node --check`. Test w przeglądarce (payloady z importu, telefon 420 px) nie był wykonany. Wymaga go przebudowa wyjść i sprawdzenie wg punktu 4 kolejności prac.
