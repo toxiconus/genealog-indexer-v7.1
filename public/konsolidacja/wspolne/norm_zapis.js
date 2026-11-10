@@ -63,7 +63,7 @@ function zapPsur(t, MALE) {
 // rodzice z łacińskiego dopełniacza: „Matthaei et Annae Kowalskow” → {father_first_name, mother_first_name, father_last_name}
 function zapRodziceLac(pr) {
   const GEN = NORM_SLOWNIKI.GEN;
-  const m = /^\s*([A-ZĄĆĘŁŃÓŚŹŻ][a-ząćęłńóśźż]+)(?:\s+et\s+([A-ZĄĆĘŁŃÓŚŹŻ][a-ząćęłńóśźż]+))?\s*(.*?)\s*$/.exec(pr);
+  const m = /^\s*(?:(?:filia|filius)\s+)?([A-ZĄĆĘŁŃÓŚŹŻ][a-ząćęłńóśźż]+)(?:\s+et\s+([A-ZĄĆĘŁŃÓŚŹŻ][a-ząćęłńóśźż]+))?\s*(.*?)\s*$/.exec(pr);
   if (!m || !zapHas(GEN, m[1].toLowerCase())) return {};
   const o = { father_first_name: GEN[m[1].toLowerCase()] };
   if (m[2]) o.mother_first_name = zapHas(GEN, m[2].toLowerCase()) ? GEN[m[2].toLowerCase()] : m[2];
@@ -73,6 +73,7 @@ function zapRodziceLac(pr) {
 }
 // rodzice z polskiego dopełniacza: „syn Kacpra i Agaty Kowalskich”
 function zapRodzicePl(pr, MALE) {
+  pr = pr.replace(/(?<=[\p{L}\p{N}_])\?/gu, "");
   const PGEN = NORM_SLOWNIKI.PGEN;
   const m = /^\s*(?:(?:syn|córka|dziecko|filia|filius)\s+)?(?:szlachetnych\s+)?(\S+)(?:\s+i\s+(\S+))?\s*(.*?)\s*$/i.exec(pr);
   if (!m || !zapHas(PGEN, m[1].toLowerCase())) return {};

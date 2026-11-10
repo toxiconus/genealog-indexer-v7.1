@@ -65,7 +65,7 @@ import json as _json, os as _os
 SLOWNIKI=_json.load(open(_os.path.join(_os.path.dirname(_os.path.abspath(__file__)),'..','wspolne','slowniki_imion.json'),encoding='utf-8'))  # GEN, PGEN, NPL: wspólne słowniki imion (źródło prawdy)
 GEN=SLOWNIKI['GEN']
 def parents(pr):
-    m=re.match(r'^\s*([A-ZĄĆĘŁŃÓŚŹŻ][a-ząćęłńóśźż]+)(?:\s+et\s+([A-ZĄĆĘŁŃÓŚŹŻ][a-ząćęłńóśźż]+))?\s*(.*?)\s*$',pr)
+    m=re.match(r'^\s*(?:(?:filia|filius)\s+)?([A-ZĄĆĘŁŃÓŚŹŻ][a-ząćęłńóśźż]+)(?:\s+et\s+([A-ZĄĆĘŁŃÓŚŹŻ][a-ząćęłńóśźż]+))?\s*(.*?)\s*$',pr)
     if not m or m.group(1).lower() not in GEN:return {}
     o={'father_first_name':GEN[m.group(1).lower()]}
     if m.group(2):
@@ -91,6 +91,7 @@ def psur(t):
         return t[:-2]
     return t
 def parents_pl(pr):
+    pr=re.sub(r'(?<=\w)\?','',pr)
     m=re.match(r'^\s*(?:(?:syn|córka|dziecko|filia|filius)\s+)?(?:szlachetnych\s+)?(\S+)(?:\s+i\s+(\S+))?\s*(.*?)\s*$',pr,re.I)
     if not m or m.group(1).lower() not in PGEN:return {}
     o={'father_first_name':PGEN[m.group(1).lower()]}

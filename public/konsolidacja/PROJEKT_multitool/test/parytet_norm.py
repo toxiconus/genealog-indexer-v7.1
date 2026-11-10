@@ -32,7 +32,7 @@ lm = []
 for fn in sorted(glob.glob(os.path.join(K, 'haiku', 'ODCZYTY', '*_dom_przyczyny.csv'))) + sorted(glob.glob(os.path.join(K, 'haiku', 'ODCZYTY', 'lm', '*.csv'))):
     lm += [x for x in rd(fn) if x.get('nazwisko', '').strip() or x.get('imie', '').strip()]
 # przypadki skrajne (znaki, nawiasy, znaki zapytania, dopełniacze, formy żeńskie)
-SK_ROD = ['', 'Matthaei et Annae', 'Joannis et Catharinae Kosidłow', 'Jacobi ? Kurczak', 'syn Kacpra i Agaty Kowalskich', 'córka Pawła Kosidłów', 'Szlachetnych Józefa i Marianny Nowaków', 'Jana', 'xyz', 'Adalberti (Woyciech) et Annae Wójcik?', 'DZIECKO Mateusza i Zofii Pcionów']
+SK_ROD = ['', 'Matthaei et Annae', 'Joannis et Catharinae Kosidłow', 'Jacobi ? Kurczak', 'syn Kacpra i Agaty Kowalskich', 'córka Pawła Kosidłów', 'Szlachetnych Józefa i Marianny Nowaków', 'Jana', 'xyz', 'Adalberti (Woyciech) et Annae Wójcik?', 'DZIECKO Mateusza i Zofii Pcionów', 'filia Mathiae Białkowski', 'Andrzeja? i Katarzyny Bigosów', 'Łukasza? i Zofii Nowaków']
 SK_NAZ = ['Kosidłowa', 'Kosidłowna', 'Kowalska', 'Pcionka', 'Kurczakowna', 'Woyciechowska', 'Kozaczkowa', 'Nowak', 'Nowak?', 'Gręda', 'Bucoń', 'Ma ria', '', 'Jakubowska', 'Szymańska', 'Cichocka', 'Wójcikowa', 'Kamieniakowa', 'Szymkowiakowna']
 SK_IM = ['Jacobus', 'Jacobus (Jakub)', 'Joannes (Jan, Johannes)', 'Woyciech', 'Adalbertus?', '[_]', '[-]', 'Maria Anna', '(Jan)', 'Jan,', 'Hiacynthus', 'Mathias / Maciej', '', 'Anna (Hanna)', 'Catharina (Katarzyna), Kasia']
 SK_AGE = ['', '3', '3 mies.', '14', '15', '60', '2 dni', '1 tyg.', '6 m.1', 'annor. 40', '3 ?', '[_]', '12 hebd']
