@@ -1,0 +1,40 @@
+﻿plik_odczytu;wiersz;rok;nr;nazwisko_odczyt;nazwisko_indeks;imie_odczyt;imie_indeks;wiek_odczyt;wiek_indeks;plec_odczyt;plec_indeks;rodzaj_konfliktu;skan;strona
+lm-5.csv;4;1799;38;Sobothowna?;Landobothowna?;Małgorzata;Małgorzata;8 lat;;K;;nazwisko;lm-5;L
+lm-7.csv;5;1799;73;Piech;Piech;Matheus;Maciej;4 Sept.;;M;;imie;lm-7;10L
+lm-7.csv;25;1800;93;Kurczak;Kurczak;Blasius;Bazyliusz;10;;M;;imie;lm-7;11P
+lm-8.csv;5;1801;101;Kozakowna;Kozaczkowna;Marianna;Marianna;6 Mens.;;F;;nazwisko;lm-8;12L
+lm-8.csv;15;1801;111;Jakubaszek;Jakubaszek;Marcin;Mateusz;2;;M;;imie;lm-8;12L
+lm-8.csv;17;1801;113;Woytowiczowna;Woytowicz;Łucja;Łukasz;2;;F;;imie;lm-8;13P
+lm-9.csv;27;1803;152;Kurczak;Kurczak;Mateusz;Maciej;50;;M;;imie;lm-9;15P
+lm-12.csv;21;1807;227;Piech;z Puckow ?;Thomas;Tomasz;m.6;;M;;nazwisko;lm-12;P
+lm-13.csv;13;1808;246;Besacka?;B...ka;Regina;Regina;18;;K;;nazwisko;lm-13;22L
+lm-14.csv;8;1808;268;;Pazdrak;Francisca Virgo;Franciszka;10;;F;;imie;lm-14;L
+lm-14.csv;16;1809;275;Krupina;Krupa;Dorotha;Dorota;70;;F;;nazwisko;lm-14;L
+lm-14.csv;20;1809;279;Kurcielowa?;...kurelakowa;Catharina;Katarzyna;18;;F;;nazwisko;lm-14;P
+lm-15.csv;7;1810;295;Michałek;Michałek / Mechałek;Blasius;Bazyliusz;36;;M;;imie;lm-15;26
+lm-15.csv;22;1810;310;Pepesonów?;Nieczytelne;Pelagia;Pelagia ?;6;;F;;nazwisko;lm-15;27
+lm-15.csv;26;1811;314;Samolów;Samol /Samal;Matthaeus;Mateusz;2;;M;;nazwisko;lm-15;27
+lm-17.csv;19;1813;368;Sięgka;Nieczytelne ? kryka ?;Wojciech;Wojciech (Adalbert);60;;M;;nazwisko;lm-17;P
+lm-18.csv;11;1814;387;Kurczak?;Kozaczek;Walenty;Walenty(n);50;;M;;nazwisko;lm-18;32
+lm-18.csv;29;1814;405;Kaczyński;Kaczynski;Stefan;Stanisław;70;;M;;imie;lm-18;33
+lm-31.csv;25;1807;729;Czarna;Czarna;Francisca;Franciszka;12;;F;;imie;lm-31;P
+lm-32.csv;18;1811;750;Bucoń?;z Rumniów?;Ewa (Eva);Ewa;13;;F;;nazwisko;lm-32;67?
+lm-32.csv;30;1812;762;Machulek;Blach..;Wojciech (Adalbertus);Wojciech (Adalbert);10;;M;;nazwisko;lm-32;67?
+lm-33.csv;23;1813;784;Tutka;Łatka ?;Anna (Tutkowa);Anna;60;;F;;nazwisko;lm-33;63
+lm-33.csv;25;1814;786;Tupaj;Tupai;Agnieszka;Agnieszka;5;;F;;nazwisko;63;?
+lm-34.csv;2;1814;790;Bucon(iowa);Bucon / Bucoń;Francisca;Franciszka;36;;K;;imie;lm-34;L (s.64)
+lm-34.csv;13;1814;800;Martini? / Pęk;Pęk;Bartholomaeus;Bartłomiej;8;;M;;nazwisko;lm-34;L (s.64)
+lm-34.csv;20;1814;807;Czernicki? (rodzice);Czernicki;Thomas?;Tomasz;1;;K?;;nazwisko;lm-34;P (s.65)
+lm-34.csv;25;1814;812;Szabatowa (rodzice);Szabat;Sophia;Zofia;2;;K;;nazwisko;lm-34;P (s.65)
+lm-34.csv;26;1814;813;Szabatka;Szabat;Francisca;Franciszka;40;;K;;imie;lm-34;P (s.65)
+lm-35.csv;12;1814;828;Rataj;Ratai;Małgorzata;Małgorzata;3 lata;;F;;nazwisko;lm-35;66 L
+lm-35.csv;15;1816;831;Kawecki;Kawecki ?;Błażej;Bazyliusz;54 lata;;M;;imie;lm-35;66 L
+lm-36.csv;13;1820;855;Tupaj;Tupai;Wawrzyniec;Wawrzyniec;46 lat;;M;;nazwisko;lm-36;68 L
+lm-37.csv;12;1824;882;Barbonak;Barbarzak;Marcin;Marcin;16 lat;;M;;nazwisko;70/L;?
+lm-42.csv;3;1823;971;Koniowska?;Kania;Marianna;Marianna;6 lat;;F;;nazwisko;lm-42;150 (L)
+lm-42.csv;11;1824;977;Boczkówna;Boczek;Francisca;Franciszka;3 lata;;F;;imie;lm-42;150 (L)
+blinow_zgony_1803-1806_Blinow_dom_przyczyny.csv;14;1804;168;Krupa;Krupcow ?;Wawrzyniec;Wawrzyniec;1 r. (m.6?);;M;;nazwisko;zdjęcia od użytkownika 2026-11-09 (str.16–19);16
+blinow_zgony_1803-1806_Blinow_dom_przyczyny.csv;29;1804;183;Pasternakowa;Pasterowa;Anna;Anna;76 l.;;K;;nazwisko;zdjęcia od użytkownika 2026-11-09 (str.16–19);18
+blinow_zgony_1803-1806_Blinow_dom_przyczyny.csv;30;1805;184;Pędrak?;Pizdrak / Pazdrak ?;Zofia;Zofia;2 l.;;K;;nazwisko;zdjęcia od użytkownika 2026-11-09 (str.16–19);18
+blinow_zgony_1803-1806_Blinow_dom_przyczyny.csv;39;1805;193;Pędrakowa;Pazdrak;Antonina;Antonina;58 l.;;K;;nazwisko;zdjęcia od użytkownika 2026-11-09 (str.16–19);18
+blinow_zgony_1803-1806_Blinow_dom_przyczyny.csv;52;1806;206;Machulek;Machulkow;Stanisław;Stanisław;6 l.;;M;;nazwisko;zdjęcia od użytkownika 2026-11-09 (str.16–19);19
