@@ -10,6 +10,8 @@ w miejsce znacznika `/*MODULE:nazwa*/` (patrz `zbuduj.py`). Nie edytuj kodu wsp�
 | `plik.js` | `dl(nazwa, tekst[, typ, bom])` – pobieranie pliku (BOM UTF-8 oprócz `.ged`) |
 | `raport.js` | `raportSpojnosci(wiersze[, opcje])`, `wiekLat`, `raportCsv` – raport spójności aktów zgonu |
 | `historia.js` | `histSnap`, `histDiff`, `histApply`, `histCsv` – wspólna historia zmian z cofaniem |
+| `norm.js` | klucze do porównań (nazwiska, imiona, wiek→rok urodzenia, miejsca); nie zmienia danych |
+| `norm_zapis.js` | reguły ZAPISU odczytu, port z `buduj_baza_v4.py`: MALE, nazwiska męskie, rodzice (łac./pol.), imiona PL, znaczniki `[_]`/`[-]`; test parytetu `PROJEKT_multitool/test/parytet_norm.py` |
 | `model.js` | `modelZZgonu` + `MODEL_STATUS` – wspólny model: osoba, zdarzenie, źródło, relacja (status dowodowy) |
 
 Planowane: `skan.js` (przybliżanie i zaznaczenia), `szukaj.js`, `wykresy.js`, `rodzina.js` – szczegóły w `../PLAN_ROZWOJU_GENEALOGA.md`.
