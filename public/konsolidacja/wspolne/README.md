@@ -14,3 +14,6 @@ w miejsce znacznika `/*MODULE:nazwa*/` (patrz `zbuduj.py`). Nie edytuj kodu wsp�
 
 Planowane: `skan.js` (przybliżanie i zaznaczenia), `szukaj.js`, `wykresy.js`, `rodzina.js` – szczegóły w `../PLAN_ROZWOJU_GENEALOGA.md`.
 Zasada: po każdej zmianie modułu przebudować wszystkie narzędzia i porównać wyniki z poprzednią wersją.
+
+## Dane wspólne
+- `slowniki_imion.json` – słowniki `GEN` (łacińskie dopełniacze), `PGEN` (polskie dopełniacze), `NPL` (łacina/dawna pisownia → dzisiejsze polskie imię). Źródło prawdy dla `narzedzia/buduj_baza_v4.py` (wczytuje je przy budowie; wynik budowy bez zmian). Docelowo czytane też przez moduł JS `norm.js` (prototyp w `PROJEKT_multitool/moduly/norm.js` ma własną, krótszą mapę imion do porównań – do zastąpienia tym plikiem).

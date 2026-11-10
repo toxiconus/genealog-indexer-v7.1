@@ -61,7 +61,9 @@ def rd(fn):
         if len(p)>n:p=p[:u]+[';'.join(p[u:len(p)-tail])]+p[len(p)-tail:]
         p+=['']*(n-len(p));out.append(dict(zip(H,p)))
     return out
-GEN={'matthaei':'Maciej','mathaei':'Maciej','hiacynthi':'Jacek','augustini':'Augustyn','gasparis':'Kacper','caspari':'Kacper','francisci':'Franciszek','mathiae':'Maciej','matthiae':'Maciej','joannis':'Jan','johannis':'Jan','adalberti':'Wojciech','josephi':'Józef','andreae':'Andrzej','thomae':'Tomasz','stanislai':'Stanisław','laurentii':'Wawrzyniec','antonii':'Antoni','petri':'Piotr','pauli':'Paweł','michaelis':'Michał','martini':'Marcin','jacobi':'Jakub','simonis':'Szymon','casimiri':'Kazimierz','gregorii':'Grzegorz','valentini':'Walenty','nicolai':'Mikołaj','christophori':'Krzysztof','blasii':'Błażej','sebastiani':'Sebastian','bartholomaei':'Bartłomiej','caroli':'Karol','ignatii':'Ignacy','catharinae':'Katarzyna','mariannae':'Marianna','agnetis':'Agnieszka','annae':'Anna','sophiae':'Zofia','dorotheae':'Dorota','theclae':'Tekla','hedwigis':'Jadwiga','margarithae':'Małgorzata','franciscae':'Franciszka','elisabethae':'Elżbieta','eliesabethae':'Elżbieta','rosaliae':'Rozalia','anastasiae':'Anastazja','salomeae':'Salomea','apolloniae':'Apolonia','magdalenae':'Magdalena','susannae':'Zuzanna','reginae':'Regina','victoriae':'Wiktoria','evae':'Ewa','justinae':'Justyna','barbarae':'Barbara','josephae':'Józefa','constantiae':'Konstancja','theresiae':'Teresa','agnetae':'Agnieszka','sophiae':'Zofia'}
+import json as _json, os as _os
+SLOWNIKI=_json.load(open(_os.path.join(_os.path.dirname(_os.path.abspath(__file__)),'..','wspolne','slowniki_imion.json'),encoding='utf-8'))  # GEN, PGEN, NPL: wspólne słowniki imion (źródło prawdy)
+GEN=SLOWNIKI['GEN']
 def parents(pr):
     m=re.match(r'^\s*([A-ZĄĆĘŁŃÓŚŹŻ][a-ząćęłńóśźż]+)(?:\s+et\s+([A-ZĄĆĘŁŃÓŚŹŻ][a-ząćęłńóśźż]+))?\s*(.*?)\s*$',pr)
     if not m or m.group(1).lower() not in GEN:return {}
@@ -71,7 +73,7 @@ def parents(pr):
     sur=re.sub(r'[?()]','',m.group(3)).strip()
     if sur:o['father_last_name']=sur
     return o
-PGEN={'kacpra':'Kacper','hiacynta':'Jacek','ignacego':'Ignacy','mateusza':'Mateusz','augustyna':'Augustyn','sebastiana':'Sebastian','agaty':'Agata','joanny':'Joanna','hieronima':'Hieronim','józefa':'Józef','pawła':'Paweł','andrzeja':'Andrzej','macieja':'Maciej','jana':'Jan','wojciecha':'Wojciech','tomasza':'Tomasz','marcina':'Marcin','jakuba':'Jakub','szymona':'Szymon','michała':'Michał','stanisława':'Stanisław','kazimierza':'Kazimierz','antoniego':'Antoni','piotra':'Piotr','franciszka':'Franciszek','walentego':'Walenty','wawrzyńca':'Wawrzyniec','mikołaja':'Mikołaj','błażeja':'Błażej','bartłomieja':'Bartłomiej','grzegorza':'Grzegorz','katarzyny':'Katarzyna','agnieszki':'Agnieszka','anastazji':'Anastazja','marianny':'Marianna','anny':'Anna','zofii':'Zofia','doroty':'Dorota','jadwigi':'Jadwiga','małgorzaty':'Małgorzata','elżbiety':'Elżbieta','rozalii':'Rozalia','tekli':'Tekla','ewy':'Ewa','teresy':'Teresa','barbary':'Barbara','salomei':'Salomea','magdaleny':'Magdalena','apolonii':'Apolonia','reginy':'Regina','franciszki':'Franciszka','józefy':'Józefa'}
+PGEN=SLOWNIKI['PGEN']
 def psur(t):
     t=re.sub(r'[?()]','',t).strip()
     f=fold(t)
@@ -131,7 +133,7 @@ def is_child(age):
     if re.search(r'mies|mens|dies|dn\.|dni|tyg|hebd|m\.\d',a):return True
     m=re.search(r'\d+',a);return bool(m and int(m.group())<15)
 
-NPL={'jacobus':'Jakub','joannes':'Jan','johannes':'Jan','adalbertus':'Wojciech','woyciech':'Wojciech','stanislaus':'Stanisław','josephus':'Józef','josephatus':'Józefat','josephatam':'Józefata','andreas':'Andrzej','mathias':'Maciej','matthias':'Maciej','matheus':'Mateusz','matthaeus':'Mateusz','mathaeus':'Mateusz','thomas':'Tomasz','martinus':'Marcin','antonius':'Antoni','paulus':'Paweł','valentinus':'Walenty','laurentius':'Wawrzyniec','sebastianus':'Sebastian','franciscus':'Franciszek','blasius':'Błażej','lucas':'Łukasz','bartholomaeus':'Bartłomiej','ignatius':'Ignacy','gregorius':'Grzegorz','christophorus':'Krzysztof','nicolaus':'Mikołaj','casimirus':'Kazimierz','michael':'Michał','alexius':'Aleksy','petrus':'Piotr','simon':'Szymon','stephanus':'Stefan','adamus':'Adam','albertus':'Wojciech','vincentius':'Wincenty','hyacinthus':'Jacek','augustinus':'Augustyn','gasparus':'Kacper','casparus':'Kacper','philippus':'Filip','agnes':'Agnieszka','sophia':'Zofia','hedwigis':'Jadwiga','hedvigis':'Jadwiga','anastasia':'Anastazja','catharina':'Katarzyna','catarina':'Katarzyna','margaretha':'Małgorzata','elisabeth':'Elżbieta','elisabetha':'Elżbieta','eva':'Ewa','rosalia':'Rozalia','theresia':'Teresa','thecla':'Tekla','dorothea':'Dorota','francisca':'Franciszka','apollonia':'Apolonia','victoria':'Wiktoria','mariae':'Maria','agathae':'Agata','agatha':'Agata','dorothae':'Dorota','petronillae':'Petronela','petronilla':'Petronela','susanna':'Zuzanna','ursula':'Urszula','lucia':'Łucja','annae':'Anna','joannae':'Joanna','catharinae':'Katarzyna','sophiae':'Zofia','agnetis':'Agnieszka','virgo':'','dorotha':'Dorota','helisabeth':'Elżbieta','hiacynt':'Jacek','jozafat':'Józefat','konstancji':'Konstancja','marianne':'Marianna','margaritha':'Małgorzata','susanne':'Zuzanna','teklae':'Tekla','ursulae':'Urszula'}
+NPL=SLOWNIKI['NPL']
 def polname(v):
     if not v or v.startswith('['):return v,''
     q='?' if v.strip().endswith('?') else ''

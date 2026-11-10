@@ -88,3 +88,10 @@ Cel: zamiast kilkunastu osobnych plików (zgony, małżeństwa, chrzty, spisy, d
 
 ## 8. Pomysły do przemyślenia
 Zewnętrzny audyt aplikacji i lista ulepszeń: `POMYSLY_ulepszen_2026-11-10.md` (nie wdrażać bez decyzji użytkownika).
+
+## 9. Decyzje użytkownika (2026-11-10, po projekcie Multitoola)
+- **Prywatność:** `GED_scalone/*.ged` i `haiku/ODCZYTY/RANKING_scalen_zgony.csv` zostają na razie w repo z danymi osobowymi (świadoma decyzja użytkownika); docelowo przeniesienie do repo prywatnego. Zastępuje to zdanie „bez danych osobowych z drzewa GED” z nagłówka. Nie dodawać kolejnych danych z drzewa poza już obecnymi.
+- **Id aktów:** użytkownik nie rozstrzygnął; przyjęta robocza opcja (do zmiany na jego życzenie): zostają obecne id (`idx-…`, `lm-…`) + stałe nowe oznaczenie i tabela `id_dawne`, tak aby przyszłe zadania mogły odwoływać się do aktów jednoznacznie.
+- **Modele:** do prostych zadań Sonnet i Haiku; Fable tylko do dużych, trudnych kroków i dopiero po zgodzie użytkownika (ostatni przebieg projektu kosztował ok. 10% limitu tygodniowego).
+- **Zrobione (krok a, część 1):** słowniki imion `GEN`/`PGEN`/`NPL` przeniesione z `buduj_baza_v4.py` do `wspolne/slowniki_imion.json` (wynik budowy bez zmian, sprawdzone sumą kontrolną). Dalej: moduł JS `wspolne/norm.js` na tych samych słownikach.
+- Projekt Multitoola: `PROJEKT_multitool/` (commit `25b3273`), otwarte decyzje w podsumowaniu agenta: progi tolerancji, kolejność kroków 5/6, słownik nazwisk (Mcion ≠ Pcion do czasu aktu), duże pliki HTML w repo.
