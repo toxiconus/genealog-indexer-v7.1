@@ -293,6 +293,7 @@ function pill(x,y,s,label){const st=slotState(s),n=(CAND[s]||[]).length,d=dget(d
  return`<g class="pill st-${st} ${sel===s?'sel':''}" data-s="${s}"><rect x="${x}" y="${y}" width="${s==='kids'?200:88}" height="22" rx="11"/><text x="${x+(s==='kids'?100:44)}" y="${y+15}" text-anchor="middle">${esc(t)}</text></g>`}
 function node(x,y,w,title,sub,role,slots){return`<g class="nd"><rect class="c" x="${x}" y="${y}" width="${w}" height="92" rx="12"/><text class="r" x="${x+12}" y="${y+16}">${esc(role)}</text><text x="${x+12}" y="${y+34}" style="font-weight:600">${esc((title||'—').slice(0,Math.floor(w/7)))}</text><text class="s" x="${x+12}" y="${y+50}">${esc(sub.slice(0,Math.floor(w/6)))}</text>${slots}</g>`}
 function renderM(){const P=cur.P,m=cur.r,G=P.G,Bd=P.Bd;
+ {const c=document.getElementById('cen');if(c)c.innerHTML='';}
  ttl(`Małżeństwo ${m[1]} nr ${m[2]}: ${G.fn} ${G.sn} + ${Bd.fn} ${Bd.sn}`,`${m[3]||''} · pan ${G.wiek?G.wiek+' l.':''}${G.by?' (~'+G.by+')':''} · panna ${Bd.wiek?Bd.wiek+' l.':''}${Bd.by?' (~'+Bd.by+')':''}`+(G.prev?` · wdowiec po ${G.prev}`:'')+(Bd.prev?` · wdowa po ${Bd.prev}`:''));
  const pp=(k,x,y,w,role)=>{const p=P[k],ok=known(p.fn),nm=ok?`${p.fn} ${p.maiden&&known(p.maiden)?p.maiden:p.sn||''}`:'brak danych';
   return node(x,y,w,nm,ok?(p.by?'ur. ~'+p.by:p.childBy?'dziecko ur. ~'+p.childBy:''):'nie podano w akcie',role,ok?pill(x+10,y+62,k+'.b','Ur.')+pill(x+108,y+62,k+'.d','Zg.'):'')};
@@ -340,7 +341,7 @@ function cardHtml(c,s,state){const r=c.r,col=c.pct>=75?'var(--ok)':c.pct>=50?'va
  <div class="act">${state==='acc'?'<button class="bad sm" data-a="un">cofnij wybór</button>':state==='rej'?'<button class="sm" data-a="un">przywróć</button>':'<button class="ok sm" data-a="acc">✓ to ta osoba</button><button class="bad sm" data-a="rej">✗ nie</button>'}<button class="sm" data-a="go">↗ otwórz</button></div></div>`}
 function wantText(s){const P=cur.P;
  if(cur.mode==='M'){if(s==='kids'){const G=P.G,B_=P.Bd;return`Dzieci ${G.fn} ${G.sn} i ${B_.fn} ${B_.sn} (matka z domu ${B_.sn}), urodzone po ${cur.r[1]}.`}
-  const p=P[s.split('.')[0]];return`Szukam: ${p.fn||'?'} ${(p.maiden&&known(p.maiden))?p.maiden:p.sn||''}${p.by?', ur. ~'+p.by:''}${p.spFn?', małżonek: '+p.spFn:''}${s.endsWith('.d')?' · po roku '+(p.by?cur.r[1]:(p.childBy||0)):''}`}
+  const p=P[s.split('.')[0]];if(!p)return'';return`Szukam: ${p.fn||'?'} ${(p.maiden&&known(p.maiden))?p.maiden:p.sn||''}${p.by?', ur. ~'+p.by:''}${p.spFn?', małżonek: '+p.spFn:''}${s.endsWith('.d')?' · po roku '+(p.by?cur.r[1]:(p.childBy||0)):''}`}
  const p=P.self;return`Osoba: ${p.fn||'?'} ${p.sn||''}${p.by?' · ur. ~'+p.by:''}${p.fa?' · ojciec '+p.fa:''}${p.mo?' · matka '+p.mo+' '+(p.moSn||''):''}${p.spFn?' · małżonek '+p.spFn:''}`}
 function panel(){const s=sel,d=dget(dkey(),s),c=CAND[s]||[];
  const acc=d.acc.map(a=>c.find(z=>z.t===a.t&&z.id===a.id)).filter(Boolean),rej=c.filter(z=>d.rej.some(a=>a.t===z.t&&a.id===z.id));
