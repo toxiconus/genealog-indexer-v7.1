@@ -1,4 +1,4 @@
-/* moduly/norm.js – normalizacja do porównań (czyste funkcje, bez DOM). Wymaga: wspolne/tekst.js (fold, lev), wspolne/raport.js (wiekLat).
+/* wspolne/norm.js – normalizacja do porównań (czyste funkcje, bez DOM). Wymaga: wspolne/tekst.js (fold, lev), wspolne/raport.js (wiekLat).
    Zasada: normalizacja NIE zmienia danych aktu. Tworzy klucze obok wartości; zapis z aktu zostaje w polu. */
 
 /* ---------- nazwiska ---------- */
@@ -24,13 +24,15 @@ function porNazwiska(a, b, klasy){ const A = kluczNazwiska(a), B = kluczNazwiska
   return 'rozne'; }
 
 /* ---------- imiona ---------- */
-// forma z aktu (łacina, dawna pisownia, odmiana) → dzisiejsze polskie. Pełny słownik: NPL/GEN/PGEN z buduj_baza_v4.py + data/imiona_wszystkie.json (migracja w kroku 1 planu).
-const NORM_IMIONA = {jacobus:'jakub',joannes:'jan',johannes:'jan',ioannes:'jan',adalbertus:'wojciech',adalbert:'wojciech',albertus:'wojciech',woyciech:'wojciech',stanislaus:'stanislaw',josephus:'jozef',andreas:'andrzej',
+// forma z aktu (łacina, dawna pisownia, odmiana) → dzisiejsze polskie. Podstawa: wspolne/slowniki_imion.json (NPL: wspólne z buduj_baza_v4.py), dodatki własne poniżej.
+const NORM_SLOWNIKI = /*JSON:slowniki_imion*/;
+const NORM_IMIONA_DODATKI = {jacobus:'jakub',joannes:'jan',johannes:'jan',ioannes:'jan',adalbertus:'wojciech',adalbert:'wojciech',albertus:'wojciech',woyciech:'wojciech',stanislaus:'stanislaw',josephus:'jozef',andreas:'andrzej',
   mathias:'maciej',matthias:'maciej',matheus:'mateusz',matthaeus:'mateusz',mathaeus:'mateusz',thomas:'tomasz',martinus:'marcin',antonius:'antoni',paulus:'pawel',valentinus:'walenty',laurentius:'wawrzyniec',
   franciscus:'franciszek',blasius:'blazej',lucas:'lukasz',bartholomaeus:'bartlomiej',ignatius:'ignacy',gregorius:'grzegorz',nicolaus:'mikolaj',casimirus:'kazimierz',michael:'michal',petrus:'piotr',simon:'szymon',
   stephanus:'stefan',vincentius:'wincenty',hyacinthus:'jacek',hiacynt:'jacek',hiacenty:'jacek',gasparus:'kacper',casparus:'kacper',kasper:'kacper',felix:'feliks',agnes:'agnieszka',sophia:'zofia',hedwigis:'jadwiga',
   catharina:'katarzyna',margaretha:'malgorzata',elisabeth:'elzbieta',eva:'ewa',theresia:'teresa',thecla:'tekla',dorothea:'dorota',francisca:'franciszka',susanna:'zuzanna',ursula:'urszula',lucia:'lucja',
   maryanna:'marianna',marjanna:'marianna',maryja:'maria',jozefa:'jozefa',jedrzej:'andrzej',bartosz:'bartlomiej',jozefat:'jozafat',gabryel:'gabriel',regina:'regina',helena:'helena'};
+const NORM_IMIONA = (() => { const o = {}; for (const [k, v] of Object.entries(NORM_SLOWNIKI.NPL)) o[fold(k).replace(/[^a-z]/g, '')] = fold(v).replace(/[^a-z]/g, ''); return Object.assign(o, NORM_IMIONA_DODATKI); })();
 // pary imion często mylonych w księgach – zgodność słaba, do sprawdzenia na skanie (nigdy „równe”)
 const NORM_IMIONA_BLISKIE = [['maciej','mateusz'],['maria','marianna'],['stefan','szczepan'],['lucja','lukasz'],['jozef','jozafat'],['stefan','stanislaw']];
 function kluczImienia(s){ return fold(normCzysc(s)).split(/[\s,./-]+/).map(t => t.replace(/[^a-z]/g, '')).filter(t => t.length > 1).map(t => NORM_IMIONA[t] || t.replace(/y(?=[aeo])/g, 'i')); }

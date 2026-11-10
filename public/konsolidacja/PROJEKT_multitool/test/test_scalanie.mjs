@@ -2,7 +2,7 @@
 // Dane kandydatów czytane są w locie z GED w repo; do wyników trafiają tylko identyfikatory i wnioski (bez danych osób z drzewa).
 import fs from 'node:fs'; import vm from 'node:vm'; import path from 'node:path'; import {fileURLToPath} from 'node:url';
 const H = path.dirname(fileURLToPath(import.meta.url)), K = path.join(H, '..', '..');
-const src = ['wspolne/tekst.js', 'wspolne/raport.js', 'PROJEKT_multitool/moduly/norm.js', 'PROJEKT_multitool/moduly/identity.js'].map(f => fs.readFileSync(path.join(K, f), 'utf8')).join('\n');
+const src = ['wspolne/tekst.js', 'wspolne/raport.js', 'wspolne/norm.js', 'PROJEKT_multitool/moduly/identity.js'].map(f => fs.readFileSync(path.join(K, f), 'utf8')).join('\n').replace('/*JSON:slowniki_imion*/', fs.readFileSync(path.join(K, 'wspolne/slowniki_imion.json'), 'utf8'));
 const X = {}; vm.createContext(X); vm.runInContext(src + '\nthis.api = {porownajProfile, idKandydaci, idIndeks, idZdanie, przedzialUr, kluczNazwiska, porNazwiska, porImiona, przedzialUr};', X); const A = X.api;
 // --- GED
 const I = {}, F = {}; let cur = null, sub = '';
