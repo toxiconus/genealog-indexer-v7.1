@@ -239,9 +239,23 @@ for fn in sorted(glob.glob(R+'haiku/ODCZYTY/*_dom_przyczyny.csv'))+sorted(glob.g
         nov+=1
 print('nakladka',nov,'nowe',newn)
 acts.sort(key=lambda a:(a['year'],0 if a.get('kind')=='prot' else 1 if a.get('kind')=='rej' else 2,a['act'],a['id']))
+# zatwierdzone przez uzytkownika (eksport z aplikacji, tylko status ok): wartosci nadpisuja odczyt, akty sa oznaczone jako zatwierdzone (D.zatw -> seed w init)
+ZATW=[];_zf=R+'haiku/ODCZYTY/zatwierdzone_ok.csv'
+if os.path.exists(_zf):
+    import csv as _csv
+    _skip={'id','verification_status','verification_notes','notes_org','act_text','scan_path','uncertain_fields'}
+    _am={x['id']:x for x in acts}
+    for _r in _csv.DictReader(open(_zf,encoding='utf-8-sig',newline=''),delimiter=';'):
+        _a=_am.get(_r['id'])
+        if not _a or _a.get('kind') or not _a.get('ai'):continue
+        for _k,_v in _r.items():
+            if _k in _skip or _k is None or not (_v or '').strip():continue
+            _a['ai'][_k]=_v.strip()
+        ZATW.append(_r['id'])
+print('zatwierdzone',len(ZATW))
 FL=D35['fields']+[{'id':'house','label':'Nr domu'},{'id':'cause_of_death','label':'Przyczyna zgonu / choroba'},{'id':'parents_raw','label':'Rodzice (z rubryki przyczyny)'}]
 D=dict(fieldsProt=D35['fieldsProt'],fieldsRej=D35['fieldsRej'],fields=FL,acts=acts,counts=cnt,scans=SCANS,cols=D35['cols']+['house','parents_raw'],fix=D43['fix'],
-       scanFiles=SF,scanBase=BASE,ord=D35['ord'],gz=D35['gz'],pairs=D35['pairs'],lata=[1797,1945],zakres='1797–1945',tytul='Baza zgonów Blinów 1797–1945',key='bazazgonow3')
+       scanFiles=SF,scanBase=BASE,ord=D35['ord'],gz=D35['gz'],pairs=D35['pairs'],lata=[1797,1945],zakres='1797–1945',tytul='Baza zgonów Blinów 1797–1945',key='bazazgonow3',zatw=ZATW)
 t=open(SZ,encoding='utf-8').read()
 def sub(old,new,cnt=1):
     global t
@@ -273,6 +287,7 @@ function renderTabs(){ const A = D.acts.filter(a => !a.kind), yc = {}; A.forEach
   $('tabs').querySelectorAll('button[data-n],button[data-f]').forEach(b => b.onclick = () => { if (b.dataset.n) { const n = b.dataset.n; if (n==='all') { S.cen = null; S.dec = null; S.year = 'all'; } else if (n[0]==='c') { S.cen = n.slice(1); S.dec = null; S.year = 'all'; } else if (n[0]==='d') { S.dec = n.slice(1); S.year = 'all'; } else { S.year = n.slice(1); } if (S.flt==='rej') S.flt = 'all'; } else S.flt = b.dataset.f; save(); renderTabs(); renderList(); }); }'''
 t=t[:i]+newtabs+t[j:]
 sub('.tabs button.on{background:var(--acc);color:#fff}','.tabs button.on{background:var(--acc);color:#fff}.tabs .tsep{flex:0 0 1px;background:var(--line);margin:0 4px;align-self:stretch}')
+sub('function init(){ HS = histSnap(S.acts);','function init(){ S.seeded = S.seeded || {}; (D.zatw||[]).forEach(id => { if (!S.seeded[id] && AM[id]) { S.seeded[id] = 1; (S.acts[id] = S.acts[id] || {f:{}}).done = true; } }); HS = histSnap(S.acts);')
 sub('Weryfikacja zgonów · v2','Baza zgonów 1797–1945')
 sub('<title>Weryfikacja zgonów</title>','<title>Baza zgonów 1797–1945</title>')
 sub("function commit(a,f,v,src,extra){ if (src === 'edit' &&","const NPLJ = "+json.dumps({k:v for k,v in NPL.items() if v},ensure_ascii=False)+"; const latName = v => String(v).split(/(\\s+)/).map(w => NPLJ[w.toLowerCase().replace(/[.,?]/g,'')] ? NPLJ[w.toLowerCase().replace(/[.,?]/g,'')] + (/\\?$/.test(w) ? '?' : '') : w).join('');\nfunction commit(a,f,v,src,extra){ if (src === 'edit' && /^(deceased_first_name|father_first_name|mother_first_name)$/.test(f)) v = latName(v); if (src === 'edit' &&")
