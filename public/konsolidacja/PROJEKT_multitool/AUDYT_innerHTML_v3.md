@@ -113,3 +113,6 @@ Uwagi do atrybutów:
 
 - Te same wzorce `const esc = ...` i `innerHTML` występują w innych szablonach w `public/konsolidacja/` (np. `weryfikacja_zgonow_ASC_1870-79.html`, `baza_zgonow_1797-1945.html`, `dopasowanie/dopasowanie_osob.html`, `narzedzia/dane/*.html`, `PROJEKT_multitool/prototyp/multitool_prototyp.html`). Nie audytowano ich; zalecany ten sam grep i ta sama lista kontrolna.
 - Analiza statyczna. Nie uruchomiono strony ani nie testowano payloadów w przeglądarce.
+
+## Wdrożone (2026-11-10)
+Poprawki F1–F9 naniesione w `narzedzia/weryfikacja_szablon_v3.html` (esc() w chipsFor, nagłówkach, `<pre>` surowego tekstu, opcjach skanów, datalistach, atrybutach data-*/value). Baza zgonów przebudowana. Test Playwright (telefon 420 px i desktop): wartości z importu zawierające `<img onerror=…>`, `&` i `"` wyświetlają się jako tekst, bez wykonania kodu, bez okien dialogowych i bez błędów JS; chip z `&` ma poprawny `data-v`. Niezbadane: te same wzorce w innych szablonach (`haiku/*`, `dopasowanie/szablon.html`, `edytor_korekt_szablon.html`).
