@@ -23,3 +23,20 @@
 
 ## Uwaga
 Zewnętrzny model nie widział repo ani skanów; część pozycji (historia zmian, warianty pisowni) może już być w aplikacji. Przed wdrożeniem sprawdzić w szablonie `weryfikacja_szablon_v3.html`, co istnieje.
+
+## Audyt paczki narzędzi (2026-11-10, drugi przebieg)
+Audytor dostał zip narzędzi (bez CSV). Zalecenia, ocenione względem planu:
+- **Zgodne z planem:** wspólny model Akt → Wystąpienie → Osoba → Relacja; nie scalać automatycznie; najpierw model na prawdziwych rekordach (chrzty, małżeństwa, zgony), potem przenoszenie narzędzi.
+- **Nowe:**
+  1. Kandydat do scalenia ma **uzasadnienie**, nie jedną liczbę: zgodności, rozbieżności, braki danych, wniosek (sprawdź / możliwe / konflikt / odrzucone).
+  2. Sygnały w 3 poziomach: **sprzeczność logiczna**, **anomalia**, **wskazówka** (także dla rodziny, nie tylko aktu).
+  3. Historia zmian jako dziennik wszystkiego (słowniki, propozycje tożsamości, relacje, scalenia) z cofaniem scalenia bez kasowania źródeł i wystąpień.
+  4. Trwały rejestr wystąpień i osób (`os:<akt>:<rola>` w `model.js` to nadal osobne obiekty); `mAttr()` zapisuje tylko wartość i status, brak `unc` i `source` z architektury.
+  5. Wszystkie narzędzia budowane z `wspolne/` przez `zbuduj.py`, z kontrolą, czy wstawiono wymagane moduły (`weryfikacja_szablon_v3.html` ma kopie modułów wklejone na stałe).
+  6. `templates-config.js`: równoległe typy `chrzest` i `birth`; najpierw mapowanie pól do jednego modelu, bez usuwania.
+  7. Skany identyfikowane samą nazwą pliku (kolizja przy takich samych nazwach).
+  8. Przeniesienie stanu roboczego z localStorage do IndexedDB; walidacja i wersjonowanie importu JSON; kopia bezpieczeństwa z przypomnieniem; eksport CSV nie powinien oznaczać „zapisano”, bo nie obejmuje historii.
+  9. Audyt `innerHTML` pod kątem escapowania danych z importu.
+- **Sprawdzone i naprawione w kodzie (2026-11-10):** `dzien()` w `wspolne/raport.js` przyjmowała nieistniejące daty (2020-02-31); import CSV odczytu AI używał `split(';')` zamiast `parseCsv()`.
+- **Do sprawdzenia:** ranking scaleń zgonów ma 13 „mocnych” (A), 223 + 77 jedynych (B), 584 wielu kandydatów (C), 226 bez kandydata (D); skuteczność algorytmu ocenić po dołączeniu CSV i kodu generującego.
+- **Poprawki `dzien()` nie wprowadzono** do wygenerowanych plików: `dopasowanie_osob.html`, `weryfikacja_zgonow_ASC_1870-79.html`, `dane/zgony_1935_mini.html`, `dane/zgony_1943-45_mini.html` (przebudować ich skryptami).
