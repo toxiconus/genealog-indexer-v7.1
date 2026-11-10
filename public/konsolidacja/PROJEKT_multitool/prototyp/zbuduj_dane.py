@@ -116,6 +116,37 @@ if WSZYSTKO:
                 if f in a['pola'] and a['pola'][f]['value'] != v: a['pola'][f].setdefault('alt', []).append(p)
                 elif f not in a['pola']: a['pola'][f] = p
             akty.append(a); OLD[a['id']] = [a['id']]
+# --- nakładka z głównej bazy zgonów (narzedzia/baza_zgonow_1797-1945.html, D.acts[].ai; tylko --wszystko): pełny zakres pól odczytów ksiąg łacińskich
+#     (normalizacje z buduj_baza_v4.py), wartości z eksportu użytkownika i akty lm-* spoza indeksu. Zatwierdzone (D.zatw) dostają status ok i wartość główną;
+#     przy aktach z indeksu inne wartości AI idą do `alt` (indeks zostaje główny), jak w nakładce lm wyżej. Wymaga zbudowanej bazy (python3 narzedzia/buduj_baza_v4.py).
+if WSZYSTKO:
+    DB = LDH('baza_zgonow_1797-1945.html'); ZT = set(DB.get('zatw') or []); BP = 'narzedzia/baza_zgonow_1797-1945.html'
+    REV = {o: k for k, v in OLD.items() for o in v}; AM = {a['id']: a for a in akty}; nowych = naniesionych = 0
+    for x in DB['acts']:
+        ai = x.get('ai') or {}
+        if x.get('kind') or not ai: continue
+        ok = x['id'] in ZT; unc = x.get('unc') or []
+        fl = x.get('file') or ''; skrel = ('haiku/skany_lm/' + fl) if fl and os.path.exists(os.path.join(K, 'haiku', 'skany_lm', fl)) else ''
+        a = AM.get(REV.get(x['id']))
+        if a is None:
+            if not x['id'].startswith('lm-'): continue   # inne akty bazy są już w danych (indeks, ASC, mini)
+            a = {'id': x['id'], 'typ': 'zgon', 'rok': x['year'], 'nr': str(x['act']), 'miejsce': ai.get('death_place') or ai.get('deceased_residence') or '', 'epoka': 'lac', 'zrodla': ['zr:liber-mortuorum'],
+                 'skan': {'plik': skrel, 'strona': '', 'roi': x.get('roi')} if skrel else None, 'stan': 'w_toku', 'pola': {}}
+            akty.append(a); AM[a['id']] = a; OLD[a['id']] = [a['id']]; nowych += 1
+        if 'zr:baza-zgonow' not in a['zrodla']: a['zrodla'].append('zr:baza-zgonow')
+        for f, v in ai.items():
+            v = str(v or '').strip()
+            if not v: continue
+            p = pole(v, 'ok' if ok else 'ai', BP, x['id'], skan=skrel, unc=('?' in v) or f in unc); cur = a['pola'].get(f)
+            if cur is None: a['pola'][f] = p; naniesionych += 1
+            elif cur['value'] == v:
+                if ok: cur['status'] = 'ok'
+            elif ok:
+                stary = {k: w for k, w in cur.items() if k != 'alt'}; p['alt'] = cur.get('alt', []) + [stary]; a['pola'][f] = p; naniesionych += 1
+            elif cur['status'] == 'ai':
+                stary = {k: w for k, w in cur.items() if k != 'alt'}; p['alt'] = cur.get('alt', []) + [stary]; a['pola'][f] = p; naniesionych += 1
+            elif all(w['value'] != v for w in cur.get('alt', [])): cur.setdefault('alt', []).append(p); naniesionych += 1
+    print('nakładka z bazy zgonów: nowych aktów', nowych, 'pól naniesionych', naniesionych, 'zatwierdzonych aktów', len(ZT))
 for a in akty:
     if a['typ'] != 'zgon': continue
     z = W(a, 'zmarly', {'imie': 'deceased_first_name', 'nazwisko': 'deceased_last_name', 'rodowe': 'deceased_maiden_name', 'plec': 'deceased_sex', 'wiek': 'age', 'stan': 'deceased_status', 'miejsce': 'deceased_residence', 'dom': 'house'})
@@ -149,6 +180,7 @@ D = {'format': {'nazwa': 'multitool-dane', 'wersja': 1}, 'opis': 'Próbka: akty 
 if WSZYSTKO:   # tabele pełnego zbioru: źródła nowych odczytów, skany (metadane, bez obrazów), id dawne (każdy akt, także z jednym id)
     D['zrodla'] += [{'id': 'zr:asc-1870-79', 'typ': 'odczyt', 'nazwa': 'Zgony 1870–1879 (weryfikator ASC, odczyt AI)', 'plik': 'narzedzia/weryfikacja_zgonow_ASC_1870-79.html; narzedzia/odczyty_AI_ASC_start.csv'},
                     {'id': 'zr:akta-zgonow-1935', 'typ': 'odczyt', 'nazwa': 'Zgony 1935 (mini, odczyt AI)', 'plik': 'narzedzia/dane/zgony_1935_mini.html'},
+                    {'id': 'zr:baza-zgonow', 'typ': 'odczyt', 'nazwa': 'Baza zgonów 1797–1945 (nałożone odczyty ksiąg łacińskich, wartości z eksportu użytkownika)', 'plik': 'narzedzia/baza_zgonow_1797-1945.html'},
                     {'id': 'zr:akta-zgonow-1943-45', 'typ': 'odczyt', 'nazwa': 'Zgony 1943–1945 (mini, indeks i odczyt AI)', 'plik': 'narzedzia/dane/zgony_1943-45_mini.html'}]
     SK = []
     for fn in sorted(glob.glob(os.path.join(K, 'haiku', 'skany_lm', '*.jpg'))):
