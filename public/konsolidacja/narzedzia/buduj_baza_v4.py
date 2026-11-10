@@ -40,8 +40,8 @@ for x in rows:
 # nakladka odczytow recznych (dom, przyczyna, rodzice) + skany wbudowane
 SCANS={}
 from PIL import Image
-for nm,src in [('lm_str16-17.jpg','eabeafb5-image.jpg'),('lm_str18-19.jpg','969c52e8-image.jpg')]:
-    im=Image.open('/mnt/user-data/attachments/3e7ce577-16ba-54bc-8dbe-e2ba98a801b3/'+src);im.thumbnail((1700,1700));bf=io.BytesIO();im.save(bf,'JPEG',quality=78)
+for nm,src in [('lm_str16-17.jpg','lm_str16-17.jpg'),('lm_str18-19.jpg','lm_str18-19.jpg')]:
+    im=Image.open(os.path.join(os.path.dirname(os.path.abspath(__file__)),'..','haiku','skany_lm',src));im.thumbnail((1700,1700));bf=io.BytesIO();im.save(bf,'JPEG',quality=78)
     SCANS[nm]='data:image/jpeg;base64,'+base64.b64encode(bf.getvalue()).decode()
 LMDIRS=[os.path.join(os.path.dirname(os.path.abspath(__file__)),'..','haiku','skany_lm')+'/','/tmp/lm_new/','/mnt/user-data/uploads/ZG/Liber mortuorum-zmarlych 1797-1825/','/mnt/user-data/uploads/ZG/Z 1815/','/mnt/user-data/uploads/ZG/Z 1822/']
 def lmscan(sk):

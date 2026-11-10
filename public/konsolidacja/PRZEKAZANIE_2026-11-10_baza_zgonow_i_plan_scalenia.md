@@ -83,4 +83,5 @@ Cel: zamiast kilkunastu osobnych plików (zgony, małżeństwa, chrzty, spisy, d
 ## 7. Uzupełnienie: dane dołączone do repo (2026-11-10)
 - Skany ksiąg łacińskich: `haiku/skany_lm/blinow_lm-N.jpg` (27 plików: lm-2…10, 12…18, 30…37, 40…42; ok. 28 MB). Builder szuka najpierw tam (`LMDIRS`), więc budowa działa w każdej sesji.
 - Eksporty zatwierdzeń z aplikacji: `haiku/ZATWIERDZENIA/ZGONY_zweryfikowane_9.csv` i `_10.csv` (881 aktów; status `ok` tylko 8). Do wczytania z powrotem do danych.
+- Zdjęcia str. 16–17 i 18–19: `haiku/skany_lm/lm_str16-17.jpg`, `lm_str18-19.jpg` (builder czyta je stąd).
 - Wciąż brak skanów: lm-1, lm-19…29, lm-38/39, lm-43+. Decyzje do użytkownika: rok aktu 866 (1822/1823), jednostka wieku Gręda (lm-2, akt 1).
