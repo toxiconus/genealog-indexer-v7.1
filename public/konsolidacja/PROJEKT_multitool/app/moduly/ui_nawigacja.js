@@ -88,6 +88,18 @@ function narzRender(){ const m = $('main'), st0 = narzStat(), mot = motywOdczyt(
     if (id === 'nRaport') return zaklUstaw('raport'); if (id === 'nNowy') return typeof nowyAktOkno === 'function' ? nowyAktOkno() : toast('Dodawanie aktów będzie dostępne w kolejnej wersji');
     const x = $(id); if (x) x.click(); if (id === 'mKopia') setTimeout(narzRender, 300); }); }
 
+// ---------- nowy akt: typ + rok + numer; pola wpisuje się potem w karcie aktu (program niczego nie wypełnia)
+function nowyAktOkno(){ const typ0 = D.typ, rok0 = AM[S.cur] && AM[S.cur].typ === typ0 ? AM[S.cur].year : '';
+  okno('Nowy akt', h`<p class="muted">Dodaje pusty akt, którego nie ma w bazie. Wszystkie pola wpiszesz w karcie aktu; zapisują się jak zwykłe poprawki (historia, cofanie, kopia pełna). Osoby z nowego aktu pojawią się w zakładkach Osoby i Drzewo.</p>
+    <div class="pola"><div class="pole"><label for="naTyp">Typ aktu</label><select id="naTyp">${D.typy.map(t => h`<option value="${t}" ${t === typ0 ? raw('selected') : ''}>${NAZWY_TYPOW[t] || t}</option>`)}</select></div>
+    <div class="pole"><label for="naRok">Rok aktu</label><input id="naRok" inputmode="numeric" maxlength="4" value="${rok0}" autocomplete="off"></div>
+    <div class="pole"><label for="naNr">Numer aktu</label><input id="naNr" inputmode="numeric" maxlength="5" autocomplete="off"></div></div><p class="err" id="naBlad" role="alert"></p>`, [['naDodaj', 'Dodaj akt i otwórz', 'p']]);
+  const blad = $('naBlad'), spr = () => { const w = nowySprawdz($('naTyp').value, $('naRok').value, $('naNr').value); wstaw(blad, w.ok || (!$('naRok').value && !$('naNr').value) ? '' : h`${w.blad}${w.istnieje ? h` <button class="lk" id="naIdz">Otwórz istniejący akt</button>` : ''}`); if ($('naIdz')) $('naIdz').onclick = () => { $('okno').hidden = true; osOtworzAkt('w:' + w.istnieje + ':x'); }; return w; };
+  ['naTyp', 'naRok', 'naNr'].forEach(id => { $(id).oninput = spr; $(id).onkeydown = e => { if (e.key === 'Enter') $('naDodaj').click(); }; });
+  $('naDodaj').onclick = () => { const w = spr(); if (!w.ok) { if (!blad.textContent) blad.textContent = w.blad; return; } const r = nowyDodaj($('naTyp').value, $('naRok').value, $('naNr').value); if (!r.ok) { blad.textContent = r.blad; return; } save(); $('okno').hidden = true; osOtworzAkt('w:' + r.id + ':x'); typInit0(); toast('Dodano akt – wpisz pola i zatwierdź'); const i = document.querySelector('#main input[data-f]'); if (i) i.focus(); };
+  ($('naRok').value ? $('naNr') : $('naRok')).focus(); }
+// po dodaniu lub usunięciu aktu: liczniki w liście typów
+function typInit0(){ const sel = $('selTyp'); if (!sel) return; [...sel.options].forEach(o => { o.textContent = (NAZWY_TYPOW[o.value] || o.value) + ' (' + (D.liczby[o.value] || 0) + ')'; }); }
 function nawInit(){ document.body.dataset.zakl = 'akty'; $('zDrzewo').onclick = () => zaklUstaw('drzewo'); $('zRaport').onclick = () => zaklUstaw('raport'); $('zNarz').onclick = () => zaklUstaw('narz');
   const M = $('menu'), b = document.createElement('button'); b.id = 'mMotyw'; b.onclick = () => { const m = motywOdczyt(); motywUstaw(m === 'auto' ? 'dark' : m === 'dark' ? 'light' : 'auto'); if (OSS.zakl === 'narz') narzRender(); }; M.appendChild(b); motywUstaw(motywOdczyt());
   const s = document.createElement('button'); s.id = 'mSkroty'; s.textContent = 'Skróty klawiszowe i wszystkie narzędzia →'; s.onclick = () => zaklUstaw('narz'); M.appendChild(s);

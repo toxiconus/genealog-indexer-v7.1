@@ -109,6 +109,7 @@ ul.pot{list-style:none;margin:0;padding-left:18px;border-left:1px solid var(--li
 /*MODUL:osoby_rdzen*/
 /*MODUL:rodziny_rdzen*/
 /*MODUL:dane_adapter*/
+/*MODUL:nowe_akty*/
 let GOTOWE = false;
 const DANE = /*DATA*/;
 const DANE_TYPY = /*DATA_TYPY*/;   // krok 5: małżeństwa i chrzty (dane_malzenstwa.json, dane_chrzty.json)
@@ -133,7 +134,7 @@ const save = () => { const n0 = S.histN || 0; histCommit(); if (typeof cofPoZapi
 /*MODUL:ui_raport*/
 /*MODUL:ui_powloka*/
 (async () => {
-  S = await stWczytaj(); normActs(); startMigracja(); startZatwierdzone(); stKolejka();
+  S = await stWczytaj(); noweWlacz(S.nowe); normActs(); startMigracja(); startZatwierdzone(); stKolejka();
   HS = histSnap(S.acts); await stFlush(false);   // stan początkowy (migracja, zatwierdzone z danych) nie liczy się do „zmian bez kopii”
   typInit(); menuInit(); skanInit(); nawInit(); odswiez(); GOTOWE = true;
 })().catch(e => { document.body.insertAdjacentText('afterbegin', 'Błąd startu: ' + e.message); });

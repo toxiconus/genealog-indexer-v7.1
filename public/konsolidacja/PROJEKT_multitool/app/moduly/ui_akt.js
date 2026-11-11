@@ -26,7 +26,7 @@ function renderAkt(){ if (!wAktach()) return; const m = $('main'), a = curAct();
   const s = S.acts[a.id] || {}, FS = fieldsOf(a), hid = [], pr = progOf(a), W = warnsOf(a);
   const bl = typDla(a).bloki, pola = bl ? bl.map(b => { const L = b.pola.map(id => FS.find(f => f.id === id)).filter(Boolean).map(f => poleHtml(a, f, hid)).filter(x => x !== ''); return L.length ? h`<h3 class="blok">${b.t}</h3><div class="pola">${L}</div>` : ''; }) : null, poleZ = bl ? null : FS.map(f => poleHtml(a, f, hid));
   wstaw(m, h`<div class="card"><h2>${a.year} · akt ${a.act} · ${nmOf(a)}</h2>
-    <div class="muted">id <code>${a.id}</code> · dawne <code>${a.stary}</code> · źródła ${(a.model?.zrodla || []).join(', ')} · skan: ${skanSciezka(a) || 'brak'}</div>
+    <div class="muted">id <code>${a.id}</code> · dawne <code>${a.stary}</code> · źródła ${(a.model?.zrodla || []).join(', ')} · skan: ${skanSciezka(a) || 'brak'}${a.nowy ? h` · <span class="bdg un" id="aktNowy">akt dodany ręcznie</span> <button class="sm d" id="bUsunNowy" title="Usuń ten akt (tylko akty dodane ręcznie)">usuń akt</button>` : ''}</div>
     <div class="bar"><i style="width:${pr}%"></i></div><div class="muted">Opracowanie pól: ${pr}%${s.done ? ' · AKT ZATWIERDZONY' : ''}</div>
     ${W.length ? h`<div class="warn">${W.map(t => h`<div>⚠ ${t}</div>`)}</div>` : ''}
     ${sygnalyHtml(a)}
@@ -45,5 +45,6 @@ function renderAkt(){ if (!wAktach()) return; const m = $('main'), a = curAct();
   if ($('tTxt')) $('tTxt').onchange = e => { const t = e.target.value; if (t === (a.tekst || '')) delete st(a.id).text; else st(a.id).text = t; save(); toast('Zapisano tekst'); };
   m.querySelectorAll('[data-rozw]').forEach(b => b.onclick = () => { AKT_ROZW = a.id + '|' + b.dataset.rozw; keepScroll(); const i = $('p_' + b.dataset.rozw); if (i) i.focus(); });
   $('bSporne').onclick = () => { S.sporne = !S.sporne; AKT_ROZW = ''; save(); keepScroll(); }; $('bMini').onclick = () => { S.miniOk = !S.miniOk; AKT_ROZW = ''; save(); keepScroll(); };
+  if ($('bUsunNowy')) $('bUsunNowy').onclick = () => { if (!confirm('Usunąć akt dodany ręcznie (' + a.year + ' nr ' + a.act + ') razem z wpisanymi polami? Tej operacji nie cofnie przycisk „Cofnij”. Wcześniej warto zrobić kopię pełną.')) return; nowyUsun(a.id); S.cur = (widoczne()[0] || {}).id || null; save(); odswiez(); typInit0(); toast('Usunięto akt dodany ręcznie'); };
   if (typeof aktbarPodlacz === 'function') aktbarPodlacz(a);
   skanWinRender(a); narzPodlacz(a); }

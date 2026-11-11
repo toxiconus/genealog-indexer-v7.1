@@ -30,5 +30,5 @@ function csvImportStosuj(w, ovw){ const ix = w.ix; let nA = 0, nF = 0, nSkip = 0
   const nT = fixAllTexts();   // dopasowanie tekstu aktu do zatwierdzonych pól (v3: ten sam krok po imporcie)
   return {aktow: nA, pol: nF, pominieteOk: nSkip, zatwierdzone: nOk, konflikty: konf, tekstow: nT}; }
 // podgląd: ta sama operacja na kopii stanu (S i D.scanFiles przywracane); nic nie jest zapisywane
-function csvImportPodglad(w, ovw){ const bakS = S, bakSF = D.scanFiles, bakH = S.hist; let r; try { S = structuredClone(S); D.scanFiles = JSON.parse(JSON.stringify(D.scanFiles || {})); r = csvImportStosuj(w, ovw); } finally { S = bakS; D.scanFiles = bakSF; } return r; }
+function csvImportPodglad(w, ovw){ const bakS = S, bakSF = D.scanFiles, bakH = S.hist; let r; try { S = structuredClone(S); D.scanFiles = JSON.parse(JSON.stringify(D.scanFiles || {})); r = csvImportStosuj(w, ovw); const zm = histDiff(histSnap(bakS.acts), histSnap(S.acts)); r.zmianIle = zm.length; r.zmiany = zm.slice(0, 300); } finally { S = bakS; D.scanFiles = bakSF; } return r; }
 async function csvImportZapisz(w, ovw, nazwa){ await kopiaMigawka('przed importem CSV: ' + (nazwa || '')); HIST_WHY = 'import CSV: ' + (nazwa || '') + (ovw ? ' (zastąp)' : ' (dopisz)'); const r = csvImportStosuj(w, ovw); save(); HIST_WHY = null; await stFlush(true); return r; }

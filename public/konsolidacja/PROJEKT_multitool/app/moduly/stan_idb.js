@@ -14,7 +14,7 @@ function stOtworz(){ if (ST_DBP) return ST_DBP; ST_DBP = new Promise((ok, no) =>
 function stAwaria(e){ ST_TRYB = 'pamiec'; ST_BLAD = String(e && e.message || e || ''); if (typeof stPasek === 'function') stPasek(); }
 function stTx(sklady, tryb, fn){ return stOtworz().then(db => new Promise((ok, no) => { const t = db.transaction(sklady, tryb), w = {}; sklady.forEach(n => w[n] = t.objectStore(n)); fn(w); t.oncomplete = () => ok(true); t.onerror = t.onabort = () => no(t.error || new Error('transakcja przerwana')); })); }
 function stWszystko(sklad){ return stOtworz().then(db => new Promise((ok, no) => { const o = db.transaction(sklad).objectStore(sklad), K = o.getAllKeys(), V = o.getAll(); V.onsuccess = () => ok(K.result.map((k, i) => [k, V.result[i]])); V.onerror = () => no(V.error); })); }
-function stPusty(){ return {decyz: [], acts: {}, cur: null, year: 'all', flt: 'all', hideOk: true, hideDoneActs: true, noroi: false, onlyScan: false, hist: [], histN: 0, fixes: {}}; }
+function stPusty(){ return {decyz: [], acts: {}, cur: null, year: 'all', flt: 'all', hideOk: true, hideDoneActs: true, noroi: false, onlyScan: false, hist: [], histN: 0, fixes: {}, nowe: []}; }
 function stBazaWart(a, f){ const ai = a.ai?.[f], lb = a.lub?.[f]; return (ai != null && String(ai).trim() !== '') ? String(ai) : String(lb ?? ai ?? ''); }
 // pamięć → rekordy (to samo służy kopii pełnej)
 function stRekordy(){ const R = {pola: {}, teksty: {}, akty: {}, decyzje: {}, historia: {}, slowniki: {}, meta: {}};
@@ -22,12 +22,12 @@ function stRekordy(){ const R = {pola: {}, teksty: {}, akty: {}, decyzje: {}, hi
     for (const f in (a.f || {})) { const k = id + '|' + f, x = Object.assign({}, a.f[f]); if (!('baza' in x)) { if (!(k in ST_BAZA) && AM[id]) ST_BAZA[k] = stBazaWart(AM[id], f); if (k in ST_BAZA) x.baza = ST_BAZA[k]; } R.pola[k] = x; }
     if (a.text != null) R.teksty[id] = String(a.text);
     ['done', 'scan', 'roi', 'par', 'hid', 'notesOrg', 'lubAck', 'qs', 'fr'].forEach(p => { if (a[p] !== undefined && !(p === 'done' && !a.done)) ak[p] = a[p]; }); if (Object.keys(ak).length) R.akty[id] = ak; }
-  (S.hist || []).forEach(e => R.historia[e.n] = e); (S.decyz || []).forEach(d => R.decyzje[d.n] = d); R.slowniki.fixes = S.fixes || {};
+  (S.hist || []).forEach(e => R.historia[e.n] = e); (S.decyz || []).forEach(d => R.decyzje[d.n] = d); R.slowniki.fixes = S.fixes || {}; if ((S.nowe || []).length) R.slowniki.noweAkty = S.nowe;
   const u = {}; ST_UST.forEach(k => { if (S[k] !== undefined) u[k] = S[k]; }); R.meta.ustawienia = u; R.meta.seeded = S.seeded || {}; R.meta.histN = S.histN || 0; return R; }
 const stPodpis = v => JSON.stringify(v);
 async function stFlush(licz){ if (licz === undefined) licz = true; clearTimeout(ST_T); ST_T = null; const R = stRekordy(), zap = [], del = []; let zm = 0;
-  for (const sk in R) for (const k in R[sk]) { const p = stPodpis(R[sk][k]), pk = sk + '\u0001' + k; if (ST_PODPIS[pk] !== p) { zap.push([sk, k, R[sk][k], p]); if (licz && ST_LICZONE.includes(sk)) zm++; } }
-  for (const pk in ST_PODPIS) { const [sk, k] = pk.split('\u0001'); if (!(k in (R[sk] || {})) && sk !== 'meta' && sk !== 'historia') { del.push([sk, k, pk]); if (licz && ST_LICZONE.includes(sk)) zm++; } }
+  for (const sk in R) for (const k in R[sk]) { const p = stPodpis(R[sk][k]), pk = sk + '\u0001' + k; if (ST_PODPIS[pk] !== p) { zap.push([sk, k, R[sk][k], p]); if (licz && (ST_LICZONE.includes(sk) || k === 'noweAkty')) zm++; } }
+  for (const pk in ST_PODPIS) { const [sk, k] = pk.split('\u0001'); if (!(k in (R[sk] || {})) && sk !== 'meta' && sk !== 'historia') { del.push([sk, k, pk]); if (licz && (ST_LICZONE.includes(sk) || k === 'noweAkty')) zm++; } }
   if (!zap.length && !del.length && !ST_DODATKI.length) return true;
   const dod = ST_DODATKI.slice();
   const ok = () => { ST_DODATKI.splice(0, dod.length); zap.forEach(([sk, k, v, p]) => ST_PODPIS[sk + '\u0001' + k] = p); del.forEach(([sk, k, pk]) => delete ST_PODPIS[pk]); if (licz && zm) { ST_ZMIANY += zm; if (typeof stWskaznik === 'function') stWskaznik(); } };
@@ -45,7 +45,7 @@ async function stWczytaj(){ const s = stPusty();
     A.forEach(([id, x]) => { Object.assign(st(id), x); ST_PODPIS['akty\u0001' + id] = stPodpis(x); });
     H.sort((x, y) => x[0] - y[0]).forEach(([n, e]) => { s.hist.push(e); ST_PODPIS['historia\u0001' + n] = stPodpis(e); });
     Dc.sort((x, y) => x[0] - y[0]).forEach(([n, d]) => { s.decyz.push(d); ST_PODPIS['decyzje\u0001' + n] = stPodpis(d); });
-    Sl.forEach(([k, v]) => { if (k === 'fixes') { s.fixes = v; ST_PODPIS['slowniki\u0001fixes'] = stPodpis(v); } });
+    Sl.forEach(([k, v]) => { if (k === 'fixes') { s.fixes = v; ST_PODPIS['slowniki\u0001fixes'] = stPodpis(v); } else if (k === 'noweAkty' && Array.isArray(v)) { s.nowe = v; ST_PODPIS['slowniki\u0001noweAkty'] = stPodpis(v); } });
     M.forEach(([k, v]) => { if (k === 'ustawienia') Object.assign(s, v); else if (k === 'seeded') s.seeded = v; else if (k === 'histN') s.histN = v; else if (k === 'zmianyBezKopii') ST_ZMIANY = v || 0; else if (k === 'ostatniaKopia') ST_OSTATNIA = v; });
     ST_PODPIS['meta\u0001ustawienia'] = null; }
   catch (e) { stAwaria(e); }
