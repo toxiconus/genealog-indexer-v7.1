@@ -39,3 +39,10 @@
 2. Skan Janów, małżeństwa 1833, akt 51 (Marcin × Rożek) – potwierdzić wdowieństwo.
 3. Skan Janów, chrzty 1812, akt 385 (Marcin) – potwierdzić wiek i rodziców (czy to Marcin z 1832).
 4. Blinów, chrzty 1778–1782 – szukać Sebastiana ok. 1780.
+
+## Aktualizacja: zgon Elżbiety (skan janow_zgony_1832_wpisy_41-44.jpg)
+- Wpis 44, Janów/Biała, 25 I 1832 (zgłoszenie): Elżbieta Kopiwodzina, córka Mateusza Białka, włościanka z Krzemienia, żona Marcina; zmarła 24 I 1832 rano (wczoraj), ok. 7 rano. Zgłaszający: Marcin Kopiwoda (wiek czytany jako 23) i Jan Pachuta.
+- Zmiana: zgon Elżbiety był w styczniu 1832 r., nie w grudniu. Syn Sebastian urodził się 14 I 1832, więc matka zmarła 10 dni po porodzie.
+- Marcin był wdowcem od 24 I 1832 („owdowiały mąż”), zgodnie z późniejszym ślubem z Marianną Rożek w 1833 r.
+- Rozbieżność wieku Marcina: 22 l. w akcie chrztu (15 I 1832), 23 l. w akcie zgonu (25 I 1832). Do sprawdzenia na skanie, który z odczytów jest błędny.
+- Pytanie do potwierdzenia: nazwisko i imię ojca Elżbiety (Mateusz Białek?) oraz wiek matki (czytane jako 20 w akcie chrztu).
