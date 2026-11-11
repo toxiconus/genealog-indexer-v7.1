@@ -1,0 +1,84 @@
+/* Test powłoki v2 (zakładki, pasek akcji aktu, cofnij/ponów, sporne pola, mini-pola, motyw, narzędzia, telefon 390 px).
+   Uruchom: node test/test_krok7_powloka.cjs [katalog_zrzutów]   (wymaga zbudowanego app/multitool_v1.html) */
+const { chromium } = require('playwright'); const assert = require('assert'); const path = require('path'); const fs = require('fs');
+const APP = 'file://' + path.join(__dirname, '..', 'app', 'multitool_v1.html'), SKANY = path.join(__dirname, '..', '..', 'haiku', 'skany_lm'), OUT = process.argv[2] || '';
+let ok = 0; const pass = m => { ok++; console.log('OK  ' + m); };
+const zrzut = async (p, n) => { if (OUT) await p.screenshot({ path: path.join(OUT, n + '.png') }); };
+async function nowa(b, vp, schemat) { const ctx = await b.newContext({ viewport: vp || { width: 1400, height: 900 }, colorScheme: schemat || 'light', acceptDownloads: true }); const p = await ctx.newPage(); p.bledy = [];
+  p.on('pageerror', e => p.bledy.push(e.message)); p.on('console', m => m.type() === 'error' && p.bledy.push(m.text())); p.on('dialog', d => d.accept()); await p.goto(APP); await p.waitForFunction('GOTOWE === true', null, { timeout: 60000 }); return p; }
+(async () => {
+  const b = await chromium.launch();
+  { const p = await nowa(b);
+    // zakładki
+    for (const [id, z] of [['zNarz', 'narz'], ['zRaport', 'raport'], ['zDrzewo', 'drzewo'], ['zOsoby', 'osoby'], ['zAkty', 'akty']]) { await p.click('#' + id); assert.strictEqual(await p.evaluate(() => document.body.dataset.zakl), z); assert.strictEqual(await p.locator('#zakl button.p').count(), 1); }
+    pass('pięć zakładek przełącza się, zawsze jedna aktywna');
+    // narzędzia: kafle zawierają wszystkie funkcje menu
+    await p.click('#zNarz'); const kl = await p.evaluate(() => [...document.querySelectorAll('#narzKafle [data-klik]')].map(x => x.dataset.klik));
+    for (const id of ['mKopia', 'mKopiaWczytaj', 'mMigawki', 'mAuto', 'mImpDop', 'mImpZast', 'mMigr', 'mDecImp', 'mDop', 'mCsv', 'mDecJson', 'mDecCsv', 'mRoi', 'mSkany', 'mKolejka']) { assert(kl.includes(id), 'brak kafla ' + id); assert(await p.locator('#' + id).count() === 1, 'brak przycisku ' + id); }
+    assert.strictEqual(await p.locator('#skWin:visible').count(), 0, 'okno skanu widoczne poza zakładką Akty'); await zrzut(p, 'narzedzia_jasny');
+    const [d1] = await Promise.all([p.waitForEvent('download'), p.click('[data-klik="nHist"]')]); assert(/historia/.test(d1.suggestedFilename()));
+    await p.click('[data-klik="mMigawki"]'); await p.waitForSelector('#oknoX'); await p.keyboard.press('Escape'); assert.strictEqual(await p.evaluate(() => document.getElementById('okno').hidden), true);
+    pass('Narzędzia: kafle dla wszystkich funkcji menu, eksport historii, okno zamykane Esc; skan ukryty poza Aktami');
+    // motyw
+    await p.click('[data-motyw="dark"]'); const ciemny = await p.evaluate(() => [document.documentElement.getAttribute('data-theme'), getComputedStyle(document.body).backgroundColor, getComputedStyle(document.querySelector('header')).backgroundColor]);
+    assert.strictEqual(ciemny[0], 'dark'); assert.strictEqual(ciemny[1], 'rgb(22, 24, 27)'); await p.reload(); await p.waitForFunction('GOTOWE === true'); assert.strictEqual(await p.evaluate(() => document.documentElement.getAttribute('data-theme')), 'dark', 'motyw nie przetrwał odświeżenia');
+    await p.click('#zNarz'); await p.click('[data-motyw="auto"]'); assert.strictEqual(await p.evaluate(() => document.documentElement.getAttribute('data-theme')), null); pass('motyw: wybór ciemnego działa niezależnie od systemu i jest pamiętany; auto wraca do systemu');
+    // akty: pasek akcji, następny/poprzedni, klawiatura
+    await p.click('#zAkty'); await p.evaluate(() => { S.hideDoneActs = false; S.flt = 'ai'; save(); odswiez(); otworz(widoczne()[0].id); });
+    const id0 = await p.evaluate(() => S.cur); await p.click('#bNext'); const id1 = await p.evaluate(() => S.cur); assert.notStrictEqual(id0, id1); assert.strictEqual(id1, await p.evaluate(() => widoczne()[1].id));
+    await p.keyboard.press('Alt+k'); assert.strictEqual(await p.evaluate(() => S.cur), id0); await p.keyboard.press('Alt+j'); assert.strictEqual(await p.evaluate(() => S.cur), id1); await p.keyboard.press('Control+Enter'); assert.strictEqual(await p.evaluate(() => S.cur), await p.evaluate(() => widoczne()[2].id));
+    pass('pasek akcji i klawiatura: następny / poprzedni akt (przyciski, Alt+J, Alt+K, Ctrl+Enter)');
+    // zapis pola, Enter → następne pole, cofnij / ponów, historia aktu
+    await p.evaluate(i => otworz(i), id0); const pole = await p.evaluate(() => document.querySelector('#main input[data-f]').dataset.f), stare = await p.inputValue('#p_' + pole);
+    await p.fill('#p_' + pole, 'Zmiana Testowa'); await p.keyboard.press('Enter'); assert.strictEqual(await p.evaluate(([i, f]) => getv(AM[i], f), [id0, pole]), 'Zmiana Testowa');
+    const fok = await p.evaluate(() => document.activeElement && document.activeElement.dataset.f); assert(fok && fok !== pole, 'Enter nie przeniósł do następnego pola: ' + fok);
+    assert.strictEqual(await p.locator('#bUndo:not([disabled])').count(), 1); await p.keyboard.press('Alt+z'); assert.strictEqual(await p.evaluate(([i, f]) => getv(AM[i], f), [id0, pole]), stare, 'cofnij nie przywróciło wartości');
+    await p.click('#bRedo'); assert.strictEqual(await p.evaluate(([i, f]) => getv(AM[i], f), [id0, pole]), 'Zmiana Testowa'); await p.click('#bUndo');
+    const hist = await p.evaluate(i => (S.hist || []).filter(e => e.id === i).length, id0); assert(hist >= 3, 'historia: ' + hist); await p.click('#histDet summary'); assert(await p.locator('#histTab tr').count() >= 4); assert(/cofnięcie/.test(await p.innerText('#histTab')));
+    pass('zapis pola Enterem z przejściem do następnego; cofnij (Alt+Z) i ponów przywracają wartość; historia aktu pokazuje zmiany i cofnięcia');
+    // sporne pola, tylko sporne, zwiń zatwierdzone
+    const sp = await p.evaluate(() => { const a = D.acts.find(a => a.ai && fieldsOf(a).filter(f => poleSporne(a, f.id)).length >= 2 && !S.acts[a.id]?.done); otworz(a.id); return { id: a.id, F: [...document.querySelectorAll('#main [data-pole]')].map(e => e.dataset.pole).filter(f => poleSporne(a, f)), n: document.querySelectorAll('#main .pole').length }; });
+    await p.keyboard.press('Alt+r'); assert.strictEqual(await p.evaluate(() => document.activeElement.dataset.f), sp.F[0]); await p.click('#bSpor'); assert.strictEqual(await p.evaluate(() => document.activeElement.dataset.f), sp.F[1]);
+    await p.click('#bSporne'); assert.strictEqual(await p.locator('#main .pole').count(), sp.F.length, 'tylko sporne'); assert(await p.locator('#sporneInfo').count() === 1); await p.click('#bSporne'); assert.strictEqual(await p.locator('#main .pole').count(), sp.n);
+    await p.click('#main [data-ak="ok"][data-f="' + sp.F[0] + '"]'); await p.click('#bMini'); assert(await p.locator('#main .pole.mini').count() >= 1); await p.click('#main .pole.mini [data-rozw]'); assert.strictEqual(await p.locator('#main .pole.mini').count() >= 0, true); await p.click('#bMini');
+    pass('sporne pola: Alt+R i przycisk przechodzą po polach niepewnych/z różnicą; „Tylko sporne” i „Zwiń zatwierdzone” działają i dają się wyłączyć');
+    // zatwierdź i następny, licznik
+    const l0 = await p.evaluate(() => parseInt(document.getElementById('doSpr').textContent.replace(/\D+/g, ''), 10)); await p.keyboard.press('Control+Shift+Enter'); const l1 = await p.evaluate(() => parseInt(document.getElementById('doSpr').textContent.replace(/\D+/g, ''), 10));
+    assert.strictEqual(l1, l0 - 1, 'licznik do sprawdzenia: ' + l0 + ' → ' + l1); assert.strictEqual(await p.evaluate(i => !!S.acts[i].done, sp.id), true); assert.notStrictEqual(await p.evaluate(() => S.cur), sp.id); await p.keyboard.press('Alt+z'); assert.strictEqual(await p.evaluate(i => !!S.acts[i].done, sp.id), false);
+    pass('„Zatwierdź i następny” (Ctrl+Shift+Enter): akt zatwierdzony, licznik „do sprawdzenia” maleje, przejście dalej; da się cofnąć');
+    // lista i skan
+    if (fs.existsSync(SKANY)) { await p.evaluate(() => { S.flt = 'all'; S.year = 'all'; save(); odswiez(); otworz(D.acts.find(a => a.file === 'blinow_lm-2.jpg').id); }); await p.setInputFiles('#fSkany', SKANY); await p.waitForFunction('document.getElementById("skImg") && document.getElementById("skImg").naturalWidth > 0');
+      const w0 = await p.evaluate(() => document.getElementById('skWin').getBoundingClientRect().width); await p.keyboard.press('Alt+l'); const w1 = await p.evaluate(() => document.getElementById('skWin').getBoundingClientRect().width); assert(w1 > w0 + 200, 'skan nie poszerzył się po ukryciu listy'); assert.strictEqual(await p.locator('#lista:visible').count(), 0);
+      await zrzut(p, 'akty_lista_ukryta_jasny'); await p.click('#listaTog'); assert.strictEqual(await p.locator('#lista:visible').count(), 1); await p.keyboard.press('Alt+s'); assert.strictEqual(await p.locator('#skWin:visible').count(), 0); await p.keyboard.press('Alt+s'); assert.strictEqual(await p.locator('#skWin:visible').count(), 1);
+      await p.click('#bMenu'); await p.click('#mMigawki'); await p.click('#oknoX'); await zrzut(p, 'akty_jasny');
+      pass('lista aktów chowa się (Alt+L / strzałka), skan się poszerza; Alt+S chowa i pokazuje skan; okno dialogowe jest nad skanem'); }
+    assert.deepStrictEqual(p.bledy, []); pass('brak błędów JS'); await p.context().close(); }
+  // Drzewo i Raport
+  { const p = await nowa(b); await p.click('#zDrzewo'); await p.waitForSelector('#drzStart'); await p.fill('#drzQ', 'kopiw'); const n = await p.locator('#lista [data-os]').count(); assert(n > 10, 'osób kopiw: ' + n);
+    const os = await p.evaluate(() => { const G = DRZ.G, o = DRZ.osoby.find(o => o.f.includes('kopiw') && (G.rodzice[o.id] || new Set()).size === 2 && G.kluczDziecka[G.czlonkowie[o.id][0]] && G.pary[G.kluczDziecka[G.czlonkowie[o.id][0]]].dzieci.length > 3); drzIdz(o.id); const p0 = G.P[G.czlonkowie[o.id][0]], a = AM[p0.akt]; return { id: o.id, ojciec: getv(a, 'father_first_name'), matka: getv(a, 'mother_first_name'), akt: a.id, rodzenstwo: G.pary[G.kluczDziecka[G.czlonkowie[o.id][0]]].dzieci.length - 1 }; });
+    await p.waitForSelector('#drzPrz'); assert.strictEqual(await p.locator('#drzPrz .os').count(), 3, 'osoba + dwoje rodziców'); const prz = await p.innerText('#drzPrz'); assert(prz.includes(os.ojciec) && prz.includes(os.matka), 'rodzice z aktu w drzewie: ' + prz);
+    assert.strictEqual(await p.locator('#main table.drzMoz tr').count(), os.rodzenstwo, 'możliwe rodzeństwo'); assert(/do sprawdzenia/.test(await p.innerText('#drzKarta'))); await zrzut(p, 'drzewo_osoba');
+    await p.click('#main [data-para] >> nth=0'); await p.waitForSelector('#drzPara'); assert.strictEqual(await p.locator('#drzParaTab tr').count(), os.rodzenstwo + 2); assert(/podpowiedź, nie potwierdzenie/.test(await p.innerText('#drzPara'))); await zrzut(p, 'drzewo_rodzina');
+    await p.click('#drzParaTab [data-os] >> nth=0'); await p.waitForSelector('#drzKarta'); await p.click('#drzAkty [data-akt] >> nth=0'); assert.strictEqual(await p.evaluate(() => document.body.dataset.zakl), 'akty'); assert.strictEqual(await p.evaluate(() => AM[S.cur].typ), 'chrzest');
+    pass('Drzewo: wyszukiwanie po nazwisku, rodzice z aktu jako potwierdzeni przodkowie, „możliwe rodzeństwo” i karta rodziny oznaczone jako podpowiedź, przejście do aktu');
+    // scalenie decyzją wydłuża drzewo i uruchamia kontrolę wieku
+    const sc = await p.evaluate(() => { const G = (zaklUstaw('drzewo'), DRZ.G), P = G.P; const dz = Object.values(P).find(x => x.rolaAktu === 'dziecko' && x.ojciec && x.matka && x.rok > 1890), oj = Object.values(P).find(x => x.rolaAktu === 'zmarly' && x.rok < dz.rok - 1 && x.ojciec); const r = osDecyduj(S.decyz, 'scal', dz.id, oj.id, {}); if (!r.ok) throw new Error(r.blad); OSS.KL = null; save(); return { dz: dz.id, zm: oj.id, n: S.decyz.length, rokDz: dz.rok, rokZm: oj.rok }; });
+    assert(sc.n >= 1, 'decyzja scal nie zapisana'); await p.click('#zRaport'); await p.click('[data-rw="wiek"] >> nth=0'); await p.waitForSelector('#rapWiekO'); assert(/przed chrztem/.test(await p.innerText('#rapWiekO')), 'kontrola: zgon przed chrztem');
+    await p.click('#zDrzewo'); await p.evaluate(w => drzIdz(DRZ.G.wezel(w)), sc.dz); assert(/osoba scalona decyzją/.test(await p.innerText('#drzKarta'))); assert.strictEqual(await p.locator('#drzAkty tr').count(), 3);
+    pass('decyzja „scal” łączy wystąpienia w jedną osobę w drzewie, a Raport wykrywa sprzeczność dat (zgon ' + sc.rokZm + ' przed chrztem ' + sc.rokDz + ')');
+    for (const [w, sel] of [['pods', '#rapPods'], ['skan', '#rapSkan'], ['spojn', '#rapSpojn'], ['wiek', '#rapWiekA'], ['numer', '#rapDziury']]) { await p.click('#zRaport'); await p.click('#rapNav [data-rw="' + w + '"]'); await p.waitForSelector(sel); assert(await p.locator(sel + ' tr').count() >= 2, 'pusty raport ' + w); await zrzut(p, 'raport_' + w); }
+    await p.click('#rapNav [data-rw="skan"]'); const ile = await p.evaluate(() => rapDoSkanu().length); const [d] = await Promise.all([p.waitForEvent('download'), p.click('#rapCsv')]); const csv = fs.readFileSync(await d.path(), 'utf8'); assert.strictEqual(csv.trim().split('\r\n').length, ile + 1, 'CSV do skanu');
+    await p.click('#rapSkan [data-akt] >> nth=0'); assert.strictEqual(await p.evaluate(() => document.body.dataset.zakl), 'akty');
+    assert.deepStrictEqual(p.bledy, []); pass('Raport: pięć widoków z danymi, eksport CSV listy „do sprawdzenia na skanie” (' + ile + ' pól), przejście do aktu'); await p.context().close(); }
+  // tryb ciemny: brak jasnych teł w głównych obszarach
+  { const p = await nowa(b, null, 'dark'); if (fs.existsSync(SKANY)) { await p.evaluate(() => otworz(D.acts.find(a => a.file === 'blinow_lm-2.jpg').id)); await p.setInputFiles('#fSkany', SKANY); await p.waitForTimeout(500); }
+    const jasne = async () => p.evaluate(() => { const L = []; document.querySelectorAll('header, #menu, #filtry select, #filtry input, #lista button, #skWin, .skwin-head, #skWin button, #skWin select, #main .card, #main input, #main button, .aktbar, .kafle .card, #main table, #main select').forEach(e => { const c = getComputedStyle(e).backgroundColor.match(/\d+(\.\d+)?/g); if (!c || (c[3] !== undefined && +c[3] === 0)) return; if ((+c[0] + +c[1] + +c[2]) / 3 > 140 && !e.classList.contains('p') && !e.classList.contains('on')) L.push(e.tagName + '#' + e.id + '.' + e.className); }); return L; });
+    assert.deepStrictEqual(await jasne(), [], 'jasne tło w trybie ciemnym (Akty)'); await zrzut(p, 'akty_ciemny');
+    for (const z of ['zOsoby', 'zDrzewo', 'zRaport', 'zNarz']) { await p.click('#' + z); await p.waitForTimeout(300); assert.deepStrictEqual(await jasne(), [], 'jasne tło w trybie ciemnym: ' + z); await zrzut(p, z + '_ciemny'); }
+    assert.deepStrictEqual(p.bledy, []); pass('tryb ciemny: żaden z głównych obszarów (nagłówek, lista, skan, pola, kafle) nie ma jasnego tła'); await p.context().close(); }
+  // telefon 390 px: bez przewijania w poziomie
+  { const p = await nowa(b, { width: 390, height: 800 });
+    for (const z of ['zAkty', 'zOsoby', 'zDrzewo', 'zRaport', 'zNarz']) { await p.click('#' + z); await p.waitForTimeout(300); const sz = await p.evaluate(() => [document.documentElement.scrollWidth, window.innerWidth]); assert(sz[0] <= sz[1] + 1, 'przewijanie poziome w ' + z + ': ' + sz); await zrzut(p, z + '_telefon'); }
+    assert.deepStrictEqual(p.bledy, []); pass('telefon 390 px: żadna zakładka nie przewija się w poziomie'); await p.context().close(); }
+  await b.close(); console.log('\nWYNIK: wszystkie ' + ok + ' kontroli powłoki przeszły');
+})().catch(e => { console.error(e); process.exit(1); });

@@ -2,16 +2,17 @@
 <html lang="pl"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Multitool v1 – akty</title>
 <style>
-:root{color-scheme:light;--bg:#f6f4ef;--card:#fff;--ink:#22262b;--mut:#687079;--line:#d9d5cb;--acc:#2f5d8a;--ok:#2e7d4f;--warn:#a86500;--err:#b3261e}
-@media (prefers-color-scheme:dark){:root{color-scheme:dark;--bg:#16181b;--card:#1f2226;--ink:#e6e3dc;--mut:#9aa1a9;--line:#353a40;--acc:#7fb0e0;--ok:#6cc08b;--warn:#e0a84a;--err:#ef8a80}}
+:root{color-scheme:light;--bg:#f6f4ef;--card:#fff;--ink:#22262b;--mut:#687079;--line:#d9d5cb;--acc:#2f5d8a;--accink:#fff;--ok:#2e7d4f;--warn:#a86500;--err:#b3261e;--note-bg:#f9e7c0;--note-ink:#4a3300;--toast-bg:#22262b;--toast-ink:#fff;--skan-bg:#111;--cien:rgba(0,0,0,.25)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){color-scheme:dark;--bg:#16181b;--card:#1f2226;--ink:#e6e3dc;--mut:#9aa1a9;--line:#353a40;--acc:#7fb0e0;--accink:#0e1a26;--ok:#6cc08b;--warn:#e0a84a;--err:#ef8a80;--note-bg:#3a2f14;--note-ink:#f1dca8;--toast-bg:#e6e3dc;--toast-ink:#16181b;--skan-bg:#0b0c0d;--cien:rgba(0,0,0,.6)}}
+:root[data-theme="dark"]{color-scheme:dark;--bg:#16181b;--card:#1f2226;--ink:#e6e3dc;--mut:#9aa1a9;--line:#353a40;--acc:#7fb0e0;--accink:#0e1a26;--ok:#6cc08b;--warn:#e0a84a;--err:#ef8a80;--note-bg:#3a2f14;--note-ink:#f1dca8;--toast-bg:#e6e3dc;--toast-ink:#16181b;--skan-bg:#0b0c0d;--cien:rgba(0,0,0,.6)}
 *{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.45 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
-header{position:sticky;top:0;z-index:5;background:var(--card);border-bottom:1px solid var(--line);padding:8px 16px;display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+header{position:sticky;top:0;z-index:70;background:var(--card);border-bottom:1px solid var(--line);padding:8px 16px;display:flex;flex-wrap:wrap;gap:8px;align-items:center}
 h1{font-size:16px;margin:0 8px 0 0}h2{font-size:16px;margin:0 0 4px}h3{font-size:15px;margin:0 0 6px}
 button,select,input,textarea{font:inherit;color:var(--ink)}button{padding:5px 10px;border:1px solid var(--line);border-radius:6px;background:var(--card);cursor:pointer}button:hover{border-color:var(--acc)}
-button.p{background:var(--acc);border-color:var(--acc);color:#fff}button.d{color:var(--err)}button:disabled{opacity:.5;cursor:default}button.sm{padding:2px 8px;font-size:13px}
+button.p{background:var(--acc);border-color:var(--acc);color:var(--accink)}button.d{color:var(--err)}button:disabled{opacity:.5;cursor:default}button.sm{padding:2px 8px;font-size:13px}
 input,select,textarea{padding:5px 8px;border:1px solid var(--line);border-radius:6px;background:var(--card);max-width:100%}textarea{width:100%}
 .ind{border:0;background:none;color:var(--mut);cursor:pointer;text-decoration:underline dotted}.ind.warn{color:var(--warn);font-weight:600}
-#pasekStan{background:var(--err);color:#fff;padding:8px 16px;font-weight:600}#przyp{background:#f9e7c0;color:#4a3300;padding:6px 16px}
+#pasekStan{background:var(--err);color:var(--accink);padding:8px 16px;font-weight:600}#przyp{background:var(--note-bg);color:var(--note-ink);padding:6px 16px}
 .wrap{display:grid;grid-template-columns:minmax(260px,340px) 1fr;gap:16px;padding:16px;max-width:1300px;margin:0 auto}
 @media (max-width:820px){.wrap{grid-template-columns:1fr}#lista{max-height:38vh}}
 .col{min-width:0}#filtry{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:8px}#filtry input[type=search]{flex:1 1 140px;min-width:0}
@@ -23,17 +24,17 @@ input,select,textarea{padding:5px 8px;border:1px solid var(--line);border-radius
 .blok{margin:14px 0 4px;font-size:14px;color:var(--mut);border-bottom:1px solid var(--line)}.pola{display:grid;grid-template-columns:1fr;gap:8px}.pole{border:1px solid var(--line);border-radius:8px;padding:8px}.pole.ok{border-color:var(--ok)}.pole.un{border-color:var(--warn)}.pole.df{border-color:var(--err)}
 .pole label{display:block;font-size:12px;color:var(--mut)}.pole input{width:100%}.chips{display:flex;flex-wrap:wrap;gap:4px;margin-top:4px;align-items:center}
 .chip{padding:1px 8px;font-size:12px;border-radius:12px}.bdg{font-size:11px;border:1px solid var(--line);border-radius:10px;padding:0 6px;color:var(--mut)}.bdg.ok{color:var(--ok);border-color:var(--ok)}.bdg.un{color:var(--warn);border-color:var(--warn)}
-#menu{position:absolute;right:16px;top:44px;z-index:9;background:var(--card);border:1px solid var(--line);border-radius:8px;padding:6px;display:flex;flex-direction:column;gap:4px;min-width:240px}#menu[hidden]{display:none}
-#okno{position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:20;display:flex;align-items:center;justify-content:center;padding:16px}#okno[hidden]{display:none}.okno-in{background:var(--card);border-radius:10px;padding:16px;max-width:760px;width:100%;max-height:85vh;overflow:auto}
-#toast{position:fixed;left:50%;bottom:16px;transform:translateX(-50%);background:#222;color:#fff;padding:8px 14px;border-radius:8px;display:none;z-index:30;max-width:92vw}
+#menu{position:absolute;right:16px;top:100%;z-index:9;max-height:80vh;overflow:auto;background:var(--card);border:1px solid var(--line);border-radius:8px;padding:6px;display:flex;flex-direction:column;gap:4px;min-width:240px}#menu[hidden]{display:none}
+#okno{position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:120;display:flex;align-items:center;justify-content:center;padding:16px}#okno[hidden]{display:none}.okno-in{background:var(--card);border-radius:10px;padding:16px;max-width:760px;width:100%;max-height:85vh;overflow:auto}
+#toast{position:fixed;left:50%;bottom:16px;transform:translateX(-50%);background:var(--toast-bg);color:var(--toast-ink);padding:8px 14px;border-radius:8px;display:none;z-index:130;max-width:92vw}
 table{border-collapse:collapse;width:100%;font-size:13px}td,th{border-bottom:1px solid var(--line);padding:3px 6px;text-align:left;word-break:break-word}
-#skView{position:relative;height:min(52vh,420px);overflow:hidden;background:#111;border-radius:8px;touch-action:none;cursor:grab;margin:6px 0}#skView[hidden]{display:none}#skLayer{position:absolute;left:0;top:0;transform-origin:0 0}#skLayer img{display:block;max-width:none;user-select:none}
+#skView{position:relative;height:min(52vh,420px);overflow:hidden;background:var(--skan-bg);border-radius:8px;touch-action:none;cursor:grab;margin:6px 0}#skView[hidden]{display:none}#skLayer{position:absolute;left:0;top:0;transform-origin:0 0}#skLayer img{display:block;max-width:none;user-select:none}
 .skbox{position:absolute;border:solid;pointer-events:none}.skbox.roi{border-color:rgba(245,158,11,.85)}.skbox.pole{border-color:#06b6d4}.skbox.nowy{border-color:#e11d48}
 .pick{display:flex;flex-wrap:wrap;gap:6px;align-items:center;margin-top:4px}.pick input[type=number]{width:90px}details.skan>summary,details.txt>summary,details.kal>summary{cursor:pointer}
 .tpodglad{white-space:pre-wrap;border:1px solid var(--line);border-radius:6px;padding:8px;margin-top:6px}.mq{background:rgba(224,168,74,.35)}.mr{background:rgba(239,138,128,.35)}.mg{background:rgba(127,176,224,.3)}.sugw{margin:4px 0}
 
 :root{--skw:clamp(480px,42vw,640px)}
-#skWin{position:fixed;top:64px;right:12px;bottom:12px;width:min(44vw,720px);min-width:300px;min-height:160px;display:flex;flex-direction:column;background:var(--card);color:var(--ink);border:1px solid var(--line);border-radius:10px;box-shadow:0 8px 24px rgba(0,0,0,.25);z-index:50;resize:both;overflow:hidden}
+#skWin{position:fixed;top:64px;right:12px;bottom:12px;width:min(44vw,720px);min-width:300px;min-height:160px;display:flex;flex-direction:column;background:var(--card);color:var(--ink);border:1px solid var(--line);border-radius:10px;box-shadow:0 8px 24px var(--cien);z-index:50;resize:both;overflow:hidden}
 #skWin[hidden]{display:none}
 body.hdr-ukryty #skWin{top:12px}
 .skwin-head{display:flex;justify-content:space-between;align-items:center;gap:6px;padding:6px 8px;cursor:move;background:var(--bg);color:var(--ink);border-bottom:1px solid var(--line);border-radius:9px 9px 0 0;user-select:none;touch-action:none;flex-wrap:wrap}
@@ -44,7 +45,7 @@ body.hdr-ukryty #skWin{top:12px}
 :root{--lw:300px}
 body.sk-dok .wrap{display:block;margin-left:calc(var(--lw) + var(--skw));max-width:none;padding:12px 16px}
 body.sk-dok .wrap>.col:first-child{position:fixed;left:0;top:var(--tt,0px);bottom:0;width:var(--lw);overflow:auto;z-index:40;background:var(--card);padding:8px;border-right:1px solid var(--line)}
-body.sk-dok #skWin{left:var(--lw);top:var(--tt,0px);bottom:0;width:var(--skw);border-radius:0;box-shadow:none;border-width:0 1px 0 0;border-color:var(--line);resize:none}
+body.sk-dok #skWin{z-index:40;left:var(--lw);top:var(--tt,0px);bottom:0;width:var(--skw);border-radius:0;box-shadow:none;border-width:0 1px 0 0;border-color:var(--line);resize:none}
 body.sk-dok.lista-ukryta .wrap>.col:first-child{display:none}
 body.sk-dok.lista-ukryta #skWin{left:0;width:calc(var(--skw) + var(--lw))}
 body.sk-dok.lista-ukryta .wrap{margin-left:calc(var(--skw) + var(--lw))}
@@ -57,9 +58,38 @@ body.sk-dok.lista-ukryta .listaTog{left:0}
 .hdrPok{position:fixed;top:0;left:0;z-index:60;display:none}
 body.hdr-ukryty header{display:none}
 body.hdr-ukryty .hdrPok{display:block}
-@media (max-width:820px){body.sk-dok #skWin{left:8px;right:8px;top:auto;bottom:8px;width:auto;height:55vh;border-width:1px;border-radius:10px;border-color:var(--line)}body.sk-dok .wrap{margin-left:0;padding:12px 16px}body.sk-dok .wrap>.col:first-child{position:static;width:auto;border-right:0}body.sk-dok.lista-ukryta #skWin{left:8px;width:auto}}
+@media (max-width:820px){#skWin,body.sk-dok #skWin,body.sk-dok.lista-ukryta #skWin{position:sticky;left:auto;right:auto;top:0;bottom:auto;width:auto;min-width:0;height:44vh;margin:0;border-width:0 0 1px 0;border-radius:0;border-color:var(--line);box-shadow:none;resize:none;z-index:40}#skWin.bezobrazu,body.sk-dok #skWin.bezobrazu{height:auto;position:static}#skWin.bezobrazu .skwin-cialo{flex:none}#skWin #skView{min-height:120px}body.sk-dok .wrap,body.sk-dok.lista-ukryta .wrap{display:grid;margin-left:0;padding:12px 16px}body.sk-dok .wrap>.col:first-child{position:static;width:auto;border-right:0;padding:0;background:none}.skwin-head{cursor:default;border-radius:0}#skDok,#skHdr{display:none}}
+
+/* ===== powłoka v2: zakładki, pasek akcji aktu, mini-pola, narzędzia, raport, drzewo ===== */
+#zakl{display:flex;gap:4px;flex-wrap:wrap}#zakl button{border-radius:6px}
+#doSpr{display:inline-flex;align-items:center;gap:6px;font-size:13px;color:var(--mut)}#doSpr i{display:inline-block;width:70px;height:6px;background:var(--line);border-radius:3px;overflow:hidden}#doSpr i b{display:block;height:100%;background:var(--ok)}
+body:not([data-zakl="akty"]) #doSpr{display:none}
+body[data-zakl="narz"] .wrap,body[data-zakl="raport"] .wrap{grid-template-columns:1fr;max-width:1200px}
+body[data-zakl="narz"] .wrap>.col:first-child,body[data-zakl="raport"] .wrap>.col:first-child{display:none}
+body[data-zakl="drzewo"] .wrap{max-width:none}
+.aktbar{position:sticky;bottom:0;z-index:6;display:flex;flex-wrap:wrap;gap:6px;align-items:center;background:var(--card);border-top:1px solid var(--line);margin:12px -14px -14px;padding:8px 14px;border-radius:0 0 10px 10px;box-shadow:0 -6px 12px -10px var(--cien)}
+.aktbar .sp{flex:1}
+.widok{display:flex;flex-wrap:wrap;gap:6px;align-items:center;margin:6px 0}.widok button.on{border-color:var(--acc);color:var(--acc);font-weight:600}
+.pole.mini{display:flex;gap:8px;align-items:baseline;padding:4px 8px}.pole.mini span{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis}.pole.mini strong{font-weight:600}
+.pole.fok{outline:2px solid var(--acc)}
+kbd{border:1px solid var(--line);border-bottom-width:2px;border-radius:4px;padding:0 5px;font:12px ui-monospace,monospace;background:var(--bg)}
+.kafle{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:12px}.kafle .card h3{margin-bottom:8px}.kafle .card .acts{margin:6px 0 0;flex-direction:column;align-items:stretch}.kafle .card .acts button{text-align:left}
+.skr{display:grid;grid-template-columns:auto 1fr;gap:4px 12px;font-size:13px;align-items:baseline}
+.rtab{overflow:auto;max-height:60vh;border:1px solid var(--line);border-radius:8px}.rtab table td,.rtab table th{white-space:nowrap}.rtab table td.w,.rtab table th.w{white-space:normal;min-width:120px}
+.rnav{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:12px}.rnav button.on{background:var(--acc);border-color:var(--acc);color:var(--accink)}
+a.lk,button.lk{border:0;background:none;padding:0;color:var(--acc);text-decoration:underline;cursor:pointer;font:inherit}
+/* drzewo */
+.drz{display:flex;align-items:center;gap:0;overflow:auto;padding:8px 0}.drz .gal{display:flex;flex-direction:column;justify-content:center;gap:6px;position:relative;padding-left:18px;margin-left:0}
+.drz .wezel{display:flex;align-items:center}.os{border:1px solid var(--line);border-radius:8px;background:var(--card);padding:5px 9px;min-width:150px;max-width:230px;font-size:13px;cursor:pointer;text-align:left}
+.os:hover{border-color:var(--acc)}.os.m{border-left:4px solid var(--acc)}.os.k{border-left:4px solid var(--warn)}.os.cur{outline:2px solid var(--acc)}.os.moz{border-style:dashed}.os small{display:block;color:var(--mut)}
+.drz .gal>.wezel{position:relative}.drz .gal>.wezel::before{content:"";position:absolute;left:-18px;top:50%;width:18px;border-top:1px solid var(--mut)}
+.drz .gal::before{content:"";position:absolute;left:0;top:25%;bottom:25%;border-left:1px solid var(--mut)}.drz .gal.jeden::before{display:none}
+ul.pot{list-style:none;margin:0;padding-left:18px;border-left:1px solid var(--line)}ul.pot>li{margin:4px 0}ul.pot.korzen{border-left:0;padding-left:0}
+.fakty{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:6px 14px;font-size:13px}
+@media (max-width:820px){header{padding:8px 16px;gap:6px}h1{width:100%;font-size:15px}#zakl{width:100%;overflow-x:auto;flex-wrap:nowrap}.wrap{padding:12px 16px;gap:12px}.aktbar{margin:12px -14px -14px}.rtab{max-height:none}.drz .os{min-width:120px}}
 </style></head><body>
-<header><h1 id="tytul">Multitool v1 · akt zgonu</h1><span id="zakl"><button id="zAkty" class="p">Akty</button> <button id="zOsoby">Osoby</button></span> <select id="selTyp" aria-label="Typ aktu" title="Typ aktu"></select><span class="muted" id="prog"></span><button class="ind" id="kopiaInd" title="Zrób kopię pełną">decyzji i zmian bez kopii: 0</button><span style="flex:1"></span><button id="bMenu">Menu ▾</button>
+<script>try{var m=localStorage.getItem('mt.motyw');if(m==='light'||m==='dark')document.documentElement.setAttribute('data-theme',m);}catch(e){}</script>
+<header><h1 id="tytul">Multitool v1 · akt zgonu</h1><nav id="zakl" aria-label="Moduły"><button id="zAkty" class="p" title="Alt+1">Akty</button><button id="zOsoby" title="Alt+2">Osoby</button><button id="zDrzewo" title="Alt+3">Drzewo</button><button id="zRaport" title="Alt+4">Raport</button><button id="zNarz" title="Alt+5">Narzędzia</button></nav> <select id="selTyp" aria-label="Typ aktu" title="Typ aktu"></select><span class="muted" id="prog"></span><span id="doSpr" title="Akty z odczytem, jeszcze niezatwierdzone"></span><button class="ind" id="kopiaInd" title="Zrób kopię pełną">decyzji i zmian bez kopii: 0</button><span style="flex:1"></span><button id="bMenu">Menu ▾</button>
 <div id="menu" hidden><button id="mCsv">Eksport CSV (zgony)</button><button id="mKopia">Kopia pełna (JSON)</button><button id="mKopiaWczytaj">Wczytaj kopię (JSON)…</button><button id="mImpDop">Import CSV zatwierdzeń (dopisz)…</button><button id="mImpZast">Import CSV zatwierdzeń (zastąp)…</button><button id="mMigawki">Migawki / przywróć…</button><button id="mKolejka">Dane źródłowe się zmieniły (0)</button><button id="mMigr">Migracja zgonów z CSV…</button><button id="mAuto">Autozapis do pliku…</button><button id="mDecJson" class="osMenu">Decyzje o osobach: eksport JSON</button><button id="mDecCsv" class="osMenu">Decyzje o osobach: eksport CSV</button><button id="mDecImp" class="osMenu">Decyzje o osobach: import JSON…</button><button id="mDop" class="osMenu">Import decyzji dop.v1…</button></div></header>
 <div id="pasekStan" hidden></div><div id="przyp" hidden></div>
 <div class="wrap"><div class="col"><div id="filtry"></div><div id="lista"></div></div><div class="col" id="main"></div></div>
@@ -1198,6 +1228,62 @@ function osObsluz(st, m, wyslij){
   if (m.t === 'profil') return wyslij({t: 'profil', req: m.req, p: st.E.P[m.id] || null});
 }
 
+/* app/moduly/rodziny_rdzen.js – graf osób i rodzin z aktów + kontrole (czyste funkcje, bez DOM). Wymaga: norm.js, raport (wiekLat), moduly/wystapienia.js, moduly/decyzje.js, osoby_rdzen.js (osModel).
+   Zasada: POTWIERDZONE jest tylko to, co wynika z jednego aktu (dziecko–rodzice, małżonkowie) oraz z decyzji „scal” użytkownika (osoba = klaster wystąpień).
+   Wszystko inne (ta sama para imion rodziców w różnych aktach) to PODPOWIEDŹ – zwracana osobno i oznaczana w widoku jako „możliwe”. Niczego tu nie scalamy i nie dopisujemy do aktów. */
+const RDZ_DZIECI = {dziecko: ['ojciec', 'matka'], zmarly: ['ojciec', 'matka'], pan_mlody: ['ojciec_pana', 'matka_pana'], panna_mloda: ['ojciec_panny', 'matka_panny']};
+const RDZ_PARY = [['ojciec', 'matka'], ['pan_mlody', 'panna_mloda'], ['ojciec_pana', 'matka_pana'], ['ojciec_panny', 'matka_panny'], ['zmarly', 'malzonek']];
+const RDZ_ROLA = {dziecko: 'dziecko (chrzest)', zmarly: 'zmarły/a', ojciec: 'ojciec', matka: 'matka', malzonek: 'małżonek', pan_mlody: 'pan młody', panna_mloda: 'panna młoda', ojciec_pana: 'ojciec pana młodego', matka_pana: 'matka pana młodego', ojciec_panny: 'ojciec panny młodej', matka_panny: 'matka panny młodej'};
+const rdzKI = v => kluczImienia(v)[0] || '';
+const rdzKN = v => { const k = kluczNazwiska(v); return k ? k.k2 : ''; };
+// klucz pary rodziców: imię ojca + nazwisko ojca + imię matki (wszystkie trzy wymagane); nazwisko rodowe matki tylko do pokazania
+const rdzKluczPary = (oi, on, mi) => { const a = rdzKI(oi), b = rdzKN(on), c = rdzKI(mi); return a && b && c ? b + '|' + a + '|' + c : ''; };
+/* graf: M = model (osModel), P = profile (wystProfile), K = klastry decyzji (decKlastry).
+   Zwraca {P, wezel(w)→id osoby, czlonkowie[id]→[w], rodzice[id]→Set, dzieci[id]→Set, malz[id]→Set, pary{klucz→{ojciec, nazwisko, matka, rodowe:Set, dzieci:[w], rodziceW:[w]}}, kluczDziecka{w→klucz}, kluczRodzica{w→klucz}} */
+function rdzGraf(M, P, K){ const G = {P, czlonkowie: {}, rodzice: {}, dzieci: {}, malz: {}, pary: {}, kluczDziecka: {}, kluczRodzica: {}}, czyja = (K && K.czyja) || {};
+  G.wezel = w => czyja[w] || w; const dod = (o, k, v) => (o[k] = o[k] || new Set()).add(v);
+  const poAkcie = {}; M.wystapienia.forEach(w => { if (!P[w.id]) return; (poAkcie[w.akt] = poAkcie[w.akt] || {})[w.rola] = w.id; (G.czlonkowie[G.wezel(w.id)] = G.czlonkowie[G.wezel(w.id)] || []).push(w.id); });
+  for (const akt in poAkcie) { const R = poAkcie[akt];
+    for (const dz in RDZ_DZIECI) { if (!R[dz]) continue; const [ro, rm] = RDZ_DZIECI[dz], d = G.wezel(R[dz]);
+      [R[ro], R[rm]].forEach(r => { if (r && G.wezel(r) !== d) { dod(G.rodzice, d, G.wezel(r)); dod(G.dzieci, G.wezel(r), d); } });
+      const po = R[ro] && P[R[ro]], pm = R[rm] && P[R[rm]], k = po && pm ? rdzKluczPary(po.imie, po.nazwisko, pm.imie) : '';
+      if (k) { const x = G.pary[k] = G.pary[k] || {klucz: k, ojciec: po.imie, nazwisko: po.nazwisko, matka: pm.imie, rodowe: new Set(), dzieci: [], rodziceW: []}; if (pm.rodowe) x.rodowe.add(pm.rodowe); x.dzieci.push(R[dz]); x.rodziceW.push(R[ro], R[rm]); G.kluczDziecka[R[dz]] = k; G.kluczRodzica[R[ro]] = k; G.kluczRodzica[R[rm]] = k; } }
+    RDZ_PARY.forEach(([x, y]) => { if (R[x] && R[y] && G.wezel(R[x]) !== G.wezel(R[y])) { dod(G.malz, G.wezel(R[x]), G.wezel(R[y])); dod(G.malz, G.wezel(R[y]), G.wezel(R[x])); } }); }
+  return G; }
+// rok zdarzeń osoby z jej wystąpień (tylko to, co mówią akty): chrzest (jako dziecko), ślub, zgon (z wiekiem)
+function rdzZycie(G, id){ const o = {ur: null, sl: [], zg: null, wiekZg: '', plec: '', imie: '', nazwisko: '', rodowe: ''}; let waga = -1;
+  (G.czlonkowie[id] || []).forEach(w => { const p = G.P[w]; if (!p) return; if (p.rolaAktu === 'dziecko') o.ur = o.ur == null ? p.rok : Math.min(o.ur, p.rok); if (p.rolaAktu === 'pan_mlody' || p.rolaAktu === 'panna_mloda') o.sl.push(p.rok); if (p.rolaAktu === 'zmarly') { o.zg = p.rok; o.wiekZg = p.wiek || ''; }
+    if (!o.plec && p.plec) o.plec = p.plec; const g = /^(dziecko|zmarly|pan_mlody|panna_mloda)$/.test(p.rolaAktu) ? 2 : 1; if (g > waga && (p.imie || p.nazwisko)) { waga = g; o.imie = p.imie; o.nazwisko = p.nazwisko; o.rodowe = p.rodowe || ''; } else if (!o.rodowe && p.rodowe) o.rodowe = p.rodowe; });
+  return o; }
+const rdzNazwa = z => ((z.imie || '?') + ' ' + (z.nazwisko || (z.rodowe ? 'z d. ' + z.rodowe : '(bez nazwiska)'))).trim() + (z.nazwisko && z.rodowe && fold(z.rodowe) !== fold(z.nazwisko) ? ' z d. ' + z.rodowe : '');
+const rdzLata = z => [z.ur != null ? 'chrz. ' + z.ur : '', z.sl.length ? 'ślub ' + z.sl.join(', ') : '', z.zg != null ? 'zm. ' + z.zg + (z.wiekZg ? ' (wiek ' + z.wiekZg + ')' : '') : ''].filter(Boolean).join(' · ');
+// przerwy między kolejnymi dziećmi pary dłuższe niż `prog` lat – podpowiedź, że może brakować aktu (nie fakt)
+function rdzPrzerwy(lata, prog){ const L = [...new Set(lata.filter(y => Number.isFinite(y)))].sort((a, b) => a - b), out = []; for (let i = 1; i < L.length; i++) if (L[i] - L[i - 1] > (prog || 4)) out.push([L[i - 1], L[i]]); return out; }
+
+/* ---------- kontrole do zakładki „Raport” ---------- */
+const rdzLiczba = v => { const m = String(v == null ? '' : v).match(/\d+/); return m ? +m[0] : null; };
+// 1. wiek w aktach poza zwykłym zakresem (do sprawdzenia na skanie): rodzice przy chrzcie, młodzi przy ślubie, zmarli
+function kontWiekWAktach(akty, wart){ const out = [], spr = (a, f, et, min, max) => { const v = wart(a, f); if (normBrak(v)) return; const n = /mies|tyg|dni|dzie|godz/i.test(String(v)) ? 0 : rdzLiczba(v); if (n == null) return; if (n < min || n > max) out.push({id: a.id, f, msg: et + ': ' + v + ' (zwykle ' + min + '–' + max + ' lat)'}); };
+  akty.forEach(a => { if (a.typ === 'chrzest') { spr(a, 'father_age', 'wiek ojca przy chrzcie', 16, 75); spr(a, 'mother_age', 'wiek matki przy chrzcie', 14, 52); } else if (a.typ === 'malzenstwo') { spr(a, 'groom_age', 'wiek pana młodego', 16, 85); spr(a, 'bride_age', 'wiek panny młodej', 14, 80); } else if (a.typ === 'zgon') spr(a, 'age', 'wiek zmarłego', 0, 105); });
+  return out; }
+// 2. osoby scalone decyzją: zgodność wieku z latami aktów (chrzest ↔ ślub ↔ zgon). Tylko dla klastrów – bez decyzji użytkownika nie łączymy aktów.
+function kontWiekOsob(G){ const out = [];
+  for (const id in G.czlonkowie) { const C = G.czlonkowie[id]; if (C.length < 2) continue; const P = C.map(w => G.P[w]).filter(Boolean), ur = P.filter(p => p.rolaAktu === 'dziecko').map(p => p.rok), zg = P.find(p => p.rolaAktu === 'zmarly'), sl = P.filter(p => p.rolaAktu === 'pan_mlody' || p.rolaAktu === 'panna_mloda'), akty = P.map(p => p.akt);
+    const B = ur.length ? Math.min(...ur) : null, bl = (msg) => out.push({id, akty, msg});
+    if (ur.length > 1 && Math.max(...ur) !== B) bl('dwa chrzty w różnych latach (' + ur.join(', ') + ') – to raczej dwie osoby');
+    if (zg && B != null) { if (zg.rok < B) bl('zgon (' + zg.rok + ') przed chrztem (' + B + ')'); const w = wiekLat(zg.wiek); if (w != null && Math.abs((zg.rok - B) - w) > 2) bl('wiek w akcie zgonu: ' + zg.wiek + ', a od chrztu (' + B + ') do zgonu (' + zg.rok + ') minęło ' + (zg.rok - B) + ' lat'); }
+    sl.forEach(s => { if (B != null) { if (s.rok - B < 14) bl('ślub (' + s.rok + ') w wieku ' + (s.rok - B) + ' lat od chrztu (' + B + ')'); const w = rdzLiczba(s.wiek); if (w != null && Math.abs((s.rok - B) - w) > 2) bl('wiek w akcie ślubu: ' + s.wiek + ', a od chrztu (' + B + ') minęło ' + (s.rok - B) + ' lat'); } if (zg && s.rok > zg.rok) bl('ślub (' + s.rok + ') po zgonie (' + zg.rok + ')'); });
+    if (zg) P.filter(p => p.rolaAktu === 'ojciec' && p.typ === 'chrzest' && p.rok > zg.rok + 1).forEach(p => bl('ojciec przy chrzcie w ' + p.rok + ', a zgon w ' + zg.rok)), P.filter(p => p.rolaAktu === 'matka' && p.typ === 'chrzest' && p.rok > zg.rok).forEach(p => bl('matka przy chrzcie w ' + p.rok + ', a zgon w ' + zg.rok)); }
+  return out; }
+// 3. numeracja: małe dziury (1–3 numery) wewnątrz ciągu numerów jednego roku i typu + powtórzone numery
+function kontNumeracja(akty){ const g = {}; akty.forEach(a => { const n = parseInt(a.act, 10); if (!Number.isFinite(n) || !Number.isFinite(+a.year)) return; (g[a.typ + '|' + a.year] = g[a.typ + '|' + a.year] || []).push([n, a.id]); });
+  const dziury = [], duble = []; Object.keys(g).sort().forEach(k => { const [typ, rok] = k.split('|'), L = g[k].sort((x, y) => x[0] - y[0]);
+    for (let i = 1; i < L.length; i++) { const d = L[i][0] - L[i - 1][0]; if (d === 0) duble.push({typ, rok: +rok, nr: L[i][0], ids: [L[i - 1][1], L[i][1]]}); else if (d >= 2 && d <= 4) dziury.push({typ, rok: +rok, brak: Array.from({length: d - 1}, (_, j) => L[i - 1][0] + 1 + j), przed: L[i - 1][1], po: L[i][1]}); } });
+  return {dziury, duble}; }
+// 4. możliwe duble aktów zgonu: ta sama osoba (klucz imienia i nazwiska) i ta sama pełna data zgonu w dwóch aktach
+function kontDubleZgonow(akty, wart){ const g = {}; akty.forEach(a => { if (a.typ !== 'zgon') return; const d = String(wart(a, 'death_date') || ''); if (!/^\d{4}-\d{2}-\d{2}$/.test(d)) return; const k = rdzKN(wart(a, 'deceased_last_name')) + '|' + rdzKI(wart(a, 'deceased_first_name')) + '|' + d; if (k.startsWith('|') || k.includes('||')) return; (g[k] = g[k] || []).push(a.id); });
+  return Object.keys(g).filter(k => g[k].length > 1).map(k => ({data: k.split('|')[2], ids: g[k]})); }
+
 /* app/moduly/dane_adapter.js – adapter Pole (model danych) ↔ a.ai / a.lub / a.unc silnika weryfikacji zgonów (krok 3).
    Silnik (akt_zgon.js) nadal czyta obiekt „akt” w układzie v3: {id, year, act, ai, lub, unc, alts, file, roi, pola, tekst, lubRaw, lubName, era}.
    Tu powstaje ten układ z `dane_zgony.json` (zapis zwarty: pole = {v, s, u, z:[nr w zr, wiersz], alt:[…]}). Id aktu w silniku = id z modelu (ZG.Z00011); stary id (idx-…) jest w a.stary i trafia do eksportu CSV. */
@@ -1227,7 +1313,7 @@ const DANE_TYPY = [{"format":{"nazwa":"multitool-dane","wersja":1,"zakres":"malz
 const D = daneNaD(DANE, DANE_TYPY), AM = {}; D.wszystkie.forEach(a => AM[a.id] = a);
 const FIELDS = D.fields.filter(f => f.id !== 'death_time');
 let S = stPusty();
-const save = () => { histCommit(); stZapisz(); if (typeof stWskaznik === 'function') stWskaznik(); };
+const save = () => { const n0 = S.histN || 0; histCommit(); if (typeof cofPoZapisie === 'function') cofPoZapisie(n0); stZapisz(); if (typeof stWskaznik === 'function') stWskaznik(); };
 /* app/moduly/akt_zgon.js – silnik weryfikacji aktu zgonu (krok 3 planu).
    Funkcje PRZENIESIONE BEZ ZMIAN LOGIKI z narzedzia/weryfikacja_szablon_v3.html (wraz z łatkami buduj_baza_v4.py: LATF/CAUSEF, latName) – to ich parytet z bazą zgonów jest kryterium kroku 3.
    Nie ma tu kopii wklejanych na stałe: fold, esc, lev, csvCell, dl, wiekLat, dzien, raportSpojnosci, hist* pochodzą z wspolne/*.js (znaczniki w szablonie).
@@ -1589,7 +1675,7 @@ const ST_NAZWA = 'multitool', ST_WER = 2, ST_SKLADY = ['kv', 'pola', 'teksty', '
 const ST_LICZONE = ['pola', 'teksty', 'akty', 'decyzje'];   // zapisy, które zwiększają licznik „zmian bez kopii”
 let ST_DODATKI = [];   // dodatkowe zapisy [magazyn, klucz, wartość] dołączane do następnej transakcji stFlush (np. raport migracji)
 let ST_TRYB = 'idb', ST_DBP = null, ST_PODPIS = {}, ST_BAZA = {}, ST_HIST_N = 0, ST_T = null, ST_ZMIANY = 0, ST_OSTATNIA = null, ST_PERSIST = false, ST_BLAD = '', ST_KOLEJ = [];
-const ST_UST = ['year', 'cen', 'dec', 'flt', 'hideOk', 'hideDoneActs', 'noroi', 'onlyScan', 'hideMk', 'cur', 'tmode', 'tfs', 'q', 'repIgn', 'typ'];
+const ST_UST = ['year', 'cen', 'dec', 'flt', 'hideOk', 'hideDoneActs', 'noroi', 'onlyScan', 'hideMk', 'cur', 'tmode', 'tfs', 'q', 'repIgn', 'typ', 'sporne', 'miniOk'];
 function stOtworz(){ if (ST_DBP) return ST_DBP; ST_DBP = new Promise((ok, no) => { let r; try { r = indexedDB.open(ST_NAZWA, ST_WER); } catch (e) { return no(e); }
   r.onupgradeneeded = () => { ST_SKLADY.forEach(n => { if (!r.result.objectStoreNames.contains(n)) r.result.createObjectStore(n); }); };
   r.onsuccess = () => ok(r.result); r.onerror = () => no(r.error); r.onblocked = () => no(new Error('baza zablokowana przez inną kartę')); }); return ST_DBP; }
@@ -1820,21 +1906,26 @@ function wstaw(el, r){ el.innerHTML = r instanceof SurowyHtml ? r.s : esc(r); }
 const $ = id => document.getElementById(id);
 const curAct = () => AM[S.cur];
 function toast(t, ms){ const e = $('toast'); if (!e) return; e.textContent = t; e.style.display = 'block'; clearTimeout(toast.t); toast.t = setTimeout(() => e.style.display = 'none', ms || 2500); }
-function keepScroll(){ const y = window.scrollY; if (typeof renderAkt === 'function') { renderAkt(); renderLista(); } window.scrollTo(0, y); }
+const wAktach = () => typeof OSS === 'undefined' || OSS.zakl === 'akty';
+function keepScroll(){ if (!wAktach()) return; const y = window.scrollY; if (typeof renderAkt === 'function') { renderAkt(); renderLista(); } window.scrollTo(0, y); }
 const ZR = {csv: 'z CSV', txt: 'z tekstu', ai: 'AI', lub: 'indeks', bz: 'baza', akt: 'akt', edit: 'własne', auto: 'auto'};
 function przyjmij(a, f, v, src, extra){ commit(a, f, v, src, extra); keepScroll(); }
 const doAll = () => { const a = curAct(); if (!a || !a.ai) return toast('Brak odczytu AI do porównania'); let n = 0; fieldsOf(a).forEach(f => { if (diffState(a, f.id) === 'eq' && !st(a.id).f[f.id]) { st(a.id).f[f.id] = {v: clean(a.ai[f.id]), src: 'ai', ok: true, unc: st(a.id).f[f.id]?.unc}; n++; } }); save(); renderAkt(); renderLista(); toast('Przyjęto zgodne pola: ' + n); };
 const doDone = () => { const a = curAct(); if (!a) return; const s = st(a.id); s.done = !s.done; if (s.done) autoResolve(a); save(); renderLista(); renderAkt(); toast(s.done ? 'Akt zatwierdzony ✓' : 'Cofnięto zatwierdzenie'); };
+let AKT_ROZW = '';   // pole rozwinięte do edycji mimo trybu mini / „tylko sporne” (id aktu|pole)
 function poleHtml(a, f, hid){ const s = S.acts[a.id], x = s?.f?.[f.id], v = getv(a, f.id), ai = a.ai?.[f.id], lb = a.lub?.[f.id];
   if (!appl(a, f.id) && !clean(v)) return ''; if (S.hideMk !== false && /^\[(?:_|-)\]$/.test(String(v || '').trim()) && !x?.ok && !x?.skip) { hid.push(f.label + ' ' + String(v).trim()); return ''; }
   const unc = isUnc(a, f.id), st0 = x?.skip ? 'sk' : x?.ok ? (unc ? 'un' : 'ok') : unc ? 'un' : (diffState(a, f.id) === 'ne' ? 'df' : ''), dlugie = /^(notes|cause_of_death|parents_raw|informant[12])$/.test(f.id) || (typDla(a).dlugie || []).includes(f.id) || String(v).length > 60;
+  const sporne = !x?.ok && !x?.skip && (st0 === 'un' || st0 === 'df');
+  if (S.sporne && !sporne && AKT_ROZW !== a.id + '|' + f.id) { hid.sp = (hid.sp || 0) + 1; return ''; }
+  if (S.miniOk && (x?.ok || x?.skip) && !unc && AKT_ROZW !== a.id + '|' + f.id) return h`<div class="pole ok mini" data-pole="${f.id}"><span>${f.label}: <strong>${x.skip ? '— pominięte —' : v}</strong> ✓ <small class="muted">${ZR[x.src] || ''}</small></span><button class="sm" data-rozw="${f.id}" title="Pokaż pole do edycji">edytuj</button></div>`;
   const chip = (txt, val, src) => h`<button class="chip" data-chip="${f.id}" data-v="${val}" data-src="${src}" title="Użyj tej wartości">${txt}: ${val}</button>`;
   const chips = [ai != null && String(ai).trim() !== '' && ai !== v ? chip('AI', ai, 'ai') : '', lb != null && String(lb).trim() !== '' && lb !== v ? chip('indeks', lb, 'lub') : ''];
   return h`<div class="pole ${st0}" data-pole="${f.id}"><label for="p_${f.id}">${f.label}</label>
     ${dlugie ? h`<textarea id="p_${f.id}" data-f="${f.id}" rows="2">${v}</textarea>` : h`<input id="p_${f.id}" data-f="${f.id}" value="${v}" autocomplete="off">`}
     <div class="chips">${x ? h`<span class="bdg" data-bdg="zr">${ZR[x.src] || x.src || ''}</span>` : ''}${x?.ok ? h`<span class="bdg ok">zatwierdzone</span>` : ''}${unc ? h`<span class="bdg un">niepewne</span>` : ''}${x?.note ? h`<span class="bdg" title="${x.note}">uwaga</span>` : ''}${chips}
       <button class="sm" data-ak="ok" data-f="${f.id}" title="Zatwierdź pole">✓</button><button class="sm" data-ak="unc" data-f="${f.id}" title="Przełącz niepewność">?</button></div>${narzPicker(a, f)}</div>`; }
-function renderAkt(){ const m = $('main'), a = curAct(); if (!a) { wstaw(m, h`<div class="card muted">Wybierz akt z listy.</div>`); return; }
+function renderAkt(){ if (!wAktach()) return; const m = $('main'), a = curAct(); if (!a) { wstaw(m, h`<div class="card muted">Wybierz akt z listy.</div>`); return; }
   const s = S.acts[a.id] || {}, FS = fieldsOf(a), hid = [], pr = progOf(a), W = warnsOf(a);
   const bl = typDla(a).bloki, pola = bl ? bl.map(b => { const L = b.pola.map(id => FS.find(f => f.id === id)).filter(Boolean).map(f => poleHtml(a, f, hid)).filter(x => x !== ''); return L.length ? h`<h3 class="blok">${b.t}</h3><div class="pola">${L}</div>` : ''; }) : null, poleZ = bl ? null : FS.map(f => poleHtml(a, f, hid));
   wstaw(m, h`<div class="card"><h2>${a.year} · akt ${a.act} · ${nmOf(a)}</h2>
@@ -1842,15 +1933,22 @@ function renderAkt(){ const m = $('main'), a = curAct(); if (!a) { wstaw(m, h`<d
     <div class="bar"><i style="width:${pr}%"></i></div><div class="muted">Opracowanie pól: ${pr}%${s.done ? ' · AKT ZATWIERDZONY' : ''}</div>
     ${W.length ? h`<div class="warn">${W.map(t => h`<div>⚠ ${t}</div>`)}</div>` : ''}
     ${sygnalyHtml(a)}
-    <div class="acts"><button class="p" id="bDone">${s.done ? 'Cofnij zatwierdzenie aktu' : 'Zatwierdź akt'}</button><button id="bAll" ${a.ai ? '' : 'disabled'}>Przyjmij zgodne pola</button><button id="bKreator">Kreator pól</button></div>
+    <div class="widok"><button id="bAll" ${a.ai ? '' : 'disabled'}>Przyjmij zgodne pola</button><button id="bKreator">Kreator pól</button>
+      <button id="bSporne" class="${S.sporne ? 'on' : ''}" title="Pokaż tylko pola niepewne i z różnicą AI ↔ indeks (niezatwierdzone)">Tylko sporne</button><button id="bMini" class="${S.miniOk ? 'on' : ''}" title="Zatwierdzone pola jako krótkie wiersze">Zwiń zatwierdzone</button></div>
     ${bl ? h`<div class="bloki" id="bloki">${pola}</div>` : h`<div class="pola">${poleZ}</div>`}
+    ${hid.sp ? h`<div class="muted" id="sporneInfo">Ukryto pól bez sporu: ${hid.sp}.</div>` : ''}
     ${hid.length ? h`<div class="muted hmk">∅ Puste (ukryte): ${hid.join(' · ')} <button class="sm" id="bShowMk">pokaż</button></div>` : ''}
-    ${tekstSekcja(a)}</div>`);
+    ${tekstSekcja(a)}${typeof aktHistoria === 'function' ? aktHistoria(a) : ''}
+    <div class="aktbar"><button id="bPrev" title="Poprzedni akt (Alt+K)">‹ Poprzedni</button><button class="p" id="bDone" title="Alt+Enter">${s.done ? 'Cofnij zatwierdzenie aktu' : 'Zatwierdź akt'}</button><button id="bDoneNext" title="Zatwierdź i przejdź do następnego niezatwierdzonego (Ctrl+Shift+Enter)">✓ i następny ›</button><button id="bNext" title="Następny akt (Alt+J)">Następny ›</button>
+      <button id="bSpor" title="Przejdź do następnego pola niepewnego lub z różnicą (Alt+R)">Sporne pole ↓</button><span class="sp"></span><button id="bUndo" title="Cofnij ostatnią zmianę (Alt+Z)">↶ Cofnij</button><button id="bRedo" title="Ponów (Alt+Y)">↷ Ponów</button></div></div>`);
   $('bDone').onclick = doDone; $('bAll').onclick = doAll; if ($('bShowMk')) $('bShowMk').onclick = () => { S.hideMk = false; save(); renderAkt(); };
   m.querySelectorAll('[data-f]').forEach(inp => { if (inp.tagName === 'BUTTON') return; inp.onchange = () => { const f = inp.dataset.f, bad = dateBad(a, f, inp.value); if (bad) { toast('⚠ ' + bad + ' – nie zapisano', 5000); inp.value = getv(a, f); return; } setf(a, f, inp.value, 'edit'); }; });
   m.querySelectorAll('[data-chip]').forEach(b => b.onclick = () => przyjmij(a, b.dataset.chip, b.dataset.v, b.dataset.src));
   m.querySelectorAll('[data-ak]').forEach(b => b.onclick = () => { const f = b.dataset.f, inp = m.querySelector('[data-f="' + f + '"]'); if (b.dataset.ak === 'ok') { const x = S.acts[a.id]?.f?.[f], v = inp ? inp.value : getv(a, f); przyjmij(a, f, v, x?.src || (a.ai?.[f] === v ? 'ai' : a.lub?.[f] === v ? 'lub' : 'edit')); } else przyjmij(a, f, inp ? inp.value : getv(a, f), S.acts[a.id]?.f?.[f]?.src || 'edit', {unc: !isUnc(a, f)}); });
   if ($('tTxt')) $('tTxt').onchange = e => { const t = e.target.value; if (t === (a.tekst || '')) delete st(a.id).text; else st(a.id).text = t; save(); toast('Zapisano tekst'); };
+  m.querySelectorAll('[data-rozw]').forEach(b => b.onclick = () => { AKT_ROZW = a.id + '|' + b.dataset.rozw; keepScroll(); const i = $('p_' + b.dataset.rozw); if (i) i.focus(); });
+  $('bSporne').onclick = () => { S.sporne = !S.sporne; AKT_ROZW = ''; save(); keepScroll(); }; $('bMini').onclick = () => { S.miniOk = !S.miniOk; AKT_ROZW = ''; save(); keepScroll(); };
+  if (typeof aktbarPodlacz === 'function') aktbarPodlacz(a);
   skanWinRender(a); narzPodlacz(a); }
 
 /* app/moduly/ui_skan.js – podgląd skanu aktu (krok 3): wybór folderu skanów (<input webkitdirectory>), obraz tylko lokalnie (File → URL.createObjectURL, nic nie jest wysyłane),
@@ -1901,13 +1999,13 @@ function skTT(){ const hd = document.querySelector('header'); document.documentE
 function skanWinRender(a){ const W = $('skWin'), pk = $('skPokaz'); if (!W) return; skTT();
   if (!a) { W.hidden = true; if (pk) pk.hidden = true; document.body.classList.remove('sk-dok'); return; }
   W.hidden = SK.schowany; if (pk) pk.hidden = !SK.schowany; document.body.classList.toggle('sk-dok', !SK.plywajacy && !SK.schowany);
-  wstaw(W, skanPanel(a)); skanOknoPodlacz(); skanPodlacz(a); }
+  W.classList.toggle('bezobrazu', !skanZnajdz(a)); wstaw(W, skanPanel(a)); skanOknoPodlacz(); skanPodlacz(a); }
 function skanOknoPodlacz(){ const W = $('skWin'), head = $('skHead'); if (!W || !head) return;
   $('skHdr').onclick = () => { document.body.classList.toggle('hdr-ukryty'); skanWinRender(curAct()); };
   $('skZwin').onclick = () => { SK.zwiniety = !SK.zwiniety; skanWinRender(curAct()); };
   $('skSchowaj').onclick = () => { SK.schowany = true; skanWinRender(curAct()); };
   $('skDok').onclick = () => { SK.plywajacy = !SK.plywajacy; if (!SK.plywajacy) Object.assign(W.style, {left: '', top: '', right: '', bottom: ''}); skanWinRender(curAct()); };
-  head.onpointerdown = e => { if (e.target.closest('button')) return; SK.plywajacy = true; const r = W.getBoundingClientRect(); Object.assign(W.style, {left: r.left + 'px', top: r.top + 'px', right: 'auto', bottom: 'auto'}); document.body.classList.remove('sk-dok');
+  head.onpointerdown = e => { if (e.target.closest('button') || (window.matchMedia && matchMedia('(max-width:820px)').matches)) return; SK.plywajacy = true; const r = W.getBoundingClientRect(); Object.assign(W.style, {left: r.left + 'px', top: r.top + 'px', right: 'auto', bottom: 'auto'}); document.body.classList.remove('sk-dok');
     const dx = e.clientX - r.left, dy = e.clientY - r.top; head.setPointerCapture(e.pointerId);
     head.onpointermove = ev => { W.style.left = Math.max(0, ev.clientX - dx) + 'px'; W.style.top = Math.max(0, ev.clientY - dy) + 'px'; };
     const kon = () => { head.onpointermove = null; head.onpointerup = null; head.onpointercancel = null; }; head.onpointerup = kon; head.onpointercancel = kon; }; }
@@ -1933,7 +2031,7 @@ function skanPodlacz(a){ if (!$('skFolder')) return;
 function skanZoom(f){ const v = $('skView'); if (!v) return; const V = SK.v, W = v.clientWidth / 2, H = v.clientHeight / 2; V.x = W - (W - V.x) * f; V.y = H - (H - V.y) * f; V.s *= f; skanTransform(); }
 function roiEksport(){ const A = D.acts.filter(a => !a.kind && (a.ai || S.acts[a.id]?.roi || S.acts[a.id]?.fr)).map(a => { const o = {id: a.id, plik: skanSciezka(a), strona: 1, roi: roiOf(a) || null}; const fr = Object.assign({}, a.pola || {}, S.acts[a.id]?.fr || {}); if (Object.keys(fr).length) o.pola = fr; return o; });
   dl('ZGONY_roi_poprawione.json', JSON.stringify(A, null, 1), 'application/json', false); return A.length; }
-function skanInit(){ addEventListener('resize', () => skTT()); const W = document.createElement('div'); W.id = 'skWin'; W.className = 'skwin'; W.hidden = true; document.body.appendChild(W);
+function skanInit(){ addEventListener('resize', () => skTT()); const W = document.createElement('div'); W.id = 'skWin'; W.className = 'skwin'; W.hidden = true; const wr = document.querySelector('.wrap'); document.body.insertBefore(W, wr);   // przed .wrap: na telefonie okno jest w układzie strony (przyklejone u góry), na komputerze – pozycja stała
   const pk = document.createElement('button'); pk.id = 'skPokaz'; pk.className = 'skPok'; pk.hidden = true; pk.textContent = '🖼 Skan'; pk.onclick = () => { SK.schowany = false; skanWinRender(curAct()); }; document.body.appendChild(pk);
   const hp = document.createElement('button'); hp.id = 'hdrPokaz'; hp.className = 'hdrPok'; hp.textContent = '▼ pasek'; hp.onclick = () => { document.body.classList.remove('hdr-ukryty'); skanWinRender(curAct()); }; document.body.appendChild(hp);
   const lt = document.createElement('button'); lt.id = 'listaTog'; lt.className = 'listaTog'; lt.title = 'Pokaż/ukryj listę aktów'; lt.textContent = '◀'; lt.onclick = () => { const u = document.body.classList.toggle('lista-ukryta'); lt.textContent = u ? '▶' : '◀'; setTimeout(() => { if (SK.v.iw) skanDopasuj(roiOf(curAct())); }, 60); }; document.body.appendChild(lt);
@@ -2053,7 +2151,7 @@ function osOdbierz(m){
   if (m.t === 'postep') { OSS.post = {od: m.od, n: m.n}; osStatus(); return; }
   if (m.t === 'wynik') { OSS.wyniki = m.wyniki; OSS.licz = m.licz; OSS.ms = m.ms; OSS.gotowe = true; OSS.post = null; OSS.cache = null; osStatus(); if (OSS.zakl === 'osoby') osRender(); return; }
   const c = OSS.czeka[m.req]; if (c) { delete OSS.czeka[m.req]; m.t === 'blad' ? c.no(new Error(m.blad)) : c.ok(m); } }
-function osStatus(){ const p = $('prog'); if (!p || OSS.zakl !== 'osoby') return; const sm = Object.values(OSS.wyniki).reduce((a, w) => a + w.filter(x => x[1] === 's').length, 0);
+function osStatus(){ if (OSS.zakl !== 'osoby') return; const p = $('prog'); if (!p || OSS.zakl !== 'osoby') return; const sm = Object.values(OSS.wyniki).reduce((a, w) => a + w.filter(x => x[1] === 's').length, 0);
   p.textContent = OSS.post ? 'Osoby: liczę propozycje ' + Math.round(100 * OSS.post.od / Math.max(1, OSS.post.n)) + '% (' + (OSS.most ? OSS.most.tryb : '') + ')' : OSS.gotowe ? 'Osoby: ' + OSS.N + ' wystąpień · osób scalonych ' + Object.keys((OSS.KL || decKlastry(S.decyz)).osoby).length + ' · ' + OSS.tryb + ' ' + (OSS.ms / 1000).toFixed(1) + ' s' : 'Osoby: przygotowuję…'; }
 // uruchom (lub uruchom ponownie, gdy zmieniły się dane aktów albo klasy wariantów nazwisk)
 function osStart(wymus){ const M = osModel(D.wszystkie, getv), sygn = osPodpis(M), K = osKlasy(S.decyz), ksig = JSON.stringify(K.klasy);
@@ -2160,8 +2258,7 @@ function osWarKarta(m){ const K = osKlasy(S.decyz), s = OSS.sel, W = OSS.war && 
   const fo = [w.a, w.b]; $('osWarTak').onclick = () => { const r = osZapiszDec('wariant_nazwiska', 'n:' + w.a, 'n:' + w.b, {formy: [Object.keys(w.formyA).join('/'), Object.keys(w.formyB).join('/')], why: w.rodzaj + ': ' + w.powod}); if (r.ok) { OSS.sel = null; OSS.war = null; toast('Zapisano klasę wariantów. Przeliczam propozycje…'); } };
   $('osWarNie').onclick = () => { const r = osZapiszDec('odrzuc_wariant', 'n:' + w.a, 'n:' + w.b, {}); if (r.ok) { OSS.sel = null; OSS.war = null; toast('Zapisano: to różne nazwiska – para nie wróci.'); osWarLadu(); } }; }
 // ---------- zakładki, menu, import/eksport
-function osZakladka(k){ OSS.zakl = k; const o = k === 'osoby'; $('zAkty').className = o ? '' : 'p'; $('zOsoby').className = o ? 'p' : ''; $('selTyp').hidden = o; document.querySelectorAll('.osMenu').forEach(b => b.hidden = !o);
-  if (o) { if (!OSS.KL) OSS.KL = decKlastry(S.decyz); $('tytul').textContent = 'Multitool v1 · osoby'; osStart(false); osRender(); } else { OSS.sel = null; odswiez(); } }
+function osZakladka(k){ zaklUstaw(k); }   // przełączanie zakładek: ui_nawigacja.js
 function osInit(){ $('zAkty').onclick = () => osZakladka('akty'); $('zOsoby').onclick = () => osZakladka('osoby'); document.querySelectorAll('.osMenu').forEach(b => b.hidden = true);
   $('mDecJson').onclick = () => { $('menu').hidden = true; dl('multitool_decyzje_' + new Date().toISOString().slice(0, 10) + '.json', JSON.stringify({format: DEC_FORMAT, dane: {wersja: (DANE.format && DANE.format.wersja) || 1, suma: DANE.suma || ''}, zapisano: new Date().toISOString(), decyzje: S.decyz}), 'application/json', false); toast('Zapisano decyzje (JSON). Pełna kopia zeruje wskaźnik zmian, ten plik nie.'); };
   $('mDecCsv').onclick = () => { $('menu').hidden = true; dl('multitool_decyzje_' + new Date().toISOString().slice(0, 10) + '.csv', decCsv(S.decyz)); toast('Zapisano decyzje (CSV)'); };
@@ -2180,6 +2277,214 @@ async function osImportDopUi(plik){ let obj; try { obj = JSON.parse((await plik.
   okno('Import dop.v1: ' + plik.name, h`<p id="impPodglad">Pary do zapisania: <b>${plan.stat.par}</b> (zaakceptowane → scal: ${plan.stat.acc}, odrzucone → różne osoby: ${plan.stat.rej}), brak odpowiednika: ${plan.stat.none}. Pominięto: <b>${plan.pominiete.length}</b>.</p><p class="muted">Scalenia z importu nie mają uzasadnienia reguł (zapisują źródło „dop.v1”). Kolizje z innymi decyzjami zostaną pominięte i wypisane.</p>${plan.pominiete.slice(0, 10).map(p => h`<p class="muted">${p.klucz} ${p.slot}: ${p.powod}</p>`)}`, [['impTak', 'Zapisz decyzje', 'p'], ['impNie', 'Anuluj']]);
   $('impNie').onclick = () => { $('okno').hidden = true; }; $('impTak').onclick = async () => { await kopiaMigawka('przed importem dop.v1: ' + plik.name); const r = osDopZastosuj(S.decyz, plan, osAktyMapa()); OSS.cache = null; OSS.KL = decKlastry(S.decyz); save(); await stFlush(true); $('okno').hidden = true; toast('Zapisano: scal ' + r.scal + ', różne osoby ' + r.odrzuc + ', brak ' + r.brak + '; pominięto ' + r.pominiete.length); osRender(); }; }
 
+/* app/moduly/ui_nawigacja.js – powłoka v2: zakładki Akty / Osoby / Drzewo / Raport / Narzędzia, pasek akcji aktu (poprzedni/następny, sporne pole, cofnij/ponów),
+   historia zmian aktu, skróty klawiszowe, motyw (auto/jasny/ciemny), zakładka „Narzędzia” (wszystkie funkcje z menu jako kafle).
+   HTML wyłącznie przez wstaw(h`…`). Stan cofania żyje w pamięci sesji; każda cofnięta zmiana trafia też do trwałej historii (S.hist) jako nowy wpis. */
+const ZAKL = [['akty', 'zAkty', 'akty'], ['osoby', 'zOsoby', 'osoby'], ['drzewo', 'zDrzewo', 'drzewo rodzin'], ['raport', 'zRaport', 'raport i kontrole'], ['narz', 'zNarz', 'narzędzia']];
+function zaklUstaw(k){ if (!ZAKL.some(z => z[0] === k)) return; OSS.zakl = k; document.body.dataset.zakl = k; ZAKL.forEach(([n, id]) => { const b = $(id); if (b) b.className = n === k ? 'p' : ''; });
+  $('selTyp').hidden = k !== 'akty'; document.querySelectorAll('.osMenu').forEach(b => b.hidden = k !== 'osoby'); $('menu').hidden = true;
+  if (k !== 'akty') { skanWinRender(null); $('tytul').textContent = 'Multitool v1 · ' + ZAKL.find(z => z[0] === k)[2]; }
+  if (k === 'akty') { OSS.sel = null; odswiez(); }
+  else if (k === 'osoby') { if (!OSS.KL) OSS.KL = decKlastry(S.decyz); osStart(false); osRender(); }
+  else { $('prog').textContent = ''; zaklOdswiez(); }
+  window.scrollTo(0, 0); }
+// zakładki bez listy aktów: render własny; zwraca true, gdy obsłużono (odswiez() wtedy nie rysuje karty aktu)
+function zaklOdswiez(){ const k = OSS.zakl; if (k === 'drzewo' && typeof drzRender === 'function') { drzRender(); } else if (k === 'raport' && typeof rapRender === 'function') { rapRender(); } else if (k === 'narz') { narzRender(); } else return false;
+  stWskaznik(); stPasek(); return true; }
+
+// ---------- motyw: auto (wg systemu) / jasny / ciemny; wybór pamiętany w tej przeglądarce
+function motywOdczyt(){ try { const m = localStorage.getItem('mt.motyw'); return m === 'light' || m === 'dark' ? m : 'auto'; } catch (e) { return document.documentElement.getAttribute('data-theme') || 'auto'; } }
+function motywUstaw(m){ const r = document.documentElement; if (m === 'light' || m === 'dark') r.setAttribute('data-theme', m); else r.removeAttribute('data-theme'); try { if (m === 'auto') localStorage.removeItem('mt.motyw'); else localStorage.setItem('mt.motyw', m); } catch (e) {}
+  const b = $('mMotyw'); if (b) b.textContent = 'Motyw: ' + ({light: 'jasny', dark: 'ciemny'}[m] || 'auto'); }
+
+// ---------- cofnij / ponów (grupa = wszystkie wpisy historii z jednego zapisu)
+const COF = {stos: [], redo: [], busy: false, MAX: 200};
+function cofPoZapisie(n0){ if (COF.busy) return; const H = S.hist || [], g = []; for (let i = H.length - 1; i >= 0 && H[i].n > n0; i--) g.unshift({id: H[i].id, k: H[i].k, f: H[i].f, before: H[i].before, after: H[i].after});
+  if (!g.length) return; COF.stos.push(g); if (COF.stos.length > COF.MAX) COF.stos.shift(); COF.redo = []; }
+function cofWykonaj(wstecz){ const g = (wstecz ? COF.stos : COF.redo).pop(); if (!g) return toast(wstecz ? 'Nie ma czego cofać (cofanie obejmuje zmiany z tej sesji)' : 'Nie ma czego ponawiać');
+  COF.busy = true; try { (wstecz ? g.slice().reverse() : g).forEach(e => histApply(S.acts, wstecz ? e : Object.assign({}, e, {before: e.after}))); HIST_WHY = wstecz ? 'cofnięcie' : 'ponowienie'; save(); } finally { HIST_WHY = null; COF.busy = false; }
+  (wstecz ? COF.redo : COF.stos).push(g); const a = AM[g[0].id]; if (a && wAktach()) { if (a.typ === D.typ && S.cur !== a.id) S.cur = a.id; renderLista(); renderAkt(); }
+  const pola = [...new Set(g.filter(e => e.k === 'f').map(e => e.f))]; toast((wstecz ? 'Cofnięto' : 'Ponowiono') + ': ' + (a ? a.year + ' akt ' + a.act : g[0].id) + (pola.length ? ' · pól: ' + pola.length : '')); }
+
+// ---------- historia zmian aktu (z trwałej historii S.hist)
+function histWart(e, v){ if (v == null) return '—'; if (e.k === 'f') { try { const x = JSON.parse(v); return String(x.v ?? '') + (x.ok ? ' ✓' : '') + (x.unc ? ' ?' : '') + (x.skip ? ' (pominięte)' : ''); } catch (er) { return String(v); } } if (e.k === 'done') return 'zatwierdzony'; return String(v).length > 80 ? String(v).slice(0, 80) + '…' : String(v); }
+function aktHistoria(a){ const H = (S.hist || []).filter(e => e.id === a.id), L = H.slice(-40).reverse(), et = f => fieldsOf(a).find(x => x.id === f)?.label || f;
+  return h`<details class="txt" id="histDet" ${S.hOpen ? raw('open') : ''}><summary>Historia zmian aktu (${H.length})</summary>
+    ${L.length ? h`<div class="rtab"><table id="histTab"><tr><th>Kiedy</th><th>Co</th><th>Przed</th><th>Po</th></tr>${L.map(e => h`<tr><td>${String(e.t || '').slice(0, 16).replace('T', ' ')}</td><td class="w">${e.k === 'f' ? et(e.f) : e.k === 'done' ? 'zatwierdzenie aktu' : e.k === 'text' ? 'tekst aktu' : e.k}${e.why ? ' (' + e.why + ')' : ''}</td><td class="w">${histWart(e, e.before)}</td><td class="w">${histWart(e, e.after)}</td></tr>`)}</table></div>${H.length > L.length ? h`<div class="muted">Pokazano ostatnie ${L.length} z ${H.length}. Całość: Narzędzia → Eksport historii (CSV).</div>` : ''}` : h`<div class="muted">Brak zmian w tym akcie.</div>`}</details>`; }
+
+// ---------- pasek akcji aktu
+function aktSasiad(d){ const v = widoczne(), i = v.findIndex(a => a.id === S.cur); const n = i < 0 ? v[0] : v[i + d]; if (!n) return toast(d > 0 ? 'To ostatni akt na liście (zmień filtr lub rok)' : 'To pierwszy akt na liście'); if (v.indexOf(n) >= LISTA_N) LISTA_N = v.indexOf(n) + LISTA_PORCJA; otworz(n.id); aktPrzewin(); }
+function aktPrzewin(){ const b = document.querySelector('#lista .it.cur'); if (b && b.scrollIntoView) b.scrollIntoView({block: 'nearest'}); if (!document.body.classList.contains('sk-dok')) window.scrollTo(0, 0); else { const m = $('main'); if (m) window.scrollTo(0, 0); } }
+function aktZatwierdzINastepny(){ const a = curAct(); if (!a) return; const v = widoczne(), i = v.findIndex(x => x.id === a.id); let n = null; for (let j = i + 1; j < v.length; j++) if (!S.acts[v[j].id]?.done) { n = v[j]; break; }
+  if (!S.acts[a.id]?.done) { const s = st(a.id); s.done = true; autoResolve(a); save(); toast('Akt zatwierdzony ✓'); } if (n) { otworz(n.id); aktPrzewin(); } else { renderLista(); renderAkt(); toast('Akt zatwierdzony ✓ – brak następnego niezatwierdzonego na liście'); } }
+const poleSporne = (a, f) => { const x = S.acts[a.id]?.f?.[f]; if (x?.ok || x?.skip) return false; if (!appl(a, f) && !clean(getv(a, f))) return false; return isUnc(a, f) || diffState(a, f) === 'ne'; };
+let SPOR_OST = ['', ''];
+function aktSpornePole(){ const a = curAct(); if (!a) return; const kol = [...$('main').querySelectorAll('[data-pole]')].map(e => e.dataset.pole), poz = f => { const i = kol.indexOf(f); return i < 0 ? 999 : i; }, F = fieldsOf(a).map(f => f.id).filter(f => poleSporne(a, f)).sort((x, y) => poz(x) - poz(y)); if (!F.length) return toast('W tym akcie nie ma już pól spornych (niepewnych ani z różnicą)');
+  const ae = document.activeElement, akt = ae && ae.dataset && ae.dataset.f ? ae.dataset.f : (SPOR_OST[0] === a.id ? SPOR_OST[1] : ''), i = F.indexOf(akt), f = F[(i + 1) % F.length]; SPOR_OST = [a.id, f]; let inp = $('p_' + f);
+  if (!inp) { AKT_ROZW = a.id + '|' + f; keepScroll(); inp = $('p_' + f); } if (!inp) return; document.querySelectorAll('.pole.fok').forEach(e => e.classList.remove('fok')); const box = inp.closest('.pole'); if (box) { box.classList.add('fok'); box.scrollIntoView({block: 'center'}); } inp.focus(); toast('Sporne pole ' + (F.indexOf(f) + 1) + ' z ' + F.length); }
+function aktbarPodlacz(a){ $('bPrev').onclick = () => aktSasiad(-1); $('bNext').onclick = () => aktSasiad(1); $('bDoneNext').onclick = aktZatwierdzINastepny; $('bSpor').onclick = aktSpornePole;
+  $('bUndo').onclick = () => cofWykonaj(true); $('bRedo').onclick = () => cofWykonaj(false); $('bUndo').disabled = !COF.stos.length; $('bRedo').disabled = !COF.redo.length;
+  const hd = $('histDet'); if (hd) hd.ontoggle = () => { S.hOpen = hd.open; }; }
+
+// ---------- skróty klawiszowe (lewy Alt; prawy Alt = polskie znaki, więc go pomijamy)
+const SKROTY = [['Enter', 'w polu: zapisz i przejdź do następnego pola'], ['Alt+J / Alt+↓', 'następny akt'], ['Alt+K / Alt+↑', 'poprzedni akt'], ['Ctrl+Enter', 'następny akt'], ['Alt+Enter', 'zatwierdź akt / cofnij zatwierdzenie'], ['Ctrl+Shift+Enter', 'zatwierdź akt i przejdź do następnego niezatwierdzonego'],
+  ['Alt+R', 'następne sporne pole (niepewne lub z różnicą AI ↔ indeks)'], ['Alt+Z / Alt+Y', 'cofnij / ponów zmianę'], ['Alt+L', 'pokaż / ukryj listę aktów'], ['Alt+S', 'pokaż / schowaj skan'], ['Alt+1 … Alt+5', 'zakładki: Akty, Osoby, Drzewo, Raport, Narzędzia'], ['Esc', 'zamknij okno / menu']];
+function skrotKlawisz(e){ const okno = !$('okno').hidden;
+  if (e.key === 'Escape') { if (okno) { $('okno').hidden = true; return; } if (!$('menu').hidden) $('menu').hidden = true; return; }
+  if (okno) return; const alt = e.altKey && !e.ctrlKey && !e.metaKey, mod = (e.ctrlKey || e.metaKey) && !e.altKey, k = e.key.length === 1 ? e.key.toLowerCase() : e.key, stop = () => { e.preventDefault(); e.stopPropagation(); };
+  if (alt && /^[1-5]$/.test(k)) { stop(); return zaklUstaw(ZAKL[+k - 1][0]); }
+  if (OSS.zakl !== 'akty') return;
+  const zapisz = () => { const el = document.activeElement; if (el && el.dataset && el.dataset.f && el.blur) el.blur(); };
+  if (alt && (k === 'j' || k === 'ArrowDown')) { stop(); zapisz(); return aktSasiad(1); } if (alt && (k === 'k' || k === 'ArrowUp')) { stop(); zapisz(); return aktSasiad(-1); }
+  if (mod && k === 'Enter') { stop(); zapisz(); return e.shiftKey ? aktZatwierdzINastepny() : aktSasiad(1); }
+  if (alt && k === 'Enter') { stop(); zapisz(); return doDone(); }
+  if (alt && k === 'r') { stop(); zapisz(); return aktSpornePole(); } if (alt && k === 'z') { stop(); zapisz(); return cofWykonaj(true); } if (alt && k === 'y') { stop(); zapisz(); return cofWykonaj(false); }
+  if (alt && k === 'l') { stop(); const t = $('listaTog'); if (t) t.click(); return; }
+  if (alt && k === 's') { stop(); SK.schowany = !SK.schowany; return skanWinRender(curAct()); }
+  if (k === 'Enter' && !e.shiftKey && !alt && !mod) { const el = e.target; if (el && el.tagName === 'INPUT' && el.dataset.f && el.closest('#main')) { stop(); const ids = [...$('main').querySelectorAll('input[data-f],textarea[data-f]')].map(x => x.dataset.f), nast = ids[ids.indexOf(el.dataset.f) + 1]; el.blur(); const n = nast && $('p_' + nast); if (n) { n.focus(); if (n.select) n.select(); } } } }
+
+// ---------- zakładka „Narzędzia”: wszystkie funkcje w jednym miejscu
+function narzStat(){ const o = {}; D.typy.forEach(t => o[t] = {n: 0, ai: 0, done: 0, skan: 0, wFolderze: 0}); D.wszystkie.forEach(a => { const x = o[a.typ]; if (!x) return; x.n++; if (a.ai) x.ai++; if (S.acts[a.id]?.done) x.done++; if (skanKlucz(a)) { x.skan++; if (SK.pliki.length && skanZnajdz(a)) x.wFolderze++; } }); return o; }
+function narzRender(){ const m = $('main'), st0 = narzStat(), mot = motywOdczyt(), zg = D.typ === 'zgon', kaf = (t, opis, P) => h`<div class="card"><h3>${t}</h3><div class="muted">${opis}</div><div class="acts">${P.map(([id, l, off]) => h`<button data-klik="${id}" ${off ? raw('disabled') : ''}>${l}</button>`)}</div></div>`;
+  wstaw($('filtry'), ''); wstaw($('lista'), '');
+  wstaw(m, h`<div class="rnav"><button id="narzWroc" class="p">← Wróć do aktów</button><span class="muted">Typ aktów dla importu i eksportu CSV: <b>${NAZWY_TYPOW[D.typ] || D.typ}</b> (zmiana: zakładka Akty, lista obok tytułu).</span></div>
+   <div class="kafle" id="narzKafle">
+    ${kaf('Kopie i bezpieczeństwo', 'Zmian bez kopii: ' + ST_ZMIANY + (ST_OSTATNIA ? ' · ostatnia kopia: ' + String(ST_OSTATNIA).slice(0, 10) : ' · nie zrobiono jeszcze kopii') + '. Kopia pełna zawiera pola, teksty, decyzje i historię.', [['mKopia', 'Kopia pełna (JSON)'], ['mKopiaWczytaj', 'Wczytaj kopię (JSON)…'], ['mMigawki', 'Migawki / przywróć…'], ['mAuto', 'Autozapis do pliku…']])}
+    ${kaf('Import', 'Każdy import pokazuje podgląd przed zapisem i robi migawkę. Pola zatwierdzone nie są nadpisywane w trybie „dopisz”.', [['mImpDop', 'Import CSV zatwierdzeń (dopisz)…', !zg], ['mImpZast', 'Import CSV zatwierdzeń (zastąp)…', !zg], ['mMigr', 'Migracja zgonów z CSV…', !zg], ['mDecImp', 'Decyzje o osobach: import JSON…'], ['mDop', 'Import decyzji dop.v1…']])}
+    ${kaf('Eksport', 'Pliki zapisują się w folderze pobierania przeglądarki.', [['mCsv', 'Eksport CSV (' + (NAZWY_TYPOW[D.typ] || D.typ).toLowerCase() + ')'], ['nHist', 'Historia zmian (CSV, ' + (S.hist || []).length + ' wpisów)'], ['mDecJson', 'Decyzje o osobach (JSON)'], ['mDecCsv', 'Decyzje o osobach (CSV)'], ['mRoi', 'ROI i ramki pól (JSON)']])}
+    <div class="card"><h3>Skany</h3><div class="muted">Aplikacja nie zawiera obrazów – pamięta nazwę pliku skanu i szuka jej w folderze wskazanym na tym komputerze. ${SK.folder ? 'Wybrany folder: ' + SK.folder + ' (' + SK.pliki.length + ' obrazów).' : 'Folder nie jest wybrany.'}</div>
+      <div class="rtab"><table id="narzSkany"><tr><th>Typ</th><th>Aktów</th><th class="w">Z adresem skanu</th><th class="w">Znalezionych w folderze</th></tr>${D.typy.map(t => h`<tr><td>${NAZWY_TYPOW[t] || t}</td><td>${st0[t].n}</td><td>${st0[t].skan}</td><td>${SK.pliki.length ? st0[t].wFolderze : '—'}</td></tr>`)}</table></div>
+      <div class="acts"><button data-klik="mSkany">Wybierz folder skanów…</button></div></div>
+    ${kaf('Dane i kontrola', 'Kolejka pokazuje pola, w których dane źródłowe zmieniły się po Twojej decyzji.', [['mKolejka', 'Dane źródłowe się zmieniły (' + ST_KOLEJ.length + ')'], ['nRaport', 'Raport i kontrole →'], ['nNowy', 'Dodaj nowy akt…']])}
+    <div class="card"><h3>Wygląd</h3><div class="muted">Motyw aplikacji (zapamiętany w tej przeglądarce).</div><div class="widok">${[['auto', 'Auto (wg systemu)'], ['light', 'Jasny'], ['dark', 'Ciemny']].map(([k, l]) => h`<button data-motyw="${k}" class="${mot === k ? 'on' : ''}">${l}</button>`)}</div></div>
+    <div class="card" style="grid-column:1/-1"><h3>Skróty klawiszowe</h3><div class="skr">${SKROTY.map(([k, o]) => h`<span>${k.split(' / ').map((x, i) => h`${i ? ' / ' : ''}<kbd>${x}</kbd>`)}</span><span>${o}</span>`)}</div></div>
+   </div>`);
+  $('narzWroc').onclick = () => zaklUstaw('akty');
+  m.querySelectorAll('[data-motyw]').forEach(b => b.onclick = () => { motywUstaw(b.dataset.motyw); narzRender(); });
+  m.querySelectorAll('[data-klik]').forEach(b => b.onclick = () => { const id = b.dataset.klik;
+    if (id === 'nHist') { dl('multitool_historia_' + new Date().toISOString().slice(0, 10) + '.csv', histCsv(S.hist || [])); return toast('Zapisano historię zmian (CSV)'); }
+    if (id === 'nRaport') return zaklUstaw('raport'); if (id === 'nNowy') return typeof nowyAktOkno === 'function' ? nowyAktOkno() : toast('Dodawanie aktów będzie dostępne w kolejnej wersji');
+    const x = $(id); if (x) x.click(); if (id === 'mKopia') setTimeout(narzRender, 300); }); }
+
+function nawInit(){ document.body.dataset.zakl = 'akty'; $('zDrzewo').onclick = () => zaklUstaw('drzewo'); $('zRaport').onclick = () => zaklUstaw('raport'); $('zNarz').onclick = () => zaklUstaw('narz');
+  const M = $('menu'), b = document.createElement('button'); b.id = 'mMotyw'; b.onclick = () => { const m = motywOdczyt(); motywUstaw(m === 'auto' ? 'dark' : m === 'dark' ? 'light' : 'auto'); if (OSS.zakl === 'narz') narzRender(); }; M.appendChild(b); motywUstaw(motywOdczyt());
+  const s = document.createElement('button'); s.id = 'mSkroty'; s.textContent = 'Skróty klawiszowe i wszystkie narzędzia →'; s.onclick = () => zaklUstaw('narz'); M.appendChild(s);
+  document.addEventListener('keydown', skrotKlawisz, true);
+  document.addEventListener('click', e => { if (!M.hidden && !e.target.closest('#menu') && e.target.id !== 'bMenu') M.hidden = true; }); }
+
+/* app/moduly/ui_drzewo.js – zakładka „Drzewo”: osoby i rodziny z aktów (zgony, małżeństwa, chrzty). Logika w rodziny_rdzen.js; tu tylko widok. HTML wyłącznie przez wstaw(h`…`).
+   Linia ciągła = potwierdzone (jeden akt albo decyzja „scal”). Ramka przerywana / sekcje „Możliwe…” = podpowiedź do sprawdzenia (zgodne imiona rodziców albo propozycja silnika z zakładki Osoby). */
+const DRZ = {tryb: 'osoby', q: '', cur: null, para: null, port: 300, glowne: true, sig: '', G: null, M: null, osoby: [], rodziny: [], E: null};
+function drzGraf(){ const sig = (S.histN || 0) + '|' + (S.decyz || []).length + '|' + D.wszystkie.length; if (DRZ.G && DRZ.sig === sig) return DRZ.G;
+  const M = osModel(D.wszystkie, getv), P = wystProfile(M), G = rdzGraf(M, P, decKlastry(S.decyz)); DRZ.G = G; DRZ.M = M; DRZ.sig = sig; DRZ.E = null;
+  DRZ.osoby = Object.keys(G.czlonkowie).map(id => { const z = rdzZycie(G, id), nm = rdzNazwa(z), C = G.czlonkowie[id]; return {id, z, nm, f: fold(nm), gl: C.some(w => /^(dziecko|zmarly|pan_mlody|panna_mloda)$/.test(P[w].rolaAktu)), rok: Math.min(...C.map(w => P[w].rok || 9999)), n: C.length}; })
+    .sort((a, b) => fold(a.z.nazwisko || a.z.rodowe || 'żż').localeCompare(fold(b.z.nazwisko || b.z.rodowe || 'żż')) || fold(a.z.imie).localeCompare(fold(b.z.imie)) || a.rok - b.rok);
+  DRZ.mapa = {}; DRZ.osoby.forEach(o => DRZ.mapa[o.id] = o);
+  DRZ.rodziny = Object.values(G.pary).map(x => { const lata = x.dzieci.map(w => P[w].rok).filter(Number.isFinite); return {k: x.klucz, nm: x.nazwisko + ': ' + x.ojciec + ' + ' + x.matka, f: fold(x.nazwisko + ' ' + x.ojciec + ' ' + x.matka + ' ' + [...x.rodowe].join(' ')), n: x.dzieci.length, od: lata.length ? Math.min(...lata) : null, do: lata.length ? Math.max(...lata) : null}; })
+    .sort((a, b) => a.f.localeCompare(b.f) || (a.od || 0) - (b.od || 0));
+  return G; }
+const drzOs = id => DRZ.mapa && DRZ.mapa[id];
+function drzRender(){ const G = drzGraf();
+  wstaw($('filtry'), h`<select id="drzTryb" aria-label="Widok drzewa"><option value="osoby" ${DRZ.tryb === 'osoby' ? raw('selected') : ''}>Osoby</option><option value="rodziny" ${DRZ.tryb === 'rodziny' ? raw('selected') : ''}>Rodziny (pary rodziców)</option></select>
+    <input id="drzQ" type="search" placeholder="nazwisko, imię" value="${DRZ.q}">${DRZ.tryb === 'osoby' ? h`<label title="Pomiń osoby znane tylko jako rodzice lub małżonkowie w cudzym akcie"><input type="checkbox" id="drzGl" ${DRZ.glowne ? raw('checked') : ''}> tylko główne osoby aktów</label>` : ''}`);
+  $('drzTryb').onchange = e => { DRZ.tryb = e.target.value; DRZ.port = 300; drzRender(); }; $('drzQ').oninput = e => { DRZ.q = e.target.value; DRZ.port = 300; drzLista(); }; if ($('drzGl')) $('drzGl').onchange = e => { DRZ.glowne = e.target.checked; drzLista(); };
+  drzLista(); drzKarta(); }
+function drzLista(){ const L = $('lista'), q = fold(DRZ.q || '').trim().split(/\s+/).filter(Boolean), pas = f => q.every(t => f.includes(t));
+  if (DRZ.tryb === 'rodziny') { const v = DRZ.rodziny.filter(r => pas(r.f)), p = v.slice(0, DRZ.port);
+    wstaw(L, h`<span class="muted" id="drzIle">Par rodziców: ${v.length}</span>${p.map(r => h`<button class="it ${DRZ.para === r.k ? 'cur' : ''}" data-para="${r.k}"><span>${r.nm}</span> <small class="bdg">${r.n} ${r.od != null ? '· ' + r.od + (r.do !== r.od ? '–' + r.do : '') : ''}</small></button>`)}${v.length > p.length ? h`<button id="drzWiecej" class="sm">Pokaż więcej (${v.length - p.length})</button>` : ''}`); }
+  else { const v = DRZ.osoby.filter(o => (!DRZ.glowne || o.gl) && pas(o.f)), p = v.slice(0, DRZ.port);
+    wstaw(L, h`<span class="muted" id="drzIle">Osób: ${v.length}${q.length ? '' : ' – wpisz nazwisko, aby zawęzić'}</span>${p.map(o => h`<button class="it ${DRZ.cur === o.id ? 'cur' : ''}" data-os="${o.id}"><span>${o.nm}</span> <small class="bdg ${o.n > 1 ? 'ok' : ''}">${o.rok < 9999 ? o.rok : ''}${o.n > 1 ? ' · ' + o.n + ' akty' : ''}</small></button>`)}${v.length > p.length ? h`<button id="drzWiecej" class="sm">Pokaż więcej (${v.length - p.length})</button>` : ''}`); }
+  L.querySelectorAll('[data-os]').forEach(b => b.onclick = () => drzIdz(b.dataset.os)); L.querySelectorAll('[data-para]').forEach(b => b.onclick = () => { DRZ.para = b.dataset.para; DRZ.cur = null; drzLista(); drzKarta(); });
+  if ($('drzWiecej')) $('drzWiecej').onclick = () => { DRZ.port += 300; drzLista(); }; }
+function drzIdz(id){ DRZ.cur = id; DRZ.para = null; if (DRZ.tryb !== 'osoby') { DRZ.tryb = 'osoby'; drzRender(); } else { drzLista(); drzKarta(); } window.scrollTo(0, 0); }
+const drzWezel = (id, kl) => { const G = DRZ.G, z = rdzZycie(G, id); return h`<button class="os ${z.plec === 'M' ? 'm' : z.plec === 'K' ? 'k' : ''} ${kl || ''}" data-os="${id}" title="Pokaż tę osobę">${rdzNazwa(z)}<small>${rdzLata(z) || 'w aktach: ' + [...new Set((G.czlonkowie[id] || []).map(w => (NAZWY_TYPOW[G.P[w].typ] || G.P[w].typ).toLowerCase() + ' ' + G.P[w].rok))].join(', ')}</small></button>`; };
+// przodkowie: osoba po lewej, rodzice po prawej (ojciec wyżej), do 5 pokoleń; tylko powiązania potwierdzone
+function drzPrzodkowie(id, gl, byli){ const G = DRZ.G, R = [...(G.rodzice[id] || [])].filter(r => !byli.has(r)).sort((a, b) => (rdzZycie(G, a).plec === 'K') - (rdzZycie(G, b).plec === 'K'));
+  const dalej = gl < 5 && R.length ? h`<div class="gal ${R.length === 1 ? 'jeden' : ''}">${R.map(r => drzPrzodkowie(r, gl + 1, new Set([...byli, id])))}</div>` : '';
+  return h`<div class="wezel">${drzWezel(id, gl === 0 ? 'cur' : '')}${dalej}</div>`; }
+function drzPotomkowie(id, gl, byli){ const G = DRZ.G, Dz = [...(G.dzieci[id] || [])].filter(d => !byli.has(d)).sort((a, b) => (drzOs(a)?.rok || 0) - (drzOs(b)?.rok || 0)); if (!Dz.length || gl > 3) return '';
+  return h`<ul class="pot ${gl === 0 ? 'korzen' : ''}">${Dz.map(d => h`<li>${drzWezel(d)}${drzPotomkowie(d, gl + 1, new Set([...byli, id]))}</li>`)}</ul>`; }
+// propozycje silnika (te same reguły co w zakładce Osoby), liczone na żądanie dla jednej osoby
+function drzKandydaci(id){ const G = DRZ.G; if (!DRZ.E) DRZ.E = osSilnik(DRZ.M, osKlasy(S.decyz).klasy); const K = decKlastry(S.decyz), out = [], seen = new Set();
+  (G.czlonkowie[id] || []).forEach(w => osKandydaci(DRZ.E, w).forEach(u => { const c = G.wezel(u.b); if (c === id || seen.has(c) || (u.wniosek !== 'sprawdz' && u.wniosek !== 'mozliwe') || K.odrzucone.has(decKlucz(w, u.b))) return; seen.add(c); out.push({c, a: w, b: u.b, wn: u.wniosek, zg: u.zgodnosci.map(x => x.t), roz: u.rozbieznosci.map(x => x.t)}); }));
+  return out.sort((x, y) => (x.wn === 'sprawdz' ? 0 : 1) - (y.wn === 'sprawdz' ? 0 : 1)).slice(0, 12); }
+function drzDzieciPary(k, bez){ const G = DRZ.G, x = G.pary[k]; if (!x) return []; return x.dzieci.filter(w => !bez.has(G.wezel(w))).map(w => ({w, c: G.wezel(w), p: G.P[w]})).sort((a, b) => (a.p.rok || 0) - (b.p.rok || 0)); }
+const drzWiersz = (d) => h`<tr><td>${d.p.rok || ''}</td><td class="w"><button class="lk" data-os="${d.c}">${(d.p.imie || '?') + ' ' + (d.p.nazwisko || '')}</button></td><td>${RDZ_ROLA[d.p.rolaAktu] || d.p.rolaAktu}${d.p.wiek ? ', wiek ' + d.p.wiek : ''}</td><td><button class="sm" data-akt="${d.w}">akt</button></td></tr>`;
+function drzKarta(){ const m = $('main'), G = DRZ.G;
+  if (DRZ.tryb === 'rodziny' && DRZ.para && G.pary[DRZ.para]) return drzKartaPary(m, G.pary[DRZ.para]);
+  const id = DRZ.cur, C = id && G.czlonkowie[id];
+  if (!C) { wstaw(m, h`<div class="card" id="drzStart"><h2>Drzewo rodzin</h2><p>Wybierz osobę albo parę rodziców z listy po lewej (wpisz nazwisko, np. „kopiw”).</p>
+    <p class="muted">Osób w aktach: ${DRZ.osoby.length} (w tym scalonych decyzją: ${DRZ.osoby.filter(o => o.n > 1).length}); par rodziców: ${DRZ.rodziny.length}.<br>Linie ciągłe pokazują tylko to, co wynika z jednego aktu albo z Twojej decyzji „scal” w zakładce Osoby. Sekcje „Możliwe…” to podpowiedzi do sprawdzenia – program niczego sam nie łączy.</p></div>`); return; }
+  const z = rdzZycie(G, id), P = C.map(w => G.P[w]).sort((a, b) => (a.rok || 0) - (b.rok || 0)), wlasne = new Set([id]), malz = [...(G.malz[id] || [])], dzieci = [...(G.dzieci[id] || [])];
+  const kD = [...new Set(C.map(w => G.kluczDziecka[w]).filter(Boolean))], kR = [...new Set(C.map(w => G.kluczRodzica[w]).filter(Boolean))];
+  const rodzenstwo = kD.map(k => ({k, x: G.pary[k], L: drzDzieciPary(k, wlasne)})).filter(r => r.L.length), mozDzieci = kR.map(k => ({k, x: G.pary[k], L: drzDzieciPary(k, new Set(dzieci.concat(id)))})).filter(r => r.L.length);
+  const kand = drzKandydaci(id), maRodz = (G.rodzice[id] || new Set()).size > 0;
+  wstaw(m, h`<div class="card" id="drzKarta"><h2>${rdzNazwa(z)}</h2><div class="muted">${rdzLata(z) || 'brak dat w aktach'} · ${C.length > 1 ? 'osoba scalona decyzją (' + C.length + ' wystąpienia w aktach)' : 'jedno wystąpienie w aktach'}</div>
+    <h3 class="blok">W aktach</h3><div class="rtab"><table id="drzAkty"><tr><th>Rok</th><th>Akt</th><th>Rola</th><th>Dane z aktu</th><th></th></tr>${P.map(p => h`<tr><td>${p.rok || ''}</td><td>${NAZWY_TYPOW[p.typ] || p.typ} nr ${AM[p.akt] ? AM[p.akt].act : ''}</td><td>${RDZ_ROLA[p.rolaAktu] || p.rolaAktu}</td><td class="w">${[p.imie, p.nazwisko, p.rodowe ? 'z d. ' + p.rodowe : '', p.wiek ? 'wiek ' + p.wiek : '', p.miejsce, p.ojciec ? 'ojciec: ' + p.ojciec : '', p.matka ? 'matka: ' + p.matka + (p.matkaNazw ? ' z d. ' + p.matkaNazw : '') : ''].filter(Boolean).join(' · ')}</td><td><button class="sm" data-akt="${p.id}">otwórz akt</button></td></tr>`)}</table></div>
+    <h3 class="blok">Przodkowie (potwierdzone)</h3>${maRodz ? h`<div class="drz" id="drzPrz">${drzPrzodkowie(id, 0, new Set())}</div>` : h`<div class="muted" id="drzBrakRodz">Akty tej osoby nie podają rodziców.${kand.length ? ' Zobacz niżej „Możliwe te same osoby” – po scaleniu z aktem, który podaje rodziców, drzewo się wydłuży.' : ''}</div>`}
+    ${malz.length ? h`<h3 class="blok">Małżonkowie (z aktów)</h3><div class="widok">${malz.map(x => drzWezel(x))}</div>` : ''}
+    ${dzieci.length ? h`<h3 class="blok">Dzieci i dalsi potomkowie (potwierdzone)</h3><div class="drzPot" id="drzPot">${drzPotomkowie(id, 0, new Set())}</div>` : ''}
+    ${mozDzieci.map(r => { const prz = rdzPrzerwy(r.L.map(d => d.p.rok).concat(dzieci.map(d => drzOs(d)?.rok)), 4); return h`<h3 class="blok">Możliwe dzieci tej pary w innych aktach – do sprawdzenia</h3><div class="muted">Akty, w których rodzice to ${r.x.ojciec} ${r.x.nazwisko} i ${r.x.matka}${r.x.rodowe.size ? ' (z d. ' + [...r.x.rodowe].join(' / ') + ')' : ''}. Zgodność imion nie dowodzi, że to ta sama para. <button class="lk" data-para="${r.k}">Pokaż całą rodzinę</button></div>
+      <div class="rtab"><table class="drzMoz">${r.L.map(drzWiersz)}</table></div>${prz.length ? h`<div class="warn">Przerwy między aktami dzieci dłuższe niż 4 lata: ${prz.map(p => p[0] + '–' + p[1]).join(', ')}. Możliwy brak aktu albo inna para o tych samych imionach.</div>` : ''}`; })}
+    ${rodzenstwo.map(r => h`<h3 class="blok">Możliwe rodzeństwo – do sprawdzenia</h3><div class="muted">Inne akty z rodzicami ${r.x.ojciec} ${r.x.nazwisko} i ${r.x.matka}. <button class="lk" data-para="${r.k}">Pokaż całą rodzinę</button></div><div class="rtab"><table class="drzMoz">${r.L.map(drzWiersz)}</table></div>`)}
+    ${kand.length ? h`<h3 class="blok">Możliwe te same osoby w innych aktach – do decyzji</h3><div class="rtab"><table id="drzKand"><tr><th>Poziom</th><th>Osoba</th><th>Co się zgadza</th><th>Rozbieżności</th><th></th></tr>${kand.map(k => { const zz = rdzZycie(G, k.c); return h`<tr><td><span class="bdg ${k.wn === 'sprawdz' ? 'ok' : 'un'}">${OS_WN[k.wn]}</span></td><td class="w"><button class="lk" data-os="${k.c}">${rdzNazwa(zz)}</button><br><small class="muted">${wystEtykieta(G.P[k.b])}</small></td><td class="w">${k.zg.join('; ')}</td><td class="w">${k.roz.join('; ') || '—'}</td><td><button class="sm" data-dec="${k.a}">decyduj w Osobach</button></td></tr>`; })}</table></div>` : ''}
+   </div>`);
+  drzPodlacz(m); }
+function drzKartaPary(m, x){ const G = DRZ.G, L = drzDzieciPary(x.klucz, new Set()), prz = rdzPrzerwy(L.map(d => d.p.rok), 4), ro = [...new Set(x.rodziceW.map(w => G.wezel(w)))];
+  wstaw(m, h`<div class="card" id="drzPara"><h2>Rodzina: ${x.ojciec} ${x.nazwisko} + ${x.matka}${x.rodowe.size ? ' (z d. ' + [...x.rodowe].join(' / ') + ')' : ''}</h2>
+    <div class="warn">Zestawienie wg zgodnych imion rodziców i nazwiska ojca w ${L.length} aktach. To podpowiedź, nie potwierdzenie: w parafii mogły żyć dwie pary o tych samych imionach. Osoby potwierdzasz w zakładce Osoby (decyzja „scal”).</div>
+    <h3 class="blok">Dzieci wg aktów</h3><div class="rtab"><table id="drzParaTab"><tr><th>Rok</th><th>Osoba</th><th>Akt</th><th></th></tr>${L.map(drzWiersz)}</table></div>
+    ${prz.length ? h`<div class="warn" id="drzPrzerwy">Przerwy dłuższe niż 4 lata: ${prz.map(p => p[0] + '–' + p[1]).join(', ')} – możliwy brak aktu w indeksie albo dwie różne pary.</div>` : ''}
+    <h3 class="blok">Rodzice w tych aktach (${ro.length} zapisów)</h3><div class="widok">${ro.slice(0, 40).map(r => drzWezel(r, 'moz'))}</div>${ro.length > 40 ? h`<div class="muted">…i ${ro.length - 40} dalszych.</div>` : ''}</div>`);
+  drzPodlacz(m); }
+function drzPodlacz(m){ m.querySelectorAll('[data-os]').forEach(b => b.onclick = () => drzIdz(b.dataset.os)); m.querySelectorAll('[data-akt]').forEach(b => b.onclick = () => osOtworzAkt(b.dataset.akt));
+  m.querySelectorAll('[data-para]').forEach(b => b.onclick = () => { DRZ.tryb = 'rodziny'; DRZ.para = b.dataset.para; DRZ.cur = null; DRZ.q = ''; drzRender(); window.scrollTo(0, 0); });
+  m.querySelectorAll('[data-dec]').forEach(b => b.onclick = () => { const w = b.dataset.dec, c = DRZ.G.wezel(w); OSS.widok = 'prop'; OSS.flt = 'mozliwe'; OSS.q = ''; zaklUstaw('osoby'); osWybierz(c); }); }
+
+/* app/moduly/ui_raport.js – zakładka „Raport”: podsumowanie pracy, raport spójności zgonów, lista „do sprawdzenia na skanie”, kontrole wieku i dat, numeracja i możliwe duble.
+   Logika kontroli: rodziny_rdzen.js i raport_zgonow.js; tu tylko widok i eksport CSV. HTML wyłącznie przez wstaw(h`…`). Raport niczego nie zmienia w danych. */
+const RAP = {w: 'pods', typ: '', kod: '', cache: {}, sig: '', LIM: 400};
+const RAP_W = [['pods', 'Podsumowanie'], ['skan', 'Do sprawdzenia na skanie'], ['spojn', 'Spójność zgonów'], ['wiek', 'Wiek i daty'], ['numer', 'Numeracja i duble']];
+const rapAktEt = a => a ? (NAZWY_TYPOW[a.typ] || a.typ) + ' ' + a.year + ' nr ' + a.act + ' · ' + nmOf(a) : '';
+function rapLicz(k, fn){ const sig = (S.histN || 0) + '|' + (S.decyz || []).length + '|' + JSON.stringify(S.repIgn || {}).length; if (RAP.sig !== sig) { RAP.cache = {}; RAP.sig = sig; } return k in RAP.cache ? RAP.cache[k] : (RAP.cache[k] = fn()); }
+// lista pól do obejrzenia na skanie: niepewne albo z różnicą AI ↔ indeks, jeszcze niezatwierdzone (akty zatwierdzone pomijamy)
+function rapDoSkanu(){ return rapLicz('skan', () => { const out = []; D.wszystkie.forEach(a => { if (S.acts[a.id]?.done) return; fieldsOf(a).forEach(f => { if (!poleSporne(a, f.id)) return; const r = diffState(a, f.id) === 'ne';
+    out.push({id: a.id, typ: a.typ, rok: a.year, nr: a.act, pole: f.label, f: f.id, v: String(getv(a, f.id) ?? ''), ai: String(a.ai?.[f.id] ?? ''), lub: String(a.lub?.[f.id] ?? ''), pow: r ? 'różnica AI ↔ indeks' : 'niepewne', skan: skanSciezka(a) ? skanBase(skanSciezka(a)) : ''}); }); }); return out; }); }
+function rapCsvSkan(L){ return ['typ;rok;nr;osoba;pole;wartosc;odczyt_AI;indeks;powod;skan;id_aktu'].concat(L.map(x => [NAZWY_TYPOW[x.typ] || x.typ, x.rok, x.nr, nmOf(AM[x.id]), x.pole, x.v, x.ai, x.lub, x.pow, x.skan, x.id].map(csvCell).join(';'))).join('\r\n') + '\r\n'; }
+function rapPods(){ return rapLicz('pods', () => D.typy.map(t => { const A = D.wszystkie.filter(a => a.typ === t); let ai = 0, done = 0, sp = 0, skan = 0, pola = 0; A.forEach(a => { if (a.ai) ai++; const d = !!S.acts[a.id]?.done; if (d) done++; if (skanKlucz(a)) skan++; if (!d) { const n = fieldsOf(a).filter(f => poleSporne(a, f.id)).length; if (n) { sp++; pola += n; } } });
+    return {t, n: A.length, ai, done, sp, pola, skan, lata: A.length ? Math.min(...A.map(a => a.year).filter(Number.isFinite)) + '–' + Math.max(...A.map(a => a.year).filter(Number.isFinite)) : ''}; })); }
+function rapGraf(){ return rapLicz('graf', () => { const M = osModel(D.wszystkie, getv); return rdzGraf(M, wystProfile(M), decKlastry(S.decyz)); }); }
+function rapRender(){ const m = $('main'); wstaw($('filtry'), ''); wstaw($('lista'), '');
+  const nav = h`<div class="rnav" id="rapNav">${RAP_W.map(([k, l]) => h`<button data-rw="${k}" class="${RAP.w === k ? 'on' : ''}">${l}</button>`)}</div>`, selTyp = h`<select id="rapTyp" aria-label="Typ aktów"><option value="">Wszystkie typy</option>${D.typy.map(t => h`<option value="${t}" ${RAP.typ === t ? raw('selected') : ''}>${NAZWY_TYPOW[t] || t}</option>`)}</select>`;
+  const wiecej = (n) => n > RAP.LIM ? h`<div class="muted">Pokazano pierwsze ${RAP.LIM} z ${n}. Pełna lista jest w eksporcie CSV albo po zawężeniu typu.</div>` : '', akt = id => h`<button class="lk" data-akt="${id}">${rapAktEt(AM[id])}</button>`;
+  let tresc;
+  if (RAP.w === 'pods') { const P = rapPods(), akt2 = decAktywne(S.decyz), K = decKlastry(S.decyz);
+    tresc = h`<div class="card"><h2>Stan pracy</h2><div class="rtab"><table id="rapPods"><tr><th>Typ</th><th>Lata</th><th>Aktów</th><th>Z odczytem</th><th>Zatwierdzonych</th><th class="w">Aktów ze spornymi polami</th><th class="w">Spornych pól</th><th class="w">Z adresem skanu</th></tr>
+      ${P.map(x => h`<tr><td>${NAZWY_TYPOW[x.t] || x.t}</td><td>${x.lata}</td><td>${x.n}</td><td>${x.ai}</td><td>${x.done}${x.ai ? ' (' + Math.round(100 * x.done / x.ai) + '%)' : ''}</td><td>${x.sp}</td><td>${x.pola}</td><td>${x.skan}</td></tr>`)}</table></div>
+      <p class="muted">Sporne pole = niepewne albo z różnicą między odczytem AI a indeksem, jeszcze niezatwierdzone. Osoby: decyzji obowiązujących ${akt2.length}, osób scalonych ${Object.keys(K.osoby).length}. Historia zmian: ${(S.hist || []).length} wpisów. Zmian bez kopii: ${ST_ZMIANY}.</p>
+      <div class="acts"><button data-rw="skan">Lista do sprawdzenia na skanie →</button><button data-rw="spojn">Spójność zgonów →</button><button data-rw="wiek">Wiek i daty →</button><button data-rw="numer">Numeracja i duble →</button></div></div>`; }
+  else if (RAP.w === 'skan') { const W = rapDoSkanu().filter(x => !RAP.typ || x.typ === RAP.typ), L = W.slice(0, RAP.LIM);
+    tresc = h`<div class="card"><h2>Do sprawdzenia na skanie (${W.length} pól w ${new Set(W.map(x => x.id)).size} aktach)</h2><div class="widok">${selTyp}<button id="rapCsv" class="p">Eksport CSV (cała lista)</button></div>
+      <div class="rtab"><table id="rapSkan"><tr><th>Akt</th><th>Pole</th><th>Wartość</th><th>Odczyt AI</th><th>Indeks</th><th>Powód</th><th>Skan</th></tr>${L.map(x => h`<tr><td class="w">${akt(x.id)}</td><td>${x.pole}</td><td class="w">${x.v}</td><td class="w">${x.ai}</td><td class="w">${x.lub}</td><td>${x.pow}</td><td class="w">${x.skan || '—'}</td></tr>`)}</table></div>${wiecej(W.length)}</div>`; }
+  else if (RAP.w === 'spojn') { const W = rapLicz('spojn', () => repAll(false)), kody = [...new Set(W.map(i => i.code))].sort(), F = W.filter(i => !RAP.kod || i.code === RAP.kod), L = F.slice(0, RAP.LIM), ik = {err: '⛔', warn: '⚠', info: 'ℹ'};
+    tresc = h`<div class="card"><h2>Spójność aktów zgonu (${F.length} sygnałów)</h2><div class="widok"><select id="rapKod" aria-label="Rodzaj sygnału"><option value="">Wszystkie rodzaje</option>${kody.map(k => h`<option value="${k}" ${RAP.kod === k ? raw('selected') : ''}>${k} (${W.filter(i => i.code === k).length})</option>`)}</select><span class="muted">Sygnały ignorowane w karcie aktu są tu pominięte.</span></div>
+      <div class="rtab"><table id="rapSpojn"><tr><th></th><th>Akt</th><th>Sygnał</th><th>Kod</th></tr>${L.map(i => h`<tr><td>${ik[i.sev] || ''}</td><td class="w">${akt(i.id)}</td><td class="w">${i.msg}</td><td>${i.code}</td></tr>`)}</table></div>${wiecej(F.length)}</div>`; }
+  else if (RAP.w === 'wiek') { const A = rapLicz('wiekA', () => kontWiekWAktach(D.wszystkie, getv)).filter(x => !RAP.typ || AM[x.id].typ === RAP.typ), O = rapLicz('wiekO', () => kontWiekOsob(rapGraf())), G = rapGraf();
+    tresc = h`<div class="card"><h2>Osoby scalone: zgodność wieku i dat (${O.length})</h2><p class="muted">Porównanie aktów tej samej osoby (chrzest ↔ ślub ↔ zgon). Dotyczy tylko osób scalonych Twoją decyzją w zakładce Osoby – program sam nie łączy aktów.</p>
+      ${O.length ? h`<div class="rtab"><table id="rapWiekO"><tr><th>Osoba</th><th>Sygnał</th><th>Akty</th></tr>${O.slice(0, RAP.LIM).map(x => h`<tr><td class="w">${rdzNazwa(rdzZycie(G, x.id))}</td><td class="w">${x.msg}</td><td class="w">${[...new Set(x.akty)].map((id, i) => h`${i ? ', ' : ''}${akt(id)}`)}</td></tr>`)}</table></div>` : h`<div class="muted" id="rapWiekOPusto">${Object.keys(decKlastry(S.decyz).osoby).length ? 'Brak sygnałów dla osób scalonych.' : 'Nie ma jeszcze osób scalonych – kontrola zacznie działać po pierwszych decyzjach „scal”.'}</div>`}</div>
+     <div class="card" style="margin-top:12px"><h2>Wiek w aktach poza zwykłym zakresem (${A.length})</h2><div class="widok">${selTyp}<span class="muted">To nie musi być błąd – sprawdź na skanie.</span></div>
+      <div class="rtab"><table id="rapWiekA"><tr><th>Akt</th><th>Sygnał</th></tr>${A.slice(0, RAP.LIM).map(x => h`<tr><td class="w">${akt(x.id)}</td><td class="w">${x.msg}</td></tr>`)}</table></div>${wiecej(A.length)}</div>`; }
+  else { const N = rapLicz('numer', () => kontNumeracja(D.wszystkie)), Dz = N.dziury.filter(x => !RAP.typ || x.typ === RAP.typ), Du = N.duble.filter(x => !RAP.typ || x.typ === RAP.typ), DZ = rapLicz('dubleZg', () => kontDubleZgonow(D.wszystkie, getv));
+    tresc = h`<div class="card"><h2>Możliwe pominięte akty: dziury w numeracji (${Dz.length})</h2><div class="widok">${selTyp}<span class="muted">Tylko małe dziury (1–3 numery) wewnątrz ciągu numerów jednego roku. Większe przeskoki to zwykle osobne serie (np. inna miejscowość).</span></div>
+      <div class="rtab"><table id="rapDziury"><tr><th>Typ</th><th>Rok</th><th>Brakujące numery</th><th>Akt przed</th><th>Akt po</th></tr>${Dz.slice(0, RAP.LIM).map(x => h`<tr><td>${NAZWY_TYPOW[x.typ] || x.typ}</td><td>${x.rok}</td><td>${x.brak.join(', ')}</td><td class="w">${akt(x.przed)}</td><td class="w">${akt(x.po)}</td></tr>`)}</table></div>${wiecej(Dz.length)}</div>
+     <div class="card" style="margin-top:12px"><h2>Ten sam numer aktu dwa razy w roku (${Du.length})</h2><div class="rtab"><table id="rapDubleNr"><tr><th>Typ</th><th>Rok</th><th>Nr</th><th>Akty</th></tr>${Du.slice(0, RAP.LIM).map(x => h`<tr><td>${NAZWY_TYPOW[x.typ] || x.typ}</td><td>${x.rok}</td><td>${x.nr}</td><td class="w">${x.ids.map((id, i) => h`${i ? ' ↔ ' : ''}${akt(id)}`)}</td></tr>`)}</table></div>${wiecej(Du.length)}</div>
+     <div class="card" style="margin-top:12px"><h2>Możliwe duble zgonów: ta sama osoba i data (${DZ.length})</h2><div class="rtab"><table id="rapDubleZg"><tr><th>Data zgonu</th><th>Akty</th></tr>${DZ.slice(0, RAP.LIM).map(x => h`<tr><td>${x.data}</td><td class="w">${x.ids.map((id, i) => h`${i ? ' ↔ ' : ''}${akt(id)}`)}</td></tr>`)}</table></div></div>`; }
+  wstaw(m, h`${nav}${tresc}`);
+  m.querySelectorAll('[data-rw]').forEach(b => b.onclick = () => { RAP.w = b.dataset.rw; rapRender(); window.scrollTo(0, 0); });
+  m.querySelectorAll('[data-akt]').forEach(b => b.onclick = () => osOtworzAkt('w:' + b.dataset.akt + ':x'));
+  if ($('rapTyp')) $('rapTyp').onchange = e => { RAP.typ = e.target.value; rapRender(); }; if ($('rapKod')) $('rapKod').onchange = e => { RAP.kod = e.target.value; rapRender(); };
+  if ($('rapCsv')) $('rapCsv').onclick = () => { const W = rapDoSkanu().filter(x => !RAP.typ || x.typ === RAP.typ); dl('multitool_do_sprawdzenia_na_skanie_' + new Date().toISOString().slice(0, 10) + '.csv', rapCsvSkan(W)); toast('Zapisano listę: ' + W.length + ' pól'); }; }
+
 /* app/moduly/ui_powloka.js – powłoka aplikacji (krok 3): nagłówek ze wskaźnikiem kopii, pasek trybu awaryjnego, lista aktów z filtrami, menu (eksport CSV, kopia, import, migawki, kolejka zmian danych), okno podglądu importu.
    Jedyne miejsce (obok ui_akt.js), gdzie wolno użyć innerHTML – wyłącznie przez wstaw(h`…`). */
 const LISTA_PORCJA = 300; let LISTA_N = LISTA_PORCJA;
@@ -2191,7 +2496,7 @@ function widoczne(){ const q = fold(S.q || '').trim(); return D.acts.filter(a =>
   if (S.flt === 'ai' && !a.ai) return false; if (S.flt === 'todo' && (!a.ai || d)) return false; if (S.flt === 'done' && !d) return false; if (S.flt === 'lub' && a.ai) return false; if (S.flt === 'unc' && !(a.ai && FSet(a).some(f => isUnc(a, f.id)) && !d)) return false; if (S.flt === 'diff' && !(a.ai && hasDiff(a))) return false; if (S.flt === 'noscan' && scanOf(a)) return false;
   return !q || nmFold(a).includes(q); }); }
 const FSet = a => fieldsOf(a);
-function renderFiltry(){ const lata = navLata(), cen = navStulecia(), dek = S.cen && S.cen !== 'all' ? navDekady(S.cen) : [], F = [['all', 'Wszystkie'], ['ai', 'Z odczytem AI'], ['todo', 'Do weryfikacji'], ['diff', 'Konflikty'], ['unc', 'Niepewne'], ['noscan', 'Bez skanu'], ['done', 'Gotowe'], ['lub', 'Tylko indeks']].concat(D.typ === 'zgon' ? [['rejprot', 'Rejestr + protokoły']] : []);
+function renderFiltry(){ if (!wAktach()) return; const lata = navLata(), cen = navStulecia(), dek = S.cen && S.cen !== 'all' ? navDekady(S.cen) : [], F = [['all', 'Wszystkie'], ['ai', 'Z odczytem AI'], ['todo', 'Do weryfikacji'], ['diff', 'Konflikty'], ['unc', 'Niepewne'], ['noscan', 'Bez skanu'], ['done', 'Gotowe'], ['lub', 'Tylko indeks']].concat(D.typ === 'zgon' ? [['rejprot', 'Rejestr + protokoły']] : []);
   wstaw($('filtry'), h`<select id="fCen" aria-label="Stulecie"><option value="all">Wszystkie stulecia</option>${cen.map(c => h`<option value="${c}" ${String(S.cen) === String(c) ? raw('selected') : ''}>${c}–${c + 99}</option>`)}</select>
     <select id="fDec" aria-label="Dekada" ${dek.length ? '' : raw('disabled')}><option value="all">Wszystkie dekady</option>${dek.map(c => h`<option value="${c}" ${String(S.dec) === String(c) ? raw('selected') : ''}>${c}–${c + 9}</option>`)}</select>
     <select id="fRok" aria-label="Rok"><option value="all">Wszystkie lata</option>${lata.map(y => h`<option value="${y}" ${String(S.year) === String(y) ? raw('selected') : ''}>${y}</option>`)}</select>
@@ -2200,11 +2505,12 @@ function renderFiltry(){ const lata = navLata(), cen = navStulecia(), dek = S.ce
   $('fCen').onchange = e => { S.cen = e.target.value; S.dec = 'all'; S.year = 'all'; LISTA_N = LISTA_PORCJA; save(); renderFiltry(); renderLista(); }; $('fDec').onchange = e => { S.dec = e.target.value; S.year = 'all'; LISTA_N = LISTA_PORCJA; save(); renderFiltry(); renderLista(); };
   $('fRok').onchange = e => { S.year = e.target.value; LISTA_N = LISTA_PORCJA; save(); renderLista(); }; $('fFlt').onchange = e => { S.flt = e.target.value; LISTA_N = LISTA_PORCJA; save(); renderLista(); };
   $('fQ').oninput = e => { S.q = e.target.value; LISTA_N = LISTA_PORCJA; renderLista(); }; $('fQ').onchange = () => save(); $('fScan').onchange = e => { S.onlyScan = e.target.checked; save(); renderLista(); }; $('fHide').onchange = e => { S.hideDoneActs = e.target.checked; save(); renderLista(); }; }
-function renderLista(){ const v = widoczne(), L = $('lista'), pokaz = v.slice(0, LISTA_N), done = D.acts.filter(a => S.acts[a.id]?.done).length, ai = D.acts.filter(a => a.ai).length;
+function renderLista(){ if (!wAktach()) return; const v = widoczne(), L = $('lista'), pokaz = v.slice(0, LISTA_N), done = D.acts.filter(a => S.acts[a.id]?.done).length, ai = D.acts.filter(a => a.ai).length;
   wstaw(L, h`${pokaz.map(a => { const pr = progOf(a), d = !!S.acts[a.id]?.done; return h`<button class="it ${a.id === S.cur ? 'cur' : ''} ${d ? 'done' : ''} ${a.ai ? '' : 'noai'}" data-id="${a.id}" style="--p:${pr}"><small>${a.year}</small> <b>${a.act}</b> <span>${nmOf(a)}</span>${d ? h`<em>✓</em>` : ''}</button>`; })}
     ${v.length > pokaz.length ? h`<button id="wiecej" class="sm">Pokaż więcej (${v.length - pokaz.length})</button>` : ''}${v.length ? '' : h`<span class="muted" id="pustaLista">${S.flt === 'rejprot' ? 'Brak rejestrów i protokołów w danych tej aplikacji (zawiera tylko akty zgonu) – widok pojawi się po dodaniu danych w kolejnym kroku.' : 'Brak aktów w tym filtrze'}</span>`}`);
   L.querySelectorAll('[data-id]').forEach(b => b.onclick = () => otworz(b.dataset.id)); if ($('wiecej')) $('wiecej').onclick = () => { LISTA_N += LISTA_PORCJA; renderLista(); };
-  $('prog').textContent = done + '/' + ai + ' zatwierdz. · widocznych ' + v.length; }
+  $('prog').textContent = done + '/' + ai + ' zatwierdz. · widocznych ' + v.length;
+  const todo = D.acts.filter(a => a.ai && !S.acts[a.id]?.done).length, ds = $('doSpr'); if (ds) wstaw(ds, h`do sprawdzenia: ${todo} <i><b style="width:${ai ? Math.round(100 * (ai - todo) / ai) : 0}%"></b></i>`); }
 function otworz(id){ S.cur = id; save(); renderLista(); renderAkt(); }
 // ---- okno (podgląd importu, migawki, kolejka zmian danych)
 function okno(tytul, tresc, przyciski){ const o = $('okno'); wstaw(o, h`<div class="okno-in" role="dialog" aria-label="${tytul}"><h3>${tytul}</h3><div id="oknoTresc">${tresc}</div><div class="acts">${(przyciski || []).map(([id, l, c]) => h`<button id="${id}" class="${c || ''}">${l}</button>`)}<button id="oknoX">Zamknij</button></div></div>`); o.hidden = false; $('oknoX').onclick = () => { o.hidden = true; }; return o; }
@@ -2223,7 +2529,7 @@ async function menuMigawki(){ const L = await kopiaLista(); okno('Migawki (ostat
   $('oknoTresc').querySelectorAll('[data-prz]').forEach(b => b.onclick = async () => { if (!confirm('Przywrócić stan z migawki? (obecny stan też trafi do migawki)')) return; await kopiaPrzywroc(b.dataset.prz); $('okno').hidden = true; odswiez(); toast('Przywrócono migawkę'); }); }
 function menuKolejka(){ const K = stKolejka(); okno('Dane źródłowe się zmieniły (' + K.length + ')', K.length ? h`<table id="kolejka"><tr><th>Akt</th><th>Pole</th><th>Twoja wartość</th><th>Baza była</th><th>Baza jest</th><th></th></tr>${K.map(x => h`<tr><td>${AM[x.id]?.stary || x.id}</td><td>${x.f}</td><td>${x.v}</td><td>${x.baza}</td><td>${x.teraz}</td><td><button class="sm" data-kz="${x.id}|${x.f}">Zostaw moją</button> <button class="sm" data-kp="${x.id}|${x.f}">Przyjmij nową</button></td></tr>`)}</table>` : h`<p class="muted">Brak zmian: dane źródłowe zgodne z tym, co widziałeś.</p>`);
   $('oknoTresc').querySelectorAll('[data-kz],[data-kp]').forEach(b => b.onclick = () => { const [id, f] = (b.dataset.kz || b.dataset.kp).split('|'); stKolejkaRozstrzygnij(id, f, b.dataset.kz ? 'zostaw' : 'przyjmij'); menuKolejka(); renderAkt(); renderLista(); stWskaznik(); }); }
-function odswiez(){ if (typeof OSS !== 'undefined' && OSS.zakl === 'osoby') { OSS.cache = null; OSS.KL = decKlastry(S.decyz); stWskaznik(); stPasek(); osStart(false); return osRender(); } typOdswiez(); HS = histSnap(S.acts); renderFiltry(); renderLista(); renderAkt(); stWskaznik(); stPasek(); const k = $('mKolejka'); if (k) k.textContent = 'Dane źródłowe się zmieniły (' + ST_KOLEJ.length + ')'; }
+function odswiez(){ if (typeof zaklOdswiez === 'function' && zaklOdswiez()) return; if (typeof OSS !== 'undefined' && OSS.zakl === 'osoby') { OSS.cache = null; OSS.KL = decKlastry(S.decyz); stWskaznik(); stPasek(); osStart(false); return osRender(); } typOdswiez(); HS = histSnap(S.acts); renderFiltry(); renderLista(); renderAkt(); stWskaznik(); stPasek(); const k = $('mKolejka'); if (k) k.textContent = 'Dane źródłowe się zmieniły (' + ST_KOLEJ.length + ')'; }
 function menuInit(){ const M = $('menu'); $('bMenu').onclick = () => { M.hidden = !M.hidden; };
   $('mCsv').onclick = () => { if (D.typ === 'zgon') dl('ZGONY_zweryfikowane.csv', csvText()); else dl(TYPY[D.typ].eksport.plik, typCsv(D.typ)); M.hidden = true; toast('Eksport CSV (nie zeruje wskaźnika kopii)'); };   // CSV nie zawiera historii ani decyzji → nie jest kopią
   $('mKopia').onclick = () => { dl('multitool_kopia_' + new Date().toISOString().slice(0, 10) + '.json', JSON.stringify(kopiaPelna()), 'application/json', false); kopiaZrobiona(); M.hidden = true; toast('Kopia pełna zapisana'); };
@@ -2249,6 +2555,6 @@ function typOdswiez(){ const sel = $('selTyp'); if (!sel) return; sel.value = D.
 (async () => {
   S = await stWczytaj(); normActs(); startMigracja(); startZatwierdzone(); stKolejka();
   HS = histSnap(S.acts); await stFlush(false);   // stan początkowy (migracja, zatwierdzone z danych) nie liczy się do „zmian bez kopii”
-  typInit(); menuInit(); skanInit(); odswiez(); GOTOWE = true;
+  typInit(); menuInit(); skanInit(); nawInit(); odswiez(); GOTOWE = true;
 })().catch(e => { document.body.insertAdjacentText('afterbegin', 'Błąd startu: ' + e.message); });
 </script></body></html>

@@ -46,13 +46,13 @@ function skTT(){ const hd = document.querySelector('header'); document.documentE
 function skanWinRender(a){ const W = $('skWin'), pk = $('skPokaz'); if (!W) return; skTT();
   if (!a) { W.hidden = true; if (pk) pk.hidden = true; document.body.classList.remove('sk-dok'); return; }
   W.hidden = SK.schowany; if (pk) pk.hidden = !SK.schowany; document.body.classList.toggle('sk-dok', !SK.plywajacy && !SK.schowany);
-  wstaw(W, skanPanel(a)); skanOknoPodlacz(); skanPodlacz(a); }
+  W.classList.toggle('bezobrazu', !skanZnajdz(a)); wstaw(W, skanPanel(a)); skanOknoPodlacz(); skanPodlacz(a); }
 function skanOknoPodlacz(){ const W = $('skWin'), head = $('skHead'); if (!W || !head) return;
   $('skHdr').onclick = () => { document.body.classList.toggle('hdr-ukryty'); skanWinRender(curAct()); };
   $('skZwin').onclick = () => { SK.zwiniety = !SK.zwiniety; skanWinRender(curAct()); };
   $('skSchowaj').onclick = () => { SK.schowany = true; skanWinRender(curAct()); };
   $('skDok').onclick = () => { SK.plywajacy = !SK.plywajacy; if (!SK.plywajacy) Object.assign(W.style, {left: '', top: '', right: '', bottom: ''}); skanWinRender(curAct()); };
-  head.onpointerdown = e => { if (e.target.closest('button')) return; SK.plywajacy = true; const r = W.getBoundingClientRect(); Object.assign(W.style, {left: r.left + 'px', top: r.top + 'px', right: 'auto', bottom: 'auto'}); document.body.classList.remove('sk-dok');
+  head.onpointerdown = e => { if (e.target.closest('button') || (window.matchMedia && matchMedia('(max-width:820px)').matches)) return; SK.plywajacy = true; const r = W.getBoundingClientRect(); Object.assign(W.style, {left: r.left + 'px', top: r.top + 'px', right: 'auto', bottom: 'auto'}); document.body.classList.remove('sk-dok');
     const dx = e.clientX - r.left, dy = e.clientY - r.top; head.setPointerCapture(e.pointerId);
     head.onpointermove = ev => { W.style.left = Math.max(0, ev.clientX - dx) + 'px'; W.style.top = Math.max(0, ev.clientY - dy) + 'px'; };
     const kon = () => { head.onpointermove = null; head.onpointerup = null; head.onpointercancel = null; }; head.onpointerup = kon; head.onpointercancel = kon; }; }
@@ -78,7 +78,7 @@ function skanPodlacz(a){ if (!$('skFolder')) return;
 function skanZoom(f){ const v = $('skView'); if (!v) return; const V = SK.v, W = v.clientWidth / 2, H = v.clientHeight / 2; V.x = W - (W - V.x) * f; V.y = H - (H - V.y) * f; V.s *= f; skanTransform(); }
 function roiEksport(){ const A = D.acts.filter(a => !a.kind && (a.ai || S.acts[a.id]?.roi || S.acts[a.id]?.fr)).map(a => { const o = {id: a.id, plik: skanSciezka(a), strona: 1, roi: roiOf(a) || null}; const fr = Object.assign({}, a.pola || {}, S.acts[a.id]?.fr || {}); if (Object.keys(fr).length) o.pola = fr; return o; });
   dl('ZGONY_roi_poprawione.json', JSON.stringify(A, null, 1), 'application/json', false); return A.length; }
-function skanInit(){ addEventListener('resize', () => skTT()); const W = document.createElement('div'); W.id = 'skWin'; W.className = 'skwin'; W.hidden = true; document.body.appendChild(W);
+function skanInit(){ addEventListener('resize', () => skTT()); const W = document.createElement('div'); W.id = 'skWin'; W.className = 'skwin'; W.hidden = true; const wr = document.querySelector('.wrap'); document.body.insertBefore(W, wr);   // przed .wrap: na telefonie okno jest w układzie strony (przyklejone u góry), na komputerze – pozycja stała
   const pk = document.createElement('button'); pk.id = 'skPokaz'; pk.className = 'skPok'; pk.hidden = true; pk.textContent = '🖼 Skan'; pk.onclick = () => { SK.schowany = false; skanWinRender(curAct()); }; document.body.appendChild(pk);
   const hp = document.createElement('button'); hp.id = 'hdrPokaz'; hp.className = 'hdrPok'; hp.textContent = '▼ pasek'; hp.onclick = () => { document.body.classList.remove('hdr-ukryty'); skanWinRender(curAct()); }; document.body.appendChild(hp);
   const lt = document.createElement('button'); lt.id = 'listaTog'; lt.className = 'listaTog'; lt.title = 'Pokaż/ukryj listę aktów'; lt.textContent = '◀'; lt.onclick = () => { const u = document.body.classList.toggle('lista-ukryta'); lt.textContent = u ? '▶' : '◀'; setTimeout(() => { if (SK.v.iw) skanDopasuj(roiOf(curAct())); }, 60); }; document.body.appendChild(lt);

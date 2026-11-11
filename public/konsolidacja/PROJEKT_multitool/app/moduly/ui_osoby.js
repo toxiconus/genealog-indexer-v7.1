@@ -18,7 +18,7 @@ function osOdbierz(m){
   if (m.t === 'postep') { OSS.post = {od: m.od, n: m.n}; osStatus(); return; }
   if (m.t === 'wynik') { OSS.wyniki = m.wyniki; OSS.licz = m.licz; OSS.ms = m.ms; OSS.gotowe = true; OSS.post = null; OSS.cache = null; osStatus(); if (OSS.zakl === 'osoby') osRender(); return; }
   const c = OSS.czeka[m.req]; if (c) { delete OSS.czeka[m.req]; m.t === 'blad' ? c.no(new Error(m.blad)) : c.ok(m); } }
-function osStatus(){ const p = $('prog'); if (!p || OSS.zakl !== 'osoby') return; const sm = Object.values(OSS.wyniki).reduce((a, w) => a + w.filter(x => x[1] === 's').length, 0);
+function osStatus(){ if (OSS.zakl !== 'osoby') return; const p = $('prog'); if (!p || OSS.zakl !== 'osoby') return; const sm = Object.values(OSS.wyniki).reduce((a, w) => a + w.filter(x => x[1] === 's').length, 0);
   p.textContent = OSS.post ? 'Osoby: liczę propozycje ' + Math.round(100 * OSS.post.od / Math.max(1, OSS.post.n)) + '% (' + (OSS.most ? OSS.most.tryb : '') + ')' : OSS.gotowe ? 'Osoby: ' + OSS.N + ' wystąpień · osób scalonych ' + Object.keys((OSS.KL || decKlastry(S.decyz)).osoby).length + ' · ' + OSS.tryb + ' ' + (OSS.ms / 1000).toFixed(1) + ' s' : 'Osoby: przygotowuję…'; }
 // uruchom (lub uruchom ponownie, gdy zmieniły się dane aktów albo klasy wariantów nazwisk)
 function osStart(wymus){ const M = osModel(D.wszystkie, getv), sygn = osPodpis(M), K = osKlasy(S.decyz), ksig = JSON.stringify(K.klasy);
@@ -125,8 +125,7 @@ function osWarKarta(m){ const K = osKlasy(S.decyz), s = OSS.sel, W = OSS.war && 
   const fo = [w.a, w.b]; $('osWarTak').onclick = () => { const r = osZapiszDec('wariant_nazwiska', 'n:' + w.a, 'n:' + w.b, {formy: [Object.keys(w.formyA).join('/'), Object.keys(w.formyB).join('/')], why: w.rodzaj + ': ' + w.powod}); if (r.ok) { OSS.sel = null; OSS.war = null; toast('Zapisano klasę wariantów. Przeliczam propozycje…'); } };
   $('osWarNie').onclick = () => { const r = osZapiszDec('odrzuc_wariant', 'n:' + w.a, 'n:' + w.b, {}); if (r.ok) { OSS.sel = null; OSS.war = null; toast('Zapisano: to różne nazwiska – para nie wróci.'); osWarLadu(); } }; }
 // ---------- zakładki, menu, import/eksport
-function osZakladka(k){ OSS.zakl = k; const o = k === 'osoby'; $('zAkty').className = o ? '' : 'p'; $('zOsoby').className = o ? 'p' : ''; $('selTyp').hidden = o; document.querySelectorAll('.osMenu').forEach(b => b.hidden = !o);
-  if (o) { if (!OSS.KL) OSS.KL = decKlastry(S.decyz); $('tytul').textContent = 'Multitool v1 · osoby'; osStart(false); osRender(); } else { OSS.sel = null; odswiez(); } }
+function osZakladka(k){ zaklUstaw(k); }   // przełączanie zakładek: ui_nawigacja.js
 function osInit(){ $('zAkty').onclick = () => osZakladka('akty'); $('zOsoby').onclick = () => osZakladka('osoby'); document.querySelectorAll('.osMenu').forEach(b => b.hidden = true);
   $('mDecJson').onclick = () => { $('menu').hidden = true; dl('multitool_decyzje_' + new Date().toISOString().slice(0, 10) + '.json', JSON.stringify({format: DEC_FORMAT, dane: {wersja: (DANE.format && DANE.format.wersja) || 1, suma: DANE.suma || ''}, zapisano: new Date().toISOString(), decyzje: S.decyz}), 'application/json', false); toast('Zapisano decyzje (JSON). Pełna kopia zeruje wskaźnik zmian, ten plik nie.'); };
   $('mDecCsv').onclick = () => { $('menu').hidden = true; dl('multitool_decyzje_' + new Date().toISOString().slice(0, 10) + '.csv', decCsv(S.decyz)); toast('Zapisano decyzje (CSV)'); };

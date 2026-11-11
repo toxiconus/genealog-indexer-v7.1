@@ -1,0 +1,68 @@
+/* app/moduly/ui_drzewo.js – zakładka „Drzewo”: osoby i rodziny z aktów (zgony, małżeństwa, chrzty). Logika w rodziny_rdzen.js; tu tylko widok. HTML wyłącznie przez wstaw(h`…`).
+   Linia ciągła = potwierdzone (jeden akt albo decyzja „scal”). Ramka przerywana / sekcje „Możliwe…” = podpowiedź do sprawdzenia (zgodne imiona rodziców albo propozycja silnika z zakładki Osoby). */
+const DRZ = {tryb: 'osoby', q: '', cur: null, para: null, port: 300, glowne: true, sig: '', G: null, M: null, osoby: [], rodziny: [], E: null};
+function drzGraf(){ const sig = (S.histN || 0) + '|' + (S.decyz || []).length + '|' + D.wszystkie.length; if (DRZ.G && DRZ.sig === sig) return DRZ.G;
+  const M = osModel(D.wszystkie, getv), P = wystProfile(M), G = rdzGraf(M, P, decKlastry(S.decyz)); DRZ.G = G; DRZ.M = M; DRZ.sig = sig; DRZ.E = null;
+  DRZ.osoby = Object.keys(G.czlonkowie).map(id => { const z = rdzZycie(G, id), nm = rdzNazwa(z), C = G.czlonkowie[id]; return {id, z, nm, f: fold(nm), gl: C.some(w => /^(dziecko|zmarly|pan_mlody|panna_mloda)$/.test(P[w].rolaAktu)), rok: Math.min(...C.map(w => P[w].rok || 9999)), n: C.length}; })
+    .sort((a, b) => fold(a.z.nazwisko || a.z.rodowe || 'żż').localeCompare(fold(b.z.nazwisko || b.z.rodowe || 'żż')) || fold(a.z.imie).localeCompare(fold(b.z.imie)) || a.rok - b.rok);
+  DRZ.mapa = {}; DRZ.osoby.forEach(o => DRZ.mapa[o.id] = o);
+  DRZ.rodziny = Object.values(G.pary).map(x => { const lata = x.dzieci.map(w => P[w].rok).filter(Number.isFinite); return {k: x.klucz, nm: x.nazwisko + ': ' + x.ojciec + ' + ' + x.matka, f: fold(x.nazwisko + ' ' + x.ojciec + ' ' + x.matka + ' ' + [...x.rodowe].join(' ')), n: x.dzieci.length, od: lata.length ? Math.min(...lata) : null, do: lata.length ? Math.max(...lata) : null}; })
+    .sort((a, b) => a.f.localeCompare(b.f) || (a.od || 0) - (b.od || 0));
+  return G; }
+const drzOs = id => DRZ.mapa && DRZ.mapa[id];
+function drzRender(){ const G = drzGraf();
+  wstaw($('filtry'), h`<select id="drzTryb" aria-label="Widok drzewa"><option value="osoby" ${DRZ.tryb === 'osoby' ? raw('selected') : ''}>Osoby</option><option value="rodziny" ${DRZ.tryb === 'rodziny' ? raw('selected') : ''}>Rodziny (pary rodziców)</option></select>
+    <input id="drzQ" type="search" placeholder="nazwisko, imię" value="${DRZ.q}">${DRZ.tryb === 'osoby' ? h`<label title="Pomiń osoby znane tylko jako rodzice lub małżonkowie w cudzym akcie"><input type="checkbox" id="drzGl" ${DRZ.glowne ? raw('checked') : ''}> tylko główne osoby aktów</label>` : ''}`);
+  $('drzTryb').onchange = e => { DRZ.tryb = e.target.value; DRZ.port = 300; drzRender(); }; $('drzQ').oninput = e => { DRZ.q = e.target.value; DRZ.port = 300; drzLista(); }; if ($('drzGl')) $('drzGl').onchange = e => { DRZ.glowne = e.target.checked; drzLista(); };
+  drzLista(); drzKarta(); }
+function drzLista(){ const L = $('lista'), q = fold(DRZ.q || '').trim().split(/\s+/).filter(Boolean), pas = f => q.every(t => f.includes(t));
+  if (DRZ.tryb === 'rodziny') { const v = DRZ.rodziny.filter(r => pas(r.f)), p = v.slice(0, DRZ.port);
+    wstaw(L, h`<span class="muted" id="drzIle">Par rodziców: ${v.length}</span>${p.map(r => h`<button class="it ${DRZ.para === r.k ? 'cur' : ''}" data-para="${r.k}"><span>${r.nm}</span> <small class="bdg">${r.n} ${r.od != null ? '· ' + r.od + (r.do !== r.od ? '–' + r.do : '') : ''}</small></button>`)}${v.length > p.length ? h`<button id="drzWiecej" class="sm">Pokaż więcej (${v.length - p.length})</button>` : ''}`); }
+  else { const v = DRZ.osoby.filter(o => (!DRZ.glowne || o.gl) && pas(o.f)), p = v.slice(0, DRZ.port);
+    wstaw(L, h`<span class="muted" id="drzIle">Osób: ${v.length}${q.length ? '' : ' – wpisz nazwisko, aby zawęzić'}</span>${p.map(o => h`<button class="it ${DRZ.cur === o.id ? 'cur' : ''}" data-os="${o.id}"><span>${o.nm}</span> <small class="bdg ${o.n > 1 ? 'ok' : ''}">${o.rok < 9999 ? o.rok : ''}${o.n > 1 ? ' · ' + o.n + ' akty' : ''}</small></button>`)}${v.length > p.length ? h`<button id="drzWiecej" class="sm">Pokaż więcej (${v.length - p.length})</button>` : ''}`); }
+  L.querySelectorAll('[data-os]').forEach(b => b.onclick = () => drzIdz(b.dataset.os)); L.querySelectorAll('[data-para]').forEach(b => b.onclick = () => { DRZ.para = b.dataset.para; DRZ.cur = null; drzLista(); drzKarta(); });
+  if ($('drzWiecej')) $('drzWiecej').onclick = () => { DRZ.port += 300; drzLista(); }; }
+function drzIdz(id){ DRZ.cur = id; DRZ.para = null; if (DRZ.tryb !== 'osoby') { DRZ.tryb = 'osoby'; drzRender(); } else { drzLista(); drzKarta(); } window.scrollTo(0, 0); }
+const drzWezel = (id, kl) => { const G = DRZ.G, z = rdzZycie(G, id); return h`<button class="os ${z.plec === 'M' ? 'm' : z.plec === 'K' ? 'k' : ''} ${kl || ''}" data-os="${id}" title="Pokaż tę osobę">${rdzNazwa(z)}<small>${rdzLata(z) || 'w aktach: ' + [...new Set((G.czlonkowie[id] || []).map(w => (NAZWY_TYPOW[G.P[w].typ] || G.P[w].typ).toLowerCase() + ' ' + G.P[w].rok))].join(', ')}</small></button>`; };
+// przodkowie: osoba po lewej, rodzice po prawej (ojciec wyżej), do 5 pokoleń; tylko powiązania potwierdzone
+function drzPrzodkowie(id, gl, byli){ const G = DRZ.G, R = [...(G.rodzice[id] || [])].filter(r => !byli.has(r)).sort((a, b) => (rdzZycie(G, a).plec === 'K') - (rdzZycie(G, b).plec === 'K'));
+  const dalej = gl < 5 && R.length ? h`<div class="gal ${R.length === 1 ? 'jeden' : ''}">${R.map(r => drzPrzodkowie(r, gl + 1, new Set([...byli, id])))}</div>` : '';
+  return h`<div class="wezel">${drzWezel(id, gl === 0 ? 'cur' : '')}${dalej}</div>`; }
+function drzPotomkowie(id, gl, byli){ const G = DRZ.G, Dz = [...(G.dzieci[id] || [])].filter(d => !byli.has(d)).sort((a, b) => (drzOs(a)?.rok || 0) - (drzOs(b)?.rok || 0)); if (!Dz.length || gl > 3) return '';
+  return h`<ul class="pot ${gl === 0 ? 'korzen' : ''}">${Dz.map(d => h`<li>${drzWezel(d)}${drzPotomkowie(d, gl + 1, new Set([...byli, id]))}</li>`)}</ul>`; }
+// propozycje silnika (te same reguły co w zakładce Osoby), liczone na żądanie dla jednej osoby
+function drzKandydaci(id){ const G = DRZ.G; if (!DRZ.E) DRZ.E = osSilnik(DRZ.M, osKlasy(S.decyz).klasy); const K = decKlastry(S.decyz), out = [], seen = new Set();
+  (G.czlonkowie[id] || []).forEach(w => osKandydaci(DRZ.E, w).forEach(u => { const c = G.wezel(u.b); if (c === id || seen.has(c) || (u.wniosek !== 'sprawdz' && u.wniosek !== 'mozliwe') || K.odrzucone.has(decKlucz(w, u.b))) return; seen.add(c); out.push({c, a: w, b: u.b, wn: u.wniosek, zg: u.zgodnosci.map(x => x.t), roz: u.rozbieznosci.map(x => x.t)}); }));
+  return out.sort((x, y) => (x.wn === 'sprawdz' ? 0 : 1) - (y.wn === 'sprawdz' ? 0 : 1)).slice(0, 12); }
+function drzDzieciPary(k, bez){ const G = DRZ.G, x = G.pary[k]; if (!x) return []; return x.dzieci.filter(w => !bez.has(G.wezel(w))).map(w => ({w, c: G.wezel(w), p: G.P[w]})).sort((a, b) => (a.p.rok || 0) - (b.p.rok || 0)); }
+const drzWiersz = (d) => h`<tr><td>${d.p.rok || ''}</td><td class="w"><button class="lk" data-os="${d.c}">${(d.p.imie || '?') + ' ' + (d.p.nazwisko || '')}</button></td><td>${RDZ_ROLA[d.p.rolaAktu] || d.p.rolaAktu}${d.p.wiek ? ', wiek ' + d.p.wiek : ''}</td><td><button class="sm" data-akt="${d.w}">akt</button></td></tr>`;
+function drzKarta(){ const m = $('main'), G = DRZ.G;
+  if (DRZ.tryb === 'rodziny' && DRZ.para && G.pary[DRZ.para]) return drzKartaPary(m, G.pary[DRZ.para]);
+  const id = DRZ.cur, C = id && G.czlonkowie[id];
+  if (!C) { wstaw(m, h`<div class="card" id="drzStart"><h2>Drzewo rodzin</h2><p>Wybierz osobę albo parę rodziców z listy po lewej (wpisz nazwisko, np. „kopiw”).</p>
+    <p class="muted">Osób w aktach: ${DRZ.osoby.length} (w tym scalonych decyzją: ${DRZ.osoby.filter(o => o.n > 1).length}); par rodziców: ${DRZ.rodziny.length}.<br>Linie ciągłe pokazują tylko to, co wynika z jednego aktu albo z Twojej decyzji „scal” w zakładce Osoby. Sekcje „Możliwe…” to podpowiedzi do sprawdzenia – program niczego sam nie łączy.</p></div>`); return; }
+  const z = rdzZycie(G, id), P = C.map(w => G.P[w]).sort((a, b) => (a.rok || 0) - (b.rok || 0)), wlasne = new Set([id]), malz = [...(G.malz[id] || [])], dzieci = [...(G.dzieci[id] || [])];
+  const kD = [...new Set(C.map(w => G.kluczDziecka[w]).filter(Boolean))], kR = [...new Set(C.map(w => G.kluczRodzica[w]).filter(Boolean))];
+  const rodzenstwo = kD.map(k => ({k, x: G.pary[k], L: drzDzieciPary(k, wlasne)})).filter(r => r.L.length), mozDzieci = kR.map(k => ({k, x: G.pary[k], L: drzDzieciPary(k, new Set(dzieci.concat(id)))})).filter(r => r.L.length);
+  const kand = drzKandydaci(id), maRodz = (G.rodzice[id] || new Set()).size > 0;
+  wstaw(m, h`<div class="card" id="drzKarta"><h2>${rdzNazwa(z)}</h2><div class="muted">${rdzLata(z) || 'brak dat w aktach'} · ${C.length > 1 ? 'osoba scalona decyzją (' + C.length + ' wystąpienia w aktach)' : 'jedno wystąpienie w aktach'}</div>
+    <h3 class="blok">W aktach</h3><div class="rtab"><table id="drzAkty"><tr><th>Rok</th><th>Akt</th><th>Rola</th><th>Dane z aktu</th><th></th></tr>${P.map(p => h`<tr><td>${p.rok || ''}</td><td>${NAZWY_TYPOW[p.typ] || p.typ} nr ${AM[p.akt] ? AM[p.akt].act : ''}</td><td>${RDZ_ROLA[p.rolaAktu] || p.rolaAktu}</td><td class="w">${[p.imie, p.nazwisko, p.rodowe ? 'z d. ' + p.rodowe : '', p.wiek ? 'wiek ' + p.wiek : '', p.miejsce, p.ojciec ? 'ojciec: ' + p.ojciec : '', p.matka ? 'matka: ' + p.matka + (p.matkaNazw ? ' z d. ' + p.matkaNazw : '') : ''].filter(Boolean).join(' · ')}</td><td><button class="sm" data-akt="${p.id}">otwórz akt</button></td></tr>`)}</table></div>
+    <h3 class="blok">Przodkowie (potwierdzone)</h3>${maRodz ? h`<div class="drz" id="drzPrz">${drzPrzodkowie(id, 0, new Set())}</div>` : h`<div class="muted" id="drzBrakRodz">Akty tej osoby nie podają rodziców.${kand.length ? ' Zobacz niżej „Możliwe te same osoby” – po scaleniu z aktem, który podaje rodziców, drzewo się wydłuży.' : ''}</div>`}
+    ${malz.length ? h`<h3 class="blok">Małżonkowie (z aktów)</h3><div class="widok">${malz.map(x => drzWezel(x))}</div>` : ''}
+    ${dzieci.length ? h`<h3 class="blok">Dzieci i dalsi potomkowie (potwierdzone)</h3><div class="drzPot" id="drzPot">${drzPotomkowie(id, 0, new Set())}</div>` : ''}
+    ${mozDzieci.map(r => { const prz = rdzPrzerwy(r.L.map(d => d.p.rok).concat(dzieci.map(d => drzOs(d)?.rok)), 4); return h`<h3 class="blok">Możliwe dzieci tej pary w innych aktach – do sprawdzenia</h3><div class="muted">Akty, w których rodzice to ${r.x.ojciec} ${r.x.nazwisko} i ${r.x.matka}${r.x.rodowe.size ? ' (z d. ' + [...r.x.rodowe].join(' / ') + ')' : ''}. Zgodność imion nie dowodzi, że to ta sama para. <button class="lk" data-para="${r.k}">Pokaż całą rodzinę</button></div>
+      <div class="rtab"><table class="drzMoz">${r.L.map(drzWiersz)}</table></div>${prz.length ? h`<div class="warn">Przerwy między aktami dzieci dłuższe niż 4 lata: ${prz.map(p => p[0] + '–' + p[1]).join(', ')}. Możliwy brak aktu albo inna para o tych samych imionach.</div>` : ''}`; })}
+    ${rodzenstwo.map(r => h`<h3 class="blok">Możliwe rodzeństwo – do sprawdzenia</h3><div class="muted">Inne akty z rodzicami ${r.x.ojciec} ${r.x.nazwisko} i ${r.x.matka}. <button class="lk" data-para="${r.k}">Pokaż całą rodzinę</button></div><div class="rtab"><table class="drzMoz">${r.L.map(drzWiersz)}</table></div>`)}
+    ${kand.length ? h`<h3 class="blok">Możliwe te same osoby w innych aktach – do decyzji</h3><div class="rtab"><table id="drzKand"><tr><th>Poziom</th><th>Osoba</th><th>Co się zgadza</th><th>Rozbieżności</th><th></th></tr>${kand.map(k => { const zz = rdzZycie(G, k.c); return h`<tr><td><span class="bdg ${k.wn === 'sprawdz' ? 'ok' : 'un'}">${OS_WN[k.wn]}</span></td><td class="w"><button class="lk" data-os="${k.c}">${rdzNazwa(zz)}</button><br><small class="muted">${wystEtykieta(G.P[k.b])}</small></td><td class="w">${k.zg.join('; ')}</td><td class="w">${k.roz.join('; ') || '—'}</td><td><button class="sm" data-dec="${k.a}">decyduj w Osobach</button></td></tr>`; })}</table></div>` : ''}
+   </div>`);
+  drzPodlacz(m); }
+function drzKartaPary(m, x){ const G = DRZ.G, L = drzDzieciPary(x.klucz, new Set()), prz = rdzPrzerwy(L.map(d => d.p.rok), 4), ro = [...new Set(x.rodziceW.map(w => G.wezel(w)))];
+  wstaw(m, h`<div class="card" id="drzPara"><h2>Rodzina: ${x.ojciec} ${x.nazwisko} + ${x.matka}${x.rodowe.size ? ' (z d. ' + [...x.rodowe].join(' / ') + ')' : ''}</h2>
+    <div class="warn">Zestawienie wg zgodnych imion rodziców i nazwiska ojca w ${L.length} aktach. To podpowiedź, nie potwierdzenie: w parafii mogły żyć dwie pary o tych samych imionach. Osoby potwierdzasz w zakładce Osoby (decyzja „scal”).</div>
+    <h3 class="blok">Dzieci wg aktów</h3><div class="rtab"><table id="drzParaTab"><tr><th>Rok</th><th>Osoba</th><th>Akt</th><th></th></tr>${L.map(drzWiersz)}</table></div>
+    ${prz.length ? h`<div class="warn" id="drzPrzerwy">Przerwy dłuższe niż 4 lata: ${prz.map(p => p[0] + '–' + p[1]).join(', ')} – możliwy brak aktu w indeksie albo dwie różne pary.</div>` : ''}
+    <h3 class="blok">Rodzice w tych aktach (${ro.length} zapisów)</h3><div class="widok">${ro.slice(0, 40).map(r => drzWezel(r, 'moz'))}</div>${ro.length > 40 ? h`<div class="muted">…i ${ro.length - 40} dalszych.</div>` : ''}</div>`);
+  drzPodlacz(m); }
+function drzPodlacz(m){ m.querySelectorAll('[data-os]').forEach(b => b.onclick = () => drzIdz(b.dataset.os)); m.querySelectorAll('[data-akt]').forEach(b => b.onclick = () => osOtworzAkt(b.dataset.akt));
+  m.querySelectorAll('[data-para]').forEach(b => b.onclick = () => { DRZ.tryb = 'rodziny'; DRZ.para = b.dataset.para; DRZ.cur = null; DRZ.q = ''; drzRender(); window.scrollTo(0, 0); });
+  m.querySelectorAll('[data-dec]').forEach(b => b.onclick = () => { const w = b.dataset.dec, c = DRZ.G.wezel(w); OSS.widok = 'prop'; OSS.flt = 'mozliwe'; OSS.q = ''; zaklUstaw('osoby'); osWybierz(c); }); }
