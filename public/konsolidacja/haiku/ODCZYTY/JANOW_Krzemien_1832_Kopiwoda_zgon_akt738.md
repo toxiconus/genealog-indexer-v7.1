@@ -12,7 +12,7 @@ Poprawka: wcześniejsza notatka podawała rok 1742. Rok to 1832 („tysiąc osie
 ## Powiązania w indeksie Lubgens (Janów/Biała)
 - Małżeństwo Marcin Kopiwoda × Elżbieta Białek, 1831, akt 30 (indeks „małżeństwa”).
 - Zgon Elżbieta Kopiwoda „zd. Białek”, Krzemień, 1832, akt 44 (indeks „zgony”). Prawdopodobnie matka zmarłego.
-- Chrzest Sebastian Kopiwoda, Krzemień, 1832, akt 20, O: Marcin, M: Elżbieta Białek (indeks „urodzenia”). Data rozbieżna z wiekiem 17 miesięcy: do sprawdzenia na skanie (możliwa data urodzenia 1831, wpis rejestrowany w 1832).
+- Chrzest Sebastian Kopiwoda, Krzemień, 1832, akt 20, O: Marcin, M: Elżbieta Białek (indeks „urodzenia”). Data urodzenia 14 I 1832 zgadza się z wiekiem 11 miesięcy w akcie zgonu (wpis 738).
 - Małżeństwo Jędrzej Kopiwoda × Jadwiga Jargiło, 1811, akt 24 (indeks). Jędrzej (52 l. w 1832) jest wtedy w wieku małżeńskim, ale kolejność pokoleń (Marcin 22 l.) trzeba sprawdzić.
 
 ## Hipotezy (do sprawdzenia, nie do GED)
@@ -21,6 +21,6 @@ Poprawka: wcześniejsza notatka podawała rok 1742. Rok to 1832 („tysiąc osie
 
 ## Urodzenie i chrzest (wpis 20, 1832, ten sam zwój)
 - Urodzenie: 14 stycznia 1832 r., godz. 8 wieczorem, Krzemień; chrzest 15 stycznia 1832 r.
-- Rodzice: Marcin Kopiwoda, włościanin z Krzemienia, 22 l., i Elżbieta z Białków.
+- Rodzice: Marcin Kopiwoda, włościanin z Krzemienia, 22 l., i Elżbieta z Białków, 20 l. (wiek matki w akcie chrztu).
 - Rodzice chrzestni: Tomasz Wiszniewski i Ulianna Białkowa.
 - Wiek w akcie zgonu (8 XII 1832): 11 miesięcy, zgodnie z datą urodzenia.
