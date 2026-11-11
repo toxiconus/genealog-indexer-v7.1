@@ -40,17 +40,20 @@ body.hdr-ukryty #skWin{top:12px}
 .skwin-btn{display:flex;gap:4px;flex-wrap:wrap}
 .skwin-cialo{display:flex;flex-direction:column;gap:6px;padding:6px 8px;flex:1;min-height:0;overflow:auto}
 #skWin #skView{flex:1 1 auto;height:auto;min-height:240px}
-/* układ na komputerze: skan po lewej na całą wysokość, lista aktów (można ukryć) i pola po prawej */
-body.sk-dok #skWin{left:0;right:auto;top:var(--tt,0px);bottom:0;width:var(--skw);border-radius:0;box-shadow:none;border-width:0 1px 0 0;resize:none}
-body.sk-dok .wrap{margin-left:var(--skw);max-width:none;padding-right:16px}
+/* układ na komputerze: lista aktów po lewej (można ukryć), skan obok niej na całą wysokość, pola po prawej */
+:root{--lw:300px}
+body.sk-dok .wrap{display:block;margin-left:calc(var(--lw) + var(--skw));max-width:none;padding:12px 16px}
+body.sk-dok .wrap>.col:first-child{position:fixed;left:0;top:var(--tt,0px);bottom:0;width:var(--lw);overflow:auto;z-index:40;background:Canvas;padding:8px;border-right:1px solid #94a3b8}
+body.sk-dok #skWin{left:var(--lw);top:var(--tt,0px);bottom:0;width:var(--skw);border-radius:0;box-shadow:none;border-width:0 1px 0 0;resize:none}
 body.sk-dok.lista-ukryta .wrap>.col:first-child{display:none}
-body.sk-dok.lista-ukryta .wrap{grid-template-columns:1fr}
+body.sk-dok.lista-ukryta #skWin{left:0;width:calc(var(--skw) + var(--lw))}
+body.sk-dok.lista-ukryta .wrap{margin-left:calc(var(--skw) + var(--lw))}
 .skPok{position:fixed;right:12px;bottom:12px;z-index:60;display:block}
 .skPok[hidden]{display:none}
 .hdrPok{position:fixed;top:0;left:0;z-index:60;display:none}
 body.hdr-ukryty header{display:none}
 body.hdr-ukryty .hdrPok{display:block}
-@media (max-width:820px){body.sk-dok #skWin{left:8px;right:8px;top:auto;bottom:8px;width:auto;height:55vh;border-width:1px;border-radius:10px}body.sk-dok .wrap{margin-left:0;padding-right:16px}}
+@media (max-width:820px){body.sk-dok #skWin{left:8px;right:8px;top:auto;bottom:8px;width:auto;height:55vh;border-width:1px;border-radius:10px}body.sk-dok .wrap{margin-left:0;padding:12px 16px}body.sk-dok .wrap>.col:first-child{position:static;width:auto;border-right:0}body.sk-dok.lista-ukryta #skWin{left:8px;width:auto}}
 </style></head><body>
 <header><h1 id="tytul">Multitool v1 · akt zgonu</h1><span id="zakl"><button id="zAkty" class="p">Akty</button> <button id="zOsoby">Osoby</button></span> <select id="selTyp" aria-label="Typ aktu" title="Typ aktu"></select><span class="muted" id="prog"></span><button class="ind" id="kopiaInd" title="Zrób kopię pełną">decyzji i zmian bez kopii: 0</button><span style="flex:1"></span><button id="bMenu">Menu ▾</button>
 <div id="menu" hidden><button id="mCsv">Eksport CSV (zgony)</button><button id="mKopia">Kopia pełna (JSON)</button><button id="mKopiaWczytaj">Wczytaj kopię (JSON)…</button><button id="mImpDop">Import CSV zatwierdzeń (dopisz)…</button><button id="mImpZast">Import CSV zatwierdzeń (zastąp)…</button><button id="mMigawki">Migawki / przywróć…</button><button id="mKolejka">Dane źródłowe się zmieniły (0)</button><button id="mMigr">Migracja zgonów z CSV…</button><button id="mAuto">Autozapis do pliku…</button><button id="mDecJson" class="osMenu">Decyzje o osobach: eksport JSON</button><button id="mDecCsv" class="osMenu">Decyzje o osobach: eksport CSV</button><button id="mDecImp" class="osMenu">Decyzje o osobach: import JSON…</button><button id="mDop" class="osMenu">Import decyzji dop.v1…</button></div></header>
@@ -1466,6 +1469,11 @@ function startZatwierdzone(){ S.seeded = S.seeded || {}; let n = 0; (D.zatw||[])
 const TYPY = {
   zgon: {
     nazwa: 'Zgony',
+    /* grupy formularza (wprowadzanie): każde pole z zestawu jest w dokładnie jednej grupie */
+    bloki: [{t: 'Zmarły', pola: ['deceased_last_name','deceased_first_name','deceased_maiden_name','deceased_sex','age','deceased_status','deceased_spouse','profession']},
+      {t: 'Data i miejsce', pola: ['death_date','death_time','death_place','house','deceased_birth_place','deceased_residence']},
+      {t: 'Rodzice', pola: ['father_first_name','father_last_name','mother_first_name','mother_last_name','parents_raw']},
+      {t: 'Przyczyna i akt', pola: ['cause_of_death','act_date','informant1','informant2','officiant','notes']}],
     zestawy: {
       LATF: ['death_place','house','deceased_last_name','deceased_first_name','death_date','deceased_sex','age','deceased_status','profession','parents_raw','father_first_name','father_last_name','mother_first_name','mother_last_name','cause_of_death','notes'],   // < 1826 (księgi łacińskie)
       CAUSEF: () => [...ORDF.slice(0,-1), FIELDS.find(f => f.id === 'cause_of_death'), ORDF[ORDF.length-1]].filter(Boolean),   // 1870–79: ORDF + przyczyna zgonu przed uwagami

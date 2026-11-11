@@ -6,6 +6,11 @@
 const TYPY = {
   zgon: {
     nazwa: 'Zgony',
+    /* grupy formularza (wprowadzanie): każde pole z zestawu jest w dokładnie jednej grupie */
+    bloki: [{t: 'Zmarły', pola: ['deceased_last_name','deceased_first_name','deceased_maiden_name','deceased_sex','age','deceased_status','deceased_spouse','profession']},
+      {t: 'Data i miejsce', pola: ['death_date','death_time','death_place','house','deceased_birth_place','deceased_residence']},
+      {t: 'Rodzice', pola: ['father_first_name','father_last_name','mother_first_name','mother_last_name','parents_raw']},
+      {t: 'Przyczyna i akt', pola: ['cause_of_death','act_date','informant1','informant2','officiant','notes']}],
     zestawy: {
       LATF: ['death_place','house','deceased_last_name','deceased_first_name','death_date','deceased_sex','age','deceased_status','profession','parents_raw','father_first_name','father_last_name','mother_first_name','mother_last_name','cause_of_death','notes'],   // < 1826 (księgi łacińskie)
       CAUSEF: () => [...ORDF.slice(0,-1), FIELDS.find(f => f.id === 'cause_of_death'), ORDF[ORDF.length-1]].filter(Boolean),   // 1870–79: ORDF + przyczyna zgonu przed uwagami
