@@ -119,3 +119,48 @@ function osWarianty(E, wylacz){ const G = new Map(); wylacz = wylacz || new Set(
   const kub = new Map(); grupy.forEach(g => [g.k2, g.k2r].filter(Boolean).forEach(k => { if (k.length < 5) return; const b = k[0] + k.length; (kub.get(b) || kub.set(b, []).get(b)).push([k, g]); }));
   grupy.forEach(g => [g.k2, g.k2r].filter(Boolean).forEach(k => { if (k.length < 5) return; for (const dl of [-1, 0, 1]) (kub.get(k[0] + (k.length + dl)) || []).forEach(([k2, h]) => { if (h.kk <= g.kk || k2 === k || lev(k, k2, 1) > 1) return; dodaj(g, h, 'podobne', 'klucze pisowni różnią się jedną literą: „' + k + '” / „' + k2 + '”' + (k !== g.k2 || k2 !== h.k2 ? ' (po odjęciu końcówki pochodnej)' : '') + ' – sprawdź na skanie, to bywają różne nazwiska'); }); }));
   return [...wyn.values()].sort((x, y) => (x.rodzaj === y.rodzaj ? 0 : x.rodzaj === 'pochodne' ? -1 : 1) || Math.min(y.nA, y.nB) - Math.min(x.nA, x.nB) || (y.nA + y.nB) - (x.nA + x.nB)); }
+
+/* ---------- 4. import decyzji z dopasowania (dop.v1) ---------- */
+// Format dop.v1 (dopasowanie/szablon.html): {klucz: {slot: {acc:[{t,id}], rej:[{t,id}], none:bool}}}; klucz = id ślubu („1841/1”) albo „B:<id chrztu>” / „D:<id zgonu>”; t = B (chrzest) | D (zgon) | M (małżeństwo).
+// acc → scal, rej → odrzuc, none → brak. Każdy slot oznacza konkretne pary wystąpień (tabela OS_DOP). Funkcja nie dotyka dziennika – zwraca plan; osDopZastosuj zapisuje go po potwierdzeniu użytkownika.
+// ctx: {idAktu(t, idStare) → id aktu | null, wyst(idAktu, rola) → id wystąpienia | null, plec(idWyst) → 'M'|'K'|''}
+const OS_DOP = {   // tryb klucza → slot → [[rola w akcie klucza, rola w akcie docelowym | 'PLEC' (pan/panna wg płci)], …]; t docelowe wynika ze slotu
+  M: {'gF.b': [['ojciec_pana', 'dziecko']], 'gF.d': [['ojciec_pana', 'zmarly']], 'gM.b': [['matka_pana', 'dziecko']], 'gM.d': [['matka_pana', 'zmarly']], 'bF.b': [['ojciec_panny', 'dziecko']], 'bF.d': [['ojciec_panny', 'zmarly']], 'bM.b': [['matka_panny', 'dziecko']], 'bM.d': [['matka_panny', 'zmarly']],
+    'g.b': [['pan_mlody', 'dziecko']], 'g.d': [['pan_mlody', 'zmarly']], 'b.b': [['panna_mloda', 'dziecko']], 'b.d': [['panna_mloda', 'zmarly']], 'kids': [['pan_mlody', 'ojciec'], ['panna_mloda', 'matka']]},
+  B: {par: [['ojciec', 'pan_mlody'], ['matka', 'panna_mloda']], sib: [['ojciec', 'ojciec'], ['matka', 'matka']], own: [['dziecko', 'zmarly']], mrg: [['dziecko', 'PLEC']], fD: [['ojciec', 'zmarly']], mD: [['matka', 'zmarly']]},
+  D: {birth: [['zmarly', 'dziecko']], mrg: [['zmarly', 'PLEC']], par: [['ojciec', 'pan_mlody'], ['matka', 'panna_mloda']], kids: [['zmarly', 'PLEC_RODZIC']]}};
+const OS_DOP_T = {M: {'gF.b': 'B', 'gF.d': 'D', 'gM.b': 'B', 'gM.d': 'D', 'bF.b': 'B', 'bF.d': 'D', 'bM.b': 'B', 'bM.d': 'D', 'g.b': 'B', 'g.d': 'D', 'b.b': 'B', 'b.d': 'D', kids: 'B'}, B: {par: 'M', sib: 'B', own: 'D', mrg: 'M', fD: 'D', mD: 'D'}, D: {birth: 'B', mrg: 'M', par: 'M', kids: 'B'}};
+function osImportDop(obj, ctx){ const R = {decyzje: [], pominiete: [], bledy: [], stat: {klucze: 0, sloty: 0, acc: 0, rej: 0, none: 0, par: 0}};
+  if (!obj || typeof obj !== 'object' || Array.isArray(obj)) { R.bledy.push('Oczekiwano obiektu JSON dop.v1 ({klucz: {slot: {acc, rej, none}}}).'); return R; }
+  const poz = (k, slot, powod) => R.pominiete.push({klucz: k, slot, powod}), widziane = new Map();
+  for (const k of Object.keys(obj)) { if (OS_ZAKAZ.has(k) || !k || k.length > 200) { poz(String(k).slice(0, 40), '', 'niedozwolony klucz'); continue; } const sl = obj[k]; if (!sl || typeof sl !== 'object' || Array.isArray(sl)) { poz(k, '', 'wpis nie jest obiektem'); continue; }
+    const tryb = k.includes(':') ? k.split(':')[0] : 'M', idKl = k.includes(':') ? k.slice(2) : k; if (!OS_DOP[tryb]) { poz(k, '', 'nieznany tryb klucza'); continue; } R.stat.klucze++;
+    const aktKl = ctx.idAktu(tryb === 'M' ? 'M' : tryb, idKl); if (!aktKl) { poz(k, '', 'akt klucza nie istnieje w danych'); continue; }
+    for (const slot of Object.keys(sl)) { if (OS_ZAKAZ.has(slot)) continue; const def = OS_DOP[tryb][slot], v = sl[slot]; if (!def) { poz(k, slot, 'nieznany slot'); continue; } if (!v || typeof v !== 'object') { poz(k, slot, 'brak decyzji'); continue; } R.stat.sloty++;
+      const tcel = OS_DOP_T[tryb][slot], listy = [['acc', Array.isArray(v.acc) ? v.acc : [], 'scal'], ['rej', Array.isArray(v.rej) ? v.rej : [], 'odrzuc']];
+      for (const [pole, arr, typ] of listy) arr.forEach(x => { if (!x || typeof x !== 'object' || !['B', 'D', 'M'].includes(x.t) || typeof x.id !== 'string' || x.id.length > 200) return poz(k, slot, pole + ': błędny rekord'); if (x.t !== tcel) return poz(k, slot, pole + ': typ rekordu ' + x.t + ' niezgodny ze slotem (oczekiwano ' + tcel + ')');
+        const aktC = ctx.idAktu(x.t, x.id); if (!aktC) return poz(k, slot, pole + ': rekord ' + x.t + ':' + x.id + ' nie istnieje w danych');
+        def.forEach(([rk, rc]) => { let wk = ctx.wyst(aktKl, rk), rolaC = rc; if (!wk) return poz(k, slot, pole + ': brak wystąpienia „' + rk + '” w akcie klucza');
+          if (rc === 'PLEC' || rc === 'PLEC_RODZIC') { const pl = ctx.plec(wk); if (!pl) return poz(k, slot, pole + ': nieznana płeć wystąpienia „' + rk + '” (rola w akcie docelowym niejednoznaczna)'); rolaC = rc === 'PLEC' ? (pl === 'M' ? 'pan_mlody' : 'panna_mloda') : (pl === 'M' ? 'ojciec' : 'matka'); }
+          const wc = ctx.wyst(aktC, rolaC); if (!wc) return poz(k, slot, pole + ': brak wystąpienia „' + rolaC + '” w akcie ' + x.t + ':' + x.id); if (wk === wc || aktKl === aktC) return poz(k, slot, pole + ': ta sama osoba w tym samym akcie');
+          const kl = wk < wc ? wk + '|' + wc : wc + '|' + wk, d = {typ, a: wk, b: wc, zr: 'dop.v1', slot: (k + ' ' + slot).slice(0, 80), why: 'import dop.v1: ' + k + ' / ' + slot}; const poprz = widziane.get(kl);
+          if (poprz && poprz.typ !== typ) { poprz.sprzeczna = true; return; } if (poprz) return; widziane.set(kl, d); R.decyzje.push(d); R.stat[pole === 'acc' ? 'acc' : 'rej']++; }); });
+      if (v.none === true && !(Array.isArray(v.acc) && v.acc.length)) { R.stat.none++; const rl = new Set(); def.forEach(([rk]) => { if (rl.has(rk)) return; rl.add(rk); const wk = ctx.wyst(aktKl, rk); if (!wk) return poz(k, slot, 'none: brak wystąpienia „' + rk + '” w akcie klucza'); const d = {typ: 'brak', a: wk, b: 'brak:' + tcel, zr: 'dop.v1', slot: (k + ' ' + slot).slice(0, 80), why: 'import dop.v1: brak odpowiednika w księgach (' + k + ' / ' + slot + ')'}; const kl = wk + '|' + d.b; if (!widziane.has(kl)) { widziane.set(kl, d); R.decyzje.push(d); } }); } } }
+  const sprz = R.decyzje.filter(d => d.sprzeczna); sprz.forEach(d => poz(d.slot, '', 'ta sama para jako acc i rej w pliku – pominięta')); R.decyzje = R.decyzje.filter(d => !d.sprzeczna); R.stat.par = R.decyzje.filter(d => d.typ !== 'brak').length; return R; }
+// zapis planu do dziennika (po potwierdzeniu): kolizje i duplikaty pomija, reszta dostaje kolejne numery; zwraca liczby
+function osDopZastosuj(L, plan, akty){ const r = {scal: 0, odrzuc: 0, brak: 0, pominiete: []}; plan.decyzje.forEach(d => { const x = osDecyduj(L, d.typ, d.a, d.b, {why: d.why, zr: d.zr, slot: d.slot, akty, wniosek: '', reguly: 0, uzasadnienie: {zgodnosci: [], rozbieznosci: [], sprzecznosci: [], braki: ['decyzja z dopasowania (dop.v1) – bez uzasadnienia reguł Multitoola']}});
+  if (x.ok) r[d.typ]++; else r.pominiete.push({a: d.a, b: d.b, typ: d.typ, powod: x.blad}); }); return r; }
+
+/* ---------- 5. obsługa komunikatów (Worker i wątek główny używają tego samego kodu) ---------- */
+// st = stan {E, gen, wyniki, licz}; wyslij(wiadomosc). Wiadomości: init {model, klasy, porcja}, karta {req, ids, limit}, porownaj {req, a, b}, warianty {req, wylacz}
+function osObsluz(st, m, wyslij){
+  if (m.t === 'init') { const g = st.gen = (st.gen || 0) + 1, t0 = Date.now(); st.E = osSilnik(m.model, m.klasy); st.wyniki = {}; st.licz = {}; let od = 0; const n = st.E.PL.length, krok = m.porcja || 500;
+    wyslij({t: 'start', gen: g, n, etyk: osEtyk(st.E), ms: Date.now() - t0});
+    const tick = () => { if (st.gen !== g) return; od = osPrzeliczPorcja(st.E, od, krok, st.wyniki, st.licz); if (od < n) { wyslij({t: 'postep', gen: g, od, n}); setTimeout(tick, 0); } else wyslij({t: 'wynik', gen: g, wyniki: st.wyniki, licz: st.licz, ms: Date.now() - t0}); };
+    setTimeout(tick, 0); return; }
+  if (!st.E) return wyslij({t: 'blad', req: m.req, blad: 'silnik nie jest gotowy'});
+  if (m.t === 'karta') { const lim = m.limit || 120, lista = [], ile = {}; (m.ids || []).forEach(id => { const L = osKandydaci(st.E, id); ile[id] = L.length; L.slice(0, lim).forEach(u => lista.push(u)); }); return wyslij({t: 'karta', req: m.req, lista, ile}); }
+  if (m.t === 'porownaj') { if (!st.E.P[m.a] || !st.E.P[m.b]) return wyslij({t: 'blad', req: m.req, blad: 'nieznane wystąpienie'}); return wyslij({t: 'porownaj', req: m.req, u: osPoWyst(st.E, m.a, m.b)}); }
+  if (m.t === 'warianty') return wyslij({t: 'warianty', req: m.req, lista: osWarianty(st.E, new Set(m.wylacz || [])).slice(0, m.limit || 400)});
+  if (m.t === 'profil') return wyslij({t: 'profil', req: m.req, p: st.E.P[m.id] || null});
+}
