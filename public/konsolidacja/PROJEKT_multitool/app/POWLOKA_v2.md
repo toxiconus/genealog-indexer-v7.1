@@ -1,6 +1,6 @@
 # Multitool – powłoka v2 (2026-11-11)
 
-Stan po przebudowie interfejsu. Budowa: `python3 app/zbuduj_app.py`. Test: `node test/test_krok7_powloka.cjs [katalog_zrzutów]` (27 kontroli) oraz testy kroków 3–6.
+Stan po przebudowie interfejsu. Budowa: `python3 app/zbuduj_app.py`. Test: `node test/test_krok7_powloka.cjs [katalog_zrzutów]` (28 kontroli) oraz testy kroków 3–6.
 
 ## Zakładki
 | Zakładka | Moduł | Co robi |
@@ -35,6 +35,8 @@ Enter (następne pole), Alt+J / Alt+K (następny / poprzedni akt), Ctrl+Enter (n
 - **Skan → indeksowanie strony** (`ui_skan.js`): „Przypisz zakresowi” (strona dla aktów nr od–do) i „＋ Nowy akt na tej stronie” (następny numer, skan, kursor w pierwszym polu).
 - **Raport → Stan pracy**: kolumna „akty z osobą połączoną w drzewie”.
 - **Zgon ↔ ślub po współmałżonku** (`rdzPropozycjeZgonSlub`), **Wywód przodków (TXT)** w karcie osoby w Drzewie, **Plan pracy: od skanów do drzewa** na górze Raportu (8 kroków z licznikami).
+- **Odczyt starych skanów** (`ui_skan.js`, sekcja „Obraz: obrót i filtry”): obrót co 90° i prostowanie ±10° (pamiętane dla pliku), filtry: szarość, mocny kontrast, kanał niebieski (wyblakły brązowy atrament), kanał czerwony (plamy), negatyw, próg; kontrast, jasność, wyostrzenie (pamiętane w `S.skObraz`). Wskaźnik jest „odkręcany” (`skanOdkrec`), więc ROI i ramki pól działają na obróconym obrazie.
+- **Słowniczek** (`ui_slowniczek.js`): łacina, rosyjski, dawne zawody, choroby, podwójne daty – panel boczny, nie blokuje skrótów.
 - Dane: imiona rodziców z dopełniacza na mianownik w `buduj_baza_v4.py` (469 poprawek, `narzedzia/POPRAWKI_imiona_dopelniacz.csv`).
 
 ## Do zrobienia

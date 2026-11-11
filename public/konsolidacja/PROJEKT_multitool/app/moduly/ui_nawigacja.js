@@ -50,8 +50,8 @@ function aktbarPodlacz(a){ $('bPrev').onclick = () => aktSasiad(-1); $('bNext').
 // ---------- skróty klawiszowe (lewy Alt; prawy Alt = polskie znaki, więc go pomijamy)
 const SKROTY = [['Enter', 'w polu: zapisz i przejdź do następnego pola'], ['Ctrl+D', 'w polu: wpisz wartość z poprzedniego aktu na liście (jak w arkuszu)'], ['Alt+J / Alt+↓', 'następny akt'], ['Alt+K / Alt+↑', 'poprzedni akt'], ['Ctrl+Enter', 'następny akt'], ['Alt+Enter', 'zatwierdź akt / cofnij zatwierdzenie'], ['Ctrl+Shift+Enter', 'zatwierdź akt i przejdź do następnego niezatwierdzonego'],
   ['Alt+R', 'następne sporne pole (niepewne lub z różnicą AI ↔ indeks)'], ['Alt+Z / Alt+Y', 'cofnij / ponów zmianę'], ['Alt+L', 'pokaż / ukryj listę aktów'], ['Alt+S', 'pokaż / schowaj skan'], ['Alt+1 … Alt+5', 'zakładki: Akty, Osoby, Drzewo, Raport, Narzędzia'], ['Alt+F', 'szukaj osoby we wszystkich aktach'], ['Esc', 'zamknij okno / menu']];
-function skrotKlawisz(e){ const okno = !$('okno').hidden;
-  if (e.key === 'Escape') { if (okno) { $('okno').hidden = true; return; } if (!$('menu').hidden) $('menu').hidden = true; return; }
+function skrotKlawisz(e){ const okno = !$('okno').hidden && !$('okno').classList.contains('bok');   // słowniczek (panel boczny) nie blokuje skrótów
+  if (e.key === 'Escape') { if (!$('okno').hidden) { $('okno').hidden = true; return; } if (!$('menu').hidden) $('menu').hidden = true; return; }
   if (okno) return; const alt = e.altKey && !e.ctrlKey && !e.metaKey, mod = (e.ctrlKey || e.metaKey) && !e.altKey, k = e.key.length === 1 ? e.key.toLowerCase() : e.key, stop = () => { e.preventDefault(); e.stopPropagation(); };
   if (alt && /^[1-5]$/.test(k)) { stop(); return zaklUstaw(ZAKL[+k - 1][0]); }
   if (alt && k === 'f') { stop(); $('szukaj').focus(); $('szukaj').select(); return; }
@@ -78,7 +78,7 @@ function narzRender(){ const m = $('main'), st0 = narzStat(), mot = motywOdczyt(
     <div class="card"><h3>Skany</h3><div class="muted">Aplikacja nie zawiera obrazów – pamięta nazwę pliku skanu i szuka jej w folderze wskazanym na tym komputerze. ${SK.folder ? 'Wybrany folder: ' + SK.folder + ' (' + SK.pliki.length + ' obrazów).' : 'Folder nie jest wybrany.'}</div>
       <div class="rtab"><table id="narzSkany"><tr><th>Typ</th><th>Aktów</th><th class="w">Z adresem skanu</th><th class="w">Znalezionych w folderze</th></tr>${D.typy.map(t => h`<tr><td>${NAZWY_TYPOW[t] || t}</td><td>${st0[t].n}</td><td>${st0[t].skan}</td><td>${SK.pliki.length ? st0[t].wFolderze : '—'}</td></tr>`)}</table></div>
       <div class="acts"><button data-klik="mSkany">Wybierz folder skanów…</button></div></div>
-    ${kaf('Dane i kontrola', 'Kolejka pokazuje pola, w których dane źródłowe zmieniły się po Twojej decyzji.', [['mKolejka', 'Dane źródłowe się zmieniły (' + ST_KOLEJ.length + ')'], ['nRaport', 'Raport i kontrole →'], ['nNowy', 'Dodaj nowy akt…']])}
+    ${kaf('Dane i kontrola', 'Kolejka pokazuje pola, w których dane źródłowe zmieniły się po Twojej decyzji.', [['mKolejka', 'Dane źródłowe się zmieniły (' + ST_KOLEJ.length + ')'], ['nRaport', 'Raport i kontrole →'], ['nNowy', 'Dodaj nowy akt…'], ['nSlow', 'Słowniczek do czytania aktów (łacina, rosyjski)…']])}
     <div class="card"><h3>Wygląd</h3><div class="muted">Motyw aplikacji (zapamiętany w tej przeglądarce).</div><div class="widok">${[['auto', 'Auto (wg systemu)'], ['light', 'Jasny'], ['dark', 'Ciemny']].map(([k, l]) => h`<button data-motyw="${k}" class="${mot === k ? 'on' : ''}">${l}</button>`)}</div></div>
     <div class="card" style="grid-column:1/-1"><h3>Skróty klawiszowe</h3><div class="skr">${SKROTY.map(([k, o]) => h`<span>${k.split(' / ').map((x, i) => h`${i ? ' / ' : ''}<kbd>${x}</kbd>`)}</span><span>${o}</span>`)}</div></div>
    </div>`);
@@ -87,7 +87,7 @@ function narzRender(){ const m = $('main'), st0 = narzStat(), mot = motywOdczyt(
   m.querySelectorAll('[data-klik]').forEach(b => b.onclick = () => { const id = b.dataset.klik;
     if (id === 'nHist') { dl('multitool_historia_' + new Date().toISOString().slice(0, 10) + '.csv', histCsv(S.hist || [])); return toast('Zapisano historię zmian (CSV)'); }
     if (id === 'nSkanyCsv') { dl('multitool_adresy_skanow_' + new Date().toISOString().slice(0, 10) + '.csv', skanAdresyCsv()); return toast('Zapisano adresy skanów (CSV)'); }
-    if (id === 'nIndeks') return indeksOkno();
+    if (id === 'nIndeks') return indeksOkno(); if (id === 'nSlow') return slowOkno();
     if (id === 'nRaport') return zaklUstaw('raport'); if (id === 'nNowy') return typeof nowyAktOkno === 'function' ? nowyAktOkno() : toast('Dodawanie aktów będzie dostępne w kolejnej wersji');
     const x = $(id); if (x) x.click(); if (id === 'mKopia') setTimeout(narzRender, 300); }); }
 
