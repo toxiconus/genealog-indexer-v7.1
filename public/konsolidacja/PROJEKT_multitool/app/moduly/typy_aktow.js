@@ -77,6 +77,8 @@ const typNiepewne = (a, f) => { const t = typCfg(a); return t.niepewne ? !!t.nie
 const typOstrzezenia = a => { const t = typCfg(a); return t.ostrzezenia ? t.ostrzezenia(a) : []; };
 const typNazwa = a => typCfg(a).nazwa(a);
 const typDaty = a => typCfg(a).daty || [];
+// wartość wpisana ręcznie: obcięte białe znaki; pola miejscowości (T.miejsca) z poprawką pisowni jak normPl starego weryfikatora
+const typNorm = (a, f, v) => { v = String(v == null ? '' : v).trim(); return (typCfg(a).miejsca || []).includes(f) ? v.replace(/Mocydła/g, 'Moczydła').replace(/Mocydłach/g, 'Moczydłach').replace(/Kacyniec/g, 'Kaczyniec') : v; };
 const NAZWY_TYPOW = {zgon: 'Zgony', malzenstwo: 'Małżeństwa', chrzest: 'Chrzty'};
 // małżeństwa: ostrzeżenia – port warns() ze starego weryfikatora (te same komunikaty); kontrola marginesu i rejestru tylko dla aktów z odczytem (a.ai), bo indeks ich nie ma
 function malOstrzezenia(a){ const w = [], tr = v => String(v == null ? '' : v).trim(), g = f => getv(a, f), num = f => { const m = tr(g(f)).match(/\d+/); return m ? +m[0] : null; };
@@ -104,4 +106,4 @@ function typWiersze(typ){ const T = TYPY[typ], E = T.eksport, F = zestawPola(typ
     const tknieto = Object.keys(s.f || {}).some(k => s.f[k].ok || s.f[k].v != null); r.verification_status = s.done ? 'ok' : (tknieto ? 'ai_v1_w_trakcie' : 'ai_v1');
     if (E.kolumny.includes('act_text')) r.act_text = txtOf(a);
     if (E.poWierszu) E.poWierszu(r, a); return r; }); }
-function typCsv(typ){ const E = TYPY[typ].eksport, R = typWiersze(typ); return E.kolumny.join(';') + '\r\n' + R.map(r => E.kolumny.map(c => csvCell(r[c])).join(';')).join('\r\n') + '\r\n'; }
+function typCsv(typ){ const E = TYPY[typ].eksport, R = typWiersze(typ); return E.kolumny.join(';') + '\r\n' + (R.length ? R.map(r => E.kolumny.map(c => csvCell(r[c])).join(';')).join('\r\n') + '\r\n' : ''); }   // bez wierszy: tylko nagłówek (stary weryfikator nigdy nie eksportował pustego zbioru)

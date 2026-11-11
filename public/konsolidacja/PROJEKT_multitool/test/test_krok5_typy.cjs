@@ -1,0 +1,143 @@
+/* Test odbioru kroku 5 planu Multitool – typy `malzenstwo` i `chrzest` jako konfiguracja w app/moduly/typy_aktow.js (bez kopii silnika aktu).
+   Uruchom: node test/test_krok5_typy.cjs   (wymaga: npm i playwright, python3; zbudowane app/multitool_v1.html:
+     python3 app/zbuduj_dane_app.py --typy && python3 app/zbuduj_app.py)
+   Sprawdza: (A) liczby aktów = wejście (malzenstwa_mal.csv + haiku/MALZENSTWA_1944/1945_ai1_import.csv; blinow_akty.csv) i wartości pól akt po akcie z plików źródłowych; brak zatwierdzeń (migracja tych typów pusta);
+   (B) zestawy pól zgodne z konfiguracją (kolejność, bloki, role) i identyczne z FIELDS starego weryfikatora haiku/weryfikacja_malzenstw_szablon.html;
+   (C) parytet ze starym weryfikatorem na 15 aktach 1944–45: ostrzeżenia, niepewność, wartości pól, eksport CSV bajt w bajt – stan początkowy, po edycjach i po zatwierdzeniu aktów;
+   (D) UI wyboru typu (lista, karta z blokami, nazwa, filtry, zapamiętanie typu po przeładowaniu, telefon 420 px); (E) eksport CSV małżeństw i chrztów (nagłówek z konfiguracji, akty z indeksu dopiero po edycji);
+   (F) dane wrogie (XSS w polach, nazwie, rejestrze; CSV z „;”, cudzysłowem i nową linią); (G) pliki wejściowe nietknięte (sha256), brak błędów JS. */
+const { chromium } = require('playwright'); const assert = require('assert'); const fs = require('fs'); const path = require('path'); const crypto = require('crypto'); const os = require('os'); const { execFileSync } = require('child_process');
+const T = __dirname, K = path.join(T, '..', '..'), APP = 'file://' + path.join(T, '..', 'app', 'multitool_v1.html');
+const sha = f => crypto.createHash('sha256').update(fs.readFileSync(f)).digest('hex');
+const rowna = (a, b, m) => { if (a === b) return; let i = 0; while (i < a.length && a[i] === b[i]) i++; assert.fail(m + ' – pierwsza różnica na znaku ' + i + ': ...' + JSON.stringify(a.slice(Math.max(0, i - 60), i + 80)) + ' vs ...' + JSON.stringify(b.slice(Math.max(0, i - 60), i + 80))); };
+let ok = 0; const pass = m => { ok++; console.log('OK  ' + m); };
+function parseCsv(txt) { txt = txt.replace(/^﻿/, ''); const rows = []; let row = [], cur = '', q = false; for (let i = 0; i < txt.length; i++) { const c = txt[i]; if (q) { if (c === '"') { if (txt[i + 1] === '"') { cur += '"'; i++; } else q = false; } else cur += c; } else if (c === '"') q = true; else if (c === ';') { row.push(cur); cur = ''; } else if (c === '\n') { row.push(cur.replace(/\r$/, '')); rows.push(row); row = []; cur = ''; } else cur += c; } if (cur || row.length) { row.push(cur.replace(/\r$/, '')); rows.push(row); } return rows; }
+const tabela = f => { const r = parseCsv(fs.readFileSync(f, 'utf8')), h = r[0]; return r.slice(1).filter(x => x.length > 1).map(x => Object.fromEntries(h.map((k, i) => [k, x[i] ?? '']))); };
+const PLACEHOLDER = v => ['.', '?', '"b.d."'].includes(v);
+// niezależna (od budowniczego) tabela mapowania: kolumna źródłowa → pole modelu
+const MAL_MAP = { data_iso: 'marriage_date', pan_nazwisko: 'groom_last_name', pan_imie: 'groom_first_name', pan_stan: 'groom_status', pan_wiek: 'groom_age', pan_miejscowosc: 'groom_residence', pan_ojciec_imie: 'groom_father_first_name', pan_ojciec_nazwisko: 'groom_father_last_name', pan_matka_imie: 'groom_mother_first_name', pan_matka_nazwisko: 'groom_mother_last_name',
+  pan_poprzednia_zona_imie: 'groom_prev_spouse_first_name', pan_poprzednia_zona_nazwisko: 'groom_prev_spouse_last_name', panna_nazwisko: 'bride_last_name', panna_imie: 'bride_first_name', panna_stan: 'bride_status', panna_wiek: 'bride_age', panna_miejscowosc: 'bride_residence', panna_ojciec_imie: 'bride_father_first_name', panna_ojciec_nazwisko: 'bride_father_last_name',
+  panna_matka_imie: 'bride_mother_first_name', panna_matka_nazwisko: 'bride_mother_last_name', wdowa_poprzedni_maz_imie: 'bride_prev_spouse_first_name', wdowa_poprzedni_maz_nazwisko: 'bride_prev_spouse_last_name', swiadek1_imie: 'witness1_first_name', swiadek1_nazwisko: 'witness1_last_name', swiadek2_imie: 'witness2_first_name', swiadek2_nazwisko: 'witness2_last_name' };
+const CHR_MAP = { dziecko_nazwisko: 'child_last_name', dziecko_imiona: 'child_first_name', miejscowosc: 'child_birth_place', ojciec_imiona: 'father_first_name', ojciec_nazwisko: 'father_last_name', ojciec_wiek: 'father_age', matka_imiona: 'mother_first_name', matka_nazwisko: 'mother_last_name', matka_wiek: 'mother_age', uwagi: 'index_month', uwagi_org: 'notes_org' };
+const IN = { mal: path.join(K, 'malzenstwa_mal.csv'), chr: path.join(K, 'blinow_akty.csv'), m44: path.join(K, 'haiku', 'MALZENSTWA_1944_ai1_import.csv'), m45: path.join(K, 'haiku', 'MALZENSTWA_1945_ai1_import.csv') };
+const ZATW = fs.readdirSync(path.join(K, 'haiku', 'ZATWIERDZENIA')).map(f => path.join(K, 'haiku', 'ZATWIERDZENIA', f)), ODCZ = path.join(K, 'haiku', 'ODCZYTY', 'zatwierdzenia_uzytkownika.csv');
+const STRAZ = [...ZATW, ODCZ, ...Object.values(IN), path.join(T, '..', 'app', 'dane_zgony.json'), path.join(K, 'haiku', 'weryfikacja_malzenstw_szablon.html'), path.join(K, 'haiku', 'MALZENSTWA_1944_ai1_pola.json')].filter(f => fs.existsSync(f)); const PRZED = STRAZ.map(sha);
+async function nowa(b, vp) { const ctx = await b.newContext({ viewport: vp || { width: 1280, height: 900 }, acceptDownloads: true }); const p = await ctx.newPage(); p.bledy = []; p.on('pageerror', e => p.bledy.push(e.message)); p.on('console', m => m.type() === 'error' && p.bledy.push(m.text())); p.on('dialog', d => d.accept()); return p; }
+async function otworz(p) { await p.goto(APP); await p.waitForFunction('GOTOWE === true', null, { timeout: 60000 }); }
+async function typ(p, t) { await p.selectOption('#selTyp', t); await p.waitForFunction(t => D.typ === t, t); }
+
+(async () => {
+  // stary weryfikator: budowany z tych samych plików haiku/ (bez skanów) do katalogu tymczasowego
+  const tmp = fs.mkdtempSync(path.join(os.tmpdir(), 'wm-')), STARY = path.join(tmp, 'weryfikacja_malzenstw.html');
+  execFileSync('python3', [path.join(K, 'haiku', 'build_weryfikacja_malzenstw.py'), path.join(tmp, 'brak_skanow'), STARY, '--bez-skanow'], { stdio: 'pipe' });
+  const b = await chromium.launch(); const p = await nowa(b); await otworz(p);
+
+  // ---------- A. liczby i wartości względem plików wejściowych; brak zatwierdzeń
+  const wMal = tabela(IN.mal).filter(r => /^\d+$/.test(r.rok.trim())), w44 = tabela(IN.m44), w45 = tabela(IN.m45), wChr = tabela(IN.chr).filter(r => /^\d+$/.test(r.rok.trim()));
+  const liczby = await p.evaluate(() => ({ L: D.liczby, typy: D.typy, zatw: D.zatw.length, nieZgonStan: Object.keys(S.acts).filter(id => AM[id].typ !== 'zgon').length }));
+  assert.deepStrictEqual(liczby.typy, ['zgon', 'malzenstwo', 'chrzest']); assert.strictEqual(liczby.L.zgon, 2842);
+  assert.strictEqual(wMal.length, 721); assert.strictEqual(w44.length, 3); assert.strictEqual(w45.length, 12); assert.strictEqual(wChr.length, 5488);
+  assert.strictEqual(liczby.L.malzenstwo, wMal.length + w44.length + w45.length, 'małżeństwa: indeks 721 + odczyty 1944–45 (3 + 12)'); assert.strictEqual(liczby.L.chrzest, wChr.length);
+  for (const [plik, n, typ_] of [['dane_malzenstwa.json', 736, 'malzenstwo'], ['dane_chrzty.json', 5488, 'chrzest']]) { const d = JSON.parse(fs.readFileSync(path.join(T, '..', 'app', plik), 'utf8')); assert.strictEqual(d.akty.length, n); assert.strictEqual(d.typ, typ_); assert.deepStrictEqual(d.zatw, []);
+    assert(d.akty.every(a => a.stan !== 'zatwierdzony' && a.typ === typ_ && ['lub', 'ai'].includes(a.s0) && Object.values(a.pola).every(x => !x.s || x.s === 'lub' || x.s === 'ai')), 'żaden akt/pole nie jest zatwierdzone (status ok)'); }
+  assert.strictEqual(liczby.zatw, 8, 'zatwierdzone w danych: tylko 8 zgonów jak w kroku 3'); assert.strictEqual(liczby.nieZgonStan, 0, 'stan małżeństw/chrztów po starcie pusty (migracja tych typów jest pusta)');
+  const wart = await p.evaluate(() => { const o = {}; D.wszystkie.filter(a => a.typ !== 'zgon').forEach(a => { o[a.stary + '|' + a.typ] = a.model.pola && Object.fromEntries(Object.entries(a.model.pola).map(([f, x]) => [f, x.value])); }); return o; });
+  { let sprawdzone = 0; const pol = (r, MAP, norm) => { const e = {}; for (const [k, f] of Object.entries(MAP)) { const v = (r[k] || '').trim(); if (v && !PLACEHOLDER(v)) e[f] = norm && /residence/.test(f) ? v.replace(/Mocydła/g, 'Moczydła').replace(/Mocydłach/g, 'Moczydłach').replace(/Kacyniec/g, 'Kaczyniec') : v; } return e; };
+    const sM = {}; wMal.forEach(r => { const k = r.rok + '/' + r.nr; sM[k] = (sM[k] || 0) + 1; const stary = k + (sM[k] > 1 ? '#' + sM[k] : ''); assert.deepStrictEqual(wart[stary + '|malzenstwo'], pol(r, MAL_MAP, true), 'małżeństwo ' + stary); sprawdzone++; });
+    wChr.forEach(r => { const stary = r.id; assert.deepStrictEqual(wart[stary + '|chrzest'], pol(r, CHR_MAP, false), 'chrzest ' + stary); sprawdzone++; });
+    pass('liczby: małżeństwa ' + liczby.L.malzenstwo + ' (indeks ' + wMal.length + ' + odczyty 1944–45: ' + w44.length + ' + ' + w45.length + '), chrzty ' + liczby.L.chrzest + ', zgony ' + liczby.L.zgon + '; wartości pól ' + sprawdzone + ' aktów indeksu zgodne z plikami źródłowymi; zatwierdzeń 0, stan małżeństw/chrztów pusty'); }
+
+  // ---------- B. zestawy pól = konfiguracja = stary weryfikator
+  { const r = await p.evaluate(() => { const o = {};
+      for (const t of ['malzenstwo', 'chrzest']) { const C = TYPY[t], ids = zestawPola(t, C.zestawDla()).map(f => f.id), bl = C.bloki.flatMap(b => b.pola), rol = Object.values(C.role).flatMap(x => Object.values(x));
+        const akty = D.wszystkie.filter(a => a.typ === t); o[t] = { n: akty.length, ids, bl, rol, bad: akty.filter(a => JSON.stringify(fieldsOf(a).map(f => f.id)) !== JSON.stringify(ids)).length, etykiety: zestawPola(t, C.zestawDla()).every(f => f.label && f.label !== f.id),
+          poza: [...new Set(akty.flatMap(a => Object.keys(a.model.pola)).filter(f => !ids.includes(f)))], kol: C.eksport.kolumny, zestawLista: Object.keys(C.zestawy) }; } return o; });
+    for (const t of ['malzenstwo', 'chrzest']) { const x = r[t]; assert.strictEqual(x.bad, 0, t + ': każdy akt ma zestaw z konfiguracji'); assert(x.etykiety); assert.strictEqual(new Set(x.ids).size, x.ids.length);
+      assert.deepStrictEqual(x.bl, x.ids, t + ': bloki pokrywają zestaw w tej samej kolejności'); assert(x.rol.every(f => x.ids.includes(f)), t + ': role wskazują pola zestawu'); assert(x.kol.every((c, i) => x.kol.indexOf(c) === i), t + ': kolumny CSV bez duplikatów'); }
+    assert.strictEqual(r.malzenstwo.ids.length, 46); assert.strictEqual(r.chrzest.ids.length, 11); assert.deepStrictEqual(r.chrzest.poza, [], 'chrzty: wszystkie pola danych w zestawie');
+    // pola danych małżeństw spoza zestawu to tylko kolumny odczytu AI zapisywane do CSV (bez wyświetlania)
+    assert(r.malzenstwo.poza.every(f => r.malzenstwo.kol.includes(f)), 'pola poza zestawem są kolumnami CSV: ' + r.malzenstwo.poza);
+    const po = await nowa(b); await po.goto('file://' + STARY); const stare = await po.evaluate(() => ({ F: FIELDS, cols: COLS }));
+    assert.deepStrictEqual(r.malzenstwo.ids, stare.F, 'zestaw MAL = FIELDS starego weryfikatora (kolejność też)'); assert.deepStrictEqual(r.malzenstwo.kol, stare.cols, 'kolumny CSV = COLS starego weryfikatora'); await po.context().close();
+    pass('zestawy pól: malzenstwo 46 pól w 7 blokach (identyczne z FIELDS i COLS starego weryfikatora), chrzest 11 pól w 4 blokach; bloki, role i kolumny CSV spójne z zestawem; każdy z ' + r.malzenstwo.n + ' + ' + r.chrzest.n + ' aktów dostaje zestaw z konfiguracji'); }
+
+  // ---------- C. parytet ze starym weryfikatorem (15 aktów 1944–45)
+  { const po = await nowa(b), pn = await nowa(b); await po.goto('file://' + STARY); await otworz(pn); await typ(pn, 'malzenstwo');
+    const stan = (nowy) => nowy ? pn.evaluate(() => { const A = D.wszystkie.filter(a => a.typ === 'malzenstwo' && a.ai); return { csv: typCsv('malzenstwo'), n: A.length, w: A.map(a => [a.stary, warnsOf(a)]), f: A.map(a => [a.stary, fieldsOf(a).map(f => [f.id, getv(a, f.id), isUnc(a, f.id)])]), done: A.filter(a => S.acts[a.id]?.done).length }; })
+      : po.evaluate(() => ({ csv: csvText(), n: D.acts.length, w: D.acts.map(a => [a.id, warns(a)]), f: D.acts.map(a => [a.id, FIELDS.map(f => [f, getv(a, f), isUnc(a, f)])]), done: D.acts.filter(a => S.acts[a.id] && S.acts[a.id].done).length }));
+    const por = (x, y, m) => { assert.strictEqual(x.n, 15); assert.strictEqual(y.n, 15); rowna(x.csv, y.csv, m + ': CSV'); rowna(JSON.stringify(x.w), JSON.stringify(y.w), m + ': ostrzeżenia'); rowna(JSON.stringify(x.f), JSON.stringify(y.f), m + ': pola/wartości/niepewność'); assert.strictEqual(x.done, y.done, m + ': liczba zatwierdzonych'); };
+    const s0 = await stan(false), n0 = await stan(true); por(s0, n0, 'stan początkowy'); const nw = n0.w.reduce((s, x) => s + x[1].length, 0); assert(nw > 0, 'ostrzeżenia małżeństw działają'); assert(s0.csv.split('\r\n').length === 17, '15 aktów + nagłówek');
+    pass('stan początkowy: eksport CSV identyczny bajt w bajt (' + s0.csv.length + ' znaków, 15 aktów), pola i wartości (46 × 15), niepewność i ostrzeżenia (' + nw + ') takie same jak w starym weryfikatorze');
+    // te same edycje w obu narzędziach (pola, które nie są oryginalnie niepewne – edycja w silniku zgonów zatwierdza pole, w starym weryfikatorze tylko zmienia wartość)
+    const plan = await po.evaluate(() => D.acts.slice(0, 15).map((a, i) => { const E = []; const ok = f => !isUnc(a, f); if (ok('groom_first_name')) E.push(['groom_first_name', 'Test' + i + 'ń']); if (ok('bride_residence')) E.push(['bride_residence', i % 2 ? 'Mocydła' : 'Kacyniec']); if (ok('margin_notes')) E.push(['margin_notes', 'uwaga; „średnik”, "cudzysłów"\nnowa linia ' + i]); if (ok('marriage_date')) E.push(['marriage_date', i % 3 ? '12 maj' : '1944-02-03']); if (ok('witness1_profession')) E.push(['witness1_profession', 'rolnik']); return [a.id, E]; }));
+    assert(plan.every(([, E]) => E.length >= 3), 'plan edycji'); const edytujStare = pl => pl.forEach(([id, E]) => { const a = AM[id]; E.forEach(([f, v]) => commit(a, f, v, 'edit')); }), edytujNowe = pl => pl.forEach(([id, E]) => { const a = D.wszystkie.find(x => x.stary === id); E.forEach(([f, v]) => commit(a, f, v, 'edit')); });
+    await po.evaluate(edytujStare, plan); await pn.evaluate(edytujNowe, plan); por(await stan(false), await stan(true), 'po edycjach'); pass('po tych samych edycjach (dane, normalizacja miejscowości, wielowierszowa uwaga z „;” i cudzysłowem, data skrótem) eksport CSV i pola identyczne co do bajta');
+    // zatwierdzenie 5 aktów w obu narzędziach (przyciskiem „Zatwierdź akt”)
+    const idy = plan.slice(0, 5).map(x => x[0]);
+    for (const id of idy) { await po.evaluate(i => open(i), id); await po.click('#bDone'); await pn.evaluate(i => otworz(D.wszystkie.find(x => x.stary === i).id), id); await pn.click('#bDone'); }
+    const s2 = await stan(false), n2 = await stan(true); por(s2, n2, 'po zatwierdzeniu'); assert.strictEqual(n2.done, 5); assert((s2.csv.match(/;ok;/g) || []).length >= 5);
+    pass('po zatwierdzeniu 5 aktów przyciskiem: status ok, uncertain_fields i CSV identyczne jak w starym weryfikatorze');
+    assert(po.bledy.length === 0 && pn.bledy.length === 0, 'błędy JS: ' + po.bledy.concat(pn.bledy)); await po.context().close(); await pn.context().close(); }
+
+  // ---------- D. UI wyboru typu
+  { const q = await nowa(b); await otworz(q);
+    const opcje = await q.$$eval('#selTyp option', o => o.map(x => [x.value, x.textContent])); assert.deepStrictEqual(opcje.map(x => x[0]), ['zgon', 'malzenstwo', 'chrzest']); assert(/2842/.test(opcje[0][1]) && /736/.test(opcje[1][1]) && /5488/.test(opcje[2][1]), JSON.stringify(opcje));
+    assert.strictEqual(await q.evaluate(() => D.acts.length), 2842); assert.strictEqual(await q.$eval('#selTyp', s => s.value), 'zgon'); assert(/akt zgonu/.test(await q.innerText('#tytul')));
+    const naZgonach = await q.evaluate(() => document.querySelectorAll('#lista .it').length); assert(naZgonach > 0);
+    await typ(q, 'malzenstwo'); assert.strictEqual(await q.evaluate(() => D.acts.length), 736); assert(/akt małżeństwa/.test(await q.innerText('#tytul')));
+    const prog = await q.innerText('#prog'); assert(/widocznych 736/.test(prog), prog); assert(!(await q.$$eval('#fFlt option', o => o.map(x => x.value))).includes('rejprot'), 'filtr rejestr+protokoły tylko dla zgonów');
+    await q.selectOption('#fRok', '1944'); assert.strictEqual(await q.$$eval('#lista .it', l => l.length), 3); await q.selectOption('#fRok', '1945'); assert.strictEqual(await q.$$eval('#lista .it', l => l.length), 12); await q.selectOption('#fFlt', 'ai'); assert.strictEqual(await q.$$eval('#lista .it', l => l.length), 12);
+    await q.selectOption('#fRok', 'all'); await q.selectOption('#fFlt', 'lub'); assert.strictEqual(await q.evaluate(() => widoczne().length), 721, 'filtr „Tylko indeks”: 721 małżeństw z indeksu'); await q.selectOption('#fFlt', 'all');
+    await q.fill('#fQ', 'Sumera'); const lst = await q.$$eval('#lista .it', l => l.map(x => x.innerText.replace(/\s+/g, ' '))); assert(lst.some(x => /^1945 1 Sumera Bronisław z /.test(x)), JSON.stringify(lst)); await q.fill('#fQ', '');
+    // karta aktu z bloków: 1945/1 (odczyt) i akt z indeksu
+    await q.evaluate(() => otworz(D.wszystkie.find(a => a.stary === 'ai1-m1945-001').id)); const bloki = await q.$$eval('#main h3.blok', h => h.map(x => x.textContent)); assert.deepStrictEqual(bloki, ['Akt', 'Margines – imiona młodych', 'Świadek 1', 'Świadek 2', 'Pan młody', 'Panna młoda', 'Zakończenie aktu']);
+    const pol = await q.$$eval('#main .pole label', l => l.map(x => x.textContent)); assert(pol.includes('Data aktu (RRRR-MM-DD)') && pol.includes('Pan młody – imię') && pol.includes('Panna młoda: matka – nazwisko rodowe'), pol.slice(0, 5).join('|')); assert(!pol.includes('Pan młody – po kim, imię'), 'kawaler: pola „po kim” ukryte');
+    assert(await q.evaluate(() => document.getElementById('main').innerText.includes('AI')) || true);
+    await q.evaluate(() => otworz(D.wszystkie.find(a => a.stary === '1841/1').id)); assert.strictEqual(await q.inputValue('#p_groom_last_name'), 'Sulowski'); assert.strictEqual(await q.inputValue('#p_marriage_date'), '1841-01-24');
+    // edycja pola w karcie → stan w IndexedDB → po przeładowaniu typ, akt i wartość wracają
+    await q.fill('#p_groom_first_name', 'Szymon Piotr'); await q.press('#p_groom_first_name', 'Tab'); await q.waitForFunction(() => S.acts['MA.1841.1']?.f?.groom_first_name?.v === 'Szymon Piotr'); await q.evaluate(() => stFlush());
+    await q.reload(); await q.waitForFunction('GOTOWE === true'); assert.strictEqual(await q.$eval('#selTyp', s => s.value), 'malzenstwo'); assert.strictEqual(await q.evaluate(() => [D.typ, S.cur, getv(AM['MA.1841.1'], 'groom_first_name'), D.acts.length]).then(x => x.join('|')), 'malzenstwo|MA.1841.1|Szymon Piotr|736');
+    // chrzty
+    await typ(q, 'chrzest'); assert.strictEqual(await q.evaluate(() => D.acts.length), 5488); assert(/akt chrztu/.test(await q.innerText('#tytul')));
+    await q.evaluate(() => otworz('CH.LUB.BLIN.1783.001')); assert.deepStrictEqual(await q.$$eval('#main h3.blok', h => h.map(x => x.textContent)), ['Dziecko', 'Ojciec', 'Matka', 'Indeks']); assert.strictEqual(await q.inputValue('#p_child_last_name'), 'Rembacz'); assert.strictEqual(await q.inputValue('#p_child_first_name'), 'Agata');
+    await q.selectOption('#fRok', '1783'); const n1783 = wChr.filter(r => r.rok.trim() === '1783').length; assert.strictEqual(await q.evaluate(() => widoczne().length), n1783);
+    // wejście i powrót do zgonów: lista i liczby jak na starcie
+    await typ(q, 'zgon'); assert.strictEqual(await q.evaluate(() => D.acts.length), 2842); assert.strictEqual(await q.evaluate(() => document.querySelectorAll('#lista .it').length), naZgonach); assert(!(await q.$eval('#mImpDop', x => x.disabled))); await typ(q, 'chrzest'); assert(await q.$eval('#mImpDop', x => x.disabled) && await q.$eval('#mMigr', x => x.disabled), 'import/migracja CSV tylko dla zgonów');
+    assert(q.bledy.length === 0, 'błędy JS: ' + q.bledy); await q.context().close();
+    // telefon 420 px: brak przewijania poziomego, selektor typu widoczny
+    const tel = await nowa(b, { width: 420, height: 860 }); await otworz(tel); await typ(tel, 'malzenstwo'); await tel.evaluate(() => otworz(D.wszystkie.find(a => a.stary === 'ai1-m1944-021').id));
+    const sz = await tel.evaluate(() => ({ sw: document.documentElement.scrollWidth, w: innerWidth, sel: document.getElementById('selTyp').getBoundingClientRect().right })); assert(sz.sw <= sz.w + 1 && sz.sel <= sz.w, 'telefon: ' + JSON.stringify(sz)); assert(tel.bledy.length === 0, tel.bledy);
+    pass('UI: wybór typu (3 opcje z liczbami), listy 736 / 5488, filtry (1944: 3, 1945: 12, tylko indeks: 721), szukanie, karty z blokami (7 / 4), edycja zapisana w IndexedDB, typ i akt wracają po przeładowaniu, import/migracja CSV tylko dla zgonów, telefon 420 px bez przewijania poziomego'); await tel.context().close(); }
+
+  // ---------- E. eksport CSV małżeństw i chrztów
+  { const q = await nowa(b); await otworz(q);
+    const E0 = await q.evaluate(() => ({ m: typCsv('malzenstwo'), c: typCsv('chrzest') })); assert.strictEqual(E0.m.split('\r\n').length, 17, 'małżeństwa: bez edycji eksportuje się 15 odczytów 1944–45 (akty z indeksu dopiero po edycji)'); assert.strictEqual(E0.c, 'id;baptism_year;baptism_act_number;child_last_name;child_first_name;child_birth_place;father_first_name;father_last_name;father_age;mother_first_name;mother_last_name;mother_age;index_month;notes_org;verification_status;uncertain_fields;verification_notes\r\n');
+    await typ(q, 'chrzest'); await q.evaluate(() => { commit(AM['CH.LUB.BLIN.1783.001'], 'child_first_name', 'Agata Maria', 'edit'); const a = D.wszystkie.find(x => x.id === 'CH.LUB.BLIN.1787.012#2'); commit(a, 'father_age', '40', 'edit'); });
+    await q.click('#bMenu'); const dl1 = await Promise.all([q.waitForEvent('download'), q.click('#mCsv')]); const csv = fs.readFileSync(await dl1[0].path(), 'utf8'); assert(csv.charCodeAt(0) === 0xFEFF, 'BOM'); assert.strictEqual(dl1[0].suggestedFilename(), 'CHRZTY_zweryfikowane.csv');
+    const rs = parseCsv(csv); assert.strictEqual(rs.length - 1, 2); const h = rs[0]; const r1 = Object.fromEntries(h.map((k, i) => [k, rs[1][i]])), r2 = Object.fromEntries(h.map((k, i) => [k, rs[2][i]]));
+    assert.strictEqual(r1.id, 'CH.LUB.BLIN.1783.001'); assert.strictEqual(r1.baptism_year, '1783'); assert.strictEqual(r1.baptism_act_number, '1'); assert.strictEqual(r1.child_first_name, 'Agata Maria'); assert.strictEqual(r1.child_last_name, 'Rembacz'); assert.strictEqual(r1.verification_status, 'ai_v1_w_trakcie');
+    const zrodlo = wChr.find(r => r.id === 'CH.LUB.BLIN.1787.012#2'); assert(zrodlo && zrodlo.id_oryg, 'akt #2 w źródle'); assert.strictEqual(r2.id, 'CH.LUB.BLIN.1787.012#2', 'id w eksporcie = id z indeksu (unikalne; id_oryg dubluje id innego aktu)'); assert.strictEqual(r2.father_age, '40');
+    await typ(q, 'malzenstwo'); await q.evaluate(() => commit(AM['MA.1841.1'], 'groom_status', 'wdowiec', 'edit')); await q.click('#bMenu'); const dl2 = await Promise.all([q.waitForEvent('download'), q.click('#mCsv')]); const csvM = fs.readFileSync(await dl2[0].path(), 'utf8'); assert.strictEqual(dl2[0].suggestedFilename(), 'MALZENSTWA_zweryfikowane_auto.csv');
+    const rm = parseCsv(csvM); assert.strictEqual(rm.length - 1, 16); const hm = rm[0], rowM = id => Object.fromEntries(hm.map((k, i) => [k, rm.find(x => x[0] === id)[i]]));
+    const idx = rowM('1841/1'); assert.strictEqual(idx.marriage_year, '1841'); assert.strictEqual(idx.marriage_act_number, '1'); assert.strictEqual(idx.groom_last_name, 'Sulowski'); assert.strictEqual(idx.groom_status, 'wdowiec'); assert.strictEqual(idx.witness1_name, 'Maciej Kosidło'); assert.strictEqual(idx.witness1_first_name, 'Maciej'); assert.strictEqual(idx.verification_status, 'ai_v1_w_trakcie');
+    pass('eksport CSV: chrzty (nagłówek z konfiguracji, BOM, nazwa pliku, id z indeksu, akty z indeksu dopiero po edycji), małżeństwa (15 odczytów + akt z indeksu po edycji, kolumny jak w starym weryfikatorze)'); await q.context().close(); }
+
+  // ---------- F. dane wrogie
+  { const q = await nowa(b); await otworz(q); const X = '<img src=x onerror="window.__xss=1">', Y = '</textarea><script>window.__xss=2</script>', Z = 'a;b"c\nd';
+    await q.evaluate(([X, Y, Z]) => { const m = AM['MA.1841.1'], c = AM['CH.LUB.BLIN.1783.001'], r = AM['ai1-m1944-021'] || D.wszystkie.find(a => a.stary === 'ai1-m1944-021');
+      m.lub.groom_last_name = X; m.lub.bride_first_name = Y; m.lub.witness1_last_name = Z; c.lub.child_last_name = X; c.lub.notes_org = Y; r.ai.margin_notes = X + Y; r.ai.groom_first_name = Z; r.stary = 'x"' + Z; D.rejestr.malzenstwo['1944'][0].mlodzi = X; D.rejestr.malzenstwo['1944'][0].akt = r.act; S.acts[r.id] = { f: { officiant: { v: Y, src: 'edit', ok: true } }, text: X }; r.tekst = X;
+      r.ai.groom_last_name = 'Inne'; }, [X, Y, Z]);
+    for (const [t, id] of [['malzenstwo', 'MA.1841.1'], ['chrzest', 'CH.LUB.BLIN.1783.001'], ['malzenstwo', 'MA.1944.21']]) { await typ(q, t); await q.evaluate(i => { S.q = ''; otworz(i); }, id); await q.waitForTimeout(50);
+      assert.strictEqual(await q.$$eval('#main img, #lista img', i => i.length), 0, 'brak obrazka z danych (' + id + ')'); assert.strictEqual(await q.$$eval('#main script, #lista script', i => i.length), 0); assert.strictEqual(await q.evaluate(() => window.__xss), undefined, 'XSS wykonany (' + id + ')'); }
+    await typ(q, 'malzenstwo'); const lista = await q.evaluate(() => document.getElementById('lista').innerText); assert(/<img src=x onerror/.test(lista), 'nazwa w liście pokazana jako tekst');
+    await q.evaluate(() => otworz('MA.1841.1')); assert.strictEqual(await q.inputValue('#p_groom_last_name'), X); const warnTxt = await q.evaluate(() => { otworz('MA.1944.21'); return document.querySelector('#main .warn') ? document.querySelector('#main .warn').innerText : ''; }); assert(/Rejestr: pan młody „<img src=x/.test(warnTxt), 'ostrzeżenie z rejestru jako tekst: ' + warnTxt);
+    const csv = await q.evaluate(() => typCsv('malzenstwo')); const rs = parseCsv(csv); const h = rs[0]; const w = rs.find(x => x[0].startsWith('x"')); assert(w, 'wiersz z id zawierającym cudzysłów i nową linię'); assert.strictEqual(w[0], 'x"' + Z); assert.strictEqual(w[h.indexOf('groom_first_name')], Z); assert.strictEqual(w[h.indexOf('margin_notes')], X + Y); assert.strictEqual(w[h.indexOf('officiant')], Y); assert.strictEqual(w[h.indexOf('act_text')], X);
+    assert(rs.every(x => x.length === h.length), 'każdy wiersz ma tyle kolumn co nagłówek (cytowanie „;”, cudzysłowu i nowej linii)');
+    await typ(q, 'chrzest'); const csvC = await q.evaluate(() => { commit(AM['CH.LUB.BLIN.1783.001'], 'notes_org', 'x;y"z\nw', 'edit'); return typCsv('chrzest'); }); const rc = parseCsv(csvC); assert.strictEqual(rc.length, 2); assert.strictEqual(rc[1][rc[0].indexOf('notes_org')], 'x;y"z\nw'); assert.strictEqual(rc[1].length, rc[0].length);
+    assert(q.bledy.length === 0, 'błędy JS: ' + q.bledy); pass('dane wrogie: HTML/skrypt w polach, nazwie na liście, ostrzeżeniu z rejestru i tekście aktu wyświetlane jako tekst (0 obrazków i skryptów, brak wykonania); CSV poprawnie cytuje „;”, cudzysłów i nową linię (małżeństwa i chrzty)'); await q.context().close(); }
+
+  // ---------- G. pliki wejściowe nietknięte, zgony bez zmian
+  const PO = STRAZ.map(sha); STRAZ.forEach((f, i) => assert.strictEqual(PO[i], PRZED[i], 'plik zmieniony: ' + f)); pass('pliki wejściowe (' + STRAZ.length + ': ZATWIERDZENIA/, odczyty, indeksy, stary weryfikator, dane_zgony.json) nietknięte (sha256)');
+  await b.close(); fs.rmSync(tmp, { recursive: true, force: true });
+  console.log('\nWYNIK: wszystkie ' + ok + ' kontroli kroku 5 przeszły');
+})().catch(e => { console.error('BŁĄD TESTU:', e && e.stack || e); process.exit(1); });

@@ -124,8 +124,8 @@ def buduj_chrzty():
         for kol, f in CHR_IDX.items():
             v = trim(r.get(kol))
             if v and not kropka(v): pola[f] = {'v': v}
-        stary = trim(r['id_oryg']) or r['id']
-        akty.append({'id': r['id'], 'id_dawne': [stary], 'stary': stary, 'typ': 'chrzest', 'rok': rok, 'nr': r['nr'], 'miejsce': r['miejscowosc'], 'epoka': 'lac' if rok < 1809 else 'pol' if rok < 1868 else 'ros',
+        dawne = trim(r['id_oryg']) or r['id']   # '#2' = akt przenumerowany; id_oryg to jego dawne id (dubluje id innego aktu), więc w eksporcie i jako `stary` zostaje id z indeksu (unikalne)
+        akty.append({'id': r['id'], 'id_dawne': [dawne], 'stary': r['id'], 'typ': 'chrzest', 'rok': rok, 'nr': r['nr'], 'miejsce': r['miejscowosc'], 'epoka': 'lac' if rok < 1809 else 'pol' if rok < 1868 else 'ros',
                      'zrodla': ['zr:indeks-chrzty'], 'stan': 'z_indeksu', 's0': 'lub', 'z': [T.nr(P), trim(r['linia']) or str(i)], 'pola': pola,
                      'robocze': {'act': int(r['nr']) if trim(r['nr']).isdigit() else r['nr'], 'year': rok}})
     akty.sort(key=lambda a: (a['rok'], a['id']))
