@@ -1,0 +1,52 @@
+{
+ "_opis": "Zbiory skanów: nazwa klucza skanu w danych → plik w folderze (ścieżka względna od folderu 01_SKANY/Blinów) i suma kontrolna zawartości (SHA-256, 16 znaków). Skany bez aktów w danych (okładka, rejestry, strony jeszcze nieodczytane) mają tylko sumę.",
+ "malzenstwa_1944-45": {
+  "folder": "Małżeństwa/1944-1945 USC Szastarka",
+  "pliki": {
+   "M1944_01": "001.jpg",
+   "M1944_02": "002.jpg",
+   "M1945_01": "004.jpg",
+   "M1945_02": "005.jpg",
+   "M1945_03": "006.jpg",
+   "M1945_04": "007.jpg",
+   "M1945_05": "008.jpg",
+   "M1945_06": "009.jpg",
+   "M1945_07": "010.jpg",
+   "M1945_08": "012.jpg",
+   "M1945_09": "016.jpg",
+   "M1945_10": "017.jpg",
+   "M1945_11": "018.jpg"
+  },
+  "sumy": {
+   "000.jpg": "7cfe6564f360d3c7",
+   "001.jpg": "b03830b84fc69faa",
+   "002.jpg": "031b6ffd67da9dec",
+   "003.jpg": "0983db839ff56e9c",
+   "004.jpg": "b13f4b00be9eee23",
+   "005.jpg": "6388502d3487d387",
+   "006.jpg": "1ba9555993e612a2",
+   "007.jpg": "fe57ea1f2599f850",
+   "008.jpg": "fbea03f2dcb73d98",
+   "009.jpg": "52629d26b0a657d4",
+   "010.jpg": "a12ff53b34067388",
+   "011.jpg": "25cc92e4ec2d2fd8",
+   "012.jpg": "7864e1cfa6d4e8c0",
+   "013.jpg": "a0a1a46849385eb0",
+   "014.jpg": "719f669a1243d348",
+   "015.jpg": "a11ed599cb6cee8f",
+   "016.jpg": "81f67f57e2c01e43",
+   "017.jpg": "21b00ca66aa7b0f5",
+   "018.jpg": "b67ca2b3c02f3d14",
+   "019.jpg": "d0988a7148bf12f3"
+  },
+  "inne": {
+   "000.jpg": "okładka",
+   "003.jpg": "protokół i rejestr alfabetyczny 1944",
+   "019.jpg": "protokół i rejestr alfabetyczny 1945",
+   "011.jpg": "odpis/korekta (dublet 010)",
+   "013.jpg": "odpis/korekta",
+   "014.jpg": "odpis/korekta",
+   "015.jpg": "odpis/korekta"
+  }
+ }
+}

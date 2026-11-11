@@ -16,7 +16,7 @@ function skanBudujIndeks(lista){ const M = {};
 const skanBase = p => String(p).split(/[\\/]/).pop().toLowerCase();
 const skanStem = p => skanBase(p).replace(/\.(jpe?g|png|webp|gif|bmp|tiff?)$/i, '');   // dane często mają nazwę skanu bez rozszerzenia („M1944_01”), a plik – z rozszerzeniem
 function skanZnajdz(a){ const p = skanSciezka(a); if (!p || !SK.pliki.length) return null; const C0 = SK.pliki.filter(f => skanStem(f.name) === skanStem(p)); if (!C0.length) { const po = typeof skpZnajdzPoSumie === 'function' && skpZnajdzPoSumie(a); if (po) return po; } const b = skanBase(p), seg = p.toLowerCase().split(/[\\/]/).reverse();
-  const C = SK.pliki.filter(f => skanStem(f.name) === skanStem(b)); if (!C.length) return null; if (C.length === 1) return C[0];
+  const C = SK.pliki.filter(f => skanStem(f.name) === skanStem(b)); if (!C.length) return null; if (C.length === 1) return C[0]; { const po = typeof skpZnajdzPoSumie === 'function' && skpZnajdzPoSumie(a, C); if (po && C.includes(po)) return po; }
   const wsp = f => { const s = (f.webkitRelativePath || f.name).toLowerCase().split('/').reverse(); let n = 0; while (n < s.length && n < seg.length && s[n] === seg[n]) n++; return n; };
   return C.slice().sort((x, y) => wsp(y) - wsp(x))[0]; }
 /* Akt bez adresu skanu: strony-kandydaci z wybranego folderu. Najpierw pliki, których ścieżka zawiera dokładnie rok aktu (np. „Z 1814”), a gdy ich nie ma – pliki z folderu o zakresie lat obejmującym rok („1847-1872 USC”).

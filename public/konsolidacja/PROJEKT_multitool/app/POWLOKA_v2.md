@@ -55,3 +55,8 @@ Enter (następne pole), Alt+J / Alt+K (następny / poprzedni akt), Ctrl+Enter (n
 - Nazwa skanu w danych bywa bez rozszerzenia („M1944_01”), a plik ma rozszerzenie – porównanie nazw pomija rozszerzenie (`skanStem`).
 - Okno otwarte z karty aktu dotyczy oglądanego aktu (typ, rok, numer). Skan z bazy, którego nie ma w wczytanych plikach, jest domyślnie zastępowany wczytanym (pole „zastąp skan” zaznaczone, można odznaczyć; przypisanie cofa „Zmień / usuń przypisanie”). Test: 12 kontroli.
 - Pliki z samych cyfr („001.jpg”) nie mówią nic o folderze (przeglądarka nie podaje ścieżki): okno ma pole „Nazwa folderu / zbioru”, z którego odgaduje typ i rok (np. „Małżeństwa 1944-1945 USC Szastarka”); wspólny zbiór `S.skProfNum`. Plan pokazuje typ, rok, numer i nazwę aktu z bazy, a po zastosowaniu otwiera akt o numerze pierwszego aktu na skanie. Test: 13 kontroli.
+
+## Sumy kontrolne skanów w danych i pełne ścieżki (małżeństwa 1944–45)
+- `app/skany_zbiory.json` opisuje zbiór skanów (folder, klucz skanu → plik, suma SHA-256 [16 znaków] każdego pliku, skany bez aktów: okładka, protokół, odpisy). Builder danych wpisuje do `scanFiles` pełną ścieżkę względną (`Małżeństwa/1944-1945 USC Szastarka/001.jpg`), a do `scanHash` sumy – aplikacja scala je do `D.scanHash`.
+- Plik o tej samej nazwie w innym folderze (`001.jpg` jest w wielu) rozstrzyga suma kontrolna; sumy liczą się tylko dla plików o pasującej nazwie albo – przy ≤ 300 wczytanych plikach – dla wszystkich (zmieniona nazwa).
+- Odczyt AI małżeństw 1945 akty 13–22: `haiku/MALZENSTWA_1945_cz2_ai1_import.csv` + `_roi.json` (kolejne części roku buduje ten sam builder; skany 010, 012, 016, 017, 018; 011/013/014/015 to odpisy i korekty). Odczyt wstępny, wiele pól oznaczonych jako niepewne.

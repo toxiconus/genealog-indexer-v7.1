@@ -16,7 +16,7 @@ function aktZModelu(x, zr){ const pola = {}; Object.keys(x.pola).forEach(f => po
 // Krok 5: D.wszystkie = akty wszystkich typów (AM obejmuje wszystkie, więc stan w IndexedDB jest wspólny), D.acts = akty bieżącego typu (D.typ). Zgony nadal są domyślne.
 function daneNaD(dane, inne){ const D = {wszystkie: dane.akty.map(x => aktZModelu(x, dane.zr)), fields: dane.konfig.fields, cols: dane.konfig.cols, ord: dane.konfig.ord, fieldsProt: dane.konfig.fieldsProt, fieldsRej: dane.konfig.fieldsRej,
     counts: dane.slowniki.counts, fix: dane.slowniki.fix, scanFiles: dane.slowniki.scanFiles, scanBase: dane.slowniki.scanBase, key: 'multitool', zatw: dane.zatw.map(id => id), rejestr: {}, typy: ['zgon']};
-  (inne || []).forEach(d => { const typ = d.typ; D.typy.push(typ); d.akty.forEach(x => D.wszystkie.push(aktZModelu(x, d.zr))); Object.assign(D.scanFiles = D.scanFiles || {}, d.scanFiles || {}); if (d.rejestr) D.rejestr[typ] = d.rejestr; });
+  (inne || []).forEach(d => { const typ = d.typ; D.typy.push(typ); d.akty.forEach(x => D.wszystkie.push(aktZModelu(x, d.zr))); Object.assign(D.scanFiles = D.scanFiles || {}, d.scanFiles || {}); Object.assign(D.scanHash = D.scanHash || {}, d.scanHash || {}); if (d.rejestr) D.rejestr[typ] = d.rejestr; });
   D.liczby = {}; D.wszystkie.forEach(a => { D.liczby[a.typ] = (D.liczby[a.typ] || 0) + 1; });
   daneUstawTyp(D, 'zgon'); return D; }
 function daneUstawTyp(D, typ){ D.typ = typ; D.acts = D.wszystkie.filter(a => a.typ === typ); const L = D.acts.map(a => a.year).filter(y => Number.isFinite(y)); if (L.length) { D.lata = [Math.min(...L), Math.max(...L)]; D.zakres = D.lata[0] + '–' + D.lata[1]; } return D; }   // zakres lat do sprawdzania wpisanych dat (dateBad); bez tego obowiązywał domyślny 1940–1946 z księgi 1943

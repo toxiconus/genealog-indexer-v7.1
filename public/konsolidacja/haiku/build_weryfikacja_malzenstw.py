@@ -7,7 +7,7 @@ H = os.path.dirname(os.path.abspath(__file__))
 scans_dir, out = sys.argv[1], sys.argv[2]
 embed = '--bez-skanow' not in sys.argv
 BASE = 'file:///J:/Genealog/Blin%C3%B3w%2C%20%C5%9Bw.%20Jana%20Chrzciciela/Blin%C3%B3w%20-%20lubgens/BLIN/M%C5%BB/'
-years = sorted(int(re.search(r'MALZENSTWA_(\d{4})_', p).group(1)) for p in glob.glob(H + '/MALZENSTWA_*_ai1_import.csv'))
+years = sorted(int(re.search(r'MALZENSTWA_(\d{4})_', p).group(1)) for p in glob.glob(H + '/MALZENSTWA_*_ai1_import.csv') if re.search(r'MALZENSTWA_\d{4}_ai1_import', p))
 acts, reg, cols, scans, pola = [], {}, None, {}, {}
 for y in years:
     rows = list(csv.reader(open(f'{H}/MALZENSTWA_{y}_ai1_import.csv', encoding='utf-8-sig', newline=''), delimiter=';'))

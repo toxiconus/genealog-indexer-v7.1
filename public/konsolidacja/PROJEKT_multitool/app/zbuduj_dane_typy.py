@@ -91,6 +91,9 @@ def buduj_malzenstwa():
         pl = 'haiku/MALZENSTWA_%d_ai1_import.csv' % y
         rows = rd(os.path.join(HK, 'MALZENSTWA_%d_ai1_import.csv' % y)); cols = list(rows[0].keys())
         roi = {r['id']: r for r in json.load(open(os.path.join(HK, 'MALZENSTWA_%d_ai1_roi.json' % y), encoding='utf-8'))}
+        wsk = {}
+        for cz in sorted(f for f in os.listdir(HK) if re.match(r'MALZENSTWA_%d_cz\d+_ai1_import\.csv$' % y, f)):   # kolejne części odczytu tego samego roku (osobny plik z ROI)
+            nowe = rd(os.path.join(HK, cz)); wsk.update({r['id']: ('haiku/' + cz, w) for w, r in enumerate(nowe, 2)}); rows += nowe; roi.update({r['id']: r for r in json.load(open(os.path.join(HK, cz.replace('_import.csv', '_roi.json')), encoding='utf-8'))})
         rejestr[str(y)] = json.load(open(os.path.join(HK, 'MALZENSTWA_%d_ai1_rejestr.json' % y), encoding='utf-8'))
         for w, r in enumerate(rows, 2):
             ai = dict(r); tekst = r.get('act_text', ''); unc = przygotuj_ai(ai, tekst); ro = roi[r['id']]
@@ -101,7 +104,7 @@ def buduj_malzenstwa():
                 pola[f] = {'v': v}
             nr = int(r['marriage_act_number'])
             x = {'id': 'MA.%d.%d' % (y, nr), 'id_dawne': [r['id']], 'stary': r['id'], 'typ': 'malzenstwo', 'rok': y, 'nr': str(nr), 'miejsce': r.get('marriage_place', ''), 'zrodla': ['zr:odczyt-malzenstwa-%d' % y], 'stan': 'w_toku',
-                 's0': 'ai', 'z': [T.nr(pl, ro['plik'], ro.get('strona', '')), str(w)], 'pola': pola, 'unc': unc, 'tekst': tekst,
+                 's0': 'ai', 'z': [T.nr(wsk[r['id']][0] if r['id'] in wsk else pl, ro['plik'], ro.get('strona', '')), str(wsk[r['id']][1] if r['id'] in wsk else w)], 'pola': pola, 'unc': unc, 'tekst': tekst,
                  'skan': {'id': 'sk:' + ro['plik'], 'strona': ro.get('strona', ''), 'roi': ro['roi']}, 'robocze': {'act': nr, 'year': y, 'file': ro['plik'], 'roi': ro['roi']}}
             if ro.get('uwaga'): x['robocze']['roiUwaga'] = ro['uwaga']
             scan_files[ro['plik']] = ro['plik']
@@ -109,9 +112,17 @@ def buduj_malzenstwa():
     akty.sort(key=lambda a: (a['rok'], a['robocze']['act'] if isinstance(a['robocze']['act'], int) else 10 ** 6, a['id']))
     zrodla = [{'id': 'zr:indeks-malzenstwa', 'typ': 'indeks', 'nazwa': 'Indeks małżeństw 1841–1894', 'plik': 'malzenstwa_mal.csv'}] + \
              [{'id': 'zr:odczyt-malzenstwa-%s' % y, 'typ': 'odczyt', 'nazwa': 'Odczyt AI małżeństw %s (haiku)' % y, 'plik': 'haiku/MALZENSTWA_%s_ai1_import.csv' % y} for y in rejestr]
+    # zbiory skanów: pełna ścieżka względna (nazwy 001.jpg powtarzają się w wielu folderach) i suma kontrolna zawartości
+    scan_hash = {}; zbp = os.path.join(H, 'skany_zbiory.json')
+    for nz, z in (json.load(open(zbp, encoding='utf-8')) if os.path.exists(zbp) else {}).items():
+        if nz.startswith('_'): continue
+        for klucz, plik in z['pliki'].items():
+            if klucz in scan_files:
+                scan_files[klucz] = z['folder'] + '/' + plik
+                if plik in z['sumy']: scan_hash[klucz] = z['sumy'][plik]
     return {'format': {'nazwa': 'multitool-dane', 'wersja': 1, 'zakres': 'malzenstwa'}, 'typ': 'malzenstwo',
             'opis': 'Małżeństwa: indeks 1841–1894 (%d aktów, status lub) + odczyty AI 1944–45 (%d aktów) z rejestrami i ROI. Bez zatwierdzeń (nie ma ich w żadnym pliku). Zapis zwarty.' % (n_idx, len(akty) - n_idx),
-            'zr': T.tab, 'zrodla': zrodla, 'rejestr': rejestr, 'scanFiles': scan_files, 'zatw': [], 'akty': akty}
+            'zr': T.tab, 'zrodla': zrodla, 'rejestr': rejestr, 'scanFiles': scan_files, 'scanHash': scan_hash, 'zatw': [], 'akty': akty}
 
 # ---------- chrzty ----------
 CHR_IDX = {'dziecko_nazwisko': 'child_last_name', 'dziecko_imiona': 'child_first_name', 'miejscowosc': 'child_birth_place', 'ojciec_imiona': 'father_first_name', 'ojciec_nazwisko': 'father_last_name', 'ojciec_wiek': 'father_age',
