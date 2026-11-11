@@ -3,7 +3,7 @@
    (2) etap „analiza” nie zmienia stanu (próba na kopii S), zapis dopiero po potwierdzeniu, po migawce; (3) nieznane id i błędne wiersze są wypisane, reszta przechodzi.
    fixAllTexts (dopasowanie tekstu aktu do zatwierdzonych pól po imporcie) jest przeniesione razem z silnikiem tokenów tekstu (akt_zgon.js), bez interfejsu trybów tekstu. */
 const CSV_ID_MAX = 80;
-function csvMapaId(){ const m = {}; D.acts.forEach(a => { m[a.id] = a; (a.model?.id_dawne || []).forEach(o => { if (!m[o]) m[o] = a; }); if (a.stary) m[a.stary] = a; }); return m; }
+function csvMapaId(){ const m = {}; ZG().forEach(a => { m[a.id] = a; (a.model?.id_dawne || []).forEach(o => { if (!m[o]) m[o] = a; }); if (a.stary) m[a.stary] = a; }); return m; }
 // rozpoznanie + walidacja nagłówka i wierszy (bez zmiany stanu)
 function csvImportRozpoznaj(txt){ const w = {ok: false, blad: '', wiersze: [], bledy: [], nieznane: []};
   let R; try { R = parseCsv(String(txt).replace(/^﻿/, '')); } catch (e) { w.blad = 'Nie udało się odczytać CSV.'; return w; }
@@ -25,8 +25,8 @@ function csvImportStosuj(w, ovw){ const ix = w.ix; let nA = 0, nF = 0, nSkip = 0
     FIELDS.forEach(f => { let v = ix[f.id] != null ? (r[ix[f.id]] || '').trim() : ''; if (!v) return; v = normFieldVal(a, f.id, v); if (f.id === 'deceased_spouse' && !/\((?:owd\.?|†)\)/.test(v)) v = spMark(v, spDef(r[ix.deceased_status]));
       if (s2.f[f.id]?.ok && !ovw) { nSkip++; if (s2.f[f.id].v !== v) konf++; return; } s2.f[f.id] = {v, src:'csv', ok:ok, unc:unc.has(f.id) || (TXTQ.has(f.id) && /\?\s*$/.test(v))}; n++; });
     if (n) { nA++; nF += n; if (ok && !s2.done) { s2.done = true; nOk++; } } });
-  D.acts.forEach(a => { if ((a.ai || a.lub) && minor(a) && st(a.id).f.deceased_status?.v !== 'dziecko') st(a.id).f.deceased_status = {v:'dziecko', src:'edit', ok:true}; });
-  D.acts.forEach(a => autoResolve(a));
+  ZG().forEach(a => { if ((a.ai || a.lub) && minor(a) && st(a.id).f.deceased_status?.v !== 'dziecko') st(a.id).f.deceased_status = {v:'dziecko', src:'edit', ok:true}; });
+  ZG().forEach(a => autoResolve(a));
   const nT = fixAllTexts();   // dopasowanie tekstu aktu do zatwierdzonych pól (v3: ten sam krok po imporcie)
   return {aktow: nA, pol: nF, pominieteOk: nSkip, zatwierdzone: nOk, konflikty: konf, tekstow: nT}; }
 // podgląd: ta sama operacja na kopii stanu (S i D.scanFiles przywracane); nic nie jest zapisywane

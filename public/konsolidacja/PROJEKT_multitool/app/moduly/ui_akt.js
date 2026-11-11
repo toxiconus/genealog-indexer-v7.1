@@ -10,7 +10,7 @@ const doAll = () => { const a = curAct(); if (!a || !a.ai) return toast('Brak od
 const doDone = () => { const a = curAct(); if (!a) return; const s = st(a.id); s.done = !s.done; if (s.done) autoResolve(a); save(); renderLista(); renderAkt(); toast(s.done ? 'Akt zatwierdzony ✓' : 'Cofnięto zatwierdzenie'); };
 function poleHtml(a, f, hid){ const s = S.acts[a.id], x = s?.f?.[f.id], v = getv(a, f.id), ai = a.ai?.[f.id], lb = a.lub?.[f.id];
   if (!appl(a, f.id) && !clean(v)) return ''; if (S.hideMk !== false && /^\[(?:_|-)\]$/.test(String(v || '').trim()) && !x?.ok && !x?.skip) { hid.push(f.label + ' ' + String(v).trim()); return ''; }
-  const unc = isUnc(a, f.id), st0 = x?.skip ? 'sk' : x?.ok ? (unc ? 'un' : 'ok') : unc ? 'un' : (diffState(a, f.id) === 'ne' ? 'df' : ''), dlugie = /^(notes|cause_of_death|parents_raw|informant[12])$/.test(f.id) || String(v).length > 60;
+  const unc = isUnc(a, f.id), st0 = x?.skip ? 'sk' : x?.ok ? (unc ? 'un' : 'ok') : unc ? 'un' : (diffState(a, f.id) === 'ne' ? 'df' : ''), dlugie = /^(notes|cause_of_death|parents_raw|informant[12])$/.test(f.id) || (typDla(a).dlugie || []).includes(f.id) || String(v).length > 60;
   const chip = (txt, val, src) => h`<button class="chip" data-chip="${f.id}" data-v="${val}" data-src="${src}" title="Użyj tej wartości">${txt}: ${val}</button>`;
   const chips = [ai != null && String(ai).trim() !== '' && ai !== v ? chip('AI', ai, 'ai') : '', lb != null && String(lb).trim() !== '' && lb !== v ? chip('indeks', lb, 'lub') : ''];
   return h`<div class="pole ${st0}" data-pole="${f.id}"><label for="p_${f.id}">${f.label}</label>
@@ -19,7 +19,7 @@ function poleHtml(a, f, hid){ const s = S.acts[a.id], x = s?.f?.[f.id], v = getv
       <button class="sm" data-ak="ok" data-f="${f.id}" title="Zatwierdź pole">✓</button><button class="sm" data-ak="unc" data-f="${f.id}" title="Przełącz niepewność">?</button></div>${narzPicker(a, f)}</div>`; }
 function renderAkt(){ const m = $('main'), a = curAct(); if (!a) { wstaw(m, h`<div class="card muted">Wybierz akt z listy.</div>`); return; }
   const s = S.acts[a.id] || {}, FS = fieldsOf(a), hid = [], pr = progOf(a), W = warnsOf(a);
-  const pola = FS.map(f => poleHtml(a, f, hid));
+  const bl = typDla(a).bloki, pola = bl ? bl.map(b => { const L = b.pola.map(id => FS.find(f => f.id === id)).filter(Boolean).map(f => poleHtml(a, f, hid)).filter(x => x !== ''); return L.length ? h`<h3 class="blok">${b.t}</h3><div class="pola">${L}</div>` : ''; }) : null, poleZ = bl ? null : FS.map(f => poleHtml(a, f, hid));
   wstaw(m, h`<div class="card"><h2>${a.year} · akt ${a.act} · ${nmOf(a)}</h2>
     <div class="muted">id <code>${a.id}</code> · dawne <code>${a.stary}</code> · źródła ${(a.model?.zrodla || []).join(', ')} · skan: ${D.scanFiles?.[scanOf(a)] || 'brak'}</div>
     <div class="bar"><i style="width:${pr}%"></i></div><div class="muted">Opracowanie pól: ${pr}%${s.done ? ' · AKT ZATWIERDZONY' : ''}</div>
@@ -27,7 +27,7 @@ function renderAkt(){ const m = $('main'), a = curAct(); if (!a) { wstaw(m, h`<d
     ${sygnalyHtml(a)}
     <div class="acts"><button class="p" id="bDone">${s.done ? 'Cofnij zatwierdzenie aktu' : 'Zatwierdź akt'}</button><button id="bAll" ${a.ai ? '' : 'disabled'}>Przyjmij zgodne pola</button><button id="bKreator">Kreator pól</button></div>
     ${skanPanel(a)}
-    <div class="pola">${pola}</div>
+    ${bl ? h`<div class="bloki" id="bloki">${pola}</div>` : h`<div class="pola">${poleZ}</div>`}
     ${hid.length ? h`<div class="muted hmk">∅ Puste (ukryte): ${hid.join(' · ')} <button class="sm" id="bShowMk">pokaż</button></div>` : ''}
     ${tekstSekcja(a)}</div>`);
   $('bDone').onclick = doDone; $('bAll').onclick = doAll; if ($('bShowMk')) $('bShowMk').onclick = () => { S.hideMk = false; save(); renderAkt(); };

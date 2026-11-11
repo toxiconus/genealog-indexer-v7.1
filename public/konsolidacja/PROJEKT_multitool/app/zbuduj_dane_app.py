@@ -1,8 +1,10 @@
 #!/usr/bin/env python3
 """Krok 3 planu: buduje app/dane_zgony.json (zgony z dane_pelne.json + to, czego model jeszcze nie niesie: tekst aktu, alts, tnotes, ROI pól, lubName, era, klucz pliku skanu, słowniki counts/fix).
 Źródła: prototyp/dane_pelne.json (python3 prototyp/zbuduj_dane.py --wszystko) oraz narzedzia/baza_zgonow_1797-1945.html (D.acts). Zapis zwarty: source = [numer wpisu w tabeli `zr`, wiersz]; unc tylko gdy prawda.
-Uruchom: python3 app/zbuduj_dane_app.py"""
+Uruchom: python3 app/zbuduj_dane_app.py   (zgony)  |  python3 app/zbuduj_dane_app.py --typy   (małżeństwa i chrzty: dane_malzenstwa.json, dane_chrzty.json)"""
 import json, os, sys
+if any(a in sys.argv for a in ('--typy', '--malzenstwa', '--chrzty')):   # krok 5: nowe pliki dane_malzenstwa.json / dane_chrzty.json; dane_zgony.json NIE jest ruszany
+    sys.dont_write_bytecode = True; sys.path.insert(0, os.path.dirname(os.path.abspath(__file__))); import zbuduj_dane_typy; zbuduj_dane_typy.main(sys.argv[1:]); sys.exit(0)
 H = os.path.dirname(os.path.abspath(__file__)); K = os.path.join(H, '..', '..')
 d = json.load(open(os.path.join(H, '..', 'prototyp', 'dane_pelne.json'), encoding='utf-8'))
 s = open(os.path.join(K, 'narzedzia', 'baza_zgonow_1797-1945.html'), encoding='utf-8').read(); i = s.index('const D = '); j = s.index(';\n', i)

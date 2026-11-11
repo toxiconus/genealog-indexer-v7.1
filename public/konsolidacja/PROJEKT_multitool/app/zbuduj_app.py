@@ -21,7 +21,14 @@ assert d.get('format', {}).get('nazwa') == 'multitool-dane', 'zły format danych
 d['suma'] = hashlib.sha256(raw).hexdigest()
 dane = json.dumps(d, ensure_ascii=False, separators=(',', ':')).replace('</', '<\\/').replace('\u2028', '\\u2028').replace('\u2029', '\\u2029')
 assert 'const DANE = /*DATA*/;' in t; t = t.replace('const DANE = /*DATA*/;', 'const DANE = ' + dane + ';')
-assert not re.search(r'/\*(MODULE|MODUL|JSON|DATA)[:*]', t), 'został niewstawiony znacznik'
+# krok 5: małżeństwa i chrzty (osobne pliki danych; budowa: python3 app/zbuduj_dane_app.py --typy)
+def wczytaj_typ(nazwa):
+    r = open(os.path.join(H, nazwa), 'rb').read(); x = json.loads(r.decode('utf-8')); assert x.get('format', {}).get('nazwa') == 'multitool-dane' and x.get('typ'), 'zły format danych: ' + nazwa; return x
+typy = [wczytaj_typ('dane_malzenstwa.json'), wczytaj_typ('dane_chrzty.json')]
+dane_typy = json.dumps(typy, ensure_ascii=False, separators=(',', ':')).replace('</', '<\\/').replace('\u2028', '\\u2028').replace('\u2029', '\\u2029')
+assert 'const DANE_TYPY = /*DATA_TYPY*/;' in t; t = t.replace('const DANE_TYPY = /*DATA_TYPY*/;', 'const DANE_TYPY = ' + dane_typy + ';')
+d['akty'] = d['akty'] + [x for y in typy for x in y['akty']]   # tylko do podsumowania poniżej
+assert not re.search(r'/\*(MODULE|MODUL|JSON|DATA|DATA_TYPY)[:*]', t), 'został niewstawiony znacznik'
 # szablon (poza modułami ui_) nie może sam używać innerHTML
 assert not re.search(r'\.innerHTML\s*=', open(os.path.join(H, 'szablon_app.html'), encoding='utf-8').read()), 'innerHTML w szablonie'
 open(os.path.join(H, 'multitool_v1.html'), 'w', encoding='utf-8').write(t)

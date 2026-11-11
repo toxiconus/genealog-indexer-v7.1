@@ -9,7 +9,7 @@ function widoczne(){ const q = fold(S.q || '').trim(); return D.acts.filter(a =>
   if (S.flt === 'ai' && !a.ai) return false; if (S.flt === 'todo' && (!a.ai || d)) return false; if (S.flt === 'done' && !d) return false; if (S.flt === 'lub' && a.ai) return false; if (S.flt === 'unc' && !(a.ai && FSet(a).some(f => isUnc(a, f.id)) && !d)) return false; if (S.flt === 'diff' && !(a.ai && hasDiff(a))) return false; if (S.flt === 'noscan' && scanOf(a)) return false;
   return !q || nmFold(a).includes(q); }); }
 const FSet = a => fieldsOf(a);
-function renderFiltry(){ const lata = navLata(), cen = navStulecia(), dek = S.cen && S.cen !== 'all' ? navDekady(S.cen) : [], F = [['all', 'Wszystkie'], ['ai', 'Z odczytem AI'], ['todo', 'Do weryfikacji'], ['diff', 'Konflikty'], ['unc', 'Niepewne'], ['noscan', 'Bez skanu'], ['done', 'Gotowe'], ['lub', 'Tylko indeks'], ['rejprot', 'Rejestr + protokoły']];
+function renderFiltry(){ const lata = navLata(), cen = navStulecia(), dek = S.cen && S.cen !== 'all' ? navDekady(S.cen) : [], F = [['all', 'Wszystkie'], ['ai', 'Z odczytem AI'], ['todo', 'Do weryfikacji'], ['diff', 'Konflikty'], ['unc', 'Niepewne'], ['noscan', 'Bez skanu'], ['done', 'Gotowe'], ['lub', 'Tylko indeks']].concat(D.typ === 'zgon' ? [['rejprot', 'Rejestr + protokoły']] : []);
   wstaw($('filtry'), h`<select id="fCen" aria-label="Stulecie"><option value="all">Wszystkie stulecia</option>${cen.map(c => h`<option value="${c}" ${String(S.cen) === String(c) ? raw('selected') : ''}>${c}–${c + 99}</option>`)}</select>
     <select id="fDec" aria-label="Dekada" ${dek.length ? '' : raw('disabled')}><option value="all">Wszystkie dekady</option>${dek.map(c => h`<option value="${c}" ${String(S.dec) === String(c) ? raw('selected') : ''}>${c}–${c + 9}</option>`)}</select>
     <select id="fRok" aria-label="Rok"><option value="all">Wszystkie lata</option>${lata.map(y => h`<option value="${y}" ${String(S.year) === String(y) ? raw('selected') : ''}>${y}</option>`)}</select>
@@ -41,9 +41,9 @@ async function menuMigawki(){ const L = await kopiaLista(); okno('Migawki (ostat
   $('oknoTresc').querySelectorAll('[data-prz]').forEach(b => b.onclick = async () => { if (!confirm('Przywrócić stan z migawki? (obecny stan też trafi do migawki)')) return; await kopiaPrzywroc(b.dataset.prz); $('okno').hidden = true; odswiez(); toast('Przywrócono migawkę'); }); }
 function menuKolejka(){ const K = stKolejka(); okno('Dane źródłowe się zmieniły (' + K.length + ')', K.length ? h`<table id="kolejka"><tr><th>Akt</th><th>Pole</th><th>Twoja wartość</th><th>Baza była</th><th>Baza jest</th><th></th></tr>${K.map(x => h`<tr><td>${AM[x.id]?.stary || x.id}</td><td>${x.f}</td><td>${x.v}</td><td>${x.baza}</td><td>${x.teraz}</td><td><button class="sm" data-kz="${x.id}|${x.f}">Zostaw moją</button> <button class="sm" data-kp="${x.id}|${x.f}">Przyjmij nową</button></td></tr>`)}</table>` : h`<p class="muted">Brak zmian: dane źródłowe zgodne z tym, co widziałeś.</p>`);
   $('oknoTresc').querySelectorAll('[data-kz],[data-kp]').forEach(b => b.onclick = () => { const [id, f] = (b.dataset.kz || b.dataset.kp).split('|'); stKolejkaRozstrzygnij(id, f, b.dataset.kz ? 'zostaw' : 'przyjmij'); menuKolejka(); renderAkt(); renderLista(); stWskaznik(); }); }
-function odswiez(){ HS = histSnap(S.acts); renderFiltry(); renderLista(); renderAkt(); stWskaznik(); stPasek(); const k = $('mKolejka'); if (k) k.textContent = 'Dane źródłowe się zmieniły (' + ST_KOLEJ.length + ')'; }
+function odswiez(){ typOdswiez(); HS = histSnap(S.acts); renderFiltry(); renderLista(); renderAkt(); stWskaznik(); stPasek(); const k = $('mKolejka'); if (k) k.textContent = 'Dane źródłowe się zmieniły (' + ST_KOLEJ.length + ')'; }
 function menuInit(){ const M = $('menu'); $('bMenu').onclick = () => { M.hidden = !M.hidden; };
-  $('mCsv').onclick = () => { dl('ZGONY_zweryfikowane.csv', csvText()); M.hidden = true; toast('Eksport CSV (nie zeruje wskaźnika kopii)'); };   // CSV nie zawiera historii ani decyzji → nie jest kopią
+  $('mCsv').onclick = () => { if (D.typ === 'zgon') dl('ZGONY_zweryfikowane.csv', csvText()); else dl(TYPY[D.typ].eksport.plik, typCsv(D.typ)); M.hidden = true; toast('Eksport CSV (nie zeruje wskaźnika kopii)'); };   // CSV nie zawiera historii ani decyzji → nie jest kopią
   $('mKopia').onclick = () => { dl('multitool_kopia_' + new Date().toISOString().slice(0, 10) + '.json', JSON.stringify(kopiaPelna()), 'application/json', false); kopiaZrobiona(); M.hidden = true; toast('Kopia pełna zapisana'); };
   $('kopiaInd').onclick = () => $('mKopia').click();
   $('mKopiaWczytaj').onclick = () => { M.hidden = true; $('fKopia').click(); }; $('fKopia').onchange = e => { if (e.target.files[0]) menuWczytajKopie(e.target.files[0]); e.target.value = ''; };
@@ -53,3 +53,13 @@ function menuInit(){ const M = $('menu'); $('bMenu').onclick = () => { M.hidden 
   $('mMigawki').onclick = () => { M.hidden = true; menuMigawki(); }; $('mKolejka').onclick = () => { M.hidden = true; menuKolejka(); };
   $('mAuto').onclick = async () => { M.hidden = true; try { toast(await kopiaAutoWybierz() ? 'Autozapis włączony' : 'Ta przeglądarka nie obsługuje autozapisu – użyj kopii pełnej'); } catch (e) { toast('Anulowano'); } };
   window.addEventListener('beforeunload', e => { if (ST_ZMIANY) { e.preventDefault(); e.returnValue = ''; } }); }
+
+// ---- wybór typu aktu (krok 5): zgony / małżeństwa / chrzty; D.acts = akty wybranego typu, AM i stan (IndexedDB) wspólne dla wszystkich typów
+function typInit(){ const sel = $('selTyp'); wstaw(sel, h`${D.typy.map(t => h`<option value="${t}">${NAZWY_TYPOW[t] || t} (${D.liczby[t] || 0})</option>`)}`);
+  sel.onchange = () => typUstaw(sel.value);
+  const t = D.typy.includes(S.typ) ? S.typ : 'zgon'; daneUstawTyp(D, t); S.typ = t; if (!AM[S.cur] || AM[S.cur].typ !== t) S.cur = (D.acts[0] || {}).id || null; }
+function typUstaw(t){ if (!D.typy.includes(t) || t === D.typ) return; S.curTyp = Object.assign({}, S.curTyp, {[D.typ]: S.cur}); daneUstawTyp(D, t); S.typ = t; S.year = 'all'; S.cen = 'all'; S.dec = 'all'; S.flt = 'all'; S.q = ''; LISTA_N = LISTA_PORCJA;
+  const k = S.curTyp && S.curTyp[t]; S.cur = AM[k] && AM[k].typ === t ? k : (D.acts[0] || {}).id || null; save(); odswiez(); }
+function typOdswiez(){ const sel = $('selTyp'); if (!sel) return; sel.value = D.typ; const tyt = $('tytul'); if (tyt) tyt.textContent = 'Multitool v1 · ' + ({zgon: 'akt zgonu', malzenstwo: 'akt małżeństwa', chrzest: 'akt chrztu'}[D.typ] || D.typ);
+  const z = D.typ === 'zgon'; $('mCsv').textContent = 'Eksport CSV (' + (NAZWY_TYPOW[D.typ] || D.typ).toLowerCase() + ')';
+  ['mImpDop', 'mImpZast', 'mMigr'].forEach(id => { const b = $(id); if (b) { b.disabled = !z; b.title = z ? '' : 'Import i migracja CSV dotyczą na razie tylko zgonów (małżeństwa i urodzenia nie mają zatwierdzeń do migracji)'; } }); }

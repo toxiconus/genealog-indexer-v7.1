@@ -1,6 +1,6 @@
 <!doctype html>
 <html lang="pl"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Multitool v1 – akt zgonu</title>
+<title>Multitool v1 – akty</title>
 <style>
 :root{--bg:#f6f4ef;--card:#fff;--ink:#22262b;--mut:#687079;--line:#d9d5cb;--acc:#2f5d8a;--ok:#2e7d4f;--warn:#a86500;--err:#b3261e}
 @media (prefers-color-scheme:dark){:root{--bg:#16181b;--card:#1f2226;--ink:#e6e3dc;--mut:#9aa1a9;--line:#353a40;--acc:#7fb0e0;--ok:#6cc08b;--warn:#e0a84a;--err:#ef8a80}}
@@ -20,7 +20,7 @@ input,select,textarea{padding:5px 8px;border:1px solid var(--line);border-radius
 .card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:14px}.muted{color:var(--mut);font-size:13px}code{font-size:12px;word-break:break-all}
 .bar{height:5px;background:var(--line);border-radius:3px;margin:6px 0}.bar i{display:block;height:100%;background:var(--ok);border-radius:3px}
 .warn{border-left:3px solid var(--warn);padding:4px 10px;margin:8px 0;font-size:13px}.err{color:var(--err)}.acts{display:flex;flex-wrap:wrap;gap:8px;margin:10px 0}
-.pola{display:grid;grid-template-columns:1fr;gap:8px}.pole{border:1px solid var(--line);border-radius:8px;padding:8px}.pole.ok{border-color:var(--ok)}.pole.un{border-color:var(--warn)}.pole.df{border-color:var(--err)}
+.blok{margin:14px 0 4px;font-size:14px;color:var(--mut);border-bottom:1px solid var(--line)}.pola{display:grid;grid-template-columns:1fr;gap:8px}.pole{border:1px solid var(--line);border-radius:8px;padding:8px}.pole.ok{border-color:var(--ok)}.pole.un{border-color:var(--warn)}.pole.df{border-color:var(--err)}
 .pole label{display:block;font-size:12px;color:var(--mut)}.pole input{width:100%}.chips{display:flex;flex-wrap:wrap;gap:4px;margin-top:4px;align-items:center}
 .chip{padding:1px 8px;font-size:12px;border-radius:12px}.bdg{font-size:11px;border:1px solid var(--line);border-radius:10px;padding:0 6px;color:var(--mut)}.bdg.ok{color:var(--ok);border-color:var(--ok)}.bdg.un{color:var(--warn);border-color:var(--warn)}
 #menu{position:absolute;right:16px;top:44px;z-index:9;background:var(--card);border:1px solid var(--line);border-radius:8px;padding:6px;display:flex;flex-direction:column;gap:4px;min-width:240px}#menu[hidden]{display:none}
@@ -32,7 +32,7 @@ table{border-collapse:collapse;width:100%;font-size:13px}td,th{border-bottom:1px
 .pick{display:flex;flex-wrap:wrap;gap:6px;align-items:center;margin-top:4px}.pick input[type=number]{width:90px}details.skan>summary,details.txt>summary,details.kal>summary{cursor:pointer}
 .tpodglad{white-space:pre-wrap;border:1px solid var(--line);border-radius:6px;padding:8px;margin-top:6px}.mq{background:rgba(224,168,74,.35)}.mr{background:rgba(239,138,128,.35)}.mg{background:rgba(127,176,224,.3)}.sugw{margin:4px 0}
 </style></head><body>
-<header><h1>Multitool v1 · akt zgonu</h1><span class="muted" id="prog"></span><button class="ind" id="kopiaInd" title="Zrób kopię pełną">decyzji i zmian bez kopii: 0</button><span style="flex:1"></span><button id="bMenu">Menu ▾</button>
+<header><h1 id="tytul">Multitool v1 · akt zgonu</h1><select id="selTyp" aria-label="Typ aktu" title="Typ aktu"></select><span class="muted" id="prog"></span><button class="ind" id="kopiaInd" title="Zrób kopię pełną">decyzji i zmian bez kopii: 0</button><span style="flex:1"></span><button id="bMenu">Menu ▾</button>
 <div id="menu" hidden><button id="mCsv">Eksport CSV (zgony)</button><button id="mKopia">Kopia pełna (JSON)</button><button id="mKopiaWczytaj">Wczytaj kopię (JSON)…</button><button id="mImpDop">Import CSV zatwierdzeń (dopisz)…</button><button id="mImpZast">Import CSV zatwierdzeń (zastąp)…</button><button id="mMigawki">Migawki / przywróć…</button><button id="mKolejka">Dane źródłowe się zmieniły (0)</button><button id="mMigr">Migracja zgonów z CSV…</button><button id="mAuto">Autozapis do pliku…</button></div></header>
 <div id="pasekStan" hidden></div><div id="przyp" hidden></div>
 <div class="wrap"><div class="col"><div id="filtry"></div><div id="lista"></div></div><div class="col" id="main"></div></div>
@@ -46,7 +46,8 @@ table{border-collapse:collapse;width:100%;font-size:13px}td,th{border-bottom:1px
 /*MODUL:dane_adapter*/
 let GOTOWE = false;
 const DANE = /*DATA*/;
-const D = daneNaD(DANE), AM = {}; D.acts.forEach(a => AM[a.id] = a);
+const DANE_TYPY = /*DATA_TYPY*/;   // krok 5: małżeństwa i chrzty (dane_malzenstwa.json, dane_chrzty.json)
+const D = daneNaD(DANE, DANE_TYPY), AM = {}; D.wszystkie.forEach(a => AM[a.id] = a);
 const FIELDS = D.fields.filter(f => f.id !== 'death_time');
 let S = stPusty();
 const save = () => { histCommit(); stZapisz(); if (typeof stWskaznik === 'function') stWskaznik(); };
@@ -65,6 +66,6 @@ const save = () => { histCommit(); stZapisz(); if (typeof stWskaznik === 'functi
 (async () => {
   S = await stWczytaj(); normActs(); startMigracja(); startZatwierdzone(); stKolejka();
   HS = histSnap(S.acts); await stFlush(false);   // stan początkowy (migracja, zatwierdzone z danych) nie liczy się do „zmian bez kopii”
-  menuInit(); skanInit(); odswiez(); GOTOWE = true;
+  typInit(); menuInit(); skanInit(); odswiez(); GOTOWE = true;
 })().catch(e => { document.body.insertAdjacentText('afterbegin', 'Błąd startu: ' + e.message); });
 </script></body></html>

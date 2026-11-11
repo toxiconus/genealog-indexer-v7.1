@@ -2,7 +2,7 @@
    nawigacja stulecie → dekada → rok (pomocnik filtrów). HTML wstawiany wyłącznie przez h`…`/wstaw. */
 // ---- tryby tekstu: edycja | podgląd ([?] podświetlone) | sugestie (poprawki z zatwierdzonych pól + lista [?])
 const TM = a => (S.tmode === 'podglad' || S.tmode === 'sug') ? S.tmode : 'edycja';
-function sugLista(a){ const t = txtOf(a); return {q: qList(t), s: t ? textSugs(a, fieldsOf(a), t) : []}; }
+function sugLista(a){ const t = txtOf(a); return {q: qList(t), s: t && !nieZgon(a) ? textSugs(a, fieldsOf(a), t) : []}; }   // poprawki z pól tylko dla zgonów (silnik tekstu zna role zgonu)
 function tekstSekcja(a){ const t = txtOf(a), m = TM(a);
   const widok = m === 'edycja' ? h`<textarea id="tTxt" rows="8" data-txt="1">${t}</textarea>`
     : m === 'podglad' ? h`<div class="tpodglad" id="tPodglad">${t.split(/(\[[^\]]*\])/).map(x => /^\[[^\]]*\]$/.test(x) ? h`<span class="${/\?/.test(x) ? 'mq' : /nieczytel/i.test(x) ? 'mr' : 'mg'}">${x}</span>` : x)}</div>`
