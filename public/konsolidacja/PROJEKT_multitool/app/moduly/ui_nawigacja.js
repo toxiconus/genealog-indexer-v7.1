@@ -77,7 +77,7 @@ function narzRender(){ const m = $('main'), st0 = narzStat(), mot = motywOdczyt(
     ${kaf('Eksport', 'Pliki zapisują się w folderze pobierania przeglądarki.', [['mCsv', 'Eksport CSV (' + (NAZWY_TYPOW[D.typ] || D.typ).toLowerCase() + ')'], ['nHist', 'Historia zmian (CSV, ' + (S.hist || []).length + ' wpisów)'], ['mDecJson', 'Decyzje o osobach (JSON)'], ['mDecCsv', 'Decyzje o osobach (CSV)'], ['mRoi', 'ROI i ramki pól (JSON)'], ['nSkanyCsv', 'Adresy skanów (CSV)']])}
     <div class="card"><h3>Skany</h3><div class="muted">Aplikacja nie zawiera obrazów – pamięta nazwę pliku skanu i szuka jej w folderze wskazanym na tym komputerze. ${SK.folder ? 'Wybrany folder: ' + SK.folder + ' (' + SK.pliki.length + ' obrazów).' : 'Folder nie jest wybrany.'}</div>
       <div class="rtab"><table id="narzSkany"><tr><th>Typ</th><th>Aktów</th><th class="w">Z adresem skanu</th><th class="w">Znalezionych w folderze</th></tr>${D.typy.map(t => h`<tr><td>${NAZWY_TYPOW[t] || t}</td><td>${st0[t].n}</td><td>${st0[t].skan}</td><td>${SK.pliki.length ? st0[t].wFolderze : '—'}</td></tr>`)}</table></div>
-      <div class="acts"><button data-klik="mSkany">Wybierz folder skanów…</button></div></div>
+      <div class="acts"><button data-klik="mSkany">Wybierz folder skanów…</button><button data-klik="nSkanAkty" title="Wczytaj jeden skan, ustaw typ, rok i liczbę aktów na skanie – akty się dopiszą albo dobierze się skan do istniejących">Skan → akty (pojedynczy skan)…</button></div></div>
     ${kaf('Dane i kontrola', 'Kolejka pokazuje pola, w których dane źródłowe zmieniły się po Twojej decyzji.', [['mKolejka', 'Dane źródłowe się zmieniły (' + ST_KOLEJ.length + ')'], ['nRaport', 'Raport i kontrole →'], ['nNowy', 'Dodaj nowy akt…'], ['nSlow', 'Słowniczek do czytania aktów (łacina, rosyjski)…']])}
     <div class="card"><h3>Wygląd</h3><div class="muted">Motyw aplikacji (zapamiętany w tej przeglądarce).</div><div class="widok">${[['auto', 'Auto (wg systemu)'], ['light', 'Jasny'], ['dark', 'Ciemny']].map(([k, l]) => h`<button data-motyw="${k}" class="${mot === k ? 'on' : ''}">${l}</button>`)}</div></div>
     <div class="card" style="grid-column:1/-1"><h3>Skróty klawiszowe</h3><div class="skr">${SKROTY.map(([k, o]) => h`<span>${k.split(' / ').map((x, i) => h`${i ? ' / ' : ''}<kbd>${x}</kbd>`)}</span><span>${o}</span>`)}</div></div>
@@ -87,7 +87,7 @@ function narzRender(){ const m = $('main'), st0 = narzStat(), mot = motywOdczyt(
   m.querySelectorAll('[data-klik]').forEach(b => b.onclick = () => { const id = b.dataset.klik;
     if (id === 'nHist') { dl('multitool_historia_' + new Date().toISOString().slice(0, 10) + '.csv', histCsv(S.hist || [])); return toast('Zapisano historię zmian (CSV)'); }
     if (id === 'nSkanyCsv') { dl('multitool_adresy_skanow_' + new Date().toISOString().slice(0, 10) + '.csv', skanAdresyCsv()); return toast('Zapisano adresy skanów (CSV)'); }
-    if (id === 'nIndeks') return indeksOkno(); if (id === 'nSlow') return slowOkno();
+    if (id === 'nSkanAkty') return skanAktyWybierz(); if (id === 'nIndeks') return indeksOkno(); if (id === 'nSlow') return slowOkno();
     if (id === 'nRaport') return zaklUstaw('raport'); if (id === 'nNowy') return typeof nowyAktOkno === 'function' ? nowyAktOkno() : toast('Dodawanie aktów będzie dostępne w kolejnej wersji');
     const x = $(id); if (x) x.click(); if (id === 'mKopia') setTimeout(narzRender, 300); }); }
 

@@ -14,7 +14,7 @@ function skanBudujIndeks(lista){ const M = {};
       for (let n = +m[1]; n <= +m[2]; n++) { const k = rok + '|' + n; if (!(k in M)) M[k] = base; } } });
   return M; }
 const skanBase = p => String(p).split(/[\\/]/).pop().toLowerCase();
-function skanZnajdz(a){ const p = skanSciezka(a); if (!p || !SK.pliki.length) return null; const b = skanBase(p), seg = p.toLowerCase().split(/[\\/]/).reverse();
+function skanZnajdz(a){ const p = skanSciezka(a); if (!p || !SK.pliki.length) return null; const C0 = SK.pliki.filter(f => f.name.toLowerCase() === skanBase(p)); if (!C0.length) { const po = typeof skpZnajdzPoSumie === 'function' && skpZnajdzPoSumie(a); if (po) return po; } const b = skanBase(p), seg = p.toLowerCase().split(/[\\/]/).reverse();
   const C = SK.pliki.filter(f => f.name.toLowerCase() === b); if (!C.length) return null; if (C.length === 1) return C[0];
   const wsp = f => { const s = (f.webkitRelativePath || f.name).toLowerCase().split('/').reverse(); let n = 0; while (n < s.length && n < seg.length && s[n] === seg[n]) n++; return n; };
   return C.slice().sort((x, y) => wsp(y) - wsp(x))[0]; }
@@ -32,7 +32,7 @@ const skanZrodlo = a => S.acts[a.id]?.scan ? 'użytkownik' : a.file ? 'dane' : s
 function skanAdresyCsv(){ return ['typ;rok;nr;osoba;plik_skanu;zrodlo;id_aktu;id_dawne'].concat(D.wszystkie.filter(a => skanKlucz(a)).map(a => [NAZWY_TYPOW[a.typ] || a.typ, a.year, a.act, nmOf(a), skanSciezka(a), skanZrodlo(a), a.id, a.stary || ''].map(csvCell).join(';'))).join('\r\n') + '\r\n'; }
 function skanUrl(f){ const k = (f.webkitRelativePath || f.name) + '|' + f.size + '|' + f.lastModified; if (!SK.url[k]) SK.url[k] = URL.createObjectURL(f); return SK.url[k]; }
 function skanWybierzFolder(lista){ Object.values(SK.url).forEach(u => URL.revokeObjectURL(u)); SK.url = {}; SK.pliki = [...lista].filter(f => /\.(jpe?g|png|webp|gif|bmp|tiff?)$/i.test(f.name));
-  const w = lista[0]?.webkitRelativePath; SK.folder = w ? w.split('/')[0] : ''; SK.auto = skanBudujIndeks(SK.pliki); SK.kandCache = {}; SK.kandI = {}; SK.v.key = ''; return SK.pliki.length; }
+  const w = lista[0]?.webkitRelativePath; SK.folder = w ? w.split('/')[0] : ''; SK.auto = skanBudujIndeks(SK.pliki); SK.kandCache = {}; SK.kandI = {}; SK.v.key = ''; SK.hashMap = null; if (typeof skpHashIndeks === 'function') skpHashIndeks().then(n => { if (n) { const a = curAct(); if (a) skanWinRender(a); } }); return SK.pliki.length; }
 /* Obraz: obrót (co 90° + drobne prostowanie) i filtry ułatwiające odczyt starego pisma. Obrót pamiętany dla każdego pliku skanu, filtr – wspólny (S.skObraz), oba trwałe.
    Obrót jest nałożony na osobną warstwę (#skObrot) wokół środka podglądu; wskaźnik myszy jest „odkręcany” (skanOdkrec), więc przesuwanie, powiększanie i rysowanie ramek działają w układzie obrazu bez zmian. */
 const SK_FILTRY = [['', 'Oryginał'], ['szary', 'Odcienie szarości'], ['kontrast', 'Mocny kontrast'], ['nieb', 'Wyblakły brązowy atrament (kanał niebieski)'], ['czerw', 'Plamy i zacieki (kanał czerwony)'], ['neg', 'Negatyw'], ['prog', 'Czarno-białe (próg)']];
@@ -65,7 +65,7 @@ function skanPanel(a){ const sk = skanKlucz(a), sc = skanSciezka(a), kand = skan
       <span class="skwin-btn"><button class="sm" id="skHdr" title="Schowaj/pokaż górny pasek">▲ pasek</button><button class="sm" id="skDok" title="Przypnij z prawej / odepnij">${SK.plywajacy ? '⇱ przypnij' : '⇲ odepnij'}</button><button class="sm" id="skZwin" title="Zwiń/rozwiń">${SK.zwiniety ? '▸' : '▾'}</button><button class="sm" id="skSchowaj" title="Schowaj skan">✕</button></span></div>
     <div class="skwin-cialo" ${SK.zwiniety ? raw('hidden') : ''}>
     <div class="acts"><button id="skFolder" class="sm">Wybierz folder skanów…</button><span class="muted" id="skInfo">${SK.folder ? 'folder: ' + SK.folder + ' · ' + SK.pliki.length + ' obrazów' : ''}</span>
-      <button class="sm" id="skIn" title="Powiększ">＋</button><button class="sm" id="skOut" title="Pomniejsz">－</button><button class="sm" id="skFit" title="Dopasuj do obszaru aktu">Dopasuj</button><button class="sm" id="skSlow" title="Słowniczek: łacina, rosyjski, dawne zawody, choroby, daty">Słowniczek</button>
+      <button class="sm" id="skIn" title="Powiększ">＋</button><button class="sm" id="skOut" title="Pomniejsz">－</button><button class="sm" id="skFit" title="Dopasuj do obszaru aktu">Dopasuj</button><button class="sm" id="skAktyOkno" title="Dopisz lub dobierz akty z tego skanu; ustawienia folderu (typ, rok, ile aktów na skanie)">Skan → akty…</button><button class="sm" id="skSlow" title="Słowniczek: łacina, rosyjski, dawne zawody, choroby, daty">Słowniczek</button>
       <label class="muted">Rysuj: <select id="skTryb"><option value="">tylko podgląd</option><option value="roi" ${SK.tryb === 'roi' ? raw('selected') : ''}>obszar aktu (ROI)</option><option value="pole" ${SK.tryb === 'pole' ? raw('selected') : ''}>ramkę pola</option></select></label>
       <button class="sm" id="skRoiDel" ${S.acts[a.id]?.roi ? '' : raw('disabled')} title="Przywróć ROI z danych">Cofnij własny ROI</button></div>
     ${stan ? h`<div class="muted" id="skStan">${stan}</div>` : ''}
@@ -99,7 +99,7 @@ function skanOknoPodlacz(){ const W = $('skWin'), head = $('skHead'); if (!W || 
     const kon = () => { head.onpointermove = null; head.onpointerup = null; head.onpointercancel = null; }; head.onpointerup = kon; head.onpointercancel = kon; }; }
 function skanPodlacz(a){ if (!$('skFolder')) return;
   $('skFolder').onclick = () => $('fSkany').click(); $('skTryb').onchange = e => { SK.tryb = e.target.value; skanRysuj(); const t = $('skPole'); if (t) t.textContent = SK.tryb === 'pole' ? 'Kliknij pole formularza, potem narysuj ramkę na skanie.' : ''; };
-  $('skIn').onclick = () => skanZoom(1.3); $('skOut').onclick = () => skanZoom(1 / 1.3); $('skFit').onclick = () => skanDopasuj(roiOf(a)); if ($('skSlow')) $('skSlow').onclick = () => slowOkno();
+  $('skIn').onclick = () => skanZoom(1.3); $('skOut').onclick = () => skanZoom(1 / 1.3); $('skFit').onclick = () => skanDopasuj(roiOf(a)); if ($('skSlow')) $('skSlow').onclick = () => slowOkno(); $('skAktyOkno').onclick = () => { const pl = skanPlik(a); if (pl) skanAktyOkno(pl); else skanAktyWybierz(); };
   $('skRoiDel').onclick = () => { const s = st(a.id); delete s.roi; save(); keepScroll(); toast('Przywrócono ROI z danych'); };
   const kand = skanKandydat(a);
   if (kand) { const idz = d => { SK.kandI[a.id] = kand.i + d; SK.v.key = ''; skanWinRender(a); }; $('skKPrev').onclick = () => idz(-1); $('skKNext').onclick = () => idz(1);

@@ -1,0 +1,56 @@
+/* Test „Skan → akty”: pojedynczy skan, ustawienia folderu, dopisanie / dobranie aktów, następny numer, okładka, rozpoznanie po sumie kontrolnej.
+   Uruchom: node test/test_krok8_skan_akty.cjs   (wymaga zbudowanego app/multitool_v1.html) */
+const { chromium } = require('playwright'); const assert = require('assert'); const path = require('path');
+const APP = 'file://' + path.join(__dirname, '..', 'app', 'multitool_v1.html');
+const PNG = ['iVBORw0KGgoAAAANSUhEUgAAAAIAAAABCAIAAAB7QOjdAAAAD0lEQVR4nGM4ISd3Qk4OAAh3Agl9JFcwAAAAAElFTkSuQmCC', 'iVBORw0KGgoAAAANSUhEUgAAAAIAAAABCAIAAAB7QOjdAAAAD0lEQVR4nGOQOyEnd0IOAAcjAgkJkJn/AAAAAElFTkSuQmCC', 'iVBORw0KGgoAAAANSUhEUgAAAAIAAAABCAIAAAB7QOjdAAAAD0lEQVR4nGOQkzshJ3cCAAXPAgnT9vJeAAAAAElFTkSuQmCC'].map(x => Buffer.from(x, 'base64'));
+let ok = 0; const pass = m => { ok++; console.log('OK  ' + m); };
+(async () => {
+  const b = await chromium.launch(), ctx = await b.newContext({ viewport: { width: 1400, height: 900 } }), p = await ctx.newPage(); p.bledy = [];
+  p.on('pageerror', e => p.bledy.push(e.message)); p.on('console', m => m.type() === 'error' && p.bledy.push(m.text())); p.on('dialog', d => d.accept());
+  await p.goto(APP); await p.waitForFunction('GOTOWE === true', null, { timeout: 60000 });
+  const wczytaj = async (nazwa, buf) => { const [fc] = await Promise.all([p.waitForEvent('filechooser'), p.click('[data-klik="nSkanAkty"]')]); await fc.setFiles({ name: nazwa, mimeType: 'image/png', buffer: buf }); await p.waitForSelector('#spTyp'); };
+  await p.click('#zNarz'); const nm = await p.evaluate(() => { const L = D.wszystkie.filter(a => a.typ === 'malzenstwo' && !a.parafia), rok = +L[0].year, N = L.filter(a => +a.year === rok).map(a => parseInt(a.act, 10)).filter(Number.isFinite), m = Math.max(...N); return { rok, m, ile: D.wszystkie.length, ma: !!L.find(a => +a.year === rok && parseInt(a.act, 10) === m), ilosc: L.length }; });
+  // 1. skan nr 2 (nr 1 to okładka): typ i rok odgadnięte z nazwy folderu, nr skanu z nazwy
+  await wczytaj('malzenstwa_1944_0002.png', PNG[0]);
+  assert.strictEqual(await p.inputValue('#spTyp'), 'malzenstwo'); assert.strictEqual(await p.inputValue('#spRok'), '1944'); assert.strictEqual(await p.inputValue('#spNrP'), '2');
+  pass('wczytanie pojedynczego skanu: typ aktu, rok i numer skanu odgadnięte z nazwy pliku');
+  // 2. plan: pierwszy akt istnieje (dobierze skan), drugi jest nowy (dopisze)
+  await p.fill('#spRok', String(nm.rok)); await p.fill('#spOd', String(nm.m)); await p.fill('#spIle', '2');
+  const st1 = await p.evaluate(() => [...document.querySelectorAll('#spTab tr[data-stan]')].map(r => r.dataset.stan)); assert.strictEqual(st1.length, 2); assert.strictEqual(st1[1], 'nowy'); assert(['dobierz', 'inny'].includes(st1[0]), 'istniejący akt: ' + st1[0]);
+  pass('plan skanu: istniejący akt dostaje skan, brakujący jest dopisywany (' + st1.join(', ') + ')');
+  // 3. zastosowanie: skan przypisany, nowy akt z numerem, profil folderu zapamiętany
+  const przed = await p.evaluate(() => D.wszystkie.length); await p.fill('#spPierw', ''); await p.click('#spZastosuj'); await p.waitForFunction(() => document.getElementById('okno').hidden === true);
+  const po = await p.evaluate(({ rok, m }) => { const a1 = D.wszystkie.find(a => a.typ === 'malzenstwo' && !a.parafia && +a.year === rok && parseInt(a.act, 10) === m), a2 = D.wszystkie.find(a => a.typ === 'malzenstwo' && +a.year === rok && String(a.act) === String(m + 1)); return { n: D.wszystkie.length, s1: a1 && skanKlucz(a1), s2: a2 && S.acts[a2.id]?.scan, nowy: a2 && !!a2.nowy, h: a2 && S.acts[a2.id]?.scanH, prof: S.skProf['malzenstwa_1944'], cur: S.cur, id2: a2 && a2.id }; }, nm);
+  assert.strictEqual(po.n, przed + 1); if (st1[0] === 'dobierz') assert.strictEqual(po.s1, 'malzenstwa_1944_0002.png'); assert.strictEqual(po.s2, 'malzenstwa_1944_0002.png'); assert(po.nowy);
+  assert(/^[0-9a-f]{16}$/.test(po.h), 'suma kontrolna: ' + po.h); assert.strictEqual(po.prof.pierwszy, 2); assert.strictEqual(po.prof.ostPlik, 2); assert.strictEqual(po.prof.ostNr, nm.m + 1); assert(po.cur);
+  pass('zastosowanie: nowy akt dopisany, skan i suma kontrolna zapisane, ustawienia folderu zapamiętane (pierwszy skan z aktami = 2)');
+  // 4. następny skan tego samego folderu: numer pierwszego aktu liczy się sam, liczba aktów z profilu
+  await p.click('#zNarz'); await wczytaj('malzenstwa_1944_0003.png', PNG[1]);
+  assert.strictEqual(await p.inputValue('#spOd'), String(nm.m + 2)); assert.strictEqual(await p.inputValue('#spIle'), '2'); assert.strictEqual(await p.inputValue('#spPierw'), '2'); assert.strictEqual(await p.inputValue('#spTyp'), 'malzenstwo');
+  pass('następny skan folderu: numer pierwszego aktu = ostatni + 1, format i liczba aktów z ustawień folderu');
+  // 5. skan przed pierwszym skanem z aktami (okładka) – 0 aktów; pominięcie nie cofa licznika
+  await p.click('#oknoX'); await p.click('#zNarz'); await wczytaj('malzenstwa_1944_0001.png', PNG[2]);
+  assert.strictEqual(await p.inputValue('#spIle'), '0'); assert.strictEqual(await p.locator('#spPusty').count(), 1); const nA = await p.evaluate(() => D.wszystkie.length);
+  await p.click('#spPomin'); await p.waitForTimeout(300); assert.strictEqual(await p.evaluate(() => D.wszystkie.length), nA); const pr = await p.evaluate(() => S.skProf['malzenstwa_1944']); assert.strictEqual(pr.ostPlik, 2); assert.strictEqual(pr.ostNr, nm.m + 1);
+  pass('okładka (skan przed pierwszym skanem z aktami): 0 aktów, nic się nie dopisuje, licznik folderu bez zmian');
+  // 6. ten sam skan jeszcze raz: akty z tym skanem są podpowiedziane, plan „ten skan już przypisany”, nic się nie dubluje
+  await p.click('#oknoX'); await p.click('#zNarz'); await wczytaj('malzenstwa_1944_0002.png', PNG[0]);
+  assert.strictEqual(await p.inputValue('#spOd'), String(nm.m)); const st2 = await p.evaluate(() => [...document.querySelectorAll('#spTab tr[data-stan]')].map(r => r.dataset.stan)); assert(st2.every(x => x === 'ten-sam' || x === 'dobierz'), st2.join());
+  const n2 = await p.evaluate(() => D.wszystkie.length); await p.click('#spZastosuj'); await p.waitForFunction(() => document.getElementById('okno').hidden === true); assert.strictEqual(await p.evaluate(() => D.wszystkie.length), n2);
+  pass('ten sam skan ponownie: podpowiada swoje akty i niczego nie dubluje');
+  // 7. konflikt: inny skan przy istniejącym akcie – domyślnie zostaje, „zastąp” zmienia
+  await p.click('#zNarz'); await wczytaj('malzenstwa_1944_0003.png', PNG[1]); await p.fill('#spOd', String(nm.m)); await p.fill('#spIle', '1');
+  assert.strictEqual(await p.evaluate(() => document.querySelector('#spTab tr[data-stan]').dataset.stan), 'inny'); await p.click('#spZastosuj'); await p.waitForFunction(() => document.getElementById('okno').hidden === true);
+  const s0 = await p.evaluate(nm0 => { const a = D.wszystkie.find(a => a.typ === 'malzenstwo' && !a.parafia && +a.year === nm0.rok && parseInt(a.act, 10) === nm0.m); return skanKlucz(a); }, nm); assert.notStrictEqual(s0, 'malzenstwa_1944_0003.png');
+  await p.click('#zNarz'); await wczytaj('malzenstwa_1944_0003.png', PNG[1]); await p.fill('#spOd', String(nm.m)); await p.fill('#spIle', '1'); await p.check('[data-zast]'); await p.click('#spZastosuj'); await p.waitForFunction(() => document.getElementById('okno').hidden === true);
+  assert.strictEqual(await p.evaluate(nm0 => { const a = D.wszystkie.find(a => a.typ === 'malzenstwo' && !a.parafia && +a.year === nm0.rok && parseInt(a.act, 10) === nm0.m); return skanKlucz(a); }, nm), 'malzenstwa_1944_0003.png');
+  pass('akt z innym skanem: domyślnie bez zmian, po zaznaczeniu „zastąp skan” skan się zmienia');
+  // 8. rozpoznanie po sumie kontrolnej przy zmienionej nazwie pliku
+  const r = await p.evaluate(async buf => { const bytes = Uint8Array.from(atob(buf), c => c.charCodeAt(0)), f = new File([bytes], 'zupelnie_inna_nazwa.png', { type: 'image/png' }); const id = Object.keys(S.acts).find(k => S.acts[k].scanH && S.acts[k].scan === 'malzenstwa_1944_0003.png'); skanWybierzFolder([f]); await new Promise(r => setTimeout(r, 500)); const a = AM[id]; const z = skanZnajdz(a); return { id: !!id, z: z && z.name }; }, PNG[1].toString('base64'));
+  assert(r.id, 'brak aktu z sumą'); assert.strictEqual(r.z, 'zupelnie_inna_nazwa.png'); pass('skan zmienionej nazwy rozpoznany po sumie kontrolnej zawartości');
+  // 9. zapis trwały: po przeładowaniu zostają nowy akt, skan i profil folderu
+  await p.evaluate(() => save()); await p.waitForTimeout(800); await p.reload(); await p.waitForFunction('GOTOWE === true', null, { timeout: 60000 });
+  const tr = await p.evaluate(nm0 => ({ prof: !!(S.skProf && S.skProf['malzenstwa_1944']), nowy: !!D.wszystkie.find(a => a.nowy && a.typ === 'malzenstwo' && +a.year === nm0.rok && String(a.act) === String(nm0.m + 1)) }), nm); assert(tr.prof && tr.nowy, JSON.stringify(tr));
+  pass('po przeładowaniu: ustawienia folderu i dopisany akt są zachowane');
+  assert.deepStrictEqual(p.bledy, [], 'błędy strony: ' + p.bledy.join(' | ')); pass('bez błędów w konsoli'); await b.close(); console.log('\nWSZYSTKO OK (' + ok + ' kontroli)');
+})().catch(e => { console.error('BŁĄD:', e.message); process.exit(1); });

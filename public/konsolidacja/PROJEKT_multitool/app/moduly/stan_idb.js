@@ -7,7 +7,7 @@ const ST_NAZWA = 'multitool', ST_WER = 2, ST_SKLADY = ['kv', 'pola', 'teksty', '
 const ST_LICZONE = ['pola', 'teksty', 'akty', 'decyzje'];   // zapisy, które zwiększają licznik „zmian bez kopii”
 let ST_DODATKI = [];   // dodatkowe zapisy [magazyn, klucz, wartość] dołączane do następnej transakcji stFlush (np. raport migracji)
 let ST_TRYB = 'idb', ST_DBP = null, ST_PODPIS = {}, ST_BAZA = {}, ST_HIST_N = 0, ST_T = null, ST_ZMIANY = 0, ST_OSTATNIA = null, ST_PERSIST = false, ST_BLAD = '', ST_KOLEJ = [];
-const ST_UST = ['year', 'cen', 'dec', 'flt', 'hideOk', 'hideDoneActs', 'noroi', 'onlyScan', 'hideMk', 'cur', 'tmode', 'tfs', 'q', 'repIgn', 'typ', 'sporne', 'miniOk', 'xOpen', 'par', 'skObraz', 'skObrazOpen'];
+const ST_UST = ['year', 'cen', 'dec', 'flt', 'hideOk', 'hideDoneActs', 'noroi', 'onlyScan', 'hideMk', 'cur', 'tmode', 'tfs', 'q', 'repIgn', 'typ', 'sporne', 'miniOk', 'xOpen', 'par', 'skObraz', 'skObrazOpen', 'skProf'];
 function stOtworz(){ if (ST_DBP) return ST_DBP; ST_DBP = new Promise((ok, no) => { let r; try { r = indexedDB.open(ST_NAZWA, ST_WER); } catch (e) { return no(e); }
   r.onupgradeneeded = () => { ST_SKLADY.forEach(n => { if (!r.result.objectStoreNames.contains(n)) r.result.createObjectStore(n); }); };
   r.onsuccess = () => ok(r.result); r.onerror = () => no(r.error); r.onblocked = () => no(new Error('baza zablokowana przez inną kartę')); }); return ST_DBP; }
@@ -21,7 +21,7 @@ function stRekordy(){ const R = {pola: {}, teksty: {}, akty: {}, decyzje: {}, hi
   for (const id in S.acts) { const a = S.acts[id] || {}, ak = {};
     for (const f in (a.f || {})) { const k = id + '|' + f, x = Object.assign({}, a.f[f]); if (!('baza' in x)) { if (!(k in ST_BAZA) && AM[id]) ST_BAZA[k] = stBazaWart(AM[id], f); if (k in ST_BAZA) x.baza = ST_BAZA[k]; } R.pola[k] = x; }
     if (a.text != null) R.teksty[id] = String(a.text);
-    ['done', 'scan', 'roi', 'par', 'hid', 'notesOrg', 'lubAck', 'qs', 'fr'].forEach(p => { if (a[p] !== undefined && !(p === 'done' && !a.done)) ak[p] = a[p]; }); if (Object.keys(ak).length) R.akty[id] = ak; }
+    ['done', 'scan', 'scanH', 'roi', 'par', 'hid', 'notesOrg', 'lubAck', 'qs', 'fr'].forEach(p => { if (a[p] !== undefined && !(p === 'done' && !a.done)) ak[p] = a[p]; }); if (Object.keys(ak).length) R.akty[id] = ak; }
   (S.hist || []).forEach(e => R.historia[e.n] = e); (S.decyz || []).forEach(d => R.decyzje[d.n] = d); R.slowniki.fixes = S.fixes || {}; if ((S.nowe || []).length) R.slowniki.noweAkty = S.nowe;
   const u = {}; ST_UST.forEach(k => { if (S[k] !== undefined) u[k] = S[k]; }); R.meta.ustawienia = u; R.meta.seeded = S.seeded || {}; R.meta.histN = S.histN || 0; return R; }
 const stPodpis = v => JSON.stringify(v);

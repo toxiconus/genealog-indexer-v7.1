@@ -45,3 +45,10 @@ Enter (następne pole), Alt+J / Alt+K (następny / poprzedni akt), Ctrl+Enter (n
 - Drzewo: brak eksportu GED (krok 11 planu) i brak rysunku wielu pokoleń bez decyzji „scal” – drzewo wydłuża się dopiero po scaleniu wystąpień w zakładce Osoby.
 - Raport „Wiek i daty” dla osób scalonych jest pusty, dopóki nie ma decyzji „scal”.
 - Ocena próbki 50 par (`test/PROBKA_50_par_do_oceny.csv`) nadal czeka na użytkownika.
+
+## Skan → akty (pojedynczy skan, ustawienia folderu)
+- Narzędzia → Skany → „Skan → akty (pojedynczy skan)…” albo przycisk „Skan → akty…” w oknie skanu (bieżąca strona).
+- Folder skanu = nazwa folderu albo wspólny początek nazw plików (`urodzenia_1890-1897_0150.jpg` → `urodzenia_1890-1897`). Dla folderu zapamiętują się: typ aktu (format pól), rok, ile aktów zwykle jest na skanie, numer pierwszego skanu z aktami (wcześniejsze to okładka/karta filmu), ostatni obsłużony skan i numer aktu (stąd domyślny numer pierwszego aktu na następnym skanie). Zapis: `S.skProf` (IndexedDB, kopia pełna).
+- Plan skanu: brak aktu w bazie → dopisze nowy (pusty, ze skanem); akt bez skanu → dobierze skan; akt z innym skanem → bez zmian, chyba że zaznaczono „zastąp skan”. Skan bez aktów (okładka) – „Ten skan bez aktów, następny”.
+- Suma kontrolna (SHA-256, 16 znaków) zapisuje się przy aktach (`scanH`; IndexedDB i kopia pełna). Skan o zmienionej nazwie rozpozna się po zawartości po wybraniu folderu (indeks sum liczony w tle). Zmieni ją dopiero ponowny zapis obrazu (przeskalowanie, kompresja).
+- Test: `test/test_krok8_skan_akty.cjs` (10 kontroli).
