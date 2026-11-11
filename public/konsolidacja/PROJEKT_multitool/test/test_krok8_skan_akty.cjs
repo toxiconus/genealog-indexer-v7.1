@@ -60,6 +60,13 @@ let ok = 0; const pass = m => { ok++; console.log('OK  ' + m); };
   await p.click('#skAktyOkno'); await p.waitForSelector('#spTab'); assert.strictEqual(await p.evaluate(() => document.querySelector('#spTab tr[data-stan]').dataset.stan), 'inny'); assert.strictEqual(await p.locator('[data-zast]').isChecked(), true);
   await p.click('#spZastosuj'); await p.waitForFunction(() => document.getElementById('okno').hidden === true); assert.strictEqual(await p.evaluate(id => skanKlucz(AM[id]), idA), 'IMG_77.png');
   pass('plik o innej nazwie: skan z bazy, którego nie ma w wczytanych plikach, zastąpiony wczytanym (zaznaczone domyślnie)');
+  // 8d. plik z samych cyfr („001.jpg”): typ i rok odgadywane z wpisanej nazwy folderu; plan pokazuje nazwę aktu, otwiera się akt wskazanego typu (nie pierwszy zgon)
+  await p.click('#zNarz'); await p.evaluate(() => typUstaw('zgon')); await wczytaj('001.jpg', PNG[1]); assert.strictEqual(await p.inputValue('#spKlucz'), '(pliki numerowane)'); assert.strictEqual(await p.inputValue('#spTyp'), 'zgon');
+  const cel = await p.evaluate(() => { const a = D.wszystkie.find(a => a.typ === 'malzenstwo' && !a.parafia && !a.nowy && +a.year > 1800); return { id: a.id, rok: String(a.year), nr: String(parseInt(a.act, 10)) }; });
+  await p.fill('#spKlucz', 'Małżeństwa ' + cel.rok + '-' + (+cel.rok + 1) + ' USC Szastarka'); assert.strictEqual(await p.inputValue('#spTyp'), 'malzenstwo'); assert.strictEqual(await p.inputValue('#spRok'), cel.rok);
+  await p.fill('#spOd', cel.nr); await p.fill('#spIle', '1'); assert((await p.locator('#spTab tbody tr[data-stan] td').nth(1).innerText()).length > 1, 'plan bez nazwy aktu');
+  await p.click('#spZastosuj'); await p.waitForFunction(() => document.getElementById('okno').hidden === true); const po8 = await p.evaluate(() => ({ typ: D.typ, cur: S.cur, nazwa: S.skProf && S.skProfNum })); assert.strictEqual(po8.cur, cel.id); assert.strictEqual(po8.typ, 'malzenstwo'); assert(po8.nazwa && /Małżeństwa/.test(po8.nazwa));
+  pass('plik „001.jpg”: typ i rok z wpisanej nazwy folderu, plan z nazwą aktu, po zastosowaniu otwiera się wskazany akt (nie pierwszy zgon)');
   // 9. zapis trwały: po przeładowaniu zostają nowy akt, skan i profil folderu
   await p.evaluate(() => save()); await p.waitForTimeout(800); await p.reload(); await p.waitForFunction('GOTOWE === true', null, { timeout: 60000 });
   const tr = await p.evaluate(nm0 => ({ prof: !!(S.skProf && S.skProf['malzenstwa_1944']), nowy: !!D.wszystkie.find(a => a.nowy && a.typ === 'malzenstwo' && +a.year === nm0.rok && String(a.act) === String(nm0.m + 1)) }), nm); assert(tr.prof && tr.nowy, JSON.stringify(tr));

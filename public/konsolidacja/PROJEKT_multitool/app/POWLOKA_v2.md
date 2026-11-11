@@ -54,3 +54,4 @@ Enter (następne pole), Alt+J / Alt+K (następny / poprzedni akt), Ctrl+Enter (n
 - Test: `test/test_krok8_skan_akty.cjs` (10 kontroli).
 - Nazwa skanu w danych bywa bez rozszerzenia („M1944_01”), a plik ma rozszerzenie – porównanie nazw pomija rozszerzenie (`skanStem`).
 - Okno otwarte z karty aktu dotyczy oglądanego aktu (typ, rok, numer). Skan z bazy, którego nie ma w wczytanych plikach, jest domyślnie zastępowany wczytanym (pole „zastąp skan” zaznaczone, można odznaczyć; przypisanie cofa „Zmień / usuń przypisanie”). Test: 12 kontroli.
+- Pliki z samych cyfr („001.jpg”) nie mówią nic o folderze (przeglądarka nie podaje ścieżki): okno ma pole „Nazwa folderu / zbioru”, z którego odgaduje typ i rok (np. „Małżeństwa 1944-1945 USC Szastarka”); wspólny zbiór `S.skProfNum`. Plan pokazuje typ, rok, numer i nazwę aktu z bazy, a po zastosowaniu otwiera akt o numerze pierwszego aktu na skanie. Test: 13 kontroli.

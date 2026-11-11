@@ -6,7 +6,7 @@
 const SKP_MAX = 12;
 // klucz folderu: nazwa folderu (gdy przeglądarka ją zna) albo nazwa pliku bez numeru na końcu („urodzenia_1890-1897_0150.jpg” → „urodzenia_1890-1897”)
 function skpKlucz(f){ const rel = (f && f.webkitRelativePath) || ''; if (rel.includes('/')) { const s = rel.split('/'); return s[s.length - 2]; }
-  const n = String((f && f.name) || '').replace(/\.[^.]+$/, '').replace(/[\s_\-]*\d+$/, ''); return n || String((f && f.name) || '?'); }
+  const n = String((f && f.name) || '').replace(/\.[^.]+$/, '').replace(/[\s_\-]*\d+$/, ''); return n; }   // pusty dla nazw z samych cyfr („001.jpg”) – wtedy okno używa wspólnego zbioru i nazwy wpisanej przez użytkownika
 // numer skanu = ostatni ciąg cyfr w nazwie pliku („…_0150.jpg” → 150); null, gdy nazwa nie ma cyfr
 function skpNumerPliku(nazwa){ const m = String(nazwa).replace(/\.[^.]+$/, '').match(/(\d+)\D*$/); return m ? parseInt(m[1], 10) : null; }
 function skpTyp(klucz){ const k = String(klucz).toLowerCase(); if (/zgon|zmar|mort|obit/.test(k)) return 'zgon'; if (/ma[łl]|[śs]lub|za[śs]lub|nupt/.test(k)) return 'malzenstwo'; if (/urodz|chrz|chrzt|ochrz|bapt/.test(k)) return 'chrzest'; return ''; }
