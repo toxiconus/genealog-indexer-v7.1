@@ -6,10 +6,19 @@ import os, re, sys, json, hashlib
 H = os.path.dirname(os.path.abspath(__file__)); K = os.path.join(H, '..', '..')
 sys.path.insert(0, os.path.join(K, 'wspolne')); sys.dont_write_bytecode = True
 from zbuduj import inline
-WYMAGANE = {'MODULE': ['tekst', 'plik', 'historia'], 'MODUL': ['raport_zgonow', 'dane_adapter', 'akt_zgon', 'typy_aktow', 'stan_idb', 'kopie', 'import_csv', 'migracja_zgony', 'ui_html', 'ui_akt', 'ui_skan', 'ui_narzedzia', 'ui_migracja', 'ui_powloka']}
+WYMAGANE = {'MODULE': ['tekst', 'plik', 'historia', 'norm', 'norm_zapis'], 'MODUL0': ['wystapienia', 'identity', 'decyzje'], 'MODUL': ['raport_zgonow', 'dane_adapter', 'akt_zgon', 'typy_aktow', 'stan_idb', 'kopie', 'import_csv', 'migracja_zgony', 'osoby_rdzen', 'ui_html', 'ui_akt', 'ui_skan', 'ui_narzedzia', 'ui_migracja', 'ui_osoby', 'ui_powloka']}
 t = open(os.path.join(H, 'szablon_app.html'), encoding='utf-8').read()
 for typ, L in WYMAGANE.items():
     for m in L: assert '/*%s:%s*/' % (typ, m) in t, 'szablon nie wstawia modułu ' + m
+# krok 6: moduły wspólne z ../moduly (/*MODUL0:x*/) i kod Workera (/*SRC:osoby*/ = te same moduły jako tekst; Worker powstaje z Blob w czasie działania, więc plik zostaje jeden i działa offline)
+def modul0(n):
+    p = os.path.join(H, '..', 'moduly', n + '.js'); x = open(p, encoding='utf-8').read()
+    if re.search(r'\.(innerHTML|outerHTML)\s*=|insertAdjacentHTML\(|document\.|window\.', x): sys.exit('DOM w module wspólnym: ' + n)
+    return x
+SRC_OSOBY = inline('/*MODULE:tekst*/\n/*MODULE:raport*/\n/*MODULE:norm*/\n/*MODULE:norm_zapis*/\n') + ''.join(modul0(n) + '\n' for n in ['wystapienia', 'identity', 'decyzje']) + open(os.path.join(H, 'moduly', 'osoby_rdzen.js'), encoding='utf-8').read()
+assert '</script' not in SRC_OSOBY.lower() and '<!--' not in SRC_OSOBY, 'kod Workera zawiera sekwencję niebezpieczną dla znacznika script'
+assert '/*SRC:osoby*/' in t; t = t.replace('/*SRC:osoby*/', SRC_OSOBY.replace('\u2028', '\\u2028').replace('\u2029', '\\u2029'))
+t = re.sub(r'/\*MODUL0:(\w+)\*/', lambda m: modul0(m.group(1)), t)
 t = inline(t)
 def modul(m):
     p = os.path.join(H, 'moduly', m.group(1) + '.js'); s = open(p, encoding='utf-8').read()

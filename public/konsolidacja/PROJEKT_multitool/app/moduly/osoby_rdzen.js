@@ -162,5 +162,6 @@ function osObsluz(st, m, wyslij){
   if (m.t === 'karta') { const lim = m.limit || 120, lista = [], ile = {}; (m.ids || []).forEach(id => { const L = osKandydaci(st.E, id); ile[id] = L.length; L.slice(0, lim).forEach(u => lista.push(u)); }); return wyslij({t: 'karta', req: m.req, lista, ile}); }
   if (m.t === 'porownaj') { if (!st.E.P[m.a] || !st.E.P[m.b]) return wyslij({t: 'blad', req: m.req, blad: 'nieznane wystąpienie'}); return wyslij({t: 'porownaj', req: m.req, u: osPoWyst(st.E, m.a, m.b)}); }
   if (m.t === 'warianty') return wyslij({t: 'warianty', req: m.req, lista: osWarianty(st.E, new Set(m.wylacz || [])).slice(0, m.limit || 400)});
+  if (m.t === 'plcie') { const p = {}; (m.ids || []).forEach(id => { const x = st.E.P[id]; if (x && x.plec) p[id] = x.plec; }); return wyslij({t: 'plcie', req: m.req, p}); }
   if (m.t === 'profil') return wyslij({t: 'profil', req: m.req, p: st.E.P[m.id] || null});
 }

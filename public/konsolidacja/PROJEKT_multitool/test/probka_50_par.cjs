@@ -1,0 +1,18 @@
+/* Generuje PROJEKT_multitool/test/PROBKA_50_par_do_oceny.csv – 50 par do oceny przez użytkownika (kryterium odbioru kroku 6).
+   Uruchom: node test/probka_50_par.cjs   (z katalogu PROJEKT_multitool; plik jest deterministyczny – ta sama dane i reguły dają ten sam plik).
+   Kolumny: para_id; osoba_A; osoba_B; propozycja; uzasadnienie; ocena_uzytkownika (pusta). Wypełnij ostatnią kolumnę: scal / odrzuc / niepewne (dla par osób) albo wariant / rozne (dla par nazwisk). */
+const fs = require('fs'), path = require('path'); const {silnik, dane, wart, T} = require('./osoby_wspolne.cjs');
+function generuj(){ const A = silnik(), M = A.osModel(dane(), wart), E = A.osSilnik(M, {}), poAkcie = {}; M.akty.forEach(a => poAkcie[a.id] = a);
+  const opis = id => { const p = E.P[id], a = poAkcie[p.akt]; const cz = x => String(x || '').trim(); return [cz(p.imie + ' ' + (p.nazwisko || '')) + (p.rodowe ? ' z d. ' + p.rodowe : ''), 'rola: ' + p.rolaAktu.replace(/_/g, ' '), 'akt: ' + p.typ + ' ' + p.rok + ' (' + p.akt + ')', p.wiek ? 'wiek: ' + p.wiek : '', p.ojciec ? 'ojciec: ' + p.ojciec : '', p.matka ? 'matka: ' + p.matka + (p.matkaNazw ? ' z d. ' + p.matkaNazw : '') : '', p.malzonek && p.malzonek.length ? 'małżonek: ' + p.malzonek.join('/') : '', p.miejsce ? 'miejsce: ' + p.miejsce : '', p.dom ? 'dom: ' + p.dom : ''].filter(Boolean).join(' | '); };
+  const para = {s: [], m: [], l: [], k: []}, KOD = {sprawdz: 's', mozliwe: 'm', malo: 'l', konflikt: 'k'}, widziane = new Set();
+  for (const p of E.PL) { for (const u of A.osKandydaci(E, p.id)) { const k = A.decKlucz(u.a, u.b); if (widziane.has(k)) continue; widziane.add(k); para[KOD[u.wniosek]].push(u); } }
+  const wybierz = (L, n) => { L.sort((x, y) => A.decKlucz(x.a, x.b) < A.decKlucz(y.a, y.b) ? -1 : 1); const o = []; for (let i = 0; i < n; i++) o.push(L[Math.floor((i + 0.5) * L.length / n)]); return o; };
+  const wiersze = []; let nr = 0; const tekstU = u => ['Zgodności: ' + (u.zgodnosci.map(x => x.t).join('; ') || '–'), 'Rozbieżności: ' + (u.rozbieznosci.map(x => x.t).join('; ') || '–'), 'Sprzeczności: ' + (u.sprzecznosci.map(x => x.t).join('; ') || '–'), 'Braki: ' + (u.braki.map(x => x.t).join('; ') || '–')].join(' || ');
+  [['s', 14], ['m', 14], ['l', 8], ['k', 8]].forEach(([kod, n]) => wybierz(para[kod], n).forEach(u => wiersze.push(['P' + String(++nr).padStart(2, '0'), opis(u.a), opis(u.b), A.OS_WN[u.wniosek] + (u.konkurencja ? ' (kandydatów: ' + u.konkurencja + ')' : ''), tekstU(u), ''])));
+  // 6 par nazwisk (kandydaci do klas wariantów): Paluch/Paluchowski i Paluch/Paruch zawsze, reszta rozłożona równomiernie
+  const W = A.osWarianty(E), obowiazkowe = W.filter(w => /^(Paluch|Paluchowski|Paruch)$/.test(w.a) && /^(Paluch|Paluchowski|Paruch)$/.test(w.b)).slice(0, 2), reszta = W.filter(w => !obowiazkowe.includes(w)); const wybrane = obowiazkowe.concat(wybierz(reszta, 6 - obowiazkowe.length));
+  wybrane.forEach(w => wiersze.push(['P' + String(++nr).padStart(2, '0'), 'nazwisko: ' + w.a + ' (' + w.nA + ' wystąpień)', 'nazwisko: ' + w.b + ' (' + w.nB + ' wystąpień)', 'wariant_nazwiska (kandydat, ' + w.rodzaj + ')', w.powod, '']));
+  const csv = c => /[;"\r\n]/.test(c) ? '"' + c.replace(/"/g, '""') + '"' : c;
+  return '﻿' + [['para_id', 'osoba_A', 'osoba_B', 'propozycja', 'uzasadnienie', 'ocena_uzytkownika']].concat(wiersze).map(r => r.map(csv).join(';')).join('\r\n') + '\r\n'; }
+module.exports = {generuj};
+if (require.main === module) { const t = generuj(); fs.writeFileSync(path.join(T, 'PROBKA_50_par_do_oceny.csv'), t); console.log('zapisano PROBKA_50_par_do_oceny.csv,', t.split('\r\n').length - 2, 'par'); }

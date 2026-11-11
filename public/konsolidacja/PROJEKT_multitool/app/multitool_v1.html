@@ -32,12 +32,569 @@ table{border-collapse:collapse;width:100%;font-size:13px}td,th{border-bottom:1px
 .pick{display:flex;flex-wrap:wrap;gap:6px;align-items:center;margin-top:4px}.pick input[type=number]{width:90px}details.skan>summary,details.txt>summary,details.kal>summary{cursor:pointer}
 .tpodglad{white-space:pre-wrap;border:1px solid var(--line);border-radius:6px;padding:8px;margin-top:6px}.mq{background:rgba(224,168,74,.35)}.mr{background:rgba(239,138,128,.35)}.mg{background:rgba(127,176,224,.3)}.sugw{margin:4px 0}
 </style></head><body>
-<header><h1 id="tytul">Multitool v1 · akt zgonu</h1><select id="selTyp" aria-label="Typ aktu" title="Typ aktu"></select><span class="muted" id="prog"></span><button class="ind" id="kopiaInd" title="Zrób kopię pełną">decyzji i zmian bez kopii: 0</button><span style="flex:1"></span><button id="bMenu">Menu ▾</button>
-<div id="menu" hidden><button id="mCsv">Eksport CSV (zgony)</button><button id="mKopia">Kopia pełna (JSON)</button><button id="mKopiaWczytaj">Wczytaj kopię (JSON)…</button><button id="mImpDop">Import CSV zatwierdzeń (dopisz)…</button><button id="mImpZast">Import CSV zatwierdzeń (zastąp)…</button><button id="mMigawki">Migawki / przywróć…</button><button id="mKolejka">Dane źródłowe się zmieniły (0)</button><button id="mMigr">Migracja zgonów z CSV…</button><button id="mAuto">Autozapis do pliku…</button></div></header>
+<header><h1 id="tytul">Multitool v1 · akt zgonu</h1><span id="zakl"><button id="zAkty" class="p">Akty</button> <button id="zOsoby">Osoby</button></span> <select id="selTyp" aria-label="Typ aktu" title="Typ aktu"></select><span class="muted" id="prog"></span><button class="ind" id="kopiaInd" title="Zrób kopię pełną">decyzji i zmian bez kopii: 0</button><span style="flex:1"></span><button id="bMenu">Menu ▾</button>
+<div id="menu" hidden><button id="mCsv">Eksport CSV (zgony)</button><button id="mKopia">Kopia pełna (JSON)</button><button id="mKopiaWczytaj">Wczytaj kopię (JSON)…</button><button id="mImpDop">Import CSV zatwierdzeń (dopisz)…</button><button id="mImpZast">Import CSV zatwierdzeń (zastąp)…</button><button id="mMigawki">Migawki / przywróć…</button><button id="mKolejka">Dane źródłowe się zmieniły (0)</button><button id="mMigr">Migracja zgonów z CSV…</button><button id="mAuto">Autozapis do pliku…</button><button id="mDecJson" class="osMenu">Decyzje o osobach: eksport JSON</button><button id="mDecCsv" class="osMenu">Decyzje o osobach: eksport CSV</button><button id="mDecImp" class="osMenu">Decyzje o osobach: import JSON…</button><button id="mDop" class="osMenu">Import decyzji dop.v1…</button></div></header>
 <div id="pasekStan" hidden></div><div id="przyp" hidden></div>
 <div class="wrap"><div class="col"><div id="filtry"></div><div id="lista"></div></div><div class="col" id="main"></div></div>
-<input type="file" id="fKopia" accept=".json,application/json" hidden><input type="file" id="fCsv" accept=".csv,text/csv" hidden><input type="file" id="fMigr" accept=".csv,text/csv" multiple hidden>
+<input type="file" id="fKopia" accept=".json,application/json" hidden><input type="file" id="fCsv" accept=".csv,text/csv" hidden><input type="file" id="fMigr" accept=".csv,text/csv" multiple hidden><input type="file" id="fDec" accept=".json,application/json" hidden><input type="file" id="fDop" accept=".json,application/json" hidden>
 <div id="okno" hidden></div><div id="toast"></div>
+<script type="text/plain" id="srcOsoby">/* wspolne/tekst.js – wspólne funkcje tekstowe (wklejane do HTML przy budowaniu przez zbuduj.py) */
+const fold = s => (s||'').toString().toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,'').replace(/ł/g,'l');
+const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+// odległość Levenshteina; max (opcjonalnie) = szybkie odcięcie: gdy różnica długości > max zwraca max+1
+function lev(a, b, max){ a = String(a); b = String(b); const m = a.length, n = b.length; if (max !== undefined && Math.abs(m-n) > max) return max + 1; if (!m) return n; if (!n) return m;
+  let p = [...Array(n+1).keys()]; for (let i = 1; i <= m; i++) { const c = [i]; for (let j = 1; j <= n; j++) c[j] = Math.min(p[j]+1, c[j-1]+1, p[j-1] + (a[i-1] === b[j-1] ? 0 : 1)); p = c; } return p[n]; }
+function csvCell(v){ v = String(v ?? ''); return /[;"\n\r]/.test(v) ? '"' + v.replace(/"/g,'""') + '"' : v; }
+
+/* wspolne/raport.js – raport spójności aktów zgonu (czyste funkcje, bez DOM).
+   Wiersz: {id, year, num, last, first, sex('M'|'K'|''), death('RRRR-MM-DD'), act('RRRR-MM-DD'), ageText, status, spouse, job, father, mother, maiden, resid}
+   Zwraca listę {id, sev:'err'|'warn'|'info', code, msg, rel:[id,...]}. Brak pola = test pomijany. */
+const RAP_NUM = {jeden:1,jedna:1,dwa:2,dwie:2,trzy:3,cztery:4,piec:5,szesc:6,siedem:7,osiem:8,dziewiec:9,dziesiec:10,jedenascie:11,dwanascie:12,trzynascie:13,czternascie:14,pietnascie:15,szesnascie:16,siedemnascie:17,osiemnascie:18,dziewietnascie:19,dwadziescia:20,trzydziesci:30,czterdziesci:40,piecdziesiat:50,szescdziesiat:60,siedemdziesiat:70,osiemdziesiat:80,dziewiecdziesiat:90,sto:100};
+// wiek w latach z zapisu ("78", "osiemdziesiąt", "dwa lata", "1 miesiąc"); null gdy nie da się ustalić
+function wiekLat(t){ t = fold(t || ''); if (!t.trim()) return null; const U = u => /^(mies|m-c|msc)/.test(u) ? 12 : /^(tyg|tydz)/.test(u) ? 52 : /^(dn|dni|dzien|doba)/.test(u) ? 365 : /^godz/.test(u) ? 8760 : 1;
+  const re = /(\d+)\s*([a-z-]*)/g; let m, n = null; while ((m = re.exec(t))) n = (n || 0) + (+m[1]) / U(m[2]);
+  if (n !== null) return n;
+  let s = 0, ok = false; t.split(/[^a-z]+/).forEach(w => { if (RAP_NUM[w]) { s += RAP_NUM[w]; ok = true; } }); if (!ok) return null;
+  if (/miesi|mies/.test(t)) return s / 12; if (/tydz|tyg/.test(t)) return s / 52; if (/(^|[^a-z])(dni|dn|dzien|doba|godz)/.test(t)) return s / 365; return s; }
+function dzien(s){ const m = /^(\d{4})-(\d{2})-(\d{2})$/.exec(s || ''); if (!m) return null; const t = Date.UTC(+m[1], +m[2]-1, +m[3]), d = new Date(t); return d.getUTCFullYear() === +m[1] && d.getUTCMonth() === +m[2]-1 && d.getUTCDate() === +m[3] ? t / 864e5 : null; }
+const RAP_M_A = /^(kuba|barnaba|bonawentura|jarema|kosma|mykoła|miko[lł]a|saba|zawisza)$/i;
+function raportSpojnosci(rows, opt){ opt = opt || {}; const out = []; const add = (r, sev, code, msg, rel) => out.push({id:r.id, sev, code, msg, rel:rel || []});
+  rows.forEach(r => { const last = (r.last || '').trim(), first = (r.first || '').trim(), age = wiekLat(r.ageText), st = fold(r.status || ''), dd = dzien(r.death), ad = dzien(r.act);
+    if (r.death && dd === null) add(r, 'warn', 'data-zla', 'Data zgonu „' + r.death + '” nie jest w formacie RRRR-MM-DD.');
+    if (dd !== null && ad !== null) { if (dd > ad) add(r, 'err', 'zgon-po-akcie', 'Data zgonu (' + r.death + ') jest późniejsza niż data aktu (' + r.act + ').'); else if (ad - dd > 10) add(r, 'warn', 'zgon-dawno', 'Akt spisany ' + (ad - dd) + ' dni po zgonie (' + r.death + ' → ' + r.act + ') – sprawdź daty.'); }
+    if (dd !== null && r.year) { const y = new Date(dd * 864e5).getUTCFullYear(); if (y < +r.year - 1 || y > +r.year) add(r, 'warn', 'rok-zgonu', 'Rok zgonu (' + y + ') nie pasuje do roku księgi (' + r.year + ').'); }
+    if (age !== null && age > 110) add(r, 'warn', 'wiek-duzy', 'Wiek „' + r.ageText + '” wygląda na zbyt duży.');
+    if (age !== null && age < 15 && /zonat|zamezn|wdow/.test(st)) add(r, 'err', 'wiek-stan', 'Wiek „' + r.ageText + '” i stan „' + r.status + '” się wykluczają.');
+    if (age !== null && age < 18 && /wdow/.test(st)) add(r, 'warn', 'wiek-wdowiec', 'Wdowa/wdowiec w wieku „' + r.ageText + '”.');
+    if (age !== null && age < 15) { if (fold(r.job || '').trim()) add(r, 'warn', 'dziecko-zawod', 'Dziecko (wiek „' + r.ageText + '”) ma wpisany zawód: ' + r.job + '.'); if (r.spouse) add(r, 'warn', 'dziecko-malzonek', 'Dziecko ma wpisanego małżonka.'); if (!r.father && !r.mother) add(r, 'info', 'dziecko-rodzice', 'Dziecko bez wpisanych rodziców.'); }
+    if (/panna|kawaler/.test(st) && r.spouse) add(r, 'warn', 'stan-malzonek', 'Stan „' + r.status + '” ale wpisany małżonek: ' + r.spouse + '.');
+    if (r.sex === 'M' && r.maiden) add(r, 'warn', 'mezczyzna-rodowe', 'Mężczyzna z nazwiskiem rodowym („' + r.maiden + '”) – nazwisko powinno być rodowe, chyba że wyjątek.');
+    if (first && r.sex) { const f = fold(first.split(/\s+/)[0]); if (r.sex === 'M' && /a$/.test(f) && !RAP_M_A.test(first.split(/\s+/)[0])) add(r, 'warn', 'plec-imie', 'Płeć M, ale imię „' + first + '” brzmi żeńsko.'); if (r.sex === 'K' && !/a$/.test(f)) add(r, 'warn', 'plec-imie', 'Płeć K, ale imię „' + first + '” brzmi męsko.'); }
+    if (last && r.sex) { const l = fold(last); if (r.sex === 'K' && /(sk|ck|dzk)i$/.test(l)) add(r, 'warn', 'plec-nazwisko', 'Płeć K, ale nazwisko „' + last + '” ma formę męską.'); if (r.sex === 'M' && /(sk|ck|dzk)a$/.test(l)) add(r, 'warn', 'plec-nazwisko', 'Płeć M, ale nazwisko „' + last + '” ma formę żeńską.'); }
+    if (opt.brak !== false) ['last','first','sex','death'].forEach(k => { if (!r[k]) add(r, 'warn', 'brak-' + k, 'Brak: ' + ({last:'nazwisko', first:'imię', sex:'płeć', death:'data zgonu'})[k] + '.'); });
+  });
+  // chronologia dat aktów w obrębie roku (numer rośnie → data nie maleje)
+  const by = {}; rows.forEach(r => { if (r.year && r.num && dzien(r.act) !== null) (by[r.year] = by[r.year] || []).push(r); });
+  Object.values(by).forEach(L => { L.sort((a, b) => a.num - b.num); let mx = null; L.forEach(r => { const d = dzien(r.act); if (mx && d < mx.d) add(r, 'warn', 'chronologia', 'Data aktu ' + r.act + ' jest wcześniejsza niż w akcie ' + mx.r.num + ' (' + mx.r.act + ') – sprawdź daty lub numer.', [mx.r.id]); if (!mx || d >= mx.d) mx = {d, r}; }); });
+  // duplikaty: ta sama osoba i ta sama data zgonu w dwóch aktach
+  const key = {}; rows.forEach(r => { if (r.last && r.first && r.death) (key[fold(r.last) + '|' + fold(r.first) + '|' + r.death] = key[fold(r.last) + '|' + fold(r.first) + '|' + r.death] || []).push(r); });
+  Object.values(key).forEach(L => { if (L.length > 1) L.forEach(r => add(r, 'err', 'duplikat', 'Ta sama osoba i data zgonu w aktach: ' + L.filter(x => x !== r).map(x => x.num + '/' + x.year).join(', ') + '.', L.filter(x => x !== r).map(x => x.id))); });
+  if (opt.dupRok) { const g = {}; rows.forEach(r => { if (r.last && r.first && r.ageText && !r.death) { const k = [fold(r.last), fold(r.first), r.year, fold(r.ageText), fold(r.resid || '')].join('|'); (g[k] = g[k] || []).push(r); } });
+    Object.values(g).forEach(L => { if (L.length > 1) L.forEach(r => add(r, 'warn', 'duplikat-rok', 'Możliwy duplikat (to samo nazwisko, imię, wiek, rok i miejsce): ' + L.filter(x => x !== r).map(x => x.id).join(', ') + '.', L.filter(x => x !== r).map(x => x.id))); }); }
+  return out; }
+function raportCsv(items, label){ return ['id;waga;kod;opis;powiazane'].concat(items.map(i => [i.id, i.sev, i.code, i.msg, (i.rel || []).join(' ')].map(csvCell).join(';'))).join('\r\n') + '\r\n'; }
+
+/* wspolne/norm.js – normalizacja do porównań (czyste funkcje, bez DOM). Wymaga: wspolne/tekst.js (fold, lev), wspolne/raport.js (wiekLat).
+   Zasada: normalizacja NIE zmienia danych aktu. Tworzy klucze obok wartości; zapis z aktu zostaje w polu. */
+
+/* ---------- nazwiska ---------- */
+// znaczniki [_] [-] [niecz.] i puste → brak danych
+const normBrak = v => { const t = String(v ?? '').trim(); return !t || /^\[[^\]]*\]$/.test(t) || /^[?.\-–]+$/.test(t) || /^b\.?\s?d\.?$/i.test(t); };
+const normCzysc = v => normBrak(v) ? '' : String(v).replace(/\?/g, '').replace(/\([^)]*\)/g, ' ').replace(/\s+/g, ' ').trim();
+// końcówki żeńskie: forma (panna / żona) + rdzeń; -ina/-yna tylko gdy rdzeń jest w słowniku znanych nazwisk (Kalina to nie żona Kala)
+const NORM_FSUF = [['iowna','panna'],['owna','panna'],['ianka','panna'],['anka','panna'],['onka','panna'],['iowa','zona'],['owa','zona']];
+function normNazwiskoBaza(s){ let f = fold(normCzysc(s)).replace(/[^a-z]/g, ''); let forma = '';
+  for (const [suf, typ] of NORM_FSUF) if (f.length - suf.length >= 3 && f.endsWith(suf)) { f = f.slice(0, -suf.length); forma = typ; break; }
+  f = f.replace(/ska$/, 'ski').replace(/cka$/, 'cki').replace(/dzka$/, 'dzki');
+  return {baza: f, forma}; }
+// k1 – klucz ścisły (ogonki, forma żeńska); k2 – klucz pisowni dawnej (y/i, rz/ż, ch/h, ó/u, -owski/-oski, ę/en, ą/on, podwojenia, końcowa samogłoska rdzenia)
+function kluczNazwiska(s){ const b = normNazwiskoBaza(s).baza; if (b.length < 2) return null;
+  let k2 = b.replace(/y/g, 'i').replace(/rz/g, 'z').replace(/ch/g, 'h').replace(/u/g, 'o').replace(/([oe])wsk/g, '$1sk').replace(/ks/g, 'x')
+    .replace(/e[nm](?=[bdtcszkgp])/g, 'e').replace(/o[nm](?=[bdtcszkgp])/g, 'a').replace(/(.)\1/g, '$1').replace(/sc/g, 'c').replace(/[aoe]$/, '');
+  return {k1: b, k2}; }
+// porównanie nazwisk: 'rowne' | 'wariant' (ta sama wymowa/dawna pisownia) | 'slownik' (klasa potwierdzona decyzją) | 'podobne' (1 litera różnicy – tylko ostrzeżenie) | 'rozne' | null (brak danych)
+function porNazwiska(a, b, klasy){ const A = kluczNazwiska(a), B = kluczNazwiska(b); if (!A || !B) return null;
+  if (A.k1 === B.k1) return 'rowne'; if (A.k2 === B.k2) return 'wariant';
+  if (klasy) { const ka = klasy[A.k2] || klasy[A.k1], kb = klasy[B.k2] || klasy[B.k1]; if (ka && ka === kb) return 'slownik'; }
+  if (Math.min(A.k2.length, B.k2.length) >= 5 && lev(A.k2, B.k2, 1) <= 1) return 'podobne';
+  return 'rozne'; }
+
+/* ---------- imiona ---------- */
+// forma z aktu (łacina, dawna pisownia, odmiana) → dzisiejsze polskie. Podstawa: wspolne/slowniki_imion.json (NPL: wspólne z buduj_baza_v4.py), dodatki własne poniżej.
+const NORM_SLOWNIKI = {"GEN":{"matthaei":"Maciej","mathaei":"Maciej","hiacynthi":"Jacek","augustini":"Augustyn","gasparis":"Kacper","caspari":"Kacper","francisci":"Franciszek","mathiae":"Maciej","matthiae":"Maciej","joannis":"Jan","johannis":"Jan","adalberti":"Wojciech","josephi":"Józef","andreae":"Andrzej","thomae":"Tomasz","stanislai":"Stanisław","laurentii":"Wawrzyniec","antonii":"Antoni","petri":"Piotr","pauli":"Paweł","michaelis":"Michał","martini":"Marcin","jacobi":"Jakub","simonis":"Szymon","casimiri":"Kazimierz","gregorii":"Grzegorz","valentini":"Walenty","nicolai":"Mikołaj","christophori":"Krzysztof","blasii":"Błażej","sebastiani":"Sebastian","bartholomaei":"Bartłomiej","caroli":"Karol","ignatii":"Ignacy","catharinae":"Katarzyna","mariannae":"Marianna","agnetis":"Agnieszka","annae":"Anna","sophiae":"Zofia","dorotheae":"Dorota","theclae":"Tekla","hedwigis":"Jadwiga","margarithae":"Małgorzata","franciscae":"Franciszka","elisabethae":"Elżbieta","eliesabethae":"Elżbieta","rosaliae":"Rozalia","anastasiae":"Anastazja","salomeae":"Salomea","apolloniae":"Apolonia","magdalenae":"Magdalena","susannae":"Zuzanna","reginae":"Regina","victoriae":"Wiktoria","evae":"Ewa","justinae":"Justyna","barbarae":"Barbara","josephae":"Józefa","constantiae":"Konstancja","theresiae":"Teresa","agnetae":"Agnieszka"},"PGEN":{"kacpra":"Kacper","hiacynta":"Jacek","ignacego":"Ignacy","mateusza":"Mateusz","augustyna":"Augustyn","sebastiana":"Sebastian","agaty":"Agata","joanny":"Joanna","hieronima":"Hieronim","józefa":"Józef","pawła":"Paweł","andrzeja":"Andrzej","macieja":"Maciej","jana":"Jan","wojciecha":"Wojciech","tomasza":"Tomasz","marcina":"Marcin","jakuba":"Jakub","szymona":"Szymon","michała":"Michał","stanisława":"Stanisław","kazimierza":"Kazimierz","antoniego":"Antoni","piotra":"Piotr","franciszka":"Franciszek","walentego":"Walenty","wawrzyńca":"Wawrzyniec","mikołaja":"Mikołaj","błażeja":"Błażej","bartłomieja":"Bartłomiej","grzegorza":"Grzegorz","katarzyny":"Katarzyna","agnieszki":"Agnieszka","anastazji":"Anastazja","marianny":"Marianna","anny":"Anna","zofii":"Zofia","doroty":"Dorota","jadwigi":"Jadwiga","małgorzaty":"Małgorzata","elżbiety":"Elżbieta","rozalii":"Rozalia","tekli":"Tekla","ewy":"Ewa","teresy":"Teresa","barbary":"Barbara","salomei":"Salomea","magdaleny":"Magdalena","apolonii":"Apolonia","reginy":"Regina","franciszki":"Franciszka","józefy":"Józefa"},"NPL":{"jacobus":"Jakub","joannes":"Jan","johannes":"Jan","adalbertus":"Wojciech","woyciech":"Wojciech","stanislaus":"Stanisław","josephus":"Józef","josephatus":"Józefat","josephatam":"Józefata","andreas":"Andrzej","mathias":"Maciej","matthias":"Maciej","matheus":"Mateusz","matthaeus":"Mateusz","mathaeus":"Mateusz","thomas":"Tomasz","martinus":"Marcin","antonius":"Antoni","paulus":"Paweł","valentinus":"Walenty","laurentius":"Wawrzyniec","sebastianus":"Sebastian","franciscus":"Franciszek","blasius":"Błażej","lucas":"Łukasz","bartholomaeus":"Bartłomiej","ignatius":"Ignacy","gregorius":"Grzegorz","christophorus":"Krzysztof","nicolaus":"Mikołaj","casimirus":"Kazimierz","michael":"Michał","alexius":"Aleksy","petrus":"Piotr","simon":"Szymon","stephanus":"Stefan","adamus":"Adam","albertus":"Wojciech","vincentius":"Wincenty","hyacinthus":"Jacek","augustinus":"Augustyn","gasparus":"Kacper","casparus":"Kacper","philippus":"Filip","agnes":"Agnieszka","sophia":"Zofia","hedwigis":"Jadwiga","hedvigis":"Jadwiga","anastasia":"Anastazja","catharina":"Katarzyna","catarina":"Katarzyna","margaretha":"Małgorzata","elisabeth":"Elżbieta","elisabetha":"Elżbieta","eva":"Ewa","rosalia":"Rozalia","theresia":"Teresa","thecla":"Tekla","dorothea":"Dorota","francisca":"Franciszka","apollonia":"Apolonia","victoria":"Wiktoria","mariae":"Maria","agathae":"Agata","agatha":"Agata","dorothae":"Dorota","petronillae":"Petronela","petronilla":"Petronela","susanna":"Zuzanna","ursula":"Urszula","lucia":"Łucja","annae":"Anna","joannae":"Joanna","catharinae":"Katarzyna","sophiae":"Zofia","agnetis":"Agnieszka","virgo":"","dorotha":"Dorota","helisabeth":"Elżbieta","hiacynt":"Jacek","jozafat":"Józefat","konstancji":"Konstancja","marianne":"Marianna","margaritha":"Małgorzata","susanne":"Zuzanna","teklae":"Tekla","ursulae":"Urszula"}};
+const NORM_IMIONA_DODATKI = {jacobus:'jakub',joannes:'jan',johannes:'jan',ioannes:'jan',adalbertus:'wojciech',adalbert:'wojciech',albertus:'wojciech',woyciech:'wojciech',stanislaus:'stanislaw',josephus:'jozef',andreas:'andrzej',
+  mathias:'maciej',matthias:'maciej',matheus:'mateusz',matthaeus:'mateusz',mathaeus:'mateusz',thomas:'tomasz',martinus:'marcin',antonius:'antoni',paulus:'pawel',valentinus:'walenty',laurentius:'wawrzyniec',
+  franciscus:'franciszek',blasius:'blazej',lucas:'lukasz',bartholomaeus:'bartlomiej',ignatius:'ignacy',gregorius:'grzegorz',nicolaus:'mikolaj',casimirus:'kazimierz',michael:'michal',petrus:'piotr',simon:'szymon',
+  stephanus:'stefan',vincentius:'wincenty',hyacinthus:'jacek',hiacynt:'jacek',hiacenty:'jacek',gasparus:'kacper',casparus:'kacper',kasper:'kacper',felix:'feliks',agnes:'agnieszka',sophia:'zofia',hedwigis:'jadwiga',
+  catharina:'katarzyna',margaretha:'malgorzata',elisabeth:'elzbieta',eva:'ewa',theresia:'teresa',thecla:'tekla',dorothea:'dorota',francisca:'franciszka',susanna:'zuzanna',ursula:'urszula',lucia:'lucja',
+  maryanna:'marianna',marjanna:'marianna',maryja:'maria',jozefa:'jozefa',jedrzej:'andrzej',bartosz:'bartlomiej',jozefat:'jozafat',gabryel:'gabriel',regina:'regina',helena:'helena'};
+const NORM_IMIONA = (() => { const o = {}; for (const [k, v] of Object.entries(NORM_SLOWNIKI.NPL)) o[fold(k).replace(/[^a-z]/g, '')] = fold(v).replace(/[^a-z]/g, ''); return Object.assign(o, NORM_IMIONA_DODATKI); })();
+// pary imion często mylonych w księgach – zgodność słaba, do sprawdzenia na skanie (nigdy „równe”)
+const NORM_IMIONA_BLISKIE = [['maciej','mateusz'],['maria','marianna'],['stefan','szczepan'],['lucja','lukasz'],['jozef','jozafat'],['stefan','stanislaw']];
+function kluczImienia(s){ return fold(normCzysc(s)).split(/[\s,./-]+/).map(t => t.replace(/[^a-z]/g, '')).filter(t => t.length > 1).map(t => NORM_IMIONA[t] || t.replace(/y(?=[aeo])/g, 'i')); }
+// 'rowne' (dowolny człon zgodny) | 'bliskie' (para mylona lub 1 litera) | 'rozne' | null
+function porImiona(a, b){ const A = kluczImienia(a), B = kluczImienia(b); if (!A.length || !B.length) return null;
+  if (A.some(x => B.includes(x))) return 'rowne';
+  if (A.some(x => B.some(y => NORM_IMIONA_BLISKIE.some(p => (p[0] === x && p[1] === y) || (p[0] === y && p[1] === x)) || (Math.min(x.length, y.length) >= 5 && lev(x, y, 1) <= 1)))) return 'bliskie';
+  return 'rozne'; }
+
+/* ---------- wiek → przedział roku urodzenia ---------- */
+// wiek w aktach jest przybliżony; tolerancja rośnie z wiekiem i dla wieków „okrągłych”. Zwraca [min, max] roku urodzenia albo null.
+function przedzialUr(rokAktu, wiekTekst){ if (!rokAktu || normBrak(wiekTekst)) return null; const w = wiekLat(String(wiekTekst).replace(/\?/g, '')); if (w === null || w < 0 || w > 115) return null;
+  let tol = w < 1 ? 0 : w < 10 ? 1 : w < 25 ? 2 : w < 45 ? 4 : w < 65 ? 6 : 9; if (w >= 30 && Math.round(w) % 10 === 0) tol += 2; else if (w >= 30 && Math.round(w) % 5 === 0) tol += 1;
+  const r = rokAktu - w; return [Math.floor(r - tol) - (w >= 1 ? 1 : 0), Math.ceil(r + tol)]; }
+const przedzialyWspolne = (a, b) => a && b ? Math.max(a[0], b[0]) <= Math.min(a[1], b[1]) : null;
+const przedzialyOdstep = (a, b) => Math.max(a[0], b[0]) - Math.min(a[1], b[1]);
+
+/* ---------- miejscowości ---------- */
+// nazwa z aktu → identyfikator miejsca. Nazwa z dokumentu zostaje w polu; tu tylko klucz. Słownik rozszerzany decyzjami użytkownika (typ decyzji „miejsce”).
+const NORM_MIEJSCA = {blinow:'blinow', blinowie:'blinow', brzozowka:'brzozowka', brzozzowka:'brzozowka', brzozowce:'brzozowka', moczydla:'moczydla', mocydla:'moczydla', moczyda:'moczydla', moczydlo:'moczydla', moczydlach:'moczydla',
+  majdan:'majdan-moczydla?', 'moczydla majdan':'majdan-moczydla', 'majdan moczydla':'majdan-moczydla', 'majdan blinowski':'majdan-blinowski', kaczyniec:'kaczyniec', kacyniec:'kaczyniec', sulow:'sulow', cieslanki:'cieslanki'};
+function kluczMiejsca(s){ const f = fold(normCzysc(s)).replace(/[^a-z ]/g, '').trim(); if (!f) return null; return NORM_MIEJSCA[f] || f; }
+// 'rowne' | 'mozliwe' (Majdan bez dookreślenia vs Majdan Moczydła/Blinowski) | 'rozne' | null
+function porMiejsca(a, b){ const A = kluczMiejsca(a), B = kluczMiejsca(b); if (!A || !B) return null; if (A === B) return 'rowne';
+  const m = x => x.replace('?', ''); if ((/\?$/.test(A) || /\?$/.test(B)) && (m(A).startsWith('majdan') && m(B).startsWith('majdan') || m(A) === 'majdan-moczydla' && B === 'moczydla' || m(B) === 'majdan-moczydla' && A === 'moczydla')) return 'mozliwe';
+  if (A.startsWith('majdan-moczydla') && B === 'moczydla' || B.startsWith('majdan-moczydla') && A === 'moczydla') return 'mozliwe';
+  return 'rozne'; }
+
+/* wspolne/norm_zapis.js – normalizacje ZAPISU odczytu (czyste funkcje, bez DOM). Port z narzedzia/buduj_baza_v4.py:
+   fold, MALE (budowa), male_surname, psur, parents, parents_pl, polname, polname_ai, is_child, fill_markers.
+   Wymaga: wspolne/norm.js (NORM_SLOWNIKI = wspolne/slowniki_imion.json: GEN, PGEN, NPL).
+   Zasada: wynik ma być IDENTYCZNY z Pythonem; sprawdza to PROJEKT_multitool/test/parytet_norm.py (uruchom po każdej zmianie tu lub w buildzie).
+   Różni się od norm.js: tam są klucze do PORÓWNAŃ (nie zmieniają danych), tu reguły, które ZMIENIAJĄ zapisywaną wartość (nazwiska męskie, imiona PL, rodzice, znaczniki). */
+
+const zapHas = (o, k) => Object.prototype.hasOwnProperty.call(o, k);
+// jak Python fold: małe litery, ł→l, ó→o, bez znaków łączących (inny niż fold z tekst.js, który nie zamienia ó)
+const zapFold = x => String(x).toLowerCase().replace(/ł/g, 'l').replace(/ó/g, 'o').normalize('NFD').replace(/\p{Mn}/gu, '');
+const zapTrimPy = s => String(s).trim();
+
+// słownik nazwisk męskich z list nazwisk (kolejność ma znaczenie: pierwsze wystąpienie wygrywa, jak setdefault)
+function zapBudujMale(nazwiska) {
+  const M = Object.create(null);
+  for (let n of nazwiska) {
+    n = zapTrimPy(n || '');
+    if (!n || n.includes(' ') || n.includes('?') || n.includes('/')) continue;
+    const f = zapFold(n);
+    if (/(owa|owna|ina|yna|ska|cka|anka)$/.test(f)) continue;
+    for (const k of new Set([f, 'oae'.includes(f[f.length - 1]) ? f.slice(0, -1) : f, f.replace(/e([^aeiouy])$/, '$1')])) if (!(k in M)) M[k] = n;
+  }
+  return M;
+}
+
+const ZAP_FSUF = [['iowna', 'panna'], ['owna', 'panna'], ['ówna', 'panna'], ['ianka', 'panna'], ['anka', 'panna'], ['onka', 'panna'], ['iowa', 'zona'], ['owa', 'zona'], ['ina', 'zona'], ['yna', 'zona']];
+// → null | [forma męska, typ] (typ: panna | zona | ska; z '?' na końcu, gdy brak pewnego rdzenia w MALE)
+function zapMaleNazwisko(sn, sex, MALE) {
+  sn = zapTrimPy(zapTrimPy(sn).replace(/\?+$/, ''));
+  if (!sn || sn.includes(' ')) return null;
+  const f = zapFold(sn);
+  if (f in MALE) return null;
+  for (const [suf, typ] of ZAP_FSUF) {
+    if (f.endsWith(suf)) {
+      const stem = f.slice(0, f.length - suf.length);
+      for (const k of [stem, stem + 'a', stem + 'o', stem + 'e']) if (k in MALE) return [MALE[k], typ];
+      return [sn.slice(0, sn.length - suf.length), typ + '?'];
+    }
+  }
+  if (/^(.*?)(ska|cka|dzka)$/.test(f) && sex !== 'M') return [sn.slice(0, -1) + 'i', 'ska'];
+  return null;
+}
+
+// nazwisko ojca z dopełniacza (polskie akta): Kowalskiego/Kowalów → forma męska
+function zapPsur(t, MALE) {
+  t = zapTrimPy(String(t).replace(/[?()]/g, ''));
+  const f = zapFold(t);
+  for (const suf of ['iow', 'ow', 'ich', 'ych']) {
+    if (f.endsWith(suf)) {
+      const stem = f.slice(0, f.length - suf.length);
+      for (const k of [stem, stem + 'a', stem + 'o', stem + 'e', stem + 'i']) if (k in MALE) return MALE[k];
+      if (suf === 'ich' || suf === 'ych') return t.slice(0, t.length - suf.length) + 'i';
+      return t.slice(0, t.length - suf.length);
+    }
+  }
+  if (t.endsWith('ów')) {
+    const stem = zapFold(t.slice(0, -2));
+    for (const k of [stem, stem + 'a', stem + 'o']) if (k in MALE) return MALE[k];
+    return t.slice(0, -2);
+  }
+  return t;
+}
+
+// rodzice z łacińskiego dopełniacza: „Matthaei et Annae Kowalskow” → {father_first_name, mother_first_name, father_last_name}
+function zapRodziceLac(pr) {
+  const GEN = NORM_SLOWNIKI.GEN;
+  const m = /^\s*(?:(?:filia|filius)\s+)?([A-ZĄĆĘŁŃÓŚŹŻ][a-ząćęłńóśźż]+)(?:\s+et\s+([A-ZĄĆĘŁŃÓŚŹŻ][a-ząćęłńóśźż]+))?\s*(.*?)\s*$/.exec(pr);
+  if (!m || !zapHas(GEN, m[1].toLowerCase())) return {};
+  const o = { father_first_name: GEN[m[1].toLowerCase()] };
+  if (m[2]) o.mother_first_name = zapHas(GEN, m[2].toLowerCase()) ? GEN[m[2].toLowerCase()] : m[2];
+  const sur = zapTrimPy(m[3].replace(/[?()]/g, ''));
+  if (sur) o.father_last_name = sur;
+  return o;
+}
+// rodzice z polskiego dopełniacza: „syn Kacpra i Agaty Kowalskich”
+function zapRodzicePl(pr, MALE) {
+  pr = pr.replace(/(?<=[\p{L}\p{N}_])\?/gu, "");
+  const PGEN = NORM_SLOWNIKI.PGEN;
+  const m = /^\s*(?:(?:syn|córka|dziecko|filia|filius)\s+)?(?:szlachetnych\s+)?(\S+)(?:\s+i\s+(\S+))?\s*(.*?)\s*$/i.exec(pr);
+  if (!m || !zapHas(PGEN, m[1].toLowerCase())) return {};
+  const o = { father_first_name: PGEN[m[1].toLowerCase()] };
+  if (m[2]) o.mother_first_name = zapHas(PGEN, m[2].toLowerCase()) ? PGEN[m[2].toLowerCase()] : m[2];
+  if (m[3]) o.father_last_name = zapPsur(m[3].replace(/[?()]/g, ''), MALE);
+  return o;
+}
+
+// imię z aktu (łacina, dawna pisownia) → dzisiejsze polskie; zwraca [imię, dodatkowe warianty z nawiasu]
+function zapPolImie(v) {
+  const NPL = NORM_SLOWNIKI.NPL;
+  if (!v || v.startsWith('[')) return [v, ''];
+  const q = zapTrimPy(v).endsWith('?') ? '?' : '';
+  let s = zapTrimPy(zapTrimPy(v).replace(/\?+$/, '')), extra = '', par = '';
+  const m = /^(.*?)\s*\((.*?)\)\s*$/.exec(s);
+  if (m) { s = zapTrimPy(m[1]); par = zapTrimPy(m[2]); }
+  const slowa = t => zapTrimPy(t) ? zapTrimPy(t).split(/\s+/) : [];
+  const one = w => { const k = w.toLowerCase().replace(/^[.,]+|[.,]+$/g, ''); return zapHas(NPL, k) ? NPL[k] : w; };
+  let main = slowa(s).map(one).filter(Boolean).join(' ');
+  if (!main && par) { main = slowa(par.split(',')[0]).map(one).join(' '); par = ''; }
+  if (par) {
+    for (const x of par.split(',').map(zapTrimPy)) {
+      if (!x || zapHas(NPL, x.toLowerCase()) || one(x) === main || x === main) continue;
+      extra = (extra ? extra + ', ' : '') + x;
+    }
+  }
+  return [main + q, extra];
+}
+// zmienia ai w miejscu: imiona PL, Woy→Woj w nazwiskach, dopisek „w akcie też: …” do notes
+function zapPolImionaAi(ai) {
+  const ex = [];
+  for (const f of ['deceased_first_name', 'father_first_name', 'mother_first_name']) {
+    const v = ai[f];
+    if (v) { const [n, e] = zapPolImie(v); if (n !== v) ai[f] = n; if (e) ex.push(e); }
+  }
+  for (const f of ['deceased_last_name', 'father_last_name', 'mother_last_name']) {
+    const v = ai[f];
+    if (v && /^Woy/.test(v)) ai[f] = 'Woj' + v.slice(3);
+  }
+  if (ex.length) ai.notes = (ai.notes || '') + (ai.notes ? ', ' : '') + 'w akcie też: ' + ex.join('; ');
+}
+
+function zapDziecko(age) {
+  const a = String(age || '').toLowerCase();
+  if (/mies|mens|dies|dn\.|dni|tyg|hebd|m\.\d/.test(a)) return true;
+  const m = /\d+/.exec(a);
+  return !!(m && parseInt(m[0], 10) < 15);
+}
+// puste pola → [_] (nie podano w akcie) / [-] (nie dotyczy); zmienia ai w miejscu
+function zapZnaczniki(ai) {
+  const ch = zapDziecko(ai.age), ln = zapTrimPy(ai.deceased_last_name || '');
+  if (ai.father_first_name && !ai.father_last_name && ln && !ln.startsWith('[')) ai.father_last_name = ln;
+  for (const f of ['house', 'age', 'deceased_status', 'deceased_last_name', 'profession']) if (!ai[f]) ai[f] = (f === 'profession' && ch) ? '[-]' : '[_]';
+  const hasp = !!(ai.parents_raw || ai.father_first_name);
+  for (const f of ['father_first_name', 'father_last_name', 'mother_first_name', 'mother_last_name', 'parents_raw'])
+    if (!ai[f]) ai[f] = (ch && (['parents_raw', 'father_first_name', 'father_last_name'].includes(f) || !hasp || f.startsWith('mother'))) ? '[_]' : '[-]';
+}
+
+/* moduly/wystapienia.js – wystąpienie → profil do porównań (czyste funkcje, bez DOM). Wymaga: norm.js.
+   Wystąpienie nie kopiuje danych: „mapa” wskazuje pola aktu. Profil jest pochodną liczoną przy każdym uruchomieniu (zmiana pola aktu od razu zmienia profil). */
+const WYST_PLEC_ROLI = {ojciec:'M', matka:'K', pan_mlody:'M', panna_mloda:'K', ojciec_pana:'M', matka_pana:'K', ojciec_panny:'M', matka_panny:'K', chrzestny:'M', chrzestna:'K'};
+const WYST_ZYJE = /^(ojciec|matka|pan_mlody|panna_mloda|swiadek\d?|chrzestny|chrzestna|zglaszajacy\d?|osadnik)$/;   // role, w których osoba na pewno żyje w roku aktu
+const WYST_RODZICE = {dziecko:['ojciec','matka'], zmarly:['ojciec','matka'], pan_mlody:['ojciec_pana','matka_pana'], panna_mloda:['ojciec_panny','matka_panny']};
+const WYST_PARY = [['ojciec','matka'], ['pan_mlody','panna_mloda'], ['ojciec_pana','matka_pana'], ['ojciec_panny','matka_panny'], ['zmarly','malzonek']];
+const wystPole = (akt, w, k) => { const f = w.mapa[k], p = f && akt.pola[f]; return p && !normBrak(p.value) ? p.value : ''; };
+// „Jan Kowalski, 43” → imię + nazwisko (świadkowie, małżonek w akcie zgonu)
+function wystRozbij(t){ const c = normCzysc(String(t).split(',')[0]).split(' ').filter(Boolean); return c.length > 1 ? {imie: c.slice(0, -1).join(' '), nazwisko: c[c.length - 1]} : {imie: c[0] || '', nazwisko: ''}; }
+// płeć z imienia tylko jako dane pochodne do porównań (nie zapisujemy jej w akcie)
+const wystPlecZImienia = im => { const k = kluczImienia(im)[0]; return !k ? '' : /a$/.test(k) && !/^(kuba|barnaba|bonawentura|kosma|jarema)$/.test(k) ? 'K' : 'M'; };
+function wystProfile(D){ const A = {}; D.akty.forEach(a => A[a.id] = a); const poAkcie = {}; D.wystapienia.forEach(w => (poAkcie[w.akt] = poAkcie[w.akt] || {})[w.rola] = w); const P = {};
+  D.wystapienia.forEach(w => { const a = A[w.akt]; if (!a) return; let imie = wystPole(a, w, 'imie'), nazw = wystPole(a, w, 'nazwisko'); const razem = wystPole(a, w, 'imie_nazwisko'); if (razem) { const x = wystRozbij(razem); imie = imie || x.imie; nazw = nazw || x.nazwisko; }
+    const p = P[w.id] = {id: w.id, akt: a.id, typ: a.typ, rola: w.rola.replace(/^(ojciec|matka)_(pana|panny)$/, '$1'), rolaAktu: w.rola, rok: a.rok, imie, nazwisko: nazw, rodowe: wystPole(a, w, 'rodowe'), wiek: wystPole(a, w, 'wiek'), miejsce: wystPole(a, w, 'miejsce') || a.miejsce || '', dom: wystPole(a, w, 'dom'),
+      plec: wystPole(a, w, 'plec') || WYST_PLEC_ROLI[w.rola] || wystPlecZImienia(imie), zg: w.rola === 'zmarly' ? a.rok : null, zyje: WYST_ZYJE.test(w.rola) ? [a.rok] : [], dzieciUr: /^(ojciec|matka)$/.test(w.rola) && a.typ === 'chrzest' ? [a.rok] : [], malzonek: []};
+    if (p.rola === 'matka' && p.rodowe && fold(p.rodowe) === fold(p.nazwisko)) p.nazwisko = ''; });
+  // rodzice i małżonek z tego samego aktu
+  D.wystapienia.forEach(w => { const p = P[w.id], R = poAkcie[w.akt]; if (!p) return; const rd = WYST_RODZICE[w.rola];
+    if (rd) { const o = R[rd[0]] && P[R[rd[0]].id], m = R[rd[1]] && P[R[rd[1]].id]; if (o) { p.ojciec = o.imie; p.ojciecNazw = o.nazwisko; } if (m) { p.matka = m.imie; p.matkaNazw = m.rodowe; } }
+    WYST_PARY.forEach(([x, y]) => { const q = w.rola === x ? R[y] : w.rola === y ? R[x] : null; if (q && P[q.id] && P[q.id].imie) p.malzonek.push(P[q.id].imie); }); });
+  return P; }
+// etykieta wystąpienia do list
+const wystEtykieta = p => [(p.imie + ' ' + (p.nazwisko || (p.rodowe ? 'z d. ' + p.rodowe : ''))).trim() || '(bez nazwiska)', p.rolaAktu.replace(/_/g, ' '), p.typ + ' ' + p.rok].join(' · ');
+
+/* moduly/identity.js – propozycje tożsamości (czyste funkcje, bez DOM). Wymaga: tekst.js, raport.js, norm.js.
+   NIC NIE SCALA. Zwraca uzasadnienie: zgodności / rozbieżności / sprzeczności / braki + wniosek słowny. Nie ma jednej liczby punktów.
+   Wejście = „profil” wystąpienia (budowany z pól aktu, patrz MODEL_DANYCH.md §4):
+   {id, akt, typ, rola, rok, imie, nazwisko, rodowe, plec('M'|'K'|''), wiek, ur:[min,max]|null, zg:rok|null, zyje:[lata],
+    miejsce, dom, ojciec, ojciecNazw, matka, matkaNazw, malzonek:[imiona], dzieciUr:[lata]} */
+const ID_WERSJA_REGUL = 1;
+const ID_WNIOSKI = {sprawdz:'sprawdź (mocna propozycja)', mozliwe:'możliwe', malo:'za mało danych', konflikt:'konflikt', odrzucone:'odrzucone'};   // „odrzucone” ustawia wyłącznie użytkownik
+const ID_ROLE_ZYJE = /^(pan_mlody|panna_mloda|ojciec|matka|swiadek|chrzestny|chrzestna|zglaszajacy|osadnik|malzonek_zyjacy)/;
+
+// przedział urodzenia profilu: jawny (akt chrztu) albo z wieku w akcie
+function idUr(p){ if (p.ur) return p.ur; if (p.rola === 'dziecko' && p.rok) return [p.rok - 1, p.rok]; return przedzialUr(p.rok, p.wiek); }
+// nazwiska kobiety: mężowskie i rodowe to dwa różne pola; porównujemy każde z każdym i zapisujemy, które się zgodziły
+function idNazwiska(p){ const o = []; if (!normBrak(p.nazwisko)) o.push([p.nazwisko, p.rola === 'panna_mloda' || p.rola === 'dziecko' ? 'rodowe' : (p.plec === 'K' ? 'nieokreślone' : 'rodowe')]); if (!normBrak(p.rodowe)) o.push([p.rodowe, 'rodowe']); return o; }
+function idPorNazw(a, b, klasy){ const A = idNazwiska(a), B = idNazwiska(b); if (!A.length || !B.length) return null; const rank = {rowne:4, wariant:3, slownik:3, podobne:1, rozne:0}; let best = null;
+  A.forEach(x => B.forEach(y => { const r = porNazwiska(x[0], y[0], klasy); if (r && (!best || rank[r] > rank[best.r])) best = {r, x, y}; }));
+  // różne nazwiska u kobiety, gdy nie porównano rodowego z rodowym, to brak danych, nie rozbieżność (zmiana nazwiska po ślubie)
+  if (best && best.r === 'rozne' && (a.plec === 'K' || b.plec === 'K') && !(best.x[1] === 'rodowe' && best.y[1] === 'rodowe')) best.r = 'nieporownywalne';
+  return best; }
+
+/* Porównanie dwóch profili. opt.klasy = klasy wariantów nazwisk potwierdzone decyzjami {klucz: idKlasy}. */
+function porownajProfile(a, b, opt){ opt = opt || {}; const Z = [], R = [], S = [], B = []; const z = (k, t, mocna) => Z.push({k, t, mocna: !!mocna}), r = (k, t, istotna) => R.push({k, t, istotna: !!istotna}), s = (k, t) => S.push({k, t}), br = (k, t) => B.push({k, t});
+  // 1. płeć
+  if (a.plec && b.plec) { if (a.plec !== b.plec) s('plec', 'różna płeć (' + a.plec + ' / ' + b.plec + ')'); } else br('plec', 'płeć nieznana w ' + (!a.plec && !b.plec ? 'obu wystąpieniach' : 'jednym wystąpieniu'));
+  // 2. nazwisko
+  const n = idPorNazw(a, b, opt.klasy);
+  if (!n) br('nazwisko', 'brak nazwiska do porównania');
+  else if (n.r === 'rowne') z('nazwisko', 'nazwisko „' + n.x[0] + '”');
+  else if (n.r === 'wariant') z('nazwisko', 'nazwisko w dawnej pisowni: „' + n.x[0] + '” / „' + n.y[0] + '”');
+  else if (n.r === 'slownik') z('nazwisko', 'warianty jednego nazwiska wg zatwierdzonego słownika: „' + n.x[0] + '” / „' + n.y[0] + '”');
+  else if (n.r === 'podobne') r('nazwisko', 'nazwiska podobne, ale nie te same: „' + n.x[0] + '” / „' + n.y[0] + '” – sprawdź na skanie', true);
+  else if (n.r === 'nieporownywalne') br('nazwisko', 'nazwisk nie da się porównać (kobieta: mężowskie / rodowe): „' + n.x[0] + '” / „' + n.y[0] + '”');
+  else r('nazwisko', 'różne nazwiska: „' + n.x[0] + '” / „' + n.y[0] + '”', true);
+  // 3. imię
+  const im = porImiona(a.imie, b.imie);
+  if (im === null) br('imie', 'brak imienia do porównania'); else if (im === 'rowne') z('imie', 'imię „' + normCzysc(a.imie) + '”' + (fold(normCzysc(a.imie)) !== fold(normCzysc(b.imie)) ? ' / „' + normCzysc(b.imie) + '”' : ''));
+  else if (im === 'bliskie') r('imie', 'imiona bliskie, często mylone: „' + normCzysc(a.imie) + '” / „' + normCzysc(b.imie) + '”', true); else r('imie', 'różne imiona: „' + normCzysc(a.imie) + '” / „' + normCzysc(b.imie) + '”', true);
+  // 4. urodzenie (przedziały, nie punkty)
+  const ua = idUr(a), ub = idUr(b);
+  if (!ua || !ub) br('urodzenie', 'brak wieku lub daty urodzenia w ' + (!ua && !ub ? 'obu wystąpieniach' : 'jednym wystąpieniu'));
+  else if (przedzialyWspolne(ua, ub)) { const waski = Math.min(ua[1] - ua[0], ub[1] - ub[0]) <= 4 && Math.max(ua[1] - ua[0], ub[1] - ub[0]) <= 14; z('urodzenie', 'rok urodzenia zgodny: ' + ua.join('–') + ' i ' + ub.join('–') + (waski ? '' : ' (szeroki przedział, wiek przybliżony)'), waski); }
+  else { const d = przedzialyOdstep(ua, ub); if (d <= 5) r('urodzenie', 'rok urodzenia rozbieżny o ' + d + ' l. ponad tolerancję: ' + ua.join('–') + ' i ' + ub.join('–'), false); else r('urodzenie', 'rok urodzenia niezgodny (' + d + ' l. ponad tolerancję): ' + ua.join('–') + ' i ' + ub.join('–'), true); }
+  // 5. chronologia – niemożliwości logiczne
+  const chr = (x, y) => { if (!x.zg) return; const pozniej = (y.zyje || []).filter(t => t > x.zg + (y.rola === 'ojciec' ? 1 : 0)); if (pozniej.length) s('zyje-po-zgonie', 'zgon w ' + x.zg + ', a w ' + pozniej[0] + ' osoba występuje jako żyjąca (' + y.rola + ')');
+    const dz = (y.dzieciUr || []).filter(t => t > x.zg + (x.plec === 'K' ? 0 : 1)); if (dz.length) s('dziecko-po-zgonie', 'zgon w ' + x.zg + ', a dziecko urodzone w ' + dz[0]); };
+  chr(a, b); chr(b, a);
+  if (a.zg && b.zg && a.akt !== b.akt) { if (a.zg !== b.zg) s('dwa-zgony', 'dwa akty zgonu w różnych latach: ' + a.zg + ' i ' + b.zg); else z('zgon', 'ten sam rok zgonu ' + a.zg + ' (możliwy podwójny wpis – sprawdź)', false); }
+  if (a.rola === 'dziecko' && b.rola === 'dziecko' && a.akt !== b.akt && a.typ === b.typ) s('dwa-chrzty', 'dwa różne akty chrztu (' + a.rok + ' i ' + b.rok + ') – to dwoje dzieci, częste powtórzenie imienia po zmarłym rodzeństwie');
+  const przedUr = (x, y) => { const u = idUr(x); if (u) (y.zyje || []).forEach(t => { if (ID_ROLE_ZYJE.test(y.rola) && t < u[0] + 12 && !S.some(q => q.k === 'przed-urodzeniem')) s('przed-urodzeniem', 'w ' + t + ' osoba dorosła (' + y.rola + '), a urodzenie najwcześniej w ' + u[0]); }); };
+  przedUr(a, b); przedUr(b, a);
+  // 6. rodzice
+  let RODZ = () => {};
+  const rodz = (etyk, x, y, kx, ky) => { const p = porImiona(x, y); if (p === null) { if (!normBrak(x) || !normBrak(y)) br(kx, etyk + ' znany tylko w jednym wystąpieniu'); else br(kx, etyk + ' nieznany w obu'); return null; }
+    if (p === 'rowne') z(kx, etyk + ': „' + normCzysc(x) + '”', true); else if (p === 'bliskie') r(kx, etyk + ' – imiona bliskie: „' + normCzysc(x) + '” / „' + normCzysc(y) + '”', false); else r(kx, etyk + ' – inne imię: „' + normCzysc(x) + '” / „' + normCzysc(y) + '”', true); return p; };
+  const po = rodz('ojciec', a.ojciec, b.ojciec, 'ojciec'), pm = rodz('matka', a.matka, b.matka, 'matka');
+  let mnZg = false;
+  if (po === 'rozne' && pm === 'rozne') RODZ = () => { if (!mnZg) s('rodzice', 'oboje rodzice inni: ' + normCzysc(a.ojciec) + ' i ' + normCzysc(a.matka) + ' / ' + normCzysc(b.ojciec) + ' i ' + normCzysc(b.matka)); };
+  if (!normBrak(a.matkaNazw) && !normBrak(b.matkaNazw)) { const q = porNazwiska(a.matkaNazw, b.matkaNazw, opt.klasy); if (q === 'rowne' || q === 'wariant' || q === 'slownik') { mnZg = true; z('matkaNazw', 'nazwisko rodowe matki: „' + normCzysc(a.matkaNazw) + '”', true); } else if (q === 'rozne') r('matkaNazw', 'inne nazwisko rodowe matki: „' + normCzysc(a.matkaNazw) + '” / „' + normCzysc(b.matkaNazw) + '”', true); }
+  RODZ();   // oboje rodzice inni = sprzeczność, chyba że zgadza się nazwisko rodowe matki (wtedy zostają dwie istotne rozbieżności)
+  // 7. małżonek (różny małżonek to nie sprzeczność: drugie małżeństwo)
+  const ma = (a.malzonek || []).filter(x => !normBrak(x)), mb = (b.malzonek || []).filter(x => !normBrak(x));
+  if (ma.length && mb.length) { if (ma.some(x => mb.some(y => porImiona(x, y) === 'rowne'))) z('malzonek', 'imię małżonka: „' + ma.find(x => mb.some(y => porImiona(x, y) === 'rowne')) + '”', true); else r('malzonek', 'inny małżonek: „' + ma.join(', ') + '” / „' + mb.join(', ') + '” (możliwe drugie małżeństwo)', false); }
+  else br('malzonek', 'małżonek nieznany w ' + (!ma.length && !mb.length ? 'obu wystąpieniach' : 'jednym wystąpieniu'));
+  // 8. miejscowość i dom (inna miejscowość to nie sprzeczność: ludzie się przenoszą)
+  const pmj = porMiejsca(a.miejsce, b.miejsce);
+  if (pmj === null) br('miejsce', 'brak miejscowości do porównania'); else if (pmj === 'rowne') z('miejsce', 'miejscowość „' + normCzysc(a.miejsce) + '”', false); else if (pmj === 'mozliwe') z('miejsce', 'miejscowość prawdopodobnie ta sama: „' + normCzysc(a.miejsce) + '” / „' + normCzysc(b.miejsce) + '”', false); else r('miejsce', 'inna miejscowość: „' + normCzysc(a.miejsce) + '” / „' + normCzysc(b.miejsce) + '”', false);
+  if (!normBrak(a.dom) && !normBrak(b.dom) && pmj === 'rowne') { if (String(a.dom).replace(/\D/g, '') === String(b.dom).replace(/\D/g, '') && Math.abs((a.rok || 0) - (b.rok || 0)) <= 30) z('dom', 'ten sam numer domu ' + a.dom + ' (akty w odstępie do 30 lat)', true); }
+  return idWniosek({zgodnosci: Z, rozbieznosci: R, sprzecznosci: S, braki: B}); }
+
+/* Wniosek z tabeli decyzyjnej (jawnej, bez wag):
+   konflikt  – jakakolwiek sprzeczność logiczna;
+   (brak propozycji) – nazwisko lub imię różne/niezgodne → para w ogóle nie jest kandydatem (rdzen=false);
+   sprawdź   – rdzeń zgodny + ≥2 mocne zgodności, w tym ≥1 rodzinna (ojciec, matka, nazwisko matki, małżonek), 0 istotnych rozbieżności;
+   możliwe   – rdzeń zgodny + ≥1 mocna zgodność, najwyżej 1 istotna rozbieżność;
+   za mało danych – sam rdzeń (imię + nazwisko, ewentualnie miejscowość). */
+function idWniosek(u){ const ma = k => u.zgodnosci.some(x => x.k === k); u.rdzen = ma('nazwisko') && ma('imie');
+  const rodzinne = u.zgodnosci.filter(x => /^(ojciec|matka|matkaNazw|malzonek)$/.test(x.k)).length, mocne = u.zgodnosci.filter(x => x.mocna).length, istotne = u.rozbieznosci.filter(x => x.istotna && !/^(nazwisko|imie)$/.test(x.k)).length;
+  u.wniosek = u.sprzecznosci.length ? 'konflikt' : !u.rdzen ? 'malo' : (mocne >= 2 && rodzinne >= 1 && !istotne) ? 'sprawdz' : (mocne >= 1 && istotne <= 1) ? 'mozliwe' : 'malo';
+  u.porzadek = [({sprawdz:0, mozliwe:1, malo:2, konflikt:3})[u.wniosek], -rodzinne, -mocne, istotne, u.rozbieznosci.length];   // do sortowania listy (leksykograficznie), nie do pokazywania
+  u.reguly = ID_WERSJA_REGUL; return u; }
+const idPorzadek = (x, y) => { for (let i = 0; i < x.porzadek.length; i++) if (x.porzadek[i] !== y.porzadek[i]) return x.porzadek[i] - y.porzadek[i]; return 0; };
+
+/* Kandydaci dla jednego profilu. Blokowanie po kluczu nazwiska (k2) i klasach słownika; wynik bez par z niezgodnym rdzeniem.
+   Po zebraniu listy: konkurencja – jeśli na najwyższym poziomie jest >1 kandydat, „sprawdź” spada do „możliwe” z adnotacją. */
+function idIndeks(profile, klasy){ const ix = {}; profile.forEach(p => idNazwiska(p).forEach(([v]) => { const k = kluczNazwiska(v); if (!k) return; const kk = (klasy && (klasy[k.k2] || klasy[k.k1])) || k.k2; (ix[kk] = ix[kk] || []).push(p); })); return ix; }
+function idKandydaci(p, ix, opt){ opt = opt || {}; const seen = new Set([p.id]), out = [];
+  idNazwiska(p).forEach(([v]) => { const k = kluczNazwiska(v); if (!k) return; const kk = (opt.klasy && (opt.klasy[k.k2] || opt.klasy[k.k1])) || k.k2;
+    (ix[kk] || []).forEach(q => { if (seen.has(q.id) || q.akt === p.akt) return; seen.add(q.id); if (opt.pomin && opt.pomin(p, q)) return; const u = porownajProfile(p, q, opt); if (!u.rdzen) return; u.a = p.id; u.b = q.id; out.push(u); }); });
+  out.sort(idPorzadek); idKonkurencja(out); return out; }
+function idKonkurencja(L){ const top = L.filter(u => u.wniosek === 'sprawdz'); if (top.length > 1) top.forEach(u => { u.wniosek = 'mozliwe'; u.konkurencja = top.length; u.rozbieznosci.push({k:'konkurencja', t:'niejednoznaczne: ' + top.length + ' kandydatów spełnia warunki mocnej propozycji', istotna:false}); });
+  const moz = L.filter(u => u.wniosek === 'mozliwe' && !u.konkurencja).length; L.forEach(u => { if (u.wniosek === 'mozliwe' && !u.konkurencja && moz > 1) u.konkurencja = moz; });
+  // jedyny kandydat w całej bazie o tym imieniu i nazwisku + zgodny rok urodzenia → „możliwe” (z adnotacją), nigdy wyżej
+  const zywi = L.filter(u => u.wniosek !== 'konflikt'); if (zywi.length === 1 && zywi[0].wniosek === 'malo' && zywi[0].zgodnosci.some(x => x.k === 'urodzenie')) { zywi[0].wniosek = 'mozliwe'; zywi[0].jedyny = true; zywi[0].zgodnosci.push({k:'jedyny', t:'jedyny kandydat w bazie o tym imieniu i nazwisku', mocna:false}); }
+  return L; }
+// tekst wniosku do pokazania i do zapisania w Decyzji
+function idZdanie(u){ const n = u.konkurencja ? ' Kandydatów na tym poziomie: ' + u.konkurencja + '.' : '';
+  return ({sprawdz:'Mocna propozycja: zgodny rdzeń i dane rodzinne. Sprawdź na skanie i zdecyduj.', mozliwe:'Możliwe: zgodny rdzeń i część danych; brakuje potwierdzenia rodzinnego lub jest rozbieżność.', malo:'Za mało danych: zgadza się tylko imię i nazwisko. Nie scalaj bez dodatkowego źródła.', konflikt:'Konflikt: ' + u.sprzecznosci.map(x => x.t).join('; ') + '. To raczej różne osoby albo błąd w jednym z aktów.'})[u.wniosek] + n; }
+
+/* moduly/decyzje.js – dziennik decyzji o tożsamości i klastry osób (czyste funkcje, bez DOM).
+   Dziennik jest jedynym źródłem prawdy o scaleniach. Osoba = klaster wystąpień wyliczany z dziennika. Nic się nie kasuje: cofnięcie to nowy wpis.
+   Decyzja: {n, t, typ:'scal'|'odrzuc'|'odloz'|'cofnij', a, b, wniosek, uzasadnienie:{zgodnosci,rozbieznosci,sprzecznosci,braki}, reguly, cofa, why} */
+const DEC_FORMAT = {nazwa:'multitool-decyzje', wersja:1};
+const decKlucz = (a, b) => a < b ? a + '|' + b : b + '|' + a;
+function decNowa(L, d){ const n = L.reduce((m, x) => Math.max(m, x.n), 0) + 1; const e = Object.assign({n, t: new Date().toISOString()}, d); L.push(e); return e; }
+// decyzje obowiązujące: bez cofniętych i bez samych wpisów „cofnij”; dla pary liczy się ostatnia
+function decAktywne(L){ const cof = new Set(L.filter(d => d.typ === 'cofnij').map(d => d.cofa)); const par = {}; L.forEach(d => { if (d.typ === 'cofnij' || cof.has(d.n)) return; par[decKlucz(d.a, d.b)] = d; }); return Object.values(par); }
+// klastry (union-find) z aktywnych decyzji „scal”; id osoby = najmniejszy numer decyzji w klastrze (stabilny, dopóki ta decyzja obowiązuje)
+function decKlastry(L){ const par = {}, f = x => par[x] === undefined || par[x] === x ? (par[x] = x) : (par[x] = f(par[x])); const akt = decAktywne(L); akt.filter(d => d.typ === 'scal').forEach(d => { par[f(d.a)] = f(d.b); });
+  const G = {}; Object.keys(par).forEach(x => (G[f(x)] = G[f(x)] || []).push(x)); const osoby = {}, czyja = {};
+  Object.values(G).forEach(c => { if (c.length < 2) return; const dn = akt.filter(d => d.typ === 'scal' && c.includes(d.a)).map(d => d.n); const id = 'o:' + Math.min(...dn); dn.sort((x, y) => x - y); osoby[id] = {id, wystapienia: c.sort(), decyzje: dn, aliasy: dn.slice(1).map(x => 'o:' + x), status: 'zatwierdzona'}; c.forEach(w => czyja[w] = id); });
+  const odrz = new Set(akt.filter(d => d.typ === 'odrzuc').map(d => decKlucz(d.a, d.b))), odl = new Set(akt.filter(d => d.typ === 'odloz').map(d => decKlucz(d.a, d.b)));
+  return {osoby, czyja, odrzucone: odrz, odlozone: odl}; }
+// para odrzucona blokuje scalenie pośrednie: zwraca listę odrzuconych par, które znalazłyby się w jednym klastrze po scaleniu a+b
+function decKolizje(L, a, b){ const K = decKlastry(L), ca = K.czyja[a] ? K.osoby[K.czyja[a]].wystapienia : [a], cb = K.czyja[b] ? K.osoby[K.czyja[b]].wystapienia : [b], out = []; ca.forEach(x => cb.forEach(y => { if (K.odrzucone.has(decKlucz(x, y))) out.push([x, y]); })); return out; }
+// walidacja importu: format, wersja, typy, odwołania do istniejących wystąpień; zwraca {ok:[...], bledy:[...]}
+function decWaliduj(obj, znaneWyst){ const bl = [], ok = []; if (!obj || !obj.format || obj.format.nazwa !== DEC_FORMAT.nazwa) return {ok, bledy: ['To nie jest plik decyzji Multitoola (brak pola format).']}; if (obj.format.wersja > DEC_FORMAT.wersja) return {ok, bledy: ['Plik z nowszej wersji (' + obj.format.wersja + '). Zaktualizuj aplikację.']};
+  if (!Array.isArray(obj.decyzje)) return {ok, bledy: ['Brak listy decyzji.']}; const nry = new Set();
+  obj.decyzje.forEach((d, i) => { const gdzie = 'wpis ' + (i + 1) + ': '; if (!d || typeof d !== 'object' || !Number.isInteger(d.n) || nry.has(d.n)) return bl.push(gdzie + 'brak lub powtórzony numer'); if (!/^(scal|odrzuc|odloz|cofnij)$/.test(d.typ)) return bl.push(gdzie + 'nieznany typ „' + String(d.typ).slice(0, 20) + '”');
+    if (d.typ === 'cofnij') { if (!Number.isInteger(d.cofa)) return bl.push(gdzie + 'cofnięcie bez numeru decyzji'); } else if (typeof d.a !== 'string' || typeof d.b !== 'string' || !znaneWyst.has(d.a) || !znaneWyst.has(d.b)) return bl.push(gdzie + 'odwołanie do nieznanego wystąpienia');
+    nry.add(d.n); ok.push(d); }); return {ok, bledy: bl}; }
+function decCsv(L){ return ['nr;czas;typ;a;b;wniosek;zgodnosci;rozbieznosci;sprzecznosci;braki;reguly;cofa;powod'].concat(L.map(d => { const u = d.uzasadnienie || {}; return [d.n, d.t, d.typ, d.a || '', d.b || '', d.wniosek || '', (u.zgodnosci || []).join(' | '), (u.rozbieznosci || []).join(' | '), (u.sprzecznosci || []).join(' | '), (u.braki || []).join(' | '), d.reguly || '', d.cofa || '', d.why || ''].map(csvCell).join(';'); })).join('\r\n') + '\r\n'; }
+
+/* app/moduly/osoby_rdzen.js – rdzeń zakładki „Osoby” (krok 6): model wystąpień z aktów, silnik propozycji, dziennik decyzji, klasy wariantów nazwisk, import dop.v1.
+   Czyste funkcje, bez DOM – działają w Web Workerze i na wątku głównym (fallback). Wymaga (kolejność): tekst.js, raport.js (wiekLat), norm.js, norm_zapis.js, moduly/wystapienia.js, moduly/identity.js, moduly/decyzje.js.
+   Zasady (MODEL_DANYCH §1, SCALANIE_OSOBY): program niczego nie scala; propozycja z uzasadnieniem → decyzja użytkownika → osoba wyliczana z dziennika. Akty, wystąpienia i źródła są tylko czytane. */
+
+/* ---------- 1. model: wystąpienia z aktów ---------- */
+// rola → atrybut → pola aktu (pierwsze niepuste); '=' w nazwie roli nie występuje. Role pomijane celowo: świadkowie, zgłaszający, księża (słabe tożsamościowo; zob. PLAN_WDROZENIA §6, krok 6).
+const OS_ROLE = {
+  zgon: {zmarly: {imie: ['deceased_first_name'], nazwisko: ['deceased_last_name'], rodowe: ['deceased_maiden_name'], plec: ['deceased_sex'], wiek: ['age'], miejsce: ['deceased_residence', 'death_place'], dom: ['house']},
+    ojciec: {imie: ['father_first_name'], nazwisko: ['father_last_name', '@ojcowskie'], miejsce: ['deceased_residence', 'death_place']},
+    matka: {imie: ['mother_first_name'], rodowe: ['mother_last_name'], nazwisko: ['father_last_name', '@ojcowskie'], miejsce: ['deceased_residence', 'death_place']},
+    malzonek: {imie_nazwisko: ['deceased_spouse']}},
+  chrzest: {dziecko: {imie: ['child_first_name'], nazwisko: ['child_last_name'], miejsce: ['child_birth_place']},
+    ojciec: {imie: ['father_first_name'], nazwisko: ['father_last_name'], wiek: ['father_age'], miejsce: ['child_birth_place']},
+    matka: {imie: ['mother_first_name'], rodowe: ['mother_last_name'], nazwisko: ['father_last_name'], wiek: ['mother_age'], miejsce: ['child_birth_place']}},
+  malzenstwo: {pan_mlody: {imie: ['groom_first_name'], nazwisko: ['groom_last_name'], wiek: ['groom_age'], stan: ['groom_status'], miejsce: ['groom_residence']},
+    panna_mloda: {imie: ['bride_first_name'], nazwisko: ['bride_last_name'], wiek: ['bride_age'], stan: ['bride_status'], miejsce: ['bride_residence']},
+    ojciec_pana: {imie: ['groom_father_first_name'], nazwisko: ['groom_father_last_name']}, matka_pana: {imie: ['groom_mother_first_name'], rodowe: ['groom_mother_last_name'], nazwisko: ['groom_father_last_name']},
+    ojciec_panny: {imie: ['bride_father_first_name'], nazwisko: ['bride_father_last_name']}, matka_panny: {imie: ['bride_mother_first_name'], rodowe: ['bride_mother_last_name'], nazwisko: ['bride_father_last_name']}}
+};
+// nazwisko ojca w akcie zgonu bez pola „ojciec”: mężczyzna → jego nazwisko; kobieta niezamężna (dziecko, panna) → jej nazwisko; kobieta z nazwiskiem rodowym → rodowe; inaczej nieznane
+function osOjcowskie(w){ const z = w('deceased_sex'), n = w('deceased_last_name'), r = w('deceased_maiden_name'); if (!normBrak(r)) return r;
+  if (z !== 'K') return n; return /dziec|panna|panienka|virgo|puella|infans|filia/i.test(String(w('deceased_status') || '')) ? n : ''; }
+// pola: funkcja wart(akt, pole) → bieżąca wartość (w aplikacji getv, czyli z poprawkami użytkownika)
+function osModel(akty, wart){ const M = {akty: [], wystapienia: []};
+  akty.forEach(a => { const R = OS_ROLE[a.typ]; if (!R) return; const w = f => { const v = wart(a, f); return v == null ? '' : String(v); }, pola = {}, rola = [];
+    for (const r in R) { const mapa = {}; let ma = false; for (const at in R[r]) { let v = ''; for (const f of R[r][at]) { v = f === '@ojcowskie' ? osOjcowskie(w) : w(f); if (!normBrak(v)) break; v = ''; } if (v !== '') { pola[r + '.' + at] = {value: v}; mapa[at] = r + '.' + at; if (at !== 'miejsce' && at !== 'plec' && at !== 'dom') ma = true; } }
+      if (ma) M.wystapienia.push({id: 'w:' + a.id + ':' + r, akt: a.id, rola: r, mapa}); }
+    M.akty.push({id: a.id, typ: a.typ, rok: Number(a.year != null ? a.year : a.rok) || null, miejsce: w('deceased_residence') || w('death_place') || w('child_birth_place') || w('groom_residence') || '', pola}); });
+  return M; }
+// podpis modelu (FNV-1a po JSON) – do rozpoznania, że dane aktów zmieniły się od ostatniego przeliczenia
+function osPodpis(M){ let h = 0x811c9dc5; const s = JSON.stringify(M); for (let i = 0; i < s.length; i++) { h ^= s.charCodeAt(i); h = Math.imul(h, 16777619) >>> 0; } return h.toString(16) + ':' + s.length; }
+
+/* ---------- 2. silnik: profile, indeks, kandydaci ---------- */
+// klasy = {klucz nazwiska (k1/k2): id klasy} z decyzji wariant_nazwiska (osKlasy)
+function osSilnik(M, klasy){ const P = wystProfile(M), PL = Object.values(P), E = {P, PL, klasy: klasy || {}, ix: {}}; osIndeksuj(E); return E; }
+const osKlucz = (v, klasy) => { const k = kluczNazwiska(v); return k ? ((klasy && (klasy[k.k2] || klasy[k.k1])) || k.k2) : null; };
+// indeks blokowy: klucz nazwiska × klucz imienia (rdzeń propozycji wymaga zgodnego nazwiska i imienia, więc pary spoza bloku nigdy nie byłyby kandydatami)
+function osIndeksuj(E){ E.ix = {}; E.PL.forEach(p => { const iml = kluczImienia(p.imie); if (!iml.length) return; const ks = new Set(); idNazwiska(p).forEach(([v]) => { const k = osKlucz(v, E.klasy); if (k) ks.add(k); });
+  ks.forEach(k => iml.forEach(im => (E.ix[k + '|' + im] = E.ix[k + '|' + im] || []).push(p))); }); }
+function osKandydaci(E, id){ const p = E.P[id]; if (!p) return []; const seen = new Set([p.id]), out = [], opt = {klasy: E.klasy}, iml = kluczImienia(p.imie);
+  idNazwiska(p).forEach(([v]) => { const k = osKlucz(v, E.klasy); if (!k) return; iml.forEach(im => (E.ix[k + '|' + im] || []).forEach(q => { if (seen.has(q.id) || q.akt === p.akt) return; seen.add(q.id); const u = porownajProfile(p, q, opt); if (!u.rdzen) return; u.a = p.id; u.b = q.id; out.push(u); })); });
+  out.sort(idPorzadek); idKonkurencja(out); return out; }
+const OS_WN = {sprawdz: 'sprawdź', mozliwe: 'możliwe', malo: 'za mało danych', konflikt: 'konflikt'};
+// wersja do wysłania z Workera / zapisania: bez ciężkich pól
+const osUzas = u => ({zgodnosci: u.zgodnosci.map(x => x.t), rozbieznosci: u.rozbieznosci.map(x => x.t), sprzecznosci: u.sprzecznosci.map(x => x.t), braki: u.braki.map(x => x.t)});
+function osPoWyst(E, a, b){ const u = porownajProfile(E.P[a], E.P[b], {klasy: E.klasy}); u.a = a; u.b = b; return u; }
+// przeliczenie profili porcjami. wyniki[id] = [[b, kod, konkurencja, mocnych, rodzinnych]] tylko dla „sprawdź” i „możliwe” (reszta to liczniki licz[id] = [za mało danych, konflikt]); pełne uzasadnienia liczy karta na żądanie
+const OS_KOD = {sprawdz: 's', mozliwe: 'm', malo: 'l', konflikt: 'k'};
+function osPrzeliczPorcja(E, od, ile, wyniki, licz){ const koniec = Math.min(E.PL.length, od + ile);
+  for (let i = od; i < koniec; i++) { const p = E.PL[i], L = osKandydaci(E, p.id); if (!L.length) continue; const w = [], c = [0, 0];
+    L.forEach(u => { if (u.wniosek === 'sprawdz' || u.wniosek === 'mozliwe') w.push([u.b, OS_KOD[u.wniosek], u.konkurencja || 0, u.zgodnosci.filter(x => x.mocna).length, u.zgodnosci.filter(x => /^(ojciec|matka|matkaNazw|malzonek)$/.test(x.k)).length]); else c[u.wniosek === 'konflikt' ? 1 : 0]++; });
+    if (w.length) wyniki[p.id] = w; if (c[0] || c[1]) licz[p.id] = c; }
+  return koniec; }
+// etykieta do list i wyszukiwania: [id, tekst, rok, typ aktu, rola]
+const osEtyk = E => E.PL.map(p => [p.id, wystEtykieta(p), p.rok || 0, p.typ, p.rolaAktu]);
+
+/* ---------- 3. decyzje: walidacja, zapis, klasy wariantów nazwisk ---------- */
+// typy dziennika: scal, odrzuc, odloz, cofnij (decyzje.js) + brak (b = „brak:B|D|M”), wariant_nazwiska / odrzuc_wariant (a, b = „n:<zapis nazwiska>”)
+const OS_TYPY = /^(scal|odrzuc|odloz|brak|wariant_nazwiska|odrzuc_wariant|cofnij)$/, OS_ZAKAZ = new Set(['__proto__', 'constructor', 'prototype']);
+const osStr = (v, max) => typeof v === 'string' && v.length <= max;
+const osListaTekst = v => Array.isArray(v) && v.length <= 40 && v.every(x => osStr(x, 400));
+// jedna decyzja → czysty obiekt albo null (białą listą pól; nic z pliku nie trafia dalej bez sprawdzenia)
+function osCzyscDec(d, znane){ if (!d || typeof d !== 'object' || Array.isArray(d) || !Number.isInteger(d.n) || d.n < 1 || !OS_TYPY.test(d.typ)) return null; const o = {n: d.n, t: osStr(d.t, 40) ? d.t : '', typ: d.typ};
+  if (d.typ === 'cofnij') { if (!Number.isInteger(d.cofa) || d.cofa < 1) return null; o.cofa = d.cofa; }
+  else { if (!osStr(d.a, 200) || !osStr(d.b == null ? '' : d.b, 200)) return null; o.a = d.a; o.b = d.b == null ? '' : d.b;
+    if (/^(scal|odrzuc|odloz)$/.test(d.typ)) { if (!/^w:/.test(o.a) || !/^w:/.test(o.b) || o.a === o.b || (znane && !(znane.has(o.a) && znane.has(o.b)))) return null; }
+    else if (d.typ === 'brak') { if (!/^w:/.test(o.a) || !/^brak:[BDM]$/.test(o.b) || (znane && !znane.has(o.a))) return null; }
+    else if (!/^n:.{1,150}$/.test(o.a) || !/^n:.{1,150}$/.test(o.b) || o.a === o.b) return null; }
+  if (d.wniosek !== undefined) { if (!osStr(d.wniosek, 40)) return null; o.wniosek = d.wniosek; } if (d.reguly !== undefined) { if (!Number.isInteger(d.reguly)) return null; o.reguly = d.reguly; }
+  if (d.why !== undefined) { if (!osStr(d.why, 1000)) return null; o.why = d.why; } if (d.zr !== undefined) { if (!osStr(d.zr, 40)) return null; o.zr = d.zr; } if (d.slot !== undefined) { if (!osStr(d.slot, 80)) return null; o.slot = d.slot; }
+  if (d.uzasadnienie !== undefined) { const u = d.uzasadnienie; if (!u || typeof u !== 'object') return null; o.uzasadnienie = {}; for (const k of ['zgodnosci', 'rozbieznosci', 'sprzecznosci', 'braki']) { if (u[k] !== undefined && !osListaTekst(u[k])) return null; o.uzasadnienie[k] = u[k] || []; } }
+  if (d.formy !== undefined) { if (!osListaTekst(d.formy)) return null; o.formy = d.formy; }
+  return o; }
+// plik/kopia → {ok:[...], bledy:[...]}; numery unikalne, „cofnij” musi wskazywać istniejący wpis
+function osWaliduj(lista, znane){ const ok = [], bledy = [], nry = new Set(); if (!Array.isArray(lista)) return {ok, bledy: ['Brak listy decyzji.']};
+  lista.forEach((d, i) => { const x = osCzyscDec(d, znane); if (!x) return bledy.push('wpis ' + (i + 1) + ': błędna lub niepełna decyzja'); if (nry.has(x.n)) return bledy.push('wpis ' + (i + 1) + ': powtórzony numer ' + x.n); nry.add(x.n); ok.push(x); });
+  const dobre = ok.filter(x => x.typ !== 'cofnij' || nry.has(x.cofa)); if (dobre.length < ok.length) bledy.push('cofnięcia bez decyzji docelowej: ' + (ok.length - dobre.length));
+  return {ok: dobre, bledy}; }
+// dopisanie decyzji z kopii/pliku do dziennika: pomija identyczne (ten sam czas, typ, a, b), reszcie nadaje nowe numery (z przemapowaniem „cofa”)
+function osDopiszDecyzje(L, nowe){ const mapa = {}, klucz = d => [d.t, d.typ, d.a || '', d.b || '', d.cofa || ''].join('|'); let dodane = 0, pominiete = 0;
+  const maja = new Map(L.map(d => [klucz(Object.assign({}, d, {cofa: ''})), d.n]));
+  nowe.slice().sort((x, y) => x.n - y.n).forEach(d => { const k = klucz(Object.assign({}, d, {cofa: d.typ === 'cofnij' ? (mapa[d.cofa] || d.cofa) : ''})); const ist = d.typ !== 'cofnij' && maja.get(klucz(Object.assign({}, d, {cofa: ''})));
+    if (ist) { mapa[d.n] = ist; pominiete++; return; }
+    if (d.typ === 'cofnij' && L.some(x => x.typ === 'cofnij' && x.cofa === (mapa[d.cofa] || d.cofa))) { pominiete++; return; }
+    const e = Object.assign({}, d); e.n = L.reduce((m, x) => Math.max(m, x.n), 0) + 1; mapa[d.n] = e.n; if (d.typ === 'cofnij') e.cofa = mapa[d.cofa] || d.cofa; L.push(e); maja.set(klucz(Object.assign({}, e, {cofa: ''})), e.n); dodane++; });
+  return {dodane, pominiete}; }
+// zapisz decyzję z kontrolą spójności; zwraca {ok, blad, dec}
+// typ: scal | odrzuc | odloz | brak | wariant_nazwiska | odrzuc_wariant; u = uzasadnienie z porównania (obiekt jak z idKandydaci/porownajProfile) albo null
+function osDecyduj(L, typ, a, b, opt){ opt = opt || {}; const u = opt.u || null, why = String(opt.why || '').trim(), A = decAktywne(L).find(d => d.typ === typ && decKlucz(d.a, d.b) === decKlucz(a, b));
+  if (A && typ !== 'odloz') return {ok: false, blad: 'Ta decyzja już obowiązuje (nr ' + A.n + ').'};
+  if (typ === 'scal' || typ === 'odrzuc' || typ === 'odloz') {
+    if (opt.akty && opt.akty[a] === opt.akty[b]) return {ok: false, blad: 'Dwa wystąpienia z tego samego aktu nie są jedną osobą.'};
+    const K = decKlastry(L);
+    if (typ === 'scal') { if (K.czyja[a] && K.czyja[a] === K.czyja[b]) return {ok: false, blad: 'Już należą do jednej osoby.'};
+      const kol = decKolizje(L, a, b); if (kol.length) return {ok: false, blad: 'Nie można scalić: w połączonej osobie znalazłaby się para wcześniej oznaczona jako różne osoby (' + kol.length + '). Najpierw cofnij tamtą decyzję.', kolizje: kol};
+      if (u && (u.wniosek !== 'sprawdz') && why.length < 5) return {ok: false, blad: 'Scalenie propozycji innej niż „sprawdź” (' + (OS_WN[u.wniosek] || u.wniosek) + ') wymaga powodu (min. 5 znaków).', trzebaPowod: true};
+      if (u && u.sprzecznosci && u.sprzecznosci.length && why.length < 5) return {ok: false, blad: 'Para ma sprzeczność logiczną – wpisz wyjaśnienie, dlaczego mimo to to ta sama osoba.', trzebaPowod: true}; }
+    if (typ === 'odrzuc' && K.czyja[a] && K.czyja[a] === K.czyja[b]) return {ok: false, blad: 'Te wystąpienia są w jednej osobie – najpierw cofnij scalenie.'}; }
+  const d = {typ, a, b: b || '', wniosek: u ? u.wniosek : (opt.wniosek || ''), reguly: u ? u.reguly : (opt.reguly || 0), why, uzasadnienie: u ? osUzas(u) : (opt.uzasadnienie || {zgodnosci: [], rozbieznosci: [], sprzecznosci: [], braki: []})};
+  if (opt.formy) d.formy = opt.formy; if (opt.zr) d.zr = opt.zr; if (opt.slot) d.slot = opt.slot; if (!d.why) delete d.why;
+  return {ok: true, dec: decNowa(L, d)}; }
+function osCofnij(L, n, why){ const d = L.find(x => x.n === n), akt = decAktywne(L); if (!d || d.typ === 'cofnij') return {ok: false, blad: 'Nie ma takiej decyzji.'}; if (!akt.some(x => x.n === n)) return {ok: false, blad: 'Decyzja nr ' + n + ' już nie obowiązuje.'};
+  const e = {typ: 'cofnij', cofa: n}; if (why) e.why = String(why).slice(0, 1000); return {ok: true, dec: decNowa(L, e)}; }
+// klasy wariantów nazwisk z aktywnych decyzji „wariant_nazwiska”: {klasy:{klucz k2: 'k:<n>'}, czlonkowie:{'k:<n>': [zapisy]}}; klucz = k2 z norm.js (porNazwiska sprawdza klasy[k2] || klasy[k1])
+function osKlasy(L){ const par = {}, f = x => par[x] === undefined || par[x] === x ? (par[x] = x) : (par[x] = f(par[x])), zapis = {}, dn = {};
+  const akt = decAktywne(L).filter(d => d.typ === 'wariant_nazwiska'); akt.forEach(d => { const ka = kluczNazwiska(d.a.slice(2)), kb = kluczNazwiska(d.b.slice(2)); if (!ka || !kb) return; (zapis[ka.k2] = zapis[ka.k2] || new Set()).add(d.a.slice(2)); (zapis[kb.k2] = zapis[kb.k2] || new Set()).add(d.b.slice(2)); par[f(ka.k2)] = f(kb.k2); });
+  const G = {}; Object.keys(par).forEach(k => (G[f(k)] = G[f(k)] || []).push(k)); const klasy = {}, czlonkowie = {};
+  Object.values(G).forEach(ks => { if (ks.length < 2) return; const ns = akt.filter(d => { const k = kluczNazwiska(d.a.slice(2)); return k && ks.includes(k.k2); }).map(d => d.n), id = 'k:' + Math.min(...ns); ks.forEach(k => klasy[k] = id); czlonkowie[id] = [].concat(...ks.map(k => [...zapis[k]])).sort(); });
+  return {klasy, czlonkowie}; }
+// zapis nazwiska → rdzeń po odjęciu końcówki pochodnej (Paluchowski → Paluch); null, gdy nie ma czego odjąć
+const osRdzenNazw = k1 => { const m = /^(.{4,}?)(owski|ewski|ski|cki|dzki|owicz|ewicz)$/.exec(k1); return m ? m[1] : null; };
+// kandydaci na klasy wariantów (do decyzji użytkownika; NIC nie jest klasą bez decyzji): pary kluczy k2, które nie są jeszcze równe, a mają wspólny rdzeń
+//  „pochodne” – jedno z nich to drugie z końcówką -ski/-owski/-icz (Paluch / Paluchowski, Paluchowska); „podobne” – klucze (lub rdzenie) różnią się jedną literą (Paluch / Paruch)
+function osWarianty(E, wylacz){ const G = new Map(); wylacz = wylacz || new Set();
+  E.PL.forEach(p => [p.nazwisko, p.rodowe].forEach(v => { const c = normCzysc(v); if (!c || /\s/.test(c) || c.length < 3) return; const k = kluczNazwiska(c); if (!k) return; const kk = E.klasy[k.k2] || k.k2; let g = G.get(kk); if (!g) G.set(kk, g = {kk, k1: k.k1, k2: k.k2, formy: {}, n: 0, przyklad: []}); g.formy[c] = (g.formy[c] || 0) + 1; g.n++; if (g.przyklad.length < 3) g.przyklad.push(p.id); }));
+  const MALE = zapBudujMale([...G.values()].flatMap(g => Object.keys(g.formy)).sort()), grupy = [...G.values()].map(g => { const f = Object.keys(g.formy).sort((x, y) => g.formy[y] - g.formy[x]); g.glowna = f[0]; const m = zapMaleNazwisko(f[0], '', MALE); g.meska = m ? m[0] : f[0]; const rd = osRdzenNazw(g.k1); g.rdzen = rd; g.k2r = rd ? (kluczNazwiska(rd) || {}).k2 || null : null; return g; });
+  const poK2 = new Map(grupy.map(g => [g.k2, g])), wyn = new Map(), dodaj = (a, b, rodzaj, powod) => { if (a === b || a.kk === b.kk) return; const k = a.kk < b.kk ? a.kk + '|' + b.kk : b.kk + '|' + a.kk; if (wyn.has(k) || wylacz.has(k)) return; wyn.set(k, {a: a.glowna, b: b.glowna, formyA: a.formy, formyB: b.formy, nA: a.n, nB: b.n, rodzaj, powod, przykladA: a.przyklad, przykladB: b.przyklad, kluczA: a.kk, kluczB: b.kk}); };
+  grupy.forEach(g => { if (g.k2r && poK2.has(g.k2r)) { const o = poK2.get(g.k2r); dodaj(o, g, 'pochodne', '„' + g.glowna + '” = „' + o.glowna + '” + końcówka pochodna (-' + g.k1.slice(g.rdzen.length) + '); rdzeń zgodny'); } });
+  const kub = new Map(); grupy.forEach(g => [g.k2, g.k2r].filter(Boolean).forEach(k => { if (k.length < 5) return; const b = k[0] + k.length; (kub.get(b) || kub.set(b, []).get(b)).push([k, g]); }));
+  grupy.forEach(g => [g.k2, g.k2r].filter(Boolean).forEach(k => { if (k.length < 5) return; for (const dl of [-1, 0, 1]) (kub.get(k[0] + (k.length + dl)) || []).forEach(([k2, h]) => { if (h.kk <= g.kk || k2 === k || lev(k, k2, 1) > 1) return; dodaj(g, h, 'podobne', 'klucze pisowni różnią się jedną literą: „' + k + '” / „' + k2 + '”' + (k !== g.k2 || k2 !== h.k2 ? ' (po odjęciu końcówki pochodnej)' : '') + ' – sprawdź na skanie, to bywają różne nazwiska'); }); }));
+  return [...wyn.values()].sort((x, y) => (x.rodzaj === y.rodzaj ? 0 : x.rodzaj === 'pochodne' ? -1 : 1) || Math.min(y.nA, y.nB) - Math.min(x.nA, x.nB) || (y.nA + y.nB) - (x.nA + x.nB)); }
+
+/* ---------- 4. import decyzji z dopasowania (dop.v1) ---------- */
+// Format dop.v1 (dopasowanie/szablon.html): {klucz: {slot: {acc:[{t,id}], rej:[{t,id}], none:bool}}}; klucz = id ślubu („1841/1”) albo „B:<id chrztu>” / „D:<id zgonu>”; t = B (chrzest) | D (zgon) | M (małżeństwo).
+// acc → scal, rej → odrzuc, none → brak. Każdy slot oznacza konkretne pary wystąpień (tabela OS_DOP). Funkcja nie dotyka dziennika – zwraca plan; osDopZastosuj zapisuje go po potwierdzeniu użytkownika.
+// ctx: {idAktu(t, idStare) → id aktu | null, wyst(idAktu, rola) → id wystąpienia | null, plec(idWyst) → 'M'|'K'|''}
+const OS_DOP = {   // tryb klucza → slot → [[rola w akcie klucza, rola w akcie docelowym | 'PLEC' (pan/panna wg płci)], …]; t docelowe wynika ze slotu
+  M: {'gF.b': [['ojciec_pana', 'dziecko']], 'gF.d': [['ojciec_pana', 'zmarly']], 'gM.b': [['matka_pana', 'dziecko']], 'gM.d': [['matka_pana', 'zmarly']], 'bF.b': [['ojciec_panny', 'dziecko']], 'bF.d': [['ojciec_panny', 'zmarly']], 'bM.b': [['matka_panny', 'dziecko']], 'bM.d': [['matka_panny', 'zmarly']],
+    'g.b': [['pan_mlody', 'dziecko']], 'g.d': [['pan_mlody', 'zmarly']], 'b.b': [['panna_mloda', 'dziecko']], 'b.d': [['panna_mloda', 'zmarly']], 'kids': [['pan_mlody', 'ojciec'], ['panna_mloda', 'matka']]},
+  B: {par: [['ojciec', 'pan_mlody'], ['matka', 'panna_mloda']], sib: [['ojciec', 'ojciec'], ['matka', 'matka']], own: [['dziecko', 'zmarly']], mrg: [['dziecko', 'PLEC']], fD: [['ojciec', 'zmarly']], mD: [['matka', 'zmarly']]},
+  D: {birth: [['zmarly', 'dziecko']], mrg: [['zmarly', 'PLEC']], par: [['ojciec', 'pan_mlody'], ['matka', 'panna_mloda']], kids: [['zmarly', 'PLEC_RODZIC']]}};
+const OS_DOP_T = {M: {'gF.b': 'B', 'gF.d': 'D', 'gM.b': 'B', 'gM.d': 'D', 'bF.b': 'B', 'bF.d': 'D', 'bM.b': 'B', 'bM.d': 'D', 'g.b': 'B', 'g.d': 'D', 'b.b': 'B', 'b.d': 'D', kids: 'B'}, B: {par: 'M', sib: 'B', own: 'D', mrg: 'M', fD: 'D', mD: 'D'}, D: {birth: 'B', mrg: 'M', par: 'M', kids: 'B'}};
+function osImportDop(obj, ctx){ const R = {decyzje: [], pominiete: [], bledy: [], stat: {klucze: 0, sloty: 0, acc: 0, rej: 0, none: 0, par: 0}};
+  if (!obj || typeof obj !== 'object' || Array.isArray(obj)) { R.bledy.push('Oczekiwano obiektu JSON dop.v1 ({klucz: {slot: {acc, rej, none}}}).'); return R; }
+  const poz = (k, slot, powod) => R.pominiete.push({klucz: k, slot, powod}), widziane = new Map();
+  for (const k of Object.keys(obj)) { if (OS_ZAKAZ.has(k) || !k || k.length > 200) { poz(String(k).slice(0, 40), '', 'niedozwolony klucz'); continue; } const sl = obj[k]; if (!sl || typeof sl !== 'object' || Array.isArray(sl)) { poz(k, '', 'wpis nie jest obiektem'); continue; }
+    const tryb = k.includes(':') ? k.split(':')[0] : 'M', idKl = k.includes(':') ? k.slice(2) : k; if (!OS_DOP[tryb]) { poz(k, '', 'nieznany tryb klucza'); continue; } R.stat.klucze++;
+    const aktKl = ctx.idAktu(tryb === 'M' ? 'M' : tryb, idKl); if (!aktKl) { poz(k, '', 'akt klucza nie istnieje w danych'); continue; }
+    for (const slot of Object.keys(sl)) { if (OS_ZAKAZ.has(slot)) continue; const def = OS_DOP[tryb][slot], v = sl[slot]; if (!def) { poz(k, slot, 'nieznany slot'); continue; } if (!v || typeof v !== 'object') { poz(k, slot, 'brak decyzji'); continue; } R.stat.sloty++;
+      const tcel = OS_DOP_T[tryb][slot], listy = [['acc', Array.isArray(v.acc) ? v.acc : [], 'scal'], ['rej', Array.isArray(v.rej) ? v.rej : [], 'odrzuc']];
+      for (const [pole, arr, typ] of listy) arr.forEach(x => { if (!x || typeof x !== 'object' || !['B', 'D', 'M'].includes(x.t) || typeof x.id !== 'string' || x.id.length > 200) return poz(k, slot, pole + ': błędny rekord'); if (x.t !== tcel) return poz(k, slot, pole + ': typ rekordu ' + x.t + ' niezgodny ze slotem (oczekiwano ' + tcel + ')');
+        const aktC = ctx.idAktu(x.t, x.id); if (!aktC) return poz(k, slot, pole + ': rekord ' + x.t + ':' + x.id + ' nie istnieje w danych');
+        def.forEach(([rk, rc]) => { let wk = ctx.wyst(aktKl, rk), rolaC = rc; if (!wk) return poz(k, slot, pole + ': brak wystąpienia „' + rk + '” w akcie klucza');
+          if (rc === 'PLEC' || rc === 'PLEC_RODZIC') { const pl = ctx.plec(wk); if (!pl) return poz(k, slot, pole + ': nieznana płeć wystąpienia „' + rk + '” (rola w akcie docelowym niejednoznaczna)'); rolaC = rc === 'PLEC' ? (pl === 'M' ? 'pan_mlody' : 'panna_mloda') : (pl === 'M' ? 'ojciec' : 'matka'); }
+          const wc = ctx.wyst(aktC, rolaC); if (!wc) return poz(k, slot, pole + ': brak wystąpienia „' + rolaC + '” w akcie ' + x.t + ':' + x.id); if (wk === wc || aktKl === aktC) return poz(k, slot, pole + ': ta sama osoba w tym samym akcie');
+          const kl = wk < wc ? wk + '|' + wc : wc + '|' + wk, d = {typ, a: wk, b: wc, zr: 'dop.v1', slot: (k + ' ' + slot).slice(0, 80), why: 'import dop.v1: ' + k + ' / ' + slot}; const poprz = widziane.get(kl);
+          if (poprz && poprz.typ !== typ) { poprz.sprzeczna = true; return; } if (poprz) return; widziane.set(kl, d); R.decyzje.push(d); R.stat[pole === 'acc' ? 'acc' : 'rej']++; }); });
+      if (v.none === true && !(Array.isArray(v.acc) && v.acc.length)) { R.stat.none++; const rl = new Set(); def.forEach(([rk]) => { if (rl.has(rk)) return; rl.add(rk); const wk = ctx.wyst(aktKl, rk); if (!wk) return poz(k, slot, 'none: brak wystąpienia „' + rk + '” w akcie klucza'); const d = {typ: 'brak', a: wk, b: 'brak:' + tcel, zr: 'dop.v1', slot: (k + ' ' + slot).slice(0, 80), why: 'import dop.v1: brak odpowiednika w księgach (' + k + ' / ' + slot + ')'}; const kl = wk + '|' + d.b; if (!widziane.has(kl)) { widziane.set(kl, d); R.decyzje.push(d); } }); } } }
+  const sprz = R.decyzje.filter(d => d.sprzeczna); sprz.forEach(d => poz(d.slot, '', 'ta sama para jako acc i rej w pliku – pominięta')); R.decyzje = R.decyzje.filter(d => !d.sprzeczna); R.stat.par = R.decyzje.filter(d => d.typ !== 'brak').length; return R; }
+// zapis planu do dziennika (po potwierdzeniu): kolizje i duplikaty pomija, reszta dostaje kolejne numery; zwraca liczby
+function osDopZastosuj(L, plan, akty){ const r = {scal: 0, odrzuc: 0, brak: 0, pominiete: []}; plan.decyzje.forEach(d => { const x = osDecyduj(L, d.typ, d.a, d.b, {why: d.why, zr: d.zr, slot: d.slot, akty, wniosek: '', reguly: 0, uzasadnienie: {zgodnosci: [], rozbieznosci: [], sprzecznosci: [], braki: ['decyzja z dopasowania (dop.v1) – bez uzasadnienia reguł Multitoola']}});
+  if (x.ok) r[d.typ]++; else r.pominiete.push({a: d.a, b: d.b, typ: d.typ, powod: x.blad}); }); return r; }
+
+/* ---------- 5. obsługa komunikatów (Worker i wątek główny używają tego samego kodu) ---------- */
+// st = stan {E, gen, wyniki, licz}; wyslij(wiadomosc). Wiadomości: init {model, klasy, porcja}, karta {req, ids, limit}, porownaj {req, a, b}, warianty {req, wylacz}
+function osObsluz(st, m, wyslij){
+  if (m.t === 'init') { const g = st.gen = (st.gen || 0) + 1, t0 = Date.now(); st.E = osSilnik(m.model, m.klasy); st.wyniki = {}; st.licz = {}; let od = 0; const n = st.E.PL.length, krok = m.porcja || 500;
+    wyslij({t: 'start', gen: g, n, etyk: osEtyk(st.E), ms: Date.now() - t0});
+    const tick = () => { if (st.gen !== g) return; od = osPrzeliczPorcja(st.E, od, krok, st.wyniki, st.licz); if (od < n) { wyslij({t: 'postep', gen: g, od, n}); setTimeout(tick, 0); } else wyslij({t: 'wynik', gen: g, wyniki: st.wyniki, licz: st.licz, ms: Date.now() - t0}); };
+    setTimeout(tick, 0); return; }
+  if (!st.E) return wyslij({t: 'blad', req: m.req, blad: 'silnik nie jest gotowy'});
+  if (m.t === 'karta') { const lim = m.limit || 120, lista = [], ile = {}; (m.ids || []).forEach(id => { const L = osKandydaci(st.E, id); ile[id] = L.length; L.slice(0, lim).forEach(u => lista.push(u)); }); return wyslij({t: 'karta', req: m.req, lista, ile}); }
+  if (m.t === 'porownaj') { if (!st.E.P[m.a] || !st.E.P[m.b]) return wyslij({t: 'blad', req: m.req, blad: 'nieznane wystąpienie'}); return wyslij({t: 'porownaj', req: m.req, u: osPoWyst(st.E, m.a, m.b)}); }
+  if (m.t === 'warianty') return wyslij({t: 'warianty', req: m.req, lista: osWarianty(st.E, new Set(m.wylacz || [])).slice(0, m.limit || 400)});
+  if (m.t === 'plcie') { const p = {}; (m.ids || []).forEach(id => { const x = st.E.P[id]; if (x && x.plec) p[id] = x.plec; }); return wyslij({t: 'plcie', req: m.req, p}); }
+  if (m.t === 'profil') return wyslij({t: 'profil', req: m.req, p: st.E.P[m.id] || null});
+}
+</script>
 <script>
 /* wspolne/tekst.js – wspólne funkcje tekstowe (wklejane do HTML przy budowaniu przez zbuduj.py) */
 const fold = s => (s||'').toString().toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,'').replace(/ł/g,'l');
@@ -102,6 +659,517 @@ function raportSpojnosci(rows, opt){ opt = opt || {}; const out = []; const add 
     Object.values(g).forEach(L => { if (L.length > 1) L.forEach(r => add(r, 'warn', 'duplikat-rok', 'Możliwy duplikat (to samo nazwisko, imię, wiek, rok i miejsce): ' + L.filter(x => x !== r).map(x => x.id).join(', ') + '.', L.filter(x => x !== r).map(x => x.id))); }); }
   return out; }
 function raportCsv(items, label){ return ['id;waga;kod;opis;powiazane'].concat(items.map(i => [i.id, i.sev, i.code, i.msg, (i.rel || []).join(' ')].map(csvCell).join(';'))).join('\r\n') + '\r\n'; }
+
+/* wspolne/norm.js – normalizacja do porównań (czyste funkcje, bez DOM). Wymaga: wspolne/tekst.js (fold, lev), wspolne/raport.js (wiekLat).
+   Zasada: normalizacja NIE zmienia danych aktu. Tworzy klucze obok wartości; zapis z aktu zostaje w polu. */
+
+/* ---------- nazwiska ---------- */
+// znaczniki [_] [-] [niecz.] i puste → brak danych
+const normBrak = v => { const t = String(v ?? '').trim(); return !t || /^\[[^\]]*\]$/.test(t) || /^[?.\-–]+$/.test(t) || /^b\.?\s?d\.?$/i.test(t); };
+const normCzysc = v => normBrak(v) ? '' : String(v).replace(/\?/g, '').replace(/\([^)]*\)/g, ' ').replace(/\s+/g, ' ').trim();
+// końcówki żeńskie: forma (panna / żona) + rdzeń; -ina/-yna tylko gdy rdzeń jest w słowniku znanych nazwisk (Kalina to nie żona Kala)
+const NORM_FSUF = [['iowna','panna'],['owna','panna'],['ianka','panna'],['anka','panna'],['onka','panna'],['iowa','zona'],['owa','zona']];
+function normNazwiskoBaza(s){ let f = fold(normCzysc(s)).replace(/[^a-z]/g, ''); let forma = '';
+  for (const [suf, typ] of NORM_FSUF) if (f.length - suf.length >= 3 && f.endsWith(suf)) { f = f.slice(0, -suf.length); forma = typ; break; }
+  f = f.replace(/ska$/, 'ski').replace(/cka$/, 'cki').replace(/dzka$/, 'dzki');
+  return {baza: f, forma}; }
+// k1 – klucz ścisły (ogonki, forma żeńska); k2 – klucz pisowni dawnej (y/i, rz/ż, ch/h, ó/u, -owski/-oski, ę/en, ą/on, podwojenia, końcowa samogłoska rdzenia)
+function kluczNazwiska(s){ const b = normNazwiskoBaza(s).baza; if (b.length < 2) return null;
+  let k2 = b.replace(/y/g, 'i').replace(/rz/g, 'z').replace(/ch/g, 'h').replace(/u/g, 'o').replace(/([oe])wsk/g, '$1sk').replace(/ks/g, 'x')
+    .replace(/e[nm](?=[bdtcszkgp])/g, 'e').replace(/o[nm](?=[bdtcszkgp])/g, 'a').replace(/(.)\1/g, '$1').replace(/sc/g, 'c').replace(/[aoe]$/, '');
+  return {k1: b, k2}; }
+// porównanie nazwisk: 'rowne' | 'wariant' (ta sama wymowa/dawna pisownia) | 'slownik' (klasa potwierdzona decyzją) | 'podobne' (1 litera różnicy – tylko ostrzeżenie) | 'rozne' | null (brak danych)
+function porNazwiska(a, b, klasy){ const A = kluczNazwiska(a), B = kluczNazwiska(b); if (!A || !B) return null;
+  if (A.k1 === B.k1) return 'rowne'; if (A.k2 === B.k2) return 'wariant';
+  if (klasy) { const ka = klasy[A.k2] || klasy[A.k1], kb = klasy[B.k2] || klasy[B.k1]; if (ka && ka === kb) return 'slownik'; }
+  if (Math.min(A.k2.length, B.k2.length) >= 5 && lev(A.k2, B.k2, 1) <= 1) return 'podobne';
+  return 'rozne'; }
+
+/* ---------- imiona ---------- */
+// forma z aktu (łacina, dawna pisownia, odmiana) → dzisiejsze polskie. Podstawa: wspolne/slowniki_imion.json (NPL: wspólne z buduj_baza_v4.py), dodatki własne poniżej.
+const NORM_SLOWNIKI = {"GEN":{"matthaei":"Maciej","mathaei":"Maciej","hiacynthi":"Jacek","augustini":"Augustyn","gasparis":"Kacper","caspari":"Kacper","francisci":"Franciszek","mathiae":"Maciej","matthiae":"Maciej","joannis":"Jan","johannis":"Jan","adalberti":"Wojciech","josephi":"Józef","andreae":"Andrzej","thomae":"Tomasz","stanislai":"Stanisław","laurentii":"Wawrzyniec","antonii":"Antoni","petri":"Piotr","pauli":"Paweł","michaelis":"Michał","martini":"Marcin","jacobi":"Jakub","simonis":"Szymon","casimiri":"Kazimierz","gregorii":"Grzegorz","valentini":"Walenty","nicolai":"Mikołaj","christophori":"Krzysztof","blasii":"Błażej","sebastiani":"Sebastian","bartholomaei":"Bartłomiej","caroli":"Karol","ignatii":"Ignacy","catharinae":"Katarzyna","mariannae":"Marianna","agnetis":"Agnieszka","annae":"Anna","sophiae":"Zofia","dorotheae":"Dorota","theclae":"Tekla","hedwigis":"Jadwiga","margarithae":"Małgorzata","franciscae":"Franciszka","elisabethae":"Elżbieta","eliesabethae":"Elżbieta","rosaliae":"Rozalia","anastasiae":"Anastazja","salomeae":"Salomea","apolloniae":"Apolonia","magdalenae":"Magdalena","susannae":"Zuzanna","reginae":"Regina","victoriae":"Wiktoria","evae":"Ewa","justinae":"Justyna","barbarae":"Barbara","josephae":"Józefa","constantiae":"Konstancja","theresiae":"Teresa","agnetae":"Agnieszka"},"PGEN":{"kacpra":"Kacper","hiacynta":"Jacek","ignacego":"Ignacy","mateusza":"Mateusz","augustyna":"Augustyn","sebastiana":"Sebastian","agaty":"Agata","joanny":"Joanna","hieronima":"Hieronim","józefa":"Józef","pawła":"Paweł","andrzeja":"Andrzej","macieja":"Maciej","jana":"Jan","wojciecha":"Wojciech","tomasza":"Tomasz","marcina":"Marcin","jakuba":"Jakub","szymona":"Szymon","michała":"Michał","stanisława":"Stanisław","kazimierza":"Kazimierz","antoniego":"Antoni","piotra":"Piotr","franciszka":"Franciszek","walentego":"Walenty","wawrzyńca":"Wawrzyniec","mikołaja":"Mikołaj","błażeja":"Błażej","bartłomieja":"Bartłomiej","grzegorza":"Grzegorz","katarzyny":"Katarzyna","agnieszki":"Agnieszka","anastazji":"Anastazja","marianny":"Marianna","anny":"Anna","zofii":"Zofia","doroty":"Dorota","jadwigi":"Jadwiga","małgorzaty":"Małgorzata","elżbiety":"Elżbieta","rozalii":"Rozalia","tekli":"Tekla","ewy":"Ewa","teresy":"Teresa","barbary":"Barbara","salomei":"Salomea","magdaleny":"Magdalena","apolonii":"Apolonia","reginy":"Regina","franciszki":"Franciszka","józefy":"Józefa"},"NPL":{"jacobus":"Jakub","joannes":"Jan","johannes":"Jan","adalbertus":"Wojciech","woyciech":"Wojciech","stanislaus":"Stanisław","josephus":"Józef","josephatus":"Józefat","josephatam":"Józefata","andreas":"Andrzej","mathias":"Maciej","matthias":"Maciej","matheus":"Mateusz","matthaeus":"Mateusz","mathaeus":"Mateusz","thomas":"Tomasz","martinus":"Marcin","antonius":"Antoni","paulus":"Paweł","valentinus":"Walenty","laurentius":"Wawrzyniec","sebastianus":"Sebastian","franciscus":"Franciszek","blasius":"Błażej","lucas":"Łukasz","bartholomaeus":"Bartłomiej","ignatius":"Ignacy","gregorius":"Grzegorz","christophorus":"Krzysztof","nicolaus":"Mikołaj","casimirus":"Kazimierz","michael":"Michał","alexius":"Aleksy","petrus":"Piotr","simon":"Szymon","stephanus":"Stefan","adamus":"Adam","albertus":"Wojciech","vincentius":"Wincenty","hyacinthus":"Jacek","augustinus":"Augustyn","gasparus":"Kacper","casparus":"Kacper","philippus":"Filip","agnes":"Agnieszka","sophia":"Zofia","hedwigis":"Jadwiga","hedvigis":"Jadwiga","anastasia":"Anastazja","catharina":"Katarzyna","catarina":"Katarzyna","margaretha":"Małgorzata","elisabeth":"Elżbieta","elisabetha":"Elżbieta","eva":"Ewa","rosalia":"Rozalia","theresia":"Teresa","thecla":"Tekla","dorothea":"Dorota","francisca":"Franciszka","apollonia":"Apolonia","victoria":"Wiktoria","mariae":"Maria","agathae":"Agata","agatha":"Agata","dorothae":"Dorota","petronillae":"Petronela","petronilla":"Petronela","susanna":"Zuzanna","ursula":"Urszula","lucia":"Łucja","annae":"Anna","joannae":"Joanna","catharinae":"Katarzyna","sophiae":"Zofia","agnetis":"Agnieszka","virgo":"","dorotha":"Dorota","helisabeth":"Elżbieta","hiacynt":"Jacek","jozafat":"Józefat","konstancji":"Konstancja","marianne":"Marianna","margaritha":"Małgorzata","susanne":"Zuzanna","teklae":"Tekla","ursulae":"Urszula"}};
+const NORM_IMIONA_DODATKI = {jacobus:'jakub',joannes:'jan',johannes:'jan',ioannes:'jan',adalbertus:'wojciech',adalbert:'wojciech',albertus:'wojciech',woyciech:'wojciech',stanislaus:'stanislaw',josephus:'jozef',andreas:'andrzej',
+  mathias:'maciej',matthias:'maciej',matheus:'mateusz',matthaeus:'mateusz',mathaeus:'mateusz',thomas:'tomasz',martinus:'marcin',antonius:'antoni',paulus:'pawel',valentinus:'walenty',laurentius:'wawrzyniec',
+  franciscus:'franciszek',blasius:'blazej',lucas:'lukasz',bartholomaeus:'bartlomiej',ignatius:'ignacy',gregorius:'grzegorz',nicolaus:'mikolaj',casimirus:'kazimierz',michael:'michal',petrus:'piotr',simon:'szymon',
+  stephanus:'stefan',vincentius:'wincenty',hyacinthus:'jacek',hiacynt:'jacek',hiacenty:'jacek',gasparus:'kacper',casparus:'kacper',kasper:'kacper',felix:'feliks',agnes:'agnieszka',sophia:'zofia',hedwigis:'jadwiga',
+  catharina:'katarzyna',margaretha:'malgorzata',elisabeth:'elzbieta',eva:'ewa',theresia:'teresa',thecla:'tekla',dorothea:'dorota',francisca:'franciszka',susanna:'zuzanna',ursula:'urszula',lucia:'lucja',
+  maryanna:'marianna',marjanna:'marianna',maryja:'maria',jozefa:'jozefa',jedrzej:'andrzej',bartosz:'bartlomiej',jozefat:'jozafat',gabryel:'gabriel',regina:'regina',helena:'helena'};
+const NORM_IMIONA = (() => { const o = {}; for (const [k, v] of Object.entries(NORM_SLOWNIKI.NPL)) o[fold(k).replace(/[^a-z]/g, '')] = fold(v).replace(/[^a-z]/g, ''); return Object.assign(o, NORM_IMIONA_DODATKI); })();
+// pary imion często mylonych w księgach – zgodność słaba, do sprawdzenia na skanie (nigdy „równe”)
+const NORM_IMIONA_BLISKIE = [['maciej','mateusz'],['maria','marianna'],['stefan','szczepan'],['lucja','lukasz'],['jozef','jozafat'],['stefan','stanislaw']];
+function kluczImienia(s){ return fold(normCzysc(s)).split(/[\s,./-]+/).map(t => t.replace(/[^a-z]/g, '')).filter(t => t.length > 1).map(t => NORM_IMIONA[t] || t.replace(/y(?=[aeo])/g, 'i')); }
+// 'rowne' (dowolny człon zgodny) | 'bliskie' (para mylona lub 1 litera) | 'rozne' | null
+function porImiona(a, b){ const A = kluczImienia(a), B = kluczImienia(b); if (!A.length || !B.length) return null;
+  if (A.some(x => B.includes(x))) return 'rowne';
+  if (A.some(x => B.some(y => NORM_IMIONA_BLISKIE.some(p => (p[0] === x && p[1] === y) || (p[0] === y && p[1] === x)) || (Math.min(x.length, y.length) >= 5 && lev(x, y, 1) <= 1)))) return 'bliskie';
+  return 'rozne'; }
+
+/* ---------- wiek → przedział roku urodzenia ---------- */
+// wiek w aktach jest przybliżony; tolerancja rośnie z wiekiem i dla wieków „okrągłych”. Zwraca [min, max] roku urodzenia albo null.
+function przedzialUr(rokAktu, wiekTekst){ if (!rokAktu || normBrak(wiekTekst)) return null; const w = wiekLat(String(wiekTekst).replace(/\?/g, '')); if (w === null || w < 0 || w > 115) return null;
+  let tol = w < 1 ? 0 : w < 10 ? 1 : w < 25 ? 2 : w < 45 ? 4 : w < 65 ? 6 : 9; if (w >= 30 && Math.round(w) % 10 === 0) tol += 2; else if (w >= 30 && Math.round(w) % 5 === 0) tol += 1;
+  const r = rokAktu - w; return [Math.floor(r - tol) - (w >= 1 ? 1 : 0), Math.ceil(r + tol)]; }
+const przedzialyWspolne = (a, b) => a && b ? Math.max(a[0], b[0]) <= Math.min(a[1], b[1]) : null;
+const przedzialyOdstep = (a, b) => Math.max(a[0], b[0]) - Math.min(a[1], b[1]);
+
+/* ---------- miejscowości ---------- */
+// nazwa z aktu → identyfikator miejsca. Nazwa z dokumentu zostaje w polu; tu tylko klucz. Słownik rozszerzany decyzjami użytkownika (typ decyzji „miejsce”).
+const NORM_MIEJSCA = {blinow:'blinow', blinowie:'blinow', brzozowka:'brzozowka', brzozzowka:'brzozowka', brzozowce:'brzozowka', moczydla:'moczydla', mocydla:'moczydla', moczyda:'moczydla', moczydlo:'moczydla', moczydlach:'moczydla',
+  majdan:'majdan-moczydla?', 'moczydla majdan':'majdan-moczydla', 'majdan moczydla':'majdan-moczydla', 'majdan blinowski':'majdan-blinowski', kaczyniec:'kaczyniec', kacyniec:'kaczyniec', sulow:'sulow', cieslanki:'cieslanki'};
+function kluczMiejsca(s){ const f = fold(normCzysc(s)).replace(/[^a-z ]/g, '').trim(); if (!f) return null; return NORM_MIEJSCA[f] || f; }
+// 'rowne' | 'mozliwe' (Majdan bez dookreślenia vs Majdan Moczydła/Blinowski) | 'rozne' | null
+function porMiejsca(a, b){ const A = kluczMiejsca(a), B = kluczMiejsca(b); if (!A || !B) return null; if (A === B) return 'rowne';
+  const m = x => x.replace('?', ''); if ((/\?$/.test(A) || /\?$/.test(B)) && (m(A).startsWith('majdan') && m(B).startsWith('majdan') || m(A) === 'majdan-moczydla' && B === 'moczydla' || m(B) === 'majdan-moczydla' && A === 'moczydla')) return 'mozliwe';
+  if (A.startsWith('majdan-moczydla') && B === 'moczydla' || B.startsWith('majdan-moczydla') && A === 'moczydla') return 'mozliwe';
+  return 'rozne'; }
+
+/* wspolne/norm_zapis.js – normalizacje ZAPISU odczytu (czyste funkcje, bez DOM). Port z narzedzia/buduj_baza_v4.py:
+   fold, MALE (budowa), male_surname, psur, parents, parents_pl, polname, polname_ai, is_child, fill_markers.
+   Wymaga: wspolne/norm.js (NORM_SLOWNIKI = wspolne/slowniki_imion.json: GEN, PGEN, NPL).
+   Zasada: wynik ma być IDENTYCZNY z Pythonem; sprawdza to PROJEKT_multitool/test/parytet_norm.py (uruchom po każdej zmianie tu lub w buildzie).
+   Różni się od norm.js: tam są klucze do PORÓWNAŃ (nie zmieniają danych), tu reguły, które ZMIENIAJĄ zapisywaną wartość (nazwiska męskie, imiona PL, rodzice, znaczniki). */
+
+const zapHas = (o, k) => Object.prototype.hasOwnProperty.call(o, k);
+// jak Python fold: małe litery, ł→l, ó→o, bez znaków łączących (inny niż fold z tekst.js, który nie zamienia ó)
+const zapFold = x => String(x).toLowerCase().replace(/ł/g, 'l').replace(/ó/g, 'o').normalize('NFD').replace(/\p{Mn}/gu, '');
+const zapTrimPy = s => String(s).trim();
+
+// słownik nazwisk męskich z list nazwisk (kolejność ma znaczenie: pierwsze wystąpienie wygrywa, jak setdefault)
+function zapBudujMale(nazwiska) {
+  const M = Object.create(null);
+  for (let n of nazwiska) {
+    n = zapTrimPy(n || '');
+    if (!n || n.includes(' ') || n.includes('?') || n.includes('/')) continue;
+    const f = zapFold(n);
+    if (/(owa|owna|ina|yna|ska|cka|anka)$/.test(f)) continue;
+    for (const k of new Set([f, 'oae'.includes(f[f.length - 1]) ? f.slice(0, -1) : f, f.replace(/e([^aeiouy])$/, '$1')])) if (!(k in M)) M[k] = n;
+  }
+  return M;
+}
+
+const ZAP_FSUF = [['iowna', 'panna'], ['owna', 'panna'], ['ówna', 'panna'], ['ianka', 'panna'], ['anka', 'panna'], ['onka', 'panna'], ['iowa', 'zona'], ['owa', 'zona'], ['ina', 'zona'], ['yna', 'zona']];
+// → null | [forma męska, typ] (typ: panna | zona | ska; z '?' na końcu, gdy brak pewnego rdzenia w MALE)
+function zapMaleNazwisko(sn, sex, MALE) {
+  sn = zapTrimPy(zapTrimPy(sn).replace(/\?+$/, ''));
+  if (!sn || sn.includes(' ')) return null;
+  const f = zapFold(sn);
+  if (f in MALE) return null;
+  for (const [suf, typ] of ZAP_FSUF) {
+    if (f.endsWith(suf)) {
+      const stem = f.slice(0, f.length - suf.length);
+      for (const k of [stem, stem + 'a', stem + 'o', stem + 'e']) if (k in MALE) return [MALE[k], typ];
+      return [sn.slice(0, sn.length - suf.length), typ + '?'];
+    }
+  }
+  if (/^(.*?)(ska|cka|dzka)$/.test(f) && sex !== 'M') return [sn.slice(0, -1) + 'i', 'ska'];
+  return null;
+}
+
+// nazwisko ojca z dopełniacza (polskie akta): Kowalskiego/Kowalów → forma męska
+function zapPsur(t, MALE) {
+  t = zapTrimPy(String(t).replace(/[?()]/g, ''));
+  const f = zapFold(t);
+  for (const suf of ['iow', 'ow', 'ich', 'ych']) {
+    if (f.endsWith(suf)) {
+      const stem = f.slice(0, f.length - suf.length);
+      for (const k of [stem, stem + 'a', stem + 'o', stem + 'e', stem + 'i']) if (k in MALE) return MALE[k];
+      if (suf === 'ich' || suf === 'ych') return t.slice(0, t.length - suf.length) + 'i';
+      return t.slice(0, t.length - suf.length);
+    }
+  }
+  if (t.endsWith('ów')) {
+    const stem = zapFold(t.slice(0, -2));
+    for (const k of [stem, stem + 'a', stem + 'o']) if (k in MALE) return MALE[k];
+    return t.slice(0, -2);
+  }
+  return t;
+}
+
+// rodzice z łacińskiego dopełniacza: „Matthaei et Annae Kowalskow” → {father_first_name, mother_first_name, father_last_name}
+function zapRodziceLac(pr) {
+  const GEN = NORM_SLOWNIKI.GEN;
+  const m = /^\s*(?:(?:filia|filius)\s+)?([A-ZĄĆĘŁŃÓŚŹŻ][a-ząćęłńóśźż]+)(?:\s+et\s+([A-ZĄĆĘŁŃÓŚŹŻ][a-ząćęłńóśźż]+))?\s*(.*?)\s*$/.exec(pr);
+  if (!m || !zapHas(GEN, m[1].toLowerCase())) return {};
+  const o = { father_first_name: GEN[m[1].toLowerCase()] };
+  if (m[2]) o.mother_first_name = zapHas(GEN, m[2].toLowerCase()) ? GEN[m[2].toLowerCase()] : m[2];
+  const sur = zapTrimPy(m[3].replace(/[?()]/g, ''));
+  if (sur) o.father_last_name = sur;
+  return o;
+}
+// rodzice z polskiego dopełniacza: „syn Kacpra i Agaty Kowalskich”
+function zapRodzicePl(pr, MALE) {
+  pr = pr.replace(/(?<=[\p{L}\p{N}_])\?/gu, "");
+  const PGEN = NORM_SLOWNIKI.PGEN;
+  const m = /^\s*(?:(?:syn|córka|dziecko|filia|filius)\s+)?(?:szlachetnych\s+)?(\S+)(?:\s+i\s+(\S+))?\s*(.*?)\s*$/i.exec(pr);
+  if (!m || !zapHas(PGEN, m[1].toLowerCase())) return {};
+  const o = { father_first_name: PGEN[m[1].toLowerCase()] };
+  if (m[2]) o.mother_first_name = zapHas(PGEN, m[2].toLowerCase()) ? PGEN[m[2].toLowerCase()] : m[2];
+  if (m[3]) o.father_last_name = zapPsur(m[3].replace(/[?()]/g, ''), MALE);
+  return o;
+}
+
+// imię z aktu (łacina, dawna pisownia) → dzisiejsze polskie; zwraca [imię, dodatkowe warianty z nawiasu]
+function zapPolImie(v) {
+  const NPL = NORM_SLOWNIKI.NPL;
+  if (!v || v.startsWith('[')) return [v, ''];
+  const q = zapTrimPy(v).endsWith('?') ? '?' : '';
+  let s = zapTrimPy(zapTrimPy(v).replace(/\?+$/, '')), extra = '', par = '';
+  const m = /^(.*?)\s*\((.*?)\)\s*$/.exec(s);
+  if (m) { s = zapTrimPy(m[1]); par = zapTrimPy(m[2]); }
+  const slowa = t => zapTrimPy(t) ? zapTrimPy(t).split(/\s+/) : [];
+  const one = w => { const k = w.toLowerCase().replace(/^[.,]+|[.,]+$/g, ''); return zapHas(NPL, k) ? NPL[k] : w; };
+  let main = slowa(s).map(one).filter(Boolean).join(' ');
+  if (!main && par) { main = slowa(par.split(',')[0]).map(one).join(' '); par = ''; }
+  if (par) {
+    for (const x of par.split(',').map(zapTrimPy)) {
+      if (!x || zapHas(NPL, x.toLowerCase()) || one(x) === main || x === main) continue;
+      extra = (extra ? extra + ', ' : '') + x;
+    }
+  }
+  return [main + q, extra];
+}
+// zmienia ai w miejscu: imiona PL, Woy→Woj w nazwiskach, dopisek „w akcie też: …” do notes
+function zapPolImionaAi(ai) {
+  const ex = [];
+  for (const f of ['deceased_first_name', 'father_first_name', 'mother_first_name']) {
+    const v = ai[f];
+    if (v) { const [n, e] = zapPolImie(v); if (n !== v) ai[f] = n; if (e) ex.push(e); }
+  }
+  for (const f of ['deceased_last_name', 'father_last_name', 'mother_last_name']) {
+    const v = ai[f];
+    if (v && /^Woy/.test(v)) ai[f] = 'Woj' + v.slice(3);
+  }
+  if (ex.length) ai.notes = (ai.notes || '') + (ai.notes ? ', ' : '') + 'w akcie też: ' + ex.join('; ');
+}
+
+function zapDziecko(age) {
+  const a = String(age || '').toLowerCase();
+  if (/mies|mens|dies|dn\.|dni|tyg|hebd|m\.\d/.test(a)) return true;
+  const m = /\d+/.exec(a);
+  return !!(m && parseInt(m[0], 10) < 15);
+}
+// puste pola → [_] (nie podano w akcie) / [-] (nie dotyczy); zmienia ai w miejscu
+function zapZnaczniki(ai) {
+  const ch = zapDziecko(ai.age), ln = zapTrimPy(ai.deceased_last_name || '');
+  if (ai.father_first_name && !ai.father_last_name && ln && !ln.startsWith('[')) ai.father_last_name = ln;
+  for (const f of ['house', 'age', 'deceased_status', 'deceased_last_name', 'profession']) if (!ai[f]) ai[f] = (f === 'profession' && ch) ? '[-]' : '[_]';
+  const hasp = !!(ai.parents_raw || ai.father_first_name);
+  for (const f of ['father_first_name', 'father_last_name', 'mother_first_name', 'mother_last_name', 'parents_raw'])
+    if (!ai[f]) ai[f] = (ch && (['parents_raw', 'father_first_name', 'father_last_name'].includes(f) || !hasp || f.startsWith('mother'))) ? '[_]' : '[-]';
+}
+
+/* moduly/wystapienia.js – wystąpienie → profil do porównań (czyste funkcje, bez DOM). Wymaga: norm.js.
+   Wystąpienie nie kopiuje danych: „mapa” wskazuje pola aktu. Profil jest pochodną liczoną przy każdym uruchomieniu (zmiana pola aktu od razu zmienia profil). */
+const WYST_PLEC_ROLI = {ojciec:'M', matka:'K', pan_mlody:'M', panna_mloda:'K', ojciec_pana:'M', matka_pana:'K', ojciec_panny:'M', matka_panny:'K', chrzestny:'M', chrzestna:'K'};
+const WYST_ZYJE = /^(ojciec|matka|pan_mlody|panna_mloda|swiadek\d?|chrzestny|chrzestna|zglaszajacy\d?|osadnik)$/;   // role, w których osoba na pewno żyje w roku aktu
+const WYST_RODZICE = {dziecko:['ojciec','matka'], zmarly:['ojciec','matka'], pan_mlody:['ojciec_pana','matka_pana'], panna_mloda:['ojciec_panny','matka_panny']};
+const WYST_PARY = [['ojciec','matka'], ['pan_mlody','panna_mloda'], ['ojciec_pana','matka_pana'], ['ojciec_panny','matka_panny'], ['zmarly','malzonek']];
+const wystPole = (akt, w, k) => { const f = w.mapa[k], p = f && akt.pola[f]; return p && !normBrak(p.value) ? p.value : ''; };
+// „Jan Kowalski, 43” → imię + nazwisko (świadkowie, małżonek w akcie zgonu)
+function wystRozbij(t){ const c = normCzysc(String(t).split(',')[0]).split(' ').filter(Boolean); return c.length > 1 ? {imie: c.slice(0, -1).join(' '), nazwisko: c[c.length - 1]} : {imie: c[0] || '', nazwisko: ''}; }
+// płeć z imienia tylko jako dane pochodne do porównań (nie zapisujemy jej w akcie)
+const wystPlecZImienia = im => { const k = kluczImienia(im)[0]; return !k ? '' : /a$/.test(k) && !/^(kuba|barnaba|bonawentura|kosma|jarema)$/.test(k) ? 'K' : 'M'; };
+function wystProfile(D){ const A = {}; D.akty.forEach(a => A[a.id] = a); const poAkcie = {}; D.wystapienia.forEach(w => (poAkcie[w.akt] = poAkcie[w.akt] || {})[w.rola] = w); const P = {};
+  D.wystapienia.forEach(w => { const a = A[w.akt]; if (!a) return; let imie = wystPole(a, w, 'imie'), nazw = wystPole(a, w, 'nazwisko'); const razem = wystPole(a, w, 'imie_nazwisko'); if (razem) { const x = wystRozbij(razem); imie = imie || x.imie; nazw = nazw || x.nazwisko; }
+    const p = P[w.id] = {id: w.id, akt: a.id, typ: a.typ, rola: w.rola.replace(/^(ojciec|matka)_(pana|panny)$/, '$1'), rolaAktu: w.rola, rok: a.rok, imie, nazwisko: nazw, rodowe: wystPole(a, w, 'rodowe'), wiek: wystPole(a, w, 'wiek'), miejsce: wystPole(a, w, 'miejsce') || a.miejsce || '', dom: wystPole(a, w, 'dom'),
+      plec: wystPole(a, w, 'plec') || WYST_PLEC_ROLI[w.rola] || wystPlecZImienia(imie), zg: w.rola === 'zmarly' ? a.rok : null, zyje: WYST_ZYJE.test(w.rola) ? [a.rok] : [], dzieciUr: /^(ojciec|matka)$/.test(w.rola) && a.typ === 'chrzest' ? [a.rok] : [], malzonek: []};
+    if (p.rola === 'matka' && p.rodowe && fold(p.rodowe) === fold(p.nazwisko)) p.nazwisko = ''; });
+  // rodzice i małżonek z tego samego aktu
+  D.wystapienia.forEach(w => { const p = P[w.id], R = poAkcie[w.akt]; if (!p) return; const rd = WYST_RODZICE[w.rola];
+    if (rd) { const o = R[rd[0]] && P[R[rd[0]].id], m = R[rd[1]] && P[R[rd[1]].id]; if (o) { p.ojciec = o.imie; p.ojciecNazw = o.nazwisko; } if (m) { p.matka = m.imie; p.matkaNazw = m.rodowe; } }
+    WYST_PARY.forEach(([x, y]) => { const q = w.rola === x ? R[y] : w.rola === y ? R[x] : null; if (q && P[q.id] && P[q.id].imie) p.malzonek.push(P[q.id].imie); }); });
+  return P; }
+// etykieta wystąpienia do list
+const wystEtykieta = p => [(p.imie + ' ' + (p.nazwisko || (p.rodowe ? 'z d. ' + p.rodowe : ''))).trim() || '(bez nazwiska)', p.rolaAktu.replace(/_/g, ' '), p.typ + ' ' + p.rok].join(' · ');
+
+/* moduly/identity.js – propozycje tożsamości (czyste funkcje, bez DOM). Wymaga: tekst.js, raport.js, norm.js.
+   NIC NIE SCALA. Zwraca uzasadnienie: zgodności / rozbieżności / sprzeczności / braki + wniosek słowny. Nie ma jednej liczby punktów.
+   Wejście = „profil” wystąpienia (budowany z pól aktu, patrz MODEL_DANYCH.md §4):
+   {id, akt, typ, rola, rok, imie, nazwisko, rodowe, plec('M'|'K'|''), wiek, ur:[min,max]|null, zg:rok|null, zyje:[lata],
+    miejsce, dom, ojciec, ojciecNazw, matka, matkaNazw, malzonek:[imiona], dzieciUr:[lata]} */
+const ID_WERSJA_REGUL = 1;
+const ID_WNIOSKI = {sprawdz:'sprawdź (mocna propozycja)', mozliwe:'możliwe', malo:'za mało danych', konflikt:'konflikt', odrzucone:'odrzucone'};   // „odrzucone” ustawia wyłącznie użytkownik
+const ID_ROLE_ZYJE = /^(pan_mlody|panna_mloda|ojciec|matka|swiadek|chrzestny|chrzestna|zglaszajacy|osadnik|malzonek_zyjacy)/;
+
+// przedział urodzenia profilu: jawny (akt chrztu) albo z wieku w akcie
+function idUr(p){ if (p.ur) return p.ur; if (p.rola === 'dziecko' && p.rok) return [p.rok - 1, p.rok]; return przedzialUr(p.rok, p.wiek); }
+// nazwiska kobiety: mężowskie i rodowe to dwa różne pola; porównujemy każde z każdym i zapisujemy, które się zgodziły
+function idNazwiska(p){ const o = []; if (!normBrak(p.nazwisko)) o.push([p.nazwisko, p.rola === 'panna_mloda' || p.rola === 'dziecko' ? 'rodowe' : (p.plec === 'K' ? 'nieokreślone' : 'rodowe')]); if (!normBrak(p.rodowe)) o.push([p.rodowe, 'rodowe']); return o; }
+function idPorNazw(a, b, klasy){ const A = idNazwiska(a), B = idNazwiska(b); if (!A.length || !B.length) return null; const rank = {rowne:4, wariant:3, slownik:3, podobne:1, rozne:0}; let best = null;
+  A.forEach(x => B.forEach(y => { const r = porNazwiska(x[0], y[0], klasy); if (r && (!best || rank[r] > rank[best.r])) best = {r, x, y}; }));
+  // różne nazwiska u kobiety, gdy nie porównano rodowego z rodowym, to brak danych, nie rozbieżność (zmiana nazwiska po ślubie)
+  if (best && best.r === 'rozne' && (a.plec === 'K' || b.plec === 'K') && !(best.x[1] === 'rodowe' && best.y[1] === 'rodowe')) best.r = 'nieporownywalne';
+  return best; }
+
+/* Porównanie dwóch profili. opt.klasy = klasy wariantów nazwisk potwierdzone decyzjami {klucz: idKlasy}. */
+function porownajProfile(a, b, opt){ opt = opt || {}; const Z = [], R = [], S = [], B = []; const z = (k, t, mocna) => Z.push({k, t, mocna: !!mocna}), r = (k, t, istotna) => R.push({k, t, istotna: !!istotna}), s = (k, t) => S.push({k, t}), br = (k, t) => B.push({k, t});
+  // 1. płeć
+  if (a.plec && b.plec) { if (a.plec !== b.plec) s('plec', 'różna płeć (' + a.plec + ' / ' + b.plec + ')'); } else br('plec', 'płeć nieznana w ' + (!a.plec && !b.plec ? 'obu wystąpieniach' : 'jednym wystąpieniu'));
+  // 2. nazwisko
+  const n = idPorNazw(a, b, opt.klasy);
+  if (!n) br('nazwisko', 'brak nazwiska do porównania');
+  else if (n.r === 'rowne') z('nazwisko', 'nazwisko „' + n.x[0] + '”');
+  else if (n.r === 'wariant') z('nazwisko', 'nazwisko w dawnej pisowni: „' + n.x[0] + '” / „' + n.y[0] + '”');
+  else if (n.r === 'slownik') z('nazwisko', 'warianty jednego nazwiska wg zatwierdzonego słownika: „' + n.x[0] + '” / „' + n.y[0] + '”');
+  else if (n.r === 'podobne') r('nazwisko', 'nazwiska podobne, ale nie te same: „' + n.x[0] + '” / „' + n.y[0] + '” – sprawdź na skanie', true);
+  else if (n.r === 'nieporownywalne') br('nazwisko', 'nazwisk nie da się porównać (kobieta: mężowskie / rodowe): „' + n.x[0] + '” / „' + n.y[0] + '”');
+  else r('nazwisko', 'różne nazwiska: „' + n.x[0] + '” / „' + n.y[0] + '”', true);
+  // 3. imię
+  const im = porImiona(a.imie, b.imie);
+  if (im === null) br('imie', 'brak imienia do porównania'); else if (im === 'rowne') z('imie', 'imię „' + normCzysc(a.imie) + '”' + (fold(normCzysc(a.imie)) !== fold(normCzysc(b.imie)) ? ' / „' + normCzysc(b.imie) + '”' : ''));
+  else if (im === 'bliskie') r('imie', 'imiona bliskie, często mylone: „' + normCzysc(a.imie) + '” / „' + normCzysc(b.imie) + '”', true); else r('imie', 'różne imiona: „' + normCzysc(a.imie) + '” / „' + normCzysc(b.imie) + '”', true);
+  // 4. urodzenie (przedziały, nie punkty)
+  const ua = idUr(a), ub = idUr(b);
+  if (!ua || !ub) br('urodzenie', 'brak wieku lub daty urodzenia w ' + (!ua && !ub ? 'obu wystąpieniach' : 'jednym wystąpieniu'));
+  else if (przedzialyWspolne(ua, ub)) { const waski = Math.min(ua[1] - ua[0], ub[1] - ub[0]) <= 4 && Math.max(ua[1] - ua[0], ub[1] - ub[0]) <= 14; z('urodzenie', 'rok urodzenia zgodny: ' + ua.join('–') + ' i ' + ub.join('–') + (waski ? '' : ' (szeroki przedział, wiek przybliżony)'), waski); }
+  else { const d = przedzialyOdstep(ua, ub); if (d <= 5) r('urodzenie', 'rok urodzenia rozbieżny o ' + d + ' l. ponad tolerancję: ' + ua.join('–') + ' i ' + ub.join('–'), false); else r('urodzenie', 'rok urodzenia niezgodny (' + d + ' l. ponad tolerancję): ' + ua.join('–') + ' i ' + ub.join('–'), true); }
+  // 5. chronologia – niemożliwości logiczne
+  const chr = (x, y) => { if (!x.zg) return; const pozniej = (y.zyje || []).filter(t => t > x.zg + (y.rola === 'ojciec' ? 1 : 0)); if (pozniej.length) s('zyje-po-zgonie', 'zgon w ' + x.zg + ', a w ' + pozniej[0] + ' osoba występuje jako żyjąca (' + y.rola + ')');
+    const dz = (y.dzieciUr || []).filter(t => t > x.zg + (x.plec === 'K' ? 0 : 1)); if (dz.length) s('dziecko-po-zgonie', 'zgon w ' + x.zg + ', a dziecko urodzone w ' + dz[0]); };
+  chr(a, b); chr(b, a);
+  if (a.zg && b.zg && a.akt !== b.akt) { if (a.zg !== b.zg) s('dwa-zgony', 'dwa akty zgonu w różnych latach: ' + a.zg + ' i ' + b.zg); else z('zgon', 'ten sam rok zgonu ' + a.zg + ' (możliwy podwójny wpis – sprawdź)', false); }
+  if (a.rola === 'dziecko' && b.rola === 'dziecko' && a.akt !== b.akt && a.typ === b.typ) s('dwa-chrzty', 'dwa różne akty chrztu (' + a.rok + ' i ' + b.rok + ') – to dwoje dzieci, częste powtórzenie imienia po zmarłym rodzeństwie');
+  const przedUr = (x, y) => { const u = idUr(x); if (u) (y.zyje || []).forEach(t => { if (ID_ROLE_ZYJE.test(y.rola) && t < u[0] + 12 && !S.some(q => q.k === 'przed-urodzeniem')) s('przed-urodzeniem', 'w ' + t + ' osoba dorosła (' + y.rola + '), a urodzenie najwcześniej w ' + u[0]); }); };
+  przedUr(a, b); przedUr(b, a);
+  // 6. rodzice
+  let RODZ = () => {};
+  const rodz = (etyk, x, y, kx, ky) => { const p = porImiona(x, y); if (p === null) { if (!normBrak(x) || !normBrak(y)) br(kx, etyk + ' znany tylko w jednym wystąpieniu'); else br(kx, etyk + ' nieznany w obu'); return null; }
+    if (p === 'rowne') z(kx, etyk + ': „' + normCzysc(x) + '”', true); else if (p === 'bliskie') r(kx, etyk + ' – imiona bliskie: „' + normCzysc(x) + '” / „' + normCzysc(y) + '”', false); else r(kx, etyk + ' – inne imię: „' + normCzysc(x) + '” / „' + normCzysc(y) + '”', true); return p; };
+  const po = rodz('ojciec', a.ojciec, b.ojciec, 'ojciec'), pm = rodz('matka', a.matka, b.matka, 'matka');
+  let mnZg = false;
+  if (po === 'rozne' && pm === 'rozne') RODZ = () => { if (!mnZg) s('rodzice', 'oboje rodzice inni: ' + normCzysc(a.ojciec) + ' i ' + normCzysc(a.matka) + ' / ' + normCzysc(b.ojciec) + ' i ' + normCzysc(b.matka)); };
+  if (!normBrak(a.matkaNazw) && !normBrak(b.matkaNazw)) { const q = porNazwiska(a.matkaNazw, b.matkaNazw, opt.klasy); if (q === 'rowne' || q === 'wariant' || q === 'slownik') { mnZg = true; z('matkaNazw', 'nazwisko rodowe matki: „' + normCzysc(a.matkaNazw) + '”', true); } else if (q === 'rozne') r('matkaNazw', 'inne nazwisko rodowe matki: „' + normCzysc(a.matkaNazw) + '” / „' + normCzysc(b.matkaNazw) + '”', true); }
+  RODZ();   // oboje rodzice inni = sprzeczność, chyba że zgadza się nazwisko rodowe matki (wtedy zostają dwie istotne rozbieżności)
+  // 7. małżonek (różny małżonek to nie sprzeczność: drugie małżeństwo)
+  const ma = (a.malzonek || []).filter(x => !normBrak(x)), mb = (b.malzonek || []).filter(x => !normBrak(x));
+  if (ma.length && mb.length) { if (ma.some(x => mb.some(y => porImiona(x, y) === 'rowne'))) z('malzonek', 'imię małżonka: „' + ma.find(x => mb.some(y => porImiona(x, y) === 'rowne')) + '”', true); else r('malzonek', 'inny małżonek: „' + ma.join(', ') + '” / „' + mb.join(', ') + '” (możliwe drugie małżeństwo)', false); }
+  else br('malzonek', 'małżonek nieznany w ' + (!ma.length && !mb.length ? 'obu wystąpieniach' : 'jednym wystąpieniu'));
+  // 8. miejscowość i dom (inna miejscowość to nie sprzeczność: ludzie się przenoszą)
+  const pmj = porMiejsca(a.miejsce, b.miejsce);
+  if (pmj === null) br('miejsce', 'brak miejscowości do porównania'); else if (pmj === 'rowne') z('miejsce', 'miejscowość „' + normCzysc(a.miejsce) + '”', false); else if (pmj === 'mozliwe') z('miejsce', 'miejscowość prawdopodobnie ta sama: „' + normCzysc(a.miejsce) + '” / „' + normCzysc(b.miejsce) + '”', false); else r('miejsce', 'inna miejscowość: „' + normCzysc(a.miejsce) + '” / „' + normCzysc(b.miejsce) + '”', false);
+  if (!normBrak(a.dom) && !normBrak(b.dom) && pmj === 'rowne') { if (String(a.dom).replace(/\D/g, '') === String(b.dom).replace(/\D/g, '') && Math.abs((a.rok || 0) - (b.rok || 0)) <= 30) z('dom', 'ten sam numer domu ' + a.dom + ' (akty w odstępie do 30 lat)', true); }
+  return idWniosek({zgodnosci: Z, rozbieznosci: R, sprzecznosci: S, braki: B}); }
+
+/* Wniosek z tabeli decyzyjnej (jawnej, bez wag):
+   konflikt  – jakakolwiek sprzeczność logiczna;
+   (brak propozycji) – nazwisko lub imię różne/niezgodne → para w ogóle nie jest kandydatem (rdzen=false);
+   sprawdź   – rdzeń zgodny + ≥2 mocne zgodności, w tym ≥1 rodzinna (ojciec, matka, nazwisko matki, małżonek), 0 istotnych rozbieżności;
+   możliwe   – rdzeń zgodny + ≥1 mocna zgodność, najwyżej 1 istotna rozbieżność;
+   za mało danych – sam rdzeń (imię + nazwisko, ewentualnie miejscowość). */
+function idWniosek(u){ const ma = k => u.zgodnosci.some(x => x.k === k); u.rdzen = ma('nazwisko') && ma('imie');
+  const rodzinne = u.zgodnosci.filter(x => /^(ojciec|matka|matkaNazw|malzonek)$/.test(x.k)).length, mocne = u.zgodnosci.filter(x => x.mocna).length, istotne = u.rozbieznosci.filter(x => x.istotna && !/^(nazwisko|imie)$/.test(x.k)).length;
+  u.wniosek = u.sprzecznosci.length ? 'konflikt' : !u.rdzen ? 'malo' : (mocne >= 2 && rodzinne >= 1 && !istotne) ? 'sprawdz' : (mocne >= 1 && istotne <= 1) ? 'mozliwe' : 'malo';
+  u.porzadek = [({sprawdz:0, mozliwe:1, malo:2, konflikt:3})[u.wniosek], -rodzinne, -mocne, istotne, u.rozbieznosci.length];   // do sortowania listy (leksykograficznie), nie do pokazywania
+  u.reguly = ID_WERSJA_REGUL; return u; }
+const idPorzadek = (x, y) => { for (let i = 0; i < x.porzadek.length; i++) if (x.porzadek[i] !== y.porzadek[i]) return x.porzadek[i] - y.porzadek[i]; return 0; };
+
+/* Kandydaci dla jednego profilu. Blokowanie po kluczu nazwiska (k2) i klasach słownika; wynik bez par z niezgodnym rdzeniem.
+   Po zebraniu listy: konkurencja – jeśli na najwyższym poziomie jest >1 kandydat, „sprawdź” spada do „możliwe” z adnotacją. */
+function idIndeks(profile, klasy){ const ix = {}; profile.forEach(p => idNazwiska(p).forEach(([v]) => { const k = kluczNazwiska(v); if (!k) return; const kk = (klasy && (klasy[k.k2] || klasy[k.k1])) || k.k2; (ix[kk] = ix[kk] || []).push(p); })); return ix; }
+function idKandydaci(p, ix, opt){ opt = opt || {}; const seen = new Set([p.id]), out = [];
+  idNazwiska(p).forEach(([v]) => { const k = kluczNazwiska(v); if (!k) return; const kk = (opt.klasy && (opt.klasy[k.k2] || opt.klasy[k.k1])) || k.k2;
+    (ix[kk] || []).forEach(q => { if (seen.has(q.id) || q.akt === p.akt) return; seen.add(q.id); if (opt.pomin && opt.pomin(p, q)) return; const u = porownajProfile(p, q, opt); if (!u.rdzen) return; u.a = p.id; u.b = q.id; out.push(u); }); });
+  out.sort(idPorzadek); idKonkurencja(out); return out; }
+function idKonkurencja(L){ const top = L.filter(u => u.wniosek === 'sprawdz'); if (top.length > 1) top.forEach(u => { u.wniosek = 'mozliwe'; u.konkurencja = top.length; u.rozbieznosci.push({k:'konkurencja', t:'niejednoznaczne: ' + top.length + ' kandydatów spełnia warunki mocnej propozycji', istotna:false}); });
+  const moz = L.filter(u => u.wniosek === 'mozliwe' && !u.konkurencja).length; L.forEach(u => { if (u.wniosek === 'mozliwe' && !u.konkurencja && moz > 1) u.konkurencja = moz; });
+  // jedyny kandydat w całej bazie o tym imieniu i nazwisku + zgodny rok urodzenia → „możliwe” (z adnotacją), nigdy wyżej
+  const zywi = L.filter(u => u.wniosek !== 'konflikt'); if (zywi.length === 1 && zywi[0].wniosek === 'malo' && zywi[0].zgodnosci.some(x => x.k === 'urodzenie')) { zywi[0].wniosek = 'mozliwe'; zywi[0].jedyny = true; zywi[0].zgodnosci.push({k:'jedyny', t:'jedyny kandydat w bazie o tym imieniu i nazwisku', mocna:false}); }
+  return L; }
+// tekst wniosku do pokazania i do zapisania w Decyzji
+function idZdanie(u){ const n = u.konkurencja ? ' Kandydatów na tym poziomie: ' + u.konkurencja + '.' : '';
+  return ({sprawdz:'Mocna propozycja: zgodny rdzeń i dane rodzinne. Sprawdź na skanie i zdecyduj.', mozliwe:'Możliwe: zgodny rdzeń i część danych; brakuje potwierdzenia rodzinnego lub jest rozbieżność.', malo:'Za mało danych: zgadza się tylko imię i nazwisko. Nie scalaj bez dodatkowego źródła.', konflikt:'Konflikt: ' + u.sprzecznosci.map(x => x.t).join('; ') + '. To raczej różne osoby albo błąd w jednym z aktów.'})[u.wniosek] + n; }
+
+/* moduly/decyzje.js – dziennik decyzji o tożsamości i klastry osób (czyste funkcje, bez DOM).
+   Dziennik jest jedynym źródłem prawdy o scaleniach. Osoba = klaster wystąpień wyliczany z dziennika. Nic się nie kasuje: cofnięcie to nowy wpis.
+   Decyzja: {n, t, typ:'scal'|'odrzuc'|'odloz'|'cofnij', a, b, wniosek, uzasadnienie:{zgodnosci,rozbieznosci,sprzecznosci,braki}, reguly, cofa, why} */
+const DEC_FORMAT = {nazwa:'multitool-decyzje', wersja:1};
+const decKlucz = (a, b) => a < b ? a + '|' + b : b + '|' + a;
+function decNowa(L, d){ const n = L.reduce((m, x) => Math.max(m, x.n), 0) + 1; const e = Object.assign({n, t: new Date().toISOString()}, d); L.push(e); return e; }
+// decyzje obowiązujące: bez cofniętych i bez samych wpisów „cofnij”; dla pary liczy się ostatnia
+function decAktywne(L){ const cof = new Set(L.filter(d => d.typ === 'cofnij').map(d => d.cofa)); const par = {}; L.forEach(d => { if (d.typ === 'cofnij' || cof.has(d.n)) return; par[decKlucz(d.a, d.b)] = d; }); return Object.values(par); }
+// klastry (union-find) z aktywnych decyzji „scal”; id osoby = najmniejszy numer decyzji w klastrze (stabilny, dopóki ta decyzja obowiązuje)
+function decKlastry(L){ const par = {}, f = x => par[x] === undefined || par[x] === x ? (par[x] = x) : (par[x] = f(par[x])); const akt = decAktywne(L); akt.filter(d => d.typ === 'scal').forEach(d => { par[f(d.a)] = f(d.b); });
+  const G = {}; Object.keys(par).forEach(x => (G[f(x)] = G[f(x)] || []).push(x)); const osoby = {}, czyja = {};
+  Object.values(G).forEach(c => { if (c.length < 2) return; const dn = akt.filter(d => d.typ === 'scal' && c.includes(d.a)).map(d => d.n); const id = 'o:' + Math.min(...dn); dn.sort((x, y) => x - y); osoby[id] = {id, wystapienia: c.sort(), decyzje: dn, aliasy: dn.slice(1).map(x => 'o:' + x), status: 'zatwierdzona'}; c.forEach(w => czyja[w] = id); });
+  const odrz = new Set(akt.filter(d => d.typ === 'odrzuc').map(d => decKlucz(d.a, d.b))), odl = new Set(akt.filter(d => d.typ === 'odloz').map(d => decKlucz(d.a, d.b)));
+  return {osoby, czyja, odrzucone: odrz, odlozone: odl}; }
+// para odrzucona blokuje scalenie pośrednie: zwraca listę odrzuconych par, które znalazłyby się w jednym klastrze po scaleniu a+b
+function decKolizje(L, a, b){ const K = decKlastry(L), ca = K.czyja[a] ? K.osoby[K.czyja[a]].wystapienia : [a], cb = K.czyja[b] ? K.osoby[K.czyja[b]].wystapienia : [b], out = []; ca.forEach(x => cb.forEach(y => { if (K.odrzucone.has(decKlucz(x, y))) out.push([x, y]); })); return out; }
+// walidacja importu: format, wersja, typy, odwołania do istniejących wystąpień; zwraca {ok:[...], bledy:[...]}
+function decWaliduj(obj, znaneWyst){ const bl = [], ok = []; if (!obj || !obj.format || obj.format.nazwa !== DEC_FORMAT.nazwa) return {ok, bledy: ['To nie jest plik decyzji Multitoola (brak pola format).']}; if (obj.format.wersja > DEC_FORMAT.wersja) return {ok, bledy: ['Plik z nowszej wersji (' + obj.format.wersja + '). Zaktualizuj aplikację.']};
+  if (!Array.isArray(obj.decyzje)) return {ok, bledy: ['Brak listy decyzji.']}; const nry = new Set();
+  obj.decyzje.forEach((d, i) => { const gdzie = 'wpis ' + (i + 1) + ': '; if (!d || typeof d !== 'object' || !Number.isInteger(d.n) || nry.has(d.n)) return bl.push(gdzie + 'brak lub powtórzony numer'); if (!/^(scal|odrzuc|odloz|cofnij)$/.test(d.typ)) return bl.push(gdzie + 'nieznany typ „' + String(d.typ).slice(0, 20) + '”');
+    if (d.typ === 'cofnij') { if (!Number.isInteger(d.cofa)) return bl.push(gdzie + 'cofnięcie bez numeru decyzji'); } else if (typeof d.a !== 'string' || typeof d.b !== 'string' || !znaneWyst.has(d.a) || !znaneWyst.has(d.b)) return bl.push(gdzie + 'odwołanie do nieznanego wystąpienia');
+    nry.add(d.n); ok.push(d); }); return {ok, bledy: bl}; }
+function decCsv(L){ return ['nr;czas;typ;a;b;wniosek;zgodnosci;rozbieznosci;sprzecznosci;braki;reguly;cofa;powod'].concat(L.map(d => { const u = d.uzasadnienie || {}; return [d.n, d.t, d.typ, d.a || '', d.b || '', d.wniosek || '', (u.zgodnosci || []).join(' | '), (u.rozbieznosci || []).join(' | '), (u.sprzecznosci || []).join(' | '), (u.braki || []).join(' | '), d.reguly || '', d.cofa || '', d.why || ''].map(csvCell).join(';'); })).join('\r\n') + '\r\n'; }
+
+/* app/moduly/osoby_rdzen.js – rdzeń zakładki „Osoby” (krok 6): model wystąpień z aktów, silnik propozycji, dziennik decyzji, klasy wariantów nazwisk, import dop.v1.
+   Czyste funkcje, bez DOM – działają w Web Workerze i na wątku głównym (fallback). Wymaga (kolejność): tekst.js, raport.js (wiekLat), norm.js, norm_zapis.js, moduly/wystapienia.js, moduly/identity.js, moduly/decyzje.js.
+   Zasady (MODEL_DANYCH §1, SCALANIE_OSOBY): program niczego nie scala; propozycja z uzasadnieniem → decyzja użytkownika → osoba wyliczana z dziennika. Akty, wystąpienia i źródła są tylko czytane. */
+
+/* ---------- 1. model: wystąpienia z aktów ---------- */
+// rola → atrybut → pola aktu (pierwsze niepuste); '=' w nazwie roli nie występuje. Role pomijane celowo: świadkowie, zgłaszający, księża (słabe tożsamościowo; zob. PLAN_WDROZENIA §6, krok 6).
+const OS_ROLE = {
+  zgon: {zmarly: {imie: ['deceased_first_name'], nazwisko: ['deceased_last_name'], rodowe: ['deceased_maiden_name'], plec: ['deceased_sex'], wiek: ['age'], miejsce: ['deceased_residence', 'death_place'], dom: ['house']},
+    ojciec: {imie: ['father_first_name'], nazwisko: ['father_last_name', '@ojcowskie'], miejsce: ['deceased_residence', 'death_place']},
+    matka: {imie: ['mother_first_name'], rodowe: ['mother_last_name'], nazwisko: ['father_last_name', '@ojcowskie'], miejsce: ['deceased_residence', 'death_place']},
+    malzonek: {imie_nazwisko: ['deceased_spouse']}},
+  chrzest: {dziecko: {imie: ['child_first_name'], nazwisko: ['child_last_name'], miejsce: ['child_birth_place']},
+    ojciec: {imie: ['father_first_name'], nazwisko: ['father_last_name'], wiek: ['father_age'], miejsce: ['child_birth_place']},
+    matka: {imie: ['mother_first_name'], rodowe: ['mother_last_name'], nazwisko: ['father_last_name'], wiek: ['mother_age'], miejsce: ['child_birth_place']}},
+  malzenstwo: {pan_mlody: {imie: ['groom_first_name'], nazwisko: ['groom_last_name'], wiek: ['groom_age'], stan: ['groom_status'], miejsce: ['groom_residence']},
+    panna_mloda: {imie: ['bride_first_name'], nazwisko: ['bride_last_name'], wiek: ['bride_age'], stan: ['bride_status'], miejsce: ['bride_residence']},
+    ojciec_pana: {imie: ['groom_father_first_name'], nazwisko: ['groom_father_last_name']}, matka_pana: {imie: ['groom_mother_first_name'], rodowe: ['groom_mother_last_name'], nazwisko: ['groom_father_last_name']},
+    ojciec_panny: {imie: ['bride_father_first_name'], nazwisko: ['bride_father_last_name']}, matka_panny: {imie: ['bride_mother_first_name'], rodowe: ['bride_mother_last_name'], nazwisko: ['bride_father_last_name']}}
+};
+// nazwisko ojca w akcie zgonu bez pola „ojciec”: mężczyzna → jego nazwisko; kobieta niezamężna (dziecko, panna) → jej nazwisko; kobieta z nazwiskiem rodowym → rodowe; inaczej nieznane
+function osOjcowskie(w){ const z = w('deceased_sex'), n = w('deceased_last_name'), r = w('deceased_maiden_name'); if (!normBrak(r)) return r;
+  if (z !== 'K') return n; return /dziec|panna|panienka|virgo|puella|infans|filia/i.test(String(w('deceased_status') || '')) ? n : ''; }
+// pola: funkcja wart(akt, pole) → bieżąca wartość (w aplikacji getv, czyli z poprawkami użytkownika)
+function osModel(akty, wart){ const M = {akty: [], wystapienia: []};
+  akty.forEach(a => { const R = OS_ROLE[a.typ]; if (!R) return; const w = f => { const v = wart(a, f); return v == null ? '' : String(v); }, pola = {}, rola = [];
+    for (const r in R) { const mapa = {}; let ma = false; for (const at in R[r]) { let v = ''; for (const f of R[r][at]) { v = f === '@ojcowskie' ? osOjcowskie(w) : w(f); if (!normBrak(v)) break; v = ''; } if (v !== '') { pola[r + '.' + at] = {value: v}; mapa[at] = r + '.' + at; if (at !== 'miejsce' && at !== 'plec' && at !== 'dom') ma = true; } }
+      if (ma) M.wystapienia.push({id: 'w:' + a.id + ':' + r, akt: a.id, rola: r, mapa}); }
+    M.akty.push({id: a.id, typ: a.typ, rok: Number(a.year != null ? a.year : a.rok) || null, miejsce: w('deceased_residence') || w('death_place') || w('child_birth_place') || w('groom_residence') || '', pola}); });
+  return M; }
+// podpis modelu (FNV-1a po JSON) – do rozpoznania, że dane aktów zmieniły się od ostatniego przeliczenia
+function osPodpis(M){ let h = 0x811c9dc5; const s = JSON.stringify(M); for (let i = 0; i < s.length; i++) { h ^= s.charCodeAt(i); h = Math.imul(h, 16777619) >>> 0; } return h.toString(16) + ':' + s.length; }
+
+/* ---------- 2. silnik: profile, indeks, kandydaci ---------- */
+// klasy = {klucz nazwiska (k1/k2): id klasy} z decyzji wariant_nazwiska (osKlasy)
+function osSilnik(M, klasy){ const P = wystProfile(M), PL = Object.values(P), E = {P, PL, klasy: klasy || {}, ix: {}}; osIndeksuj(E); return E; }
+const osKlucz = (v, klasy) => { const k = kluczNazwiska(v); return k ? ((klasy && (klasy[k.k2] || klasy[k.k1])) || k.k2) : null; };
+// indeks blokowy: klucz nazwiska × klucz imienia (rdzeń propozycji wymaga zgodnego nazwiska i imienia, więc pary spoza bloku nigdy nie byłyby kandydatami)
+function osIndeksuj(E){ E.ix = {}; E.PL.forEach(p => { const iml = kluczImienia(p.imie); if (!iml.length) return; const ks = new Set(); idNazwiska(p).forEach(([v]) => { const k = osKlucz(v, E.klasy); if (k) ks.add(k); });
+  ks.forEach(k => iml.forEach(im => (E.ix[k + '|' + im] = E.ix[k + '|' + im] || []).push(p))); }); }
+function osKandydaci(E, id){ const p = E.P[id]; if (!p) return []; const seen = new Set([p.id]), out = [], opt = {klasy: E.klasy}, iml = kluczImienia(p.imie);
+  idNazwiska(p).forEach(([v]) => { const k = osKlucz(v, E.klasy); if (!k) return; iml.forEach(im => (E.ix[k + '|' + im] || []).forEach(q => { if (seen.has(q.id) || q.akt === p.akt) return; seen.add(q.id); const u = porownajProfile(p, q, opt); if (!u.rdzen) return; u.a = p.id; u.b = q.id; out.push(u); })); });
+  out.sort(idPorzadek); idKonkurencja(out); return out; }
+const OS_WN = {sprawdz: 'sprawdź', mozliwe: 'możliwe', malo: 'za mało danych', konflikt: 'konflikt'};
+// wersja do wysłania z Workera / zapisania: bez ciężkich pól
+const osUzas = u => ({zgodnosci: u.zgodnosci.map(x => x.t), rozbieznosci: u.rozbieznosci.map(x => x.t), sprzecznosci: u.sprzecznosci.map(x => x.t), braki: u.braki.map(x => x.t)});
+function osPoWyst(E, a, b){ const u = porownajProfile(E.P[a], E.P[b], {klasy: E.klasy}); u.a = a; u.b = b; return u; }
+// przeliczenie profili porcjami. wyniki[id] = [[b, kod, konkurencja, mocnych, rodzinnych]] tylko dla „sprawdź” i „możliwe” (reszta to liczniki licz[id] = [za mało danych, konflikt]); pełne uzasadnienia liczy karta na żądanie
+const OS_KOD = {sprawdz: 's', mozliwe: 'm', malo: 'l', konflikt: 'k'};
+function osPrzeliczPorcja(E, od, ile, wyniki, licz){ const koniec = Math.min(E.PL.length, od + ile);
+  for (let i = od; i < koniec; i++) { const p = E.PL[i], L = osKandydaci(E, p.id); if (!L.length) continue; const w = [], c = [0, 0];
+    L.forEach(u => { if (u.wniosek === 'sprawdz' || u.wniosek === 'mozliwe') w.push([u.b, OS_KOD[u.wniosek], u.konkurencja || 0, u.zgodnosci.filter(x => x.mocna).length, u.zgodnosci.filter(x => /^(ojciec|matka|matkaNazw|malzonek)$/.test(x.k)).length]); else c[u.wniosek === 'konflikt' ? 1 : 0]++; });
+    if (w.length) wyniki[p.id] = w; if (c[0] || c[1]) licz[p.id] = c; }
+  return koniec; }
+// etykieta do list i wyszukiwania: [id, tekst, rok, typ aktu, rola]
+const osEtyk = E => E.PL.map(p => [p.id, wystEtykieta(p), p.rok || 0, p.typ, p.rolaAktu]);
+
+/* ---------- 3. decyzje: walidacja, zapis, klasy wariantów nazwisk ---------- */
+// typy dziennika: scal, odrzuc, odloz, cofnij (decyzje.js) + brak (b = „brak:B|D|M”), wariant_nazwiska / odrzuc_wariant (a, b = „n:<zapis nazwiska>”)
+const OS_TYPY = /^(scal|odrzuc|odloz|brak|wariant_nazwiska|odrzuc_wariant|cofnij)$/, OS_ZAKAZ = new Set(['__proto__', 'constructor', 'prototype']);
+const osStr = (v, max) => typeof v === 'string' && v.length <= max;
+const osListaTekst = v => Array.isArray(v) && v.length <= 40 && v.every(x => osStr(x, 400));
+// jedna decyzja → czysty obiekt albo null (białą listą pól; nic z pliku nie trafia dalej bez sprawdzenia)
+function osCzyscDec(d, znane){ if (!d || typeof d !== 'object' || Array.isArray(d) || !Number.isInteger(d.n) || d.n < 1 || !OS_TYPY.test(d.typ)) return null; const o = {n: d.n, t: osStr(d.t, 40) ? d.t : '', typ: d.typ};
+  if (d.typ === 'cofnij') { if (!Number.isInteger(d.cofa) || d.cofa < 1) return null; o.cofa = d.cofa; }
+  else { if (!osStr(d.a, 200) || !osStr(d.b == null ? '' : d.b, 200)) return null; o.a = d.a; o.b = d.b == null ? '' : d.b;
+    if (/^(scal|odrzuc|odloz)$/.test(d.typ)) { if (!/^w:/.test(o.a) || !/^w:/.test(o.b) || o.a === o.b || (znane && !(znane.has(o.a) && znane.has(o.b)))) return null; }
+    else if (d.typ === 'brak') { if (!/^w:/.test(o.a) || !/^brak:[BDM]$/.test(o.b) || (znane && !znane.has(o.a))) return null; }
+    else if (!/^n:.{1,150}$/.test(o.a) || !/^n:.{1,150}$/.test(o.b) || o.a === o.b) return null; }
+  if (d.wniosek !== undefined) { if (!osStr(d.wniosek, 40)) return null; o.wniosek = d.wniosek; } if (d.reguly !== undefined) { if (!Number.isInteger(d.reguly)) return null; o.reguly = d.reguly; }
+  if (d.why !== undefined) { if (!osStr(d.why, 1000)) return null; o.why = d.why; } if (d.zr !== undefined) { if (!osStr(d.zr, 40)) return null; o.zr = d.zr; } if (d.slot !== undefined) { if (!osStr(d.slot, 80)) return null; o.slot = d.slot; }
+  if (d.uzasadnienie !== undefined) { const u = d.uzasadnienie; if (!u || typeof u !== 'object') return null; o.uzasadnienie = {}; for (const k of ['zgodnosci', 'rozbieznosci', 'sprzecznosci', 'braki']) { if (u[k] !== undefined && !osListaTekst(u[k])) return null; o.uzasadnienie[k] = u[k] || []; } }
+  if (d.formy !== undefined) { if (!osListaTekst(d.formy)) return null; o.formy = d.formy; }
+  return o; }
+// plik/kopia → {ok:[...], bledy:[...]}; numery unikalne, „cofnij” musi wskazywać istniejący wpis
+function osWaliduj(lista, znane){ const ok = [], bledy = [], nry = new Set(); if (!Array.isArray(lista)) return {ok, bledy: ['Brak listy decyzji.']};
+  lista.forEach((d, i) => { const x = osCzyscDec(d, znane); if (!x) return bledy.push('wpis ' + (i + 1) + ': błędna lub niepełna decyzja'); if (nry.has(x.n)) return bledy.push('wpis ' + (i + 1) + ': powtórzony numer ' + x.n); nry.add(x.n); ok.push(x); });
+  const dobre = ok.filter(x => x.typ !== 'cofnij' || nry.has(x.cofa)); if (dobre.length < ok.length) bledy.push('cofnięcia bez decyzji docelowej: ' + (ok.length - dobre.length));
+  return {ok: dobre, bledy}; }
+// dopisanie decyzji z kopii/pliku do dziennika: pomija identyczne (ten sam czas, typ, a, b), reszcie nadaje nowe numery (z przemapowaniem „cofa”)
+function osDopiszDecyzje(L, nowe){ const mapa = {}, klucz = d => [d.t, d.typ, d.a || '', d.b || '', d.cofa || ''].join('|'); let dodane = 0, pominiete = 0;
+  const maja = new Map(L.map(d => [klucz(Object.assign({}, d, {cofa: ''})), d.n]));
+  nowe.slice().sort((x, y) => x.n - y.n).forEach(d => { const k = klucz(Object.assign({}, d, {cofa: d.typ === 'cofnij' ? (mapa[d.cofa] || d.cofa) : ''})); const ist = d.typ !== 'cofnij' && maja.get(klucz(Object.assign({}, d, {cofa: ''})));
+    if (ist) { mapa[d.n] = ist; pominiete++; return; }
+    if (d.typ === 'cofnij' && L.some(x => x.typ === 'cofnij' && x.cofa === (mapa[d.cofa] || d.cofa))) { pominiete++; return; }
+    const e = Object.assign({}, d); e.n = L.reduce((m, x) => Math.max(m, x.n), 0) + 1; mapa[d.n] = e.n; if (d.typ === 'cofnij') e.cofa = mapa[d.cofa] || d.cofa; L.push(e); maja.set(klucz(Object.assign({}, e, {cofa: ''})), e.n); dodane++; });
+  return {dodane, pominiete}; }
+// zapisz decyzję z kontrolą spójności; zwraca {ok, blad, dec}
+// typ: scal | odrzuc | odloz | brak | wariant_nazwiska | odrzuc_wariant; u = uzasadnienie z porównania (obiekt jak z idKandydaci/porownajProfile) albo null
+function osDecyduj(L, typ, a, b, opt){ opt = opt || {}; const u = opt.u || null, why = String(opt.why || '').trim(), A = decAktywne(L).find(d => d.typ === typ && decKlucz(d.a, d.b) === decKlucz(a, b));
+  if (A && typ !== 'odloz') return {ok: false, blad: 'Ta decyzja już obowiązuje (nr ' + A.n + ').'};
+  if (typ === 'scal' || typ === 'odrzuc' || typ === 'odloz') {
+    if (opt.akty && opt.akty[a] === opt.akty[b]) return {ok: false, blad: 'Dwa wystąpienia z tego samego aktu nie są jedną osobą.'};
+    const K = decKlastry(L);
+    if (typ === 'scal') { if (K.czyja[a] && K.czyja[a] === K.czyja[b]) return {ok: false, blad: 'Już należą do jednej osoby.'};
+      const kol = decKolizje(L, a, b); if (kol.length) return {ok: false, blad: 'Nie można scalić: w połączonej osobie znalazłaby się para wcześniej oznaczona jako różne osoby (' + kol.length + '). Najpierw cofnij tamtą decyzję.', kolizje: kol};
+      if (u && (u.wniosek !== 'sprawdz') && why.length < 5) return {ok: false, blad: 'Scalenie propozycji innej niż „sprawdź” (' + (OS_WN[u.wniosek] || u.wniosek) + ') wymaga powodu (min. 5 znaków).', trzebaPowod: true};
+      if (u && u.sprzecznosci && u.sprzecznosci.length && why.length < 5) return {ok: false, blad: 'Para ma sprzeczność logiczną – wpisz wyjaśnienie, dlaczego mimo to to ta sama osoba.', trzebaPowod: true}; }
+    if (typ === 'odrzuc' && K.czyja[a] && K.czyja[a] === K.czyja[b]) return {ok: false, blad: 'Te wystąpienia są w jednej osobie – najpierw cofnij scalenie.'}; }
+  const d = {typ, a, b: b || '', wniosek: u ? u.wniosek : (opt.wniosek || ''), reguly: u ? u.reguly : (opt.reguly || 0), why, uzasadnienie: u ? osUzas(u) : (opt.uzasadnienie || {zgodnosci: [], rozbieznosci: [], sprzecznosci: [], braki: []})};
+  if (opt.formy) d.formy = opt.formy; if (opt.zr) d.zr = opt.zr; if (opt.slot) d.slot = opt.slot; if (!d.why) delete d.why;
+  return {ok: true, dec: decNowa(L, d)}; }
+function osCofnij(L, n, why){ const d = L.find(x => x.n === n), akt = decAktywne(L); if (!d || d.typ === 'cofnij') return {ok: false, blad: 'Nie ma takiej decyzji.'}; if (!akt.some(x => x.n === n)) return {ok: false, blad: 'Decyzja nr ' + n + ' już nie obowiązuje.'};
+  const e = {typ: 'cofnij', cofa: n}; if (why) e.why = String(why).slice(0, 1000); return {ok: true, dec: decNowa(L, e)}; }
+// klasy wariantów nazwisk z aktywnych decyzji „wariant_nazwiska”: {klasy:{klucz k2: 'k:<n>'}, czlonkowie:{'k:<n>': [zapisy]}}; klucz = k2 z norm.js (porNazwiska sprawdza klasy[k2] || klasy[k1])
+function osKlasy(L){ const par = {}, f = x => par[x] === undefined || par[x] === x ? (par[x] = x) : (par[x] = f(par[x])), zapis = {}, dn = {};
+  const akt = decAktywne(L).filter(d => d.typ === 'wariant_nazwiska'); akt.forEach(d => { const ka = kluczNazwiska(d.a.slice(2)), kb = kluczNazwiska(d.b.slice(2)); if (!ka || !kb) return; (zapis[ka.k2] = zapis[ka.k2] || new Set()).add(d.a.slice(2)); (zapis[kb.k2] = zapis[kb.k2] || new Set()).add(d.b.slice(2)); par[f(ka.k2)] = f(kb.k2); });
+  const G = {}; Object.keys(par).forEach(k => (G[f(k)] = G[f(k)] || []).push(k)); const klasy = {}, czlonkowie = {};
+  Object.values(G).forEach(ks => { if (ks.length < 2) return; const ns = akt.filter(d => { const k = kluczNazwiska(d.a.slice(2)); return k && ks.includes(k.k2); }).map(d => d.n), id = 'k:' + Math.min(...ns); ks.forEach(k => klasy[k] = id); czlonkowie[id] = [].concat(...ks.map(k => [...zapis[k]])).sort(); });
+  return {klasy, czlonkowie}; }
+// zapis nazwiska → rdzeń po odjęciu końcówki pochodnej (Paluchowski → Paluch); null, gdy nie ma czego odjąć
+const osRdzenNazw = k1 => { const m = /^(.{4,}?)(owski|ewski|ski|cki|dzki|owicz|ewicz)$/.exec(k1); return m ? m[1] : null; };
+// kandydaci na klasy wariantów (do decyzji użytkownika; NIC nie jest klasą bez decyzji): pary kluczy k2, które nie są jeszcze równe, a mają wspólny rdzeń
+//  „pochodne” – jedno z nich to drugie z końcówką -ski/-owski/-icz (Paluch / Paluchowski, Paluchowska); „podobne” – klucze (lub rdzenie) różnią się jedną literą (Paluch / Paruch)
+function osWarianty(E, wylacz){ const G = new Map(); wylacz = wylacz || new Set();
+  E.PL.forEach(p => [p.nazwisko, p.rodowe].forEach(v => { const c = normCzysc(v); if (!c || /\s/.test(c) || c.length < 3) return; const k = kluczNazwiska(c); if (!k) return; const kk = E.klasy[k.k2] || k.k2; let g = G.get(kk); if (!g) G.set(kk, g = {kk, k1: k.k1, k2: k.k2, formy: {}, n: 0, przyklad: []}); g.formy[c] = (g.formy[c] || 0) + 1; g.n++; if (g.przyklad.length < 3) g.przyklad.push(p.id); }));
+  const MALE = zapBudujMale([...G.values()].flatMap(g => Object.keys(g.formy)).sort()), grupy = [...G.values()].map(g => { const f = Object.keys(g.formy).sort((x, y) => g.formy[y] - g.formy[x]); g.glowna = f[0]; const m = zapMaleNazwisko(f[0], '', MALE); g.meska = m ? m[0] : f[0]; const rd = osRdzenNazw(g.k1); g.rdzen = rd; g.k2r = rd ? (kluczNazwiska(rd) || {}).k2 || null : null; return g; });
+  const poK2 = new Map(grupy.map(g => [g.k2, g])), wyn = new Map(), dodaj = (a, b, rodzaj, powod) => { if (a === b || a.kk === b.kk) return; const k = a.kk < b.kk ? a.kk + '|' + b.kk : b.kk + '|' + a.kk; if (wyn.has(k) || wylacz.has(k)) return; wyn.set(k, {a: a.glowna, b: b.glowna, formyA: a.formy, formyB: b.formy, nA: a.n, nB: b.n, rodzaj, powod, przykladA: a.przyklad, przykladB: b.przyklad, kluczA: a.kk, kluczB: b.kk}); };
+  grupy.forEach(g => { if (g.k2r && poK2.has(g.k2r)) { const o = poK2.get(g.k2r); dodaj(o, g, 'pochodne', '„' + g.glowna + '” = „' + o.glowna + '” + końcówka pochodna (-' + g.k1.slice(g.rdzen.length) + '); rdzeń zgodny'); } });
+  const kub = new Map(); grupy.forEach(g => [g.k2, g.k2r].filter(Boolean).forEach(k => { if (k.length < 5) return; const b = k[0] + k.length; (kub.get(b) || kub.set(b, []).get(b)).push([k, g]); }));
+  grupy.forEach(g => [g.k2, g.k2r].filter(Boolean).forEach(k => { if (k.length < 5) return; for (const dl of [-1, 0, 1]) (kub.get(k[0] + (k.length + dl)) || []).forEach(([k2, h]) => { if (h.kk <= g.kk || k2 === k || lev(k, k2, 1) > 1) return; dodaj(g, h, 'podobne', 'klucze pisowni różnią się jedną literą: „' + k + '” / „' + k2 + '”' + (k !== g.k2 || k2 !== h.k2 ? ' (po odjęciu końcówki pochodnej)' : '') + ' – sprawdź na skanie, to bywają różne nazwiska'); }); }));
+  return [...wyn.values()].sort((x, y) => (x.rodzaj === y.rodzaj ? 0 : x.rodzaj === 'pochodne' ? -1 : 1) || Math.min(y.nA, y.nB) - Math.min(x.nA, x.nB) || (y.nA + y.nB) - (x.nA + x.nB)); }
+
+/* ---------- 4. import decyzji z dopasowania (dop.v1) ---------- */
+// Format dop.v1 (dopasowanie/szablon.html): {klucz: {slot: {acc:[{t,id}], rej:[{t,id}], none:bool}}}; klucz = id ślubu („1841/1”) albo „B:<id chrztu>” / „D:<id zgonu>”; t = B (chrzest) | D (zgon) | M (małżeństwo).
+// acc → scal, rej → odrzuc, none → brak. Każdy slot oznacza konkretne pary wystąpień (tabela OS_DOP). Funkcja nie dotyka dziennika – zwraca plan; osDopZastosuj zapisuje go po potwierdzeniu użytkownika.
+// ctx: {idAktu(t, idStare) → id aktu | null, wyst(idAktu, rola) → id wystąpienia | null, plec(idWyst) → 'M'|'K'|''}
+const OS_DOP = {   // tryb klucza → slot → [[rola w akcie klucza, rola w akcie docelowym | 'PLEC' (pan/panna wg płci)], …]; t docelowe wynika ze slotu
+  M: {'gF.b': [['ojciec_pana', 'dziecko']], 'gF.d': [['ojciec_pana', 'zmarly']], 'gM.b': [['matka_pana', 'dziecko']], 'gM.d': [['matka_pana', 'zmarly']], 'bF.b': [['ojciec_panny', 'dziecko']], 'bF.d': [['ojciec_panny', 'zmarly']], 'bM.b': [['matka_panny', 'dziecko']], 'bM.d': [['matka_panny', 'zmarly']],
+    'g.b': [['pan_mlody', 'dziecko']], 'g.d': [['pan_mlody', 'zmarly']], 'b.b': [['panna_mloda', 'dziecko']], 'b.d': [['panna_mloda', 'zmarly']], 'kids': [['pan_mlody', 'ojciec'], ['panna_mloda', 'matka']]},
+  B: {par: [['ojciec', 'pan_mlody'], ['matka', 'panna_mloda']], sib: [['ojciec', 'ojciec'], ['matka', 'matka']], own: [['dziecko', 'zmarly']], mrg: [['dziecko', 'PLEC']], fD: [['ojciec', 'zmarly']], mD: [['matka', 'zmarly']]},
+  D: {birth: [['zmarly', 'dziecko']], mrg: [['zmarly', 'PLEC']], par: [['ojciec', 'pan_mlody'], ['matka', 'panna_mloda']], kids: [['zmarly', 'PLEC_RODZIC']]}};
+const OS_DOP_T = {M: {'gF.b': 'B', 'gF.d': 'D', 'gM.b': 'B', 'gM.d': 'D', 'bF.b': 'B', 'bF.d': 'D', 'bM.b': 'B', 'bM.d': 'D', 'g.b': 'B', 'g.d': 'D', 'b.b': 'B', 'b.d': 'D', kids: 'B'}, B: {par: 'M', sib: 'B', own: 'D', mrg: 'M', fD: 'D', mD: 'D'}, D: {birth: 'B', mrg: 'M', par: 'M', kids: 'B'}};
+function osImportDop(obj, ctx){ const R = {decyzje: [], pominiete: [], bledy: [], stat: {klucze: 0, sloty: 0, acc: 0, rej: 0, none: 0, par: 0}};
+  if (!obj || typeof obj !== 'object' || Array.isArray(obj)) { R.bledy.push('Oczekiwano obiektu JSON dop.v1 ({klucz: {slot: {acc, rej, none}}}).'); return R; }
+  const poz = (k, slot, powod) => R.pominiete.push({klucz: k, slot, powod}), widziane = new Map();
+  for (const k of Object.keys(obj)) { if (OS_ZAKAZ.has(k) || !k || k.length > 200) { poz(String(k).slice(0, 40), '', 'niedozwolony klucz'); continue; } const sl = obj[k]; if (!sl || typeof sl !== 'object' || Array.isArray(sl)) { poz(k, '', 'wpis nie jest obiektem'); continue; }
+    const tryb = k.includes(':') ? k.split(':')[0] : 'M', idKl = k.includes(':') ? k.slice(2) : k; if (!OS_DOP[tryb]) { poz(k, '', 'nieznany tryb klucza'); continue; } R.stat.klucze++;
+    const aktKl = ctx.idAktu(tryb === 'M' ? 'M' : tryb, idKl); if (!aktKl) { poz(k, '', 'akt klucza nie istnieje w danych'); continue; }
+    for (const slot of Object.keys(sl)) { if (OS_ZAKAZ.has(slot)) continue; const def = OS_DOP[tryb][slot], v = sl[slot]; if (!def) { poz(k, slot, 'nieznany slot'); continue; } if (!v || typeof v !== 'object') { poz(k, slot, 'brak decyzji'); continue; } R.stat.sloty++;
+      const tcel = OS_DOP_T[tryb][slot], listy = [['acc', Array.isArray(v.acc) ? v.acc : [], 'scal'], ['rej', Array.isArray(v.rej) ? v.rej : [], 'odrzuc']];
+      for (const [pole, arr, typ] of listy) arr.forEach(x => { if (!x || typeof x !== 'object' || !['B', 'D', 'M'].includes(x.t) || typeof x.id !== 'string' || x.id.length > 200) return poz(k, slot, pole + ': błędny rekord'); if (x.t !== tcel) return poz(k, slot, pole + ': typ rekordu ' + x.t + ' niezgodny ze slotem (oczekiwano ' + tcel + ')');
+        const aktC = ctx.idAktu(x.t, x.id); if (!aktC) return poz(k, slot, pole + ': rekord ' + x.t + ':' + x.id + ' nie istnieje w danych');
+        def.forEach(([rk, rc]) => { let wk = ctx.wyst(aktKl, rk), rolaC = rc; if (!wk) return poz(k, slot, pole + ': brak wystąpienia „' + rk + '” w akcie klucza');
+          if (rc === 'PLEC' || rc === 'PLEC_RODZIC') { const pl = ctx.plec(wk); if (!pl) return poz(k, slot, pole + ': nieznana płeć wystąpienia „' + rk + '” (rola w akcie docelowym niejednoznaczna)'); rolaC = rc === 'PLEC' ? (pl === 'M' ? 'pan_mlody' : 'panna_mloda') : (pl === 'M' ? 'ojciec' : 'matka'); }
+          const wc = ctx.wyst(aktC, rolaC); if (!wc) return poz(k, slot, pole + ': brak wystąpienia „' + rolaC + '” w akcie ' + x.t + ':' + x.id); if (wk === wc || aktKl === aktC) return poz(k, slot, pole + ': ta sama osoba w tym samym akcie');
+          const kl = wk < wc ? wk + '|' + wc : wc + '|' + wk, d = {typ, a: wk, b: wc, zr: 'dop.v1', slot: (k + ' ' + slot).slice(0, 80), why: 'import dop.v1: ' + k + ' / ' + slot}; const poprz = widziane.get(kl);
+          if (poprz && poprz.typ !== typ) { poprz.sprzeczna = true; return; } if (poprz) return; widziane.set(kl, d); R.decyzje.push(d); R.stat[pole === 'acc' ? 'acc' : 'rej']++; }); });
+      if (v.none === true && !(Array.isArray(v.acc) && v.acc.length)) { R.stat.none++; const rl = new Set(); def.forEach(([rk]) => { if (rl.has(rk)) return; rl.add(rk); const wk = ctx.wyst(aktKl, rk); if (!wk) return poz(k, slot, 'none: brak wystąpienia „' + rk + '” w akcie klucza'); const d = {typ: 'brak', a: wk, b: 'brak:' + tcel, zr: 'dop.v1', slot: (k + ' ' + slot).slice(0, 80), why: 'import dop.v1: brak odpowiednika w księgach (' + k + ' / ' + slot + ')'}; const kl = wk + '|' + d.b; if (!widziane.has(kl)) { widziane.set(kl, d); R.decyzje.push(d); } }); } } }
+  const sprz = R.decyzje.filter(d => d.sprzeczna); sprz.forEach(d => poz(d.slot, '', 'ta sama para jako acc i rej w pliku – pominięta')); R.decyzje = R.decyzje.filter(d => !d.sprzeczna); R.stat.par = R.decyzje.filter(d => d.typ !== 'brak').length; return R; }
+// zapis planu do dziennika (po potwierdzeniu): kolizje i duplikaty pomija, reszta dostaje kolejne numery; zwraca liczby
+function osDopZastosuj(L, plan, akty){ const r = {scal: 0, odrzuc: 0, brak: 0, pominiete: []}; plan.decyzje.forEach(d => { const x = osDecyduj(L, d.typ, d.a, d.b, {why: d.why, zr: d.zr, slot: d.slot, akty, wniosek: '', reguly: 0, uzasadnienie: {zgodnosci: [], rozbieznosci: [], sprzecznosci: [], braki: ['decyzja z dopasowania (dop.v1) – bez uzasadnienia reguł Multitoola']}});
+  if (x.ok) r[d.typ]++; else r.pominiete.push({a: d.a, b: d.b, typ: d.typ, powod: x.blad}); }); return r; }
+
+/* ---------- 5. obsługa komunikatów (Worker i wątek główny używają tego samego kodu) ---------- */
+// st = stan {E, gen, wyniki, licz}; wyslij(wiadomosc). Wiadomości: init {model, klasy, porcja}, karta {req, ids, limit}, porownaj {req, a, b}, warianty {req, wylacz}
+function osObsluz(st, m, wyslij){
+  if (m.t === 'init') { const g = st.gen = (st.gen || 0) + 1, t0 = Date.now(); st.E = osSilnik(m.model, m.klasy); st.wyniki = {}; st.licz = {}; let od = 0; const n = st.E.PL.length, krok = m.porcja || 500;
+    wyslij({t: 'start', gen: g, n, etyk: osEtyk(st.E), ms: Date.now() - t0});
+    const tick = () => { if (st.gen !== g) return; od = osPrzeliczPorcja(st.E, od, krok, st.wyniki, st.licz); if (od < n) { wyslij({t: 'postep', gen: g, od, n}); setTimeout(tick, 0); } else wyslij({t: 'wynik', gen: g, wyniki: st.wyniki, licz: st.licz, ms: Date.now() - t0}); };
+    setTimeout(tick, 0); return; }
+  if (!st.E) return wyslij({t: 'blad', req: m.req, blad: 'silnik nie jest gotowy'});
+  if (m.t === 'karta') { const lim = m.limit || 120, lista = [], ile = {}; (m.ids || []).forEach(id => { const L = osKandydaci(st.E, id); ile[id] = L.length; L.slice(0, lim).forEach(u => lista.push(u)); }); return wyslij({t: 'karta', req: m.req, lista, ile}); }
+  if (m.t === 'porownaj') { if (!st.E.P[m.a] || !st.E.P[m.b]) return wyslij({t: 'blad', req: m.req, blad: 'nieznane wystąpienie'}); return wyslij({t: 'porownaj', req: m.req, u: osPoWyst(st.E, m.a, m.b)}); }
+  if (m.t === 'warianty') return wyslij({t: 'warianty', req: m.req, lista: osWarianty(st.E, new Set(m.wylacz || [])).slice(0, m.limit || 400)});
+  if (m.t === 'plcie') { const p = {}; (m.ids || []).forEach(id => { const x = st.E.P[id]; if (x && x.plec) p[id] = x.plec; }); return wyslij({t: 'plcie', req: m.req, p}); }
+  if (m.t === 'profil') return wyslij({t: 'profil', req: m.req, p: st.E.P[m.id] || null});
+}
 
 /* app/moduly/dane_adapter.js – adapter Pole (model danych) ↔ a.ai / a.lub / a.unc silnika weryfikacji zgonów (krok 3).
    Silnik (akt_zgon.js) nadal czyta obiekt „akt” w układzie v3: {id, year, act, ai, lub, unc, alts, file, roi, pola, tekst, lubRaw, lubName, era}.
@@ -486,6 +1554,7 @@ function typCsv(typ){ const E = TYPY[typ].eksport, R = typWiersze(typ); return E
    S w pamięci ma układ v3 ({acts:{id:{f,done,text,…}}, hist, …}); tu jest tylko rozkład na magazyny i z powrotem. Zapis różnicowy: do bazy idą tylko rekordy, których podpis się zmienił.
    Pole w stanie pamięta wartość bazową (`baza`), którą użytkownik widział; gdy po przebudowie danych baza się zmieni, pole trafia do kolejki „dane źródłowe się zmieniły” (stKolejka) zamiast cicho znikać. */
 const ST_NAZWA = 'multitool', ST_WER = 2, ST_SKLADY = ['kv', 'pola', 'teksty', 'akty', 'decyzje', 'historia', 'slowniki', 'skany', 'kopie', 'meta'];
+const ST_LICZONE = ['pola', 'teksty', 'akty', 'decyzje'];   // zapisy, które zwiększają licznik „zmian bez kopii”
 let ST_DODATKI = [];   // dodatkowe zapisy [magazyn, klucz, wartość] dołączane do następnej transakcji stFlush (np. raport migracji)
 let ST_TRYB = 'idb', ST_DBP = null, ST_PODPIS = {}, ST_BAZA = {}, ST_HIST_N = 0, ST_T = null, ST_ZMIANY = 0, ST_OSTATNIA = null, ST_PERSIST = false, ST_BLAD = '', ST_KOLEJ = [];
 const ST_UST = ['year', 'cen', 'dec', 'flt', 'hideOk', 'hideDoneActs', 'noroi', 'onlyScan', 'hideMk', 'cur', 'tmode', 'tfs', 'q', 'repIgn', 'typ'];
@@ -495,36 +1564,37 @@ function stOtworz(){ if (ST_DBP) return ST_DBP; ST_DBP = new Promise((ok, no) =>
 function stAwaria(e){ ST_TRYB = 'pamiec'; ST_BLAD = String(e && e.message || e || ''); if (typeof stPasek === 'function') stPasek(); }
 function stTx(sklady, tryb, fn){ return stOtworz().then(db => new Promise((ok, no) => { const t = db.transaction(sklady, tryb), w = {}; sklady.forEach(n => w[n] = t.objectStore(n)); fn(w); t.oncomplete = () => ok(true); t.onerror = t.onabort = () => no(t.error || new Error('transakcja przerwana')); })); }
 function stWszystko(sklad){ return stOtworz().then(db => new Promise((ok, no) => { const o = db.transaction(sklad).objectStore(sklad), K = o.getAllKeys(), V = o.getAll(); V.onsuccess = () => ok(K.result.map((k, i) => [k, V.result[i]])); V.onerror = () => no(V.error); })); }
-function stPusty(){ return {acts: {}, cur: null, year: 'all', flt: 'all', hideOk: true, hideDoneActs: true, noroi: false, onlyScan: false, hist: [], histN: 0, fixes: {}}; }
+function stPusty(){ return {decyz: [], acts: {}, cur: null, year: 'all', flt: 'all', hideOk: true, hideDoneActs: true, noroi: false, onlyScan: false, hist: [], histN: 0, fixes: {}}; }
 function stBazaWart(a, f){ const ai = a.ai?.[f], lb = a.lub?.[f]; return (ai != null && String(ai).trim() !== '') ? String(ai) : String(lb ?? ai ?? ''); }
 // pamięć → rekordy (to samo służy kopii pełnej)
-function stRekordy(){ const R = {pola: {}, teksty: {}, akty: {}, historia: {}, slowniki: {}, meta: {}};
+function stRekordy(){ const R = {pola: {}, teksty: {}, akty: {}, decyzje: {}, historia: {}, slowniki: {}, meta: {}};
   for (const id in S.acts) { const a = S.acts[id] || {}, ak = {};
     for (const f in (a.f || {})) { const k = id + '|' + f, x = Object.assign({}, a.f[f]); if (!('baza' in x)) { if (!(k in ST_BAZA) && AM[id]) ST_BAZA[k] = stBazaWart(AM[id], f); if (k in ST_BAZA) x.baza = ST_BAZA[k]; } R.pola[k] = x; }
     if (a.text != null) R.teksty[id] = String(a.text);
     ['done', 'scan', 'roi', 'par', 'hid', 'notesOrg', 'lubAck', 'qs', 'fr'].forEach(p => { if (a[p] !== undefined && !(p === 'done' && !a.done)) ak[p] = a[p]; }); if (Object.keys(ak).length) R.akty[id] = ak; }
-  (S.hist || []).forEach(e => R.historia[e.n] = e); R.slowniki.fixes = S.fixes || {};
+  (S.hist || []).forEach(e => R.historia[e.n] = e); (S.decyz || []).forEach(d => R.decyzje[d.n] = d); R.slowniki.fixes = S.fixes || {};
   const u = {}; ST_UST.forEach(k => { if (S[k] !== undefined) u[k] = S[k]; }); R.meta.ustawienia = u; R.meta.seeded = S.seeded || {}; R.meta.histN = S.histN || 0; return R; }
 const stPodpis = v => JSON.stringify(v);
 async function stFlush(licz){ if (licz === undefined) licz = true; clearTimeout(ST_T); ST_T = null; const R = stRekordy(), zap = [], del = []; let zm = 0;
-  for (const sk in R) for (const k in R[sk]) { const p = stPodpis(R[sk][k]), pk = sk + '\u0001' + k; if (ST_PODPIS[pk] !== p) { zap.push([sk, k, R[sk][k], p]); if (licz && ['pola', 'teksty', 'akty'].includes(sk)) zm++; } }
-  for (const pk in ST_PODPIS) { const [sk, k] = pk.split('\u0001'); if (!(k in (R[sk] || {})) && sk !== 'meta' && sk !== 'historia') { del.push([sk, k, pk]); if (licz && ['pola', 'teksty', 'akty'].includes(sk)) zm++; } }
+  for (const sk in R) for (const k in R[sk]) { const p = stPodpis(R[sk][k]), pk = sk + '\u0001' + k; if (ST_PODPIS[pk] !== p) { zap.push([sk, k, R[sk][k], p]); if (licz && ST_LICZONE.includes(sk)) zm++; } }
+  for (const pk in ST_PODPIS) { const [sk, k] = pk.split('\u0001'); if (!(k in (R[sk] || {})) && sk !== 'meta' && sk !== 'historia') { del.push([sk, k, pk]); if (licz && ST_LICZONE.includes(sk)) zm++; } }
   if (!zap.length && !del.length && !ST_DODATKI.length) return true;
   const dod = ST_DODATKI.slice();
   const ok = () => { ST_DODATKI.splice(0, dod.length); zap.forEach(([sk, k, v, p]) => ST_PODPIS[sk + '\u0001' + k] = p); del.forEach(([sk, k, pk]) => delete ST_PODPIS[pk]); if (licz && zm) { ST_ZMIANY += zm; if (typeof stWskaznik === 'function') stWskaznik(); } };
   if (ST_TRYB === 'pamiec') { ok(); return false; }
   try { const meta = [['ostatniaKopia', ST_OSTATNIA], ['zmianyBezKopii', ST_ZMIANY + (licz ? zm : 0)]];
-    await stTx(['pola', 'teksty', 'akty', 'historia', 'slowniki', 'meta'], 'readwrite', w => { zap.forEach(([sk, k, v]) => w[sk].put(v, sk === 'historia' ? +k : k)); del.forEach(([sk, k]) => w[sk].delete(k)); meta.forEach(([k, v]) => w.meta.put(v, k)); dod.forEach(([sk, k, v]) => w[sk].put(v, k)); });
+    await stTx(['pola', 'teksty', 'akty', 'decyzje', 'historia', 'slowniki', 'meta'], 'readwrite', w => { zap.forEach(([sk, k, v]) => w[sk].put(v, sk === 'historia' || sk === 'decyzje' ? +k : k)); del.forEach(([sk, k]) => w[sk].delete(k)); meta.forEach(([k, v]) => w.meta.put(v, k)); dod.forEach(([sk, k, v]) => w[sk].put(v, k)); });
     ok(); if (!ST_PERSIST && navigator.storage && navigator.storage.persist) { ST_PERSIST = true; try { navigator.storage.persist(); } catch (e) {} } if (licz && typeof kopiaAutoZapis === "function") kopiaAutoZapis(); return true; }
   catch (e) { stAwaria(e); ok(); return false; } }
 function stZapisz(){ if (ST_T) return; ST_T = setTimeout(() => { stFlush(true); }, 120); }
 async function stWczytaj(){ const s = stPusty();
-  try { const [P, T, A, H, Sl, M] = await Promise.all(['pola', 'teksty', 'akty', 'historia', 'slowniki', 'meta'].map(stWszystko));
+  try { const [P, T, A, H, Sl, M, Dc] = await Promise.all(['pola', 'teksty', 'akty', 'historia', 'slowniki', 'meta', 'decyzje'].map(stWszystko));
     const st = id => s.acts[id] || (s.acts[id] = {f: {}, done: false});
     P.forEach(([k, x]) => { const i = k.lastIndexOf('|'), id = k.slice(0, i), f = k.slice(i + 1); if ('baza' in x) { ST_BAZA[k] = x.baza; } st(id).f[f] = x; ST_PODPIS['pola\u0001' + k] = stPodpis(x); });
     T.forEach(([id, t]) => { st(id).text = t; ST_PODPIS['teksty\u0001' + id] = stPodpis(t); });
     A.forEach(([id, x]) => { Object.assign(st(id), x); ST_PODPIS['akty\u0001' + id] = stPodpis(x); });
     H.sort((x, y) => x[0] - y[0]).forEach(([n, e]) => { s.hist.push(e); ST_PODPIS['historia\u0001' + n] = stPodpis(e); });
+    Dc.sort((x, y) => x[0] - y[0]).forEach(([n, d]) => { s.decyz.push(d); ST_PODPIS['decyzje\u0001' + n] = stPodpis(d); });
     Sl.forEach(([k, v]) => { if (k === 'fixes') { s.fixes = v; ST_PODPIS['slowniki\u0001fixes'] = stPodpis(v); } });
     M.forEach(([k, v]) => { if (k === 'ustawienia') Object.assign(s, v); else if (k === 'seeded') s.seeded = v; else if (k === 'histN') s.histN = v; else if (k === 'zmianyBezKopii') ST_ZMIANY = v || 0; else if (k === 'ostatniaKopia') ST_OSTATNIA = v; });
     ST_PODPIS['meta\u0001ustawienia'] = null; }
@@ -547,7 +1617,7 @@ const KOP_MIGRACJE = {};   // KOP_MIGRACJE[n] = obj => obj w wersji n+1 (gdy for
 let KOP_AUTO = null;
 const KOP_ZAKAZ = new Set(['__proto__', 'constructor', 'prototype']);
 function kopiaPelna(){ const R = stRekordy(); return {format: {nazwa: KOP_NAZWA, wersja: KOP_WER}, dane: {wersja: (typeof DANE !== 'undefined' && DANE.format && DANE.format.wersja) || 1, suma: (typeof DANE !== 'undefined' && DANE.suma) || ''},
-  zapisano: new Date().toISOString(), pola: R.pola, teksty: R.teksty, akty: R.akty, decyzje: [], historia: S.hist || [], slowniki: R.slowniki, ustawienia: Object.assign({}, R.meta.ustawienia, {seeded: R.meta.seeded, histN: R.meta.histN})}; }
+  zapisano: new Date().toISOString(), pola: R.pola, teksty: R.teksty, akty: R.akty, decyzje: (S.decyz || []).slice(), historia: S.hist || [], slowniki: R.slowniki, ustawienia: Object.assign({}, R.meta.ustawienia, {seeded: R.meta.seeded, histN: R.meta.histN})}; }
 async function kopiaMigawka(powod){ const k = kopiaPelna(); k.powod = powod || ''; const klucz = k.zapisano;
   if (ST_TRYB === 'pamiec') { (kopiaMigawka.pamiec = kopiaMigawka.pamiec || []).push([klucz, k]); kopiaMigawka.pamiec = kopiaMigawka.pamiec.slice(-KOP_MAX); return klucz; }
   try { await stTx(['kopie'], 'readwrite', w => w.kopie.put(k, klucz)); const L = await stWszystko('kopie'); L.sort((a, b) => a[0] < b[0] ? -1 : 1); const nadmiar = L.slice(0, Math.max(0, L.length - KOP_MAX)); if (nadmiar.length) await stTx(['kopie'], 'readwrite', w => nadmiar.forEach(([kk]) => w.kopie.delete(kk))); }
@@ -577,22 +1647,23 @@ function kopiaWalidacja(obj){ const r = {ok: false, blad: '', bledy: [], czysty:
   const f = obj.format; if (!f || f.nazwa !== KOP_NAZWA) { r.blad = 'Nieznany format pliku' + (f && f.nazwa ? ' („' + String(f.nazwa).slice(0, 40) + '”)' : '') + ': oczekiwano ' + KOP_NAZWA + '.'; return r; }
   if (!Number.isInteger(f.wersja) || f.wersja < 1) { r.blad = 'Brak numeru wersji formatu kopii.'; return r; } if (f.wersja > KOP_WER) { r.blad = 'Kopia jest w nowszej wersji formatu (' + f.wersja + ') niż ta aplikacja (' + KOP_WER + '). Zaktualizuj aplikację.'; return r; }
   while (obj.format.wersja < KOP_WER) { const m = KOP_MIGRACJE[obj.format.wersja]; if (!m) { r.blad = 'Brak migracji kopii z wersji ' + obj.format.wersja + '.'; return r; } obj = m(obj); }
-  const C = {pola: {}, teksty: {}, akty: {}, historia: [], fixes: {}, ust: {}}, B = r.bledy, bl = (t, k) => { if (B.length < 200) B.push(t + ': ' + String(k).slice(0, 80)); };
+  const C = {pola: {}, teksty: {}, akty: {}, decyzje: [], historia: [], fixes: {}, ust: {}}, B = r.bledy, bl = (t, k) => { if (B.length < 200) B.push(t + ': ' + String(k).slice(0, 80)); };
   const pl = obj.pola && typeof obj.pola === 'object' ? obj.pola : {}; for (const k in pl) { const i = k.lastIndexOf('|'), id = k.slice(0, i), fl = k.slice(i + 1); if (i < 1 || KOP_ZAKAZ.has(id) || !AM[id] || !/^[a-z_0-9]{1,40}$/.test(fl) || KOP_ZAKAZ.has(fl)) { bl('pole poza danymi', k); continue; } const p = kopPole(pl[k]); if (!p) { bl('błędne pole', k); continue; } C.pola[k] = p; }
   const tk = obj.teksty && typeof obj.teksty === 'object' ? obj.teksty : {}; for (const id in tk) { if (KOP_ZAKAZ.has(id) || !AM[id] || !kopStr(tk[id], 50000)) { bl('błędny tekst', id); continue; } C.teksty[id] = tk[id]; }
   const ak = obj.akty && typeof obj.akty === 'object' ? obj.akty : {}; for (const id in ak) { if (KOP_ZAKAZ.has(id) || !AM[id]) { bl('akt poza danymi', id); continue; } const x = kopAkt(ak[id]); if (!x) { bl('błędny stan aktu', id); continue; } C.akty[id] = x; }
+  if (obj.decyzje !== undefined) { const wd = osWaliduj(obj.decyzje, null); C.decyzje = wd.ok; wd.bledy.slice(0, 20).forEach(b => bl('decyzje', b)); }
   (Array.isArray(obj.historia) ? obj.historia : []).forEach((e, i) => { const x = kopHist(e); if (x && (AM[x.id])) C.historia.push(x); else bl('błędny wpis historii', i); });
   const fx = obj.slowniki && obj.slowniki.fixes; if (fx && typeof fx === 'object') for (const a in fx) { if (KOP_ZAKAZ.has(a) || !fx[a] || typeof fx[a] !== 'object') { bl('słownik', a); continue; } const o = {}; for (const b in fx[a]) { if (KOP_ZAKAZ.has(b) || !Number.isFinite(fx[a][b])) { bl('słownik', a + '→' + b); continue; } o[b] = fx[a][b]; } C.fixes[a] = o; }
   const u = obj.ustawienia && typeof obj.ustawienia === 'object' ? obj.ustawienia : {}; ['year', 'cen', 'dec', 'flt', 'cur', 'tmode', 'q', 'typ'].forEach(k => { if (u[k] === null || kopStr(u[k], 200)) C.ust[k] = u[k]; }); ['hideOk', 'hideDoneActs', 'noroi', 'onlyScan', 'hideMk'].forEach(k => { if (typeof u[k] === 'boolean') C.ust[k] = u[k]; });
   if (u.seeded && typeof u.seeded === 'object') { C.ust.seeded = {}; for (const id in u.seeded) if (AM[id]) C.ust.seeded[id] = 1; } if (Number.isInteger(u.histN)) C.ust.histN = u.histN;
   // różnice względem bieżącego stanu
   let nowe = 0, takie = 0, konflikt = 0, nadpisz = 0; for (const k in C.pola) { const i = k.lastIndexOf('|'), cur = S.acts[k.slice(0, i)]?.f?.[k.slice(i + 1)]; if (!cur) nowe++; else if (cur.v === C.pola[k].v) takie++; else if (cur.ok) konflikt++; else nadpisz++; }
-  r.roznice = {pola: Object.keys(C.pola).length, nowe, takie, konfliktyZOk: konflikt, nadpisane: nadpisz, teksty: Object.keys(C.teksty).length, akty: Object.keys(C.akty).length, zatwierdzone: Object.values(C.akty).filter(a => a.done).length, historia: C.historia.length};
+  r.roznice = {pola: Object.keys(C.pola).length, nowe, takie, konfliktyZOk: konflikt, nadpisane: nadpisz, teksty: Object.keys(C.teksty).length, akty: Object.keys(C.akty).length, zatwierdzone: Object.values(C.akty).filter(a => a.done).length, historia: C.historia.length, decyzje: C.decyzje.length};
   r.czysty = C; r.ok = true; return r; }
 // zastosowanie: 'dopisz' (domyślnie; nie rusza pól ok) albo 'zastap' (stan = kopia). Migawka obecnego stanu zawsze przed zapisem.
 async function kopiaZastosuj(w, tryb, nazwa){ if (!w || !w.ok) return false; await kopiaMigawka('przed importem kopii' + (nazwa ? ': ' + nazwa : '')); const C = w.czysty; tryb = tryb === 'zastap' ? 'zastap' : 'dopisz';
   const stan = id => S.acts[id] || (S.acts[id] = {f: {}, done: false}); HIST_WHY = 'import kopii' + (nazwa ? ': ' + nazwa : '') + ' (' + tryb + ')';
-  if (tryb === 'zastap') { S.acts = {}; S.hist = []; S.histN = 0; S.fixes = {}; }
+  if (tryb === 'zastap') { S.acts = {}; S.hist = []; S.histN = 0; S.fixes = {}; S.decyz = C.decyzje.slice(); } else if (C.decyzje.length) osDopiszDecyzje(S.decyz, C.decyzje);
   for (const k in C.pola) { const i = k.lastIndexOf('|'), id = k.slice(0, i), f = k.slice(i + 1), cur = S.acts[id]?.f?.[f]; if (tryb === 'dopisz' && cur && (cur.ok || cur.v === C.pola[k].v)) continue; stan(id).f[f] = C.pola[k]; if ('baza' in C.pola[k]) ST_BAZA[k] = C.pola[k].baza; }
   for (const id in C.teksty) { if (tryb === 'dopisz' && S.acts[id]?.text != null) continue; stan(id).text = C.teksty[id]; }
   for (const id in C.akty) { const s = stan(id); for (const p in C.akty[id]) { if (tryb === 'dopisz' && s[p] !== undefined && s[p] !== false) continue; s[p] = C.akty[id][p]; } }
@@ -901,6 +1972,153 @@ async function migrZgPlikiWybrane(lista){ const pliki = []; for (const f of list
   $('migTak').onclick = async () => { $('migTak').disabled = true; const r = await migrZgWykonaj(pliki); if (!r.ok) { wstaw($('migWynik'), h`<p class="err" id="migBlad">${r.blad}</p>`); return; } odswiez(); migrZgPokazRaport(r); toast(r.bezZmian ? 'Migracja: bez zmian' : 'Migracja zakończona'); }; }
 function migrZgUiInit(){ const b = $('mMigr'); if (!b) return; b.onclick = () => { $('menu').hidden = true; migrZgOkno(); }; $('fMigr').onchange = e => { const L = [...e.target.files]; e.target.value = ''; if (L.length) migrZgPlikiWybrane(L); }; }
 
+/* app/moduly/ui_osoby.js – zakładka „Osoby” (krok 6): propozycje scaleń z uzasadnieniem, decyzje (scal / różne osoby / odłóż / brak odpowiednika), cofanie, klasy wariantów nazwisk,
+   liczenie w tle (Web Worker, z fallbackiem na wątek główny), eksport/import decyzji i import dop.v1. Logika w osoby_rdzen.js; tu tylko widok i most do Workera.
+   Dziennik decyzji to S.decyz (IndexedDB, magazyn `decyzje`, kopia pełna). Akty, wystąpienia i źródła nigdy nie są zmieniane przez decyzje. HTML tylko przez wstaw(h`…`). */
+const OSS = {zakl: 'akty', widok: 'prop', flt: 'sprawdz', q: '', cur: null, sel: null, most: null, req: 0, czeka: {}, wyniki: {}, licz: {}, et: new Map(), post: null, gotowe: false, sygn: '', ksig: '', KL: null, cache: null, tryb: '', ms: 0, N: 0, port: 300, karta: null, war: null, wyb: null};
+const osId = id => { const i = id.lastIndexOf(':'); return id.slice(2, i); };
+const osLabel = id => { const e = OSS.et.get(id); return e ? e[1] : id; };
+const osCzlonkowie = c => { OSS.KL = OSS.KL || decKlastry(S.decyz); return OSS.KL.osoby[c] ? OSS.KL.osoby[c].wystapienia : [c]; };   // c = id osoby („o:3”) albo wystąpienia („w:…”)
+// ---------- most do silnika: Worker z kodu modułów (blob), a gdy się nie da – ten sam kod na wątku głównym
+function osZamknij(){ if (OSS.most) OSS.most.zamknij(); OSS.most = null; }
+function osMost(onMsg){ const src = $('srcOsoby').textContent;
+  const watek = () => { const st = {}; let zywy = true; return {tryb: 'wątek główny (bez Web Workera)', wyslij: m => setTimeout(() => { if (zywy) osObsluz(st, m.t === 'init' ? Object.assign({}, m, {porcja: 120}) : m, x => zywy && setTimeout(() => onMsg(x), 0)); }, 0), zamknij: () => { zywy = false; st.gen = -1; }}; };
+  try { if (typeof Worker === 'undefined') return watek(); const url = URL.createObjectURL(new Blob([src + '\nconst __st = {}; self.onmessage = ev => osObsluz(__st, ev.data, m => self.postMessage(m));'], {type: 'text/javascript'})), w = new Worker(url); let ok = false;
+    w.onmessage = ev => { ok = true; onMsg(ev.data); }; w.onerror = e => { if (!ok && OSS.most && OSS.most.w === w) { console.warn('Worker niedostępny, liczę na wątku głównym', e.message); OSS.most = watek(); OSS.most.wyslij(OSS.ostatniInit); } };
+    return {tryb: 'Web Worker', w, wyslij: m => w.postMessage(m), zamknij: () => { w.terminate(); URL.revokeObjectURL(url); }}; } catch (e) { return watek(); } }
+function osWyslij(m){ return new Promise((ok, no) => { const req = ++OSS.req; OSS.czeka[req] = {ok, no}; OSS.most.wyslij(Object.assign({req}, m)); }); }
+function osOdbierz(m){
+  if (m.t === 'start') { OSS.et = new Map(m.etyk.map(e => [e[0], e])); OSS.N = m.n; OSS.post = {od: 0, n: m.n}; osStatus(); if (OSS.zakl === 'osoby') osRender(); return; }
+  if (m.t === 'postep') { OSS.post = {od: m.od, n: m.n}; osStatus(); return; }
+  if (m.t === 'wynik') { OSS.wyniki = m.wyniki; OSS.licz = m.licz; OSS.ms = m.ms; OSS.gotowe = true; OSS.post = null; OSS.cache = null; osStatus(); if (OSS.zakl === 'osoby') osRender(); return; }
+  const c = OSS.czeka[m.req]; if (c) { delete OSS.czeka[m.req]; m.t === 'blad' ? c.no(new Error(m.blad)) : c.ok(m); } }
+function osStatus(){ const p = $('prog'); if (!p || OSS.zakl !== 'osoby') return; const sm = Object.values(OSS.wyniki).reduce((a, w) => a + w.filter(x => x[1] === 's').length, 0);
+  p.textContent = OSS.post ? 'Osoby: liczę propozycje ' + Math.round(100 * OSS.post.od / Math.max(1, OSS.post.n)) + '% (' + (OSS.most ? OSS.most.tryb : '') + ')' : OSS.gotowe ? 'Osoby: ' + OSS.N + ' wystąpień · osób scalonych ' + Object.keys((OSS.KL || decKlastry(S.decyz)).osoby).length + ' · ' + OSS.tryb + ' ' + (OSS.ms / 1000).toFixed(1) + ' s' : 'Osoby: przygotowuję…'; }
+// uruchom (lub uruchom ponownie, gdy zmieniły się dane aktów albo klasy wariantów nazwisk)
+function osStart(wymus){ const M = osModel(D.wszystkie, getv), sygn = osPodpis(M), K = osKlasy(S.decyz), ksig = JSON.stringify(K.klasy);
+  if (!wymus && OSS.most && OSS.sygn === sygn && OSS.ksig === ksig) return; osZamknij(); OSS.sygn = sygn; OSS.ksig = ksig; OSS.klasy = K; OSS.gotowe = false; OSS.wyniki = {}; OSS.licz = {}; OSS.cache = null; OSS.post = {od: 0, n: 1}; OSS.czeka = {}; OSS.karta = null; OSS.war = null;
+  OSS.most = osMost(osOdbierz); OSS.tryb = OSS.most.tryb; OSS.ostatniInit = {t: 'init', model: M, klasy: K.klasy, porcja: 800}; OSS.most.wyslij(OSS.ostatniInit); osStatus(); }
+// ---------- agregaty do listy
+function osKolejnosc(k){ return k === 's' ? 0 : k === 'm' ? 1 : 2; }
+function osLista(){ if (OSS.cache) return OSS.cache; OSS.KL = decKlastry(S.decyz); const KL = OSS.KL, kl = {};
+  for (const id in OSS.wyniki) { const c = KL.czyja[id] || id; OSS.wyniki[id].forEach(x => { if ((KL.czyja[x[0]] || x[0]) === c || KL.odrzucone.has(decKlucz(id, x[0]))) return; const o = kl[c] || (kl[c] = {c, kod: 'z', ile: 0, rodz: 0, mocne: 0}); o.ile++; if (osKolejnosc(x[1]) < osKolejnosc(o.kod) || (x[1] === o.kod && (x[4] > o.rodz || (x[4] === o.rodz && x[3] > o.mocne)))) { o.kod = x[1]; o.rodz = x[4]; o.mocne = x[3]; } }); }
+  OSS.cache = {kl, osoby: Object.keys(KL.osoby)}; return OSS.cache; }
+const osNazwaKl = c => { const L = osCzlonkowie(c); return osLabel(L[0]) + (L.length > 1 ? ' (+' + (L.length - 1) + ')' : ''); };
+function osElementy(){ const A = osLista(), q = fold(OSS.q.trim()), tok = q.split(/\s+/).filter(Boolean), KL = OSS.KL; let out = [];
+  const pasuje = c => !tok.length || tok.every(t => osCzlonkowie(c).some(w => fold(osLabel(w)).includes(t)));
+  if (OSS.widok === 'prop') { if (tok.length) { const widziane = new Set(); OSS.et.forEach((e, id) => { const c = KL.czyja[id] || id; if (widziane.has(c) || !tok.every(t => fold(e[1]).includes(t))) return; widziane.add(c); const o = A.kl[c]; out.push({c, kod: o ? o.kod : 'z', ile: o ? o.ile : 0, rodz: o ? o.rodz : 0, mocne: o ? o.mocne : 0}); }); }
+    else out = Object.values(A.kl).filter(o => OSS.flt === 'sprawdz' ? o.kod === 's' : o.kod === 's' || o.kod === 'm');
+    out.sort((x, y) => osKolejnosc(x.kod) - osKolejnosc(y.kod) || y.rodz - x.rodz || y.mocne - x.mocne || fold(osLabel(x.c)).localeCompare(fold(osLabel(y.c)))); }
+  else if (OSS.widok === 'osoby') out = A.osoby.filter(pasuje).map(c => ({c, kod: 'o', ile: KL.osoby[c].wystapienia.length})).sort((x, y) => fold(osLabel(KL.osoby[x.c].wystapienia[0])).localeCompare(fold(osLabel(KL.osoby[y.c].wystapienia[0]))));
+  return out; }
+// ---------- render
+const OS_BADGE = {s: 'sprawdź', m: 'możliwe', l: 'za mało danych', k: 'konflikt', z: '–', o: 'osoba'};
+function osRender(){ if (OSS.zakl !== 'osoby') return; osStatus(); osFiltry(); osListaRender(); osKartaRender(); }
+function osFiltry(){ const W = [['prop', 'Propozycje'], ['osoby', 'Osoby scalone'], ['dec', 'Decyzje'], ['war', 'Warianty nazwisk']];
+  wstaw($('filtry'), h`<select id="osWidok" aria-label="Widok">${W.map(([k, l]) => h`<option value="${k}" ${OSS.widok === k ? raw('selected') : ''}>${l}</option>`)}</select>
+    ${OSS.widok === 'prop' ? h`<select id="osFlt" aria-label="Poziom propozycji"><option value="sprawdz" ${OSS.flt === 'sprawdz' ? raw('selected') : ''}>Mocne (sprawdź)</option><option value="mozliwe" ${OSS.flt === 'mozliwe' ? raw('selected') : ''}>Mocne i możliwe</option></select>` : ''}
+    ${OSS.widok === 'prop' || OSS.widok === 'osoby' ? h`<input id="osQ" type="search" placeholder="nazwisko, imię" value="${OSS.q}">` : ''}`);
+  $('osWidok').onchange = e => { OSS.widok = e.target.value; OSS.port = 300; OSS.sel = null; OSS.cur = OSS.widok === 'prop' || OSS.widok === 'osoby' ? OSS.cur : null; osRender(); };
+  if ($('osFlt')) $('osFlt').onchange = e => { OSS.flt = e.target.value; OSS.port = 300; osListaRender(); };
+  if ($('osQ')) $('osQ').oninput = e => { OSS.q = e.target.value; OSS.port = 300; osListaRender(); }; }
+function osListaRender(){ const L = $('lista'), p = OSS.port;
+  if (OSS.widok === 'dec') return osDecLista(L); if (OSS.widok === 'war') return osWarLista(L);
+  if (!OSS.gotowe && !OSS.et.size) { wstaw(L, h`<span class="muted">Przygotowuję wystąpienia…</span>`); return; }
+  const E = osElementy(), pokaz = E.slice(0, p);
+  wstaw(L, h`${!OSS.gotowe ? h`<span class="muted" id="osLiczy">Liczenie w tle trwa – lista uzupełni się sama (${OSS.most ? OSS.most.tryb : ''}).</span>` : ''}${pokaz.map(o => h`<button class="it ${o.c === OSS.cur ? 'cur' : ''}" data-c="${o.c}"><span>${osNazwaKl(o.c)}</span> <small class="bdg ${o.kod === 's' ? 'ok' : o.kod === 'm' ? 'un' : ''}">${OS_BADGE[o.kod]}${o.ile && o.kod !== 'o' ? ' · ' + o.ile : ''}</small></button>`)}
+    ${E.length > pokaz.length ? h`<button id="osWiecej" class="sm">Pokaż więcej (${E.length - pokaz.length})</button>` : ''}${E.length ? '' : h`<span class="muted" id="osPusto">${OSS.gotowe ? (OSS.widok === 'osoby' ? 'Nie scalono jeszcze żadnych osób.' : 'Brak pozycji dla tego filtra.') : ''}</span>`}`);
+  L.querySelectorAll('[data-c]').forEach(b => b.onclick = () => osWybierz(b.dataset.c)); if ($('osWiecej')) $('osWiecej').onclick = () => { OSS.port += 300; osListaRender(); };
+ }
+async function osWybierz(c){ OSS.cur = c; OSS.karta = null; osListaRender(); await osKartaLicz(); osKartaRender(); }
+// pełne uzasadnienia dla wszystkich wystąpień osoby (liczy silnik na żądanie)
+async function osKartaLicz(){ const c = OSS.cur; if (!c || !OSS.most) return; const ids = osCzlonkowie(c); OSS.karta = {c, ladowanie: true, lista: []}; osKartaRender();
+  try { const r = await osWyslij({t: 'karta', ids, limit: 150}); if (OSS.cur !== c) return; OSS.karta = {c, lista: r.lista, ile: r.ile}; } catch (e) { OSS.karta = {c, blad: e.message, lista: []}; } }
+function osGrupuj(c, lista){ const KL = decKlastry(S.decyz), moje = new Set(osCzlonkowie(c)), best = {};
+  lista.forEach(u => { if (moje.has(u.b) || KL.odrzucone.has(decKlucz(u.a, u.b))) return; const k = KL.czyja[u.b] || u.b; if (!best[k] || idPorzadek(u, best[k]) < 0) best[k] = u; });
+  const gr = {sprawdz: [], mozliwe: [], malo: [], konflikt: []}; Object.values(best).sort(idPorzadek).forEach(u => gr[u.wniosek].push(u)); return gr; }
+function osPropHtml(u, i){ const KL = OSS.KL, os = KL.czyja[u.b], odl = KL.odlozone.has(decKlucz(u.a, u.b));
+  return h`<div class="warn osprop ${u.wniosek}" data-i="${i}"><h3>${osLabel(u.b)} <span class="bdg ${u.wniosek === 'sprawdz' ? 'ok' : u.wniosek === 'mozliwe' ? 'un' : ''}">${OS_WN[u.wniosek]}</span>${os ? h` <span class="bdg">osoba · ${KL.osoby[os].wystapienia.length} wyst.</span>` : ''}${odl ? h` <span class="bdg">odłożone</span>` : ''}</h3>
+    <div class="muted">Dla: ${osLabel(u.a)}</div>
+    ${u.zgodnosci.length ? h`<div><b>Zgodności:</b> ${u.zgodnosci.map(x => x.t).join('; ')}</div>` : ''}${u.rozbieznosci.length ? h`<div><b>Rozbieżności:</b> ${u.rozbieznosci.map(x => x.t).join('; ')}</div>` : ''}
+    ${u.sprzecznosci.length ? h`<div class="err"><b>Sprzeczności:</b> ${u.sprzecznosci.map(x => x.t).join('; ')}</div>` : ''}${u.braki.length ? h`<div class="muted"><b>Braki danych:</b> ${u.braki.map(x => x.t).join('; ')}</div>` : ''}
+    <div><b>Wniosek:</b> ${idZdanie(u)}</div>
+    <div class="acts"><input class="osPowod" data-i="${i}" placeholder="powód (wymagany poza „sprawdź” i przy sprzecznościach)" maxlength="300"><button class="p" data-a="scal" data-i="${i}">To ta sama osoba – scal</button><button data-a="odrzuc" data-i="${i}">To różne osoby</button><button data-a="odloz" data-i="${i}">Odłóż</button><button class="sm" data-a="akty" data-i="${i}">Akty obu</button></div></div>`; }
+const OS_TD = {scal: 'scalono', odrzuc: 'różne osoby', odloz: 'odłożono', brak: 'brak odpowiednika w księgach', wariant_nazwiska: 'warianty jednego nazwiska', odrzuc_wariant: 'różne nazwiska', cofnij: 'cofnięcie'};
+function osDecWiersz(d, cofanie, aktywne){ const akt = aktywne.has(d.n); return h`<tr data-n="${d.n}"><td>${d.n}</td><td>${(d.t || '').slice(0, 16).replace('T', ' ')}</td><td>${OS_TD[d.typ]}${d.zr ? ' (' + d.zr + ')' : ''}</td><td>${d.typ === 'cofnij' ? 'cofa nr ' + d.cofa : d.typ.indexOf('wariant') >= 0 ? d.a.slice(2) + ' ↔ ' + d.b.slice(2) : osLabel(d.a) + (d.b && d.b.indexOf('brak:') !== 0 ? ' ↔ ' + osLabel(d.b) : d.b ? ' (' + d.b.slice(5) + ')' : '')}</td><td>${d.why || ''}</td><td>${cofanie && akt && d.typ !== 'cofnij' ? h`<button class="sm" data-cof="${d.n}">Cofnij</button>` : (d.typ === 'cofnij' ? '' : '(cofnięta)')}</td></tr>`; }
+function osKartaRender(){ const m = $('main'); if (OSS.widok === 'dec') return osDecKarta(m); if (OSS.widok === 'war') return osWarKarta(m);
+  const c = OSS.cur; if (!c) { wstaw(m, h`<div class="card muted" id="osPuste">Wybierz osobę z listy. Aplikacja tylko proponuje połączenia; każde scalenie zatwierdzasz sam i możesz je cofnąć. Akty, wystąpienia i źródła nigdy nie są zmieniane przez decyzje.</div>`); return; }
+  const KL = decKlastry(S.decyz); OSS.KL = KL; const C = osCzlonkowie(c), os = KL.osoby[c] ? c : null, K = OSS.karta && OSS.karta.c === c ? OSS.karta : null, gr = K && !K.ladowanie ? osGrupuj(c, K.lista) : null, flat = gr ? [].concat(gr.sprawdz, gr.mozliwe, gr.malo, gr.konflikt) : [];
+  OSS.flat = flat; const mojeSet = new Set(C), akt = new Set(decAktywne(S.decyz).map(d => d.n)), moje = S.decyz.filter(d => d.typ !== 'cofnij' && (mojeSet.has(d.a) || mojeSet.has(d.b))), brak = decAktywne(S.decyz).filter(d => d.typ === 'brak' && mojeSet.has(d.a));
+  const grHtml = (kl, t, otwarte) => gr && gr[kl].length ? h`<details ${otwarte ? raw('open') : ''} data-gr="${kl}"><summary>${t} (${gr[kl].length})</summary>${gr[kl].map(u => osPropHtml(u, flat.indexOf(u)))}</details>` : '';
+  wstaw(m, h`<div class="card" id="osKarta"><h2>${os ? 'Osoba ' + os : osLabel(c)}</h2><p class="muted">${os ? 'Scalona z decyzji: ' + KL.osoby[os].decyzje.join(', ') + '. ' : 'Wystąpienie bez decyzji (tożsamość nierozstrzygnięta). '}Wystąpień: ${C.length}.</p>
+    <table id="osCzl">${C.map(w => h`<tr><td>${osLabel(w)}</td><td><button class="sm" data-akt="${w}">Otwórz akt</button></td></tr>`)}</table>
+    ${brak.length ? h`<div class="warn">Zaznaczono brak odpowiednika w księgach: ${brak.map(d => OS_TD.brak + ' (' + ({B: 'chrzty', D: 'zgony', M: 'małżeństwa'})[d.b.slice(5)] + ')').join('; ')}</div>` : ''}
+    <div class="acts"><select id="osBrakT" aria-label="Gdzie szukano"><option value="B">chrzty</option><option value="D">zgony</option><option value="M">małżeństwa</option></select><button id="osBrak" data-w="${C[0]}">Brak odpowiednika w księgach</button></div>
+    <h2>Propozycje</h2>${!K || K.ladowanie ? h`<p class="muted" id="osLaduje">Liczę uzasadnienia…</p>` : K.blad ? h`<p class="err">${K.blad}</p>` : h`<p class="muted" id="osLiczba">Kandydatów: ${flat.length} (z czego mocnych ${gr.sprawdz.length}, możliwych ${gr.mozliwe.length}).</p>
+      ${grHtml('sprawdz', 'Mocne propozycje', true)}${grHtml('mozliwe', 'Możliwe', true)}${grHtml('malo', 'Za mało danych', false)}${grHtml('konflikt', 'Konflikty – raczej inne osoby', false)}`}
+    <h2>Historia decyzji tej osoby (${moje.length})</h2>${moje.length ? h`<table id="osHist">${moje.map(d => osDecWiersz(d, true, akt))}</table>` : h`<p class="muted">Brak decyzji.</p>`}</div>`);
+  m.querySelectorAll('[data-akt]').forEach(b => b.onclick = () => osOtworzAkt(b.dataset.akt)); m.querySelectorAll('[data-cof]').forEach(b => b.onclick = () => osCofnijUi(+b.dataset.cof));
+  m.querySelectorAll('button[data-a]').forEach(b => b.onclick = () => osAkcja(b.dataset.a, +b.dataset.i));
+  if ($('osBrak')) $('osBrak').onclick = () => osZapiszDec('brak', $('osBrak').dataset.w, 'brak:' + $('osBrakT').value, {});
+}
+function osZapiszDec(typ, a, b, opt){ const r = osDecyduj(S.decyz, typ, a, b, opt); if (!r.ok) { toast(r.blad, 5000); return r; }
+  OSS.cache = null; OSS.KL = decKlastry(S.decyz); save(); const nowaKlasa = typ === 'wariant_nazwiska' || typ === 'odrzuc_wariant' ? osKlasy(S.decyz) : null; if (nowaKlasa && JSON.stringify(nowaKlasa.klasy) !== OSS.ksig) { clearTimeout(osZapiszDec.t); osZapiszDec.t = setTimeout(() => osStart(true), 400); }
+  osRender(); return r; }
+function osAkcja(a, i){ const u = OSS.flat && OSS.flat[i]; if (!u) return; if (a === 'akty') { osOtworzAkt(u.a); return; }
+  const pole = document.querySelector('.osPowod[data-i="' + i + '"]'), why = pole ? pole.value : ''; if (a === 'scal') { const r = osZapiszDec('scal', u.a, u.b, {u, why, akty: osAktyMapa()}); if (r.ok) { toast('Scalono. Wystąpienia i źródła bez zmian – możesz to cofnąć.'); OSS.cur = decKlastry(S.decyz).czyja[u.a] || u.a; osWybierz(OSS.cur); } else if (r.trzebaPowod && pole) pole.focus(); return; }
+  if (a === 'odrzuc') { const r = osZapiszDec('odrzuc', u.a, u.b, {u, why, akty: osAktyMapa()}); if (r.ok) toast('Zapisano: to różne osoby. Ta para nie wróci jako propozycja.'); return; }
+  if (a === 'odloz') { const r = osZapiszDec('odloz', u.a, u.b, {u, why, akty: osAktyMapa()}); if (r.ok) toast('Odłożono.'); } }
+const osAktyMapa = () => new Proxy({}, {get: (o, id) => typeof id === 'string' && id[0] === 'w' ? osId(id) : undefined});
+function osCofnijUi(n){ const dla = OSS.cur ? osCzlonkowie(OSS.cur) : []; const r = osCofnij(S.decyz, n, ''); if (!r.ok) return toast(r.blad); OSS.cache = null; OSS.KL = decKlastry(S.decyz); save(); const d = S.decyz.find(x => x.n === n); toast('Cofnięto decyzję nr ' + n + '. Akty, wystąpienia i źródła bez zmian.'); if (OSS.cur && !decKlastry(S.decyz).osoby[OSS.cur] && !OSS.et.has(OSS.cur)) OSS.cur = dla[0] || null; if (d && d.typ.indexOf('wariant') >= 0) osStart(true); osRender(); if (OSS.widok !== 'dec' && OSS.cur) osKartaLicz().then(osKartaRender); }
+function osOtworzAkt(w){ const a = AM[osId(w)]; if (!a) return toast('Akt nie istnieje w danych.'); osZakladka('akty'); if (D.typ !== a.typ) typUstaw(a.typ); S.cur = a.id; S.q = ''; S.year = 'all'; S.cen = 'all'; S.dec = 'all'; S.flt = 'all'; S.hideDoneActs = false; save(); odswiez(); }
+// ---------- widok „Decyzje”
+function osDecLista(L){ const d = S.decyz.slice().reverse(); wstaw(L, h`${d.length ? '' : h`<span class="muted" id="osPusto">Dziennik decyzji jest pusty.</span>`}${d.slice(0, OSS.port).map(x => h`<button class="it ${OSS.sel === x.n ? 'cur' : ''}" data-n="${x.n}"><small>${x.n}</small> <span>${OS_TD[x.typ]}</span></button>`)}${d.length > OSS.port ? h`<button id="osWiecej" class="sm">Pokaż więcej</button>` : ''}`);
+  L.querySelectorAll('[data-n]').forEach(b => b.onclick = () => { OSS.sel = +b.dataset.n; osListaRender(); osKartaRender(); }); if ($('osWiecej')) $('osWiecej').onclick = () => { OSS.port += 300; osListaRender(); }; }
+function osDecKarta(m){ const akt = new Set(decAktywne(S.decyz).map(d => d.n)), d = S.decyz.find(x => x.n === OSS.sel);
+  if (!d) { wstaw(m, h`<div class="card muted">Decyzji: ${S.decyz.length}, obowiązujących: ${akt.size}. Wybierz decyzję z listy. Cofnięcie to nowy wpis – nic nie jest kasowane.</div>`); return; }
+  const u = d.uzasadnienie || {}; wstaw(m, h`<div class="card" id="osDecKarta"><h2>Decyzja nr ${d.n}: ${OS_TD[d.typ]}</h2><table>${osDecWiersz(d, true, akt)}</table>
+    ${['zgodnosci', 'rozbieznosci', 'sprzecznosci', 'braki'].map(k => (u[k] || []).length ? h`<div><b>${({zgodnosci: 'Zgodności', rozbieznosci: 'Rozbieżności', sprzecznosci: 'Sprzeczności', braki: 'Braki danych'})[k]}:</b> ${u[k].join('; ')}</div>` : '')}
+    <p class="muted">Wniosek w chwili decyzji: ${d.wniosek || '–'}; wersja reguł: ${d.reguly || '–'}. ${akt.has(d.n) ? 'Decyzja obowiązuje.' : 'Decyzja nie obowiązuje (cofnięta lub zastąpiona).'}</p></div>`);
+  m.querySelectorAll('[data-cof]').forEach(b => b.onclick = () => osCofnijUi(+b.dataset.cof)); }
+// ---------- widok „Warianty nazwisk”
+async function osWarLadu(){ if (OSS.war || !OSS.most || !OSS.gotowe) return; OSS.war = {ladowanie: true}; const K = osKlasy(S.decyz), kl = z => { const k = kluczNazwiska(z.slice(2)); return k ? K.klasy[k.k2] || k.k2 : ''; };
+  try { const wyl = decAktywne(S.decyz).filter(d => d.typ === 'odrzuc_wariant').map(d => { const x = kl(d.a), y = kl(d.b); return x < y ? x + '|' + y : y + '|' + x; }); const r = await osWyslij({t: 'warianty', wylacz: wyl, limit: 600}); OSS.war = {lista: r.lista}; } catch (e) { OSS.war = {blad: e.message, lista: []}; } osListaRender(); osKartaRender(); }
+function osWarLista(L){ const K = osKlasy(S.decyz), kl = Object.keys(K.czlonkowie);
+  if (!OSS.gotowe) { wstaw(L, h`<span class="muted">Warianty liczą się po zakończeniu przeliczania…</span>`); return; } osWarLadu(); const W = OSS.war && OSS.war.lista || [];
+  wstaw(L, h`${kl.length ? h`<div class="blok">Zatwierdzone klasy (${kl.length})</div>${kl.map(k => h`<button class="it ${OSS.sel === k ? 'cur' : ''}" data-k="${k}"><span>${K.czlonkowie[k].join(' / ')}</span></button>`)}` : ''}<div class="blok">Kandydaci do decyzji (${W.length}${OSS.war && OSS.war.ladowanie ? ', liczę…' : ''})</div>
+    ${W.slice(0, OSS.port).map((w, i) => h`<button class="it ${OSS.sel === 'w' + i ? 'cur' : ''}" data-w="${i}"><span>${w.a} ↔ ${w.b}</span> <small class="bdg">${w.rodzaj}</small></button>`)}${W.length > OSS.port ? h`<button id="osWiecej" class="sm">Pokaż więcej (${W.length - OSS.port})</button>` : ''}`);
+  L.querySelectorAll('[data-w]').forEach(b => b.onclick = () => { OSS.sel = 'w' + b.dataset.w; osListaRender(); osKartaRender(); }); L.querySelectorAll('[data-k]').forEach(b => b.onclick = () => { OSS.sel = b.dataset.k; osListaRender(); osKartaRender(); }); if ($('osWiecej')) $('osWiecej').onclick = () => { OSS.port += 300; osListaRender(); }; }
+function osWarKarta(m){ const K = osKlasy(S.decyz), s = OSS.sel, W = OSS.war && OSS.war.lista || [];
+  if (typeof s === 'string' && s[0] === 'k') { const ds = decAktywne(S.decyz).filter(d => d.typ === 'wariant_nazwiska' && K.czlonkowie[s] && (K.czlonkowie[s].includes(d.a.slice(2)) || K.czlonkowie[s].includes(d.b.slice(2))));
+    wstaw(m, h`<div class="card" id="osKlasa"><h2>Klasa wariantów ${s}</h2><p>${K.czlonkowie[s].join(' / ')}</p><p class="muted">Przy porównaniach osób te zapisy liczą się jako zgodne nazwisko (z dopiskiem „zatwierdzony słownik”). To nie scala osób.</p><table>${ds.map(d => h`<tr><td>${d.n}</td><td>${d.a.slice(2)} ↔ ${d.b.slice(2)}</td><td><button class="sm" data-cof="${d.n}">Cofnij</button></td></tr>`)}</table></div>`); m.querySelectorAll('[data-cof]').forEach(b => b.onclick = () => osCofnijUi(+b.dataset.cof)); return; }
+  const w = typeof s === 'string' && s[0] === 'w' ? W[+s.slice(1)] : null; if (!w) { wstaw(m, h`<div class="card muted" id="osWarPuste">Warianty nazwisk to kandydaci do słownika: program znalazł zapisy o wspólnym rdzeniu (np. Paluch / Paluchowski, Paluch / Paruch). Nic nie jest klasą bez Twojej decyzji. Wybierz parę z listy.</div>`); return; }
+  const fm = f => Object.entries(f).sort((x, y) => y[1] - x[1]).map(([z, n]) => z + ' (' + n + ')').join(', ');
+  wstaw(m, h`<div class="card" id="osWarKarta"><h2>${w.a} ↔ ${w.b}</h2><p><b>Rodzaj:</b> ${w.rodzaj === 'pochodne' ? 'jedno nazwisko pochodzi od drugiego' : 'podobna pisownia'}. ${w.powod}</p>
+    <p><b>${w.a}:</b> ${fm(w.formyA)}<br><b>${w.b}:</b> ${fm(w.formyB)}</p><p class="muted">Przykładowe wystąpienia: ${w.przykladA.concat(w.przykladB).map(osLabel).join('; ')}</p>
+    <div class="acts"><button class="p" id="osWarTak">To warianty jednego nazwiska</button><button id="osWarNie">To różne nazwiska</button></div><p class="muted">Po zatwierdzeniu program przeliczy propozycje (kilka sekund w tle).</p></div>`);
+  const fo = [w.a, w.b]; $('osWarTak').onclick = () => { const r = osZapiszDec('wariant_nazwiska', 'n:' + w.a, 'n:' + w.b, {formy: [Object.keys(w.formyA).join('/'), Object.keys(w.formyB).join('/')], why: w.rodzaj + ': ' + w.powod}); if (r.ok) { OSS.sel = null; OSS.war = null; toast('Zapisano klasę wariantów. Przeliczam propozycje…'); } };
+  $('osWarNie').onclick = () => { const r = osZapiszDec('odrzuc_wariant', 'n:' + w.a, 'n:' + w.b, {}); if (r.ok) { OSS.sel = null; OSS.war = null; toast('Zapisano: to różne nazwiska – para nie wróci.'); osWarLadu(); } }; }
+// ---------- zakładki, menu, import/eksport
+function osZakladka(k){ OSS.zakl = k; const o = k === 'osoby'; $('zAkty').className = o ? '' : 'p'; $('zOsoby').className = o ? 'p' : ''; $('selTyp').hidden = o; document.querySelectorAll('.osMenu').forEach(b => b.hidden = !o);
+  if (o) { if (!OSS.KL) OSS.KL = decKlastry(S.decyz); $('tytul').textContent = 'Multitool v1 · osoby'; osStart(false); osRender(); } else { OSS.sel = null; odswiez(); } }
+function osInit(){ $('zAkty').onclick = () => osZakladka('akty'); $('zOsoby').onclick = () => osZakladka('osoby'); document.querySelectorAll('.osMenu').forEach(b => b.hidden = true);
+  $('mDecJson').onclick = () => { $('menu').hidden = true; dl('multitool_decyzje_' + new Date().toISOString().slice(0, 10) + '.json', JSON.stringify({format: DEC_FORMAT, dane: {wersja: (DANE.format && DANE.format.wersja) || 1, suma: DANE.suma || ''}, zapisano: new Date().toISOString(), decyzje: S.decyz}), 'application/json', false); toast('Zapisano decyzje (JSON). Pełna kopia zeruje wskaźnik zmian, ten plik nie.'); };
+  $('mDecCsv').onclick = () => { $('menu').hidden = true; dl('multitool_decyzje_' + new Date().toISOString().slice(0, 10) + '.csv', decCsv(S.decyz)); toast('Zapisano decyzje (CSV)'); };
+  $('mDecImp').onclick = () => { $('menu').hidden = true; $('fDec').click(); }; $('fDec').onchange = e => { if (e.target.files[0]) osImportDecyzji(e.target.files[0]); e.target.value = ''; };
+  $('mDop').onclick = () => { $('menu').hidden = true; $('fDop').click(); }; $('fDop').onchange = e => { if (e.target.files[0]) osImportDopUi(e.target.files[0]); e.target.value = ''; }; }
+async function osImportDecyzji(plik){ let obj; try { obj = JSON.parse((await plik.text()).replace(/^﻿/, '')); } catch (e) { return okno('Import decyzji', h`<p class="err" id="impBlad">To nie jest poprawny JSON.</p>`); }
+  if (!obj || !obj.format || obj.format.nazwa !== DEC_FORMAT.nazwa) return okno('Import decyzji', h`<p class="err" id="impBlad">To nie jest plik decyzji Multitoola (brak pola format).</p>`); if (obj.format.wersja > DEC_FORMAT.wersja) return okno('Import decyzji', h`<p class="err" id="impBlad">Plik z nowszej wersji (${obj.format.wersja}). Zaktualizuj aplikację.</p>`);
+  const w = osWaliduj(obj.decyzje, null); okno('Import decyzji: ' + plik.name, h`<p id="impPodglad">Decyzji do wczytania: <b>${w.ok.length}</b>${w.bledy.length ? h`, odrzuconych jako błędne: <b>${w.bledy.length}</b>` : ''}. Tryb „dopisz”: identyczne decyzje są pomijane, reszta dostaje nowe numery. Przed zapisem powstaje migawka.</p>${w.bledy.slice(0, 8).map(b => h`<p class="err">${b}</p>`)}`, [['impTak', 'Dopisz', 'p'], ['impNie', 'Anuluj']]);
+  $('impNie').onclick = () => { $('okno').hidden = true; }; $('impTak').onclick = async () => { await kopiaMigawka('przed importem decyzji: ' + plik.name); const r = osDopiszDecyzje(S.decyz, w.ok); OSS.cache = null; OSS.KL = decKlastry(S.decyz); save(); await stFlush(true); $('okno').hidden = true; toast('Wczytano decyzje: dodano ' + r.dodane + ', pominięto ' + r.pominiete); osStart(false); osRender(); }; }
+// kontekst dla importu dop.v1: id dawne → id aktu, wystąpienia z etykiet (silnik mówi, które istnieją), płeć z karty (profil)
+function osDopKontekst(){ const stare = {B: {}, D: {}, M: {}}, T = {chrzest: 'B', zgon: 'D', malzenstwo: 'M'}; D.wszystkie.forEach(a => { const t = T[a.typ]; if (!t) return; (a.model && a.model.id_dawne || []).concat([a.stary, a.id]).forEach(i => { if (i) stare[t][i] = a.id; }); });
+  return {idAktu: (t, id) => stare[t] && stare[t][id] || null, wyst: (akt, rola) => { const w = 'w:' + akt + ':' + rola; return OSS.et.has(w) ? w : null; }, plec: w => OSS.plec && OSS.plec[w] || ''}; }
+async function osImportDopUi(plik){ let obj; try { obj = JSON.parse((await plik.text()).replace(/^﻿/, '')); } catch (e) { return okno('Import dop.v1', h`<p class="err" id="impBlad">To nie jest poprawny JSON.</p>`); }
+  if (!OSS.most) osStart(false); if (!OSS.et.size) return okno('Import dop.v1', h`<p class="err" id="impBlad">Silnik osób jeszcze się przygotowuje – spróbuj za chwilę.</p>`); try { OSS.plec = (await osWyslij({t: 'plcie', ids: [...OSS.et.keys()].filter(i => /:(dziecko|zmarly|ojciec|matka|pan_mlody|panna_mloda)$/.test(i))})).p; } catch (e) { OSS.plec = {}; }
+  const plan = osImportDop(obj, osDopKontekst()); if (plan.bledy.length) return okno('Import dop.v1', h`<p class="err" id="impBlad">${plan.bledy.join(' ')}</p>`);
+  okno('Import dop.v1: ' + plik.name, h`<p id="impPodglad">Pary do zapisania: <b>${plan.stat.par}</b> (zaakceptowane → scal: ${plan.stat.acc}, odrzucone → różne osoby: ${plan.stat.rej}), brak odpowiednika: ${plan.stat.none}. Pominięto: <b>${plan.pominiete.length}</b>.</p><p class="muted">Scalenia z importu nie mają uzasadnienia reguł (zapisują źródło „dop.v1”). Kolizje z innymi decyzjami zostaną pominięte i wypisane.</p>${plan.pominiete.slice(0, 10).map(p => h`<p class="muted">${p.klucz} ${p.slot}: ${p.powod}</p>`)}`, [['impTak', 'Zapisz decyzje', 'p'], ['impNie', 'Anuluj']]);
+  $('impNie').onclick = () => { $('okno').hidden = true; }; $('impTak').onclick = async () => { await kopiaMigawka('przed importem dop.v1: ' + plik.name); const r = osDopZastosuj(S.decyz, plan, osAktyMapa()); OSS.cache = null; OSS.KL = decKlastry(S.decyz); save(); await stFlush(true); $('okno').hidden = true; toast('Zapisano: scal ' + r.scal + ', różne osoby ' + r.odrzuc + ', brak ' + r.brak + '; pominięto ' + r.pominiete.length); osRender(); }; }
+
 /* app/moduly/ui_powloka.js – powłoka aplikacji (krok 3): nagłówek ze wskaźnikiem kopii, pasek trybu awaryjnego, lista aktów z filtrami, menu (eksport CSV, kopia, import, migawki, kolejka zmian danych), okno podglądu importu.
    Jedyne miejsce (obok ui_akt.js), gdzie wolno użyć innerHTML – wyłącznie przez wstaw(h`…`). */
 const LISTA_PORCJA = 300; let LISTA_N = LISTA_PORCJA;
@@ -944,7 +2162,7 @@ async function menuMigawki(){ const L = await kopiaLista(); okno('Migawki (ostat
   $('oknoTresc').querySelectorAll('[data-prz]').forEach(b => b.onclick = async () => { if (!confirm('Przywrócić stan z migawki? (obecny stan też trafi do migawki)')) return; await kopiaPrzywroc(b.dataset.prz); $('okno').hidden = true; odswiez(); toast('Przywrócono migawkę'); }); }
 function menuKolejka(){ const K = stKolejka(); okno('Dane źródłowe się zmieniły (' + K.length + ')', K.length ? h`<table id="kolejka"><tr><th>Akt</th><th>Pole</th><th>Twoja wartość</th><th>Baza była</th><th>Baza jest</th><th></th></tr>${K.map(x => h`<tr><td>${AM[x.id]?.stary || x.id}</td><td>${x.f}</td><td>${x.v}</td><td>${x.baza}</td><td>${x.teraz}</td><td><button class="sm" data-kz="${x.id}|${x.f}">Zostaw moją</button> <button class="sm" data-kp="${x.id}|${x.f}">Przyjmij nową</button></td></tr>`)}</table>` : h`<p class="muted">Brak zmian: dane źródłowe zgodne z tym, co widziałeś.</p>`);
   $('oknoTresc').querySelectorAll('[data-kz],[data-kp]').forEach(b => b.onclick = () => { const [id, f] = (b.dataset.kz || b.dataset.kp).split('|'); stKolejkaRozstrzygnij(id, f, b.dataset.kz ? 'zostaw' : 'przyjmij'); menuKolejka(); renderAkt(); renderLista(); stWskaznik(); }); }
-function odswiez(){ typOdswiez(); HS = histSnap(S.acts); renderFiltry(); renderLista(); renderAkt(); stWskaznik(); stPasek(); const k = $('mKolejka'); if (k) k.textContent = 'Dane źródłowe się zmieniły (' + ST_KOLEJ.length + ')'; }
+function odswiez(){ if (typeof OSS !== 'undefined' && OSS.zakl === 'osoby') { OSS.cache = null; OSS.KL = decKlastry(S.decyz); stWskaznik(); stPasek(); osStart(false); return osRender(); } typOdswiez(); HS = histSnap(S.acts); renderFiltry(); renderLista(); renderAkt(); stWskaznik(); stPasek(); const k = $('mKolejka'); if (k) k.textContent = 'Dane źródłowe się zmieniły (' + ST_KOLEJ.length + ')'; }
 function menuInit(){ const M = $('menu'); $('bMenu').onclick = () => { M.hidden = !M.hidden; };
   $('mCsv').onclick = () => { if (D.typ === 'zgon') dl('ZGONY_zweryfikowane.csv', csvText()); else dl(TYPY[D.typ].eksport.plik, typCsv(D.typ)); M.hidden = true; toast('Eksport CSV (nie zeruje wskaźnika kopii)'); };   // CSV nie zawiera historii ani decyzji → nie jest kopią
   $('mKopia').onclick = () => { dl('multitool_kopia_' + new Date().toISOString().slice(0, 10) + '.json', JSON.stringify(kopiaPelna()), 'application/json', false); kopiaZrobiona(); M.hidden = true; toast('Kopia pełna zapisana'); };
@@ -952,7 +2170,7 @@ function menuInit(){ const M = $('menu'); $('bMenu').onclick = () => { M.hidden 
   $('mKopiaWczytaj').onclick = () => { M.hidden = true; $('fKopia').click(); }; $('fKopia').onchange = e => { if (e.target.files[0]) menuWczytajKopie(e.target.files[0]); e.target.value = ''; };
   $('mImpDop').onclick = () => { M.hidden = true; $('fCsv').dataset.ovw = ''; $('fCsv').click(); }; $('mImpZast').onclick = () => { M.hidden = true; $('fCsv').dataset.ovw = '1'; $('fCsv').click(); };
   $('fCsv').onchange = e => { if (e.target.files[0]) menuImportCsv(e.target.files[0], !!e.target.dataset.ovw); e.target.value = ''; };
-  migrZgUiInit();
+  migrZgUiInit(); osInit();
   $('mMigawki').onclick = () => { M.hidden = true; menuMigawki(); }; $('mKolejka').onclick = () => { M.hidden = true; menuKolejka(); };
   $('mAuto').onclick = async () => { M.hidden = true; try { toast(await kopiaAutoWybierz() ? 'Autozapis włączony' : 'Ta przeglądarka nie obsługuje autozapisu – użyj kopii pełnej'); } catch (e) { toast('Anulowano'); } };
   window.addEventListener('beforeunload', e => { if (ST_ZMIANY) { e.preventDefault(); e.returnValue = ''; } }); }

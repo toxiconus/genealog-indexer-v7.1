@@ -7,7 +7,7 @@ const KOP_MIGRACJE = {};   // KOP_MIGRACJE[n] = obj => obj w wersji n+1 (gdy for
 let KOP_AUTO = null;
 const KOP_ZAKAZ = new Set(['__proto__', 'constructor', 'prototype']);
 function kopiaPelna(){ const R = stRekordy(); return {format: {nazwa: KOP_NAZWA, wersja: KOP_WER}, dane: {wersja: (typeof DANE !== 'undefined' && DANE.format && DANE.format.wersja) || 1, suma: (typeof DANE !== 'undefined' && DANE.suma) || ''},
-  zapisano: new Date().toISOString(), pola: R.pola, teksty: R.teksty, akty: R.akty, decyzje: [], historia: S.hist || [], slowniki: R.slowniki, ustawienia: Object.assign({}, R.meta.ustawienia, {seeded: R.meta.seeded, histN: R.meta.histN})}; }
+  zapisano: new Date().toISOString(), pola: R.pola, teksty: R.teksty, akty: R.akty, decyzje: (S.decyz || []).slice(), historia: S.hist || [], slowniki: R.slowniki, ustawienia: Object.assign({}, R.meta.ustawienia, {seeded: R.meta.seeded, histN: R.meta.histN})}; }
 async function kopiaMigawka(powod){ const k = kopiaPelna(); k.powod = powod || ''; const klucz = k.zapisano;
   if (ST_TRYB === 'pamiec') { (kopiaMigawka.pamiec = kopiaMigawka.pamiec || []).push([klucz, k]); kopiaMigawka.pamiec = kopiaMigawka.pamiec.slice(-KOP_MAX); return klucz; }
   try { await stTx(['kopie'], 'readwrite', w => w.kopie.put(k, klucz)); const L = await stWszystko('kopie'); L.sort((a, b) => a[0] < b[0] ? -1 : 1); const nadmiar = L.slice(0, Math.max(0, L.length - KOP_MAX)); if (nadmiar.length) await stTx(['kopie'], 'readwrite', w => nadmiar.forEach(([kk]) => w.kopie.delete(kk))); }
@@ -37,22 +37,23 @@ function kopiaWalidacja(obj){ const r = {ok: false, blad: '', bledy: [], czysty:
   const f = obj.format; if (!f || f.nazwa !== KOP_NAZWA) { r.blad = 'Nieznany format pliku' + (f && f.nazwa ? ' („' + String(f.nazwa).slice(0, 40) + '”)' : '') + ': oczekiwano ' + KOP_NAZWA + '.'; return r; }
   if (!Number.isInteger(f.wersja) || f.wersja < 1) { r.blad = 'Brak numeru wersji formatu kopii.'; return r; } if (f.wersja > KOP_WER) { r.blad = 'Kopia jest w nowszej wersji formatu (' + f.wersja + ') niż ta aplikacja (' + KOP_WER + '). Zaktualizuj aplikację.'; return r; }
   while (obj.format.wersja < KOP_WER) { const m = KOP_MIGRACJE[obj.format.wersja]; if (!m) { r.blad = 'Brak migracji kopii z wersji ' + obj.format.wersja + '.'; return r; } obj = m(obj); }
-  const C = {pola: {}, teksty: {}, akty: {}, historia: [], fixes: {}, ust: {}}, B = r.bledy, bl = (t, k) => { if (B.length < 200) B.push(t + ': ' + String(k).slice(0, 80)); };
+  const C = {pola: {}, teksty: {}, akty: {}, decyzje: [], historia: [], fixes: {}, ust: {}}, B = r.bledy, bl = (t, k) => { if (B.length < 200) B.push(t + ': ' + String(k).slice(0, 80)); };
   const pl = obj.pola && typeof obj.pola === 'object' ? obj.pola : {}; for (const k in pl) { const i = k.lastIndexOf('|'), id = k.slice(0, i), fl = k.slice(i + 1); if (i < 1 || KOP_ZAKAZ.has(id) || !AM[id] || !/^[a-z_0-9]{1,40}$/.test(fl) || KOP_ZAKAZ.has(fl)) { bl('pole poza danymi', k); continue; } const p = kopPole(pl[k]); if (!p) { bl('błędne pole', k); continue; } C.pola[k] = p; }
   const tk = obj.teksty && typeof obj.teksty === 'object' ? obj.teksty : {}; for (const id in tk) { if (KOP_ZAKAZ.has(id) || !AM[id] || !kopStr(tk[id], 50000)) { bl('błędny tekst', id); continue; } C.teksty[id] = tk[id]; }
   const ak = obj.akty && typeof obj.akty === 'object' ? obj.akty : {}; for (const id in ak) { if (KOP_ZAKAZ.has(id) || !AM[id]) { bl('akt poza danymi', id); continue; } const x = kopAkt(ak[id]); if (!x) { bl('błędny stan aktu', id); continue; } C.akty[id] = x; }
+  if (obj.decyzje !== undefined) { const wd = osWaliduj(obj.decyzje, null); C.decyzje = wd.ok; wd.bledy.slice(0, 20).forEach(b => bl('decyzje', b)); }
   (Array.isArray(obj.historia) ? obj.historia : []).forEach((e, i) => { const x = kopHist(e); if (x && (AM[x.id])) C.historia.push(x); else bl('błędny wpis historii', i); });
   const fx = obj.slowniki && obj.slowniki.fixes; if (fx && typeof fx === 'object') for (const a in fx) { if (KOP_ZAKAZ.has(a) || !fx[a] || typeof fx[a] !== 'object') { bl('słownik', a); continue; } const o = {}; for (const b in fx[a]) { if (KOP_ZAKAZ.has(b) || !Number.isFinite(fx[a][b])) { bl('słownik', a + '→' + b); continue; } o[b] = fx[a][b]; } C.fixes[a] = o; }
   const u = obj.ustawienia && typeof obj.ustawienia === 'object' ? obj.ustawienia : {}; ['year', 'cen', 'dec', 'flt', 'cur', 'tmode', 'q', 'typ'].forEach(k => { if (u[k] === null || kopStr(u[k], 200)) C.ust[k] = u[k]; }); ['hideOk', 'hideDoneActs', 'noroi', 'onlyScan', 'hideMk'].forEach(k => { if (typeof u[k] === 'boolean') C.ust[k] = u[k]; });
   if (u.seeded && typeof u.seeded === 'object') { C.ust.seeded = {}; for (const id in u.seeded) if (AM[id]) C.ust.seeded[id] = 1; } if (Number.isInteger(u.histN)) C.ust.histN = u.histN;
   // różnice względem bieżącego stanu
   let nowe = 0, takie = 0, konflikt = 0, nadpisz = 0; for (const k in C.pola) { const i = k.lastIndexOf('|'), cur = S.acts[k.slice(0, i)]?.f?.[k.slice(i + 1)]; if (!cur) nowe++; else if (cur.v === C.pola[k].v) takie++; else if (cur.ok) konflikt++; else nadpisz++; }
-  r.roznice = {pola: Object.keys(C.pola).length, nowe, takie, konfliktyZOk: konflikt, nadpisane: nadpisz, teksty: Object.keys(C.teksty).length, akty: Object.keys(C.akty).length, zatwierdzone: Object.values(C.akty).filter(a => a.done).length, historia: C.historia.length};
+  r.roznice = {pola: Object.keys(C.pola).length, nowe, takie, konfliktyZOk: konflikt, nadpisane: nadpisz, teksty: Object.keys(C.teksty).length, akty: Object.keys(C.akty).length, zatwierdzone: Object.values(C.akty).filter(a => a.done).length, historia: C.historia.length, decyzje: C.decyzje.length};
   r.czysty = C; r.ok = true; return r; }
 // zastosowanie: 'dopisz' (domyślnie; nie rusza pól ok) albo 'zastap' (stan = kopia). Migawka obecnego stanu zawsze przed zapisem.
 async function kopiaZastosuj(w, tryb, nazwa){ if (!w || !w.ok) return false; await kopiaMigawka('przed importem kopii' + (nazwa ? ': ' + nazwa : '')); const C = w.czysty; tryb = tryb === 'zastap' ? 'zastap' : 'dopisz';
   const stan = id => S.acts[id] || (S.acts[id] = {f: {}, done: false}); HIST_WHY = 'import kopii' + (nazwa ? ': ' + nazwa : '') + ' (' + tryb + ')';
-  if (tryb === 'zastap') { S.acts = {}; S.hist = []; S.histN = 0; S.fixes = {}; }
+  if (tryb === 'zastap') { S.acts = {}; S.hist = []; S.histN = 0; S.fixes = {}; S.decyz = C.decyzje.slice(); } else if (C.decyzje.length) osDopiszDecyzje(S.decyz, C.decyzje);
   for (const k in C.pola) { const i = k.lastIndexOf('|'), id = k.slice(0, i), f = k.slice(i + 1), cur = S.acts[id]?.f?.[f]; if (tryb === 'dopisz' && cur && (cur.ok || cur.v === C.pola[k].v)) continue; stan(id).f[f] = C.pola[k]; if ('baza' in C.pola[k]) ST_BAZA[k] = C.pola[k].baza; }
   for (const id in C.teksty) { if (tryb === 'dopisz' && S.acts[id]?.text != null) continue; stan(id).text = C.teksty[id]; }
   for (const id in C.akty) { const s = stan(id); for (const p in C.akty[id]) { if (tryb === 'dopisz' && s[p] !== undefined && s[p] !== false) continue; s[p] = C.akty[id][p]; } }
