@@ -42,3 +42,10 @@ Uwagi:
 
 - Najnowszy eksport CSV zgonów to `haiku/ZATWIERDZENIA/ZGONY_zweryfikowane_10.csv` (881 aktów, 8 `ok`). Użytkownik nie zrobił nowego eksportu, więc punkt 5 „Czego brakuje” jest zamknięty: ten plik jest wejściem do kroku 3 i 4.
 - Pozostałe braki z tabeli (kopia JSON zgonów, małżeństwa, `dop.v1`, edytor korekt) bez zmian.
+
+## Decyzja użytkownika (2026-11-11, drugie)
+
+- Kopii JSON zgonów nie ma i nie będzie. Użytkownik nie zapisywał innych eksportów; jedynym źródłem jest baza (`narzedzia/baza_zgonow_1797-1945.html`) i eksport CSV `ZGONY_zweryfikowane_10.csv`.
+- Eksportów małżeństw (JSON i CSV) nie ma. Krok 4 dla małżeństw: nic do migracji, dopóki użytkownik nie potwierdzi zatwierdzeń w przeglądarce.
+- `dop.v1` i edytor korekt: użytkownik nie potwierdził ich istnienia. Traktować jako „brak”, chyba że pojawią się w przeglądarce.
+- Krok 0 dla zgonów zamknięty na CSV `_10` + nakładce 441. Dla pozostałych: brak eksportów.
