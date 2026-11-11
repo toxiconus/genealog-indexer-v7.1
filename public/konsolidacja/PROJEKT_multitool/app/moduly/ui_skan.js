@@ -1,6 +1,6 @@
 /* app/moduly/ui_skan.js – podgląd skanu aktu (krok 3): wybór folderu skanów (<input webkitdirectory>), obraz tylko lokalnie (File → URL.createObjectURL, nic nie jest wysyłane),
    przesuwanie/powiększanie, obszar aktu (ROI) i ramki pól – oba edytowalne (zapis w stanie: akty.roi, akty.fr), eksport ROI (menu). HTML wstawiany wyłącznie przez wstaw(h`…`). */
-const SK = {pliki: [], url: {}, folder: '', auto: {}, plywajacy: false, zwiniety: false, schowany: false, v: {key: '', s: 1, x: 0, y: 0, iw: 1, ih: 1}, tryb: '', pole: '', rn: null};
+const SK = {pliki: [], url: {}, folder: '', auto: {}, kandCache: {}, kandI: {}, kandOst: {}, plywajacy: false, zwiniety: false, schowany: false, v: {key: '', s: 1, x: 0, y: 0, iw: 1, ih: 1}, tryb: '', pole: '', rn: null};
 const roiOk = r => !!r && typeof r === 'object' && ['x', 'y', 'w', 'h'].every(k => typeof r[k] === 'number' && isFinite(r[k])) && r.w > 0 && r.h > 0 && r.x >= 0 && r.y >= 0 && r.x + r.w <= 1.0001 && r.y + r.h <= 1.0001;
 const frOf = (a, f) => (S.acts[a.id]?.fr?.[f]) || (a.pola && a.pola[f]) || null;
 const skanKlucz = a => scanOf(a) || (SK.auto && SK.auto[a.year + '|' + parseInt(a.act, 10)]) || '';
@@ -18,9 +18,21 @@ function skanZnajdz(a){ const p = skanSciezka(a); if (!p || !SK.pliki.length) re
   const C = SK.pliki.filter(f => f.name.toLowerCase() === b); if (!C.length) return null; if (C.length === 1) return C[0];
   const wsp = f => { const s = (f.webkitRelativePath || f.name).toLowerCase().split('/').reverse(); let n = 0; while (n < s.length && n < seg.length && s[n] === seg[n]) n++; return n; };
   return C.slice().sort((x, y) => wsp(y) - wsp(x))[0]; }
+/* Akt bez adresu skanu: strony-kandydaci z wybranego folderu. Najpierw pliki, których ścieżka zawiera dokładnie rok aktu (np. „Z 1814”), a gdy ich nie ma – pliki z folderu o zakresie lat obejmującym rok („1847-1872 USC”).
+   Program niczego nie przypisuje sam: użytkownik przegląda strony (‹ ›) i klika „Przypisz”. Przypisanie zapisuje się w stanie aktu (S.acts[id].scan = nazwa pliku). */
+const skanNat = (a, b) => (a.webkitRelativePath || a.name).localeCompare(b.webkitRelativePath || b.name, 'pl', {numeric: true});
+function skanKandydaci(a){ const y = +a.year; if (!SK.pliki.length || !Number.isFinite(y)) return []; const k = 'k|' + y; if (SK.kandCache[k]) return SK.kandCache[k];
+  const dokl = [], zakr = []; SK.pliki.forEach(f => { const sc = (f.webkitRelativePath || f.name), bezZakr = sc.replace(/(1[5-9]\d\d)\s*[-–]\s*(1[5-9]\d\d)/g, (m, p, q) => { if (y >= +p && y <= +q) zakr.push(f); return ' '; });
+    if (new RegExp('(^|\\D)' + y + '(\\D|$)').test(bezZakr)) dokl.push(f); });
+  return SK.kandCache[k] = [...new Set(dokl.length ? dokl : zakr)].sort(skanNat); }
+function skanKandydat(a){ if (skanKlucz(a)) return null; const L = skanKandydaci(a); if (!L.length) return null; let i = SK.kandI[a.id]; if (i == null) { const o = SK.kandOst[+a.year]; i = o != null ? L.findIndex(f => (f.webkitRelativePath || f.name) === o) : 0; if (i < 0) i = 0; } i = Math.max(0, Math.min(L.length - 1, i)); return {L, i, plik: L[i]}; }
+const skanPlik = a => skanZnajdz(a) || (skanKandydat(a) || {}).plik || null;
+// źródło adresu skanu: 'użytkownik' (przypisane ręcznie), 'dane' (z bazy), 'nazwa pliku' (rok i numer aktu w nazwie pliku z folderu)
+const skanZrodlo = a => S.acts[a.id]?.scan ? 'użytkownik' : a.file ? 'dane' : skanKlucz(a) ? 'nazwa pliku' : '';
+function skanAdresyCsv(){ return ['typ;rok;nr;osoba;plik_skanu;zrodlo;id_aktu;id_dawne'].concat(D.wszystkie.filter(a => skanKlucz(a)).map(a => [NAZWY_TYPOW[a.typ] || a.typ, a.year, a.act, nmOf(a), skanSciezka(a), skanZrodlo(a), a.id, a.stary || ''].map(csvCell).join(';'))).join('\r\n') + '\r\n'; }
 function skanUrl(f){ const k = (f.webkitRelativePath || f.name) + '|' + f.size + '|' + f.lastModified; if (!SK.url[k]) SK.url[k] = URL.createObjectURL(f); return SK.url[k]; }
 function skanWybierzFolder(lista){ Object.values(SK.url).forEach(u => URL.revokeObjectURL(u)); SK.url = {}; SK.pliki = [...lista].filter(f => /\.(jpe?g|png|webp|gif|bmp|tiff?)$/i.test(f.name));
-  const w = lista[0]?.webkitRelativePath; SK.folder = w ? w.split('/')[0] : ''; SK.auto = skanBudujIndeks(SK.pliki); SK.v.key = ''; return SK.pliki.length; }
+  const w = lista[0]?.webkitRelativePath; SK.folder = w ? w.split('/')[0] : ''; SK.auto = skanBudujIndeks(SK.pliki); SK.kandCache = {}; SK.kandI = {}; SK.v.key = ''; return SK.pliki.length; }
 const skanTransform = () => { const L = $('skLayer'); if (L) L.style.transform = `translate(${SK.v.x}px,${SK.v.y}px) scale(${SK.v.s})`; };
 function skanRysuj(){ const L = $('skLayer'), a = curAct(); if (!L || !a) return; L.querySelectorAll('.skbox').forEach(e => e.remove()); const V = SK.v, box = (r, cls, w) => { const e = document.createElement('div'); e.className = 'skbox ' + cls; Object.assign(e.style, {left: r.x * V.iw + 'px', top: r.y * V.ih + 'px', width: r.w * V.iw + 'px', height: r.h * V.ih + 'px', borderWidth: (w / V.s) + 'px'}); L.appendChild(e); };
   if (SK.rn) { box(SK.rn, 'nowy', 2); return; } const roi = roiOf(a); if (roi && roiOk(roi) && SK.tryb !== 'pole') box(roi, 'roi', 2);
@@ -29,9 +41,9 @@ function skanDopasuj(r){ if (!$('skView')) return; const W = $('skView').clientW
 function skanFokusPola(a, f){ SK.pole = f; const rs = frOf(a, f); if (!$('skImg') || !SK.v.iw || !rs || !rs.length) { skanRysuj(); return; }
   const x1 = Math.min(...rs.map(r => r[0])), y1 = Math.min(...rs.map(r => r[1])), x2 = Math.max(...rs.map(r => r[0] + r[2])), y2 = Math.max(...rs.map(r => r[1] + r[3])), mx = Math.max(.03, (x2 - x1) * .2), my = Math.max(.03, (y2 - y1) * 1.2);
   const x = Math.max(0, x1 - mx), y = Math.max(0, y1 - my); skanDopasuj({x, y, w: Math.min(1 - x, x2 - x1 + 2 * mx), h: Math.min(1 - y, y2 - y1 + 2 * my)}); }
-function skanPanel(a){ const sk = skanKlucz(a), sc = skanSciezka(a), plik = skanZnajdz(a), pf = fieldsOf(a).filter(f => frOf(a, f.id));
-  const stan = !sk ? 'Ten akt nie ma przypisanego skanu.' : !SK.pliki.length ? 'Wybierz folder ze skanami (obraz zostaje na tym komputerze).' : plik ? '' : 'Nie znaleziono pliku „' + skanBase(sc) + '” w wybranym folderze (' + SK.pliki.length + ' obrazów).';
-  return h`<div class="skwin-head" id="skHead"><span class="skwin-tyt">Skan <b>${sc ? skanBase(sc) : '(brak)'}</b>${plik ? '' : ' – niewczytany'}</span>
+function skanPanel(a){ const sk = skanKlucz(a), sc = skanSciezka(a), kand = skanKandydat(a), plik = skanZnajdz(a) || (kand && kand.plik), pf = fieldsOf(a).filter(f => frOf(a, f.id));
+  const stan = !sk ? (kand ? '' : 'Ten akt nie ma przypisanego skanu.' + (SK.pliki.length ? ' W wybranym folderze nie ma stron z rokiem ' + a.year + ' w nazwie.' : ' Wybierz folder skanów, aby przejrzeć strony z tego roku i przypisać właściwą.')) : !SK.pliki.length ? 'Wybierz folder ze skanami (obraz zostaje na tym komputerze).' : plik ? '' : 'Nie znaleziono pliku „' + skanBase(sc) + '” w wybranym folderze (' + SK.pliki.length + ' obrazów).';
+  return h`<div class="skwin-head" id="skHead"><span class="skwin-tyt">Skan <b>${sc ? skanBase(sc) : kand ? 'do przypisania' : '(brak)'}</b>${plik ? '' : ' – niewczytany'}</span>
       <span class="skwin-btn"><button class="sm" id="skHdr" title="Schowaj/pokaż górny pasek">▲ pasek</button><button class="sm" id="skDok" title="Przypnij z prawej / odepnij">${SK.plywajacy ? '⇱ przypnij' : '⇲ odepnij'}</button><button class="sm" id="skZwin" title="Zwiń/rozwiń">${SK.zwiniety ? '▸' : '▾'}</button><button class="sm" id="skSchowaj" title="Schowaj skan">✕</button></span></div>
     <div class="skwin-cialo" ${SK.zwiniety ? raw('hidden') : ''}>
     <div class="acts"><button id="skFolder" class="sm">Wybierz folder skanów…</button><span class="muted" id="skInfo">${SK.folder ? 'folder: ' + SK.folder + ' · ' + SK.pliki.length + ' obrazów' : ''}</span>
@@ -39,6 +51,8 @@ function skanPanel(a){ const sk = skanKlucz(a), sc = skanSciezka(a), plik = skan
       <label class="muted">Rysuj: <select id="skTryb"><option value="">tylko podgląd</option><option value="roi" ${SK.tryb === 'roi' ? raw('selected') : ''}>obszar aktu (ROI)</option><option value="pole" ${SK.tryb === 'pole' ? raw('selected') : ''}>ramkę pola</option></select></label>
       <button class="sm" id="skRoiDel" ${S.acts[a.id]?.roi ? '' : raw('disabled')} title="Przywróć ROI z danych">Cofnij własny ROI</button></div>
     ${stan ? h`<div class="muted" id="skStan">${stan}</div>` : ''}
+    ${kand ? h`<div class="widok" id="skKand"><span class="muted">Akt nie ma adresu skanu. Strona ${kand.i + 1} z ${kand.L.length} pasujących do roku ${a.year}:</span> <button class="sm" id="skKPrev" ${kand.i ? '' : raw('disabled')} title="Poprzednia strona">‹</button><code>${kand.plik.name}</code><button class="sm" id="skKNext" ${kand.i < kand.L.length - 1 ? '' : raw('disabled')} title="Następna strona">›</button><button class="sm p" id="skPrzypisz" title="Zapisz tę stronę jako skan tego aktu">Przypisz tę stronę do aktu</button></div>` : ''}
+    ${S.acts[a.id]?.scan ? h`<div class="widok" id="skWlasny"><span class="muted">Skan przypisany ręcznie.</span> <button class="sm" id="skOdepnij" title="Usuń ręczne przypisanie skanu">Zmień / usuń przypisanie</button></div>` : ''}
     ${plik ? h`<div id="skView"><div id="skLayer"><img id="skImg" alt="Skan aktu ${a.act}" draggable="false"></div></div>` : ''}
     <div class="muted" id="skPole">${SK.tryb === 'pole' ? (SK.pole ? 'Rysujesz ramkę dla pola „' + (fieldsOf(a).find(f => f.id === SK.pole)?.label || SK.pole) + '” (zastępuje poprzednie). Kliknij pole formularza, by zmienić pole.' : 'Kliknij pole formularza, potem narysuj ramkę na skanie.') : ''}${pf.length && SK.tryb !== 'pole' ? ' Pola z ramkami: ' + pf.map(f => f.label).join(', ') + '.' : ''}</div></div></div>`; }
 /* Okno skanu: przypięte z prawej (obok pól) albo pływające (przeciągane za nagłówek); można zwinąć, schować i ukryć górny pasek. */
@@ -46,7 +60,7 @@ function skTT(){ const hd = document.querySelector('header'); document.documentE
 function skanWinRender(a){ const W = $('skWin'), pk = $('skPokaz'); if (!W) return; skTT();
   if (!a) { W.hidden = true; if (pk) pk.hidden = true; document.body.classList.remove('sk-dok'); return; }
   W.hidden = SK.schowany; if (pk) pk.hidden = !SK.schowany; document.body.classList.toggle('sk-dok', !SK.plywajacy && !SK.schowany);
-  W.classList.toggle('bezobrazu', !skanZnajdz(a)); wstaw(W, skanPanel(a)); skanOknoPodlacz(); skanPodlacz(a); }
+  W.classList.toggle('bezobrazu', !skanPlik(a)); wstaw(W, skanPanel(a)); skanOknoPodlacz(); skanPodlacz(a); }
 function skanOknoPodlacz(){ const W = $('skWin'), head = $('skHead'); if (!W || !head) return;
   $('skHdr').onclick = () => { document.body.classList.toggle('hdr-ukryty'); skanWinRender(curAct()); };
   $('skZwin').onclick = () => { SK.zwiniety = !SK.zwiniety; skanWinRender(curAct()); };
@@ -60,7 +74,11 @@ function skanPodlacz(a){ if (!$('skFolder')) return;
   $('skFolder').onclick = () => $('fSkany').click(); $('skTryb').onchange = e => { SK.tryb = e.target.value; skanRysuj(); const t = $('skPole'); if (t) t.textContent = SK.tryb === 'pole' ? 'Kliknij pole formularza, potem narysuj ramkę na skanie.' : ''; };
   $('skIn').onclick = () => skanZoom(1.3); $('skOut').onclick = () => skanZoom(1 / 1.3); $('skFit').onclick = () => skanDopasuj(roiOf(a));
   $('skRoiDel').onclick = () => { const s = st(a.id); delete s.roi; save(); keepScroll(); toast('Przywrócono ROI z danych'); };
-  const plik = skanZnajdz(a), img = $('skImg'), view = $('skView'); if (!plik) return; const key = (plik.webkitRelativePath || plik.name);
+  const kand = skanKandydat(a);
+  if (kand) { const idz = d => { SK.kandI[a.id] = kand.i + d; SK.v.key = ''; skanWinRender(a); }; $('skKPrev').onclick = () => idz(-1); $('skKNext').onclick = () => idz(1);
+    $('skPrzypisz').onclick = () => { st(a.id).scan = kand.plik.name; SK.kandOst[+a.year] = kand.plik.webkitRelativePath || kand.plik.name; delete SK.kandI[a.id]; save(); renderLista(); renderAkt(); toast('Przypisano skan ' + kand.plik.name + ' – następny akt z ' + a.year + ' zacznie od tej strony'); }; }
+  if ($('skOdepnij')) $('skOdepnij').onclick = () => { delete st(a.id).scan; save(); renderLista(); renderAkt(); toast('Usunięto ręczne przypisanie skanu'); };
+  const plik = skanPlik(a), img = $('skImg'), view = $('skView'); if (!plik) return; const key = (plik.webkitRelativePath || plik.name);
   img.onload = () => { const V = SK.v; if (V.key !== key) { V.key = key; V.iw = img.naturalWidth; V.ih = img.naturalHeight; skanDopasuj(roiOf(a)); } else { V.iw = img.naturalWidth; V.ih = img.naturalHeight; skanTransform(); skanRysuj(); } if (SK.pole) skanRysuj(); };
   img.onerror = () => toast('Nie można otworzyć pliku skanu'); img.src = skanUrl(plik);
   const pts = new Map(), pos = e => { const b = view.getBoundingClientRect(); return {x: e.clientX - b.left, y: e.clientY - b.top}; }, V = SK.v, wz = p => ({x: (p.x - V.x) / V.s / V.iw, y: (p.y - V.y) / V.s / V.ih}), kl = v => Math.min(1, Math.max(0, v));

@@ -72,7 +72,7 @@ function narzRender(){ const m = $('main'), st0 = narzStat(), mot = motywOdczyt(
    <div class="kafle" id="narzKafle">
     ${kaf('Kopie i bezpieczeństwo', 'Zmian bez kopii: ' + ST_ZMIANY + (ST_OSTATNIA ? ' · ostatnia kopia: ' + String(ST_OSTATNIA).slice(0, 10) : ' · nie zrobiono jeszcze kopii') + '. Kopia pełna zawiera pola, teksty, decyzje i historię.', [['mKopia', 'Kopia pełna (JSON)'], ['mKopiaWczytaj', 'Wczytaj kopię (JSON)…'], ['mMigawki', 'Migawki / przywróć…'], ['mAuto', 'Autozapis do pliku…']])}
     ${kaf('Import', 'Każdy import pokazuje podgląd przed zapisem i robi migawkę. Pola zatwierdzone nie są nadpisywane w trybie „dopisz”.', [['mImpDop', 'Import CSV zatwierdzeń (dopisz)…', !zg], ['mImpZast', 'Import CSV zatwierdzeń (zastąp)…', !zg], ['mMigr', 'Migracja zgonów z CSV…', !zg], ['mDecImp', 'Decyzje o osobach: import JSON…'], ['mDop', 'Import decyzji dop.v1…']])}
-    ${kaf('Eksport', 'Pliki zapisują się w folderze pobierania przeglądarki.', [['mCsv', 'Eksport CSV (' + (NAZWY_TYPOW[D.typ] || D.typ).toLowerCase() + ')'], ['nHist', 'Historia zmian (CSV, ' + (S.hist || []).length + ' wpisów)'], ['mDecJson', 'Decyzje o osobach (JSON)'], ['mDecCsv', 'Decyzje o osobach (CSV)'], ['mRoi', 'ROI i ramki pól (JSON)']])}
+    ${kaf('Eksport', 'Pliki zapisują się w folderze pobierania przeglądarki.', [['mCsv', 'Eksport CSV (' + (NAZWY_TYPOW[D.typ] || D.typ).toLowerCase() + ')'], ['nHist', 'Historia zmian (CSV, ' + (S.hist || []).length + ' wpisów)'], ['mDecJson', 'Decyzje o osobach (JSON)'], ['mDecCsv', 'Decyzje o osobach (CSV)'], ['mRoi', 'ROI i ramki pól (JSON)'], ['nSkanyCsv', 'Adresy skanów (CSV)']])}
     <div class="card"><h3>Skany</h3><div class="muted">Aplikacja nie zawiera obrazów – pamięta nazwę pliku skanu i szuka jej w folderze wskazanym na tym komputerze. ${SK.folder ? 'Wybrany folder: ' + SK.folder + ' (' + SK.pliki.length + ' obrazów).' : 'Folder nie jest wybrany.'}</div>
       <div class="rtab"><table id="narzSkany"><tr><th>Typ</th><th>Aktów</th><th class="w">Z adresem skanu</th><th class="w">Znalezionych w folderze</th></tr>${D.typy.map(t => h`<tr><td>${NAZWY_TYPOW[t] || t}</td><td>${st0[t].n}</td><td>${st0[t].skan}</td><td>${SK.pliki.length ? st0[t].wFolderze : '—'}</td></tr>`)}</table></div>
       <div class="acts"><button data-klik="mSkany">Wybierz folder skanów…</button></div></div>
@@ -84,6 +84,7 @@ function narzRender(){ const m = $('main'), st0 = narzStat(), mot = motywOdczyt(
   m.querySelectorAll('[data-motyw]').forEach(b => b.onclick = () => { motywUstaw(b.dataset.motyw); narzRender(); });
   m.querySelectorAll('[data-klik]').forEach(b => b.onclick = () => { const id = b.dataset.klik;
     if (id === 'nHist') { dl('multitool_historia_' + new Date().toISOString().slice(0, 10) + '.csv', histCsv(S.hist || [])); return toast('Zapisano historię zmian (CSV)'); }
+    if (id === 'nSkanyCsv') { dl('multitool_adresy_skanow_' + new Date().toISOString().slice(0, 10) + '.csv', skanAdresyCsv()); return toast('Zapisano adresy skanów (CSV)'); }
     if (id === 'nRaport') return zaklUstaw('raport'); if (id === 'nNowy') return typeof nowyAktOkno === 'function' ? nowyAktOkno() : toast('Dodawanie aktów będzie dostępne w kolejnej wersji');
     const x = $(id); if (x) x.click(); if (id === 'mKopia') setTimeout(narzRender, 300); }); }
 
