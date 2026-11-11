@@ -128,5 +128,5 @@ function nawInit(){ podpInit(); document.body.dataset.zakl = 'akty'; $('zDrzewo'
   const M = $('menu'), b = document.createElement('button'); b.id = 'mMotyw'; b.onclick = () => { const m = motywOdczyt(); motywUstaw(m === 'auto' ? 'dark' : m === 'dark' ? 'light' : 'auto'); if (OSS.zakl === 'narz') narzRender(); }; M.appendChild(b); motywUstaw(motywOdczyt());
   const s = document.createElement('button'); s.id = 'mSkroty'; s.textContent = 'Skróty klawiszowe i wszystkie narzędzia →'; s.onclick = () => zaklUstaw('narz'); M.appendChild(s);
   $('szukaj').onkeydown = e => { if (e.key !== 'Enter') return; const q = e.target.value.trim(); if (!q) return; DRZ.q = q; DRZ.glowne = false; DRZ.tryb = 'osoby'; DRZ.cur = null; DRZ.para = null; DRZ.port = 300; zaklUstaw('drzewo'); };
-  document.addEventListener('keydown', skrotKlawisz, true);
+  document.addEventListener('keydown', skrotKlawisz, true); document.addEventListener('keydown', kolKlawisz);
   document.addEventListener('click', e => { if (!M.hidden && !e.target.closest('#menu') && e.target.id !== 'bMenu') M.hidden = true; }); }

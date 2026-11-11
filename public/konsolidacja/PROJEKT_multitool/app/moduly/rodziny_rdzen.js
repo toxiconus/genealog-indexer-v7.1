@@ -12,7 +12,7 @@ const rdzKluczPary = (oi, on, mi) => { const a = rdzKI(oi), b = rdzKN(on), c = r
    Zwraca {P, wezel(w)→id osoby, czlonkowie[id]→[w], rodzice[id]→Set, dzieci[id]→Set, malz[id]→Set, pary{klucz→{ojciec, nazwisko, matka, rodowe:Set, dzieci:[w], rodziceW:[w]}}, kluczDziecka{w→klucz}, kluczRodzica{w→klucz}} */
 function rdzGraf(M, P, K){ const G = {P, czlonkowie: {}, rodzice: {}, dzieci: {}, malz: {}, pary: {}, kluczDziecka: {}, kluczRodzica: {}}, czyja = (K && K.czyja) || {};
   G.wezel = w => czyja[w] || w; const dod = (o, k, v) => (o[k] = o[k] || new Set()).add(v);
-  const poAkcie = {}; M.wystapienia.forEach(w => { if (!P[w.id]) return; (poAkcie[w.akt] = poAkcie[w.akt] || {})[w.rola] = w.id; (G.czlonkowie[G.wezel(w.id)] = G.czlonkowie[G.wezel(w.id)] || []).push(w.id); });
+  const poAkcie = G.poAkcieRola = {}; M.wystapienia.forEach(w => { if (!P[w.id]) return; (poAkcie[w.akt] = poAkcie[w.akt] || {})[w.rola] = w.id; (G.czlonkowie[G.wezel(w.id)] = G.czlonkowie[G.wezel(w.id)] || []).push(w.id); });
   for (const akt in poAkcie) { const R = poAkcie[akt];
     for (const dz in RDZ_DZIECI) { if (!R[dz]) continue; const [ro, rm] = RDZ_DZIECI[dz], d = G.wezel(R[dz]);
       [R[ro], R[rm]].forEach(r => { if (r && G.wezel(r) !== d) { dod(G.rodzice, d, G.wezel(r)); dod(G.dzieci, G.wezel(r), d); } });
@@ -61,3 +61,17 @@ function imieMianownik(v, plec, znane){ v = String(v == null ? '' : v).trim(); i
   const C = plec === 'M' ? [v.replace(/a$/, ''), v.replace(/ka$/, 'ek'), v.replace(/wła$/, 'weł'), v.replace(/iego$/, 'i'), v.replace(/ego$/, 'y'), v.replace(/ra$/, 'er'), v.replace(/ca$/, 'iec')] : [v.replace(/y$/, 'a'), v.replace(/ii$/, 'ia'), v.replace(/ji$/, 'ja'), v.replace(/i$/, 'a')];
   return C.find(c => c !== v && znane(c)) || ''; }
 function kontDopelniacz(akty, wart, znane){ const out = []; akty.forEach(a => (IMIE_POLA[a.typ] || []).forEach(([f, pl]) => { const v = String(wart(a, f) ?? '').trim(), m = imieMianownik(v, pl, znane); if (m) out.push({id: a.id, f, v, m}); })); return out; }
+/* ---------- rekonstrukcja rodzin: rodzice z aktów dzieci ↔ para młodych z aktu ślubu ----------
+   Drzewo rośnie w górę dopiero wtedy, gdy „ojciec” i „matka” z aktu dziecka zostaną połączeni z własnym ślubem (akt ślubu podaje ICH rodziców).
+   Propozycja: para rodziców (imię i nazwisko ojca + imię matki) ↔ ślub o tych samych imionach i nazwisku pana młodego, zawarty najwyżej rok po i nie dawniej niż 32 lata przed urodzeniem dziecka.
+   „Jednoznaczna”: dokładnie jeden taki ślub, nazwisko panny młodej zgodne z nazwiskiem rodowym matki w co najmniej jednym akcie dziecka i w żadnym niesprzeczne.
+   Zwraca [{klucz, ojciec, nazwisko, matka, rodowe, sluby:[{akt, rok, pan, panna, pannaNazw}], akty:[{dz, o, m, rok, rodowe}], jednoznaczna}] – same podpowiedzi, bez zmiany danych. */
+function rdzPropozycjeSlubow(G, K){ const P = G.P, sl = {}, odrz = (K && K.odrzucone) || new Set(), out = [];
+  for (const akt in G.poAkcieRola || {}) { const R = G.poAkcieRola[akt], g = R.pan_mlody && P[R.pan_mlody], b = R.panna_mloda && P[R.panna_mloda]; if (!g || !b) continue; const k = rdzKluczPary(g.imie, g.nazwisko, b.imie); if (!k) continue; (sl[k] = sl[k] || []).push({akt, rok: g.rok, pan: g.id, panna: b.id, pannaNazw: b.nazwisko || '', kn: rdzKN(b.nazwisko || '')}); }
+  for (const k in G.pary) { const x = G.pary[k], S0 = sl[k]; if (!S0) continue;
+    const akty = x.dzieci.map((dz, i) => { const p = P[dz], o = x.rodziceW[2 * i], m = x.rodziceW[2 * i + 1], ur = p.rolaAktu === 'dziecko' ? [p.rok, p.rok] : idUr(p); return {dz, o, m, rok: p.rok, ur: ur || null, rodowe: (P[m] && P[m].rodowe) || '', kn: rdzKN((P[m] && P[m].rodowe) || ''), typ: p.typ, rola: p.rolaAktu}; }).filter(a => a.o && a.m);
+    const C = S0.filter(s => !odrz.has(decKlucz(akty[0].o, s.pan)) && akty.every(a => (!a.kn || !s.kn || a.kn === s.kn) && (!a.ur || (a.ur[1] >= s.rok - 1 && a.ur[0] <= s.rok + 32)) && P[a.dz].akt !== s.akt)); if (!C.length) continue;
+    if (C.length === 1 && akty.every(a => G.wezel(a.o) === G.wezel(C[0].pan) && G.wezel(a.m) === G.wezel(C[0].panna))) continue;   // już połączone
+    const zgodne = C.length === 1 && C[0].kn && akty.some(a => a.kn && a.kn === C[0].kn) && akty.some(a => a.ur);
+    out.push({klucz: k, ojciec: x.ojciec, nazwisko: x.nazwisko, matka: x.matka, rodowe: [...x.rodowe], sluby: C, akty, jednoznaczna: !!zgodne}); }
+  return out.sort((a, b) => (b.jednoznaczna - a.jednoznaczna) || fold(a.nazwisko + a.ojciec).localeCompare(fold(b.nazwisko + b.ojciec))); }

@@ -40,7 +40,7 @@ function osElementy(){ const A = osLista(), q = fold(OSS.q.trim()), tok = q.spli
 // ---------- render
 const OS_BADGE = {s: 'sprawdź', m: 'możliwe', l: 'za mało danych', k: 'konflikt', z: '–', o: 'osoba'};
 function osRender(){ if (OSS.zakl !== 'osoby') return; osStatus(); osFiltry(); osListaRender(); osKartaRender(); }
-function osFiltry(){ const W = [['prop', 'Propozycje'], ['osoby', 'Osoby scalone'], ['dec', 'Decyzje'], ['war', 'Warianty nazwisk']];
+function osFiltry(){ const W = [['kol', 'Kolejka łączenia (para po parze)'], ['rodz', 'Rodziny: rodzice ↔ ślub'], ['prop', 'Propozycje'], ['osoby', 'Osoby scalone'], ['dec', 'Decyzje'], ['war', 'Warianty nazwisk']];
   wstaw($('filtry'), h`<select id="osWidok" aria-label="Widok">${W.map(([k, l]) => h`<option value="${k}" ${OSS.widok === k ? raw('selected') : ''}>${l}</option>`)}</select>
     ${OSS.widok === 'prop' ? h`<select id="osFlt" aria-label="Poziom propozycji"><option value="sprawdz" ${OSS.flt === 'sprawdz' ? raw('selected') : ''}>Mocne (sprawdź)</option><option value="mozliwe" ${OSS.flt === 'mozliwe' ? raw('selected') : ''}>Mocne i możliwe</option></select>` : ''}
     ${OSS.widok === 'prop' || OSS.widok === 'osoby' ? h`<input id="osQ" type="search" placeholder="nazwisko, imię" value="${OSS.q}">` : ''}`);
@@ -48,7 +48,7 @@ function osFiltry(){ const W = [['prop', 'Propozycje'], ['osoby', 'Osoby scalone
   if ($('osFlt')) $('osFlt').onchange = e => { OSS.flt = e.target.value; OSS.port = 300; osListaRender(); };
   if ($('osQ')) $('osQ').oninput = e => { OSS.q = e.target.value; OSS.port = 300; osListaRender(); }; }
 function osListaRender(){ const L = $('lista'), p = OSS.port;
-  if (OSS.widok === 'dec') return osDecLista(L); if (OSS.widok === 'war') return osWarLista(L);
+  if (OSS.widok === 'kol') return kolListaRender(L); if (OSS.widok === 'rodz') return rszListaRender(L); if (OSS.widok === 'dec') return osDecLista(L); if (OSS.widok === 'war') return osWarLista(L);
   if (!OSS.gotowe && !OSS.et.size) { wstaw(L, h`<span class="muted">Przygotowuję wystąpienia…</span>`); return; }
   const E = osElementy(), pokaz = E.slice(0, p);
   wstaw(L, h`${!OSS.gotowe ? h`<span class="muted" id="osLiczy">Liczenie w tle trwa – lista uzupełni się sama (${OSS.most ? OSS.most.tryb : ''}).</span>` : ''}${pokaz.map(o => h`<button class="it ${o.c === OSS.cur ? 'cur' : ''}" data-c="${o.c}"><span>${osNazwaKl(o.c)}</span> <small class="bdg ${o.kod === 's' ? 'ok' : o.kod === 'm' ? 'un' : ''}">${OS_BADGE[o.kod]}${o.ile && o.kod !== 'o' ? ' · ' + o.ile : ''}</small></button>`)}
@@ -71,7 +71,7 @@ function osPropHtml(u, i){ const KL = OSS.KL, os = KL.czyja[u.b], odl = KL.odloz
     <div class="acts"><input class="osPowod" data-i="${i}" placeholder="powód (wymagany poza „sprawdź” i przy sprzecznościach)" maxlength="300"><button class="p" data-a="scal" data-i="${i}">To ta sama osoba – scal</button><button data-a="odrzuc" data-i="${i}">To różne osoby</button><button data-a="odloz" data-i="${i}">Odłóż</button><button class="sm" data-a="akty" data-i="${i}">Akty obu</button></div></div>`; }
 const OS_TD = {scal: 'scalono', odrzuc: 'różne osoby', odloz: 'odłożono', brak: 'brak odpowiednika w księgach', wariant_nazwiska: 'warianty jednego nazwiska', odrzuc_wariant: 'różne nazwiska', cofnij: 'cofnięcie'};
 function osDecWiersz(d, cofanie, aktywne){ const akt = aktywne.has(d.n); return h`<tr data-n="${d.n}"><td>${d.n}</td><td>${(d.t || '').slice(0, 16).replace('T', ' ')}</td><td>${OS_TD[d.typ]}${d.zr ? ' (' + d.zr + ')' : ''}</td><td>${d.typ === 'cofnij' ? 'cofa nr ' + d.cofa : d.typ.indexOf('wariant') >= 0 ? d.a.slice(2) + ' ↔ ' + d.b.slice(2) : osLabel(d.a) + (d.b && d.b.indexOf('brak:') !== 0 ? ' ↔ ' + osLabel(d.b) : d.b ? ' (' + d.b.slice(5) + ')' : '')}</td><td>${d.why || ''}</td><td>${cofanie && akt && d.typ !== 'cofnij' ? h`<button class="sm" data-cof="${d.n}">Cofnij</button>` : (d.typ === 'cofnij' ? '' : '(cofnięta)')}</td></tr>`; }
-function osKartaRender(){ const m = $('main'); if (OSS.widok === 'dec') return osDecKarta(m); if (OSS.widok === 'war') return osWarKarta(m);
+function osKartaRender(){ const m = $('main'); if (OSS.widok === 'kol') return kolKartaRender(m); if (OSS.widok === 'rodz') return rszKartaRender(m); if (OSS.widok === 'dec') return osDecKarta(m); if (OSS.widok === 'war') return osWarKarta(m);
   const c = OSS.cur; if (!c) { wstaw(m, h`<div class="card muted" id="osPuste">Wybierz osobę z listy. Aplikacja tylko proponuje połączenia; każde scalenie zatwierdzasz sam i możesz je cofnąć. Akty, wystąpienia i źródła nigdy nie są zmieniane przez decyzje.</div>`); return; }
   const KL = decKlastry(S.decyz); OSS.KL = KL; const C = osCzlonkowie(c), os = KL.osoby[c] ? c : null, K = OSS.karta && OSS.karta.c === c ? OSS.karta : null, gr = K && !K.ladowanie ? osGrupuj(c, K.lista) : null, flat = gr ? [].concat(gr.sprawdz, gr.mozliwe, gr.malo, gr.konflikt) : [];
   OSS.flat = flat; const mojeSet = new Set(C), akt = new Set(decAktywne(S.decyz).map(d => d.n)), moje = S.decyz.filter(d => d.typ !== 'cofnij' && (mojeSet.has(d.a) || mojeSet.has(d.b))), brak = decAktywne(S.decyz).filter(d => d.typ === 'brak' && mojeSet.has(d.a));

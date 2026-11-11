@@ -1,6 +1,6 @@
 # Multitool – powłoka v2 (2026-11-11)
 
-Stan po przebudowie interfejsu. Budowa: `python3 app/zbuduj_app.py`. Test: `node test/test_krok7_powloka.cjs [katalog_zrzutów]` (23 kontrole) oraz testy kroków 3–6.
+Stan po przebudowie interfejsu. Budowa: `python3 app/zbuduj_app.py`. Test: `node test/test_krok7_powloka.cjs [katalog_zrzutów]` (26 kontroli) oraz testy kroków 3–6.
 
 ## Zakładki
 | Zakładka | Moduł | Co robi |
@@ -28,6 +28,13 @@ Enter (następne pole), Alt+J / Alt+K (następny / poprzedni akt), Ctrl+Enter (n
 - **Szukajka w nagłówku** (Alt+F): osoby we wszystkich aktach, także rodzice i małżonkowie → zakładka Drzewo.
 - **Wklejka z Lubgens** (`import_indeks.js`, Narzędzia → Import): tekst strony wyników → akty z indeksu, także innych parafii (`a.parafia`, `a.zIndeksu`), wartości jako „indeks” (src `lub`), niezatwierdzone. Z uwag brane są tylko jawne „O:”, „M:” i miejscowość na początku; nazwisko ojca nie jest dopisywane. Akty już obecne są pomijane (klucz: typ + rok + nazwisko i imię + parafia). Filtr „Parafia” na liście aktów.
 - **Wpisywanie**: listy podpowiedzi imion / nazwisk / miejscowości z bazy, Ctrl+D = wartość z poprzedniego aktu, w oknie nowego aktu informacja „w bazie do nr N”.
+
+## Indeksowanie parafii i budowa drzewa (dodane 2026-11-11, trzecia tura)
+- **Osoby → Kolejka łączenia** (`ui_kolejka.js`): mocne propozycje para po parze, klawisze T / R / O / strzałki. „Pewne” = brak rozbieżności, brak drugiego kandydata, zgodni oboje rodzice, nazwisko rodowe matki i rok urodzenia; nigdy para chrzest+chrzest ani zgon+zgon. Scalenie zbiorcze pewnych: migawka, powód w decyzji.
+- **Osoby → Rodziny: rodzice ↔ ślub** (`rodziny_rdzen.js: rdzPropozycjeSlubow`): rodzice z aktów dzieci łączeni z własnym aktem ślubu. To ten krok wydłuża drzewo (akt ślubu podaje rodziców młodych). „Jednoznaczne” = jeden pasujący ślub, nazwisko panny = nazwisko rodowe matki, dzieci od roku przed ślubem do 32 lat po.
+- **Skan → indeksowanie strony** (`ui_skan.js`): „Przypisz zakresowi” (strona dla aktów nr od–do) i „＋ Nowy akt na tej stronie” (następny numer, skan, kursor w pierwszym polu).
+- **Raport → Stan pracy**: kolumna „akty z osobą połączoną w drzewie”.
+- Dane: imiona rodziców z dopełniacza na mianownik w `buduj_baza_v4.py` (469 poprawek, `narzedzia/POPRAWKI_imiona_dopelniacz.csv`).
 
 ## Do zrobienia
 - Tabela stron dla LM 1797–1825 i USC 1847–1872 (adresy skanów): do wypełnienia ręcznie przez „Przypisz”, potem eksport „Adresy skanów (CSV)” i wczytanie do danych w repo (brak jeszcze skryptu wczytującego ten CSV do `dane_zgony.json`).
