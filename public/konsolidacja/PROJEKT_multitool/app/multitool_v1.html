@@ -383,7 +383,7 @@ function zestawPola(typ, nazwa){ const k = typ + ':' + nazwa; if (ZESTAW_CACHE[k
    Pole w stanie pamięta wartość bazową (`baza`), którą użytkownik widział; gdy po przebudowie danych baza się zmieni, pole trafia do kolejki „dane źródłowe się zmieniły” (stKolejka) zamiast cicho znikać. */
 const ST_NAZWA = 'multitool', ST_WER = 2, ST_SKLADY = ['kv', 'pola', 'teksty', 'akty', 'decyzje', 'historia', 'slowniki', 'skany', 'kopie', 'meta'];
 let ST_TRYB = 'idb', ST_DBP = null, ST_PODPIS = {}, ST_BAZA = {}, ST_HIST_N = 0, ST_T = null, ST_ZMIANY = 0, ST_OSTATNIA = null, ST_PERSIST = false, ST_BLAD = '', ST_KOLEJ = [];
-const ST_UST = ['year', 'cen', 'dec', 'flt', 'hideOk', 'hideDoneActs', 'noroi', 'onlyScan', 'hideMk', 'cur', 'tmode', 'tfs', 'q'];
+const ST_UST = ['year', 'cen', 'dec', 'flt', 'hideOk', 'hideDoneActs', 'noroi', 'onlyScan', 'hideMk', 'cur', 'tmode', 'tfs', 'q', 'repIgn'];
 function stOtworz(){ if (ST_DBP) return ST_DBP; ST_DBP = new Promise((ok, no) => { let r; try { r = indexedDB.open(ST_NAZWA, ST_WER); } catch (e) { return no(e); }
   r.onupgradeneeded = () => { ST_SKLADY.forEach(n => { if (!r.result.objectStoreNames.contains(n)) r.result.createObjectStore(n); }); };
   r.onsuccess = () => ok(r.result); r.onerror = () => no(r.error); r.onblocked = () => no(new Error('baza zablokowana przez inną kartę')); }); return ST_DBP; }
@@ -397,7 +397,7 @@ function stRekordy(){ const R = {pola: {}, teksty: {}, akty: {}, historia: {}, s
   for (const id in S.acts) { const a = S.acts[id] || {}, ak = {};
     for (const f in (a.f || {})) { const k = id + '|' + f, x = Object.assign({}, a.f[f]); if (!('baza' in x)) { if (!(k in ST_BAZA) && AM[id]) ST_BAZA[k] = stBazaWart(AM[id], f); if (k in ST_BAZA) x.baza = ST_BAZA[k]; } R.pola[k] = x; }
     if (a.text != null) R.teksty[id] = String(a.text);
-    ['done', 'scan', 'roi', 'par', 'hid', 'notesOrg', 'lubAck', 'qs'].forEach(p => { if (a[p] !== undefined && !(p === 'done' && !a.done)) ak[p] = a[p]; }); if (Object.keys(ak).length) R.akty[id] = ak; }
+    ['done', 'scan', 'roi', 'par', 'hid', 'notesOrg', 'lubAck', 'qs', 'fr'].forEach(p => { if (a[p] !== undefined && !(p === 'done' && !a.done)) ak[p] = a[p]; }); if (Object.keys(ak).length) R.akty[id] = ak; }
   (S.hist || []).forEach(e => R.historia[e.n] = e); R.slowniki.fixes = S.fixes || {};
   const u = {}; ST_UST.forEach(k => { if (S[k] !== undefined) u[k] = S[k]; }); R.meta.ustawienia = u; R.meta.seeded = S.seeded || {}; R.meta.histN = S.histN || 0; return R; }
 const stPodpis = v => JSON.stringify(v);
@@ -458,6 +458,7 @@ function kopAkt(x){ if (!x || typeof x !== 'object' || Array.isArray(x)) return 
   if (x.done !== undefined) { if (typeof x.done !== 'boolean') return null; o.done = x.done; } if (x.lubAck !== undefined) { if (typeof x.lubAck !== 'boolean') return null; o.lubAck = x.lubAck; }
   for (const k of ['scan', 'notesOrg']) if (x[k] !== undefined) { if (!kopStr(x[k], 5000)) return null; o[k] = x[k]; }
   if (x.roi !== undefined && x.roi !== null) { const r = x.roi; if (typeof r !== 'object' || !['x', 'y', 'w', 'h'].every(k => typeof r[k] === 'number' && isFinite(r[k]))) return null; o.roi = {x: r.x, y: r.y, w: r.w, h: r.h}; }
+  if (x.fr !== undefined) { if (!x.fr || typeof x.fr !== 'object' || Array.isArray(x.fr)) return null; o.fr = {}; for (const k in x.fr) { const L = x.fr[k]; if (KOP_ZAKAZ.has(k) || !Array.isArray(L) || L.length > 20 || !L.every(r => Array.isArray(r) && r.length === 4 && r.every(n => typeof n === 'number' && isFinite(n) && n >= 0 && n <= 1))) return null; o.fr[k] = L.map(r => r.slice()); } }
   if (x.par !== undefined) { if (!x.par || typeof x.par !== 'object') return null; o.par = {}; ['father', 'mother'].forEach(k => { if (x.par[k]) o.par[k] = 1; }); }
   if (x.hid !== undefined) { if (!x.hid || typeof x.hid !== 'object' || (x.hid.death_time !== undefined && !kopStr(x.hid.death_time, 50))) return null; o.hid = x.hid.death_time !== undefined ? {death_time: x.hid.death_time} : {}; }
   if (x.qs !== undefined) { if (!x.qs || typeof x.qs !== 'object') return null; o.qs = {}; for (const k in x.qs) { if (KOP_ZAKAZ.has(k) || !kopStr(x.qs[k], 50)) return null; o.qs[k] = x.qs[k]; } }
