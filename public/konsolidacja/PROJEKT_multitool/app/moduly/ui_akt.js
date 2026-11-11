@@ -17,16 +17,17 @@ function poleHtml(a, f, hid){ const s = S.acts[a.id], x = s?.f?.[f.id], v = getv
   if (S.sporne && !sporne && AKT_ROZW !== a.id + '|' + f.id) { hid.sp = (hid.sp || 0) + 1; return ''; }
   if (S.miniOk && (x?.ok || x?.skip) && !unc && AKT_ROZW !== a.id + '|' + f.id) return h`<div class="pole ok mini" data-pole="${f.id}"><span>${f.label}: <strong>${x.skip ? '— pominięte —' : v}</strong> ✓ <small class="muted">${ZR[x.src] || ''}</small></span><button class="sm" data-rozw="${f.id}" title="Pokaż pole do edycji">edytuj</button></div>`;
   const chip = (txt, val, src) => h`<button class="chip" data-chip="${f.id}" data-v="${val}" data-src="${src}" title="Użyj tej wartości">${txt}: ${val}</button>`;
-  const chips = [ai != null && String(ai).trim() !== '' && ai !== v ? chip('AI', ai, 'ai') : '', lb != null && String(lb).trim() !== '' && lb !== v ? chip('indeks', lb, 'lub') : ''];
+  const mian = typeof imieZnane === 'function' && (IMIE_POLA[a.typ] || []).find(x => x[0] === f.id), mianV = mian ? imieMianownik(v, mian[1], imieZnane) : '';
+  const chips = [ai != null && String(ai).trim() !== '' && ai !== v ? chip('AI', ai, 'ai') : '', lb != null && String(lb).trim() !== '' && lb !== v ? chip('indeks', lb, 'lub') : '', mianV ? h`<button class="chip" data-chip="${f.id}" data-v="${mianV}" data-src="edit" data-mian="1" title="Imię jest zapisane w dopełniaczu – wpisz mianownik">mianownik: ${mianV}</button>` : ''];
   return h`<div class="pole ${st0}" data-pole="${f.id}"><label for="p_${f.id}">${f.label}</label>
-    ${dlugie ? h`<textarea id="p_${f.id}" data-f="${f.id}" rows="2">${v}</textarea>` : h`<input id="p_${f.id}" data-f="${f.id}" value="${v}" autocomplete="off">`}
+    ${dlugie ? h`<textarea id="p_${f.id}" data-f="${f.id}" rows="2">${v}</textarea>` : h`<input id="p_${f.id}" data-f="${f.id}" value="${v}" autocomplete="off" ${typeof podpListaDla === 'function' && podpListaDla(f.id) ? raw('list="' + podpListaDla(f.id) + '"') : ''}>`}
     <div class="chips">${x ? h`<span class="bdg" data-bdg="zr">${ZR[x.src] || x.src || ''}</span>` : ''}${x?.ok ? h`<span class="bdg ok">zatwierdzone</span>` : ''}${unc ? h`<span class="bdg un">niepewne</span>` : ''}${x?.note ? h`<span class="bdg" title="${x.note}">uwaga</span>` : ''}${chips}
       <button class="sm" data-ak="ok" data-f="${f.id}" title="Zatwierdź pole">✓</button><button class="sm" data-ak="unc" data-f="${f.id}" title="Przełącz niepewność">?</button></div>${narzPicker(a, f)}</div>`; }
 function renderAkt(){ if (!wAktach()) return; const m = $('main'), a = curAct(); if (!a) { wstaw(m, h`<div class="card muted">Wybierz akt z listy.</div>`); return; }
   const s = S.acts[a.id] || {}, FS = fieldsOf(a), hid = [], pr = progOf(a), W = warnsOf(a);
   const bl = typDla(a).bloki, pola = bl ? bl.map(b => { const L = b.pola.map(id => FS.find(f => f.id === id)).filter(Boolean).map(f => poleHtml(a, f, hid)).filter(x => x !== ''); return L.length ? h`<h3 class="blok">${b.t}</h3><div class="pola">${L}</div>` : ''; }) : null, poleZ = bl ? null : FS.map(f => poleHtml(a, f, hid));
-  wstaw(m, h`<div class="card"><h2>${a.year} · akt ${a.act} · ${nmOf(a)}</h2>
-    <div class="muted">id <code>${a.id}</code> · dawne <code>${a.stary}</code> · źródła ${(a.model?.zrodla || []).join(', ')} · skan: ${skanSciezka(a) || 'brak'}${a.nowy ? h` · <span class="bdg un" id="aktNowy">akt dodany ręcznie</span> <button class="sm d" id="bUsunNowy" title="Usuń ten akt (tylko akty dodane ręcznie)">usuń akt</button>` : ''}</div>
+  wstaw(m, h`<div class="card"><h2>${a.year} · akt ${a.act} · ${nmOf(a)}${a.parafia ? h` <span class="bdg un" id="aktParafia">parafia ${a.parafia}</span>` : ''}</h2>
+    <div class="muted">id <code>${a.id}</code> · dawne <code>${a.stary}</code> · źródła ${(a.model?.zrodla || []).join(', ')} · skan: ${skanSciezka(a) || 'brak'}${a.nowy ? h` · <span class="bdg un" id="aktNowy">${a.zIndeksu ? 'akt z wklejonego indeksu (niesprawdzony na skanie)' : 'akt dodany ręcznie'}</span> <button class="sm d" id="bUsunNowy" title="Usuń ten akt (tylko akty dodane ręcznie)">usuń akt</button>` : ''}</div>
     <div class="bar"><i style="width:${pr}%"></i></div><div class="muted">Opracowanie pól: ${pr}%${s.done ? ' · AKT ZATWIERDZONY' : ''}</div>
     ${W.length ? h`<div class="warn">${W.map(t => h`<div>⚠ ${t}</div>`)}</div>` : ''}
     ${sygnalyHtml(a)}

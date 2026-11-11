@@ -46,10 +46,18 @@ function kontWiekOsob(G){ const out = [];
     if (zg) P.filter(p => p.rolaAktu === 'ojciec' && p.typ === 'chrzest' && p.rok > zg.rok + 1).forEach(p => bl('ojciec przy chrzcie w ' + p.rok + ', a zgon w ' + zg.rok)), P.filter(p => p.rolaAktu === 'matka' && p.typ === 'chrzest' && p.rok > zg.rok).forEach(p => bl('matka przy chrzcie w ' + p.rok + ', a zgon w ' + zg.rok)); }
   return out; }
 // 3. numeracja: małe dziury (1–3 numery) wewnątrz ciągu numerów jednego roku i typu + powtórzone numery
-function kontNumeracja(akty){ const g = {}; akty.forEach(a => { const n = parseInt(a.act, 10); if (!Number.isFinite(n) || !Number.isFinite(+a.year)) return; (g[a.typ + '|' + a.year] = g[a.typ + '|' + a.year] || []).push([n, a.id]); });
+function kontNumeracja(akty){ const g = {}; akty.forEach(a => { const n = parseInt(a.act, 10); if (a.parafia || !Number.isFinite(n) || !Number.isFinite(+a.year)) return; (g[a.typ + '|' + a.year] = g[a.typ + '|' + a.year] || []).push([n, a.id]); });
   const dziury = [], duble = []; Object.keys(g).sort().forEach(k => { const [typ, rok] = k.split('|'), L = g[k].sort((x, y) => x[0] - y[0]);
     for (let i = 1; i < L.length; i++) { const d = L[i][0] - L[i - 1][0]; if (d === 0) duble.push({typ, rok: +rok, nr: L[i][0], ids: [L[i - 1][1], L[i][1]]}); else if (d >= 2 && d <= 4) dziury.push({typ, rok: +rok, brak: Array.from({length: d - 1}, (_, j) => L[i - 1][0] + 1 + j), przed: L[i - 1][1], po: L[i][1]}); } });
   return {dziury, duble}; }
 // 4. możliwe duble aktów zgonu: ta sama osoba (klucz imienia i nazwiska) i ta sama pełna data zgonu w dwóch aktach
 function kontDubleZgonow(akty, wart){ const g = {}; akty.forEach(a => { if (a.typ !== 'zgon') return; const d = String(wart(a, 'death_date') || ''); if (!/^\d{4}-\d{2}-\d{2}$/.test(d)) return; const k = rdzKN(wart(a, 'deceased_last_name')) + '|' + rdzKI(wart(a, 'deceased_first_name')) + '|' + d; if (k.startsWith('|') || k.includes('||')) return; (g[k] = g[k] || []).push(a.id); });
   return Object.keys(g).filter(k => g[k].length > 1).map(k => ({data: k.split('|')[2], ids: g[k]})); }
+/* ---------- imiona rodziców w dopełniaczu („syn Marcina i Antoniny” → Marcin, Antonina) ----------
+   Propozycja powstaje tylko wtedy, gdy zapis NIE jest znanym imieniem, a po zdjęciu końcówki dopełniacza JEST imieniem znanym ze słownika bazy (znane(v) → true).
+   Pole ojca: -a, -ka→-ek, -wła→-weł, -iego→-i, -ego→-y, -ra→-er, -ca→-iec; pole matki: -y→-a, -ii→-ia, -ji→-ja, -i→-a. Zwraca mianownik albo ''. */
+const IMIE_POLA = {zgon: [['father_first_name', 'M'], ['mother_first_name', 'K']], chrzest: [['father_first_name', 'M'], ['mother_first_name', 'K']], malzenstwo: [['groom_father_first_name', 'M'], ['groom_mother_first_name', 'K'], ['bride_father_first_name', 'M'], ['bride_mother_first_name', 'K']]};
+function imieMianownik(v, plec, znane){ v = String(v == null ? '' : v).trim(); if (!v || /[\s\[\]?(),.]/.test(v) || znane(v)) return '';
+  const C = plec === 'M' ? [v.replace(/a$/, ''), v.replace(/ka$/, 'ek'), v.replace(/wła$/, 'weł'), v.replace(/iego$/, 'i'), v.replace(/ego$/, 'y'), v.replace(/ra$/, 'er'), v.replace(/ca$/, 'iec')] : [v.replace(/y$/, 'a'), v.replace(/ii$/, 'ia'), v.replace(/ji$/, 'ja'), v.replace(/i$/, 'a')];
+  return C.find(c => c !== v && znane(c)) || ''; }
+function kontDopelniacz(akty, wart, znane){ const out = []; akty.forEach(a => (IMIE_POLA[a.typ] || []).forEach(([f, pl]) => { const v = String(wart(a, f) ?? '').trim(), m = imieMianownik(v, pl, znane); if (m) out.push({id: a.id, f, v, m}); })); return out; }

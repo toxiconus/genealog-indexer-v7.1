@@ -61,6 +61,7 @@ body.hdr-ukryty .hdrPok{display:block}
 @media (max-width:820px){#skWin,body.sk-dok #skWin,body.sk-dok.lista-ukryta #skWin{position:sticky;left:auto;right:auto;top:0;bottom:auto;width:auto;min-width:0;height:44vh;margin:0;border-width:0 0 1px 0;border-radius:0;border-color:var(--line);box-shadow:none;resize:none;z-index:40}#skWin.bezobrazu,body.sk-dok #skWin.bezobrazu{height:auto;position:static}#skWin.bezobrazu .skwin-cialo{flex:none}#skWin #skView{min-height:120px}body.sk-dok .wrap,body.sk-dok.lista-ukryta .wrap{display:grid;margin-left:0;padding:12px 16px}body.sk-dok .wrap>.col:first-child{position:static;width:auto;border-right:0;padding:0;background:none}.skwin-head{cursor:default;border-radius:0}#skDok,#skHdr{display:none}}
 
 /* ===== powłoka v2: zakładki, pasek akcji aktu, mini-pola, narzędzia, raport, drzewo ===== */
+#szukaj{width:230px}@media (max-width:820px){#szukaj{width:100%}}
 #zakl{display:flex;gap:4px;flex-wrap:wrap}#zakl button{border-radius:6px}
 #doSpr{display:inline-flex;align-items:center;gap:6px;font-size:13px;color:var(--mut)}#doSpr i{display:inline-block;width:70px;height:6px;background:var(--line);border-radius:3px;overflow:hidden}#doSpr i b{display:block;height:100%;background:var(--ok)}
 body:not([data-zakl="akty"]) #doSpr{display:none}
@@ -90,7 +91,7 @@ ul.pot{list-style:none;margin:0;padding-left:18px;border-left:1px solid var(--li
 @media (max-width:820px){header{padding:8px 16px;gap:6px}h1{width:100%;font-size:15px}#zakl{width:100%;overflow-x:auto;flex-wrap:nowrap}.wrap{padding:12px 16px;gap:12px}.aktbar{margin:12px -14px -14px}.rtab{max-height:none}.drz .os{min-width:120px}}
 </style></head><body>
 <script>try{var m=localStorage.getItem('mt.motyw');if(m==='light'||m==='dark')document.documentElement.setAttribute('data-theme',m);}catch(e){}</script>
-<header><h1 id="tytul">Multitool v1 · akt zgonu</h1><nav id="zakl" aria-label="Moduły"><button id="zAkty" class="p" title="Alt+1">Akty</button><button id="zOsoby" title="Alt+2">Osoby</button><button id="zDrzewo" title="Alt+3">Drzewo</button><button id="zRaport" title="Alt+4">Raport</button><button id="zNarz" title="Alt+5">Narzędzia</button></nav> <select id="selTyp" aria-label="Typ aktu" title="Typ aktu"></select><span class="muted" id="prog"></span><span id="doSpr" title="Akty z odczytem, jeszcze niezatwierdzone"></span><button class="ind" id="kopiaInd" title="Zrób kopię pełną">decyzji i zmian bez kopii: 0</button><span style="flex:1"></span><button id="bMenu">Menu ▾</button>
+<header><h1 id="tytul">Multitool v1 · akt zgonu</h1><nav id="zakl" aria-label="Moduły"><button id="zAkty" class="p" title="Alt+1">Akty</button><button id="zOsoby" title="Alt+2">Osoby</button><button id="zDrzewo" title="Alt+3">Drzewo</button><button id="zRaport" title="Alt+4">Raport</button><button id="zNarz" title="Alt+5">Narzędzia</button></nav> <select id="selTyp" aria-label="Typ aktu" title="Typ aktu"></select><input id="szukaj" type="search" placeholder="Szukaj osoby we wszystkich aktach…" aria-label="Szukaj osoby we wszystkich aktach" title="Nazwisko i imię; Enter pokazuje wyniki w zakładce Drzewo (także rodzice i małżonkowie)"><span class="muted" id="prog"></span><span id="doSpr" title="Akty z odczytem, jeszcze niezatwierdzone"></span><button class="ind" id="kopiaInd" title="Zrób kopię pełną">decyzji i zmian bez kopii: 0</button><span style="flex:1"></span><button id="bMenu">Menu ▾</button>
 <div id="menu" hidden><button id="mCsv">Eksport CSV (zgony)</button><button id="mKopia">Kopia pełna (JSON)</button><button id="mKopiaWczytaj">Wczytaj kopię (JSON)…</button><button id="mImpDop">Import CSV zatwierdzeń (dopisz)…</button><button id="mImpZast">Import CSV zatwierdzeń (zastąp)…</button><button id="mMigawki">Migawki / przywróć…</button><button id="mKolejka">Dane źródłowe się zmieniły (0)</button><button id="mMigr">Migracja zgonów z CSV…</button><button id="mAuto">Autozapis do pliku…</button><button id="mDecJson" class="osMenu">Decyzje o osobach: eksport JSON</button><button id="mDecCsv" class="osMenu">Decyzje o osobach: eksport CSV</button><button id="mDecImp" class="osMenu">Decyzje o osobach: import JSON…</button><button id="mDop" class="osMenu">Import decyzji dop.v1…</button></div></header>
 <div id="pasekStan" hidden></div><div id="przyp" hidden></div>
 <div class="wrap"><div class="col"><div id="filtry"></div><div id="lista"></div></div><div class="col" id="main"></div></div>
@@ -109,6 +110,7 @@ ul.pot{list-style:none;margin:0;padding-left:18px;border-left:1px solid var(--li
 /*MODUL0:decyzje*/
 /*MODUL:osoby_rdzen*/
 /*MODUL:rodziny_rdzen*/
+/*MODUL:import_indeks*/
 /*MODUL:dane_adapter*/
 /*MODUL:nowe_akty*/
 let GOTOWE = false;
