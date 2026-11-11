@@ -27,6 +27,10 @@ input,select,textarea{padding:5px 8px;border:1px solid var(--line);border-radius
 #okno{position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:20;display:flex;align-items:center;justify-content:center;padding:16px}#okno[hidden]{display:none}.okno-in{background:var(--card);border-radius:10px;padding:16px;max-width:760px;width:100%;max-height:85vh;overflow:auto}
 #toast{position:fixed;left:50%;bottom:16px;transform:translateX(-50%);background:#222;color:#fff;padding:8px 14px;border-radius:8px;display:none;z-index:30;max-width:92vw}
 table{border-collapse:collapse;width:100%;font-size:13px}td,th{border-bottom:1px solid var(--line);padding:3px 6px;text-align:left;word-break:break-word}
+#skView{position:relative;height:min(52vh,420px);overflow:hidden;background:#111;border-radius:8px;touch-action:none;cursor:grab;margin:6px 0}#skView[hidden]{display:none}#skLayer{position:absolute;left:0;top:0;transform-origin:0 0}#skLayer img{display:block;max-width:none;user-select:none}
+.skbox{position:absolute;border:solid;pointer-events:none}.skbox.roi{border-color:rgba(245,158,11,.85)}.skbox.pole{border-color:#06b6d4}.skbox.nowy{border-color:#e11d48}
+.pick{display:flex;flex-wrap:wrap;gap:6px;align-items:center;margin-top:4px}.pick input[type=number]{width:90px}details.skan>summary,details.txt>summary,details.kal>summary{cursor:pointer}
+.tpodglad{white-space:pre-wrap;border:1px solid var(--line);border-radius:6px;padding:8px;margin-top:6px}.mq{background:rgba(224,168,74,.35)}.mr{background:rgba(239,138,128,.35)}.mg{background:rgba(127,176,224,.3)}.sugw{margin:4px 0}
 </style></head><body>
 <header><h1>Multitool v1 · akt zgonu</h1><span class="muted" id="prog"></span><button class="ind" id="kopiaInd" title="Zrób kopię pełną">decyzji i zmian bez kopii: 0</button><span style="flex:1"></span><button id="bMenu">Menu ▾</button>
 <div id="menu" hidden><button id="mCsv">Eksport CSV (zgony)</button><button id="mKopia">Kopia pełna (JSON)</button><button id="mKopiaWczytaj">Wczytaj kopię (JSON)…</button><button id="mImpDop">Import CSV zatwierdzeń (dopisz)…</button><button id="mImpZast">Import CSV zatwierdzeń (zastąp)…</button><button id="mMigawki">Migawki / przywróć…</button><button id="mKolejka">Dane źródłowe się zmieniły (0)</button><button id="mAuto">Autozapis do pliku…</button></div></header>
@@ -53,10 +57,12 @@ const save = () => { histCommit(); stZapisz(); if (typeof stWskaznik === 'functi
 /*MODUL:import_csv*/
 /*MODUL:ui_html*/
 /*MODUL:ui_akt*/
+/*MODUL:ui_skan*/
+/*MODUL:ui_narzedzia*/
 /*MODUL:ui_powloka*/
 (async () => {
   S = await stWczytaj(); normActs(); startMigracja(); startZatwierdzone(); stKolejka();
   HS = histSnap(S.acts); await stFlush(false);   // stan początkowy (migracja, zatwierdzone z danych) nie liczy się do „zmian bez kopii”
-  menuInit(); odswiez(); GOTOWE = true;
+  menuInit(); skanInit(); odswiez(); GOTOWE = true;
 })().catch(e => { document.body.insertAdjacentText('afterbegin', 'Błąd startu: ' + e.message); });
 </script></body></html>
