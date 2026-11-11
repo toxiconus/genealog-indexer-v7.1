@@ -37,3 +37,8 @@ Uwagi:
 3. Otwórz `public/konsolidacja/haiku/weryfikacja_malzenstw_szablon.html`. Zrób kopię JSON i eksport CSV. Zapisz w `haiku/ZATWIERDZENIA/` z prefiksem `malzenstwa_`.
 4. Otwórz `public/konsolidacja/dopasowanie/dopasowanie_osob.html` i wyeksportuj decyzje `dop.v1`. Zapisz jako `haiku/ZATWIERDZENIA/dop_v1_RRRR-MM-DD.json`.
 5. Otwórz `public/konsolidacja/narzedzia/edytor_korekt_szablon.html`, wyeksportuj korekty `blinow_edytor_v1` jako JSON do `haiku/ZATWIERDZENIA/edytor_korekt_RRRR-MM-DD.json`. Potem daj znać w czacie. Nazwy przycisków w HTML nie były sprawdzane, więc ich dokładne brzmienie potwierdź na ekranie.
+
+## Decyzja użytkownika (2026-11-11)
+
+- Najnowszy eksport CSV zgonów to `haiku/ZATWIERDZENIA/ZGONY_zweryfikowane_10.csv` (881 aktów, 8 `ok`). Użytkownik nie zrobił nowego eksportu, więc punkt 5 „Czego brakuje” jest zamknięty: ten plik jest wejściem do kroku 3 i 4.
+- Pozostałe braki z tabeli (kopia JSON zgonów, małżeństwa, `dop.v1`, edytor korekt) bez zmian.
