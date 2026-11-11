@@ -12,14 +12,34 @@ def zr(src):
     k = (src.get('plik', ''), src.get('skan', ''), src.get('strona', ''))
     if k not in tix: tix[k] = len(tab); tab.append(list(k))
     return [tix[k], src.get('wiersz', '')]
-def pole(p):
-    o = {'v': p['value'], 's': p['status'], 'z': zr(p['source'])}
-    if p.get('unc'): o['u'] = 1
-    if p.get('roi'): o['roi'] = p['roi']
-    if p.get('alt'): o['alt'] = [pole(x) for x in p['alt']]
-    for k in ('raw', 'by', 'note'):
-        if p.get(k): o[k] = p[k]
-    return o
+ZAT = set(OD['zatw'])
+def zrodlo(m, st, v):   # pochodzenie wartości: kandydat z dane_pelne o tym samym statusie (a potem wartości), inaczej pole główne
+    c = [m] + (m.get('alt') or []) if m else []
+    for pr in (lambda x: x['status'] in st and x['value'] == v, lambda x: x['status'] in st, lambda x: x['value'] == v, lambda x: True):
+        for x in c:
+            if pr(x): return x
+    return None
+def pole(f, o, m):
+    """Pole w układzie modelu z wartości silnika v3: ai (status ai/ok) jako główne, lub (indeks) w alt – także gdy wartości są równe (dane_pelne scala równe wartości w jedno pole, co gubi rozdział ai/lub potrzebny silnikowi)."""
+    ai = (o.get('ai') or {}).get(f); lb = (o.get('lub') or {}).get(f); unc = f in (o.get('unc') or [])
+    def mk(v, status):
+        x = zrodlo(m, ('ai', 'ok') if status != 'lub' else ('lub',), v); src = x['source'] if x else {'plik': '', 'skan': '', 'strona': '', 'wiersz': ''}
+        p = {'v': v, 's': status, 'z': zr(src)}
+        if unc or '?' in str(v): p['u'] = 1
+        if x and x.get('roi'): p['roi'] = x['roi']
+        return p
+    if ai not in (None, ''):
+        p = mk(ai, 'ok' if o['id'] in ZAT else 'ai')
+        if lb not in (None, ''): p['alt'] = [mk(lb, 'lub')]
+        return p
+    if lb not in (None, ''): return mk(lb, 'lub')
+    return None
+def POLA(o, a):
+    r = {}
+    for f in list(dict.fromkeys(list((o.get('ai') or {}).keys()) + list((o.get('lub') or {}).keys()))):
+        p = pole(f, o, a['pola'].get(f))
+        if p: r[f] = p
+    return r
 akty = []; brak = 0
 for a in d['akty']:
     if a['typ'] != 'zgon': continue
@@ -27,10 +47,11 @@ for a in d['akty']:
     if len(st) != 1: brak += 1; continue
     o = ST[st[0]]
     r = {'file': o.get('file') or '', 'roi': o.get('roi'), 'lubName': o.get('lubName') or '', 'lubRaw': o.get('lubRaw') or '', 'era': o.get('era') or '', 'act': o['act'], 'year': o['year']}
+    if o.get('lub') == {}: r['lubEmpty'] = 1
     for k in ('alts', 'tnotes', 'pola'):
         if o.get(k): r[k] = o[k]
     x = {'id': a['id'], 'id_dawne': idd[a['id']], 'stary': st[0], 'typ': 'zgon', 'rok': a['rok'], 'nr': a['nr'], 'miejsce': a['miejsce'], 'epoka': a['epoka'], 'zrodla': a['zrodla'], 'stan': a['stan'],
-         'skan': a.get('skan'), 'pola': {f: pole(p) for f, p in a['pola'].items()}, 'unc': o.get('unc') or [], 'robocze': r}
+         'skan': a.get('skan'), 'pola': POLA(o, a), 'unc': o.get('unc') or [], 'robocze': r}
     if o.get('tekst'): x['tekst'] = o['tekst']
     akty.append(x)
 assert not brak, 'akty bez jednoznacznego id w bazie zgonów: %d' % brak
