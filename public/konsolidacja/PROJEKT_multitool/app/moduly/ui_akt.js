@@ -21,12 +21,11 @@ function renderAkt(){ const m = $('main'), a = curAct(); if (!a) { wstaw(m, h`<d
   const s = S.acts[a.id] || {}, FS = fieldsOf(a), hid = [], pr = progOf(a), W = warnsOf(a);
   const bl = typDla(a).bloki, pola = bl ? bl.map(b => { const L = b.pola.map(id => FS.find(f => f.id === id)).filter(Boolean).map(f => poleHtml(a, f, hid)).filter(x => x !== ''); return L.length ? h`<h3 class="blok">${b.t}</h3><div class="pola">${L}</div>` : ''; }) : null, poleZ = bl ? null : FS.map(f => poleHtml(a, f, hid));
   wstaw(m, h`<div class="card"><h2>${a.year} · akt ${a.act} · ${nmOf(a)}</h2>
-    <div class="muted">id <code>${a.id}</code> · dawne <code>${a.stary}</code> · źródła ${(a.model?.zrodla || []).join(', ')} · skan: ${D.scanFiles?.[scanOf(a)] || 'brak'}</div>
+    <div class="muted">id <code>${a.id}</code> · dawne <code>${a.stary}</code> · źródła ${(a.model?.zrodla || []).join(', ')} · skan: ${skanSciezka(a) || 'brak'}</div>
     <div class="bar"><i style="width:${pr}%"></i></div><div class="muted">Opracowanie pól: ${pr}%${s.done ? ' · AKT ZATWIERDZONY' : ''}</div>
     ${W.length ? h`<div class="warn">${W.map(t => h`<div>⚠ ${t}</div>`)}</div>` : ''}
     ${sygnalyHtml(a)}
     <div class="acts"><button class="p" id="bDone">${s.done ? 'Cofnij zatwierdzenie aktu' : 'Zatwierdź akt'}</button><button id="bAll" ${a.ai ? '' : 'disabled'}>Przyjmij zgodne pola</button><button id="bKreator">Kreator pól</button></div>
-    ${skanPanel(a)}
     ${bl ? h`<div class="bloki" id="bloki">${pola}</div>` : h`<div class="pola">${poleZ}</div>`}
     ${hid.length ? h`<div class="muted hmk">∅ Puste (ukryte): ${hid.join(' · ')} <button class="sm" id="bShowMk">pokaż</button></div>` : ''}
     ${tekstSekcja(a)}</div>`);
@@ -35,4 +34,4 @@ function renderAkt(){ const m = $('main'), a = curAct(); if (!a) { wstaw(m, h`<d
   m.querySelectorAll('[data-chip]').forEach(b => b.onclick = () => przyjmij(a, b.dataset.chip, b.dataset.v, b.dataset.src));
   m.querySelectorAll('[data-ak]').forEach(b => b.onclick = () => { const f = b.dataset.f, inp = m.querySelector('[data-f="' + f + '"]'); if (b.dataset.ak === 'ok') { const x = S.acts[a.id]?.f?.[f], v = inp ? inp.value : getv(a, f); przyjmij(a, f, v, x?.src || (a.ai?.[f] === v ? 'ai' : a.lub?.[f] === v ? 'lub' : 'edit')); } else przyjmij(a, f, inp ? inp.value : getv(a, f), S.acts[a.id]?.f?.[f]?.src || 'edit', {unc: !isUnc(a, f)}); });
   if ($('tTxt')) $('tTxt').onchange = e => { const t = e.target.value; if (t === (a.tekst || '')) delete st(a.id).text; else st(a.id).text = t; save(); toast('Zapisano tekst'); };
-  narzPodlacz(a); }
+  skanWinRender(a); narzPodlacz(a); }

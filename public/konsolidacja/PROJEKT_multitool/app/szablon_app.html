@@ -31,6 +31,21 @@ table{border-collapse:collapse;width:100%;font-size:13px}td,th{border-bottom:1px
 .skbox{position:absolute;border:solid;pointer-events:none}.skbox.roi{border-color:rgba(245,158,11,.85)}.skbox.pole{border-color:#06b6d4}.skbox.nowy{border-color:#e11d48}
 .pick{display:flex;flex-wrap:wrap;gap:6px;align-items:center;margin-top:4px}.pick input[type=number]{width:90px}details.skan>summary,details.txt>summary,details.kal>summary{cursor:pointer}
 .tpodglad{white-space:pre-wrap;border:1px solid var(--line);border-radius:6px;padding:8px;margin-top:6px}.mq{background:rgba(224,168,74,.35)}.mr{background:rgba(239,138,128,.35)}.mg{background:rgba(127,176,224,.3)}.sugw{margin:4px 0}
+
+#skWin{position:fixed;top:64px;right:12px;bottom:12px;width:min(44vw,720px);min-width:300px;min-height:160px;display:flex;flex-direction:column;background:Canvas;color:CanvasText;border:1px solid #94a3b8;border-radius:10px;box-shadow:0 8px 24px rgba(0,0,0,.25);z-index:50;resize:both;overflow:hidden}
+#skWin[hidden]{display:none}
+body.hdr-ukryty #skWin{top:12px}
+.skwin-head{display:flex;justify-content:space-between;align-items:center;gap:6px;padding:6px 8px;cursor:move;background:#e2e8f0;color:#0f172a;border-radius:9px 9px 0 0;user-select:none;touch-action:none;flex-wrap:wrap}
+.skwin-btn{display:flex;gap:4px;flex-wrap:wrap}
+.skwin-cialo{display:flex;flex-direction:column;gap:6px;padding:6px 8px;flex:1;min-height:0;overflow:auto}
+#skWin #skView{flex:1 1 auto;height:auto;min-height:240px}
+body.sk-dok .wrap{padding-right:calc(min(44vw,720px) + 24px)}
+.skPok{position:fixed;right:12px;bottom:12px;z-index:60;display:block}
+.skPok[hidden]{display:none}
+.hdrPok{position:fixed;top:0;left:0;z-index:60;display:none}
+body.hdr-ukryty header{display:none}
+body.hdr-ukryty .hdrPok{display:block}
+@media (max-width:820px){body.sk-dok .wrap{padding-right:16px}#skWin{left:8px;right:8px;top:auto;bottom:8px;width:auto;height:55vh}}
 </style></head><body>
 <header><h1 id="tytul">Multitool v1 · akt zgonu</h1><span id="zakl"><button id="zAkty" class="p">Akty</button> <button id="zOsoby">Osoby</button></span> <select id="selTyp" aria-label="Typ aktu" title="Typ aktu"></select><span class="muted" id="prog"></span><button class="ind" id="kopiaInd" title="Zrób kopię pełną">decyzji i zmian bez kopii: 0</button><span style="flex:1"></span><button id="bMenu">Menu ▾</button>
 <div id="menu" hidden><button id="mCsv">Eksport CSV (zgony)</button><button id="mKopia">Kopia pełna (JSON)</button><button id="mKopiaWczytaj">Wczytaj kopię (JSON)…</button><button id="mImpDop">Import CSV zatwierdzeń (dopisz)…</button><button id="mImpZast">Import CSV zatwierdzeń (zastąp)…</button><button id="mMigawki">Migawki / przywróć…</button><button id="mKolejka">Dane źródłowe się zmieniły (0)</button><button id="mMigr">Migracja zgonów z CSV…</button><button id="mAuto">Autozapis do pliku…</button><button id="mDecJson" class="osMenu">Decyzje o osobach: eksport JSON</button><button id="mDecCsv" class="osMenu">Decyzje o osobach: eksport CSV</button><button id="mDecImp" class="osMenu">Decyzje o osobach: import JSON…</button><button id="mDop" class="osMenu">Import decyzji dop.v1…</button></div></header>
