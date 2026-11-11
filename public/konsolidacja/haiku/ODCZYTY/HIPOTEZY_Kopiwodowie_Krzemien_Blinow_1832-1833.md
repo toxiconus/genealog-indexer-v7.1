@@ -46,3 +46,18 @@
 - Marcin był wdowcem od 24 I 1832 („owdowiały mąż”), zgodnie z późniejszym ślubem z Marianną Rożek w 1833 r.
 - Rozbieżność wieku Marcina: 22 l. w akcie chrztu (15 I 1832), 23 l. w akcie zgonu (25 I 1832). Do sprawdzenia na skanie, który z odczytów jest błędny.
 - Pytanie do potwierdzenia: nazwisko i imię ojca Elżbiety (Mateusz Białek?) oraz wiek matki (czytane jako 20 w akcie chrztu).
+
+## F. Sebastian z 1812 r.: Brzozówka czy Blinów? (hipoteza robocza)
+Najbardziej prawdopodobna: **Brzozówka** (dom 24 w Brzozówce), ślub w kościele Blinów.
+Za Brzozówką:
+- Wpis ślubu 1812 w indeksie Lubgens ma adnotację „Brzozówka”; dzieci z 1816 i 1818 też „Brzozówka”.
+- Zgon Łukasza Kopiwody, Blinów/Brzozówka 1815, akt 830, i zgon Elżbiety Kopiwody, Blinów/Brzozówka 1822, akt 865 (Lubgens). Wcześniejsza notatka GED: Sebastian to możliwie syn Łukasza i Elżbiety z Majdanu. Pasowałoby to do rodziny w Brzozówce.
+Przeciw Krzemieniowi:
+- W indeksie Janowa (Krzemień) chrzty 1780–1785 nie mają żadnego Sebastiana (są Anastazja 1780, Antoni 1781, Walenty 1782, Agnieszka 1782, Andrzej 1783, Wojciech 1784).
+Przeciw Blinowowi (nie wykluczony):
+- Nasz indeks Blinowa zaczyna się od 1783 r. (`akty_1783_scalone.csv`). Chrztów z 1778–1782 nie mamy, więc nie da się wykluczyć, że Sebastian ur. ok. 1780 był wpisany w Blinowie.
+
+Do sprawdzenia, żeby rozstrzygnąć:
+1. Blinów, chrzty 1778–1782: czy jest Sebastian, syn Łukasza i Elżbiety.
+2. Zgony Łukasza (akt 830, 1815) i Elżbiety (akt 865, 1822): wiek, bo ma być ok. 35 l. w 1815 r., jeśli ojciec Sebastiana z 1780 r.
+3. Spis/rewizja Brzozówki ok. 1799–1808 (numer domu 24 i nazwisko Kopiwoda).
