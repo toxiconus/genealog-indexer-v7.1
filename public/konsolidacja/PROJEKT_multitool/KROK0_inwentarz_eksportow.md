@@ -49,3 +49,8 @@ Uwagi:
 - Eksportów małżeństw (JSON i CSV) nie ma. Krok 4 dla małżeństw: nic do migracji, dopóki użytkownik nie potwierdzi zatwierdzeń w przeglądarce.
 - `dop.v1` i edytor korekt: użytkownik nie potwierdził ich istnienia. Traktować jako „brak”, chyba że pojawią się w przeglądarce.
 - Krok 0 dla zgonów zamknięty na CSV `_10` + nakładce 441. Dla pozostałych: brak eksportów.
+
+## Decyzja użytkownika (2026-11-11, trzecie)
+
+- Sprzeczność zatwierdzeń (`ZGONY_zweryfikowane_AKTUALNE.csv`: 155 `ok` vs `ZGONY_zweryfikowane_10.csv`: 8 `ok`) nie blokuje dalszej pracy. Wyjaśnimy ją później, bez wpływu na kroki 3–4.
+- Małżeństwa i urodzenia nie mają żadnych zatwierdzeń w innych plikach CSV. Są tylko indeks i odczyty: `malzenstwa_mal.csv` (721), `blinow_akty.csv` (5489), `blinow_scalone.csv`.
