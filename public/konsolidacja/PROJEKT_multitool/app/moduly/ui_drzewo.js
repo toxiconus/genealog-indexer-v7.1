@@ -2,15 +2,19 @@
    Linia ciągła = potwierdzone (jeden akt albo decyzja „scal”). Ramka przerywana / sekcje „Możliwe…” = podpowiedź do sprawdzenia (zgodne imiona rodziców albo propozycja silnika z zakładki Osoby). */
 const DRZ = {tryb: 'osoby', q: '', cur: null, para: null, port: 300, glowne: true, sig: '', G: null, M: null, osoby: [], rodziny: [], E: null};
 function drzGraf(){ const sig = (S.histN || 0) + '|' + (S.decyz || []).length + '|' + D.wszystkie.length; if (DRZ.G && DRZ.sig === sig) return DRZ.G;
-  const M = osModel(D.wszystkie, getv), P = wystProfile(M), G = rdzGraf(M, P, decKlastry(S.decyz)); DRZ.G = G; DRZ.M = M; DRZ.sig = sig; DRZ.E = null;
-  DRZ.osoby = Object.keys(G.czlonkowie).map(id => { const z = rdzZycie(G, id), nm = rdzNazwa(z), C = G.czlonkowie[id]; return {id, z, nm, f: fold(nm), gl: C.some(w => /^(dziecko|zmarly|pan_mlody|panna_mloda)$/.test(P[w].rolaAktu)), rok: Math.min(...C.map(w => P[w].rok || 9999)), n: C.length}; })
-    .sort((a, b) => fold(a.z.nazwisko || a.z.rodowe || 'żż').localeCompare(fold(b.z.nazwisko || b.z.rodowe || 'żż')) || fold(a.z.imie).localeCompare(fold(b.z.imie)) || a.rok - b.rok);
+  const M = osModel(D.wszystkie, getv), P = wystProfile(M), G = rdzGraf(M, P, decKlastry(S.decyz)); DRZ.G = G; DRZ.M = M; DRZ.sig = sig; DRZ.E = null; DRZ.listySig = ''; DRZ.mapa = {};
+  G.poAkcie = {}; M.wystapienia.forEach(w => { if (P[w.id]) (G.poAkcie[w.akt] = G.poAkcie[w.akt] || []).push(w.id); });
+  return G; }
+// listy do lewej kolumny (sortowanie 26 tys. osób trwa – liczone dopiero, gdy zakładka Drzewo jest otwarta)
+function drzListy(){ const G = drzGraf(), P = G.P; if (DRZ.listySig === DRZ.sig) return; DRZ.listySig = DRZ.sig;
+  DRZ.osoby = Object.keys(G.czlonkowie).map(id => { const z = rdzZycie(G, id), nm = rdzNazwa(z), C = G.czlonkowie[id]; return {id, z, nm, f: fold(nm), gl: C.some(w => /^(dziecko|zmarly|pan_mlody|panna_mloda)$/.test(P[w].rolaAktu)), rok: Math.min(...C.map(w => P[w].rok || 9999)), n: C.length, kn: fold(z.nazwisko || z.rodowe || 'żż'), ki: fold(z.imie)}; })
+    .sort((a, b) => (a.kn < b.kn ? -1 : a.kn > b.kn ? 1 : 0) || (a.ki < b.ki ? -1 : a.ki > b.ki ? 1 : 0) || a.rok - b.rok);
   DRZ.mapa = {}; DRZ.osoby.forEach(o => DRZ.mapa[o.id] = o);
   DRZ.rodziny = Object.values(G.pary).map(x => { const lata = x.dzieci.map(w => P[w].rok).filter(Number.isFinite); return {k: x.klucz, nm: x.nazwisko + ': ' + x.ojciec + ' + ' + x.matka, f: fold(x.nazwisko + ' ' + x.ojciec + ' ' + x.matka + ' ' + [...x.rodowe].join(' ')), n: x.dzieci.length, od: lata.length ? Math.min(...lata) : null, do: lata.length ? Math.max(...lata) : null}; })
-    .sort((a, b) => a.f.localeCompare(b.f) || (a.od || 0) - (b.od || 0));
-  return G; }
-const drzOs = id => DRZ.mapa && DRZ.mapa[id];
-function drzRender(){ const G = drzGraf();
+    .sort((a, b) => (a.f < b.f ? -1 : a.f > b.f ? 1 : 0) || (a.od || 0) - (b.od || 0)); }
+function drzSilnik(){ drzGraf(); if (!DRZ.E) DRZ.E = osSilnik(DRZ.M, osKlasy(S.decyz).klasy); return DRZ.E; }
+const drzOs = id => { const o = DRZ.mapa && DRZ.mapa[id]; if (o) return o; const C = DRZ.G && DRZ.G.czlonkowie[id]; return C ? {id, rok: Math.min(...C.map(w => DRZ.G.P[w].rok || 9999))} : null; };
+function drzRender(){ const G = drzGraf(); drzListy();
   wstaw($('filtry'), h`<select id="drzTryb" aria-label="Widok drzewa"><option value="osoby" ${DRZ.tryb === 'osoby' ? raw('selected') : ''}>Osoby</option><option value="rodziny" ${DRZ.tryb === 'rodziny' ? raw('selected') : ''}>Rodziny (pary rodziców)</option></select>
     <input id="drzQ" type="search" placeholder="nazwisko, imię" value="${DRZ.q}">${DRZ.tryb === 'osoby' ? h`<label title="Pomiń osoby znane tylko jako rodzice lub małżonkowie w cudzym akcie"><input type="checkbox" id="drzGl" ${DRZ.glowne ? raw('checked') : ''}> tylko główne osoby aktów</label>` : ''}`);
   $('drzTryb').onchange = e => { DRZ.tryb = e.target.value; DRZ.port = 300; drzRender(); }; $('drzQ').oninput = e => { DRZ.q = e.target.value; DRZ.port = 300; drzLista(); }; if ($('drzGl')) $('drzGl').onchange = e => { DRZ.glowne = e.target.checked; drzLista(); };
@@ -31,7 +35,7 @@ function drzPrzodkowie(id, gl, byli){ const G = DRZ.G, R = [...(G.rodzice[id] ||
 function drzPotomkowie(id, gl, byli){ const G = DRZ.G, Dz = [...(G.dzieci[id] || [])].filter(d => !byli.has(d)).sort((a, b) => (drzOs(a)?.rok || 0) - (drzOs(b)?.rok || 0)); if (!Dz.length || gl > 3) return '';
   return h`<ul class="pot ${gl === 0 ? 'korzen' : ''}">${Dz.map(d => h`<li>${drzWezel(d)}${drzPotomkowie(d, gl + 1, new Set([...byli, id]))}</li>`)}</ul>`; }
 // propozycje silnika (te same reguły co w zakładce Osoby), liczone na żądanie dla jednej osoby
-function drzKandydaci(id){ const G = DRZ.G; if (!DRZ.E) DRZ.E = osSilnik(DRZ.M, osKlasy(S.decyz).klasy); const K = decKlastry(S.decyz), out = [], seen = new Set();
+function drzKandydaci(id){ const G = DRZ.G; drzSilnik(); const K = decKlastry(S.decyz), out = [], seen = new Set();
   (G.czlonkowie[id] || []).forEach(w => osKandydaci(DRZ.E, w).forEach(u => { const c = G.wezel(u.b); if (c === id || seen.has(c) || (u.wniosek !== 'sprawdz' && u.wniosek !== 'mozliwe') || K.odrzucone.has(decKlucz(w, u.b))) return; seen.add(c); out.push({c, a: w, b: u.b, wn: u.wniosek, zg: u.zgodnosci.map(x => x.t), roz: u.rozbieznosci.map(x => x.t)}); }));
   return out.sort((x, y) => (x.wn === 'sprawdz' ? 0 : 1) - (y.wn === 'sprawdz' ? 0 : 1)).slice(0, 12); }
 function drzDzieciPary(k, bez){ const G = DRZ.G, x = G.pary[k]; if (!x) return []; return x.dzieci.filter(w => !bez.has(G.wezel(w))).map(w => ({w, c: G.wezel(w), p: G.P[w]})).sort((a, b) => (a.p.rok || 0) - (b.p.rok || 0)); }

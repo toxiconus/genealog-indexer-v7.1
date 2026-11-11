@@ -35,7 +35,7 @@ function renderAkt(){ if (!wAktach()) return; const m = $('main'), a = curAct();
     ${bl ? h`<div class="bloki" id="bloki">${pola}</div>` : h`<div class="pola">${poleZ}</div>`}
     ${hid.sp ? h`<div class="muted" id="sporneInfo">Ukryto pól bez sporu: ${hid.sp}.</div>` : ''}
     ${hid.length ? h`<div class="muted hmk">∅ Puste (ukryte): ${hid.join(' · ')} <button class="sm" id="bShowMk">pokaż</button></div>` : ''}
-    ${tekstSekcja(a)}${typeof aktHistoria === 'function' ? aktHistoria(a) : ''}
+    ${typeof xrefSekcja === 'function' ? xrefSekcja(a) : ''}${tekstSekcja(a)}${typeof aktHistoria === 'function' ? aktHistoria(a) : ''}
     <div class="aktbar"><button id="bPrev" title="Poprzedni akt (Alt+K)">‹ Poprzedni</button><button class="p" id="bDone" title="Alt+Enter">${s.done ? 'Cofnij zatwierdzenie aktu' : 'Zatwierdź akt'}</button><button id="bDoneNext" title="Zatwierdź i przejdź do następnego niezatwierdzonego (Ctrl+Shift+Enter)">✓ i następny ›</button><button id="bNext" title="Następny akt (Alt+J)">Następny ›</button>
       <button id="bSpor" title="Przejdź do następnego pola niepewnego lub z różnicą (Alt+R)">Sporne pole ↓</button><span class="sp"></span><button id="bUndo" title="Cofnij ostatnią zmianę (Alt+Z)">↶ Cofnij</button><button id="bRedo" title="Ponów (Alt+Y)">↷ Ponów</button></div></div>`);
   $('bDone').onclick = doDone; $('bAll').onclick = doAll; if ($('bShowMk')) $('bShowMk').onclick = () => { S.hideMk = false; save(); renderAkt(); };
@@ -46,5 +46,5 @@ function renderAkt(){ if (!wAktach()) return; const m = $('main'), a = curAct();
   m.querySelectorAll('[data-rozw]').forEach(b => b.onclick = () => { AKT_ROZW = a.id + '|' + b.dataset.rozw; keepScroll(); const i = $('p_' + b.dataset.rozw); if (i) i.focus(); });
   $('bSporne').onclick = () => { S.sporne = !S.sporne; AKT_ROZW = ''; save(); keepScroll(); }; $('bMini').onclick = () => { S.miniOk = !S.miniOk; AKT_ROZW = ''; save(); keepScroll(); };
   if ($('bUsunNowy')) $('bUsunNowy').onclick = () => { if (!confirm('Usunąć akt dodany ręcznie (' + a.year + ' nr ' + a.act + ') razem z wpisanymi polami? Tej operacji nie cofnie przycisk „Cofnij”. Wcześniej warto zrobić kopię pełną.')) return; nowyUsun(a.id); S.cur = (widoczne()[0] || {}).id || null; save(); odswiez(); typInit0(); toast('Usunięto akt dodany ręcznie'); };
-  if (typeof aktbarPodlacz === 'function') aktbarPodlacz(a);
+  if (typeof aktbarPodlacz === 'function') aktbarPodlacz(a); if (typeof xrefPodlacz === 'function') xrefPodlacz(a);
   skanWinRender(a); narzPodlacz(a); }

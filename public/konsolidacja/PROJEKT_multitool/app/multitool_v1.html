@@ -85,6 +85,7 @@ a.lk,button.lk{border:0;background:none;padding:0;color:var(--acc);text-decorati
 .drz .gal>.wezel{position:relative}.drz .gal>.wezel::before{content:"";position:absolute;left:-18px;top:50%;width:18px;border-top:1px solid var(--mut)}
 .drz .gal::before{content:"";position:absolute;left:0;top:25%;bottom:25%;border-left:1px solid var(--mut)}.drz .gal.jeden::before{display:none}
 ul.pot{list-style:none;margin:0;padding-left:18px;border-left:1px solid var(--line)}ul.pot>li{margin:4px 0}ul.pot.korzen{border-left:0;padding-left:0}
+.xpotw{font-size:13px;margin:4px 0}.xpotw>div{padding:2px 0;color:var(--ok)}.xprop{border:1px solid var(--line);border-radius:8px;padding:6px 8px;margin:6px 0;font-size:13px}.xgl{display:flex;flex-wrap:wrap;gap:4px 6px;align-items:baseline}.xgl .sp{flex:1}.xroz{font-size:12px}
 .fakty{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:6px 14px;font-size:13px}
 @media (max-width:820px){header{padding:8px 16px;gap:6px}h1{width:100%;font-size:15px}#zakl{width:100%;overflow-x:auto;flex-wrap:nowrap}.wrap{padding:12px 16px;gap:12px}.aktbar{margin:12px -14px -14px}.rtab{max-height:none}.drz .os{min-width:120px}}
 </style></head><body>
@@ -1696,7 +1697,7 @@ const ST_NAZWA = 'multitool', ST_WER = 2, ST_SKLADY = ['kv', 'pola', 'teksty', '
 const ST_LICZONE = ['pola', 'teksty', 'akty', 'decyzje'];   // zapisy, które zwiększają licznik „zmian bez kopii”
 let ST_DODATKI = [];   // dodatkowe zapisy [magazyn, klucz, wartość] dołączane do następnej transakcji stFlush (np. raport migracji)
 let ST_TRYB = 'idb', ST_DBP = null, ST_PODPIS = {}, ST_BAZA = {}, ST_HIST_N = 0, ST_T = null, ST_ZMIANY = 0, ST_OSTATNIA = null, ST_PERSIST = false, ST_BLAD = '', ST_KOLEJ = [];
-const ST_UST = ['year', 'cen', 'dec', 'flt', 'hideOk', 'hideDoneActs', 'noroi', 'onlyScan', 'hideMk', 'cur', 'tmode', 'tfs', 'q', 'repIgn', 'typ', 'sporne', 'miniOk'];
+const ST_UST = ['year', 'cen', 'dec', 'flt', 'hideOk', 'hideDoneActs', 'noroi', 'onlyScan', 'hideMk', 'cur', 'tmode', 'tfs', 'q', 'repIgn', 'typ', 'sporne', 'miniOk', 'xOpen'];
 function stOtworz(){ if (ST_DBP) return ST_DBP; ST_DBP = new Promise((ok, no) => { let r; try { r = indexedDB.open(ST_NAZWA, ST_WER); } catch (e) { return no(e); }
   r.onupgradeneeded = () => { ST_SKLADY.forEach(n => { if (!r.result.objectStoreNames.contains(n)) r.result.createObjectStore(n); }); };
   r.onsuccess = () => ok(r.result); r.onerror = () => no(r.error); r.onblocked = () => no(new Error('baza zablokowana przez inną kartę')); }); return ST_DBP; }
@@ -1963,7 +1964,7 @@ function renderAkt(){ if (!wAktach()) return; const m = $('main'), a = curAct();
     ${bl ? h`<div class="bloki" id="bloki">${pola}</div>` : h`<div class="pola">${poleZ}</div>`}
     ${hid.sp ? h`<div class="muted" id="sporneInfo">Ukryto pól bez sporu: ${hid.sp}.</div>` : ''}
     ${hid.length ? h`<div class="muted hmk">∅ Puste (ukryte): ${hid.join(' · ')} <button class="sm" id="bShowMk">pokaż</button></div>` : ''}
-    ${tekstSekcja(a)}${typeof aktHistoria === 'function' ? aktHistoria(a) : ''}
+    ${typeof xrefSekcja === 'function' ? xrefSekcja(a) : ''}${tekstSekcja(a)}${typeof aktHistoria === 'function' ? aktHistoria(a) : ''}
     <div class="aktbar"><button id="bPrev" title="Poprzedni akt (Alt+K)">‹ Poprzedni</button><button class="p" id="bDone" title="Alt+Enter">${s.done ? 'Cofnij zatwierdzenie aktu' : 'Zatwierdź akt'}</button><button id="bDoneNext" title="Zatwierdź i przejdź do następnego niezatwierdzonego (Ctrl+Shift+Enter)">✓ i następny ›</button><button id="bNext" title="Następny akt (Alt+J)">Następny ›</button>
       <button id="bSpor" title="Przejdź do następnego pola niepewnego lub z różnicą (Alt+R)">Sporne pole ↓</button><span class="sp"></span><button id="bUndo" title="Cofnij ostatnią zmianę (Alt+Z)">↶ Cofnij</button><button id="bRedo" title="Ponów (Alt+Y)">↷ Ponów</button></div></div>`);
   $('bDone').onclick = doDone; $('bAll').onclick = doAll; if ($('bShowMk')) $('bShowMk').onclick = () => { S.hideMk = false; save(); renderAkt(); };
@@ -1974,7 +1975,7 @@ function renderAkt(){ if (!wAktach()) return; const m = $('main'), a = curAct();
   m.querySelectorAll('[data-rozw]').forEach(b => b.onclick = () => { AKT_ROZW = a.id + '|' + b.dataset.rozw; keepScroll(); const i = $('p_' + b.dataset.rozw); if (i) i.focus(); });
   $('bSporne').onclick = () => { S.sporne = !S.sporne; AKT_ROZW = ''; save(); keepScroll(); }; $('bMini').onclick = () => { S.miniOk = !S.miniOk; AKT_ROZW = ''; save(); keepScroll(); };
   if ($('bUsunNowy')) $('bUsunNowy').onclick = () => { if (!confirm('Usunąć akt dodany ręcznie (' + a.year + ' nr ' + a.act + ') razem z wpisanymi polami? Tej operacji nie cofnie przycisk „Cofnij”. Wcześniej warto zrobić kopię pełną.')) return; nowyUsun(a.id); S.cur = (widoczne()[0] || {}).id || null; save(); odswiez(); typInit0(); toast('Usunięto akt dodany ręcznie'); };
-  if (typeof aktbarPodlacz === 'function') aktbarPodlacz(a);
+  if (typeof aktbarPodlacz === 'function') aktbarPodlacz(a); if (typeof xrefPodlacz === 'function') xrefPodlacz(a);
   skanWinRender(a); narzPodlacz(a); }
 
 /* app/moduly/ui_skan.js – podgląd skanu aktu (krok 3): wybór folderu skanów (<input webkitdirectory>), obraz tylko lokalnie (File → URL.createObjectURL, nic nie jest wysyłane),
@@ -2433,15 +2434,19 @@ function nawInit(){ document.body.dataset.zakl = 'akty'; $('zDrzewo').onclick = 
    Linia ciągła = potwierdzone (jeden akt albo decyzja „scal”). Ramka przerywana / sekcje „Możliwe…” = podpowiedź do sprawdzenia (zgodne imiona rodziców albo propozycja silnika z zakładki Osoby). */
 const DRZ = {tryb: 'osoby', q: '', cur: null, para: null, port: 300, glowne: true, sig: '', G: null, M: null, osoby: [], rodziny: [], E: null};
 function drzGraf(){ const sig = (S.histN || 0) + '|' + (S.decyz || []).length + '|' + D.wszystkie.length; if (DRZ.G && DRZ.sig === sig) return DRZ.G;
-  const M = osModel(D.wszystkie, getv), P = wystProfile(M), G = rdzGraf(M, P, decKlastry(S.decyz)); DRZ.G = G; DRZ.M = M; DRZ.sig = sig; DRZ.E = null;
-  DRZ.osoby = Object.keys(G.czlonkowie).map(id => { const z = rdzZycie(G, id), nm = rdzNazwa(z), C = G.czlonkowie[id]; return {id, z, nm, f: fold(nm), gl: C.some(w => /^(dziecko|zmarly|pan_mlody|panna_mloda)$/.test(P[w].rolaAktu)), rok: Math.min(...C.map(w => P[w].rok || 9999)), n: C.length}; })
-    .sort((a, b) => fold(a.z.nazwisko || a.z.rodowe || 'żż').localeCompare(fold(b.z.nazwisko || b.z.rodowe || 'żż')) || fold(a.z.imie).localeCompare(fold(b.z.imie)) || a.rok - b.rok);
+  const M = osModel(D.wszystkie, getv), P = wystProfile(M), G = rdzGraf(M, P, decKlastry(S.decyz)); DRZ.G = G; DRZ.M = M; DRZ.sig = sig; DRZ.E = null; DRZ.listySig = ''; DRZ.mapa = {};
+  G.poAkcie = {}; M.wystapienia.forEach(w => { if (P[w.id]) (G.poAkcie[w.akt] = G.poAkcie[w.akt] || []).push(w.id); });
+  return G; }
+// listy do lewej kolumny (sortowanie 26 tys. osób trwa – liczone dopiero, gdy zakładka Drzewo jest otwarta)
+function drzListy(){ const G = drzGraf(), P = G.P; if (DRZ.listySig === DRZ.sig) return; DRZ.listySig = DRZ.sig;
+  DRZ.osoby = Object.keys(G.czlonkowie).map(id => { const z = rdzZycie(G, id), nm = rdzNazwa(z), C = G.czlonkowie[id]; return {id, z, nm, f: fold(nm), gl: C.some(w => /^(dziecko|zmarly|pan_mlody|panna_mloda)$/.test(P[w].rolaAktu)), rok: Math.min(...C.map(w => P[w].rok || 9999)), n: C.length, kn: fold(z.nazwisko || z.rodowe || 'żż'), ki: fold(z.imie)}; })
+    .sort((a, b) => (a.kn < b.kn ? -1 : a.kn > b.kn ? 1 : 0) || (a.ki < b.ki ? -1 : a.ki > b.ki ? 1 : 0) || a.rok - b.rok);
   DRZ.mapa = {}; DRZ.osoby.forEach(o => DRZ.mapa[o.id] = o);
   DRZ.rodziny = Object.values(G.pary).map(x => { const lata = x.dzieci.map(w => P[w].rok).filter(Number.isFinite); return {k: x.klucz, nm: x.nazwisko + ': ' + x.ojciec + ' + ' + x.matka, f: fold(x.nazwisko + ' ' + x.ojciec + ' ' + x.matka + ' ' + [...x.rodowe].join(' ')), n: x.dzieci.length, od: lata.length ? Math.min(...lata) : null, do: lata.length ? Math.max(...lata) : null}; })
-    .sort((a, b) => a.f.localeCompare(b.f) || (a.od || 0) - (b.od || 0));
-  return G; }
-const drzOs = id => DRZ.mapa && DRZ.mapa[id];
-function drzRender(){ const G = drzGraf();
+    .sort((a, b) => (a.f < b.f ? -1 : a.f > b.f ? 1 : 0) || (a.od || 0) - (b.od || 0)); }
+function drzSilnik(){ drzGraf(); if (!DRZ.E) DRZ.E = osSilnik(DRZ.M, osKlasy(S.decyz).klasy); return DRZ.E; }
+const drzOs = id => { const o = DRZ.mapa && DRZ.mapa[id]; if (o) return o; const C = DRZ.G && DRZ.G.czlonkowie[id]; return C ? {id, rok: Math.min(...C.map(w => DRZ.G.P[w].rok || 9999))} : null; };
+function drzRender(){ const G = drzGraf(); drzListy();
   wstaw($('filtry'), h`<select id="drzTryb" aria-label="Widok drzewa"><option value="osoby" ${DRZ.tryb === 'osoby' ? raw('selected') : ''}>Osoby</option><option value="rodziny" ${DRZ.tryb === 'rodziny' ? raw('selected') : ''}>Rodziny (pary rodziców)</option></select>
     <input id="drzQ" type="search" placeholder="nazwisko, imię" value="${DRZ.q}">${DRZ.tryb === 'osoby' ? h`<label title="Pomiń osoby znane tylko jako rodzice lub małżonkowie w cudzym akcie"><input type="checkbox" id="drzGl" ${DRZ.glowne ? raw('checked') : ''}> tylko główne osoby aktów</label>` : ''}`);
   $('drzTryb').onchange = e => { DRZ.tryb = e.target.value; DRZ.port = 300; drzRender(); }; $('drzQ').oninput = e => { DRZ.q = e.target.value; DRZ.port = 300; drzLista(); }; if ($('drzGl')) $('drzGl').onchange = e => { DRZ.glowne = e.target.checked; drzLista(); };
@@ -2462,7 +2467,7 @@ function drzPrzodkowie(id, gl, byli){ const G = DRZ.G, R = [...(G.rodzice[id] ||
 function drzPotomkowie(id, gl, byli){ const G = DRZ.G, Dz = [...(G.dzieci[id] || [])].filter(d => !byli.has(d)).sort((a, b) => (drzOs(a)?.rok || 0) - (drzOs(b)?.rok || 0)); if (!Dz.length || gl > 3) return '';
   return h`<ul class="pot ${gl === 0 ? 'korzen' : ''}">${Dz.map(d => h`<li>${drzWezel(d)}${drzPotomkowie(d, gl + 1, new Set([...byli, id]))}</li>`)}</ul>`; }
 // propozycje silnika (te same reguły co w zakładce Osoby), liczone na żądanie dla jednej osoby
-function drzKandydaci(id){ const G = DRZ.G; if (!DRZ.E) DRZ.E = osSilnik(DRZ.M, osKlasy(S.decyz).klasy); const K = decKlastry(S.decyz), out = [], seen = new Set();
+function drzKandydaci(id){ const G = DRZ.G; drzSilnik(); const K = decKlastry(S.decyz), out = [], seen = new Set();
   (G.czlonkowie[id] || []).forEach(w => osKandydaci(DRZ.E, w).forEach(u => { const c = G.wezel(u.b); if (c === id || seen.has(c) || (u.wniosek !== 'sprawdz' && u.wniosek !== 'mozliwe') || K.odrzucone.has(decKlucz(w, u.b))) return; seen.add(c); out.push({c, a: w, b: u.b, wn: u.wniosek, zg: u.zgodnosci.map(x => x.t), roz: u.rozbieznosci.map(x => x.t)}); }));
   return out.sort((x, y) => (x.wn === 'sprawdz' ? 0 : 1) - (y.wn === 'sprawdz' ? 0 : 1)).slice(0, 12); }
 function drzDzieciPary(k, bez){ const G = DRZ.G, x = G.pary[k]; if (!x) return []; return x.dzieci.filter(w => !bez.has(G.wezel(w))).map(w => ({w, c: G.wezel(w), p: G.P[w]})).sort((a, b) => (a.p.rok || 0) - (b.p.rok || 0)); }
@@ -2498,6 +2503,47 @@ function drzPodlacz(m){ m.querySelectorAll('[data-os]').forEach(b => b.onclick =
   m.querySelectorAll('[data-para]').forEach(b => b.onclick = () => { DRZ.tryb = 'rodziny'; DRZ.para = b.dataset.para; DRZ.cur = null; DRZ.q = ''; drzRender(); window.scrollTo(0, 0); });
   m.querySelectorAll('[data-dec]').forEach(b => b.onclick = () => { const w = b.dataset.dec, c = DRZ.G.wezel(w); OSS.widok = 'prop'; OSS.flt = 'mozliwe'; OSS.q = ''; zaklUstaw('osoby'); osWybierz(c); }); }
 
+/* app/moduly/ui_powiazania.js – karta aktu: sekcja „W innych aktach” (potwierdzenia krzyżowe).
+   Dla każdej osoby z aktu (zmarły, dziecko, młodzi, rodzice, małżonek) pokazuje: (1) akty już połączone decyzją „scal” wraz z kontrolą zgodności wieku i dat,
+   (2) propozycje silnika z zakładki Osoby (te same reguły), z przyciskami „ta sama osoba” / „różne osoby” – decyzja zapisuje się w dzienniku decyzji i da się cofnąć w zakładce Osoby.
+   Program niczego nie przenosi między aktami: pola aktu mówią tylko to, co jest w tym akcie; inne akty są pokazane obok jako potwierdzenie albo sprzeczność.
+   Silnik (model wszystkich aktów) przelicza się w tle, gdy dane się zmieniły – karta aktu nie czeka. HTML wyłącznie przez wstaw(h`…`). */
+const XR = {t: null, LIM: 4};
+const xrSwiezy = () => DRZ.G && DRZ.sig === (S.histN || 0) + '|' + (S.decyz || []).length + '|' + D.wszystkie.length;
+const XR_TYP = {zgon: 'zgon', malzenstwo: 'ślub', chrzest: 'chrzest'};
+const xrAkt = w => { const p = DRZ.G.P[w], a = p && AM[p.akt]; return a ? (XR_TYP[a.typ] || a.typ) + ' ' + a.year + ' nr ' + a.act + (a.parafia ? ' (' + a.parafia + ')' : '') : ''; };
+function xrefSekcja(a){ return h`<details class="txt" id="xrefDet" ${S.xOpen === false ? '' : raw('open')}><summary>W innych aktach <span class="muted" id="xrefIle"></span></summary><div id="xrefTresc"><span class="muted">Szukam powiązań…</span></div></details>`; }
+function xrefPodlacz(a){ const det = $('xrefDet'); if (!det) return; det.ontoggle = () => { S.xOpen = det.open; if (det.open) xrefPlanuj(a); }; xrefPlanuj(a); }
+// przeliczenie w tle: od razu, gdy silnik jest aktualny; inaczej po chwili bezczynności (żeby nie przerywać pisania)
+function xrefPlanuj(a){ clearTimeout(XR.t); const det = $('xrefDet'); if (!det || !det.open) return; if (xrSwiezy() && DRZ.E) return xrefRysuj(a);
+  XR.t = setTimeout(() => { const el = document.activeElement; if (el && el.dataset && el.dataset.f && el.value !== String(getv(a, el.dataset.f) ?? '')) return xrefPlanuj(a); if (S.cur !== a.id || !wAktach()) return; xrefRysuj(a); }, DRZ.G ? 700 : 150); }
+function xrefDane(a){ const G = drzGraf(), E = drzSilnik(), K = decKlastry(S.decyz), W = G.poAkcie[a.id] || [], out = [];
+  W.forEach(w => { const p = G.P[w], id = G.wezel(w), inne = (G.czlonkowie[id] || []).filter(x => x !== w), kand = [], seen = new Set();
+    osKandydaci(E, w).forEach(u => { const c = G.wezel(u.b); if (c === id || seen.has(c) || (u.wniosek !== 'sprawdz' && u.wniosek !== 'mozliwe') || K.odrzucone.has(decKlucz(w, u.b))) return; seen.add(c); if (u.wniosek === 'mozliwe' && u.rozbieznosci.some(x => x.istotna)) return; kand.push(u); });
+    out.push({w, p, id, inne, kand}); });
+  const kontr = kontWiekOsob({P: G.P, czlonkowie: Object.fromEntries(out.filter(o => o.inne.length).map(o => [o.id, G.czlonkowie[o.id]]))});
+  return {G, out, kontr}; }
+function xrefRysuj(a){ const box = $('xrefTresc'); if (!box || S.cur !== a.id) return; let X; try { X = xrefDane(a); } catch (e) { wstaw(box, h`<span class="err">Nie udało się policzyć powiązań: ${e.message}</span>`); return; }
+  const G = X.G, potw = X.out.reduce((n, o) => n + o.inne.length, 0), mocne = X.out.reduce((n, o) => n + o.kand.filter(u => u.wniosek === 'sprawdz').length, 0), moz = X.out.reduce((n, o) => n + o.kand.filter(u => u.wniosek === 'mozliwe').length, 0);
+  const il = $('xrefIle'); if (il) il.textContent = '· potwierdzone: ' + potw + ' · mocne propozycje: ' + mocne + ' · możliwe: ' + moz;
+  XR.flat = [];
+  const wiersz = (o, u) => { const i = XR.flat.push({a: o.w, b: u.b, u}) - 1, q = G.P[u.b]; return h`<div class="xprop" data-xb="${u.b}"><div class="xgl"><span class="bdg ${u.wniosek === 'sprawdz' ? 'ok' : 'un'}">${OS_WN[u.wniosek]}</span> <button class="lk" data-xakt="${u.b}">${xrAkt(u.b)}</button> <span class="muted">– ${RDZ_ROLA[q.rolaAktu] || q.rolaAktu}: ${(q.imie || '?') + ' ' + (q.nazwisko || '')}${q.rodowe ? ' z d. ' + q.rodowe : ''}${q.wiek ? ', wiek ' + q.wiek : ''}</span>
+      <span class="sp"></span><button class="sm" data-xdec="scal" data-i="${i}" title="Zapisz decyzję: to ta sama osoba">ta sama osoba</button><button class="sm" data-xdec="odrzuc" data-i="${i}" title="Zapisz decyzję: to różne osoby (propozycja zniknie)">różne osoby</button></div>
+      <div class="muted">zgadza się: ${u.zgodnosci.map(x => x.t).join('; ')}</div>${u.rozbieznosci.length ? h`<div class="err xroz">różni się: ${u.rozbieznosci.map(x => x.t).join('; ')}</div>` : ''}</div>`; };
+  const czesc = X.out.filter(o => o.inne.length || o.kand.length).map(o => { const k = o.kand.slice(0, XR.LIM), sygn = X.kontr.filter(x => x.id === o.id);
+    return h`<h3 class="blok">${RDZ_ROLA[o.p.rolaAktu] || o.p.rolaAktu}: ${(o.p.imie || '?') + ' ' + (o.p.nazwisko || (o.p.rodowe ? 'z d. ' + o.p.rodowe : ''))} <button class="lk" data-xos="${o.id}" title="Pokaż tę osobę w zakładce Drzewo">drzewo</button></h3>
+      ${o.inne.length ? h`<div class="xpotw">${o.inne.map(w => h`<div>✓ potwierdzone decyzją: <button class="lk" data-xakt="${w}">${xrAkt(w)}</button> <span class="muted">– ${RDZ_ROLA[G.P[w].rolaAktu] || G.P[w].rolaAktu}${G.P[w].wiek ? ', wiek ' + G.P[w].wiek : ''}</span></div>`)}</div>` : ''}
+      ${sygn.length ? h`<div class="warn">${sygn.map(x => h`<div>⚠ ${x.msg}</div>`)}</div>` : ''}
+      ${k.length ? h`<div class="xrefTab">${k.map(u => wiersz(o, u))}</div>${o.kand.length > k.length ? h`<div class="muted">…i ${o.kand.length - k.length} dalszych propozycji – <button class="lk" data-xwiecej="${o.w}">pokaż w zakładce Osoby</button></div>` : ''}` : ''}`; });
+  wstaw(box, czesc.length ? h`<div class="muted">Pola tego aktu pokazują tylko to, co jest w tym akcie. Poniżej inne akty tych samych osób: połączone Twoją decyzją albo proponowane do sprawdzenia.</div>${czesc}` : h`<span class="muted" id="xrefPusto">Nie znaleziono tych osób w innych aktach (zgony, małżeństwa, chrzty w bazie).</span>`);
+  box.querySelectorAll('[data-xakt]').forEach(b => b.onclick = () => osOtworzAkt(b.dataset.xakt));
+  box.querySelectorAll('[data-xos]').forEach(b => b.onclick = () => { zaklUstaw('drzewo'); drzIdz(b.dataset.xos); });
+  box.querySelectorAll('[data-xwiecej]').forEach(b => b.onclick = () => { const c = DRZ.G.wezel(b.dataset.xwiecej); OSS.widok = 'prop'; OSS.flt = 'mozliwe'; OSS.q = ''; zaklUstaw('osoby'); osWybierz(c); });
+  box.querySelectorAll('[data-xdec]').forEach(b => b.onclick = () => xrefDecyzja(a, b.dataset.xdec, XR.flat[+b.dataset.i])); }
+function xrefDecyzja(a, typ, x){ if (!x) return; let opt = {u: x.u, akty: osAktyMapa()}, r = osDecyduj(S.decyz, typ, x.a, x.b, opt);
+  if (!r.ok && r.trzebaPowod) { const why = prompt(r.blad + '\n\nPowód (np. „zgodny wiek i rodzice na skanie”):', ''); if (why == null) return; opt.why = why; r = osDecyduj(S.decyz, typ, x.a, x.b, opt); }
+  if (!r.ok) return toast(r.blad, 6000); OSS.cache = null; OSS.KL = decKlastry(S.decyz); save(); toast(typ === 'scal' ? 'Zapisano: ta sama osoba. Cofniesz to w zakładce Osoby → Decyzje.' : 'Zapisano: różne osoby. Propozycja nie będzie już pokazywana.'); xrefRysuj(a); }
+
 /* app/moduly/ui_raport.js – zakładka „Raport”: podsumowanie pracy, raport spójności zgonów, lista „do sprawdzenia na skanie”, kontrole wieku i dat, numeracja i możliwe duble.
    Logika kontroli: rodziny_rdzen.js i raport_zgonow.js; tu tylko widok i eksport CSV. HTML wyłącznie przez wstaw(h`…`). Raport niczego nie zmienia w danych. */
 const RAP = {w: 'pods', typ: '', kod: '', cache: {}, sig: '', LIM: 400};
@@ -2510,7 +2556,7 @@ function rapDoSkanu(){ return rapLicz('skan', () => { const out = []; D.wszystki
 function rapCsvSkan(L){ return ['typ;rok;nr;osoba;pole;wartosc;odczyt_AI;indeks;powod;skan;id_aktu'].concat(L.map(x => [NAZWY_TYPOW[x.typ] || x.typ, x.rok, x.nr, nmOf(AM[x.id]), x.pole, x.v, x.ai, x.lub, x.pow, x.skan, x.id].map(csvCell).join(';'))).join('\r\n') + '\r\n'; }
 function rapPods(){ return rapLicz('pods', () => D.typy.map(t => { const A = D.wszystkie.filter(a => a.typ === t); let ai = 0, done = 0, sp = 0, skan = 0, pola = 0; A.forEach(a => { if (a.ai) ai++; const d = !!S.acts[a.id]?.done; if (d) done++; if (skanKlucz(a)) skan++; if (!d) { const n = fieldsOf(a).filter(f => poleSporne(a, f.id)).length; if (n) { sp++; pola += n; } } });
     return {t, n: A.length, ai, done, sp, pola, skan, lata: A.length ? Math.min(...A.map(a => a.year).filter(Number.isFinite)) + '–' + Math.max(...A.map(a => a.year).filter(Number.isFinite)) : ''}; })); }
-function rapGraf(){ return rapLicz('graf', () => { const M = osModel(D.wszystkie, getv); return rdzGraf(M, wystProfile(M), decKlastry(S.decyz)); }); }
+function rapGraf(){ return drzGraf(); }
 function rapRender(){ const m = $('main'); wstaw($('filtry'), ''); wstaw($('lista'), '');
   const nav = h`<div class="rnav" id="rapNav">${RAP_W.map(([k, l]) => h`<button data-rw="${k}" class="${RAP.w === k ? 'on' : ''}">${l}</button>`)}</div>`, selTyp = h`<select id="rapTyp" aria-label="Typ aktów"><option value="">Wszystkie typy</option>${D.typy.map(t => h`<option value="${t}" ${RAP.typ === t ? raw('selected') : ''}>${NAZWY_TYPOW[t] || t}</option>`)}</select>`;
   const wiecej = (n) => n > RAP.LIM ? h`<div class="muted">Pokazano pierwsze ${RAP.LIM} z ${n}. Pełna lista jest w eksporcie CSV albo po zawężeniu typu.</div>` : '', akt = id => h`<button class="lk" data-akt="${id}">${rapAktEt(AM[id])}</button>`;
