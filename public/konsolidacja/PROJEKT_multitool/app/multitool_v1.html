@@ -1432,7 +1432,7 @@ function skpTyp(klucz){ const k = String(klucz).toLowerCase(); if (/zgon|zmar|mo
 function skpRok(klucz){ const m = String(klucz).match(/(?:^|\D)(1[5-9]\d\d)(?!\d)/); return m ? +m[1] : ''; }
 const skpAkt = (typ, rok, nr) => D.wszystkie.find(x => x.typ === typ && !x.parafia && +x.year === rok && String(x.act).toLowerCase() === String(nr));
 // akty, które już mają ten skan przypisany ręcznie (wtedy okno podpowiada ich zakres)
-function skpZeSkanu(nazwa){ const b = skanBase(nazwa), L = D.wszystkie.filter(a => !a.parafia && S.acts[a.id]?.scan && skanBase(S.acts[a.id].scan) === b); if (!L.length) return null;
+function skpZeSkanu(nazwa){ const b = skanStem(nazwa), L = D.wszystkie.filter(a => !a.parafia && S.acts[a.id]?.scan && skanStem(S.acts[a.id].scan) === b); if (!L.length) return null;
   const typ = L[0].typ, rok = +L[0].year, N = L.filter(a => a.typ === typ && +a.year === rok).map(a => parseInt(a.act, 10)).filter(Number.isFinite); if (!N.length) return null;
   return {typ, rok, od: Math.min(...N), ile: Math.min(SKP_MAX, Math.max(...N) - Math.min(...N) + 1)}; }
 // domyślny numer pierwszego aktu na skanie nr `nrPliku`
@@ -1440,10 +1440,11 @@ function skpOd(prof, typ, rok, nrPliku){ prof = prof || {};
   if (prof.ostNr != null && prof.ostRok === rok && prof.ostTyp === typ && prof.ostPlik != null && nrPliku != null && nrPliku > prof.ostPlik) return prof.ostNr + 1;
   if (prof.nrPierwszego != null && prof.ostPlik == null) return prof.nrPierwszego;
   const L = D.wszystkie.filter(x => x.typ === typ && !x.parafia && +x.year === rok).map(x => parseInt(x.act, 10)).filter(Number.isFinite); return L.length ? Math.max(...L) + 1 : 1; }
-function skpPlan(typ, rok, od, ile, nazwa){ const L = [], b = skanBase(nazwa);
+/* w planie: brak = skan z bazy, którego nie ma w wczytanych plikach */
+function skpPlan(typ, rok, od, ile, nazwa){ const L = [], b = skanStem(nazwa);
   for (let i = 0; i < ile; i++) { const nr = od + i, a = skpAkt(typ, rok, nr), s = a ? skanKlucz(a) : '';
     if (!a) { const w = nowySprawdz(typ, String(rok), String(nr)); L.push({nr, typ, rok, id: '', skan: '', stan: w.ok ? 'nowy' : 'blad', blad: w.ok ? '' : w.blad}); }
-    else L.push({nr, typ, rok, id: a.id, skan: s, stan: !s ? 'dobierz' : skanBase(s) === b ? 'ten-sam' : 'inny', blad: ''}); }
+    else L.push({nr, typ, rok, id: a.id, skan: s, stan: !s ? 'dobierz' : skanStem(s) === b ? 'ten-sam' : 'inny', blad: '', brak: !!s && skanStem(s) !== b && !SK.pliki.some(f => skanStem(f.name) === skanStem(s))}); }
   return L; }
 // stosuje plan: nowe akty dopisuje (puste, ze skanem), istniejące bez skanu dobiera, z innym skanem – tylko gdy numer jest w zbiorze `zast`
 function skpZastosuj(plan, nazwa, zast, hash){ const R = {dodane: [], dobrane: [], zastapione: [], zostawione: [], blad: ''};
@@ -1461,15 +1462,15 @@ function skpZnajdzPoSumie(a){ const h0 = S.acts[a.id]?.scanH; return h0 && SK.ha
 
 /* app/moduly/ui_skan_akty.js – okno „Skan → akty”: wczytanie pojedynczego skanu, ustawienia folderu (typ, rok, ile aktów na skanie, pierwszy skan z aktami)
    i dopisanie nowych aktów albo dobranie skanu do istniejących. Logika w skan_profil.js; tu tylko DOM. */
-function skanAktyWybierz(){ let i = $('fSkanJeden'); if (!i) { i = document.createElement('input'); i.type = 'file'; i.id = 'fSkanJeden'; i.hidden = true; i.accept = 'image/*'; document.body.appendChild(i);
-    i.onchange = e => { const f = e.target.files[0]; e.target.value = ''; if (f) skanAktyOkno(f); }; } i.click(); }
+function skanAktyWybierz(akt){ let i = $('fSkanJeden'); if (!i) { i = document.createElement('input'); i.type = 'file'; i.id = 'fSkanJeden'; i.hidden = true; i.accept = 'image/*'; document.body.appendChild(i);
+    i.onchange = e => { const f = e.target.files[0]; e.target.value = ''; if (f) skanAktyOkno(f, i.akt); }; } i.akt = akt || null; i.click(); }
 const SP_STAN = {nowy: 'brak w bazie → dopisze nowy akt', dobierz: 'jest w bazie bez skanu → dobierze skan', 'ten-sam': 'jest w bazie, ten skan już przypisany', inny: 'jest w bazie, ma inny skan', blad: ''};
-function skanAktyOkno(plik){ if (!plik) return skanAktyWybierz();
+function skanAktyOkno(plik, akt){ if (!plik) return skanAktyWybierz();
   if (!SK.pliki.some(f => f.name === plik.name)) { SK.pliki.push(plik); SK.kandCache = {}; }
   const klucz = skpKlucz(plik), PR = S.skProf = S.skProf || {}, prof = PR[klucz] || {}, nrp = skpNumerPliku(plik.name), z = skpZeSkanu(plik.name);
-  const typ0 = z ? z.typ : prof.typ || skpTyp(klucz) || D.typ, rok0 = z ? z.rok : prof.rok || skpRok(klucz) || '';
-  const przed = prof.pierwszy != null && nrp != null && nrp < prof.pierwszy, ile0 = z ? z.ile : przed ? 0 : (prof.aktow || 1), od0 = z ? z.od : rok0 ? skpOd(prof, typ0, +rok0, nrp) : '';
-  let hash = '', zast = new Set(); skpHash(plik).then(x => { hash = x; });
+  const typ0 = z ? z.typ : akt ? akt.typ : prof.typ || skpTyp(klucz) || D.typ, rok0 = z ? z.rok : akt ? +akt.year : prof.rok || skpRok(klucz) || '';   // z karty aktu: skan dotyczy oglądanego aktu
+  const przed = !akt && prof.pierwszy != null && nrp != null && nrp < prof.pierwszy, ile0 = z ? z.ile : przed ? 0 : (prof.aktow || 1), od0 = z ? z.od : akt && Number.isFinite(parseInt(akt.act, 10)) ? parseInt(akt.act, 10) : rok0 ? skpOd(prof, typ0, +rok0, nrp) : '';
+  let hash = '', zast = new Set(), ruszone = new Set(); skpHash(plik).then(x => { hash = x; });
   okno('Skan → akty', h`<img id="spImg" alt="Podgląd skanu" style="display:block;max-width:100%;max-height:36vh;margin:0 auto 8px;object-fit:contain;background:var(--skan-bg)">
     <p class="muted">Plik: <b>${plik.name}</b> · skan nr ${nrp == null ? '?' : nrp} · folder / zbiór: <b>${klucz}</b> · ${prof.typ ? 'ustawienia folderu zapamiętane' : 'pierwsze wczytanie z tego folderu'}. Ustawienia (typ aktu = format pól, rok, liczba aktów na skanie, pierwszy skan z aktami) zapamiętają się dla tego folderu, a numer pierwszego aktu na następnym skanie program policzy sam.</p>
     <div class="pola"><div class="pole"><label for="spTyp">Typ aktu (format pól)</label><select id="spTyp">${D.typy.map(t => h`<option value="${t}" ${t === typ0 ? raw('selected') : ''}>${NAZWY_TYPOW[t] || t}</option>`)}</select></div>
@@ -1485,15 +1486,15 @@ function skanAktyOkno(plik){ if (!plik) return skanAktyWybierz();
   const rys = () => { const d = dane(), el = $('spPlan'); $('spBlad').textContent = '';
     if (d.ile === 0) return wstaw(el, h`<p class="muted" id="spPusty">Brak aktów na tym skanie – zapisze się tylko ustawienie folderu (ten skan liczy się jako obsłużony).</p>`);
     if (d.rok == null || d.rok < NOWE_ROK[0] || d.rok > NOWE_ROK[1] || d.od == null || d.od < 1 || d.ile == null) return wstaw(el, h`<p class="muted" id="spPusty">Wpisz rok, numer pierwszego aktu i liczbę aktów na skanie.</p>`);
-    const P = skpPlan(d.typ, d.rok, d.od, d.ile, plik.name);
-    wstaw(el, h`<div class="rtab"><table id="spTab"><tr><th>Nr aktu</th><th>Co zrobi</th><th></th></tr>${P.map(w => h`<tr data-stan="${w.stan}"><td>${w.nr}</td><td>${w.stan === 'blad' ? w.blad : SP_STAN[w.stan]}${w.stan === 'inny' ? ': ' + skanBase(w.skan) : ''}</td><td>${w.stan === 'inny' ? h`<label><input type="checkbox" data-zast="${w.nr}" ${zast.has(w.nr) ? raw('checked') : ''}> zastąp skan</label>` : ''}</td></tr>`)}</table></div>`);
-    el.querySelectorAll('[data-zast]').forEach(c => c.onchange = () => { const n = +c.dataset.zast; if (c.checked) zast.add(n); else zast.delete(n); }); return P; };
+    const P = skpPlan(d.typ, d.rok, d.od, d.ile, plik.name); P.forEach(w => { if (w.brak && !ruszone.has(w.nr)) zast.add(w.nr); });   // skan z bazy, którego nie ma w wczytanych plikach, zastępuje się domyślnie
+    wstaw(el, h`<div class="rtab"><table id="spTab"><tr><th>Nr aktu</th><th>Co zrobi</th><th></th></tr>${P.map(w => h`<tr data-stan="${w.stan}"><td>${w.nr}</td><td>${w.stan === 'blad' ? w.blad : SP_STAN[w.stan]}${w.stan === 'inny' ? ': ' + skanBase(w.skan) + (w.brak ? ' (nie ma go w wczytanych plikach – zostanie zastąpiony tym skanem)' : '') : ''}</td><td>${w.stan === 'inny' ? h`<label><input type="checkbox" data-zast="${w.nr}" ${zast.has(w.nr) ? raw('checked') : ''}> zastąp skan</label>` : ''}</td></tr>`)}</table></div>`);
+    el.querySelectorAll('[data-zast]').forEach(c => c.onchange = () => { const n = +c.dataset.zast; ruszone.add(n); if (c.checked) zast.add(n); else zast.delete(n); }); return P; };
   ['spTyp', 'spRok', 'spNrP', 'spPierw', 'spOd', 'spIle'].forEach(id => $(id).oninput = rys); rys();
   const nastepny = () => { const L = SK.pliki.filter(f => skpKlucz(f) === klucz).sort(skanNat), i = L.findIndex(f => f.name === plik.name); if (i >= 0 && L[i + 1]) return skanAktyOkno(L[i + 1]); toast('To ostatni wczytany skan tego folderu – wskaż następny'); skanAktyWybierz(); };
   const zastosuj = (nast, bez) => { const d = dane(); if (bez) d.ile = 0; if (d.ile == null) return void ($('spBlad').textContent = 'Wpisz liczbę aktów na skanie (0, jeśli brak).');
     let R = {dodane: [], dobrane: [], zastapione: [], zostawione: []};
     if (d.ile > 0) { if (d.rok == null || d.rok < NOWE_ROK[0] || d.rok > NOWE_ROK[1] || d.od == null || d.od < 1) return void ($('spBlad').textContent = 'Wpisz rok (cztery cyfry) i numer pierwszego aktu na skanie.');
-      const P = skpPlan(d.typ, d.rok, d.od, d.ile, plik.name), b = P.find(w => w.stan === 'blad'); if (b) return void ($('spBlad').textContent = 'Akt nr ' + b.nr + ': ' + b.blad); R = skpZastosuj(P, plik.name, zast, hash); if (R.blad) return void ($('spBlad').textContent = R.blad); }
+      const P = skpPlan(d.typ, d.rok, d.od, d.ile, plik.name); P.forEach(w => { if (w.brak && !ruszone.has(w.nr)) zast.add(w.nr); }); const b = P.find(w => w.stan === 'blad'); if (b) return void ($('spBlad').textContent = 'Akt nr ' + b.nr + ': ' + b.blad); R = skpZastosuj(P, plik.name, zast, hash); if (R.blad) return void ($('spBlad').textContent = R.blad); }
     const nowszy = d.nrP != null && (prof.ostPlik == null || d.nrP >= prof.ostPlik);   // wcześniejszy skan nie cofa licznika „ostatni skan / ostatni akt”
     PR[klucz] = Object.assign({}, prof, {typ: d.typ, rok: d.rok || prof.rok, aktow: d.ile > 0 ? d.ile : prof.aktow || 1, pierwszy: d.pierw != null ? d.pierw : d.ile > 0 && d.nrP != null ? d.nrP : prof.pierwszy == null ? null : prof.pierwszy});
     if (nowszy) { PR[klucz].ostPlik = d.nrP; if (d.ile > 0) { PR[klucz].ostNr = d.od + d.ile - 1; PR[klucz].ostRok = d.rok; PR[klucz].ostTyp = d.typ; } }
@@ -2169,8 +2170,9 @@ function skanBudujIndeks(lista){ const M = {};
       for (let n = +m[1]; n <= +m[2]; n++) { const k = rok + '|' + n; if (!(k in M)) M[k] = base; } } });
   return M; }
 const skanBase = p => String(p).split(/[\\/]/).pop().toLowerCase();
-function skanZnajdz(a){ const p = skanSciezka(a); if (!p || !SK.pliki.length) return null; const C0 = SK.pliki.filter(f => f.name.toLowerCase() === skanBase(p)); if (!C0.length) { const po = typeof skpZnajdzPoSumie === 'function' && skpZnajdzPoSumie(a); if (po) return po; } const b = skanBase(p), seg = p.toLowerCase().split(/[\\/]/).reverse();
-  const C = SK.pliki.filter(f => f.name.toLowerCase() === b); if (!C.length) return null; if (C.length === 1) return C[0];
+const skanStem = p => skanBase(p).replace(/\.(jpe?g|png|webp|gif|bmp|tiff?)$/i, '');   // dane często mają nazwę skanu bez rozszerzenia („M1944_01”), a plik – z rozszerzeniem
+function skanZnajdz(a){ const p = skanSciezka(a); if (!p || !SK.pliki.length) return null; const C0 = SK.pliki.filter(f => skanStem(f.name) === skanStem(p)); if (!C0.length) { const po = typeof skpZnajdzPoSumie === 'function' && skpZnajdzPoSumie(a); if (po) return po; } const b = skanBase(p), seg = p.toLowerCase().split(/[\\/]/).reverse();
+  const C = SK.pliki.filter(f => skanStem(f.name) === skanStem(b)); if (!C.length) return null; if (C.length === 1) return C[0];
   const wsp = f => { const s = (f.webkitRelativePath || f.name).toLowerCase().split('/').reverse(); let n = 0; while (n < s.length && n < seg.length && s[n] === seg[n]) n++; return n; };
   return C.slice().sort((x, y) => wsp(y) - wsp(x))[0]; }
 /* Akt bez adresu skanu: strony-kandydaci z wybranego folderu. Najpierw pliki, których ścieżka zawiera dokładnie rok aktu (np. „Z 1814”), a gdy ich nie ma – pliki z folderu o zakresie lat obejmującym rok („1847-1872 USC”).
@@ -2254,7 +2256,7 @@ function skanOknoPodlacz(){ const W = $('skWin'), head = $('skHead'); if (!W || 
     const kon = () => { head.onpointermove = null; head.onpointerup = null; head.onpointercancel = null; }; head.onpointerup = kon; head.onpointercancel = kon; }; }
 function skanPodlacz(a){ if (!$('skFolder')) return;
   $('skFolder').onclick = () => $('fSkany').click(); $('skTryb').onchange = e => { SK.tryb = e.target.value; skanRysuj(); const t = $('skPole'); if (t) t.textContent = SK.tryb === 'pole' ? 'Kliknij pole formularza, potem narysuj ramkę na skanie.' : ''; };
-  $('skIn').onclick = () => skanZoom(1.3); $('skOut').onclick = () => skanZoom(1 / 1.3); $('skFit').onclick = () => skanDopasuj(roiOf(a)); if ($('skSlow')) $('skSlow').onclick = () => slowOkno(); $('skAktyOkno').onclick = () => { const pl = skanPlik(a); if (pl) skanAktyOkno(pl); else skanAktyWybierz(); };
+  $('skIn').onclick = () => skanZoom(1.3); $('skOut').onclick = () => skanZoom(1 / 1.3); $('skFit').onclick = () => skanDopasuj(roiOf(a)); if ($('skSlow')) $('skSlow').onclick = () => slowOkno(); $('skAktyOkno').onclick = () => { const pl = skanPlik(a) || (SK.pliki.length === 1 ? SK.pliki[0] : null); if (pl) skanAktyOkno(pl, a); else skanAktyWybierz(a); };
   $('skRoiDel').onclick = () => { const s = st(a.id); delete s.roi; save(); keepScroll(); toast('Przywrócono ROI z danych'); };
   const kand = skanKandydat(a);
   if (kand) { const idz = d => { SK.kandI[a.id] = kand.i + d; SK.v.key = ''; skanWinRender(a); }; $('skKPrev').onclick = () => idz(-1); $('skKNext').onclick = () => idz(1);

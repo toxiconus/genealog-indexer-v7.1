@@ -13,7 +13,7 @@ function skpTyp(klucz){ const k = String(klucz).toLowerCase(); if (/zgon|zmar|mo
 function skpRok(klucz){ const m = String(klucz).match(/(?:^|\D)(1[5-9]\d\d)(?!\d)/); return m ? +m[1] : ''; }
 const skpAkt = (typ, rok, nr) => D.wszystkie.find(x => x.typ === typ && !x.parafia && +x.year === rok && String(x.act).toLowerCase() === String(nr));
 // akty, które już mają ten skan przypisany ręcznie (wtedy okno podpowiada ich zakres)
-function skpZeSkanu(nazwa){ const b = skanBase(nazwa), L = D.wszystkie.filter(a => !a.parafia && S.acts[a.id]?.scan && skanBase(S.acts[a.id].scan) === b); if (!L.length) return null;
+function skpZeSkanu(nazwa){ const b = skanStem(nazwa), L = D.wszystkie.filter(a => !a.parafia && S.acts[a.id]?.scan && skanStem(S.acts[a.id].scan) === b); if (!L.length) return null;
   const typ = L[0].typ, rok = +L[0].year, N = L.filter(a => a.typ === typ && +a.year === rok).map(a => parseInt(a.act, 10)).filter(Number.isFinite); if (!N.length) return null;
   return {typ, rok, od: Math.min(...N), ile: Math.min(SKP_MAX, Math.max(...N) - Math.min(...N) + 1)}; }
 // domyślny numer pierwszego aktu na skanie nr `nrPliku`
@@ -21,10 +21,11 @@ function skpOd(prof, typ, rok, nrPliku){ prof = prof || {};
   if (prof.ostNr != null && prof.ostRok === rok && prof.ostTyp === typ && prof.ostPlik != null && nrPliku != null && nrPliku > prof.ostPlik) return prof.ostNr + 1;
   if (prof.nrPierwszego != null && prof.ostPlik == null) return prof.nrPierwszego;
   const L = D.wszystkie.filter(x => x.typ === typ && !x.parafia && +x.year === rok).map(x => parseInt(x.act, 10)).filter(Number.isFinite); return L.length ? Math.max(...L) + 1 : 1; }
-function skpPlan(typ, rok, od, ile, nazwa){ const L = [], b = skanBase(nazwa);
+/* w planie: brak = skan z bazy, którego nie ma w wczytanych plikach */
+function skpPlan(typ, rok, od, ile, nazwa){ const L = [], b = skanStem(nazwa);
   for (let i = 0; i < ile; i++) { const nr = od + i, a = skpAkt(typ, rok, nr), s = a ? skanKlucz(a) : '';
     if (!a) { const w = nowySprawdz(typ, String(rok), String(nr)); L.push({nr, typ, rok, id: '', skan: '', stan: w.ok ? 'nowy' : 'blad', blad: w.ok ? '' : w.blad}); }
-    else L.push({nr, typ, rok, id: a.id, skan: s, stan: !s ? 'dobierz' : skanBase(s) === b ? 'ten-sam' : 'inny', blad: ''}); }
+    else L.push({nr, typ, rok, id: a.id, skan: s, stan: !s ? 'dobierz' : skanStem(s) === b ? 'ten-sam' : 'inny', blad: '', brak: !!s && skanStem(s) !== b && !SK.pliki.some(f => skanStem(f.name) === skanStem(s))}); }
   return L; }
 // stosuje plan: nowe akty dopisuje (puste, ze skanem), istniejące bez skanu dobiera, z innym skanem – tylko gdy numer jest w zbiorze `zast`
 function skpZastosuj(plan, nazwa, zast, hash){ const R = {dodane: [], dobrane: [], zastapione: [], zostawione: [], blad: ''};

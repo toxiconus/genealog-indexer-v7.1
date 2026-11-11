@@ -48,6 +48,18 @@ let ok = 0; const pass = m => { ok++; console.log('OK  ' + m); };
   // 8. rozpoznanie po sumie kontrolnej przy zmienionej nazwie pliku
   const r = await p.evaluate(async buf => { const bytes = Uint8Array.from(atob(buf), c => c.charCodeAt(0)), f = new File([bytes], 'zupelnie_inna_nazwa.png', { type: 'image/png' }); const id = Object.keys(S.acts).find(k => S.acts[k].scanH && S.acts[k].scan === 'malzenstwa_1944_0003.png'); skanWybierzFolder([f]); await new Promise(r => setTimeout(r, 500)); const a = AM[id]; const z = skanZnajdz(a); return { id: !!id, z: z && z.name }; }, PNG[1].toString('base64'));
   assert(r.id, 'brak aktu z sumą'); assert.strictEqual(r.z, 'zupelnie_inna_nazwa.png'); pass('skan zmienionej nazwy rozpoznany po sumie kontrolnej zawartości');
+  // 8b. nazwa skanu w danych bez rozszerzenia („M1944_01”) i plik z rozszerzeniem: skan się znajduje, okno z karty aktu proponuje właśnie ten akt
+  await p.click('#zAkty'); const idA = await p.evaluate(() => { const a = D.wszystkie.find(a => a.typ === 'malzenstwo' && !a.parafia && !a.nowy); st(a.id).scan = 'M1944_01'; save(); return a.id; });
+  const znal = await p.evaluate(async ({ buf, id }) => { const f = new File([Uint8Array.from(atob(buf), c => c.charCodeAt(0))], 'M1944_01.jpg', { type: 'image/jpeg' }); skanWybierzFolder([f]); osOtworzAkt('w:' + id + ':x'); renderAkt(); const z = skanZnajdz(AM[id]); return z && z.name; }, { buf: PNG[0].toString('base64'), id: idA });
+  assert.strictEqual(znal, 'M1944_01.jpg'); assert.strictEqual(await p.locator('#skStan').count(), 0, 'komunikat „nie znaleziono pliku” mimo pasującego pliku');
+  await p.click('#skAktyOkno'); await p.waitForSelector('#spTyp'); const aA = await p.evaluate(id => ({ nr: String(parseInt(AM[id].act, 10)), rok: String(AM[id].year) }), idA);
+  assert.strictEqual(await p.inputValue('#spOd'), aA.nr); assert.strictEqual(await p.inputValue('#spRok'), aA.rok); assert.strictEqual(await p.evaluate(() => document.querySelector('#spTab tr[data-stan]').dataset.stan), 'ten-sam');
+  pass('skan z nazwą bez rozszerzenia w danych: znaleziony, a okno z karty aktu dotyczy oglądanego aktu (' + aA.rok + ' nr ' + aA.nr + ')');
+  // 8c. plik o zupełnie innej nazwie: skan z bazy, którego nie ma w wczytanych plikach, zostaje domyślnie zastąpiony wczytanym
+  await p.click('#oknoX'); await p.evaluate(buf => { const f = new File([Uint8Array.from(atob(buf), c => c.charCodeAt(0))], 'IMG_77.png', { type: 'image/png' }); skanWybierzFolder([f]); renderAkt(); }, PNG[2].toString('base64'));
+  await p.click('#skAktyOkno'); await p.waitForSelector('#spTab'); assert.strictEqual(await p.evaluate(() => document.querySelector('#spTab tr[data-stan]').dataset.stan), 'inny'); assert.strictEqual(await p.locator('[data-zast]').isChecked(), true);
+  await p.click('#spZastosuj'); await p.waitForFunction(() => document.getElementById('okno').hidden === true); assert.strictEqual(await p.evaluate(id => skanKlucz(AM[id]), idA), 'IMG_77.png');
+  pass('plik o innej nazwie: skan z bazy, którego nie ma w wczytanych plikach, zastąpiony wczytanym (zaznaczone domyślnie)');
   // 9. zapis trwały: po przeładowaniu zostają nowy akt, skan i profil folderu
   await p.evaluate(() => save()); await p.waitForTimeout(800); await p.reload(); await p.waitForFunction('GOTOWE === true', null, { timeout: 60000 });
   const tr = await p.evaluate(nm0 => ({ prof: !!(S.skProf && S.skProf['malzenstwa_1944']), nowy: !!D.wszystkie.find(a => a.nowy && a.typ === 'malzenstwo' && +a.year === nm0.rok && String(a.act) === String(nm0.m + 1)) }), nm); assert(tr.prof && tr.nowy, JSON.stringify(tr));

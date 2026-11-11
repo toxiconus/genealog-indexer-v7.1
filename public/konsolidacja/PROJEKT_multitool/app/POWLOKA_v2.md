@@ -52,3 +52,5 @@ Enter (następne pole), Alt+J / Alt+K (następny / poprzedni akt), Ctrl+Enter (n
 - Plan skanu: brak aktu w bazie → dopisze nowy (pusty, ze skanem); akt bez skanu → dobierze skan; akt z innym skanem → bez zmian, chyba że zaznaczono „zastąp skan”. Skan bez aktów (okładka) – „Ten skan bez aktów, następny”.
 - Suma kontrolna (SHA-256, 16 znaków) zapisuje się przy aktach (`scanH`; IndexedDB i kopia pełna). Skan o zmienionej nazwie rozpozna się po zawartości po wybraniu folderu (indeks sum liczony w tle). Zmieni ją dopiero ponowny zapis obrazu (przeskalowanie, kompresja).
 - Test: `test/test_krok8_skan_akty.cjs` (10 kontroli).
+- Nazwa skanu w danych bywa bez rozszerzenia („M1944_01”), a plik ma rozszerzenie – porównanie nazw pomija rozszerzenie (`skanStem`).
+- Okno otwarte z karty aktu dotyczy oglądanego aktu (typ, rok, numer). Skan z bazy, którego nie ma w wczytanych plikach, jest domyślnie zastępowany wczytanym (pole „zastąp skan” zaznaczone, można odznaczyć; przypisanie cofa „Zmień / usuń przypisanie”). Test: 12 kontroli.

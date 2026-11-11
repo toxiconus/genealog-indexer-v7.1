@@ -14,8 +14,9 @@ function skanBudujIndeks(lista){ const M = {};
       for (let n = +m[1]; n <= +m[2]; n++) { const k = rok + '|' + n; if (!(k in M)) M[k] = base; } } });
   return M; }
 const skanBase = p => String(p).split(/[\\/]/).pop().toLowerCase();
-function skanZnajdz(a){ const p = skanSciezka(a); if (!p || !SK.pliki.length) return null; const C0 = SK.pliki.filter(f => f.name.toLowerCase() === skanBase(p)); if (!C0.length) { const po = typeof skpZnajdzPoSumie === 'function' && skpZnajdzPoSumie(a); if (po) return po; } const b = skanBase(p), seg = p.toLowerCase().split(/[\\/]/).reverse();
-  const C = SK.pliki.filter(f => f.name.toLowerCase() === b); if (!C.length) return null; if (C.length === 1) return C[0];
+const skanStem = p => skanBase(p).replace(/\.(jpe?g|png|webp|gif|bmp|tiff?)$/i, '');   // dane często mają nazwę skanu bez rozszerzenia („M1944_01”), a plik – z rozszerzeniem
+function skanZnajdz(a){ const p = skanSciezka(a); if (!p || !SK.pliki.length) return null; const C0 = SK.pliki.filter(f => skanStem(f.name) === skanStem(p)); if (!C0.length) { const po = typeof skpZnajdzPoSumie === 'function' && skpZnajdzPoSumie(a); if (po) return po; } const b = skanBase(p), seg = p.toLowerCase().split(/[\\/]/).reverse();
+  const C = SK.pliki.filter(f => skanStem(f.name) === skanStem(b)); if (!C.length) return null; if (C.length === 1) return C[0];
   const wsp = f => { const s = (f.webkitRelativePath || f.name).toLowerCase().split('/').reverse(); let n = 0; while (n < s.length && n < seg.length && s[n] === seg[n]) n++; return n; };
   return C.slice().sort((x, y) => wsp(y) - wsp(x))[0]; }
 /* Akt bez adresu skanu: strony-kandydaci z wybranego folderu. Najpierw pliki, których ścieżka zawiera dokładnie rok aktu (np. „Z 1814”), a gdy ich nie ma – pliki z folderu o zakresie lat obejmującym rok („1847-1872 USC”).
@@ -99,7 +100,7 @@ function skanOknoPodlacz(){ const W = $('skWin'), head = $('skHead'); if (!W || 
     const kon = () => { head.onpointermove = null; head.onpointerup = null; head.onpointercancel = null; }; head.onpointerup = kon; head.onpointercancel = kon; }; }
 function skanPodlacz(a){ if (!$('skFolder')) return;
   $('skFolder').onclick = () => $('fSkany').click(); $('skTryb').onchange = e => { SK.tryb = e.target.value; skanRysuj(); const t = $('skPole'); if (t) t.textContent = SK.tryb === 'pole' ? 'Kliknij pole formularza, potem narysuj ramkę na skanie.' : ''; };
-  $('skIn').onclick = () => skanZoom(1.3); $('skOut').onclick = () => skanZoom(1 / 1.3); $('skFit').onclick = () => skanDopasuj(roiOf(a)); if ($('skSlow')) $('skSlow').onclick = () => slowOkno(); $('skAktyOkno').onclick = () => { const pl = skanPlik(a); if (pl) skanAktyOkno(pl); else skanAktyWybierz(); };
+  $('skIn').onclick = () => skanZoom(1.3); $('skOut').onclick = () => skanZoom(1 / 1.3); $('skFit').onclick = () => skanDopasuj(roiOf(a)); if ($('skSlow')) $('skSlow').onclick = () => slowOkno(); $('skAktyOkno').onclick = () => { const pl = skanPlik(a) || (SK.pliki.length === 1 ? SK.pliki[0] : null); if (pl) skanAktyOkno(pl, a); else skanAktyWybierz(a); };
   $('skRoiDel').onclick = () => { const s = st(a.id); delete s.roi; save(); keepScroll(); toast('Przywrócono ROI z danych'); };
   const kand = skanKandydat(a);
   if (kand) { const idz = d => { SK.kandI[a.id] = kand.i + d; SK.v.key = ''; skanWinRender(a); }; $('skKPrev').onclick = () => idz(-1); $('skKNext').onclick = () => idz(1);
