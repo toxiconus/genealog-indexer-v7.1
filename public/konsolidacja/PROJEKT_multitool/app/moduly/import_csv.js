@@ -1,7 +1,7 @@
 /* app/moduly/import_csv.js – import CSV zatwierdzeń zgonów (ZGONY_zweryfikowane_*.csv) z walidacją i podglądem (PLAN_WDROZENIA §2.4, krok 3).
    Logika wczytania pól i aktów jest przeniesiona z `fVer` w weryfikacja_szablon_v3.html. Różnice: (1) id z pliku mapowane przez id dawne (idx-…, asc-…, ai1-…, lm-…) na id modelu;
    (2) etap „analiza” nie zmienia stanu (próba na kopii S), zapis dopiero po potwierdzeniu, po migawce; (3) nieznane id i błędne wiersze są wypisane, reszta przechodzi.
-   NIE przeniesione: dopasowanie tekstu aktu do zatwierdzonych pól po imporcie (fixAllTexts/textSugs – silnik tokenów tekstu, do kroku „tryby tekstu”). */
+   fixAllTexts (dopasowanie tekstu aktu do zatwierdzonych pól po imporcie) jest przeniesione razem z silnikiem tokenów tekstu (akt_zgon.js), bez interfejsu trybów tekstu. */
 const CSV_ID_MAX = 80;
 function csvMapaId(){ const m = {}; D.acts.forEach(a => { m[a.id] = a; (a.model?.id_dawne || []).forEach(o => { if (!m[o]) m[o] = a; }); if (a.stary) m[a.stary] = a; }); return m; }
 // rozpoznanie + walidacja nagłówka i wierszy (bez zmiany stanu)
@@ -27,7 +27,8 @@ function csvImportStosuj(w, ovw){ const ix = w.ix; let nA = 0, nF = 0, nSkip = 0
     if (n) { nA++; nF += n; if (ok && !s2.done) { s2.done = true; nOk++; } } });
   D.acts.forEach(a => { if ((a.ai || a.lub) && minor(a) && st(a.id).f.deceased_status?.v !== 'dziecko') st(a.id).f.deceased_status = {v:'dziecko', src:'edit', ok:true}; });
   D.acts.forEach(a => autoResolve(a));
-  return {aktow: nA, pol: nF, pominieteOk: nSkip, zatwierdzone: nOk, konflikty: konf}; }
+  const nT = fixAllTexts();   // dopasowanie tekstu aktu do zatwierdzonych pól (v3: ten sam krok po imporcie)
+  return {aktow: nA, pol: nF, pominieteOk: nSkip, zatwierdzone: nOk, konflikty: konf, tekstow: nT}; }
 // podgląd: ta sama operacja na kopii stanu (S i D.scanFiles przywracane); nic nie jest zapisywane
 function csvImportPodglad(w, ovw){ const bakS = S, bakSF = D.scanFiles, bakH = S.hist; let r; try { S = structuredClone(S); D.scanFiles = JSON.parse(JSON.stringify(D.scanFiles || {})); r = csvImportStosuj(w, ovw); } finally { S = bakS; D.scanFiles = bakSF; } return r; }
 async function csvImportZapisz(w, ovw, nazwa){ await kopiaMigawka('przed importem CSV: ' + (nazwa || '')); HIST_WHY = 'import CSV: ' + (nazwa || '') + (ovw ? ' (zastąp)' : ' (dopisz)'); const r = csvImportStosuj(w, ovw); save(); HIST_WHY = null; await stFlush(true); return r; }

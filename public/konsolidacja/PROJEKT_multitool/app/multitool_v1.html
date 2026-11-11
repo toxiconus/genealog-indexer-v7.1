@@ -47,6 +47,20 @@ function csvCell(v){ v = String(v ?? ''); return /[;"\n\r]/.test(v) ? '"' + v.re
 function dl(name, text, type, bom){ type = type || 'text/csv'; if (bom === undefined) bom = !name.endsWith('.ged');
   const b = new Blob([bom ? '﻿' : '', text], {type: type + ';charset=utf-8'}), u = URL.createObjectURL(b), l = document.createElement('a'); l.href = u; l.download = name; document.body.appendChild(l); l.click(); l.remove(); setTimeout(() => URL.revokeObjectURL(u), 4000); }
 
+/* wspolne/historia.js – wspólna historia zmian z możliwością cofnięcia (czyste funkcje, bez DOM).
+   Stan: acts = { idAktu: { f:{pole:{...}}, text, done, qs:{klucz:'skip'} } }. Migawka → różnice → wpisy {id,k,f,before,after}. */
+function histSnap(acts){ const o = {}; for (const id in acts) { const a = acts[id] || {}; for (const f in (a.f || {})) o[id + '|f|' + f] = JSON.stringify(a.f[f]); if (a.text != null) o[id + '|text'] = String(a.text); if (a.done) o[id + '|done'] = '1'; for (const k in (a.qs || {})) o[id + '|q|' + k] = String(a.qs[k]); } return o; }
+function histDiff(prev, cur){ const out = [], keys = new Set([...Object.keys(prev), ...Object.keys(cur)]); keys.forEach(k => { if (prev[k] !== cur[k]) { const p = k.split('|'); out.push({id:p[0], k:p[1], f:p.slice(2).join('|'), before:prev[k] ?? null, after:cur[k] ?? null}); } }); return out; }
+// cofnięcie wpisu: przywraca stan „przed” w acts
+function histApply(acts, e){ const a = acts[e.id] = acts[e.id] || {f:{}, done:false}; a.f = a.f || {};
+  if (e.k === 'f') { if (e.before == null) delete a.f[e.f]; else a.f[e.f] = JSON.parse(e.before); }
+  else if (e.k === 'text') { if (e.before == null) delete a.text; else a.text = e.before; }
+  else if (e.k === 'done') a.done = e.before != null;
+  else if (e.k === 'q') { a.qs = a.qs || {}; if (e.before == null) delete a.qs[e.f]; else a.qs[e.f] = e.before; } }
+function histCsv(list){ return ['nr;czas;akt;rodzaj;pole;przed;po;powod'].concat(list.map(e => [e.n, e.t, e.id, e.k, e.f, e.before ?? '', e.after ?? '', e.why || ''].map(csvCell).join(';'))).join('\r\n') + '\r\n'; }
+
+/* app/moduly/raport_zgonow.js – kopia wspolne/raport.js Z POPRAWKĄ zgodną z v3/bazą zgonów: dziecko z zawodem „agricola” nie jest ostrzeżeniem (KONTROLE A-09).
+   wspolne/raport.js nie ma tej poprawki (rozjazd wersji wykryty testem parytetu kroku 3); nie nadpisano go – do decyzji, czy zsynchronizować. */
 /* wspolne/raport.js – raport spójności aktów zgonu (czyste funkcje, bez DOM).
    Wiersz: {id, year, num, last, first, sex('M'|'K'|''), death('RRRR-MM-DD'), act('RRRR-MM-DD'), ageText, status, spouse, job, father, mother, maiden, resid}
    Zwraca listę {id, sev:'err'|'warn'|'info', code, msg, rel:[id,...]}. Brak pola = test pomijany. */
@@ -67,7 +81,7 @@ function raportSpojnosci(rows, opt){ opt = opt || {}; const out = []; const add 
     if (age !== null && age > 110) add(r, 'warn', 'wiek-duzy', 'Wiek „' + r.ageText + '” wygląda na zbyt duży.');
     if (age !== null && age < 15 && /zonat|zamezn|wdow/.test(st)) add(r, 'err', 'wiek-stan', 'Wiek „' + r.ageText + '” i stan „' + r.status + '” się wykluczają.');
     if (age !== null && age < 18 && /wdow/.test(st)) add(r, 'warn', 'wiek-wdowiec', 'Wdowa/wdowiec w wieku „' + r.ageText + '”.');
-    if (age !== null && age < 15) { if (fold(r.job || '').trim()) add(r, 'warn', 'dziecko-zawod', 'Dziecko (wiek „' + r.ageText + '”) ma wpisany zawód: ' + r.job + '.'); if (r.spouse) add(r, 'warn', 'dziecko-malzonek', 'Dziecko ma wpisanego małżonka.'); if (!r.father && !r.mother) add(r, 'info', 'dziecko-rodzice', 'Dziecko bez wpisanych rodziców.'); }
+    if (age !== null && age < 15) { if (fold(r.job || '').trim() && !/^agricola/i.test(String(r.job).trim())) add(r, 'warn', 'dziecko-zawod', 'Dziecko (wiek „' + r.ageText + '”) ma wpisany zawód: ' + r.job + '.'); if (r.spouse) add(r, 'warn', 'dziecko-malzonek', 'Dziecko ma wpisanego małżonka.'); if (!r.father && !r.mother) add(r, 'info', 'dziecko-rodzice', 'Dziecko bez wpisanych rodziców.'); }
     if (/panna|kawaler/.test(st) && r.spouse) add(r, 'warn', 'stan-malzonek', 'Stan „' + r.status + '” ale wpisany małżonek: ' + r.spouse + '.');
     if (r.sex === 'M' && r.maiden) add(r, 'warn', 'mezczyzna-rodowe', 'Mężczyzna z nazwiskiem rodowym („' + r.maiden + '”) – nazwisko powinno być rodowe, chyba że wyjątek.');
     if (first && r.sex) { const f = fold(first.split(/\s+/)[0]); if (r.sex === 'M' && /a$/.test(f) && !RAP_M_A.test(first.split(/\s+/)[0])) add(r, 'warn', 'plec-imie', 'Płeć M, ale imię „' + first + '” brzmi żeńsko.'); if (r.sex === 'K' && !/a$/.test(f)) add(r, 'warn', 'plec-imie', 'Płeć K, ale imię „' + first + '” brzmi męsko.'); }
@@ -84,18 +98,6 @@ function raportSpojnosci(rows, opt){ opt = opt || {}; const out = []; const add 
     Object.values(g).forEach(L => { if (L.length > 1) L.forEach(r => add(r, 'warn', 'duplikat-rok', 'Możliwy duplikat (to samo nazwisko, imię, wiek, rok i miejsce): ' + L.filter(x => x !== r).map(x => x.id).join(', ') + '.', L.filter(x => x !== r).map(x => x.id))); }); }
   return out; }
 function raportCsv(items, label){ return ['id;waga;kod;opis;powiazane'].concat(items.map(i => [i.id, i.sev, i.code, i.msg, (i.rel || []).join(' ')].map(csvCell).join(';'))).join('\r\n') + '\r\n'; }
-
-/* wspolne/historia.js – wspólna historia zmian z możliwością cofnięcia (czyste funkcje, bez DOM).
-   Stan: acts = { idAktu: { f:{pole:{...}}, text, done, qs:{klucz:'skip'} } }. Migawka → różnice → wpisy {id,k,f,before,after}. */
-function histSnap(acts){ const o = {}; for (const id in acts) { const a = acts[id] || {}; for (const f in (a.f || {})) o[id + '|f|' + f] = JSON.stringify(a.f[f]); if (a.text != null) o[id + '|text'] = String(a.text); if (a.done) o[id + '|done'] = '1'; for (const k in (a.qs || {})) o[id + '|q|' + k] = String(a.qs[k]); } return o; }
-function histDiff(prev, cur){ const out = [], keys = new Set([...Object.keys(prev), ...Object.keys(cur)]); keys.forEach(k => { if (prev[k] !== cur[k]) { const p = k.split('|'); out.push({id:p[0], k:p[1], f:p.slice(2).join('|'), before:prev[k] ?? null, after:cur[k] ?? null}); } }); return out; }
-// cofnięcie wpisu: przywraca stan „przed” w acts
-function histApply(acts, e){ const a = acts[e.id] = acts[e.id] || {f:{}, done:false}; a.f = a.f || {};
-  if (e.k === 'f') { if (e.before == null) delete a.f[e.f]; else a.f[e.f] = JSON.parse(e.before); }
-  else if (e.k === 'text') { if (e.before == null) delete a.text; else a.text = e.before; }
-  else if (e.k === 'done') a.done = e.before != null;
-  else if (e.k === 'q') { a.qs = a.qs || {}; if (e.before == null) delete a.qs[e.f]; else a.qs[e.f] = e.before; } }
-function histCsv(list){ return ['nr;czas;akt;rodzaj;pole;przed;po;powod'].concat(list.map(e => [e.n, e.t, e.id, e.k, e.f, e.before ?? '', e.after ?? '', e.why || ''].map(csvCell).join(';'))).join('\r\n') + '\r\n'; }
 
 /* app/moduly/dane_adapter.js – adapter Pole (model danych) ↔ a.ai / a.lub / a.unc silnika weryfikacji zgonów (krok 3).
    Silnik (akt_zgon.js) nadal czyta obiekt „akt” w układzie v3: {id, year, act, ai, lub, unc, alts, file, roi, pola, tekst, lubRaw, lubName, era}.
@@ -297,6 +299,58 @@ const missingAudit = (a, FS) => {
 const lubOnly = (a, FS) => a.lub ? FS.filter(f => { const lv = clean(a.lub[f.id]); if (!lv) return false; const x = st(a.id).f[f.id]; if (x?.ok || x?.skip) return false; const cur = x ? clean(x.v) : clean(a.ai?.[f.id]); return !cur || fold(cur) !== fold(lv); }) : [];
 const txtOf = a => { const s = S.acts[a.id]; return s && s.text != null ? s.text : (a.tekst || ''); };
 
+// ---- silnik tekstu aktu potrzebny przy zatwierdzaniu pól (commit → applyWitText) i po imporcie (fixAllTexts); BEZ interfejsu trybów tekstu
+function applyWitText(a, f){ const t = txtOf(a); if (!t) return; const L = textSugs(a, fieldsOf(a), t).filter(x => x.f === f).sort((x, y) => y.i - x.i); if (!L.length) return; let r = t; L.forEach(x => { r = r.slice(0, x.i) + x.to + r.slice(x.e); }); st(a.id).text = r === (a.tekst||'') ? undefined : r; if (r === (a.tekst||'')) delete st(a.id).text; save(); }
+function textSugs(a, FS, t){ const s = st(a.id), out = [], toks = assignTok(a, t, FS), okf = f => { const fx = s.f[f]; return fx && fx.ok && !fx.skip ? clean(fx.v) : ''; };
+  const spans = []; const mm = t.match(/Staw(?:ili|ił)\s+się:?\s+/i);
+  if (mm) { const st0 = mm.index + mm[0].length, cm = t.indexOf(',', st0); if (cm > st0) { const seg = t.slice(st0, cm), parts = []; let pos = 0; seg.split(/(\s+i\s+)/).forEach(pt => { if (!/^\s+i\s+$/.test(pt)) parts.push({s:st0 + pos, e:st0 + pos + pt.length, txt:pt}); pos += pt.length; });
+      ['informant1','informant2'].forEach((f, k) => { const val = okf(f).split(',')[0].trim(), pt = parts[k]; if (!val || !pt || parts.length !== 2 && k) return; const bare = pt.txt.replace(/\[[^\]]*\]/g, '').replace(/\s+/g, ' ').trim();
+        const covered = toks.some(x => x.f === f && !x.vr && x.i >= pt.s && x.e <= pt.e); if (fold(bare) !== fold(val) && (/\[/.test(pt.txt) || !covered)) spans.push({i:pt.s, e:pt.e, from:pt.txt, to:val, f}); }); } }
+  const inSpan = x => spans.some(q => x.i >= q.i && x.e <= q.e);
+  toks.forEach(x => { const fx = s.f[x.f]; if (x.vr && fx?.ok && !fx.skip && !inSpan(x)) out.push({i:x.i, e:x.e, from:x.w, to:inflTo(x.w, x.fw), f:x.f}); });
+  spans.forEach(q => out.push(q));
+  const gm = t.match(/godzinie\s+(\[nieczytelne\]|\[niecz\.\])/i), tm = okf('death_time').match(/^(\d{1,2})(?::(\d\d))?$/);
+  if (gm && tm) { const i = gm.index + gm[0].length - gm[1].length; out.push({i, e:i + gm[1].length, from:gm[1], to:normTime(tm[1] + (tm[2] ? ':' + tm[2] : '')), f:'death_time'}); }
+  return out.sort((x, y) => x.i - y.i); }
+function witParts(t){ const mm = (t||'').match(/Staw(?:ili|ił)\s+się:?\s+/i); if (!mm) return null; const st0 = mm.index + mm[0].length, cm = t.indexOf(',', st0); if (cm <= st0) return null; const parts = []; let pos = 0; t.slice(st0, cm).split(/(\s+i\s+)/).forEach(pt => { if (!/^\s+i\s+$/.test(pt)) parts.push({s:st0 + pos, e:st0 + pos + pt.length, txt:pt}); pos += pt.length; }); return parts; }
+function syncWitnesses(a, oldT, newT){ if (a.kind) return; const po = witParts(oldT), pn = witParts(newT); if (!pn || pn.length > 2) return; const s2 = st(a.id), done = [];
+  ['informant1','informant2'].forEach((f, k) => { const n = pn[k]; if (!n || (pn.length === 1 && k)) return; const o = po && po[k] ? po[k].txt : null; if (o !== null && o === n.txt) return;
+    const name = n.txt.replace(/\s+/g, ' ').trim(); if (/[\[\]?]/.test(name) || name.split(' ').filter(w => w.length > 1).length < 2) return;
+    const x = s2.f[f]; if (x && (x.ok || x.skip)) return; const cur = clean(getv(a, f)).replace(/\?$/, '').trim(); if (fold(cur) === fold(name)) return;
+    s2.f[f] = {v:name, src:'txt', ok:true, unc:false, note:x?.note}; done.push(f); });
+  if (done.length) { save(); toast('Świadkowie z tekstu zapisani do pól: ' + done.map(f => f.slice(-1)).join(', ')); } }
+function assignTok(a, t, FS){ const toks = []; const re = /[\p{L}]+/gu; let m; while ((m = re.exec(t))) toks.push({w:m[0], i:m.index, e:m.index+m[0].length, f:null});
+  const ids = new Set(FS.map(f => f.id)); let cur = 0; const um = toks.findIndex(x => /^(umar|zmar)/i.test(x.w));
+  for (const f of TF_ORDER) { if (!ids.has(f)) continue; const ws = (f.startsWith('informant') ? clean(getv(a,f)).split(',')[0] : clean(getv(a,f))).split(/[\s\-,]+/).map(w => w.replace(/[^\p{L}]/gu, '')).filter(w => w.length >= 3 && !SLOWA.has(fold(w))); if (!ws.length) continue;
+    if (um >= 0 && ['death_place','deceased_first_name','deceased_last_name'].includes(f) && cur < um) cur = um;
+    let from = cur; for (const w of ws) { let j = toks.findIndex((x,k) => k >= from && !x.f && !MIESG.has(fold(x.w)) && stemOk(x.w, w)); if (j < 0) j = toks.findIndex(x => !x.f && !MIESG.has(fold(x.w)) && stemOk(x.w, w)); if (j >= 0) { toks[j].f = f; toks[j].fw = w; toks[j].vr = f !== 'profession' && !lenient(toks[j].w, w) && !((S.acts[a.id]?.vrOk || {})[fold(toks[j].w)+'|'+fold(w)]); from = j; if (w === ws[0]) cur = j; } } }
+  return toks; }
+function baseCands(word, f, a){ const t = FT[f]; if (!t || !D.counts[t]) return []; const x = stemOf(word), sex = getv(a,'deceased_sex'), fem = f === 'mother_last_name' || f === 'deceased_maiden_name' || (f === 'deceased_last_name' && sex === 'K') || (f === 'deceased_spouse');
+  const out = []; for (const [n,c] of Object.entries(D.counts[t])) { if (c < 2) continue; const y = stemOf(n); if (y === x) { let sc = c; if (t === 's' && /(sk|ck|dzk)[ai]$/i.test(n)) sc += (fem === /a$/i.test(n)) ? 1e6 : 0; out.push([n,c,sc]); } }
+  const seen = new Set(); return out.sort((p,q) => q[2]-p[2]).filter(r => { const k = fold(r[0]); if (seen.has(k)) return false; seen.add(k); return true; }).slice(0,3); }
+function stemOf(w){ w = fold(w); for (const e of ENDS) if (w.length - e.length >= 4 && w.endsWith(e)) return w.slice(0, -e.length); return w; }
+function stemOk(w, v){ const a = fold(w), b = fold(v); if (a.length < 3 || b.length < 3) return false; if (a === b) return true; const x = stemOf(w), y = stemOf(v); if (x === y) return true; if (Math.min(x.length, y.length) >= 5 && lev(x, y, 1) <= 1) return true;
+  if (Math.abs(a.length-b.length) > 3) return false; let k = 0; while (k < a.length && k < b.length && a[k] === b[k]) k++; return k >= Math.max(3, Math.min(a.length, b.length) - 2); }
+function lenient(w, v){ const a = fold(w), b = fold(v); if (a === b) return true; if (b === 'kol' && /^kolon/.test(a)) return true; if (sameStem(w, v)) return true; let k = 0; while (k < a.length && k < b.length && a[k] === b[k]) k++; if (k < 3) return false; const ta = a.slice(k), tb = b.slice(k); if (!TAIL.test(ta) || !TAIL.test(tb)) return false; return k >= Math.min(a.length, b.length) - 3 && k >= Math.max(a.length, b.length) - 5; }
+const sameStem = (w, v) => fold(w) === fold(v) || stemOf(w) === stemOf(v);
+const ENDS = ['owie','ami','ach','ich','ych','ego','emu','ow','om','em','ie','owi','a','e','y','i','u','o'].sort((x,y) => y.length-x.length);
+const MIESG = new Set(['stycznia','lutego','marca','kwietnia','maja','czerwca','lipca','sierpnia','wrzesnia','pazdziernika','listopada','grudnia']);
+const SLOWA = new Set(['owdowiala','owdowialy','owdowialego','owdowialej','zona','zone','zony','maz','meza','domu','zmarlej','zmarlego','zamezna','zonaty']);
+const TAIL = /^(|a|e|i|y|u|o|m|ie|em|ow|owa|owi|ego|emu|iej|ej|ami|ach|om|ka|ek|ec|iec|ca|ce|cu|ku|ki|kow|la|el|le|ela|ia|iem|ia|ow|iow|ska|skiego|skiej|skim|ski|ia|ii|ią|ą|ę|ą|ach|ach|ow)$/;
+const QRE = /(?:[\p{L}]+\s?)?\[[^\]]*(?:\?|nieczytel)[^\]]*\]/gu;
+function qList(t){ const o = [], c = {}; for (const m of t.matchAll(QRE)) { const k = m[0]; c[k] = c[k] || 0; o.push({s:m.index, e:m.index+k.length, txt:k, key:k+'#'+(c[k]++)}); } return o; }
+function qClean(x){ const m = x.match(/^([\s\S]*?)\[([^\]]*)\]$/); if (!m) return x; const inner = m[2].replace(/\?/g,'').trim(); return /nieczytel/i.test(inner) ? m[1].trim() : (inner ? m[1] + inner : m[1].trim()); }
+function inflTo(tok, fw){ const m1 = tok.match(/(?:sk|ck|dzk)(ich|iego|iej|iemu|im|ą|ie)$/i), m2 = fw.match(/^(.*(?:sk|ck|dzk))[ai]$/i); if (m1 && m2) return m2[1] + m1[1]; const st0 = stemOf(tok), ft = fold(tok); let end = ''; if (st0 !== ft && ft.startsWith(st0)) end = tok.slice(st0.length); return (end && stemOf(fw) === fold(fw) && !fold(fw).endsWith(fold(end))) ? fw + end : fw; }
+function setTxt(a, v){ const old = txtOf(a), s2 = st(a.id); if (v === (a.tekst||'')) delete s2.text; else s2.text = v; save(); syncWitnesses(a, old, v); }
+function fixAllTexts(){ let n = 0; D.acts.forEach(a => { if (!a.tekst || a.kind) return; const t = txtOf(a), safe = x => !/(_place|_residence)$/.test(x.f) && (/[\[\s]/.test(x.from) || fold(x.from).slice(-3) === fold(x.to).slice(-3)), L = textSugs(a, fieldsOf(a), t).filter(safe).sort((x, y) => y.i - x.i); let r = t, last = Infinity; L.forEach(x => { if (x.e > last) return; r = r.slice(0, x.i) + x.to + r.slice(x.e); last = x.i; }); const g1 = clean(s2x(a).f.informant1?.ok ? s2x(a).f.informant1.v : ''), g2 = clean(s2x(a).f.informant2?.ok ? s2x(a).f.informant2.v : ''); const sm = r.match(/(Staw(?:ili|ił)\s+się:?\s+)(.*?)(,\s+(?:obaj|oba)\b)/i); if (sm && g1 && g2 && !/[,\[]/.test(g1 + g2)) { const cur = sm[2], want = g1 + ' i ' + g2; if (!/\sz\s/.test(cur) && cur !== want && cur.replace(/[?\[\]]/g, '').replace(/\s+/g, ' ').trim() !== want.replace(/\?/g, '')) r = r.slice(0, sm.index + sm[1].length) + want + r.slice(sm.index + sm[1].length + cur.length); }
+      if (r !== t) { const s2 = st(a.id); if (r === (a.tekst||'')) delete s2.text; else s2.text = r; n++; } }); return n; }
+const s2x = a => st(a.id);
+const TF_ORDER = ['informant1','informant2','death_place','deceased_first_name','deceased_last_name','deceased_birth_place','deceased_residence','profession','deceased_status','deceased_spouse','deceased_maiden_name','father_first_name','father_last_name','mother_first_name','mother_last_name','officiant'];
+function nextTF(a, FS){ const s = st(a.id); const ids = FS.map(f => f.id); const order = TF_ORDER.filter(f => ids.includes(f)).concat(ids.filter(f => !TF_ORDER.includes(f))); const k = Math.max(0, order.indexOf(TF)); for (let n = 1; n <= order.length; n++) { const f = order[(k+n) % order.length]; const x = s.f[f]; if (!(x?.ok || x?.skip) && (clean(getv(a,f)) || (a.alts?.[f]||[]).length) && appl(a,f)) return f; } return null; }
+
+const hlCls = (a, f) => { const x = S.acts[a.id]?.f?.[f]; return x?.skip ? 'sk' : x?.ok ? (x.unc ? 'un' : 'ok') : isUnc(a,f) ? 'un' : diffState(a,f) === 'ne' ? (S.acts[a.id]?.done && clean(getv(a,f)) ? 'ok' : 'cf') : ''; };   // zatwierdzony akt = przyjęte wartości (bez czerwonego)
+function marks(h){ return h.replace(/\[[^\]]*\]/g, q => /\?/.test(q) ? `<span class="mq">${q}</span>` : /nieczytel/i.test(q) ? `<span class="mr">${q}</span>` : `<span class="mg">${q}</span>`); }
+
 // ---- końcówka: setf i start (v3: setf woła keepScroll; normActs i migracja stanu działają przy starcie)
 function setf(a,f,v,src){ commit(a,f,v,src); keepScroll(true); }
 // migracja zapisanych wcześniej wartości do obecnych zasad (v3, blok po normActs): znaczniki, miejscowości, małżonek, wiek; autoResolve; zatwierdzone akty bez niepewności. Zwraca liczbę zmian.
@@ -448,7 +502,7 @@ function kopiaAutoZapis(od){ if (!KOP_AUTO) return; clearTimeout(KOP_AUTO.t); KO
 /* app/moduly/import_csv.js – import CSV zatwierdzeń zgonów (ZGONY_zweryfikowane_*.csv) z walidacją i podglądem (PLAN_WDROZENIA §2.4, krok 3).
    Logika wczytania pól i aktów jest przeniesiona z `fVer` w weryfikacja_szablon_v3.html. Różnice: (1) id z pliku mapowane przez id dawne (idx-…, asc-…, ai1-…, lm-…) na id modelu;
    (2) etap „analiza” nie zmienia stanu (próba na kopii S), zapis dopiero po potwierdzeniu, po migawce; (3) nieznane id i błędne wiersze są wypisane, reszta przechodzi.
-   NIE przeniesione: dopasowanie tekstu aktu do zatwierdzonych pól po imporcie (fixAllTexts/textSugs – silnik tokenów tekstu, do kroku „tryby tekstu”). */
+   fixAllTexts (dopasowanie tekstu aktu do zatwierdzonych pól po imporcie) jest przeniesione razem z silnikiem tokenów tekstu (akt_zgon.js), bez interfejsu trybów tekstu. */
 const CSV_ID_MAX = 80;
 function csvMapaId(){ const m = {}; D.acts.forEach(a => { m[a.id] = a; (a.model?.id_dawne || []).forEach(o => { if (!m[o]) m[o] = a; }); if (a.stary) m[a.stary] = a; }); return m; }
 // rozpoznanie + walidacja nagłówka i wierszy (bez zmiany stanu)
@@ -474,7 +528,8 @@ function csvImportStosuj(w, ovw){ const ix = w.ix; let nA = 0, nF = 0, nSkip = 0
     if (n) { nA++; nF += n; if (ok && !s2.done) { s2.done = true; nOk++; } } });
   D.acts.forEach(a => { if ((a.ai || a.lub) && minor(a) && st(a.id).f.deceased_status?.v !== 'dziecko') st(a.id).f.deceased_status = {v:'dziecko', src:'edit', ok:true}; });
   D.acts.forEach(a => autoResolve(a));
-  return {aktow: nA, pol: nF, pominieteOk: nSkip, zatwierdzone: nOk, konflikty: konf}; }
+  const nT = fixAllTexts();   // dopasowanie tekstu aktu do zatwierdzonych pól (v3: ten sam krok po imporcie)
+  return {aktow: nA, pol: nF, pominieteOk: nSkip, zatwierdzone: nOk, konflikty: konf, tekstow: nT}; }
 // podgląd: ta sama operacja na kopii stanu (S i D.scanFiles przywracane); nic nie jest zapisywane
 function csvImportPodglad(w, ovw){ const bakS = S, bakSF = D.scanFiles, bakH = S.hist; let r; try { S = structuredClone(S); D.scanFiles = JSON.parse(JSON.stringify(D.scanFiles || {})); r = csvImportStosuj(w, ovw); } finally { S = bakS; D.scanFiles = bakSF; } return r; }
 async function csvImportZapisz(w, ovw, nazwa){ await kopiaMigawka('przed importem CSV: ' + (nazwa || '')); HIST_WHY = 'import CSV: ' + (nazwa || '') + (ovw ? ' (zastąp)' : ' (dopisz)'); const r = csvImportStosuj(w, ovw); save(); HIST_WHY = null; await stFlush(true); return r; }
@@ -566,7 +621,7 @@ function menuKolejka(){ const K = stKolejka(); okno('Dane źródłowe się zmien
 function odswiez(){ HS = histSnap(S.acts); renderFiltry(); renderLista(); renderAkt(); stWskaznik(); stPasek(); const k = $('mKolejka'); if (k) k.textContent = 'Dane źródłowe się zmieniły (' + ST_KOLEJ.length + ')'; }
 function menuInit(){ const M = $('menu'); $('bMenu').onclick = () => { M.hidden = !M.hidden; };
   $('mCsv').onclick = () => { dl('ZGONY_zweryfikowane.csv', csvText()); M.hidden = true; toast('Eksport CSV (nie zeruje wskaźnika kopii)'); };   // CSV nie zawiera historii ani decyzji → nie jest kopią
-  $('mKopia').onclick = () => { dl('multitool_kopia_' + new Date().toISOString().slice(0, 10) + '.json', JSON.stringify(kopiaPelna()), 'application/json'); kopiaZrobiona(); M.hidden = true; toast('Kopia pełna zapisana'); };
+  $('mKopia').onclick = () => { dl('multitool_kopia_' + new Date().toISOString().slice(0, 10) + '.json', JSON.stringify(kopiaPelna()), 'application/json', false); kopiaZrobiona(); M.hidden = true; toast('Kopia pełna zapisana'); };
   $('kopiaInd').onclick = () => $('mKopia').click();
   $('mKopiaWczytaj').onclick = () => { M.hidden = true; $('fKopia').click(); }; $('fKopia').onchange = e => { if (e.target.files[0]) menuWczytajKopie(e.target.files[0]); e.target.value = ''; };
   $('mImpDop').onclick = () => { M.hidden = true; $('fCsv').dataset.ovw = ''; $('fCsv').click(); }; $('mImpZast').onclick = () => { M.hidden = true; $('fCsv').dataset.ovw = '1'; $('fCsv').click(); };

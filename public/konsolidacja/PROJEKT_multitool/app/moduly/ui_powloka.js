@@ -41,7 +41,7 @@ function menuKolejka(){ const K = stKolejka(); okno('Dane źródłowe się zmien
 function odswiez(){ HS = histSnap(S.acts); renderFiltry(); renderLista(); renderAkt(); stWskaznik(); stPasek(); const k = $('mKolejka'); if (k) k.textContent = 'Dane źródłowe się zmieniły (' + ST_KOLEJ.length + ')'; }
 function menuInit(){ const M = $('menu'); $('bMenu').onclick = () => { M.hidden = !M.hidden; };
   $('mCsv').onclick = () => { dl('ZGONY_zweryfikowane.csv', csvText()); M.hidden = true; toast('Eksport CSV (nie zeruje wskaźnika kopii)'); };   // CSV nie zawiera historii ani decyzji → nie jest kopią
-  $('mKopia').onclick = () => { dl('multitool_kopia_' + new Date().toISOString().slice(0, 10) + '.json', JSON.stringify(kopiaPelna()), 'application/json'); kopiaZrobiona(); M.hidden = true; toast('Kopia pełna zapisana'); };
+  $('mKopia').onclick = () => { dl('multitool_kopia_' + new Date().toISOString().slice(0, 10) + '.json', JSON.stringify(kopiaPelna()), 'application/json', false); kopiaZrobiona(); M.hidden = true; toast('Kopia pełna zapisana'); };
   $('kopiaInd').onclick = () => $('mKopia').click();
   $('mKopiaWczytaj').onclick = () => { M.hidden = true; $('fKopia').click(); }; $('fKopia').onchange = e => { if (e.target.files[0]) menuWczytajKopie(e.target.files[0]); e.target.value = ''; };
   $('mImpDop').onclick = () => { M.hidden = true; $('fCsv').dataset.ovw = ''; $('fCsv').click(); }; $('mImpZast').onclick = () => { M.hidden = true; $('fCsv').dataset.ovw = '1'; $('fCsv').click(); };
