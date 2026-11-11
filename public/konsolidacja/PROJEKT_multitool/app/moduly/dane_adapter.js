@@ -15,4 +15,5 @@ function aktZModelu(x, zr){ const pola = {}; Object.keys(x.pola).forEach(f => po
 // cały zbiór → obiekt D w układzie v3 (acts, fields, cols, ord, counts, fix, scanFiles, scanBase, zatw)
 function daneNaD(dane){ const D = {acts: dane.akty.map(x => aktZModelu(x, dane.zr)), fields: dane.konfig.fields, cols: dane.konfig.cols, ord: dane.konfig.ord, fieldsProt: dane.konfig.fieldsProt, fieldsRej: dane.konfig.fieldsRej,
     counts: dane.slowniki.counts, fix: dane.slowniki.fix, scanFiles: dane.slowniki.scanFiles, scanBase: dane.slowniki.scanBase, key: 'multitool', zatw: dane.zatw.map(id => id)};
+  const L = D.acts.map(a => a.year).filter(y => Number.isFinite(y)); if (L.length) { D.lata = [Math.min(...L), Math.max(...L)]; D.zakres = D.lata[0] + '–' + D.lata[1]; }   // zakres lat do sprawdzania wpisanych dat (dateBad); bez tego obowiązywał domyślny 1940–1946 z księgi 1943
   return D; }
