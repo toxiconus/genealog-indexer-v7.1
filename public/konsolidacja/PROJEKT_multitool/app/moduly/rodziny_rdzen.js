@@ -54,10 +54,10 @@ function kontNumeracja(akty){ const g = {}; akty.forEach(a => { const n = parseI
 function kontDubleZgonow(akty, wart){ const g = {}; akty.forEach(a => { if (a.typ !== 'zgon') return; const d = String(wart(a, 'death_date') || ''); if (!/^\d{4}-\d{2}-\d{2}$/.test(d)) return; const k = rdzKN(wart(a, 'deceased_last_name')) + '|' + rdzKI(wart(a, 'deceased_first_name')) + '|' + d; if (k.startsWith('|') || k.includes('||')) return; (g[k] = g[k] || []).push(a.id); });
   return Object.keys(g).filter(k => g[k].length > 1).map(k => ({data: k.split('|')[2], ids: g[k]})); }
 /* ---------- imiona rodziców w dopełniaczu („syn Marcina i Antoniny” → Marcin, Antonina) ----------
-   Propozycja powstaje tylko wtedy, gdy zapis NIE jest znanym imieniem, a po zdjęciu końcówki dopełniacza JEST imieniem znanym ze słownika bazy (znane(v) → true).
+   Propozycja powstaje tylko wtedy, gdy zapis NIE jest znanym imieniem (wyjątek: imię żeńskie w polu ojca), a po zdjęciu końcówki dopełniacza JEST imieniem znanym ze słownika bazy (znane(v) → true).
    Pole ojca: -a, -ka→-ek, -wła→-weł, -iego→-i, -ego→-y, -ra→-er, -ca→-iec; pole matki: -y→-a, -ii→-ia, -ji→-ja, -i→-a. Zwraca mianownik albo ''. */
 const IMIE_POLA = {zgon: [['father_first_name', 'M'], ['mother_first_name', 'K']], chrzest: [['father_first_name', 'M'], ['mother_first_name', 'K']], malzenstwo: [['groom_father_first_name', 'M'], ['groom_mother_first_name', 'K'], ['bride_father_first_name', 'M'], ['bride_mother_first_name', 'K']]};
-function imieMianownik(v, plec, znane){ v = String(v == null ? '' : v).trim(); if (!v || /[\s\[\]?(),.]/.test(v) || znane(v)) return '';
+function imieMianownik(v, plec, znane){ v = String(v == null ? '' : v).trim(); if (!v || /[\s\[\]?(),.]/.test(v) || (znane(v) && !(plec === 'M' && /a$/.test(v)))) return '';   // w polu ojca imię żeńskie (Józefa, Franciszka) to dopełniacz męskiego
   const C = plec === 'M' ? [v.replace(/a$/, ''), v.replace(/ka$/, 'ek'), v.replace(/wła$/, 'weł'), v.replace(/iego$/, 'i'), v.replace(/ego$/, 'y'), v.replace(/ra$/, 'er'), v.replace(/ca$/, 'iec')] : [v.replace(/y$/, 'a'), v.replace(/ii$/, 'ia'), v.replace(/ji$/, 'ja'), v.replace(/i$/, 'a')];
   return C.find(c => c !== v && znane(c)) || ''; }
 function kontDopelniacz(akty, wart, znane){ const out = []; akty.forEach(a => (IMIE_POLA[a.typ] || []).forEach(([f, pl]) => { const v = String(wart(a, f) ?? '').trim(), m = imieMianownik(v, pl, znane); if (m) out.push({id: a.id, f, v, m}); })); return out; }

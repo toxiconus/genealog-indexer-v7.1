@@ -1,0 +1,470 @@
+﻿id;rok;nr;pole;bylo;jest;zapis_zrodlowy
+asc-1871-016;1871;16;father_first_name;Mateusza;Mateusz;Moczydła , lat 71 c. Mateusza i Marianny Boguniów wdowa
+asc-1871-016;1871;16;mother_first_name;Marianny;Marianna;Moczydła , lat 71 c. Mateusza i Marianny Boguniów wdowa
+asc-1871-019;1871;19;father_first_name;Józefa;Józef;Brzozówka, m-6 c. Józefa i Agaty
+asc-1871-019;1871;19;mother_first_name;Agaty;Agata;Brzozówka, m-6 c. Józefa i Agaty
+asc-1871-023;1871;23;father_first_name;Wojciecha;Wojciech;Moczydła , lat 41 c. Wojciecha i Marianny Kaniów
+asc-1871-023;1871;23;mother_first_name;Marianny;Marianna;Moczydła , lat 41 c. Wojciecha i Marianny Kaniów
+asc-1871-013;1871;13;father_first_name;Andrzeja;Andrzej;Blinów, lat 56 s. Andrzeja i Tekli wdowiec
+asc-1871-013;1871;13;mother_first_name;Tekli;Tekla;Blinów, lat 56 s. Andrzeja i Tekli wdowiec
+asc-1871-028;1871;28;mother_first_name;Franciszki;Franciszka;Brzozówka, lat 53 c. Wawrzyńca i Franciszki Tupaj, owd. Wawrzyńca Kopiwoda
+asc-1871-009;1871;9;father_first_name;Jakuba;Jakub;Blinów, lat 44 s. Jakuba i Zofii, owd. Katarzynę Olech
+asc-1871-009;1871;9;mother_first_name;Zofii;Zofia;Blinów, lat 44 s. Jakuba i Zofii, owd. Katarzynę Olech
+asc-1871-027;1871;27;father_first_name;Pawła;Paweł;Blinów, lat 63 s. Pawła i Marianny
+asc-1871-027;1871;27;mother_first_name;Marianny;Marianna;Blinów, lat 63 s. Pawła i Marianny
+asc-1871-026;1871;26;father_first_name;Szymona;Szymon;Moczydła , lat 3 s. Szymona i Anny
+asc-1871-026;1871;26;mother_first_name;Anny;Anna;Moczydła , lat 3 s. Szymona i Anny
+asc-1871-029;1871;29;father_first_name;Szymona;Szymon;Moczdła, lat 2 s. Szymona i Anny
+asc-1871-029;1871;29;mother_first_name;Anny;Anna;Moczdła, lat 2 s. Szymona i Anny
+asc-1871-018;1871;18;father_first_name;Jana;Jan;Blinów , lat 8 s. Jana i Rozalii z Samuelów
+asc-1871-018;1871;18;mother_first_name;Rozalii;Rozalia;Blinów , lat 8 s. Jana i Rozalii z Samuelów
+asc-1871-011;1871;11;father_first_name;Piotra;Piotr;Blinów, m-9 c. Piotra i Marianny z Pawłasków
+asc-1871-011;1871;11;mother_first_name;Marianny;Marianna;Blinów, m-9 c. Piotra i Marianny z Pawłasków
+asc-1871-012;1871;12;father_first_name;Mikołaja;Mikołaj;Blinów, lat 1 s. Mikołaja i Anieli z Mrozów
+asc-1871-012;1871;12;mother_first_name;Anieli;Aniela;Blinów, lat 1 s. Mikołaja i Anieli z Mrozów
+asc-1871-022;1871;22;father_first_name;Franciszka;Franciszek;Moczydła , m-5 c. Franciszka i Marianny z Jachurów
+asc-1871-022;1871;22;mother_first_name;Marianny;Marianna;Moczydła , m-5 c. Franciszka i Marianny z Jachurów
+asc-1871-025;1871;25;father_first_name;Tomasza;Tomasz;Moczdła, lat 65 c. Tomasza i Anny Czarneckich wdowa
+asc-1871-025;1871;25;mother_first_name;Anny;Anna;Moczdła, lat 65 c. Tomasza i Anny Czarneckich wdowa
+asc-1871-020;1871;20;father_first_name;Andrzeja;Andrzej;Blinów , lat 68 c. Andrzeja i Ewy Kurczaków wdowa
+asc-1871-020;1871;20;mother_first_name;Ewy;Ewa;Blinów , lat 68 c. Andrzeja i Ewy Kurczaków wdowa
+asc-1871-024;1871;24;father_first_name;Franciszka;Franciszek;Blinów, lat 53 s. Franciszka i Łucji, owd. Agnieszkę Jachura
+asc-1871-024;1871;24;mother_first_name;Łucji;Łucja;Blinów, lat 53 s. Franciszka i Łucji, owd. Agnieszkę Jachura
+asc-1871-017;1871;17;mother_first_name;Marianny;Marianna;Blinów, lat 1 c. ?. i Marianny
+asc-1871-014;1871;14;father_first_name;Marcina;Marcin;Blinów, lat 2 s. Marcina i Antoniny z Kosidłów
+asc-1871-014;1871;14;mother_first_name;Antoniny;Antonina;Blinów, lat 2 s. Marcina i Antoniny z Kosidłów
+asc-1872-010;1872;10;father_first_name;Szymona;Szymon;Blinów, lat 44 c. Szymona i Petroneli Kurczaków
+asc-1872-010;1872;10;mother_first_name;Petroneli;Petronela;Blinów, lat 44 c. Szymona i Petroneli Kurczaków
+asc-1872-009;1872;9;father_first_name;Michała;Michał;Blinów, m-8 s. Michała i Zofii z Kudrelków
+asc-1872-009;1872;9;mother_first_name;Zofii;Zofia;Blinów, m-8 s. Michała i Zofii z Kudrelków
+asc-1872-049;1872;49;father_first_name;Andrzeja;Andrzej;Blinów, lat 1 c. Andrzeja i Katarzyna
+asc-1872-013;1872;13;father_first_name;Antoniego;Antoni;Blinów, m-7 s. Antoniego i Marianny z Mrozów
+asc-1872-013;1872;13;mother_first_name;Marianny;Marianna;Blinów, m-7 s. Antoniego i Marianny z Mrozów
+asc-1872-029;1872;29;father_first_name;Pawła;Paweł;Blinów, lat 8 c. Pawła i Jadwigi z Kosidłów
+asc-1872-029;1872;29;mother_first_name;Jadwigi;Jadwiga;Blinów, lat 8 c. Pawła i Jadwigi z Kosidłów
+asc-1872-032;1872;32;father_first_name;Pawła;Paweł;Blinów, lat 3 s. Pawła i Jadwigi
+asc-1872-032;1872;32;mother_first_name;Jadwigi;Jadwiga;Blinów, lat 3 s. Pawła i Jadwigi
+asc-1872-002;1872;2;father_first_name;Tomasza;Tomasz;Blinów, lat 50 s. Tomasza i Marianny z Machulków, owd. Mariannę z Jędrzejczaków
+asc-1872-002;1872;2;mother_first_name;Marianny;Marianna;Blinów, lat 50 s. Tomasza i Marianny z Machulków, owd. Mariannę z Jędrzejczaków
+asc-1872-025;1872;25;father_first_name;Wojciecha;Wojciech;Blinów, m-5 c. Wojciecha i Zofii z Nieściurów
+asc-1872-025;1872;25;mother_first_name;Zofii;Zofia;Blinów, m-5 c. Wojciecha i Zofii z Nieściurów
+asc-1872-008;1872;8;father_first_name;Tomasza;Tomasz;Blinów, lat 9 c. Tomasza i Marianny z Wójtowiczów
+asc-1872-008;1872;8;mother_first_name;Marianny;Marianna;Blinów, lat 9 c. Tomasza i Marianny z Wójtowiczów
+asc-1872-031;1872;31;father_first_name;Marcina;Marcin;Blinów, c. Marcina i Ewy z Jachurów
+asc-1872-031;1872;31;mother_first_name;Ewy;Ewa;Blinów, c. Marcina i Ewy z Jachurów
+asc-1872-016;1872;16;father_first_name;Jana;Jan;Blinów, lat 5 s. Jana i Katarzyny z Janików
+asc-1872-016;1872;16;mother_first_name;Katarzyny;Katarzyna;Blinów, lat 5 s. Jana i Katarzyny z Janików
+asc-1872-014;1872;14;father_first_name;Wojciecha;Wojciech;Blinów, lat 1 c. Wojciecha i Józefy z Jachurów
+asc-1872-014;1872;14;mother_first_name;Józefy;Józefa;Blinów, lat 1 c. Wojciecha i Józefy z Jachurów
+asc-1872-007;1872;7;father_first_name;Pawła;Paweł;Blinów, m-9 c. Pawła i Zofii z Solarzów
+asc-1872-007;1872;7;mother_first_name;Zofii;Zofia;Blinów, m-9 c. Pawła i Zofii z Solarzów
+asc-1872-018;1872;18;father_first_name;Pawła;Paweł;Blinów, lat 9 c. Pawła i Zofii z Solarzów
+asc-1872-018;1872;18;mother_first_name;Zofii;Zofia;Blinów, lat 9 c. Pawła i Zofii z Solarzów
+asc-1872-026;1872;26;father_first_name;Marcina;Marcin;Blinów, lat 49 c. Marcina i Marianny Czernieskich ze wsi Skotnik
+asc-1872-026;1872;26;mother_first_name;Marianny;Marianna;Blinów, lat 49 c. Marcina i Marianny Czernieskich ze wsi Skotnik
+asc-1872-027;1872;27;father_first_name;Pawła;Paweł;Blinów, lat 4 s. Pawła i Petroneli z Jędrzejczaków
+asc-1872-027;1872;27;mother_first_name;Petroneli;Petronela;Blinów, lat 4 s. Pawła i Petroneli z Jędrzejczaków
+asc-1872-036;1872;36;father_first_name;Macieja;Maciej;Blinów, s. Macieja i Marianny Kosidłów
+asc-1872-036;1872;36;mother_first_name;Marianny;Marianna;Blinów, s. Macieja i Marianny Kosidłów
+asc-1872-044;1872;44;father_first_name;Wojciecha;Wojciech;Moczydła, lat 20 c. Wojciecha i Rozalii
+asc-1872-044;1872;44;mother_first_name;Rozalii;Rozalia;Moczydła, lat 20 c. Wojciecha i Rozalii
+asc-1872-045;1872;45;father_first_name;Wojciecha;Wojciech;Moczydła , lat 7 s. Wojciecha i Rozalii z Marchewków
+asc-1872-045;1872;45;mother_first_name;Rozalii;Rozalia;Moczydła , lat 7 s. Wojciecha i Rozalii z Marchewków
+asc-1872-047;1872;47;father_first_name;Wojciecha;Wojciech;Moczydła, lat 74 c. Wojciecha i Agnieszki Pawłasków
+asc-1872-047;1872;47;mother_first_name;Agnieszki;Agnieszka;Moczydła, lat 74 c. Wojciecha i Agnieszki Pawłasków
+asc-1872-041;1872;41;father_first_name;Michała;Michał;Blinów, lat 1 s. Michała i Anastazji z Gnatów
+asc-1872-041;1872;41;mother_first_name;Anastazji;Anastazja;Blinów, lat 1 s. Michała i Anastazji z Gnatów
+asc-1872-011;1872;11;father_first_name;Wojciecha;Wojciech;Blinów, lat 71 c. Wojciecha i Antoniny Wielebów , wdowa
+asc-1872-011;1872;11;mother_first_name;Antoniny;Antonina;Blinów, lat 71 c. Wojciecha i Antoniny Wielebów , wdowa
+asc-1872-043;1872;43;mother_first_name;Katarzyny;Katarzyna;Moczydła, lat 8 s. Wawrzyńca i Katarzyny
+asc-1872-001;1872;1;father_first_name;Jana;Jan;Blinów, lat 6 s. Jana i Jadwigi z Ciećków
+asc-1872-001;1872;1;mother_first_name;Jadwigi;Jadwiga;Blinów, lat 6 s. Jana i Jadwigi z Ciećków
+asc-1872-006;1872;6;father_first_name;Walentego;Walenty;Brzozówka , lat 34 c. Walentego i Anny Gochów
+asc-1872-006;1872;6;mother_first_name;Anny;Anna;Brzozówka , lat 34 c. Walentego i Anny Gochów
+asc-1872-003;1872;3;father_first_name;Szymona;Szymon;Blinów, lat 48 c. Szymona i Katarzyny Kosidło, wdowa
+asc-1872-003;1872;3;mother_first_name;Katarzyny;Katarzyna;Blinów, lat 48 c. Szymona i Katarzyny Kosidło, wdowa
+asc-1872-004;1872;4;father_first_name;Szymona;Szymon;Moczydła, lat 75 c. Szymona i Marianny z Ciećków
+asc-1872-004;1872;4;mother_first_name;Marianny;Marianna;Moczydła, lat 75 c. Szymona i Marianny z Ciećków
+asc-1872-042;1872;42;father_first_name;Tomasza;Tomasz;Moczydła, lat 37 c. Tomasza i Marianny Wielebów
+asc-1872-042;1872;42;mother_first_name;Marianny;Marianna;Moczydła, lat 37 c. Tomasza i Marianny Wielebów
+asc-1872-050;1872;50;father_first_name;Andrzeja;Andrzej;Moczydła, lat 1 s. Andrzeja i Marianny Koguc
+asc-1872-050;1872;50;mother_first_name;Marianny;Marianna;Moczydła, lat 1 s. Andrzeja i Marianny Koguc
+asc-1872-012;1872;12;father_first_name;Jana;Jan;Brzozówka , lat 60 s. Jana i Marianny Ogonów
+asc-1872-012;1872;12;mother_first_name;Marianny;Marianna;Brzozówka , lat 60 s. Jana i Marianny Ogonów
+asc-1872-039;1872;39;father_first_name;Filipa;Filip;Blinów, lat 2 s. Filipa i Katarzyny z Ciećków
+asc-1872-039;1872;39;mother_first_name;Katarzyny;Katarzyna;Blinów, lat 2 s. Filipa i Katarzyny z Ciećków
+asc-1872-037;1872;37;father_first_name;Tomasza;Tomasz;Blinów, c. Tomasza i Katarzyny z Dobrzyńskich
+asc-1872-037;1872;37;mother_first_name;Katarzyny;Katarzyna;Blinów, c. Tomasza i Katarzyny z Dobrzyńskich
+asc-1872-038;1872;38;father_first_name;Adama;Adam;Blinów, lat 8 c. Adama i Magdaleny z Dąbrowskich
+asc-1872-038;1872;38;mother_first_name;Magdaleny;Magdalena;Blinów, lat 8 c. Adama i Magdaleny z Dąbrowskich
+asc-1872-028;1872;28;father_first_name;Pawła;Paweł;Blinów, lat 2 c. Pawła i Katarzyny z Szabatów
+asc-1872-028;1872;28;mother_first_name;Katarzyny;Katarzyna;Blinów, lat 2 c. Pawła i Katarzyny z Szabatów
+asc-1872-024;1872;24;father_first_name;Jana;Jan;Blinów, lat 5 c. Jana i Zofii z Kosidłów
+asc-1872-024;1872;24;mother_first_name;Zofii;Zofia;Blinów, lat 5 c. Jana i Zofii z Kosidłów
+asc-1872-005;1872;5;father_first_name;Bartłomieja;Bartłomiej;Blinów, lat 20 s. Bartłomieja i Marianny z Dąbrowskich
+asc-1872-005;1872;5;mother_first_name;Marianny;Marianna;Blinów, lat 20 s. Bartłomieja i Marianny z Dąbrowskich
+asc-1872-040;1872;40;father_first_name;Bartłomieja;Bartłomiej;Blinów, lat 1 c. Bartłomieja i Agnieszki z Baranów
+asc-1872-040;1872;40;mother_first_name;Agnieszki;Agnieszka;Blinów, lat 1 c. Bartłomieja i Agnieszki z Baranów
+asc-1872-019;1872;19;father_first_name;Tomasza;Tomasz;Brzozówka , lat 60 s. Tomasza i Tekli
+asc-1872-019;1872;19;mother_first_name;Tekli;Tekla;Brzozówka , lat 60 s. Tomasza i Tekli
+asc-1872-017;1872;17;father_first_name;Tomasza;Tomasz;Blinów, lat 4 c. Tomasza i Antoniny z Lewków
+asc-1872-017;1872;17;mother_first_name;Antoniny;Antonina;Blinów, lat 4 c. Tomasza i Antoniny z Lewków
+asc-1872-015;1872;15;father_first_name;Marcina;Marcin;Blinów, lat 9 s. Marcina i Marianny z Machulaków
+asc-1872-015;1872;15;mother_first_name;Marianny;Marianna;Blinów, lat 9 s. Marcina i Marianny z Machulaków
+asc-1872-048;1872;48;father_first_name;Wojciecha;Wojciech;Brzozówka , lat 1 s. Wojciecha i Marianny z Traczów
+asc-1872-048;1872;48;mother_first_name;Marianny;Marianna;Brzozówka , lat 1 s. Wojciecha i Marianny z Traczów
+asc-1872-020;1872;20;father_first_name;Franciszka;Franciszek;Blinów, lat 2 c. Franciszka i Zofii z Pcionków
+asc-1872-020;1872;20;mother_first_name;Zofii;Zofia;Blinów, lat 2 c. Franciszka i Zofii z Pcionków
+asc-1872-021;1872;21;father_first_name;Antoniego;Antoni;Blinów, lat 8 c. Antoniego i Zofii z Kosidłów
+asc-1872-021;1872;21;mother_first_name;Zofii;Zofia;Blinów, lat 8 c. Antoniego i Zofii z Kosidłów
+asc-1872-022;1872;22;father_first_name;Filipa;Filip;Blinów, lat 1 c. Filipa i Zofii z Samuelów
+asc-1872-022;1872;22;mother_first_name;Zofii;Zofia;Blinów, lat 1 c. Filipa i Zofii z Samuelów
+asc-1872-033;1872;33;father_first_name;Filipa;Filip;Blinów, lat 21 s. Filipa i Marianny
+asc-1872-033;1872;33;mother_first_name;Marianny;Marianna;Blinów, lat 21 s. Filipa i Marianny
+asc-1872-034;1872;34;father_first_name;Wojciecha;Wojciech;Blinów, lat 60 c. Wojciecha i Katarzyny Machulków
+asc-1872-034;1872;34;mother_first_name;Katarzyny;Katarzyna;Blinów, lat 60 c. Wojciecha i Katarzyny Machulków
+asc-1873-014;1873;14;father_first_name;Andrzeja;Andrzej;m.9 c. Andrzeja i Katarzyny z Pudłów
+asc-1873-014;1873;14;mother_first_name;Katarzyny;Katarzyna;m.9 c. Andrzeja i Katarzyny z Pudłów
+asc-1873-029;1873;29;mother_first_name;Katarzyny;Katarzyna;m.2 s. Wawrzyńca i Katarzyny z Grelów
+asc-1873-017;1873;17;father_first_name;Jana;Jan;l.5 s. Jana i Franciszki
+asc-1873-017;1873;17;mother_first_name;Franciszki;Franciszka;l.5 s. Jana i Franciszki
+asc-1873-019;1873;19;father_first_name;Jana;Jan;l.7 s. Jana i Franciszki
+asc-1873-019;1873;19;mother_first_name;Franciszki;Franciszka;l.7 s. Jana i Franciszki
+asc-1873-007;1873;7;father_first_name;Józefa;Józef;l.3 s. Józefa i Barbary z Kolasów
+asc-1873-007;1873;7;mother_first_name;Barbary;Barbara;l.3 s. Józefa i Barbary z Kolasów
+asc-1873-032;1873;32;father_first_name;Józefa;Józef;m.8 c. Józefa i Zofii
+asc-1873-032;1873;32;mother_first_name;Zofii;Zofia;m.8 c. Józefa i Zofii
+asc-1873-024;1873;24;father_first_name;Stanisława;Stanisław;l.2 s. Stanisława i Ewy z Wielebów
+asc-1873-024;1873;24;mother_first_name;Ewy;Ewa;l.2 s. Stanisława i Ewy z Wielebów
+asc-1873-030;1873;30;father_first_name;Marcina;Marcin;l.4 c. Marcina i Katarzyny z Nieściurów
+asc-1873-030;1873;30;mother_first_name;Katarzyny;Katarzyna;l.4 c. Marcina i Katarzyny z Nieściurów
+asc-1873-033;1873;33;father_first_name;Marcina;Marcin;l.7 c. Marcina i Katarzyny z Kędziorów
+asc-1873-033;1873;33;mother_first_name;Katarzyny;Katarzyna;l.7 c. Marcina i Katarzyny z Kędziorów
+asc-1873-015;1873;15;father_first_name;Jana;Jan;c. Jana i Katarzyny z Janików
+asc-1873-015;1873;15;mother_first_name;Katarzyny;Katarzyna;c. Jana i Katarzyny z Janików
+asc-1873-022;1873;22;father_first_name;Marcina;Marcin;l.25 s. Marcina i Zofii
+asc-1873-022;1873;22;mother_first_name;Zofii;Zofia;l.25 s. Marcina i Zofii
+asc-1873-025;1873;25;father_first_name;Jakuba;Jakub;l.5 c. Jakuba i Marianny
+asc-1873-025;1873;25;mother_first_name;Marianny;Marianna;l.5 c. Jakuba i Marianny
+asc-1873-001;1873;1;father_first_name;Antoniego;Antoni;l.2,5 c. Antoniego i Marianny
+asc-1873-001;1873;1;mother_first_name;Marianny;Marianna;l.2,5 c. Antoniego i Marianny
+asc-1873-048;1873;48;father_first_name;Sebastiana;Sebastian;l.57 wdowiec s. Sebastiana i Cecylii
+asc-1873-048;1873;48;mother_first_name;Cecylii;Cecylia;l.57 wdowiec s. Sebastiana i Cecylii
+asc-1873-002;1873;2;father_first_name;Jana;Jan;m.6 c. Jana i Marianny z Jachurów
+asc-1873-002;1873;2;mother_first_name;Marianny;Marianna;m.6 c. Jana i Marianny z Jachurów
+asc-1873-013;1873;13;father_first_name;Józefa;Józef;l.5 c. Józefa i Marianny z Dobrzyńskich
+asc-1873-013;1873;13;mother_first_name;Marianny;Marianna;l.5 c. Józefa i Marianny z Dobrzyńskich
+asc-1873-003;1873;3;father_first_name;Pawła;Paweł;l.22 c. Pawła i Zofii z Kozaczków
+asc-1873-003;1873;3;mother_first_name;Zofii;Zofia;l.22 c. Pawła i Zofii z Kozaczków
+asc-1873-008;1873;8;father_first_name;Jakuba;Jakub;l.66 s. Jakuba i Katarzyny
+asc-1873-008;1873;8;mother_first_name;Katarzyny;Katarzyna;l.66 s. Jakuba i Katarzyny
+asc-1873-010;1873;10;father_first_name;Piotra;Piotr;l.2 s. Piotra i Agnieszki z Kaniów
+asc-1873-010;1873;10;mother_first_name;Agnieszki;Agnieszka;l.2 s. Piotra i Agnieszki z Kaniów
+asc-1873-018;1873;18;father_first_name;Wojciecha;Wojciech;l.3 s. Wojciecha i Marianny
+asc-1873-018;1873;18;mother_first_name;Marianny;Marianna;l.3 s. Wojciecha i Marianny
+asc-1873-020;1873;20;father_first_name;Stanisława;Stanisław;l.13 s. Stanisława i Katarzyny
+asc-1873-020;1873;20;mother_first_name;Katarzyny;Katarzyna;l.13 s. Stanisława i Katarzyny
+asc-1873-012;1873;12;father_first_name;Wojciecha;Wojciech;l.48 c. Wojciecha i Agnieszki Koguców owd.Adama Mroza
+asc-1873-012;1873;12;mother_first_name;Agnieszki;Agnieszka;l.48 c. Wojciecha i Agnieszki Koguców owd.Adama Mroza
+asc-1873-016;1873;16;father_first_name;Jakuba;Jakub;l.50 s. Jakuba i Magdaleny owd.Mariannę z Pawłasków
+asc-1873-016;1873;16;mother_first_name;Magdaleny;Magdalena;l.50 s. Jakuba i Magdaleny owd.Mariannę z Pawłasków
+asc-1873-035;1873;35;father_first_name;Filipa;Filip;l.3,5 s. Filipa i Katarzyny z Ciećków
+asc-1873-035;1873;35;mother_first_name;Katarzyny;Katarzyna;l.3,5 s. Filipa i Katarzyny z Ciećków
+asc-1873-034;1873;34;father_first_name;Szymona;Szymon;l.50 wdowa c. Szymona i Petroneli małż.Kurczaków
+asc-1873-034;1873;34;mother_first_name;Petroneli;Petronela;l.50 wdowa c. Szymona i Petroneli małż.Kurczaków
+asc-1873-006;1873;6;father_first_name;Jana;Jan;l.70 wdowa c. Jana i Anny Pasternaków
+asc-1873-006;1873;6;mother_first_name;Anny;Anna;l.70 wdowa c. Jana i Anny Pasternaków
+asc-1873-021;1873;21;father_first_name;Marcina;Marcin;l.48 s. Marcina i Teresy owd.Annę ze Szwedów
+asc-1873-021;1873;21;mother_first_name;Teresy;Teresa;l.48 s. Marcina i Teresy owd.Annę ze Szwedów
+asc-1873-049;1873;49;father_first_name;Jana;Jan;l.37 c. Jana i Rozalii małż.Wiechników owd. Pawła Pcionka
+asc-1873-049;1873;49;mother_first_name;Rozalii;Rozalia;l.37 c. Jana i Rozalii małż.Wiechników owd. Pawła Pcionka
+asc-1873-050;1873;50;father_first_name;Antoniego;Antoni;l.3 c. Antoniego i Anny ze Szwedów
+asc-1873-050;1873;50;mother_first_name;Anny;Anna;l.3 c. Antoniego i Anny ze Szwedów
+asc-1873-009;1873;9;mother_first_name;Franciszki;Franciszka;l.6 s. Wawrzyńca i Franciszki z Buconiów
+asc-1873-023;1873;23;father_first_name;Marcina;Marcin;l.20 c. Marcina i Antoniny małż.Wójtowiczów owd.Wojciecha Sosnówka
+asc-1873-023;1873;23;mother_first_name;Antoniny;Antonina;l.20 c. Marcina i Antoniny małż.Wójtowiczów owd.Wojciecha Sosnówka
+asc-1873-004;1873;4;father_first_name;Antoniego;Antoni;l.19 s. Antoniego i Anny z Pudłów
+asc-1873-004;1873;4;mother_first_name;Anny;Anna;l.19 s. Antoniego i Anny z Pudłów
+asc-1873-047;1873;47;father_first_name;Jakuba;Jakub;l.l.50 c. Jakuba i Zofii małż.Wcisłów owd.Wawrzyńca Stępnia
+asc-1873-047;1873;47;mother_first_name;Zofii;Zofia;l.l.50 c. Jakuba i Zofii małż.Wcisłów owd.Wawrzyńca Stępnia
+asc-1873-031;1873;31;father_first_name;Józefa;Józef;l.1 c. Józefa i Franciszki
+asc-1873-031;1873;31;mother_first_name;Franciszki;Franciszka;l.1 c. Józefa i Franciszki
+asc-1873-027;1873;27;father_first_name;Franciszka;Franciszek;l.47 c. Franciszka i Tekli małż.Szczecińskich
+asc-1873-027;1873;27;mother_first_name;Tekli;Tekla;l.47 c. Franciszka i Tekli małż.Szczecińskich
+asc-1873-005;1873;5;father_first_name;Pawła;Paweł;l.3 c. Pawła i Franciszki z Jędrzejczaków
+asc-1873-005;1873;5;mother_first_name;Franciszki;Franciszka;l.3 c. Pawła i Franciszki z Jędrzejczaków
+asc-1873-046;1873;46;father_first_name;Bartłomieja;Bartłomiej;l.40 s. Bartłomieja i Marianny z Kurczaków
+asc-1873-046;1873;46;mother_first_name;Marianny;Marianna;l.40 s. Bartłomieja i Marianny z Kurczaków
+asc-1874-008;1874;8;father_first_name;Pawła;Paweł;l.21 c. Pawła i Anny
+asc-1874-008;1874;8;mother_first_name;Anny;Anna;l.21 c. Pawła i Anny
+asc-1874-013;1874;13;father_first_name;Antoniego;Antoni;l.1 c. Antoniego i Marianny z Mrozów
+asc-1874-013;1874;13;mother_first_name;Marianny;Marianna;l.1 c. Antoniego i Marianny z Mrozów
+asc-1874-019;1874;19;father_first_name;Antoniego;Antoni;l.1 s. Antoniego i Katarzyny z Szydłowskich
+asc-1874-019;1874;19;mother_first_name;Katarzyny;Katarzyna;l.1 s. Antoniego i Katarzyny z Szydłowskich
+asc-1874-023;1874;23;father_first_name;Jana;Jan;l.2 s. Jana i Franciszki
+asc-1874-023;1874;23;mother_first_name;Franciszki;Franciszka;l.2 s. Jana i Franciszki
+asc-1874-011;1874;11;father_first_name;Michała;Michał;l.2 s. Michała i Zofii z Serafinów
+asc-1874-011;1874;11;mother_first_name;Zofii;Zofia;l.2 s. Michała i Zofii z Serafinów
+asc-1874-002;1874;2;father_first_name;Józefa;Józef;l.1 s. Józefa i Barbary z Kolasów
+asc-1874-002;1874;2;mother_first_name;Barbary;Barbara;l.1 s. Józefa i Barbary z Kolasów
+asc-1874-004;1874;4;father_first_name;Wojciecha;Wojciech;m.9 c. Wojciecha i Zofii z Nieściurów
+asc-1874-004;1874;4;mother_first_name;Zofii;Zofia;m.9 c. Wojciecha i Zofii z Nieściurów
+asc-1874-018;1874;18;father_first_name;Stanisława;Stanisław;l.46 wd. c. Stanisława i Agnieszki małż.Nieściurów
+asc-1874-018;1874;18;mother_first_name;Agnieszki;Agnieszka;l.46 wd. c. Stanisława i Agnieszki małż.Nieściurów
+asc-1874-026;1874;26;father_first_name;Józefa;Józef;l.50 s. Józefa i Ewy owd. Żonę Mariannę
+asc-1874-026;1874;26;mother_first_name;Ewy;Ewa;l.50 s. Józefa i Ewy owd. Żonę Mariannę
+asc-1874-015;1874;15;father_first_name;Wojciecha;Wojciech;l.2 s. Wojciecha i Agnieszki
+asc-1874-015;1874;15;mother_first_name;Agnieszki;Agnieszka;l.2 s. Wojciecha i Agnieszki
+asc-1874-025;1874;25;father_first_name;Jana;Jan;m.2 s. Jana i Zofii
+asc-1874-025;1874;25;mother_first_name;Zofii;Zofia;m.2 s. Jana i Zofii
+asc-1874-007;1874;7;father_first_name;Stanisława;Stanisław;m.5 s. Stanisława i Antoniny z Jachurów
+asc-1874-007;1874;7;mother_first_name;Antoniny;Antonina;m.5 s. Stanisława i Antoniny z Jachurów
+asc-1874-005;1874;5;father_first_name;Wojciecha;Wojciech;l.77 wd. s. Wojciecha i Franciszki
+asc-1874-005;1874;5;mother_first_name;Franciszki;Franciszka;l.77 wd. s. Wojciecha i Franciszki
+asc-1874-012;1874;12;father_first_name;Jana;Jan;m.5 s. Jana i Marianny z Jachurów
+asc-1874-012;1874;12;mother_first_name;Marianny;Marianna;m.5 s. Jana i Marianny z Jachurów
+asc-1874-014;1874;14;father_first_name;Jakuba;Jakub;m.6 s. Jakuba i Marianny z Dąbrowskich
+asc-1874-014;1874;14;mother_first_name;Marianny;Marianna;m.6 s. Jakuba i Marianny z Dąbrowskich
+asc-1874-001;1874;1;father_first_name;Wojciecha;Wojciech;l.2 c. Wojciecha i Franciszki z Chmielów
+asc-1874-001;1874;1;mother_first_name;Franciszki;Franciszka;l.2 c. Wojciecha i Franciszki z Chmielów
+asc-1874-009;1874;9;father_first_name;Macieja;Maciej;l.35 s. Macieja i Tekli z Saganów owd.Annę z Siembidów
+asc-1874-009;1874;9;mother_first_name;Tekli;Tekla;l.35 s. Macieja i Tekli z Saganów owd.Annę z Siembidów
+asc-1874-021;1874;21;father_first_name;Marcina;Marcin;l.36 c. Marcina i Jadwigi Jędrzejczaków owd. Franciszka Mroza
+asc-1874-021;1874;21;mother_first_name;Jadwigi;Jadwiga;l.36 c. Marcina i Jadwigi Jędrzejczaków owd. Franciszka Mroza
+asc-1874-022;1874;22;father_first_name;Andrzeja;Andrzej;m.8 s. Andrzeja i Marianny z Koguców
+asc-1874-022;1874;22;mother_first_name;Marianny;Marianna;m.8 s. Andrzeja i Marianny z Koguców
+asc-1874-006;1874;6;father_first_name;Pawła;Paweł;l.67 wd. c. Pawła i Anny Machulaków
+asc-1874-006;1874;6;mother_first_name;Anny;Anna;l.67 wd. c. Pawła i Anny Machulaków
+asc-1874-017;1874;17;father_first_name;Kacpra;Kacper;l.1 s. Kacpra i Jadwigi z Jędrzejczaków
+asc-1874-017;1874;17;mother_first_name;Jadwigi;Jadwiga;l.1 s. Kacpra i Jadwigi z Jędrzejczaków
+asc-1874-010;1874;10;father_first_name;Pawła;Paweł;l.1 c. Pawła i Katarzyny z Szabatów
+asc-1874-010;1874;10;mother_first_name;Katarzyny;Katarzyna;l.1 c. Pawła i Katarzyny z Szabatów
+asc-1874-003;1874;3;father_first_name;Macieja;Maciej;l.55 wd. s. Macieja i Agnieszki
+asc-1874-003;1874;3;mother_first_name;Agnieszki;Agnieszka;l.55 wd. s. Macieja i Agnieszki
+asc-1874-024;1874;24;father_first_name;Bartłomieja;Bartłomiej;l.70 wd. c. Bartłomieja i Katarzyny Królów
+asc-1874-024;1874;24;mother_first_name;Katarzyny;Katarzyna;l.70 wd. c. Bartłomieja i Katarzyny Królów
+asc-1874-020;1874;20;mother_first_name;Franciszki;Franciszka;l.61 c. Wawrzyńca i Franciszki Tupajów
+asc-1875-006;1875;6;father_first_name;Pawła;Paweł;l.3 c. Pawła i Jadwigi z Kosidłów
+asc-1875-006;1875;6;mother_first_name;Jadwigi;Jadwiga;l.3 c. Pawła i Jadwigi z Kosidłów
+asc-1875-009;1875;9;father_first_name;Łukasza;Łukasz;l.54 s. Łukasza i Marianny owd, Zofię z Wcisłów
+asc-1875-009;1875;9;mother_first_name;Marianny;Marianna;l.54 s. Łukasza i Marianny owd, Zofię z Wcisłów
+asc-1875-007;1875;7;father_first_name;Wojciecha;Wojciech;l.22 s. Wojciecha i Katarzyny z Sulowskich
+asc-1875-007;1875;7;mother_first_name;Katarzyny;Katarzyna;l.22 s. Wojciecha i Katarzyny z Sulowskich
+asc-1875-020;1875;20;father_first_name;Wojciecha;Wojciech;l.45 s. Wojciecha i Reginy owd.
+asc-1875-020;1875;20;mother_first_name;Reginy;Regina;l.45 s. Wojciecha i Reginy owd.
+asc-1875-022;1875;22;father_first_name;Franciszka;Franciszek;m.4 s. Franciszka i Reginy
+asc-1875-022;1875;22;mother_first_name;Reginy;Regina;m.4 s. Franciszka i Reginy
+asc-1875-001;1875;1;father_first_name;Franciszka;Franciszek;l.55 s. Franciszka i Anny owd.Agatę z Jędrzejczaków
+asc-1875-001;1875;1;mother_first_name;Anny;Anna;l.55 s. Franciszka i Anny owd.Agatę z Jędrzejczaków
+asc-1875-012;1875;12;father_first_name;Walentego;Walenty;l.43 c. Walentego i Katarzyny Pawłasków owd.Wojciecha Kosidło
+asc-1875-012;1875;12;mother_first_name;Katarzyny;Katarzyna;l.43 c. Walentego i Katarzyny Pawłasków owd.Wojciecha Kosidło
+asc-1875-015;1875;15;father_first_name;Józefa;Józef;l.1 s. Józefa i Franciszki z Machulaków
+asc-1875-015;1875;15;mother_first_name;Franciszki;Franciszka;l.1 s. Józefa i Franciszki z Machulaków
+asc-1875-018;1875;18;father_first_name;Wojciecha;Wojciech;l.3 s. Wojciecha i Zofii z Pawłasków
+asc-1875-018;1875;18;mother_first_name;Zofii;Zofia;l.3 s. Wojciecha i Zofii z Pawłasków
+asc-1875-017;1875;17;father_first_name;Walentego;Walenty;l.2 s. Walentego i Antoniny z Pawłasków
+asc-1875-017;1875;17;mother_first_name;Antoniny;Antonina;l.2 s. Walentego i Antoniny z Pawłasków
+asc-1875-024;1875;24;father_first_name;Antoniego;Antoni;m.2 s. Antoniego i Zofii z Łukasików
+asc-1875-024;1875;24;mother_first_name;Zofii;Zofia;m.2 s. Antoniego i Zofii z Łukasików
+asc-1875-004;1875;4;father_first_name;Walentego;Walenty;l.49 s. Walentego i Franciszki owd.Katarzynę z Mazurów
+asc-1875-004;1875;4;mother_first_name;Franciszki;Franciszka;l.49 s. Walentego i Franciszki owd.Katarzynę z Mazurów
+asc-1875-014;1875;14;father_first_name;Macieja;Maciej;l.71 s. Macieja i Katarzyny owd.Jadwigę z Wcisłów
+asc-1875-014;1875;14;mother_first_name;Katarzyny;Katarzyna;l.71 s. Macieja i Katarzyny owd.Jadwigę z Wcisłów
+asc-1875-021;1875;21;father_first_name;Piotra;Piotr;l.58 s. Piotra i Ewy owd.Anastazję z Samuelów
+asc-1875-021;1875;21;mother_first_name;Ewy;Ewa;l.58 s. Piotra i Ewy owd.Anastazję z Samuelów
+asc-1875-010;1875;10;father_first_name;Józefa;Józef;l.67 wd. c. Józefa i Marianny
+asc-1875-010;1875;10;mother_first_name;Marianny;Marianna;l.67 wd. c. Józefa i Marianny
+asc-1875-003;1875;3;father_first_name;Pawła;Paweł;m.2 s. Pawła i Agnieszki z Sekułów
+asc-1875-003;1875;3;mother_first_name;Agnieszki;Agnieszka;m.2 s. Pawła i Agnieszki z Sekułów
+asc-1875-025;1875;25;father_first_name;Antoniego;Antoni;l.67 wdowa c. Antoniego i Marianny Pawłasków
+asc-1875-025;1875;25;mother_first_name;Marianny;Marianna;l.67 wdowa c. Antoniego i Marianny Pawłasków
+asc-1875-002;1875;2;father_first_name;Mateusza;Mateusz;l.30 c. Mateusza i Magdaleny Spryszaków owd.Wojciecha Pędzio
+asc-1875-002;1875;2;mother_first_name;Magdaleny;Magdalena;l.30 c. Mateusza i Magdaleny Spryszaków owd.Wojciecha Pędzio
+asc-1875-016;1875;16;father_first_name;Andrzeja;Andrzej;l.59 c. Andrzeja i Katarzyny Bigosów owd.Michała Piech
+asc-1875-016;1875;16;mother_first_name;Katarzyny;Katarzyna;l.59 c. Andrzeja i Katarzyny Bigosów owd.Michała Piech
+asc-1875-019;1875;19;father_first_name;Marcina;Marcin;l.52 wd. c. Marcina i Doroty Gnatów
+asc-1875-019;1875;19;mother_first_name;Doroty;Dorota;l.52 wd. c. Marcina i Doroty Gnatów
+asc-1875-005;1875;5;father_first_name;Michała;Michał;l.43 c. Michała i Agaty z Kurczaków małż.Kosidłów owd.Antoniego Sobótka
+asc-1875-005;1875;5;mother_first_name;Agaty;Agata;l.43 c. Michała i Agaty z Kurczaków małż.Kosidłów owd.Antoniego Sobótka
+asc-1875-011;1875;11;father_first_name;Antoniego;Antoni;l.1 s. Antoniego i Zofii z Kosidłów
+asc-1875-011;1875;11;mother_first_name;Zofii;Zofia;l.1 s. Antoniego i Zofii z Kosidłów
+asc-1875-013;1875;13;father_first_name;Leonarda;Leonard;l.53 s. Leonarda i Marianny owd.Honoratę z Romańskich
+asc-1875-013;1875;13;mother_first_name;Marianny;Marianna;l.53 s. Leonarda i Marianny owd.Honoratę z Romańskich
+asc-1876-026;1876;26;father_first_name;Szymona;Szymon;l.15 c. Szymona i Tekli z Chmielów
+asc-1876-026;1876;26;mother_first_name;Tekli;Tekla;l.15 c. Szymona i Tekli z Chmielów
+asc-1876-014;1876;14;father_first_name;Jana;Jan;m.6 c. Jana i Agnieszki z Nikolasów
+asc-1876-014;1876;14;mother_first_name;Agnieszki;Agnieszka;m.6 c. Jana i Agnieszki z Nikolasów
+asc-1876-012;1876;12;father_first_name;Bartłomieja;Bartłomiej;l.8 c. Bartłomieja i Zofii z Kosidłów
+asc-1876-012;1876;12;mother_first_name;Zofii;Zofia;l.8 c. Bartłomieja i Zofii z Kosidłów
+asc-1876-028;1876;28;father_first_name;Szymona;Szymon;l.42 c. Szymona i Elżbiety z Sokalskich
+asc-1876-028;1876;28;mother_first_name;Elżbiety;Elżbieta;l.42 c. Szymona i Elżbiety z Sokalskich
+asc-1876-004;1876;4;father_first_name;Krzysztofa;Krzysztof;l.67 wd. c. Krzysztofa i Marianny Pasternaków
+asc-1876-004;1876;4;mother_first_name;Marianny;Marianna;l.67 wd. c. Krzysztofa i Marianny Pasternaków
+asc-1876-016;1876;16;father_first_name;Wojciecha;Wojciech;l.56 wd. c. Wojciecha i Franciszki Kurczaków
+asc-1876-016;1876;16;mother_first_name;Franciszki;Franciszka;l.56 wd. c. Wojciecha i Franciszki Kurczaków
+asc-1876-020;1876;20;father_first_name;Józefa;Józef;l.18 c. Józefa i Marianny z Dobrzyńskich
+asc-1876-020;1876;20;mother_first_name;Marianny;Marianna;l.18 c. Józefa i Marianny z Dobrzyńskich
+asc-1876-001;1876;1;father_first_name;Wojciecha;Wojciech;l.1 c. Wojciecha i Anastazji z Sulowskich
+asc-1876-001;1876;1;mother_first_name;Anastazji;Anastazja;l.1 c. Wojciecha i Anastazji z Sulowskich
+asc-1876-009;1876;9;father_first_name;Szymona;Szymon;l.21 s. Szymona i Anny z Królów
+asc-1876-009;1876;9;mother_first_name;Anny;Anna;l.21 s. Szymona i Anny z Królów
+asc-1876-015;1876;15;father_first_name;Michała;Michał;l.3 s. Michała i Anastazji z Gnatów
+asc-1876-015;1876;15;mother_first_name;Anastazji;Anastazja;l.3 s. Michała i Anastazji z Gnatów
+asc-1876-024;1876;24;father_first_name;Józefa;Józef;l.26 c. Józefa i Jadwigi z Głazów małż.Kudrelków
+asc-1876-024;1876;24;mother_first_name;Jadwigi;Jadwiga;l.26 c. Józefa i Jadwigi z Głazów małż.Kudrelków
+asc-1876-017;1876;17;father_first_name;Stanisława;Stanisław;l.62 wd. c. Stanisława i Marianny małż. Saganów
+asc-1876-017;1876;17;mother_first_name;Marianny;Marianna;l.62 wd. c. Stanisława i Marianny małż. Saganów
+asc-1876-003;1876;3;father_first_name;Franciszka;Franciszek;l.6 s. Franciszka i Marianny z Jędrzejczaków
+asc-1876-003;1876;3;mother_first_name;Marianny;Marianna;l.6 s. Franciszka i Marianny z Jędrzejczaków
+asc-1876-023;1876;23;father_first_name;Adama;Adam;l.8 s. Adama i Katarzyny z Koguców
+asc-1876-023;1876;23;mother_first_name;Katarzyny;Katarzyna;l.8 s. Adama i Katarzyny z Koguców
+asc-1876-010;1876;10;father_first_name;Pawła;Paweł;l.75 wd. s. Pawła i Zofii
+asc-1876-010;1876;10;mother_first_name;Zofii;Zofia;l.75 wd. s. Pawła i Zofii
+asc-1876-008;1876;8;father_first_name;Mateusza;Mateusz;l.74 s. Mateusza i Anastazji owd.Mariannę z Kotułów
+asc-1876-008;1876;8;mother_first_name;Anastazji;Anastazja;l.74 s. Mateusza i Anastazji owd.Mariannę z Kotułów
+asc-1876-002;1876;2;father_first_name;Jakuba;Jakub;l.68 wd. s. Jakuba i Zofii
+asc-1876-002;1876;2;mother_first_name;Zofii;Zofia;l.68 wd. s. Jakuba i Zofii
+asc-1876-007;1876;7;father_first_name;Adama;Adam;l.10 s. Adama i Magdaleny z Dąbrowskich
+asc-1876-007;1876;7;mother_first_name;Magdaleny;Magdalena;l.10 s. Adama i Magdaleny z Dąbrowskich
+asc-1876-025;1876;25;father_first_name;Mateusza;Mateusz;l.41 s. Mateusza i Anastazji z Jachurów owd.Anielę z Mrozów
+asc-1876-025;1876;25;mother_first_name;Anastazji;Anastazja;l.41 s. Mateusza i Anastazji z Jachurów owd.Anielę z Mrozów
+asc-1876-018;1876;18;father_first_name;Walentego;Walenty;m.7 s. Walentego i Małgorzaty z Soboniewskich
+asc-1876-018;1876;18;mother_first_name;Małgorzaty;Małgorzata;m.7 s. Walentego i Małgorzaty z Soboniewskich
+asc-1876-021;1876;21;father_first_name;Pawła;Paweł;l.43 s. Pawła i Katarzyny z Saganów owd.Annę z Buconiów
+asc-1876-021;1876;21;mother_first_name;Katarzyny;Katarzyna;l.43 s. Pawła i Katarzyny z Saganów owd.Annę z Buconiów
+asc-1876-005;1876;5;father_first_name;Pawła;Paweł;l.73 wd. s. Pawła i Marianny
+asc-1876-005;1876;5;mother_first_name;Marianny;Marianna;l.73 wd. s. Pawła i Marianny
+asc-1876-022;1876;22;father_first_name;Tomasza;Tomasz;l.1 s. Tomasza i Katarzyny z Kamińskich
+asc-1876-022;1876;22;mother_first_name;Katarzyny;Katarzyna;l.1 s. Tomasza i Katarzyny z Kamińskich
+asc-1876-019;1876;19;father_first_name;Walentego;Walenty;l.7 s. Walentego i Agnieszki
+asc-1876-019;1876;19;mother_first_name;Agnieszki;Agnieszka;l.7 s. Walentego i Agnieszki
+asc-1876-013;1876;13;father_first_name;Marcina;Marcin;l.21 s. Marcina i Zofii z Kosidłów
+asc-1876-013;1876;13;mother_first_name;Zofii;Zofia;l.21 s. Marcina i Zofii z Kosidłów
+asc-1876-027;1876;27;father_first_name;Marcina;Marcin;l.10 c. Marcina i Antoniny z Kosidłów
+asc-1876-027;1876;27;mother_first_name;Antoniny;Antonina;l.10 c. Marcina i Antoniny z Kosidłów
+asc-1877-024;1877;24;father_first_name;Jana;Jan;m.9 c. Jana i Jadwigi z Ogonów
+asc-1877-024;1877;24;mother_first_name;Jadwigi;Jadwiga;m.9 c. Jana i Jadwigi z Ogonów
+asc-1877-016;1877;16;father_first_name;Wojciecha;Wojciech;l.55 c. Wojciecha i Katarzyny Saganów owd Andrzeja Ciećka
+asc-1877-016;1877;16;mother_first_name;Katarzyny;Katarzyna;l.55 c. Wojciecha i Katarzyny Saganów owd Andrzeja Ciećka
+asc-1877-028;1877;28;father_first_name;Wojciecha;Wojciech;l.50 ur w Polichnie s. Wojciecha i Henryki z Grudzińskich
+asc-1877-009;1877;9;father_first_name;Pawła;Paweł;c. Pawła i Jadwigi z Kosidłów
+asc-1877-009;1877;9;mother_first_name;Jadwigi;Jadwiga;c. Pawła i Jadwigi z Kosidłów
+asc-1877-014;1877;14;father_first_name;Bartłomieja;Bartłomiej;l.3 c. Bartłomieja i Zofii z Kosidłów
+asc-1877-014;1877;14;mother_first_name;Zofii;Zofia;l.3 c. Bartłomieja i Zofii z Kosidłów
+asc-1877-008;1877;8;father_first_name;Macieja;Maciej;l.73 wd. c. Macieja i Agnieszki Krupów
+asc-1877-008;1877;8;mother_first_name;Agnieszki;Agnieszka;l.73 wd. c. Macieja i Agnieszki Krupów
+asc-1877-022;1877;22;father_first_name;Macieja;Maciej;l.65 wd ur w Szastarce c. Macieja i Marianny Buconiów
+asc-1877-022;1877;22;mother_first_name;Marianny;Marianna;l.65 wd ur w Szastarce c. Macieja i Marianny Buconiów
+asc-1877-003;1877;3;father_first_name;Walentego;Walenty;l.25 c. Walentego i Marianny
+asc-1877-003;1877;3;mother_first_name;Marianny;Marianna;l.25 c. Walentego i Marianny
+asc-1877-007;1877;7;father_first_name;Antoniego;Antoni;l.25 c. Antoniego i Agaty Krawczyków owd.Wojciecha Jachura
+asc-1877-007;1877;7;mother_first_name;Agaty;Agata;l.25 c. Antoniego i Agaty Krawczyków owd.Wojciecha Jachura
+asc-1877-027;1877;27;father_first_name;Wojciecha;Wojciech;m.8 c. Wojciecha i Jadwigi z Krawczyków
+asc-1877-027;1877;27;mother_first_name;Jadwigi;Jadwiga;m.8 c. Wojciecha i Jadwigi z Krawczyków
+asc-1877-012;1877;12;father_first_name;Jana;Jan;l.2 c. Jana i Katarzyny z Janików
+asc-1877-012;1877;12;mother_first_name;Katarzyny;Katarzyna;l.2 c. Jana i Katarzyny z Janików
+asc-1877-006;1877;6;father_first_name;Michała;Michał;l.40 c. Michała i Salomei
+asc-1877-006;1877;6;mother_first_name;Salomei;Salomea;l.40 c. Michała i Salomei
+asc-1877-005;1877;5;father_first_name;Andrzeja;Andrzej;l.32 s. Andrzeja i Agnieszki
+asc-1877-005;1877;5;mother_first_name;Agnieszki;Agnieszka;l.32 s. Andrzeja i Agnieszki
+asc-1877-010;1877;10;father_first_name;Marcina;Marcin;l.10 s. Marcina i Tekli z Czarneckich
+asc-1877-010;1877;10;mother_first_name;Tekli;Tekla;l.10 s. Marcina i Tekli z Czarneckich
+asc-1877-019;1877;19;father_first_name;Jakuba;Jakub;l.67 wd ur w Błażku c. Jakuba i Marianny Głazów
+asc-1877-019;1877;19;mother_first_name;Marianny;Marianna;l.67 wd ur w Błażku c. Jakuba i Marianny Głazów
+asc-1877-013;1877;13;father_first_name;Pawła;Paweł;l.5 s. Pawła i Doroty z Sobótków
+asc-1877-013;1877;13;mother_first_name;Doroty;Dorota;l.5 s. Pawła i Doroty z Sobótków
+asc-1877-030;1877;30;father_first_name;Pawła;Paweł;l.48 c. Pawła i Katarzyny z Machulaków małż Kozaczków owd Walentego Kurczaka
+asc-1877-030;1877;30;mother_first_name;Katarzyny;Katarzyna;l.48 c. Pawła i Katarzyny z Machulaków małż Kozaczków owd Walentego Kurczaka
+asc-1877-033;1877;33;father_first_name;Nikodema;Nikodem;l.58 c. Nikodema i Anny z Pawłasków małż Kozaczków owd Pawła Kurczaka
+asc-1877-033;1877;33;mother_first_name;Anny;Anna;l.58 c. Nikodema i Anny z Pawłasków małż Kozaczków owd Pawła Kurczaka
+asc-1877-021;1877;21;father_first_name;Jana;Jan;m.3 s. Jana i Józefy z Babiarzów
+asc-1877-021;1877;21;mother_first_name;Józefy;Józefa;m.3 s. Jana i Józefy z Babiarzów
+asc-1877-032;1877;32;father_first_name;Mateusza;Mateusz;l.44 c. Mateusza i Anastazji z Kędziorów małż Pawłasków owd Antoniego Nieściura
+asc-1877-032;1877;32;mother_first_name;Anastazji;Anastazja;l.44 c. Mateusza i Anastazji z Kędziorów małż Pawłasków owd Antoniego Nieściura
+asc-1877-026;1877;26;father_first_name;Antoniego;Antoni;m.8 s. Antoniego i Anny z Wcisłów
+asc-1877-026;1877;26;mother_first_name;Anny;Anna;m.8 s. Antoniego i Anny z Wcisłów
+asc-1877-002;1877;2;father_first_name;Antoniego;Antoni;l.77 wd. c. Antoniego i Marianny Wcisłów
+asc-1877-002;1877;2;mother_first_name;Marianny;Marianna;l.77 wd. c. Antoniego i Marianny Wcisłów
+asc-1877-001;1877;1;father_first_name;Bartłomieja;Bartłomiej;l.63 wd. c. Bartłomieja i Agnieszki Wcisłów
+asc-1877-001;1877;1;mother_first_name;Agnieszki;Agnieszka;l.63 wd. c. Bartłomieja i Agnieszki Wcisłów
+asc-1877-004;1877;4;father_first_name;Adama;Adam;l.1 c. Adama i Magdaleny
+asc-1877-004;1877;4;mother_first_name;Magdaleny;Magdalena;l.1 c. Adama i Magdaleny
+asc-1877-031;1877;31;father_first_name;Wojciecha;Wojciech;m.3 c. Wojciecha i Katarzyny z Pawłasków
+asc-1877-031;1877;31;mother_first_name;Katarzyny;Katarzyna;m.3 c. Wojciecha i Katarzyny z Pawłasków
+asc-1877-023;1877;23;father_first_name;Wojciecha;Wojciech;l.3 c. Wojciecha i Tekli
+asc-1877-023;1877;23;mother_first_name;Tekli;Tekla;l.3 c. Wojciecha i Tekli
+asc-1877-015;1877;15;father_first_name;Wojciecha;Wojciech;l.40 ur w Słodkowie s. Wojciecha i Agnieszki owd.Małgorzatę z Soboniewskich
+asc-1877-015;1877;15;mother_first_name;Agnieszki;Agnieszka;l.40 ur w Słodkowie s. Wojciecha i Agnieszki owd.Małgorzatę z Soboniewskich
+asc-1877-018;1877;18;father_first_name;Szymona;Szymon;l.2 s. Szymona i Ewy z Kędziorów
+asc-1877-018;1877;18;mother_first_name;Ewy;Ewa;l.2 s. Szymona i Ewy z Kędziorów
+asc-1877-020;1877;20;father_first_name;Kacpra;Kacper;l.60 c. Kacpra i Antoniny Gnatów owd.Stanisława Stępnia
+asc-1877-020;1877;20;mother_first_name;Antoniny;Antonina;l.60 c. Kacpra i Antoniny Gnatów owd.Stanisława Stępnia
+asc-1877-025;1877;25;father_first_name;Józefa;Józef;l.13 s. Józefa i Franciszki z Obydziów
+asc-1877-025;1877;25;mother_first_name;Franciszki;Franciszka;l.13 s. Józefa i Franciszki z Obydziów
+asc-1877-017;1877;17;father_first_name;Macieja;Maciej;l.55 wd c. Macieja i Rozalii Makoskich
+asc-1877-017;1877;17;mother_first_name;Rozalii;Rozalia;l.55 wd c. Macieja i Rozalii Makoskich
+asc-1877-011;1877;11;father_first_name;Piotra;Piotr;l.4 s. Piotra i Zofii z Sosnówków
+asc-1877-011;1877;11;mother_first_name;Zofii;Zofia;l.4 s. Piotra i Zofii z Sosnówków
+asc-1877-029;1877;29;father_first_name;Marcina;Marcin;l.67 wd c. Marcina i Marianny z Boguniów małż.Wielebów
+asc-1877-029;1877;29;mother_first_name;Marianny;Marianna;l.67 wd c. Marcina i Marianny z Boguniów małż.Wielebów
+asc-1878-019;1878;19;father_first_name;Grzegorza;Grzegorz;l.50 s. Grzegorza i Marianny owd Jadwigę z Czubów
+asc-1878-019;1878;19;mother_first_name;Marianny;Marianna;l.50 s. Grzegorza i Marianny owd Jadwigę z Czubów
+asc-1878-001;1878;1;father_first_name;Michała;Michał;l.1 c. Michała i Zofii z Serafinów
+asc-1878-001;1878;1;mother_first_name;Zofii;Zofia;l.1 c. Michała i Zofii z Serafinów
+asc-1878-030;1878;30;father_first_name;Antoniego;Antoni;l.70 wd c. Antoniego i Anastazji Kołotów?
+asc-1878-030;1878;30;mother_first_name;Anastazji;Anastazja;l.70 wd c. Antoniego i Anastazji Kołotów?
+asc-1878-007;1878;7;father_first_name;Andrzeja;Andrzej;l.67 wd c. Andrzeja i Agnieszki małż Sulowskich
+asc-1878-007;1878;7;mother_first_name;Agnieszki;Agnieszka;l.67 wd c. Andrzeja i Agnieszki małż Sulowskich
+asc-1878-021;1878;21;father_first_name;Tomasza;Tomasz;l.38 s. Tomasza i Katarzyny owd Mariannę z Kudrelków
+asc-1878-021;1878;21;mother_first_name;Katarzyny;Katarzyna;l.38 s. Tomasza i Katarzyny owd Mariannę z Kudrelków
+asc-1878-011;1878;11;father_first_name;Wojciecha;Wojciech;l.60 wd c. Wojciecha i Antoniny małż Wielebów
+asc-1878-011;1878;11;mother_first_name;Antoniny;Antonina;l.60 wd c. Wojciecha i Antoniny małż Wielebów
+asc-1878-008;1878;8;father_first_name;Franciszka;Franciszek;l.4 s. Franciszka i Zofii z Wcisłów
+asc-1878-008;1878;8;mother_first_name;Zofii;Zofia;l.4 s. Franciszka i Zofii z Wcisłów
+asc-1878-029;1878;29;father_first_name;Tomasza;Tomasz;m.6 s. Tomasza i Marianny z Pcionków
+asc-1878-029;1878;29;mother_first_name;Marianny;Marianna;m.6 s. Tomasza i Marianny z Pcionków
+asc-1878-010;1878;10;father_first_name;Marcina;Marcin;l.40 s. Marcina i Zofii z Sulowskich owd Katarzynę z Janików
+asc-1878-010;1878;10;mother_first_name;Zofii;Zofia;l.40 s. Marcina i Zofii z Sulowskich owd Katarzynę z Janików
+asc-1878-013;1878;13;father_first_name;Marcina;Marcin;l.66 wd s. Marcina i Anastazji
+asc-1878-013;1878;13;mother_first_name;Anastazji;Anastazja;l.66 wd s. Marcina i Anastazji
+asc-1878-018;1878;18;father_first_name;Kacpra;Kacper;l.21 c. Kacpra i Jadwigi z Jędrzejczaków małż Pawłasków owd Ignacego Kolasę
+asc-1878-018;1878;18;mother_first_name;Jadwigi;Jadwiga;l.21 c. Kacpra i Jadwigi z Jędrzejczaków małż Pawłasków owd Ignacego Kolasę
+asc-1878-004;1878;4;father_first_name;Józefa;Józef;l.1 c. Józefa i Franciszki z Machulaków
+asc-1878-004;1878;4;mother_first_name;Franciszki;Franciszka;l.1 c. Józefa i Franciszki z Machulaków
+asc-1878-020;1878;20;father_first_name;Wojciecha;Wojciech;l.2 s. Wojciecha i Rozalii z Marchewków
+asc-1878-020;1878;20;mother_first_name;Rozalii;Rozalia;l.2 s. Wojciecha i Rozalii z Marchewków
+asc-1878-025;1878;25;father_first_name;Wojciecha;Wojciech;m.4 s. Wojciecha i Marianny z Machulaków
+asc-1878-025;1878;25;mother_first_name;Marianny;Marianna;m.4 s. Wojciecha i Marianny z Machulaków
+asc-1878-031;1878;31;father_first_name;Wojciecha;Wojciech;t.2 s. Wojciecha i Rozalii z Marchewków
+asc-1878-031;1878;31;mother_first_name;Rozalii;Rozalia;t.2 s. Wojciecha i Rozalii z Marchewków
+asc-1878-028;1878;28;father_first_name;Andrzeja;Andrzej;l.62 wd s. Andrzeja i Zofii z Kozaczków
+asc-1878-028;1878;28;mother_first_name;Zofii;Zofia;l.62 wd s. Andrzeja i Zofii z Kozaczków
+asc-1878-002;1878;2;father_first_name;Wojciecha;Wojciech;l.1 s. Wojciecha i Franciszki z Chmielów
+asc-1878-002;1878;2;mother_first_name;Franciszki;Franciszka;l.1 s. Wojciecha i Franciszki z Chmielów
+asc-1878-014;1878;14;father_first_name;Andrzeja;Andrzej;l.60 wd c. Andrzeja i Agnieszki Sulowskich
+asc-1878-014;1878;14;mother_first_name;Agnieszki;Agnieszka;l.60 wd c. Andrzeja i Agnieszki Sulowskich
+asc-1878-016;1878;16;father_first_name;Tomasza;Tomasz;l.3 s. Tomasza i Katarzyny z Dobrzyńskich
+asc-1878-016;1878;16;mother_first_name;Katarzyny;Katarzyna;l.3 s. Tomasza i Katarzyny z Dobrzyńskich
+asc-1878-027;1878;27;father_first_name;Walentego;Walenty;l.16 s. Walentego i Marianny z Kudrelków
+asc-1878-027;1878;27;mother_first_name;Marianny;Marianna;l.16 s. Walentego i Marianny z Kudrelków
+asc-1878-009;1878;9;father_first_name;Jana;Jan;l.70 wd c. Jana i Marianny z Czubów małż Ogonów
+asc-1878-009;1878;9;mother_first_name;Marianny;Marianna;l.70 wd c. Jana i Marianny z Czubów małż Ogonów
+asc-1878-003;1878;3;father_first_name;Jakuba;Jakub;l.60 s. Jakuba i Małgorzaty owd Agnieszkę z Drozdów
+asc-1878-003;1878;3;mother_first_name;Małgorzaty;Małgorzata;l.60 s. Jakuba i Małgorzaty owd Agnieszkę z Drozdów
+asc-1878-024;1878;24;father_first_name;Jakuba;Jakub;m.5 s. Jakuba i Franciszki z Jaworskich
+asc-1878-024;1878;24;mother_first_name;Franciszki;Franciszka;m.5 s. Jakuba i Franciszki z Jaworskich
+asc-1878-015;1878;15;father_first_name;Dominika;Dominik;l.2 s. Dominika i Agnieszki z Kosidłów
+asc-1878-015;1878;15;mother_first_name;Agnieszki;Agnieszka;l.2 s. Dominika i Agnieszki z Kosidłów
+asc-1878-017;1878;17;father_first_name;Franciszka;Franciszek;l.14 c. Franciszka i Zofii z Pcionków
+asc-1878-017;1878;17;mother_first_name;Zofii;Zofia;l.14 c. Franciszka i Zofii z Pcionków
+asc-1878-012;1878;12;father_first_name;Pawła;Paweł;l.3 c. Pawła i Marianny z Machulaków
+asc-1878-012;1878;12;mother_first_name;Marianny;Marianna;l.3 c. Pawła i Marianny z Machulaków
+asc-1878-023;1878;23;father_first_name;Jana;Jan;l.1 c. Jana i Józefy z Nieściurów
+asc-1878-023;1878;23;mother_first_name;Józefy;Józefa;l.1 c. Jana i Józefy z Nieściurów
+asc-1878-026;1878;26;father_first_name;Tomasza;Tomasz;l.2 c. Tomasza i Anny z Pasternaków
+asc-1878-026;1878;26;mother_first_name;Anny;Anna;l.2 c. Tomasza i Anny z Pasternaków
+asc-1878-022;1878;22;father_first_name;Stanisława;Stanisław;l.8 c. Stanisława i Anny z Wcisłów
+asc-1878-022;1878;22;mother_first_name;Anny;Anna;l.8 c. Stanisława i Anny z Wcisłów
+asc-1879-021;1879;21;father_first_name;Michała;Michał;l.7 s. Michała i Katarzyny z Koguców
+asc-1879-021;1879;21;mother_first_name;Katarzyny;Katarzyna;l.7 s. Michała i Katarzyny z Koguców
+idx-1822-968;1822;968;mother_first_name;Konstancji;Konstancja;Józefa i Konstancji Paluchów

@@ -17,6 +17,23 @@ def take(Dn,prefix):
         acts.append(a)
 ZG='Blinów - lubgens/BLIN/ZG/'
 take(D35,ZG);take(D43,ZG);take(DA,'')
+# Indeks ASC 1870-79 powstal z uwag "s. Jakuba i Zofii": imiona rodzicow sa tam w dopelniaczu. Tu zamiana na mianownik (ta sama regula co w Multitoolu,
+# rodziny_rdzen.js: imieMianownik): tylko gdy zapis NIE jest znanym imieniem, a forma bez koncowki JEST znanym imieniem (>= 3 wystapienia w slowniku imion tej bazy
+# albo imie ze wspolne/slowniki_imion.json). Zapis zrodlowy zostaje w lubRaw. Lista zmian: narzedzia/POPRAWKI_imiona_dopelniacz.csv.
+_SL=json.load(open(R+'wspolne/slowniki_imion.json',encoding='utf-8'))
+_ZNANE={k for k,v in DA['counts']['n'].items() if v>=3 and not re.search(r'[\s\[\]?(),.]',k)}|set(_SL['PGEN'].values())|set(_SL['GEN'].values())
+def imie_mianownik(v,plec):
+    v=(v or '').strip()
+    if not v or re.search(r'[\s\[\]?(),.]',v) or (v in _ZNANE and not (plec=='M' and v.endswith('a'))):return ''   # w polu ojca imie zenskie (Jozefa, Franciszka) to dopelniacz meskiego
+    C=[re.sub(r'a$','',v),re.sub(r'ka$','ek',v),re.sub(r'wła$','weł',v),re.sub(r'iego$','i',v),re.sub(r'ego$','y',v),re.sub(r'ra$','er',v),re.sub(r'ca$','iec',v)] if plec=='M' else [re.sub(r'y$','a',v),re.sub(r'ii$','ia',v),re.sub(r'ji$','ja',v),re.sub(r'i$','a',v)]
+    return next((c for c in C if c!=v and c in _ZNANE),'')
+_POPR=[]
+for a in acts:
+    if not str(a.get('id','')).startswith('asc-') or not a.get('lub'):continue
+    a['lub']=dict(a['lub'])
+    for f_,pl_ in (('father_first_name','M'),('mother_first_name','K')):
+        m_=imie_mianownik(a['lub'].get(f_),pl_)
+        if m_:_POPR.append([a['id'],a['year'],a['act'],f_,a['lub'][f_],m_,a.get('lubRaw','')]);a['lub'][f_]=m_
 # indeks (poza 1870-79 i latami, ktore juz maja akty)
 txt=open(R+'zgony.csv',encoding='utf-8-sig').read()
 rows=list(csv.DictReader(txt.splitlines(),delimiter=';' if ';' in txt.split('\n')[0] else ','))
@@ -194,7 +211,10 @@ for fn in sorted(glob.glob(R+'haiku/ODCZYTY/*_dom_przyczyny.csv'))+sorted(glob.g
         pr=x['rodzice'].strip()
         if pr:
             ai['parents_raw']=pr
-            for k_,v_ in (parents(pr) or parents_pl(pr)).items():ai[k_]=v_+('?' if '?' in pr else '')
+            for k_,v_ in (parents(pr) or parents_pl(pr)).items():
+                m_=imie_mianownik(v_,'M' if k_=='father_first_name' else 'K') if k_ in ('father_first_name','mother_first_name') else ''   # imie spoza slownika PGEN zostawalo w dopelniaczu (np. Konstancji)
+                if m_:_POPR.append([(a or {}).get('id',''),x['rok'],(a or {}).get('act',''),k_,v_,m_,pr]);v_=m_
+                ai[k_]=v_+('?' if '?' in pr else '')
         if x.get('_stan'):ai['profession']=x['_stan']
         _ms=male_surname(ai['deceased_last_name'],ai['deceased_sex']) if ai['deceased_last_name'] else None
         _ntf=''
@@ -292,7 +312,20 @@ sub('function init(){ HS = histSnap(S.acts);','function init(){ S.seeded = S.see
 sub('Weryfikacja zgonów · v2','Baza zgonów 1797–1945')
 sub('<title>Weryfikacja zgonów</title>','<title>Baza zgonów 1797–1945</title>')
 sub("function commit(a,f,v,src,extra){ if (src === 'edit' &&","const NPLJ = "+json.dumps({k:v for k,v in NPL.items() if v},ensure_ascii=False)+"; const latName = v => String(v).split(/(\\s+)/).map(w => NPLJ[w.toLowerCase().replace(/[.,?]/g,'')] ? NPLJ[w.toLowerCase().replace(/[.,?]/g,'')] + (/\\?$/.test(w) ? '?' : '') : w).join('');\nfunction commit(a,f,v,src,extra){ if (src === 'edit' && /^(deceased_first_name|father_first_name|mother_first_name)$/.test(f)) v = latName(v); if (src === 'edit' &&")
+# ostatnie przejscie: imiona rodzicow w dopelniaczu, ktore dotarly inna droga (nakladki odczytow) – ta sama regula, wpis do listy poprawek
+_bylo={(r_[0],r_[3]) for r_ in _POPR}
+for a_ in D['acts']:
+    for zr_ in ('ai','lub'):
+        if not isinstance(a_.get(zr_),dict):continue
+        for f_,pl_ in (('father_first_name','M'),('mother_first_name','K')):
+            v_=a_[zr_].get(f_) or '';q_='?' if v_.endswith('?') else '';m_=imie_mianownik(v_.rstrip('?'),pl_)
+            if m_:
+                if (a_.get('id'),f_) not in _bylo:_POPR.append([a_.get('id',''),a_.get('year',''),a_.get('act',''),f_,v_,m_,a_.get('lubRaw') or (a_.get('ai') or {}).get('parents_raw','')])
+                a_[zr_][f_]=m_+q_
 out=t.replace('const D = /*DATA*/;','const D = '+json.dumps(D,ensure_ascii=False,separators=(',',':'))+';') if 'const D = /*DATA*/;' in t else None
 assert out,'marker'
 open(R+'narzedzia/baza_zgonow_1797-1945.html','w',encoding='utf-8').write(out)
 print(len(acts),sum(1 for a in acts if a.get('ai') and not a.get('kind')),'overlay',nov,len(out))
+with open(R+'narzedzia/POPRAWKI_imiona_dopelniacz.csv','w',encoding='utf-8-sig',newline='') as f_:
+    w_=csv.writer(f_,delimiter=';');w_.writerow(['id','rok','nr','pole','bylo','jest','zapis_zrodlowy']);w_.writerows(_POPR)
+print('imiona rodzicow z dopelniacza na mianownik:',len(_POPR))
