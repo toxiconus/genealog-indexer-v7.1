@@ -2,8 +2,8 @@
 <html lang="pl"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Multitool v1 – akty</title>
 <style>
-:root{--bg:#f6f4ef;--card:#fff;--ink:#22262b;--mut:#687079;--line:#d9d5cb;--acc:#2f5d8a;--ok:#2e7d4f;--warn:#a86500;--err:#b3261e}
-@media (prefers-color-scheme:dark){:root{--bg:#16181b;--card:#1f2226;--ink:#e6e3dc;--mut:#9aa1a9;--line:#353a40;--acc:#7fb0e0;--ok:#6cc08b;--warn:#e0a84a;--err:#ef8a80}}
+:root{color-scheme:light;--bg:#f6f4ef;--card:#fff;--ink:#22262b;--mut:#687079;--line:#d9d5cb;--acc:#2f5d8a;--ok:#2e7d4f;--warn:#a86500;--err:#b3261e}
+@media (prefers-color-scheme:dark){:root{color-scheme:dark;--bg:#16181b;--card:#1f2226;--ink:#e6e3dc;--mut:#9aa1a9;--line:#353a40;--acc:#7fb0e0;--ok:#6cc08b;--warn:#e0a84a;--err:#ef8a80}}
 *{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.45 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
 header{position:sticky;top:0;z-index:5;background:var(--card);border-bottom:1px solid var(--line);padding:8px 16px;display:flex;flex-wrap:wrap;gap:8px;align-items:center}
 h1{font-size:16px;margin:0 8px 0 0}h2{font-size:16px;margin:0 0 4px}h3{font-size:15px;margin:0 0 6px}
@@ -48,6 +48,10 @@ body.sk-dok #skWin{left:var(--lw);top:var(--tt,0px);bottom:0;width:var(--skw);bo
 body.sk-dok.lista-ukryta .wrap>.col:first-child{display:none}
 body.sk-dok.lista-ukryta #skWin{left:0;width:calc(var(--skw) + var(--lw))}
 body.sk-dok.lista-ukryta .wrap{margin-left:calc(var(--skw) + var(--lw))}
+.listaTog{position:fixed;top:calc(var(--tt,0px) + 45vh);left:calc(var(--lw) - 14px);z-index:60;width:28px;height:48px;padding:0;border-radius:0 8px 8px 0;display:none;font-size:14px;line-height:1}
+body.sk-dok .listaTog{display:block}
+body.sk-dok.lista-ukryta .listaTog{left:0}
+@media (max-width:820px){.listaTog{display:none!important}}
 .skPok{position:fixed;right:12px;bottom:12px;z-index:60;display:block}
 .skPok[hidden]{display:none}
 .hdrPok{position:fixed;top:0;left:0;z-index:60;display:none}

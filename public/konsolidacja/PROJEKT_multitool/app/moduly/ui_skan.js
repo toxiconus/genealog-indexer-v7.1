@@ -32,7 +32,7 @@ function skanFokusPola(a, f){ SK.pole = f; const rs = frOf(a, f); if (!$('skImg'
 function skanPanel(a){ const sk = skanKlucz(a), sc = skanSciezka(a), plik = skanZnajdz(a), pf = fieldsOf(a).filter(f => frOf(a, f.id));
   const stan = !sk ? 'Ten akt nie ma przypisanego skanu.' : !SK.pliki.length ? 'Wybierz folder ze skanami (obraz zostaje na tym komputerze).' : plik ? '' : 'Nie znaleziono pliku „' + skanBase(sc) + '” w wybranym folderze (' + SK.pliki.length + ' obrazów).';
   return h`<div class="skwin-head" id="skHead"><span class="skwin-tyt">Skan <b>${sc ? skanBase(sc) : '(brak)'}</b>${plik ? '' : ' – niewczytany'}</span>
-      <span class="skwin-btn"><button class="sm" id="skLista" title="Pokaż/ukryj listę aktów">${document.body.classList.contains('lista-ukryta') ? '☰ pokaż akty' : '☰ ukryj akty'}</button><button class="sm" id="skHdr" title="Schowaj/pokaż górny pasek">▲ pasek</button><button class="sm" id="skDok" title="Przypnij z prawej / odepnij">${SK.plywajacy ? '⇱ przypnij' : '⇲ odepnij'}</button><button class="sm" id="skZwin" title="Zwiń/rozwiń">${SK.zwiniety ? '▸' : '▾'}</button><button class="sm" id="skSchowaj" title="Schowaj skan">✕</button></span></div>
+      <span class="skwin-btn"><button class="sm" id="skHdr" title="Schowaj/pokaż górny pasek">▲ pasek</button><button class="sm" id="skDok" title="Przypnij z prawej / odepnij">${SK.plywajacy ? '⇱ przypnij' : '⇲ odepnij'}</button><button class="sm" id="skZwin" title="Zwiń/rozwiń">${SK.zwiniety ? '▸' : '▾'}</button><button class="sm" id="skSchowaj" title="Schowaj skan">✕</button></span></div>
     <div class="skwin-cialo" ${SK.zwiniety ? raw('hidden') : ''}>
     <div class="acts"><button id="skFolder" class="sm">Wybierz folder skanów…</button><span class="muted" id="skInfo">${SK.folder ? 'folder: ' + SK.folder + ' · ' + SK.pliki.length + ' obrazów' : ''}</span>
       <button class="sm" id="skIn" title="Powiększ">＋</button><button class="sm" id="skOut" title="Pomniejsz">－</button><button class="sm" id="skFit" title="Dopasuj do obszaru aktu">Dopasuj</button>
@@ -49,7 +49,6 @@ function skanWinRender(a){ const W = $('skWin'), pk = $('skPokaz'); if (!W) retu
   wstaw(W, skanPanel(a)); skanOknoPodlacz(); skanPodlacz(a); }
 function skanOknoPodlacz(){ const W = $('skWin'), head = $('skHead'); if (!W || !head) return;
   $('skHdr').onclick = () => { document.body.classList.toggle('hdr-ukryty'); skanWinRender(curAct()); };
-  $('skLista').onclick = () => { document.body.classList.toggle('lista-ukryta'); skanWinRender(curAct()); };
   $('skZwin').onclick = () => { SK.zwiniety = !SK.zwiniety; skanWinRender(curAct()); };
   $('skSchowaj').onclick = () => { SK.schowany = true; skanWinRender(curAct()); };
   $('skDok').onclick = () => { SK.plywajacy = !SK.plywajacy; if (!SK.plywajacy) Object.assign(W.style, {left: '', top: '', right: '', bottom: ''}); skanWinRender(curAct()); };
@@ -82,6 +81,7 @@ function roiEksport(){ const A = D.acts.filter(a => !a.kind && (a.ai || S.acts[a
 function skanInit(){ addEventListener('resize', () => skTT()); const W = document.createElement('div'); W.id = 'skWin'; W.className = 'skwin'; W.hidden = true; document.body.appendChild(W);
   const pk = document.createElement('button'); pk.id = 'skPokaz'; pk.className = 'skPok'; pk.hidden = true; pk.textContent = '🖼 Skan'; pk.onclick = () => { SK.schowany = false; skanWinRender(curAct()); }; document.body.appendChild(pk);
   const hp = document.createElement('button'); hp.id = 'hdrPokaz'; hp.className = 'hdrPok'; hp.textContent = '▼ pasek'; hp.onclick = () => { document.body.classList.remove('hdr-ukryty'); skanWinRender(curAct()); }; document.body.appendChild(hp);
+  const lt = document.createElement('button'); lt.id = 'listaTog'; lt.className = 'listaTog'; lt.title = 'Pokaż/ukryj listę aktów'; lt.textContent = '◀'; lt.onclick = () => { const u = document.body.classList.toggle('lista-ukryta'); lt.textContent = u ? '▶' : '◀'; setTimeout(() => { if (SK.v.iw) skanDopasuj(roiOf(curAct())); }, 60); }; document.body.appendChild(lt);
   const i = document.createElement('input'); i.type = 'file'; i.id = 'fSkany'; i.hidden = true; i.multiple = true; i.setAttribute('webkitdirectory', ''); i.setAttribute('directory', ''); document.body.appendChild(i);
   i.onchange = e => { const n = skanWybierzFolder(e.target.files); e.target.value = ''; toast(n ? 'Wczytano listę skanów: ' + n + ' (obrazy zostają lokalnie)' : 'W folderze nie ma obrazów'); keepScroll(); };
   const m = $('menu'), b = document.createElement('button'); b.id = 'mRoi'; b.textContent = 'Eksport ROI i ramek pól (JSON)'; b.onclick = () => { m.hidden = true; toast('Wyeksportowano ROI: ' + roiEksport() + ' aktów'); }; m.appendChild(b);
