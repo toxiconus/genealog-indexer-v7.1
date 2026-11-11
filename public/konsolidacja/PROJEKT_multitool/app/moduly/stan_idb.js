@@ -4,6 +4,7 @@
    S w pamięci ma układ v3 ({acts:{id:{f,done,text,…}}, hist, …}); tu jest tylko rozkład na magazyny i z powrotem. Zapis różnicowy: do bazy idą tylko rekordy, których podpis się zmienił.
    Pole w stanie pamięta wartość bazową (`baza`), którą użytkownik widział; gdy po przebudowie danych baza się zmieni, pole trafia do kolejki „dane źródłowe się zmieniły” (stKolejka) zamiast cicho znikać. */
 const ST_NAZWA = 'multitool', ST_WER = 2, ST_SKLADY = ['kv', 'pola', 'teksty', 'akty', 'decyzje', 'historia', 'slowniki', 'skany', 'kopie', 'meta'];
+let ST_DODATKI = [];   // dodatkowe zapisy [magazyn, klucz, wartość] dołączane do następnej transakcji stFlush (np. raport migracji)
 let ST_TRYB = 'idb', ST_DBP = null, ST_PODPIS = {}, ST_BAZA = {}, ST_HIST_N = 0, ST_T = null, ST_ZMIANY = 0, ST_OSTATNIA = null, ST_PERSIST = false, ST_BLAD = '', ST_KOLEJ = [];
 const ST_UST = ['year', 'cen', 'dec', 'flt', 'hideOk', 'hideDoneActs', 'noroi', 'onlyScan', 'hideMk', 'cur', 'tmode', 'tfs', 'q', 'repIgn'];
 function stOtworz(){ if (ST_DBP) return ST_DBP; ST_DBP = new Promise((ok, no) => { let r; try { r = indexedDB.open(ST_NAZWA, ST_WER); } catch (e) { return no(e); }
@@ -26,11 +27,12 @@ const stPodpis = v => JSON.stringify(v);
 async function stFlush(licz){ if (licz === undefined) licz = true; clearTimeout(ST_T); ST_T = null; const R = stRekordy(), zap = [], del = []; let zm = 0;
   for (const sk in R) for (const k in R[sk]) { const p = stPodpis(R[sk][k]), pk = sk + '\u0001' + k; if (ST_PODPIS[pk] !== p) { zap.push([sk, k, R[sk][k], p]); if (licz && ['pola', 'teksty', 'akty'].includes(sk)) zm++; } }
   for (const pk in ST_PODPIS) { const [sk, k] = pk.split('\u0001'); if (!(k in (R[sk] || {})) && sk !== 'meta' && sk !== 'historia') { del.push([sk, k, pk]); if (licz && ['pola', 'teksty', 'akty'].includes(sk)) zm++; } }
-  if (!zap.length && !del.length) return true;
-  const ok = () => { zap.forEach(([sk, k, v, p]) => ST_PODPIS[sk + '\u0001' + k] = p); del.forEach(([sk, k, pk]) => delete ST_PODPIS[pk]); if (licz && zm) { ST_ZMIANY += zm; if (typeof stWskaznik === 'function') stWskaznik(); } };
+  if (!zap.length && !del.length && !ST_DODATKI.length) return true;
+  const dod = ST_DODATKI.slice();
+  const ok = () => { ST_DODATKI.splice(0, dod.length); zap.forEach(([sk, k, v, p]) => ST_PODPIS[sk + '\u0001' + k] = p); del.forEach(([sk, k, pk]) => delete ST_PODPIS[pk]); if (licz && zm) { ST_ZMIANY += zm; if (typeof stWskaznik === 'function') stWskaznik(); } };
   if (ST_TRYB === 'pamiec') { ok(); return false; }
   try { const meta = [['ostatniaKopia', ST_OSTATNIA], ['zmianyBezKopii', ST_ZMIANY + (licz ? zm : 0)]];
-    await stTx(['pola', 'teksty', 'akty', 'historia', 'slowniki', 'meta'], 'readwrite', w => { zap.forEach(([sk, k, v]) => w[sk].put(v, sk === 'historia' ? +k : k)); del.forEach(([sk, k]) => w[sk].delete(k)); meta.forEach(([k, v]) => w.meta.put(v, k)); });
+    await stTx(['pola', 'teksty', 'akty', 'historia', 'slowniki', 'meta'], 'readwrite', w => { zap.forEach(([sk, k, v]) => w[sk].put(v, sk === 'historia' ? +k : k)); del.forEach(([sk, k]) => w[sk].delete(k)); meta.forEach(([k, v]) => w.meta.put(v, k)); dod.forEach(([sk, k, v]) => w[sk].put(v, k)); });
     ok(); if (!ST_PERSIST && navigator.storage && navigator.storage.persist) { ST_PERSIST = true; try { navigator.storage.persist(); } catch (e) {} } if (licz && typeof kopiaAutoZapis === "function") kopiaAutoZapis(); return true; }
   catch (e) { stAwaria(e); ok(); return false; } }
 function stZapisz(){ if (ST_T) return; ST_T = setTimeout(() => { stFlush(true); }, 120); }

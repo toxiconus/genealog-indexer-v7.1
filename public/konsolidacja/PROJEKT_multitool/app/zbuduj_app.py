@@ -6,7 +6,7 @@ import os, re, sys, json, hashlib
 H = os.path.dirname(os.path.abspath(__file__)); K = os.path.join(H, '..', '..')
 sys.path.insert(0, os.path.join(K, 'wspolne')); sys.dont_write_bytecode = True
 from zbuduj import inline
-WYMAGANE = {'MODULE': ['tekst', 'plik', 'historia'], 'MODUL': ['raport_zgonow', 'dane_adapter', 'akt_zgon', 'typy_aktow', 'stan_idb', 'kopie', 'import_csv', 'ui_html', 'ui_akt', 'ui_skan', 'ui_narzedzia', 'ui_powloka']}
+WYMAGANE = {'MODULE': ['tekst', 'plik', 'historia'], 'MODUL': ['raport_zgonow', 'dane_adapter', 'akt_zgon', 'typy_aktow', 'stan_idb', 'kopie', 'import_csv', 'migracja_zgony', 'ui_html', 'ui_akt', 'ui_skan', 'ui_narzedzia', 'ui_migracja', 'ui_powloka']}
 t = open(os.path.join(H, 'szablon_app.html'), encoding='utf-8').read()
 for typ, L in WYMAGANE.items():
     for m in L: assert '/*%s:%s*/' % (typ, m) in t, 'szablon nie wstawia modułu ' + m

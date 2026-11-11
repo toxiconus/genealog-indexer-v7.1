@@ -33,10 +33,10 @@ table{border-collapse:collapse;width:100%;font-size:13px}td,th{border-bottom:1px
 .tpodglad{white-space:pre-wrap;border:1px solid var(--line);border-radius:6px;padding:8px;margin-top:6px}.mq{background:rgba(224,168,74,.35)}.mr{background:rgba(239,138,128,.35)}.mg{background:rgba(127,176,224,.3)}.sugw{margin:4px 0}
 </style></head><body>
 <header><h1>Multitool v1 · akt zgonu</h1><span class="muted" id="prog"></span><button class="ind" id="kopiaInd" title="Zrób kopię pełną">decyzji i zmian bez kopii: 0</button><span style="flex:1"></span><button id="bMenu">Menu ▾</button>
-<div id="menu" hidden><button id="mCsv">Eksport CSV (zgony)</button><button id="mKopia">Kopia pełna (JSON)</button><button id="mKopiaWczytaj">Wczytaj kopię (JSON)…</button><button id="mImpDop">Import CSV zatwierdzeń (dopisz)…</button><button id="mImpZast">Import CSV zatwierdzeń (zastąp)…</button><button id="mMigawki">Migawki / przywróć…</button><button id="mKolejka">Dane źródłowe się zmieniły (0)</button><button id="mAuto">Autozapis do pliku…</button></div></header>
+<div id="menu" hidden><button id="mCsv">Eksport CSV (zgony)</button><button id="mKopia">Kopia pełna (JSON)</button><button id="mKopiaWczytaj">Wczytaj kopię (JSON)…</button><button id="mImpDop">Import CSV zatwierdzeń (dopisz)…</button><button id="mImpZast">Import CSV zatwierdzeń (zastąp)…</button><button id="mMigawki">Migawki / przywróć…</button><button id="mKolejka">Dane źródłowe się zmieniły (0)</button><button id="mMigr">Migracja zgonów z CSV…</button><button id="mAuto">Autozapis do pliku…</button></div></header>
 <div id="pasekStan" hidden></div><div id="przyp" hidden></div>
 <div class="wrap"><div class="col"><div id="filtry"></div><div id="lista"></div></div><div class="col" id="main"></div></div>
-<input type="file" id="fKopia" accept=".json,application/json" hidden><input type="file" id="fCsv" accept=".csv,text/csv" hidden>
+<input type="file" id="fKopia" accept=".json,application/json" hidden><input type="file" id="fCsv" accept=".csv,text/csv" hidden><input type="file" id="fMigr" accept=".csv,text/csv" multiple hidden>
 <div id="okno" hidden></div><div id="toast"></div>
 <script>
 /* wspolne/tekst.js – wspólne funkcje tekstowe (wklejane do HTML przy budowaniu przez zbuduj.py) */
@@ -387,6 +387,7 @@ function zestawPola(typ, nazwa){ const k = typ + ':' + nazwa; if (ZESTAW_CACHE[k
    S w pamięci ma układ v3 ({acts:{id:{f,done,text,…}}, hist, …}); tu jest tylko rozkład na magazyny i z powrotem. Zapis różnicowy: do bazy idą tylko rekordy, których podpis się zmienił.
    Pole w stanie pamięta wartość bazową (`baza`), którą użytkownik widział; gdy po przebudowie danych baza się zmieni, pole trafia do kolejki „dane źródłowe się zmieniły” (stKolejka) zamiast cicho znikać. */
 const ST_NAZWA = 'multitool', ST_WER = 2, ST_SKLADY = ['kv', 'pola', 'teksty', 'akty', 'decyzje', 'historia', 'slowniki', 'skany', 'kopie', 'meta'];
+let ST_DODATKI = [];   // dodatkowe zapisy [magazyn, klucz, wartość] dołączane do następnej transakcji stFlush (np. raport migracji)
 let ST_TRYB = 'idb', ST_DBP = null, ST_PODPIS = {}, ST_BAZA = {}, ST_HIST_N = 0, ST_T = null, ST_ZMIANY = 0, ST_OSTATNIA = null, ST_PERSIST = false, ST_BLAD = '', ST_KOLEJ = [];
 const ST_UST = ['year', 'cen', 'dec', 'flt', 'hideOk', 'hideDoneActs', 'noroi', 'onlyScan', 'hideMk', 'cur', 'tmode', 'tfs', 'q', 'repIgn'];
 function stOtworz(){ if (ST_DBP) return ST_DBP; ST_DBP = new Promise((ok, no) => { let r; try { r = indexedDB.open(ST_NAZWA, ST_WER); } catch (e) { return no(e); }
@@ -409,11 +410,12 @@ const stPodpis = v => JSON.stringify(v);
 async function stFlush(licz){ if (licz === undefined) licz = true; clearTimeout(ST_T); ST_T = null; const R = stRekordy(), zap = [], del = []; let zm = 0;
   for (const sk in R) for (const k in R[sk]) { const p = stPodpis(R[sk][k]), pk = sk + '\u0001' + k; if (ST_PODPIS[pk] !== p) { zap.push([sk, k, R[sk][k], p]); if (licz && ['pola', 'teksty', 'akty'].includes(sk)) zm++; } }
   for (const pk in ST_PODPIS) { const [sk, k] = pk.split('\u0001'); if (!(k in (R[sk] || {})) && sk !== 'meta' && sk !== 'historia') { del.push([sk, k, pk]); if (licz && ['pola', 'teksty', 'akty'].includes(sk)) zm++; } }
-  if (!zap.length && !del.length) return true;
-  const ok = () => { zap.forEach(([sk, k, v, p]) => ST_PODPIS[sk + '\u0001' + k] = p); del.forEach(([sk, k, pk]) => delete ST_PODPIS[pk]); if (licz && zm) { ST_ZMIANY += zm; if (typeof stWskaznik === 'function') stWskaznik(); } };
+  if (!zap.length && !del.length && !ST_DODATKI.length) return true;
+  const dod = ST_DODATKI.slice();
+  const ok = () => { ST_DODATKI.splice(0, dod.length); zap.forEach(([sk, k, v, p]) => ST_PODPIS[sk + '\u0001' + k] = p); del.forEach(([sk, k, pk]) => delete ST_PODPIS[pk]); if (licz && zm) { ST_ZMIANY += zm; if (typeof stWskaznik === 'function') stWskaznik(); } };
   if (ST_TRYB === 'pamiec') { ok(); return false; }
   try { const meta = [['ostatniaKopia', ST_OSTATNIA], ['zmianyBezKopii', ST_ZMIANY + (licz ? zm : 0)]];
-    await stTx(['pola', 'teksty', 'akty', 'historia', 'slowniki', 'meta'], 'readwrite', w => { zap.forEach(([sk, k, v]) => w[sk].put(v, sk === 'historia' ? +k : k)); del.forEach(([sk, k]) => w[sk].delete(k)); meta.forEach(([k, v]) => w.meta.put(v, k)); });
+    await stTx(['pola', 'teksty', 'akty', 'historia', 'slowniki', 'meta'], 'readwrite', w => { zap.forEach(([sk, k, v]) => w[sk].put(v, sk === 'historia' ? +k : k)); del.forEach(([sk, k]) => w[sk].delete(k)); meta.forEach(([k, v]) => w.meta.put(v, k)); dod.forEach(([sk, k, v]) => w[sk].put(v, k)); });
     ok(); if (!ST_PERSIST && navigator.storage && navigator.storage.persist) { ST_PERSIST = true; try { navigator.storage.persist(); } catch (e) {} } if (licz && typeof kopiaAutoZapis === "function") kopiaAutoZapis(); return true; }
   catch (e) { stAwaria(e); ok(); return false; } }
 function stZapisz(){ if (ST_T) return; ST_T = setTimeout(() => { stFlush(true); }, 120); }
@@ -539,6 +541,70 @@ function csvImportStosuj(w, ovw){ const ix = w.ix; let nA = 0, nF = 0, nSkip = 0
 // podgląd: ta sama operacja na kopii stanu (S i D.scanFiles przywracane); nic nie jest zapisywane
 function csvImportPodglad(w, ovw){ const bakS = S, bakSF = D.scanFiles, bakH = S.hist; let r; try { S = structuredClone(S); D.scanFiles = JSON.parse(JSON.stringify(D.scanFiles || {})); r = csvImportStosuj(w, ovw); } finally { S = bakS; D.scanFiles = bakSF; } return r; }
 async function csvImportZapisz(w, ovw, nazwa){ await kopiaMigawka('przed importem CSV: ' + (nazwa || '')); HIST_WHY = 'import CSV: ' + (nazwa || '') + (ovw ? ' (zastąp)' : ' (dopisz)'); const r = csvImportStosuj(w, ovw); save(); HIST_WHY = null; await stFlush(true); return r; }
+
+/* app/moduly/migracja_zgony.js – krok 4 planu: migracja zatwierdzeń ZGONÓW z plików CSV do stanu roboczego (IndexedDB).
+   Zakres: tylko zgony. Źródłem są pliki CSV (eksport ZGONY_zweryfikowane_10.csv + nakładka zatwierdzenia_uzytkownika.csv), nie pamięć przeglądarki.
+   Wczytanie rzędów: istniejący import (import_csv.js: csvImportRozpoznaj / csvImportStosuj, tryb „dopisz” – pola już zatwierdzone nie są ruszane).
+   Kolejność: najpierw pełny eksport, potem nakładka (nakładka nadpisuje tylko pola niezatwierdzone). Stare dane (pliki CSV, localStorage starych narzędzi, haiku/ZATWIERDZENIA/) nie są zmieniane.
+   Procedura: plan (próba na kopii stanu, nic nie jest zapisywane) → migawka → zastosowanie → jeden zapis (stFlush: pola, teksty, akty, historia, slowniki, meta + raport w jednej transakcji) → odczyt kontrolny z IndexedDB.
+   Idempotencja: ponowne uruchomienie z tymi samymi plikami nie zmienia stanu (bez migawki, bez nowych wpisów historii); zapisuje się tylko licznik uruchomień w raporcie.
+   Niezmapowane id (brak w danych) trafiają z pełną treścią wiersza do raportu (pole `osierocone`), nie przepadają. Plik ZGONY_zweryfikowane_AKTUALNE.csv jest odrzucany: rozbieżność 155 ok vs 8 ok czeka na decyzję użytkownika. */
+const MIGR_ZG_KLUCZ = 'migracja_zgony', MIGR_ZG_WER = 1, MIGR_ZG_OSIEROCONE_MAX = 500;
+const migrZgPamiec = {};
+// cecha stanu bez pola `baza` (dopisywanego przy zapisie) – do wykrycia „bez zmian”
+const migrZgPodpis = acts => JSON.stringify(acts, (k, v) => k === 'baza' ? undefined : v);
+function migrZgLiczby(Sx, nHist){ let pola = 0, polaOk = 0, polaOkCsv = 0, akty = 0, gotowe = 0, teksty = 0;
+  for (const id in Sx.acts) { const a = Sx.acts[id] || {}; let n = 0; for (const f in (a.f || {})) { n++; pola++; if (a.f[f].ok) { polaOk++; if (a.f[f].src === 'csv') polaOkCsv++; } } if (n) akty++; if (a.done) gotowe++; if (a.text != null) teksty++; }
+  return {pola, polaOk, polaOkCsv, akty, gotowe, teksty, historia: nHist}; }
+async function migrZgSuma(txt){ try { const b = new TextEncoder().encode(txt), d = await crypto.subtle.digest('SHA-256', b); return [...new Uint8Array(d)].map(x => x.toString(16).padStart(2, '0')).join(''); } catch (e) { return ''; } }
+// rozpoznanie jednego pliku: {nazwa, bytes, sha256, format, etykieta, w, wierszy, ok, rozpoznanych, nieznane[], bledy[], duplikaty, blad}
+async function migrZgRozpoznaj(nazwa, txt){ const p = {nazwa, bytes: new Blob([txt]).size, sha256: await migrZgSuma(txt), format: 'nieznany', etykieta: '', w: null, wierszy: 0, ok: 0, rozpoznanych: 0, nieznane: [], bledy: [], duplikaty: 0, blad: ''};
+  if (/AKTUALNE/i.test(nazwa)) { p.blad = 'Plik „' + nazwa + '” to nierozstrzygnięta rozbieżność (155 ok vs 8 ok w eksporcie _10). Nie jest migrowany, dopóki użytkownik nie zdecyduje.'; return p; }
+  const w = csvImportRozpoznaj(txt); if (!w.ok) { p.blad = w.blad; return p; }
+  const H = Object.keys(w.ix); if (!['death_year', 'death_act_number', 'verification_status'].every(k => H.includes(k))) { p.blad = 'To nie jest CSV zgonów (brak kolumn death_year, death_act_number, verification_status). Małżeństwa i urodzenia nie są migrowane.'; return p; }
+  p.format = (H.includes('scan_path') || H.includes('act_text')) ? 'eksport' : 'nakladka'; p.etykieta = p.format === 'eksport' ? 'eksport CSV zgonów (pełny)' : 'nakładka zatwierdzeń użytkownika';
+  const R = parseCsv(String(txt).replace(/^﻿/, '')).slice(1).filter(r => !(r.length === 1 && !String(r[0]).trim())); p.wierszy = R.length; p.ok = R.filter(r => (r[w.ix.verification_status] || '') === 'ok').length;
+  const widziane = new Set(); R.forEach(r => { const id = String(r[w.ix.id] || '').trim(); if (widziane.has(id)) p.duplikaty++; widziane.add(id); });
+  p.w = w; p.rozpoznanych = w.wiersze.length; p.nieznane = w.nieznane.slice(); p.bledy = w.bledy.slice();
+  p.osierocone = w.nieznane.length ? R.filter(r => w.nieznane.includes(String(r[w.ix.id] || '').trim())).slice(0, MIGR_ZG_OSIEROCONE_MAX).map(r => { const o = {}; Object.keys(w.ix).forEach(k => o[k] = r[w.ix[k]] ?? ''); return {plik: nazwa, id: o.id, wiersz: o}; }) : [];
+  return p; }
+const migrZgKolej = P => P.slice().sort((a, b) => (a.format === 'eksport' ? 0 : 1) - (b.format === 'eksport' ? 0 : 1));   // stabilne: eksport przed nakładką
+function migrZgStosuj(P){ return P.map(p => csvImportStosuj(p.w, false)); }
+// plan: próba na kopii stanu; zwraca {blad} albo {pliki, przed, oczekiwane, bezZmian, nadpisane, osierocone, lacznieNieznanych}
+async function migrZgPlan(pliki){ const P = []; for (const f of pliki) P.push(await migrZgRozpoznaj(f.nazwa, f.tekst));
+  const zle = P.filter(p => p.blad); if (zle.length) return {blad: zle.map(p => p.nazwa + ': ' + p.blad).join(' | '), pliki: P}; if (!P.length) return {blad: 'Nie wybrano plików.', pliki: P};
+  const kol = migrZgKolej(P), nSnap = histSnap(S.acts), nHist = (S.hist || []).length + histDiff(HS || nSnap, nSnap).length, przed = migrZgLiczby(S, nHist), podpisPrzed = migrZgPodpis(S.acts);
+  const bakS = S, bakSF = D.scanFiles; let Sk, wyn; try { S = structuredClone(S); D.scanFiles = JSON.parse(JSON.stringify(D.scanFiles || {})); wyn = migrZgStosuj(kol); Sk = S; } finally { S = bakS; D.scanFiles = bakSF; }
+  const roz = histDiff(nSnap, histSnap(Sk.acts)), oczek = migrZgLiczby(Sk, nHist + roz.length);
+  return {pliki: kol, przed, oczekiwane: oczek, bezZmian: migrZgPodpis(Sk.acts) === podpisPrzed, nowychWpisowHistorii: roz.length, nadpisanePola: roz.filter(e => e.k === 'f' && e.before != null).length, importy: wyn,
+    osierocone: kol.flatMap(p => p.osierocone || []).slice(0, MIGR_ZG_OSIEROCONE_MAX), nieznanychId: kol.reduce((s, p) => s + p.nieznane.length, 0)}; }
+function migrZgOpisPlik(p){ return {nazwa: p.nazwa, format: p.format, etykieta: p.etykieta, bytes: p.bytes, sha256: p.sha256, wierszy: p.wierszy, ok: p.ok, rozpoznanych: p.rozpoznanych, nieznane: p.nieznane.length, bledneWiersze: p.bledy.length, duplikatyId: p.duplikaty}; }
+async function migrZgOdczytIDB(){ const R = {pola: 0, polaOk: 0, polaOkCsv: 0, akty: 0, gotowe: 0, teksty: 0, historia: 0}, ak = new Set();
+  const [P, T, A, H] = await Promise.all(['pola', 'teksty', 'akty', 'historia'].map(stWszystko));
+  P.forEach(([k, x]) => { R.pola++; ak.add(k.slice(0, k.lastIndexOf('|'))); if (x.ok) { R.polaOk++; if (x.src === 'csv') R.polaOkCsv++; } }); R.akty = ak.size; R.teksty = T.length; R.historia = H.length; R.gotowe = A.filter(([id, x]) => x && x.done).length; return R; }
+function migrZgZapisMeta(r){ ST_DODATKI.push(['meta', MIGR_ZG_KLUCZ, r]); return stFlush(false); }
+async function migrZgOdczytajRaport(){ if (ST_TRYB === 'pamiec') return migrZgPamiec[MIGR_ZG_KLUCZ] || null; try { const M = await stWszystko('meta'); const x = M.find(([k]) => k === MIGR_ZG_KLUCZ); return x ? x[1] : null; } catch (e) { return null; } }
+// wykonanie: pliki = [{nazwa, tekst}]; zwraca raport (zapisany w meta['migracja_zgony'])
+async function migrZgWykonaj(pliki){ const plan = await migrZgPlan(pliki); if (plan.blad) return {ok: false, blad: plan.blad};
+  const poprzedni = await migrZgOdczytajRaport(), t = new Date().toISOString(), opis = plan.pliki.map(p => p.nazwa).join(' + ');
+  const r = {format: {nazwa: 'multitool-migracja-zgony', wersja: MIGR_ZG_WER}, zakres: 'zgony', zapisano: t, uruchomien: ((poprzedni && poprzedni.uruchomien) || 0) + 1, pierwszeUruchomienie: (poprzedni && poprzedni.pierwszeUruchomienie) || t,
+    pliki: plan.pliki.map(migrZgOpisPlik), przed: plan.przed, oczekiwane: plan.oczekiwane, bezZmian: plan.bezZmian, nowychWpisowHistorii: plan.nowychWpisowHistorii, nadpisanePola: plan.nadpisanePola, nieznanychId: plan.nieznanychId, osierocone: plan.osierocone,
+    migawka: '', tryb: ST_TRYB, uwagi: ['Nierozstrzygnięte: ZGONY_zweryfikowane_AKTUALNE.csv (155 ok) kontra _10 (8 ok) – nie migrowano, nie łączono.', 'Stare dane nietknięte: pliki CSV w haiku/ i pamięć starych narzędzi nie są zmieniane.']};
+  if (plan.bezZmian) { r.po = plan.przed; r.zgodne = true; r.komunikat = 'Stan już zawiera te dane – bez zmian (bez migawki, bez nowych wpisów historii).'; if (ST_TRYB === 'pamiec') migrZgPamiec[MIGR_ZG_KLUCZ] = r; else await migrZgZapisMeta(r); r.ok = true; return r; }
+  histCommit(); r.migawka = await kopiaMigawka('przed migracją zgonów z CSV: ' + opis);
+  const bazy = {}; for (const id in S.acts) for (const f in (S.acts[id].f || {})) if (S.acts[id].f[f].baza !== undefined) bazy[id + '|' + f] = S.acts[id].f[f].baza;
+  HIST_WHY = 'migracja zgonów z CSV: ' + opis; try { migrZgStosuj(plan.pliki); for (const id in S.acts) for (const f in (S.acts[id].f || {})) { const x = S.acts[id].f[f], k = id + '|' + f; if (x.baza === undefined && k in bazy) x.baza = bazy[k]; } histCommit(); } finally { HIST_WHY = null; }
+  r.po = migrZgLiczby(S, (S.hist || []).length); r.zgodne = JSON.stringify(r.po) === JSON.stringify(r.oczekiwane);
+  if (ST_TRYB === 'pamiec') migrZgPamiec[MIGR_ZG_KLUCZ] = r; else ST_DODATKI.push(['meta', MIGR_ZG_KLUCZ, r]);
+  await stFlush(true);   // jedna transakcja: pola, teksty, akty, historia, slowniki, meta + raport
+  if (ST_TRYB === 'idb') { r.odczytIDB = await migrZgOdczytIDB(); r.zgodneZIDB = ['pola', 'polaOk', 'polaOkCsv', 'akty', 'gotowe', 'teksty', 'historia'].every(k => r.odczytIDB[k] === r.po[k]); await migrZgZapisMeta(r); }
+  r.ok = true; return r; }
+function migrZgRaportTekst(r){ const L = [], l = s => L.push(s), L1 = (e, o) => e + ': pól ' + o.pola + ' (ok ' + o.polaOk + ', w tym z CSV ' + o.polaOkCsv + '), aktów z polami ' + o.akty + ', aktów gotowych ' + o.gotowe + ', tekstów ' + o.teksty + ', wpisów historii ' + o.historia;
+  l('# Raport migracji zgonów z CSV'); l(''); l('Zapisano: ' + r.zapisano + ' · uruchomień: ' + r.uruchomien + ' · tryb zapisu: ' + r.tryb); if (r.komunikat) l(r.komunikat); if (r.migawka) l('Migawka przed zapisem: ' + r.migawka); l('');
+  l('## Pliki'); r.pliki.forEach(p => l('- ' + p.nazwa + ' (' + p.etykieta + ', ' + p.bytes + ' B, sha256 ' + (p.sha256 || '—') + '): wierszy ' + p.wierszy + ', ok ' + p.ok + ', rozpoznanych ' + p.rozpoznanych + ', nieznanych id ' + p.nieznane + ', błędnych wierszy ' + p.bledneWiersze + ', duplikatów id ' + p.duplikatyId)); l('');
+  l('## Liczby'); l('- ' + L1('Przed', r.przed)); l('- ' + L1('Oczekiwane (próba na kopii)', r.oczekiwane)); l('- ' + L1('Po (pamięć)', r.po)); if (r.odczytIDB) l('- ' + L1('Po (odczyt z IndexedDB)', r.odczytIDB));
+  l('- Zgodność oczekiwane = po: ' + (r.zgodne ? 'TAK' : 'NIE') + (r.odczytIDB ? '; po = IndexedDB: ' + (r.zgodneZIDB ? 'TAK' : 'NIE') : '')); l('- Nowe wpisy historii: ' + r.nowychWpisowHistorii + '; nadpisane istniejące pola niezatwierdzone: ' + r.nadpisanePola); l('- Niezmapowane id: ' + r.nieznanychId + (r.osierocone.length ? ' (pełne wiersze w polu „osierocone” raportu JSON)' : '')); l('');
+  l('## Uwagi'); r.uwagi.forEach(u => l('- ' + u)); return L.join('\n') + '\n'; }
 
 /* app/moduly/ui_html.js – jedyny sposób wstawiania HTML w aplikacji (RYZYKA §4). Szablon znakowany h`…` escapuje każdą wstawkę (tekst, liczby, atrybuty w cudzysłowach);
    surowy HTML wymaga jawnego raw(). innerHTML wolno tylko w plikach ui_*.js (sprawdza zbuduj_app.py). */
@@ -712,6 +778,30 @@ const navPasuje = a => (!S.cen || S.cen === 'all' || Math.floor(a.year / 100) * 
 function narzPodlacz(a){ tekstPodlacz(a); narzPickerPodlacz(a); sygnalyPodlacz(a); if ($('bKreator')) $('bKreator').onclick = () => kreatorStart(a); skanPodlacz(a);
   $('main').querySelectorAll('input[data-f],textarea[data-f]').forEach(inp => inp.addEventListener('focus', () => { if (typeof skanFokusPola === 'function') skanFokusPola(a, inp.dataset.f); })); }
 
+/* app/moduly/ui_migracja.js – okno „Migracja zgonów z CSV” (krok 4): wybór plików → podgląd (próba na kopii) → migracja → raport (podgląd i zapis do pliku).
+   Logika jest w migracja_zgony.js; tu tylko HTML (przez wstaw(h`…`)). Pliki wczytywane jako tekst; wartości z plików trafiają do HTML wyłącznie przez h`…` (escapowanie). */
+function migrZgLiczbyHtml(e, o){ return h`<tr><td>${e}</td><td>${o.pola}</td><td>${o.polaOk}</td><td>${o.akty}</td><td>${o.gotowe}</td><td>${o.teksty}</td><td>${o.historia}</td></tr>`; }
+function migrZgTabela(r){ return h`<table id="migTab"><tr><th></th><th>pola</th><th>pola ok</th><th>akty z polami</th><th>akty gotowe</th><th>teksty</th><th>wpisy historii</th></tr>
+  ${migrZgLiczbyHtml('przed', r.przed)}${migrZgLiczbyHtml('oczekiwane', r.oczekiwane)}${r.po ? migrZgLiczbyHtml('po', r.po) : ''}${r.odczytIDB ? migrZgLiczbyHtml('po (z bazy)', r.odczytIDB) : ''}</table>`; }
+const migrZgN = x => Array.isArray(x) ? x.length : (x || 0);   // plan ma tablice, zapisany raport – liczby
+function migrZgPlikiHtml(P){ return h`<ul id="migPliki">${P.map(p => h`<li>${p.nazwa} · ${p.etykieta || p.format} · wierszy ${p.wierszy}, ok ${p.ok}, rozpoznanych ${p.rozpoznanych}${migrZgN(p.nieznane) ? h`, <span class="err">nieznanych id ${migrZgN(p.nieznane)}</span>` : ''}${migrZgN(p.bledy ?? p.bledneWiersze) ? h`, <span class="err">błędnych wierszy ${migrZgN(p.bledy ?? p.bledneWiersze)}</span>` : ''}</li>`)}</ul>`; }
+async function migrZgOkno(){ const ost = await migrZgOdczytajRaport();
+  okno('Migracja zgonów z CSV', h`<p class="muted">Źródło: eksport <b>ZGONY_zweryfikowane_10.csv</b> i nakładka <b>zatwierdzenia_uzytkownika.csv</b> (wybierz oba naraz). Przed zapisem powstaje migawka; pliki i stare narzędzia nie są zmieniane. Tylko zgony.</p>
+    <p><button id="migWybierz" class="p">Wybierz pliki CSV…</button></p><div id="migWynik">${ost ? h`<p id="migOstatni">Ostatnia migracja: ${ost.zapisano} (uruchomień ${ost.uruchomien}), zgodność: ${ost.zgodne ? 'TAK' : 'NIE'}. <button id="migPokazOst" class="sm">Pokaż raport</button></p>` : h`<p class="muted" id="migOstatni">Brak zapisanej migracji.</p>`}</div>`);
+  $('migWybierz').onclick = () => $('fMigr').click(); if (ost && $('migPokazOst')) $('migPokazOst').onclick = () => migrZgPokazRaport(ost); }
+function migrZgPokazRaport(r){ const o = $('migWynik'); wstaw(o, h`<h4>Raport migracji</h4>${r.komunikat ? h`<p id="migKomunikat">${r.komunikat}</p>` : ''}${migrZgPlikiHtml(r.pliki)}${migrZgTabela(r)}
+  <p id="migZgodne">Zgodność oczekiwane = po: <b>${r.zgodne ? 'TAK' : 'NIE'}</b>${r.odczytIDB ? h`; po = baza: <b>${r.zgodneZIDB ? 'TAK' : 'NIE'}</b>` : ''}. Nowych wpisów historii: ${r.nowychWpisowHistorii}; nadpisanych pól niezatwierdzonych: ${r.nadpisanePola}; niezmapowanych id: ${r.nieznanychId}.</p>
+  ${r.migawka ? h`<p class="muted">Migawka przed zapisem: ${r.migawka}</p>` : ''}<p><button id="migZapiszRaport" class="sm">Zapisz raport (.md)</button> <button id="migZapiszJson" class="sm">Zapisz raport (.json)</button></p>`);
+  $('migZapiszRaport').onclick = () => dl('raport_migracji_zgonow_' + r.zapisano.slice(0, 10) + '.md', migrZgRaportTekst(r), 'text/markdown', false);
+  $('migZapiszJson').onclick = () => dl('raport_migracji_zgonow_' + r.zapisano.slice(0, 10) + '.json', JSON.stringify(r, null, 1), 'application/json', false); }
+async function migrZgPlikiWybrane(lista){ const pliki = []; for (const f of lista) pliki.push({nazwa: f.name, tekst: await f.text()}); const o = $('migWynik'); if (!o) return;
+  const plan = await migrZgPlan(pliki); if (plan.blad) { wstaw(o, h`<p class="err" id="migBlad">${plan.blad}</p>`); return; }
+  wstaw(o, h`<h4>Podgląd (nic jeszcze nie zapisano)</h4>${migrZgPlikiHtml(plan.pliki)}${migrZgTabela(plan)}
+    <p id="migPodglad">${plan.bezZmian ? 'Stan już zawiera te dane – migracja niczego nie zmieni.' : h`Nowych wpisów historii: <b>${plan.nowychWpisowHistorii}</b>; nadpisanych pól niezatwierdzonych: <b>${plan.nadpisanePola}</b>; niezmapowanych id: <b>${plan.nieznanychId}</b>.`}</p>
+    <p><button id="migTak" class="p">Migruj</button></p>`);
+  $('migTak').onclick = async () => { $('migTak').disabled = true; const r = await migrZgWykonaj(pliki); if (!r.ok) { wstaw($('migWynik'), h`<p class="err" id="migBlad">${r.blad}</p>`); return; } odswiez(); migrZgPokazRaport(r); toast(r.bezZmian ? 'Migracja: bez zmian' : 'Migracja zakończona'); }; }
+function migrZgUiInit(){ const b = $('mMigr'); if (!b) return; b.onclick = () => { $('menu').hidden = true; migrZgOkno(); }; $('fMigr').onchange = e => { const L = [...e.target.files]; e.target.value = ''; if (L.length) migrZgPlikiWybrane(L); }; }
+
 /* app/moduly/ui_powloka.js – powłoka aplikacji (krok 3): nagłówek ze wskaźnikiem kopii, pasek trybu awaryjnego, lista aktów z filtrami, menu (eksport CSV, kopia, import, migawki, kolejka zmian danych), okno podglądu importu.
    Jedyne miejsce (obok ui_akt.js), gdzie wolno użyć innerHTML – wyłącznie przez wstaw(h`…`). */
 const LISTA_PORCJA = 300; let LISTA_N = LISTA_PORCJA;
@@ -763,6 +853,7 @@ function menuInit(){ const M = $('menu'); $('bMenu').onclick = () => { M.hidden 
   $('mKopiaWczytaj').onclick = () => { M.hidden = true; $('fKopia').click(); }; $('fKopia').onchange = e => { if (e.target.files[0]) menuWczytajKopie(e.target.files[0]); e.target.value = ''; };
   $('mImpDop').onclick = () => { M.hidden = true; $('fCsv').dataset.ovw = ''; $('fCsv').click(); }; $('mImpZast').onclick = () => { M.hidden = true; $('fCsv').dataset.ovw = '1'; $('fCsv').click(); };
   $('fCsv').onchange = e => { if (e.target.files[0]) menuImportCsv(e.target.files[0], !!e.target.dataset.ovw); e.target.value = ''; };
+  migrZgUiInit();
   $('mMigawki').onclick = () => { M.hidden = true; menuMigawki(); }; $('mKolejka').onclick = () => { M.hidden = true; menuKolejka(); };
   $('mAuto').onclick = async () => { M.hidden = true; try { toast(await kopiaAutoWybierz() ? 'Autozapis włączony' : 'Ta przeglądarka nie obsługuje autozapisu – użyj kopii pełnej'); } catch (e) { toast('Anulowano'); } };
   window.addEventListener('beforeunload', e => { if (ST_ZMIANY) { e.preventDefault(); e.returnValue = ''; } }); }

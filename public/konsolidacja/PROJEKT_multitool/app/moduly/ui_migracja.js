@@ -1,0 +1,23 @@
+/* app/moduly/ui_migracja.js – okno „Migracja zgonów z CSV” (krok 4): wybór plików → podgląd (próba na kopii) → migracja → raport (podgląd i zapis do pliku).
+   Logika jest w migracja_zgony.js; tu tylko HTML (przez wstaw(h`…`)). Pliki wczytywane jako tekst; wartości z plików trafiają do HTML wyłącznie przez h`…` (escapowanie). */
+function migrZgLiczbyHtml(e, o){ return h`<tr><td>${e}</td><td>${o.pola}</td><td>${o.polaOk}</td><td>${o.akty}</td><td>${o.gotowe}</td><td>${o.teksty}</td><td>${o.historia}</td></tr>`; }
+function migrZgTabela(r){ return h`<table id="migTab"><tr><th></th><th>pola</th><th>pola ok</th><th>akty z polami</th><th>akty gotowe</th><th>teksty</th><th>wpisy historii</th></tr>
+  ${migrZgLiczbyHtml('przed', r.przed)}${migrZgLiczbyHtml('oczekiwane', r.oczekiwane)}${r.po ? migrZgLiczbyHtml('po', r.po) : ''}${r.odczytIDB ? migrZgLiczbyHtml('po (z bazy)', r.odczytIDB) : ''}</table>`; }
+const migrZgN = x => Array.isArray(x) ? x.length : (x || 0);   // plan ma tablice, zapisany raport – liczby
+function migrZgPlikiHtml(P){ return h`<ul id="migPliki">${P.map(p => h`<li>${p.nazwa} · ${p.etykieta || p.format} · wierszy ${p.wierszy}, ok ${p.ok}, rozpoznanych ${p.rozpoznanych}${migrZgN(p.nieznane) ? h`, <span class="err">nieznanych id ${migrZgN(p.nieznane)}</span>` : ''}${migrZgN(p.bledy ?? p.bledneWiersze) ? h`, <span class="err">błędnych wierszy ${migrZgN(p.bledy ?? p.bledneWiersze)}</span>` : ''}</li>`)}</ul>`; }
+async function migrZgOkno(){ const ost = await migrZgOdczytajRaport();
+  okno('Migracja zgonów z CSV', h`<p class="muted">Źródło: eksport <b>ZGONY_zweryfikowane_10.csv</b> i nakładka <b>zatwierdzenia_uzytkownika.csv</b> (wybierz oba naraz). Przed zapisem powstaje migawka; pliki i stare narzędzia nie są zmieniane. Tylko zgony.</p>
+    <p><button id="migWybierz" class="p">Wybierz pliki CSV…</button></p><div id="migWynik">${ost ? h`<p id="migOstatni">Ostatnia migracja: ${ost.zapisano} (uruchomień ${ost.uruchomien}), zgodność: ${ost.zgodne ? 'TAK' : 'NIE'}. <button id="migPokazOst" class="sm">Pokaż raport</button></p>` : h`<p class="muted" id="migOstatni">Brak zapisanej migracji.</p>`}</div>`);
+  $('migWybierz').onclick = () => $('fMigr').click(); if (ost && $('migPokazOst')) $('migPokazOst').onclick = () => migrZgPokazRaport(ost); }
+function migrZgPokazRaport(r){ const o = $('migWynik'); wstaw(o, h`<h4>Raport migracji</h4>${r.komunikat ? h`<p id="migKomunikat">${r.komunikat}</p>` : ''}${migrZgPlikiHtml(r.pliki)}${migrZgTabela(r)}
+  <p id="migZgodne">Zgodność oczekiwane = po: <b>${r.zgodne ? 'TAK' : 'NIE'}</b>${r.odczytIDB ? h`; po = baza: <b>${r.zgodneZIDB ? 'TAK' : 'NIE'}</b>` : ''}. Nowych wpisów historii: ${r.nowychWpisowHistorii}; nadpisanych pól niezatwierdzonych: ${r.nadpisanePola}; niezmapowanych id: ${r.nieznanychId}.</p>
+  ${r.migawka ? h`<p class="muted">Migawka przed zapisem: ${r.migawka}</p>` : ''}<p><button id="migZapiszRaport" class="sm">Zapisz raport (.md)</button> <button id="migZapiszJson" class="sm">Zapisz raport (.json)</button></p>`);
+  $('migZapiszRaport').onclick = () => dl('raport_migracji_zgonow_' + r.zapisano.slice(0, 10) + '.md', migrZgRaportTekst(r), 'text/markdown', false);
+  $('migZapiszJson').onclick = () => dl('raport_migracji_zgonow_' + r.zapisano.slice(0, 10) + '.json', JSON.stringify(r, null, 1), 'application/json', false); }
+async function migrZgPlikiWybrane(lista){ const pliki = []; for (const f of lista) pliki.push({nazwa: f.name, tekst: await f.text()}); const o = $('migWynik'); if (!o) return;
+  const plan = await migrZgPlan(pliki); if (plan.blad) { wstaw(o, h`<p class="err" id="migBlad">${plan.blad}</p>`); return; }
+  wstaw(o, h`<h4>Podgląd (nic jeszcze nie zapisano)</h4>${migrZgPlikiHtml(plan.pliki)}${migrZgTabela(plan)}
+    <p id="migPodglad">${plan.bezZmian ? 'Stan już zawiera te dane – migracja niczego nie zmieni.' : h`Nowych wpisów historii: <b>${plan.nowychWpisowHistorii}</b>; nadpisanych pól niezatwierdzonych: <b>${plan.nadpisanePola}</b>; niezmapowanych id: <b>${plan.nieznanychId}</b>.`}</p>
+    <p><button id="migTak" class="p">Migruj</button></p>`);
+  $('migTak').onclick = async () => { $('migTak').disabled = true; const r = await migrZgWykonaj(pliki); if (!r.ok) { wstaw($('migWynik'), h`<p class="err" id="migBlad">${r.blad}</p>`); return; } odswiez(); migrZgPokazRaport(r); toast(r.bezZmian ? 'Migracja: bez zmian' : 'Migracja zakończona'); }; }
+function migrZgUiInit(){ const b = $('mMigr'); if (!b) return; b.onclick = () => { $('menu').hidden = true; migrZgOkno(); }; $('fMigr').onchange = e => { const L = [...e.target.files]; e.target.value = ''; if (L.length) migrZgPlikiWybrane(L); }; }

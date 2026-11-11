@@ -33,10 +33,10 @@ table{border-collapse:collapse;width:100%;font-size:13px}td,th{border-bottom:1px
 .tpodglad{white-space:pre-wrap;border:1px solid var(--line);border-radius:6px;padding:8px;margin-top:6px}.mq{background:rgba(224,168,74,.35)}.mr{background:rgba(239,138,128,.35)}.mg{background:rgba(127,176,224,.3)}.sugw{margin:4px 0}
 </style></head><body>
 <header><h1>Multitool v1 · akt zgonu</h1><span class="muted" id="prog"></span><button class="ind" id="kopiaInd" title="Zrób kopię pełną">decyzji i zmian bez kopii: 0</button><span style="flex:1"></span><button id="bMenu">Menu ▾</button>
-<div id="menu" hidden><button id="mCsv">Eksport CSV (zgony)</button><button id="mKopia">Kopia pełna (JSON)</button><button id="mKopiaWczytaj">Wczytaj kopię (JSON)…</button><button id="mImpDop">Import CSV zatwierdzeń (dopisz)…</button><button id="mImpZast">Import CSV zatwierdzeń (zastąp)…</button><button id="mMigawki">Migawki / przywróć…</button><button id="mKolejka">Dane źródłowe się zmieniły (0)</button><button id="mAuto">Autozapis do pliku…</button></div></header>
+<div id="menu" hidden><button id="mCsv">Eksport CSV (zgony)</button><button id="mKopia">Kopia pełna (JSON)</button><button id="mKopiaWczytaj">Wczytaj kopię (JSON)…</button><button id="mImpDop">Import CSV zatwierdzeń (dopisz)…</button><button id="mImpZast">Import CSV zatwierdzeń (zastąp)…</button><button id="mMigawki">Migawki / przywróć…</button><button id="mKolejka">Dane źródłowe się zmieniły (0)</button><button id="mMigr">Migracja zgonów z CSV…</button><button id="mAuto">Autozapis do pliku…</button></div></header>
 <div id="pasekStan" hidden></div><div id="przyp" hidden></div>
 <div class="wrap"><div class="col"><div id="filtry"></div><div id="lista"></div></div><div class="col" id="main"></div></div>
-<input type="file" id="fKopia" accept=".json,application/json" hidden><input type="file" id="fCsv" accept=".csv,text/csv" hidden>
+<input type="file" id="fKopia" accept=".json,application/json" hidden><input type="file" id="fCsv" accept=".csv,text/csv" hidden><input type="file" id="fMigr" accept=".csv,text/csv" multiple hidden>
 <div id="okno" hidden></div><div id="toast"></div>
 <script>
 /*MODULE:tekst*/
@@ -55,10 +55,12 @@ const save = () => { histCommit(); stZapisz(); if (typeof stWskaznik === 'functi
 /*MODUL:stan_idb*/
 /*MODUL:kopie*/
 /*MODUL:import_csv*/
+/*MODUL:migracja_zgony*/
 /*MODUL:ui_html*/
 /*MODUL:ui_akt*/
 /*MODUL:ui_skan*/
 /*MODUL:ui_narzedzia*/
+/*MODUL:ui_migracja*/
 /*MODUL:ui_powloka*/
 (async () => {
   S = await stWczytaj(); normActs(); startMigracja(); startZatwierdzone(); stKolejka();

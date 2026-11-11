@@ -49,6 +49,7 @@ function menuInit(){ const M = $('menu'); $('bMenu').onclick = () => { M.hidden 
   $('mKopiaWczytaj').onclick = () => { M.hidden = true; $('fKopia').click(); }; $('fKopia').onchange = e => { if (e.target.files[0]) menuWczytajKopie(e.target.files[0]); e.target.value = ''; };
   $('mImpDop').onclick = () => { M.hidden = true; $('fCsv').dataset.ovw = ''; $('fCsv').click(); }; $('mImpZast').onclick = () => { M.hidden = true; $('fCsv').dataset.ovw = '1'; $('fCsv').click(); };
   $('fCsv').onchange = e => { if (e.target.files[0]) menuImportCsv(e.target.files[0], !!e.target.dataset.ovw); e.target.value = ''; };
+  migrZgUiInit();
   $('mMigawki').onclick = () => { M.hidden = true; menuMigawki(); }; $('mKolejka').onclick = () => { M.hidden = true; menuKolejka(); };
   $('mAuto').onclick = async () => { M.hidden = true; try { toast(await kopiaAutoWybierz() ? 'Autozapis włączony' : 'Ta przeglądarka nie obsługuje autozapisu – użyj kopii pełnej'); } catch (e) { toast('Anulowano'); } };
   window.addEventListener('beforeunload', e => { if (ST_ZMIANY) { e.preventDefault(); e.returnValue = ''; } }); }
