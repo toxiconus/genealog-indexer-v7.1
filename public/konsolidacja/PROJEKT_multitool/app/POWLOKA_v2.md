@@ -1,6 +1,6 @@
 # Multitool – powłoka v2 (2026-11-11)
 
-Stan po przebudowie interfejsu. Budowa: `python3 app/zbuduj_app.py`. Test: `node test/test_krok7_powloka.cjs [katalog_zrzutów]` (26 kontroli) oraz testy kroków 3–6.
+Stan po przebudowie interfejsu. Budowa: `python3 app/zbuduj_app.py`. Test: `node test/test_krok7_powloka.cjs [katalog_zrzutów]` (27 kontroli) oraz testy kroków 3–6.
 
 ## Zakładki
 | Zakładka | Moduł | Co robi |
@@ -34,6 +34,7 @@ Enter (następne pole), Alt+J / Alt+K (następny / poprzedni akt), Ctrl+Enter (n
 - **Osoby → Rodziny: rodzice ↔ ślub** (`rodziny_rdzen.js: rdzPropozycjeSlubow`): rodzice z aktów dzieci łączeni z własnym aktem ślubu. To ten krok wydłuża drzewo (akt ślubu podaje rodziców młodych). „Jednoznaczne” = jeden pasujący ślub, nazwisko panny = nazwisko rodowe matki, dzieci od roku przed ślubem do 32 lat po.
 - **Skan → indeksowanie strony** (`ui_skan.js`): „Przypisz zakresowi” (strona dla aktów nr od–do) i „＋ Nowy akt na tej stronie” (następny numer, skan, kursor w pierwszym polu).
 - **Raport → Stan pracy**: kolumna „akty z osobą połączoną w drzewie”.
+- **Zgon ↔ ślub po współmałżonku** (`rdzPropozycjeZgonSlub`), **Wywód przodków (TXT)** w karcie osoby w Drzewie, **Plan pracy: od skanów do drzewa** na górze Raportu (8 kroków z licznikami).
 - Dane: imiona rodziców z dopełniacza na mianownik w `buduj_baza_v4.py` (469 poprawek, `narzedzia/POPRAWKI_imiona_dopelniacz.csv`).
 
 ## Do zrobienia

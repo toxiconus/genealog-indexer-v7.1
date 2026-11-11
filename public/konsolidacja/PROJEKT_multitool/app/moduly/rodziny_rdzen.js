@@ -75,3 +75,20 @@ function rdzPropozycjeSlubow(G, K){ const P = G.P, sl = {}, odrz = (K && K.odrzu
     const zgodne = C.length === 1 && C[0].kn && akty.some(a => a.kn && a.kn === C[0].kn) && akty.some(a => a.ur);
     out.push({klucz: k, ojciec: x.ojciec, nazwisko: x.nazwisko, matka: x.matka, rodowe: [...x.rodowe], sluby: C, akty, jednoznaczna: !!zgodne}); }
   return out.sort((a, b) => (b.jednoznaczna - a.jednoznaczna) || fold(a.nazwisko + a.ojciec).localeCompare(fold(b.nazwisko + b.ojciec))); }
+/* ---------- zgon osoby zamężnej / żonatej ↔ jej akt ślubu (po imieniu współmałżonka) ----------
+   Akt zgonu dorosłego często nie podaje rodziców, ale podaje współmałżonka. Propozycja: zmarły + małżonek ↔ para młodych o tych samych imionach i nazwisku męża;
+   ślub nie później niż zgon i nie dawniej niż 70 lat przed nim; gdy oba akty podają wiek – roczniki urodzenia muszą się zgadzać (±3 lata); nazwisko rodowe zmarłej (jeśli jest) = nazwisko panny młodej.
+   „Jednoznaczna”: jeden pasujący ślub, żaden inny zgon nie pasuje do tej samej strony tego ślubu, a zgodność potwierdza wiek albo nazwisko rodowe.
+   Wynik ma ten sam kształt co rdzPropozycjeSlubow (akty: jeden wpis, o = wystąpienie łączone z panem młodym, m = z panną młodą) + rodzaj: 'zgon'. */
+function rdzPropozycjeZgonSlub(G, K){ const P = G.P, sl = {}, odrz = (K && K.odrzucone) || new Set(), out = [], zak = (a, b) => !a || !b || (a[0] <= b[1] + 3 && b[0] <= a[1] + 3);
+  for (const akt in G.poAkcieRola || {}) { const R = G.poAkcieRola[akt], g = R.pan_mlody && P[R.pan_mlody], b = R.panna_mloda && P[R.panna_mloda]; if (!g || !b) continue; const k = rdzKluczPary(g.imie, g.nazwisko, b.imie); if (!k) continue; (sl[k] = sl[k] || []).push({akt, rok: g.rok, pan: g.id, panna: b.id, pannaNazw: b.nazwisko || '', kn: rdzKN(b.nazwisko || '')}); }
+  const zajete = {};
+  for (const akt in G.poAkcieRola || {}) { const R = G.poAkcieRola[akt], z = R.zmarly && P[R.zmarly], m = R.malzonek && P[R.malzonek]; if (!z || !m || !z.imie || !m.imie || !z.nazwisko) continue; const mez = z.plec === 'M', kob = z.plec === 'K'; if (!mez && !kob) continue;
+    const k = mez ? rdzKluczPary(z.imie, z.nazwisko, m.imie) : rdzKluczPary(m.imie, z.nazwisko, z.imie), S0 = k && sl[k]; if (!S0) continue; const urZ = idUr(z), knZ = kob ? rdzKN(z.rodowe || '') : '';
+    const C = S0.filter(s => { const strona = P[mez ? s.pan : s.panna]; return s.rok <= z.rok && z.rok - s.rok <= 70 && zak(urZ, idUr(strona)) && (!knZ || !s.kn || knZ === s.kn) && !odrz.has(decKlucz(z.id, strona.id)); }); if (!C.length) continue;
+    const o = mez ? z.id : m.id, mm = mez ? m.id : z.id; if (C.length === 1 && G.wezel(o) === G.wezel(C[0].pan) && G.wezel(mm) === G.wezel(C[0].panna)) continue;
+    const s0 = C[0], strona0 = P[mez ? s0.pan : s0.panna], potw = (urZ && idUr(strona0)) || (knZ && s0.kn && knZ === s0.kn);
+    const x = {rodzaj: 'zgon', klucz: 'zg|' + z.id, ojciec: mez ? z.imie : m.imie, nazwisko: z.nazwisko, matka: mez ? m.imie : z.imie, rodowe: kob && z.rodowe ? [z.rodowe] : [], sluby: C, akty: [{dz: z.id, o, m: mm, rok: z.rok, ur: urZ, rodowe: z.rodowe || '', kn: knZ, typ: 'zgon', rola: 'zmarly'}], jednoznaczna: C.length === 1 && !!potw, mez};
+    if (C.length === 1) (zajete[(mez ? s0.pan : s0.panna)] = zajete[(mez ? s0.pan : s0.panna)] || []).push(x); out.push(x); }
+  for (const w in zajete) if (zajete[w].length > 1) zajete[w].forEach(x => { x.jednoznaczna = false; x.konkurencja = zajete[w].length; });   // dwa zgony pasują do tego samego małżonka ze ślubu → żaden nie jest jednoznaczny
+  return out.sort((a, b) => (b.jednoznaczna - a.jednoznaczna) || fold(a.nazwisko + a.ojciec).localeCompare(fold(b.nazwisko + b.ojciec))); }
