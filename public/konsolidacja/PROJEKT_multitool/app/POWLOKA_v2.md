@@ -72,3 +72,11 @@ Enter (następne pole), Alt+J / Alt+K (następny / poprzedni akt), Ctrl+Enter (n
 - Klawiatura na Androidzie (mini): przy otwartej klawiaturze (visualViewport niższy o > 120 px) ukrywa się nagłówek, skan jest przypięty na górze widocznego obszaru (34% jego wysokości), aktywne pole przewija się pod skan, a pasek „◂ ✔ Zatwierdź i dalej ▸” trzyma się dolnej krawędzi widocznego obszaru (nad klawiaturą). „Zatwierdź i dalej” zapisuje `zatw: 1` w paczce; Multitool przy imporcie ustawia akt jako zatwierdzony, a pola bez „?” jako zatwierdzone. Test układu z klawiaturą jest symulacją (niski ekran + znacznik `kbTest`), nie prawdziwą klawiaturą Androida.
 - Niepewność w mini: przycisk „?” przy polu. Wyłączenie go usuwa też znaki zapytania z wartości („Bucoń?” → „Bucoń”, jak `stripQ` w starej weryfikacji); włączenie niczego nie dopisuje. Znak „?” na końcu wartości z bazy liczy się jako niepewne od razu. Zatwierdzenie aktu zachowuje stan „?” każdego pola: pola z „?” przechodzą do Multitoola jako niepewne (nie zatwierdzone), pozostałe jako zatwierdzone.
 - Dane mini z kopią Multitoola: `node app/mini/zbuduj_dane_mini.cjs kopia.json` stosuje kopię pełną (Narzędzia → kopia) przed wyciągnięciem pól, więc mini zawiera poprawki już wpisane w Multitoolu (np. 1944/23: Cieciek, 26 lat, Dziewa, 16 lat).
+
+## Mini: podpowiedzi z dawnego mini (2026-11-12h)
+- **Menu ▾ przy każdym polu**: znaczniki `[_] [-] [niecz.] [nieznane] [uszk.] [skreśl.] [b.d.]` z opisem w nawiasie, „✕ wyczyść”, a przy polach margines↔akt także „⇄ wartość z drugiej strony”.
+- **Podpowiedzi przy pisaniu** (imiona, nazwiska, miejscowości, zawody) ze słownika zbudowanego z całej wbudowanej bazy, wg częstości (np. „W” → Wojciech, Walenty…).
+- **Kontrola margines ↔ akt** (małżeństwa): zielone „✓ zgodne”, pomarańczowe „≠” z możliwością zamiany przez ▾.
+- **Ukrywanie**: „Ukryj pola już wypełnione (pewne)” (w formularzu) i „Ukryj zatwierdzone akty” (na liście); ustawienia zapamiętane.
+- **† Zgon na marginesie** (małżeństwa, też w Multitoolu: pola `groom_death_margin`, `bride_death_margin`, kolumny CSV po `margin_notes`): osobne pola dla pana i panny młodej, z przyciskiem „wstaw z uwag” (z odczytu Haiku).
+- Test: `test/test_krok10_pomoce.cjs`.

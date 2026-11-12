@@ -334,6 +334,19 @@
     ]
    },
    {
+    "t": "† Zgon na marginesie",
+    "pola": [
+     {
+      "id": "groom_death_margin",
+      "label": "† Pan młody – zgon (adnotacja na marginesie: data, miejsce, uwagi)"
+     },
+     {
+      "id": "bride_death_margin",
+      "label": "† Panna młoda – zgon (adnotacja na marginesie: data, miejsce, uwagi)"
+     }
+    ]
+   },
+   {
     "t": "Zakończenie aktu",
     "pola": [
      {
