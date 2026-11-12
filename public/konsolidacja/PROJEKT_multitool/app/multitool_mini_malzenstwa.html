@@ -32,7 +32,7 @@ dialog{border:1px solid var(--line);border-radius:12px;background:var(--card);co
 #szuk{width:100%;padding:10px;border:1px solid var(--line);border-radius:10px;background:var(--card)}
 @media(min-width:900px){main{max-width:1280px}.dwa{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(0,1fr);gap:14px;align-items:start}.dwa .pg{height:calc(100vh - var(--gh,96px) - 16px)}}
 #akcje{position:fixed;left:0;right:0;bottom:0;z-index:8;display:flex;gap:6px;background:var(--card);border-top:1px solid var(--line);padding:6px 8px calc(6px + env(safe-area-inset-bottom));transform:translateY(var(--vvb,0px))}#akcje button{flex:0 0 auto}#akcje #aOk{flex:1}body.maakcje{padding-bottom:72px}
-.pole input{scroll-margin-top:calc(var(--ph,42vh) + 24px);scroll-margin-bottom:84px}
+.pole,.pole button,.pole input{scroll-margin-top:calc(var(--ph,42vh) + 24px);scroll-margin-bottom:90px}
 @media(max-width:899px){body.kb #gora{display:none}body.kb .pg{position:fixed;left:10px;right:10px;top:calc(var(--vvt,0px) + 4px);height:calc(var(--vvh,100vh) * .34);z-index:7;margin:0}body.kb .dwa::before{content:'';display:block;height:calc(var(--vvh,100vh) * .34 + 8px)}body.kb .pole input{scroll-margin-top:calc(var(--vvh,100vh) * .34 + 16px)}body.kb #toast{bottom:140px}}
 </style></head><body>
 <div id="gora"><header><h1>Multitool mini · Małżeństwa</h1><span class="muted" id="lic"></span><button id="bFoto" class="pri sm">＋ Zdjęcia</button><button id="bMenu" class="sm">⋮</button></header>
@@ -65,8 +65,9 @@ const url = s => URLS[s.h] || (URLS[s.h] = URL.createObjectURL(s.blob));
 const edit = (rok, nr, utworz) => { const k = klucz(rok, nr); let e = MEM.akty[k]; if (!e && utworz) e = MEM.akty[k] = {id: k, rok: +rok, nr: String(nr), h: '', f: {}}; return e; };
 const baza = (rok, nr) => IDX.get(klucz(rok, nr)) || null;
 const wart = (rok, nr, k) => { const e = edit(rok, nr), b = baza(rok, nr); return e && e.f[k] ? e.f[k].v : (b && b.f[k]) || ''; };
-const niep = (rok, nr, k) => { const e = edit(rok, nr), b = baza(rok, nr); return e && e.f[k] ? !!e.f[k].u : !!(b && b.u.includes(k)); };
+const niep = (rok, nr, k) => { const e = edit(rok, nr), b = baza(rok, nr); return e && e.f[k] ? !!e.f[k].u : !!(b && (b.u.includes(k) || /\?\s*$/.test(b.f[k] || ''))); };   // znak „?” na końcu wartości też liczy się jako niepewne
 const nazwa = (rok, nr) => NAZ.map(k => wart(rok, nr, k)).filter(Boolean).join(' ');
+const bezQ = v => String(v).replace(/\s*\(\?\)/g, '').replace(/\s*\?+/g, '').replace(/\s{2,}/g, ' ').trim();   // jak stripQ w starej weryfikacji
 const etyk = p => FIX_ETYKIET[p.id] || p.label;
 const maZmiany = e => e && Object.keys(e.f).length > 0, wazny = e => e && (maZmiany(e) || e.h || e.zatw);
 /* ---- zdjęcia ---- */
@@ -132,7 +133,7 @@ function formularz(rok, nr) {
       const zm = () => { const e = edit(rok, nr), x = e && e.f[p.id], bv = (b && b.f[p.id]) || '', bu = !!(b && b.u.includes(p.id)); w.classList.toggle('z', !!x && (x.v !== bv || !!x.u !== bu)); };
       const ustaw = () => { const v = inp.value, u = w.classList.contains('u'), bv = (b && b.f[p.id]) || '', bu = !!(b && b.u.includes(p.id)), e = e0(); if (v === bv && u === bu) delete e.f[p.id]; else e.f[p.id] = {v, u}; zm(); licz(); zapiszAkt(e); };
       inp.oninput = ustaw; inp.onfocus = () => { ostFocus = inp; };
-      const q = el('button', {class: 'q', 'aria-pressed': String(niep(rok, nr, p.id)), title: 'niepewny odczyt', onclick: () => { w.classList.toggle('u'); q.setAttribute('aria-pressed', String(w.classList.contains('u'))); ustaw(); }}, '?'); zm();
+      const q = el('button', {class: 'q', 'aria-pressed': String(niep(rok, nr, p.id)), title: 'niepewny odczyt', onclick: () => { w.classList.toggle('u'); const u = w.classList.contains('u'); if (!u && /\?/.test(inp.value)) inp.value = bezQ(inp.value); q.setAttribute('aria-pressed', String(u)); ustaw(); }}, '?'); zm();
       w.append(lab, el('div', {class: 'w'}, inp, q)); d.append(w); }); box.append(d); });
   if (b && b.t) box.append(el('details', {}, el('summary', {}, 'Tekst aktu (odczyt)'), el('pre', {class: 't'}, b.t)));
   if (b && b.o) box.append(el('details', {}, el('summary', {}, 'Odczyt Haiku (do porównania)'), el('pre', {class: 't'}, Object.entries(b.o).map(([k, v]) => k + ': ' + v).join('\n'))));
