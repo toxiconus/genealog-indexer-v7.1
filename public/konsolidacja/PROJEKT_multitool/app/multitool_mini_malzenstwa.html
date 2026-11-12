@@ -30,6 +30,7 @@ dialog{border:1px solid var(--line);border-radius:12px;background:var(--card);co
 .li{display:block;width:100%;text-align:left;margin:4px 0;padding:8px 10px}.li small{color:var(--mut);display:block}.li .ai{color:var(--uncl);font-size:12px}
 .pole.z label{font-weight:700;color:var(--ink)}pre.t{white-space:pre-wrap;font:13px/1.35 ui-monospace,monospace;background:var(--bg);padding:8px;border-radius:8px}
 #szuk{width:100%;padding:10px;border:1px solid var(--line);border-radius:10px;background:var(--card)}
+@media(min-width:900px){main{max-width:1280px}.dwa{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(0,1fr);gap:14px;align-items:start}.dwa .pg{height:calc(100vh - var(--gh,96px) - 16px)}}
 </style></head><body>
 <div id="gora"><header><h1>Multitool mini · Małżeństwa</h1><span class="muted" id="lic"></span><button id="bFoto" class="pri sm">＋ Zdjęcia</button><button id="bMenu" class="sm">⋮</button></header>
 <nav role="tablist"><button id="tB" role="tab" aria-selected="true">Baza</button><button id="tS" role="tab" aria-selected="false">Skany</button></nav></div>
@@ -70,8 +71,9 @@ const porzadek = () => Object.values(MEM.skany).sort((a, b) => (a.dodano || 0) -
 const aktyTegoSkanu = h => Object.values(MEM.akty).filter(e => e.h === h).sort((a, b) => a.rok - b.rok || parseInt(a.nr) - parseInt(b.nr));
 /* ---- przeglądarka skanu: przypięta u góry, przeciąganie, szczypanie, +/−, „Akt” (obcięcie do obszaru aktu), „Całość”, ⇕ (wysokość) ---- */
 const WYS = [30, 40, 60]; let wys = (() => { try { const v = localStorage.getItem('mmWys'); return v == null ? 1 : +v; } catch (e) { return 1; } })(); if (!(wys in WYS)) wys = 1; document.documentElement.style.setProperty('--ph', WYS[wys] + 'vh');
+const FILTRY = [['Normalny', 'none'], ['Jasny, mocny kontrast', 'brightness(1.25) contrast(1.5)'], ['Szary, kontrast', 'grayscale(1) contrast(1.8) brightness(1.1)'], ['Negatyw', 'invert(1) contrast(1.2)']]; let filtr_i = (() => { try { return +localStorage.getItem('mmFiltr') || 0; } catch (e) { return 0; } })(); if (!FILTRY[filtr_i]) filtr_i = 0;
 function przegladarka(s, ro) {
-  const c = el('div', {class: 'pg', role: 'img', 'aria-label': 'Skan ' + s.name}), img = el('img', {src: url(s), alt: '', draggable: 'false'}), st = {s: 1, x: 0, y: 0}, P = new Map(); let g0 = null;
+  const c = el('div', {class: 'pg', role: 'img', 'aria-label': 'Skan ' + s.name}), img = el('img', {src: url(s), alt: '', draggable: 'false', style: 'filter:' + FILTRY[filtr_i][1]}), st = {s: 1, x: 0, y: 0}, P = new Map(); let g0 = null;
   const W = () => c.clientWidth || 360, Hh = () => c.clientHeight || 300, IH = () => W() * ((img.naturalHeight || 7) / (img.naturalWidth || 10));
   const ogr = () => { const w = W() * st.s, hh = IH() * st.s; st.x = w <= W() ? (W() - w) / 2 : Math.min(0, Math.max(W() - w, st.x)); st.y = hh <= Hh() ? 0 : Math.min(0, Math.max(Hh() - hh, st.y)); };
   const ap = () => { ogr(); img.style.width = W() + 'px'; img.style.transform = 'translate(' + st.x + 'px,' + st.y + 'px) scale(' + st.s + ')'; };
@@ -79,6 +81,7 @@ function przegladarka(s, ro) {
   const akt = () => { if (!ro) return calosc(); st.s = Math.min(8, Math.max(1, 1 / ro[2])); st.x = -ro[0] * W() * st.s; st.y = -ro[1] * IH() * st.s; ap(); };
   const zoom = (f, cx, cy) => { const ns = Math.min(10, Math.max(0.3, st.s * f)); st.x = cx - (cx - st.x) * ns / st.s; st.y = cy - (cy - st.y) * ns / st.s; st.s = ns; ap(); };
   const tb = el('div', {class: 'tb'}, ro ? el('button', {onclick: akt, 'aria-label': 'Pokaż obszar aktu'}, 'Akt') : '', el('button', {onclick: calosc, 'aria-label': 'Pokaż cały skan'}, 'Całość'), el('button', {onclick: () => zoom(1.4, W() / 2, Hh() / 2), 'aria-label': 'Przybliż'}, '+'), el('button', {onclick: () => zoom(1 / 1.4, W() / 2, Hh() / 2), 'aria-label': 'Oddal'}, '−'),
+    el('button', {onclick: () => { filtr_i = (filtr_i + 1) % FILTRY.length; img.style.filter = FILTRY[filtr_i][1]; try { localStorage.setItem('mmFiltr', filtr_i); } catch (e) {} toast('Obraz: ' + FILTRY[filtr_i][0]); }, 'aria-label': 'Zmień filtr obrazu (jasność, kontrast, negatyw)'}, '☀'),
     el('button', {onclick: () => { wys = (wys + 1) % WYS.length; document.documentElement.style.setProperty('--ph', WYS[wys] + 'vh'); try { localStorage.setItem('mmWys', wys); } catch (e) {} setTimeout(ap, 30); }, 'aria-label': 'Zmień wysokość podglądu'}, '⇕'));
   c.onpointerdown = e => { if (e.target.closest('.tb')) return; c.setPointerCapture(e.pointerId); P.set(e.pointerId, {x: e.clientX, y: e.clientY}); g0 = null; };
   c.onpointermove = e => { const q = P.get(e.pointerId); if (!q) return; const r = c.getBoundingClientRect(); if (P.size === 1) { st.x += e.clientX - q.x; st.y += e.clientY - q.y; q.x = e.clientX; q.y = e.clientY; ap(); }
@@ -110,11 +113,13 @@ function widokSkanow(m) {
   const s = MEM.skany[cur]; m.append(przegladarka(s, null), el('p', {class: 'muted'}, s.name + ' · ' + Math.round(s.size / 1024) + ' KB · suma ' + s.h));
   const bar = el('div', {class: 'akt'}); aktyTegoSkanu(cur).forEach(e => bar.append(el('button', {class: maZmiany(e) ? 'ok' : '', onclick: () => { otwarty = {rok: e.rok, nr: e.nr}; rys(); }}, e.rok + ' / ' + e.nr + ' ' + (nazwa(e.rok, e.nr) || '')))); m.append(bar);
 }
+function sasiad(rok, nr, d) { const w = new Map(); BAZA.forEach(a => w.set(klucz(a.r, a.n), [a.r, a.n])); Object.values(MEM.akty).forEach(e => { if (maZmiany(e) || e.h) w.set(e.id, [e.rok, e.nr]); }); w.set(klucz(rok, nr), [+rok, String(nr)]);
+  const L = [...w.values()].sort((a, b) => a[0] - b[0] || (parseInt(a[1]) || 0) - (parseInt(b[1]) || 0) || String(a[1]).localeCompare(String(b[1]))), i = L.findIndex(x => klucz(x[0], x[1]) === klucz(rok, nr)); return L[i + d] || null; }
 const OST = () => { try { return JSON.parse(localStorage.getItem('mmOst_' + TYP) || '{}'); } catch (e) { return {}; } };
 function formularz(rok, nr) {
   const b = baza(rok, nr), e0 = () => edit(rok, nr, true), box = el('div', {class: 'box'}); let ostFocus = null;
   const sk = edit(rok, nr), sh = sk && sk.h && MEM.skany[sk.h];
-  box.append(el('div', {class: 'row'}, el('button', {class: 'sm', onclick: () => { otwarty = null; rys(); }}, '‹ Lista'), el('b', {style: 'flex:1'}, rok + ' / ' + nr + (b && b.ai ? ' · odczyt AI' : '') + (b ? '' : ' · nowy')), el('button', {class: 'sm', onclick: () => dlgSkan(rok, nr)}, 'Skan…'), !b ? el('button', {class: 'sm', onclick: async () => { if (!confirm('Usunąć ten nowy akt z telefonu?')) return; const k = klucz(rok, nr); delete MEM.akty[k]; await usun('akty', k); otwarty = null; rys(); }}, 'Usuń') : ''));
+  box.append(el('div', {class: 'row'}, el('button', {class: 'sm', onclick: () => { otwarty = null; rys(); }}, '‹ Lista'), el('b', {style: 'flex:1'}, rok + ' / ' + nr + (b && b.ai ? ' · odczyt AI' : '') + (b ? '' : ' · nowy')), el('button', {class: 'sm', 'aria-label': 'Poprzedni akt', onclick: () => { const x = sasiad(rok, nr, -1); if (x) { otwarty = {rok: x[0], nr: x[1]}; rys(); window.scrollTo(0, 0); } else toast('To pierwszy akt'); }}, '◂'), el('button', {class: 'sm', 'aria-label': 'Następny akt', onclick: () => { const x = sasiad(rok, nr, 1); if (x) { otwarty = {rok: x[0], nr: x[1]}; rys(); window.scrollTo(0, 0); } else toast('To ostatni akt'); }}, '▸'), el('button', {class: 'sm', onclick: () => dlgSkan(rok, nr)}, 'Skan…'), !b ? el('button', {class: 'sm', onclick: async () => { if (!confirm('Usunąć ten nowy akt z telefonu?')) return; const k = klucz(rok, nr); delete MEM.akty[k]; await usun('akty', k); otwarty = null; rys(); }}, 'Usuń') : ''));
   if (!sh) box.append(el('p', {class: 'muted'}, 'Skan: ' + (sk && sk.h ? sk.h + ' (bez obrazu na tym telefonie – dodaj plik przyciskiem „Skan…”)' : b && b.s ? b.s + ' (z bazy, bez obrazu na telefonie)' : 'brak – „Skan…” przypisze zdjęcie')));
   box.append(el('div', {class: 'row'}, el('span', {class: 'muted'}, 'Wstaw w aktywne pole:'), ...['[_]', '[-]'].map(z => el('button', {class: 'sm', onmousedown: ev => ev.preventDefault(), onclick: () => { if (ostFocus) { ostFocus.value = z; ostFocus.dispatchEvent(new Event('input')); } }}, z)), el('span', {class: 'muted'}, '[_] nie podano w akcie · [-] nie dotyczy · ? = niepewne')));
   POLA.bloki.forEach((g, gi) => { const sum = el('summary', {}), d = el('details', {open: gi === 0}, sum); const licz = () => { sum.textContent = g.t + ' (' + g.pola.filter(p => wart(rok, nr, p.id)).length + '/' + g.pola.length + ')'; }; licz();
@@ -126,7 +131,7 @@ function formularz(rok, nr) {
       w.append(lab, el('div', {class: 'w'}, inp, q)); d.append(w); }); box.append(d); });
   if (b && b.t) box.append(el('details', {}, el('summary', {}, 'Tekst aktu (odczyt)'), el('pre', {class: 't'}, b.t)));
   if (b && b.o) box.append(el('details', {}, el('summary', {}, 'Odczyt Haiku (do porównania)'), el('pre', {class: 't'}, Object.entries(b.o).map(([k, v]) => k + ': ' + v).join('\n'))));
-  box.append(el('p', {class: 'muted'}, 'Zapis automatyczny (w tej przeglądarce). Zmienione pola są pogrubione. Pamiętaj o eksporcie: „⋮” → Eksport paczki.')); return el('div', {}, sh ? przegladarka(sh, b && b.ro) : '', box); }
+  box.append(el('p', {class: 'muted'}, 'Zapis automatyczny (w tej przeglądarce). Zmienione pola są pogrubione. Pamiętaj o eksporcie: „⋮” → Eksport paczki.')); return el('div', {class: sh ? 'dwa' : ''}, sh ? przegladarka(sh, b && b.ro) : '', box); }
 const tZ = {}; function zapiszAkt(e) { clearTimeout(tZ[e.id]); tZ[e.id] = setTimeout(() => { delete tZ[e.id]; if (!maZmiany(e) && !e.h) { delete MEM.akty[e.id]; usun('akty', e.id); } else zapisz('akty', e); }, 400); }
 const splucz = () => Object.keys(tZ).forEach(k => { clearTimeout(tZ[k]); delete tZ[k]; const e = MEM.akty[k]; if (e) { if (!maZmiany(e) && !e.h) usun('akty', k); else zapisz('akty', e); } });
 addEventListener('pagehide', splucz); document.addEventListener('visibilitychange', () => { if (document.hidden) splucz(); });
