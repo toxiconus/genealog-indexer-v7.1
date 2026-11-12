@@ -31,11 +31,15 @@ dialog{border:1px solid var(--line);border-radius:12px;background:var(--card);co
 .pole.z label{font-weight:700;color:var(--ink)}pre.t{white-space:pre-wrap;font:13px/1.35 ui-monospace,monospace;background:var(--bg);padding:8px;border-radius:8px}
 #szuk{width:100%;padding:10px;border:1px solid var(--line);border-radius:10px;background:var(--card)}
 @media(min-width:900px){main{max-width:1280px}.dwa{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(0,1fr);gap:14px;align-items:start}.dwa .pg{height:calc(100vh - var(--gh,96px) - 16px)}}
+#akcje{position:fixed;left:0;right:0;bottom:0;z-index:8;display:flex;gap:6px;background:var(--card);border-top:1px solid var(--line);padding:6px 8px calc(6px + env(safe-area-inset-bottom));transform:translateY(var(--vvb,0px))}#akcje button{flex:0 0 auto}#akcje #aOk{flex:1}body.maakcje{padding-bottom:72px}
+.pole input{scroll-margin-top:calc(var(--ph,42vh) + 24px);scroll-margin-bottom:84px}
+@media(max-width:899px){body.kb #gora{display:none}body.kb .pg{position:fixed;left:10px;right:10px;top:calc(var(--vvt,0px) + 4px);height:calc(var(--vvh,100vh) * .34);z-index:7;margin:0}body.kb .dwa::before{content:'';display:block;height:calc(var(--vvh,100vh) * .34 + 8px)}body.kb .pole input{scroll-margin-top:calc(var(--vvh,100vh) * .34 + 16px)}body.kb #toast{bottom:140px}}
 </style></head><body>
 <div id="gora"><header><h1>Multitool mini · Małżeństwa</h1><span class="muted" id="lic"></span><button id="bFoto" class="pri sm">＋ Zdjęcia</button><button id="bMenu" class="sm">⋮</button></header>
 <nav role="tablist"><button id="tB" role="tab" aria-selected="true">Baza</button><button id="tS" role="tab" aria-selected="false">Skany</button></nav></div>
 <div id="pas" role="list" aria-label="Skany" hidden></div>
 <main id="main"></main>
+<div id="akcje" hidden><button id="aPrev" aria-label="Poprzedni akt">◂</button><button id="aOk" class="pri">✔ Zatwierdź i dalej</button><button id="aNext" aria-label="Następny akt">▸</button></div>
 <div class="kl" id="kl" hidden><button id="kPrev">‹ Skan</button><button id="kAkt" class="pri">＋ Akt</button><button id="kNext">Skan ›</button></div>
 <input type="file" id="fFoto" accept="image/*" multiple hidden><input type="file" id="fImp" accept=".json,application/json" hidden>
 <dialog id="dl"></dialog><div id="toast" role="status"></div>
@@ -63,7 +67,7 @@ const wart = (rok, nr, k) => { const e = edit(rok, nr), b = baza(rok, nr); retur
 const niep = (rok, nr, k) => { const e = edit(rok, nr), b = baza(rok, nr); return e && e.f[k] ? !!e.f[k].u : !!(b && b.u.includes(k)); };
 const nazwa = (rok, nr) => NAZ.map(k => wart(rok, nr, k)).filter(Boolean).join(' ');
 const etyk = p => FIX_ETYKIET[p.id] || p.label;
-const maZmiany = e => e && Object.keys(e.f).length > 0;
+const maZmiany = e => e && Object.keys(e.f).length > 0, wazny = e => e && (maZmiany(e) || e.h || e.zatw);
 /* ---- zdjęcia ---- */
 async function dodajZdjecia(L, przypisz) { let n = 0, d = 0, ost = null; for (const f of L) { const h = await hash(f); ost = h; if (MEM.skany[h]) { d++; continue; } const s = {h, name: f.name, size: f.size, mtime: f.lastModified, mime: f.type, dodano: Date.now() + n, blob: f}; MEM.skany[h] = s; await zapisz('skany', s); n++; }
   toast('Dodano ' + n + (d ? ', pominięto ' + d + ' (już są – ta sama suma)' : '')); if (przypisz && ost) { const e = edit(przypisz.rok, przypisz.nr, true); e.h = ost; await zapisz('akty', e); } if (!przypisz && ost) cur = ost; rys(); }
@@ -92,7 +96,7 @@ function przegladarka(s, ro) {
 /* ---- widok ---- */
 function rys() { $('lic').textContent = BAZA.length + ' aktów · ' + Object.values(MEM.akty).filter(maZmiany).length + ' zmian · ' + Object.keys(MEM.skany).length + ' skanów';
   $('tB').setAttribute('aria-selected', tab === 'baza'); $('tS').setAttribute('aria-selected', tab === 'skany'); $('pas').hidden = tab !== 'skany' || !Object.keys(MEM.skany).length; $('kl').hidden = tab !== 'skany' || !Object.keys(MEM.skany).length;
-  const m = $('main'); m.replaceChildren(); if (otwarty) return m.append(formularz(otwarty.rok, otwarty.nr)); if (tab === 'baza') widokBazy(m); else widokSkanow(m); }
+  const m = $('main'); m.replaceChildren(); $('akcje').hidden = !otwarty; document.body.classList.toggle('maakcje', !!otwarty); if (otwarty) { const e = edit(otwarty.rok, otwarty.nr); $('aOk').textContent = e && e.zatw ? '↩ Cofnij zatwierdzenie' : '✔ Zatwierdź i dalej'; return m.append(formularz(otwarty.rok, otwarty.nr)); } if (tab === 'baza') widokBazy(m); else widokSkanow(m); }
 function widokBazy(m) {
   const lata = [...new Set(BAZA.map(a => a.r).concat(Object.values(MEM.akty).map(e => e.rok)))].sort((a, b) => a - b);
   const q = el('input', {id: 'szuk', type: 'search', placeholder: 'Szukaj: nazwisko, imię, 1890/12, miejscowość…', value: filtr.q, autocomplete: 'off'}), sr = el('select', {id: 'szRok', 'aria-label': 'Rok'}, el('option', {value: ''}, 'Wszystkie lata'), ...lata.map(r => el('option', {value: r, selected: String(r) === String(filtr.rok)}, r)));
@@ -101,7 +105,7 @@ function widokBazy(m) {
     BAZA.forEach(a => wszystkie.set(klucz(a.r, a.n), {rok: a.r, nr: a.n, b: a})); Object.values(MEM.akty).forEach(e => { if (!wszystkie.has(e.id) && maZmiany(e)) wszystkie.set(e.id, {rok: e.rok, nr: e.nr, b: null}); });
     for (const x of wszystkie.values()) { if (filtr.rok && String(x.rok) !== String(filtr.rok)) continue; if (kw) { if (String(x.rok) !== kw[1] || String(x.nr).toLowerCase() !== kw[2]) continue; } else if (t) { const s = (x.rok + '/' + x.nr + ' ' + (x.b ? Object.values(x.b.f).join(' ') : '') + ' ' + nazwa(x.rok, x.nr)).toLowerCase(); if (!t.split(/\s+/).every(w => s.includes(w))) continue; } wyn.push(x); }
     wyn.sort((a, b) => a.rok - b.rok || (parseInt(a.nr) || 0) - (parseInt(b.nr) || 0) || String(a.nr).localeCompare(String(b.nr))); $('licz').textContent = wyn.length + ' z ' + wszystkie.size;
-    wyn.slice(0, filtr.ile).forEach(x => { const e = edit(x.rok, x.nr), ai = x.b && x.b.ai; lista.append(el('button', {class: 'li', onclick: () => { otwarty = {rok: x.rok, nr: x.nr}; rys(); window.scrollTo(0, 0); }}, el('b', {}, x.rok + ' / ' + x.nr + '  '), nazwa(x.rok, x.nr) || '—', el('small', {}, (ai ? 'odczyt AI · ' : '') + (maZmiany(e) ? '✎ zmieniony · ' : '') + (x.b ? '' : 'nowy · ') + (e && e.h ? 'ma skan' : '')))); });
+    wyn.slice(0, filtr.ile).forEach(x => { const e = edit(x.rok, x.nr), ai = x.b && x.b.ai; lista.append(el('button', {class: 'li', onclick: () => { otwarty = {rok: x.rok, nr: x.nr}; rys(); window.scrollTo(0, 0); }}, el('b', {}, x.rok + ' / ' + x.nr + '  '), nazwa(x.rok, x.nr) || '—', el('small', {}, (ai ? 'odczyt AI · ' : '') + (e && e.zatw ? '✔ zatwierdzony · ' : '') + (maZmiany(e) ? '✎ zmieniony · ' : '') + (x.b ? '' : 'nowy · ') + (e && e.h ? 'ma skan' : '')))); });
     if (wyn.length > filtr.ile) lista.append(el('button', {class: 'li', onclick: () => { filtr.ile += 100; odsw(); }}, 'Pokaż więcej (' + (wyn.length - filtr.ile) + ')')); };
   q.oninput = () => { filtr.q = q.value; filtr.ile = 60; odsw(); }; sr.onchange = () => { filtr.rok = sr.value; filtr.ile = 60; odsw(); };
   m.append(el('div', {class: 'row'}, q), el('div', {class: 'row', style: 'margin-top:6px'}, sr, el('span', {class: 'muted', id: 'licz', style: 'flex:1'}), el('button', {class: 'pri sm', onclick: () => dlgAkt()}, '＋ Nowy akt')), lista); odsw(); }
@@ -113,13 +117,13 @@ function widokSkanow(m) {
   const s = MEM.skany[cur]; m.append(przegladarka(s, null), el('p', {class: 'muted'}, s.name + ' · ' + Math.round(s.size / 1024) + ' KB · suma ' + s.h));
   const bar = el('div', {class: 'akt'}); aktyTegoSkanu(cur).forEach(e => bar.append(el('button', {class: maZmiany(e) ? 'ok' : '', onclick: () => { otwarty = {rok: e.rok, nr: e.nr}; rys(); }}, e.rok + ' / ' + e.nr + ' ' + (nazwa(e.rok, e.nr) || '')))); m.append(bar);
 }
-function sasiad(rok, nr, d) { const w = new Map(); BAZA.forEach(a => w.set(klucz(a.r, a.n), [a.r, a.n])); Object.values(MEM.akty).forEach(e => { if (maZmiany(e) || e.h) w.set(e.id, [e.rok, e.nr]); }); w.set(klucz(rok, nr), [+rok, String(nr)]);
+function sasiad(rok, nr, d) { const w = new Map(); BAZA.forEach(a => w.set(klucz(a.r, a.n), [a.r, a.n])); Object.values(MEM.akty).forEach(e => { if (wazny(e)) w.set(e.id, [e.rok, e.nr]); }); w.set(klucz(rok, nr), [+rok, String(nr)]);
   const L = [...w.values()].sort((a, b) => a[0] - b[0] || (parseInt(a[1]) || 0) - (parseInt(b[1]) || 0) || String(a[1]).localeCompare(String(b[1]))), i = L.findIndex(x => klucz(x[0], x[1]) === klucz(rok, nr)); return L[i + d] || null; }
 const OST = () => { try { return JSON.parse(localStorage.getItem('mmOst_' + TYP) || '{}'); } catch (e) { return {}; } };
 function formularz(rok, nr) {
   const b = baza(rok, nr), e0 = () => edit(rok, nr, true), box = el('div', {class: 'box'}); let ostFocus = null;
   const sk = edit(rok, nr), sh = sk && sk.h && MEM.skany[sk.h];
-  box.append(el('div', {class: 'row'}, el('button', {class: 'sm', onclick: () => { otwarty = null; rys(); }}, '‹ Lista'), el('b', {style: 'flex:1'}, rok + ' / ' + nr + (b && b.ai ? ' · odczyt AI' : '') + (b ? '' : ' · nowy')), el('button', {class: 'sm', 'aria-label': 'Poprzedni akt', onclick: () => { const x = sasiad(rok, nr, -1); if (x) { otwarty = {rok: x[0], nr: x[1]}; rys(); window.scrollTo(0, 0); } else toast('To pierwszy akt'); }}, '◂'), el('button', {class: 'sm', 'aria-label': 'Następny akt', onclick: () => { const x = sasiad(rok, nr, 1); if (x) { otwarty = {rok: x[0], nr: x[1]}; rys(); window.scrollTo(0, 0); } else toast('To ostatni akt'); }}, '▸'), el('button', {class: 'sm', onclick: () => dlgSkan(rok, nr)}, 'Skan…'), !b ? el('button', {class: 'sm', onclick: async () => { if (!confirm('Usunąć ten nowy akt z telefonu?')) return; const k = klucz(rok, nr); delete MEM.akty[k]; await usun('akty', k); otwarty = null; rys(); }}, 'Usuń') : ''));
+  box.append(el('div', {class: 'row'}, el('button', {class: 'sm', onclick: () => { otwarty = null; rys(); }}, '‹ Lista'), el('b', {style: 'flex:1'}, rok + ' / ' + nr + (b && b.ai ? ' · odczyt AI' : '') + (b ? '' : ' · nowy') + (edit(rok, nr) && edit(rok, nr).zatw ? ' · ✔' : '')), el('button', {class: 'sm', onclick: () => dlgSkan(rok, nr)}, 'Skan…'), !b ? el('button', {class: 'sm', onclick: async () => { if (!confirm('Usunąć ten nowy akt z telefonu?')) return; const k = klucz(rok, nr); delete MEM.akty[k]; await usun('akty', k); otwarty = null; rys(); }}, 'Usuń') : ''));
   if (!sh) box.append(el('p', {class: 'muted'}, 'Skan: ' + (sk && sk.h ? sk.h + ' (bez obrazu na tym telefonie – dodaj plik przyciskiem „Skan…”)' : b && b.s ? b.s + ' (z bazy, bez obrazu na telefonie)' : 'brak – „Skan…” przypisze zdjęcie')));
   box.append(el('div', {class: 'row'}, el('span', {class: 'muted'}, 'Wstaw w aktywne pole:'), ...['[_]', '[-]'].map(z => el('button', {class: 'sm', onmousedown: ev => ev.preventDefault(), onclick: () => { if (ostFocus) { ostFocus.value = z; ostFocus.dispatchEvent(new Event('input')); } }}, z)), el('span', {class: 'muted'}, '[_] nie podano w akcie · [-] nie dotyczy · ? = niepewne')));
   POLA.bloki.forEach((g, gi) => { const sum = el('summary', {}), d = el('details', {open: gi === 0}, sum); const licz = () => { sum.textContent = g.t + ' (' + g.pola.filter(p => wart(rok, nr, p.id)).length + '/' + g.pola.length + ')'; }; licz();
@@ -132,8 +136,8 @@ function formularz(rok, nr) {
   if (b && b.t) box.append(el('details', {}, el('summary', {}, 'Tekst aktu (odczyt)'), el('pre', {class: 't'}, b.t)));
   if (b && b.o) box.append(el('details', {}, el('summary', {}, 'Odczyt Haiku (do porównania)'), el('pre', {class: 't'}, Object.entries(b.o).map(([k, v]) => k + ': ' + v).join('\n'))));
   box.append(el('p', {class: 'muted'}, 'Zapis automatyczny (w tej przeglądarce). Zmienione pola są pogrubione. Pamiętaj o eksporcie: „⋮” → Eksport paczki.')); return el('div', {class: sh ? 'dwa' : ''}, sh ? przegladarka(sh, b && b.ro) : '', box); }
-const tZ = {}; function zapiszAkt(e) { clearTimeout(tZ[e.id]); tZ[e.id] = setTimeout(() => { delete tZ[e.id]; if (!maZmiany(e) && !e.h) { delete MEM.akty[e.id]; usun('akty', e.id); } else zapisz('akty', e); }, 400); }
-const splucz = () => Object.keys(tZ).forEach(k => { clearTimeout(tZ[k]); delete tZ[k]; const e = MEM.akty[k]; if (e) { if (!maZmiany(e) && !e.h) usun('akty', k); else zapisz('akty', e); } });
+const tZ = {}; function zapiszAkt(e) { clearTimeout(tZ[e.id]); tZ[e.id] = setTimeout(() => { delete tZ[e.id]; if (!wazny(e)) { delete MEM.akty[e.id]; usun('akty', e.id); } else zapisz('akty', e); }, 400); }
+const splucz = () => Object.keys(tZ).forEach(k => { clearTimeout(tZ[k]); delete tZ[k]; const e = MEM.akty[k]; if (e) { if (!wazny(e)) usun('akty', k); else zapisz('akty', e); } });
 addEventListener('pagehide', splucz); document.addEventListener('visibilitychange', () => { if (document.hidden) splucz(); });
 /* ---- okna ---- */
 function dlg(tytul, tresc, przyciski) { const d = $('dl'); d.replaceChildren(el('h3', {}, tytul), ...tresc, el('div', {class: 'row'}, ...przyciski)); if (!d.open) d.showModal(); return d; }
@@ -151,10 +155,10 @@ function dlgSkan(rok, nr) { const P = porzadek(), siatka = el('div', {class: 'ro
   const f = el('input', {type: 'file', accept: 'image/*', multiple: true, hidden: true}); f.onchange = async () => { const L = [...f.files]; zamknij(); if (L.length) await dodajZdjecia(L, {rok, nr}); };
   dlg('Skan do aktu ' + rok + ' / ' + nr, [P.length ? siatka : el('p', {class: 'muted'}, 'Brak zdjęć na telefonie.'), f], [el('button', {class: 'pri', onclick: () => f.click()}, '＋ Dodaj zdjęcie'), el('button', {onclick: async () => { const e = edit(rok, nr, true); e.h = ''; await zapisz('akty', e); zamknij(); rys(); }}, 'Odepnij'), el('button', {onclick: zamknij}, 'Zamknij')]); }
 /* ---- eksport / import paczki ---- */
-function paczka() { const A = Object.values(MEM.akty).filter(e => maZmiany(e) || e.h).sort((a, b) => a.rok - b.rok || parseInt(a.nr) - parseInt(b.nr)), Hy = new Set(A.map(e => e.h).filter(Boolean));
+function paczka() { const A = Object.values(MEM.akty).filter(wazny).sort((a, b) => a.rok - b.rok || parseInt(a.nr) - parseInt(b.nr)), Hy = new Set(A.map(e => e.h).filter(Boolean));
   return {format: {nazwa: 'multitool-mini', wersja: 2}, typ: TYP, wyeksportowano: new Date().toISOString(), uwaga: 'Sumy: pierwsze 16 znaków SHA-256 zawartości pliku (jak w Multitoolu). Pole „b” to wartość z bazy w chwili zmiany. Pliki nie są zmieniane.',
     skany: [...Hy].filter(h => MEM.skany[h]).map(h => { const s = MEM.skany[h]; return {h, nazwa: s.name, rozmiar: s.size, data: s.mtime || null}; }),
-    akty: A.map(e => ({typ: TYP, rok: e.rok, nr: e.nr, h: e.h || '', pola: Object.fromEntries(Object.entries(e.f).map(([k, x]) => { const bv = (baza(e.rok, e.nr) && baza(e.rok, e.nr).f[k]) || ''; const o = {v: x.v}; if (x.u) o.u = 1; if (bv) o.b = bv; return [k, o]; }))}))}; }
+    akty: A.map(e => ({typ: TYP, rok: e.rok, nr: e.nr, h: e.h || '', zatw: e.zatw ? 1 : 0, pola: Object.fromEntries(Object.entries(e.f).map(([k, x]) => { const bv = (baza(e.rok, e.nr) && baza(e.rok, e.nr).f[k]) || ''; const o = {v: String(x.v).trim()}; if (x.u) o.u = 1; if (bv) o.b = bv; return [k, o]; }))}))}; }
 function eksport() { splucz(); const p = paczka(), txt = JSON.stringify(p), nz = 'multitool_mini_' + TYP + '_' + new Date().toISOString().slice(0, 16).replace(/[-:T]/g, '') + '.json', f = new File([txt], nz, {type: 'application/json'});
   dlg('Eksport paczki', [el('p', {}, p.akty.length + ' aktów ze zmianami lub skanem, ' + p.skany.length + ' skanów (bez obrazów, ok. ' + Math.max(1, Math.round(txt.length / 1024)) + ' KB).')],
     [el('button', {class: 'pri', onclick: () => { const u = URL.createObjectURL(f), a = el('a', {href: u, download: nz}); document.body.append(a); a.click(); a.remove(); setTimeout(() => URL.revokeObjectURL(u), 4000); zamknij(); toast('Zapisano ' + nz); }}, 'Pobierz plik'),
@@ -166,8 +170,14 @@ function menu() { dlg('Menu', [], [el('button', {onclick: () => { zamknij(); eks
   el('button', {onclick: async () => { if (tab !== 'skany' || !cur || !confirm('Usunąć obraz bieżącego skanu z telefonu? (zakładka Skany)')) return; delete MEM.skany[cur]; await usun('skany', cur); cur = null; zamknij(); rys(); }}, 'Usuń obraz bieżącego skanu'), el('button', {onclick: zamknij}, 'Zamknij')]); }
 $('bFoto').onclick = () => $('fFoto').click(); $('fFoto').onchange = e => { const L = [...e.target.files]; e.target.value = ''; if (L.length) { tab = 'skany'; otwarty = null; dodajZdjecia(L); } };
 $('fImp').onchange = e => { const f = e.target.files[0]; e.target.value = ''; if (f) importuj(f); }; $('bMenu').onclick = menu; $('kAkt').onclick = () => dlgAkt(cur);
+const idz = d => { if (!otwarty) return; splucz(); const x = sasiad(otwarty.rok, otwarty.nr, d); if (x) { otwarty = {rok: x[0], nr: x[1]}; rys(); window.scrollTo(0, 0); } else toast(d < 0 ? 'To pierwszy akt' : 'To ostatni akt'); };
+$('aPrev').onclick = () => idz(-1); $('aNext').onclick = () => idz(1);
+$('aOk').onclick = async () => { if (!otwarty) return; splucz(); const e = edit(otwarty.rok, otwarty.nr, true); if (e.zatw) { e.zatw = false; await (wazny(e) ? zapisz('akty', e) : (delete MEM.akty[e.id], usun('akty', e.id))); toast('Cofnięto zatwierdzenie'); return rys(); } e.zatw = true; await zapisz('akty', e); toast('Zatwierdzono ' + e.rok + ' / ' + e.nr); idz(1); };
 $('tB').onclick = () => { tab = 'baza'; otwarty = null; rys(); }; $('tS').onclick = () => { tab = 'skany'; otwarty = null; rys(); };
 $('kPrev').onclick = () => { const P = porzadek(), i = P.findIndex(s => s.h === cur); if (i > 0) { cur = P[i - 1].h; rys(); } }; $('kNext').onclick = () => { const P = porzadek(), i = P.findIndex(s => s.h === cur); if (i >= 0 && P[i + 1]) { cur = P[i + 1].h; rys(); } };
+const vv = window.visualViewport, ukl = () => { const r = document.documentElement.style, h = vv ? vv.height : innerHeight, t = vv ? vv.offsetTop : 0; r.setProperty('--vvh', h + 'px'); r.setProperty('--vvt', t + 'px'); r.setProperty('--vvb', Math.min(0, h + t - innerHeight) + 'px'); document.body.classList.toggle('kb', document.documentElement.dataset.kbTest === '1' || (!!vv && innerHeight - h > 120)); };
+if (vv) { vv.addEventListener('resize', ukl); vv.addEventListener('scroll', ukl); } addEventListener('resize', ukl); ukl();
+document.addEventListener('focusin', e => { if (e.target.matches && e.target.matches('.pole input')) setTimeout(() => e.target.scrollIntoView({block: 'nearest'}), 320); });
 const gh = () => document.documentElement.style.setProperty('--gh', $('gora').offsetHeight + 'px'); addEventListener('resize', gh); new ResizeObserver(gh).observe($('gora')); gh();
 (async () => { try { DB = await idb(); (await wszystko('skany')).forEach(s => MEM.skany[s.h] = s); (await wszystko('akty')).forEach(a => MEM.akty[a.id] = a); if (navigator.storage && navigator.storage.persist) navigator.storage.persist(); } catch (e) { toast('Brak pamięci przeglądarki – dane nie zapiszą się po zamknięciu'); DB = null; } rys(); })();
 </script></body></html>

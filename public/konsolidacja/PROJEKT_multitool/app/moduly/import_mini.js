@@ -1,7 +1,7 @@
 /* app/moduly/import_mini.js – import paczki z telefonu (Multitool mini → „multitool-mini” JSON) i szukanie skanów na dysku po sumie kontrolnej (bez DOM).
    Paczka: skany [{h: 16 znaków SHA-256 zawartości, nazwa, rozmiar}], akty [{typ, rok, nr, h, pola: {pole: {v, u?}}}].
    Zasady: brak aktu w bazie → dopisuje nowy (puste pola wypełnione z paczki); akt jest → wypełnia tylko puste pola (różnice liczy jako konflikty i niczego nie nadpisuje);
-   skan: nazwa, suma (scanH) i rozmiar (scanSz) zapisują się przy akcie, jeśli akt nie ma jeszcze skanu. Wartości z telefonu to odczyt do sprawdzenia (ok: false). */
+   skan: nazwa, suma (scanH) i rozmiar (scanSz) zapisują się przy akcie, jeśli akt nie ma jeszcze skanu. Wartości z telefonu to odczyt do sprawdzenia (ok: false), chyba że akt zatwierdzono na telefonie (zatw: 1 → akt zatwierdzony, pola bez „?” zatwierdzone). */
 const MINI_MAX_AKTOW = 5000, MINI_H = /^[0-9a-f]{16}$/;
 const miniPolaTypu = typ => { const T = TYPY[typ]; const s = new Set(); ((T && T.bloki) || []).forEach(g => g.pola.forEach(p => s.add(p))); return s; };
 const miniCzysc = v => String(v).replace(/[\u0000-\u001f\u007f<>]/g, ' ').trim().slice(0, 500);
@@ -14,13 +14,13 @@ function miniRozpoznaj(txt){ const w = {ok: false, blad: '', akty: [], skany: {}
     const ok = miniPolaTypu(x.typ), pola = {}; Object.entries(x.pola || {}).forEach(([k, o]) => { if (!ok.has(k) || !o || typeof o.v !== 'string') return; const v = miniCzysc(o.v), b = typeof o.b === 'string' ? miniCzysc(o.b) : undefined; if (v || b) pola[k] = {v, u: !!o.u, b}; });
     const a = skpAkt(x.typ, +x.rok, String(x.nr).toLowerCase()), sk = w.skany[x.h] || {h: x.h || '', nazwa: '', rozmiar: 0};
     let nowe = 0, konf = 0, zmien = 0; Object.entries(pola).forEach(([k, o]) => { const cur = a ? String(getv(a, k) ?? '').trim() : ''; if (cur === o.v) return; if (!cur) nowe++; else if (o.b !== undefined && cur === o.b) zmien++; else konf++; });
-    w.akty.push({typ: x.typ, rok: +x.rok, nr: String(x.nr), h: x.h, pola, stan: a ? 'jest' : 'nowy', id: a ? a.id : '', nowe, zmien, konf, skan: sk, innySkan: !!(a && S.acts[a.id] && S.acts[a.id].scanH && S.acts[a.id].scanH !== x.h)}); });
+    w.akty.push({typ: x.typ, rok: +x.rok, nr: String(x.nr), h: x.h, pola, stan: a ? 'jest' : 'nowy', id: a ? a.id : '', zatw: !!x.zatw, nowe, zmien, konf, skan: sk, innySkan: !!(a && S.acts[a.id] && S.acts[a.id].scanH && S.acts[a.id].scanH !== x.h)}); });
   w.ok = true; return w; }
-function miniStosuj(w){ const R = {dodane: 0, zmienione: 0, uzupelnione: 0, pol: 0, konflikty: 0, skany: 0, innySkan: 0, blad: ''};
+function miniStosuj(w){ const R = {zatw: 0, dodane: 0, zmienione: 0, uzupelnione: 0, pol: 0, konflikty: 0, skany: 0, innySkan: 0, blad: ''};
   for (const x of w.akty) { let id = x.id; if (!id) { const r = nowyDodaj(x.typ, String(x.rok), x.nr); if (!r.ok) { if (r.istnieje) id = r.istnieje; else { R.blad = r.blad; break; } } else { id = r.id; R.dodane++; } }
     const a = AM[id], s = st(id); let n = 0;
-    Object.entries(x.pola).forEach(([k, o]) => { const cur = String(getv(a, k) ?? '').trim(); if (cur === o.v) return; if (cur && !(o.b !== undefined && cur === o.b)) { R.konflikty++; return; } s.f[k] = {v: o.v, src: 'edit', ok: false, unc: !!o.u}; n++; if (cur) R.zmienione++; });
-    if (n && x.stan === 'jest') R.uzupelnione++; R.pol += n;
+    Object.entries(x.pola).forEach(([k, o]) => { const cur = String(getv(a, k) ?? '').trim(); if (cur === o.v) return; if (cur && !(o.b !== undefined && cur === o.b)) { R.konflikty++; return; } s.f[k] = {v: o.v, src: 'edit', ok: !!x.zatw && !o.u, unc: !!o.u}; n++; if (cur) R.zmienione++; });
+    if (n && x.stan === 'jest') R.uzupelnione++; R.pol += n; if (x.zatw && !s.done) { s.done = true; R.zatw++; }
     if (x.h && !s.scanH) { if (x.skan.nazwa && !s.scan) s.scan = x.skan.nazwa; s.scanH = x.h; if (x.skan.rozmiar) s.scanSz = x.skan.rozmiar; R.skany++; } else if (x.h && s.scanH !== x.h) R.innySkan++; }
   return R; }
 /* szukanie skanów z paczki wśród plików z dysku: najpierw rozmiar (tani filtr), potem suma; wynik {h: File}. Wywołanie zwrotne `postep(i, n)` jest opcjonalne. */
