@@ -20,7 +20,7 @@ let ok = 0; const pass = m => { ok++; console.log('OK  ' + m); };
   await m.locator('#main .pole input').first().fill(wzor.nazw + 'X'); await m.locator('#main .pole .q').nth(1).click();
   // zdjęcie przypisane do aktu
   await m.click('button:has-text("Skan…")'); await m.setInputFiles('#dl input[type=file]', [{ name: 'IMG_0001.png', mimeType: 'image/png', buffer: PNG[0] }]).catch(async () => { await m.click('#dl button:has-text("Dodaj zdjęcie")'); });
-  await m.waitForSelector('#podglad'); pass('mini: zdjęcie dodane i przypisane do aktu');
+  await m.waitForSelector('.pg img'); pass('mini: zdjęcie dodane i przypisane do aktu');
   // nowy akt
   await m.click('button:has-text("‹ Lista")'); await m.click('button:has-text("Nowy akt")'); await m.locator('#dl input').nth(0).fill('1890'); const nr = await m.locator('#dl input').nth(1).inputValue(); await m.click('#dl button.pri'); await m.waitForSelector('#main .pole input');
   await m.locator('#main .pole input').first().fill('Testowy'); await m.waitForTimeout(600);

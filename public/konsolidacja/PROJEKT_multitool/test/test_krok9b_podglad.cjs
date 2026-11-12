@@ -1,0 +1,16 @@
+/* Test przeglądarki skanu w mini: skan przypięty u góry razem z polami (jednocześnie widoczne), obcięcie do aktu, przybliżanie. Uruchom: node test/test_krok9b_podglad.cjs [obraz.jpg] [zrzut.png] */
+const { chromium } = require('playwright'), assert = require('assert'), path = require('path'), fs = require('fs');
+const IMG = process.argv[2] || path.join(__dirname, '..', 'app', 'mini', 'test_skan.png'), SHOT = process.argv[3];
+(async () => {
+  const b = await chromium.launch(), ctx = await b.newContext({ viewport: { width: 390, height: 780 }, hasTouch: true }), p = await ctx.newPage(); const bl = []; p.on('pageerror', e => bl.push(e.message));
+  await p.goto('file://' + path.join(__dirname, '..', 'app', 'multitool_mini_malzenstwa.html'));
+  await p.fill('#szuk', '1944/21'); await p.click('#lista .li'); await p.waitForSelector('#main .pole input');
+  await p.click('button:has-text("Skan…")'); await p.setInputFiles('#dl input[type=file]', IMG); await p.waitForSelector('.pg img');
+  await p.waitForFunction(() => { const i = document.querySelector('.pg img'); return i.naturalWidth > 0 && i.style.transform; });
+  const r = await p.evaluate(() => { const g = document.querySelector('.pg').getBoundingClientRect(), f = document.querySelector('#main .pole input').getBoundingClientRect(); return { gTop: g.top, gBot: g.bottom, fTop: f.top, fBot: f.bottom, vh: innerHeight, tr: document.querySelector('.pg img').style.transform }; });
+  assert(r.gBot > 0 && r.fTop >= r.gBot - 1 && r.fBot <= r.vh, 'skan i pole jednocześnie na ekranie: ' + JSON.stringify(r)); console.log('OK  skan (' + Math.round(r.gTop) + '–' + Math.round(r.gBot) + ' px) i pierwsze pole (' + Math.round(r.fTop) + '–' + Math.round(r.fBot) + ' px) widoczne razem na ekranie 780 px');
+  await p.evaluate(() => window.scrollTo(0, 400)); await p.waitForTimeout(150); const po = await p.evaluate(() => document.querySelector('.pg').getBoundingClientRect().top); const gh = await p.evaluate(() => document.getElementById('gora').offsetHeight); assert(Math.abs(po - gh) < 3, 'skan zostaje przypięty po przewinięciu: ' + po + ' vs ' + gh); console.log('OK  po przewinięciu formularza skan zostaje przypięty u góry');
+  await p.evaluate(() => window.scrollTo(0, 0)); const t0 = await p.evaluate(() => document.querySelector('.pg img').style.transform); await p.click('.pg .tb button[aria-label="Przybliż"]'); const t1 = await p.evaluate(() => document.querySelector('.pg img').style.transform); assert.notStrictEqual(t0, t1); await p.click('.pg .tb button:has-text("Całość")'); const t2 = await p.evaluate(() => document.querySelector('.pg img').style.transform); assert.notStrictEqual(t1, t2); await p.click('.pg .tb button:has-text("Akt")'); const t3 = await p.evaluate(() => document.querySelector('.pg img').style.transform); assert.strictEqual(t3, t0); console.log('OK  przyciski Akt / Całość / + działają (obcięcie do obszaru aktu wraca po „Akt”)');
+  if (SHOT) { await p.screenshot({ path: SHOT }); }
+  assert.deepStrictEqual(bl, [], bl.join('|')); console.log('OK  bez błędów'); await b.close();
+})().catch(e => { console.error('BŁĄD', e.message); process.exit(1); });

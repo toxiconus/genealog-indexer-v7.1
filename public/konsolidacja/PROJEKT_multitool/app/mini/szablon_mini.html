@@ -6,7 +6,7 @@
 :root{--bg:#f2f1ed;--card:#fcfbf9;--ink:#23282e;--mut:#6b7078;--line:#dad7ce;--acc:#3d4d63;--ok:#4b7a5d;--okb:#e6eee8;--bad:#9f4a45;--unc:#f1eadc;--uncl:#966a2e}
 @media(prefers-color-scheme:dark){:root{--bg:#15171a;--card:#1d2024;--ink:#e4e2dd;--mut:#9b9ea2;--line:#34383d;--acc:#93a8c6;--ok:#8fbf9f;--okb:#1f3126;--bad:#d89b95;--unc:#382f1f;--uncl:#d0a769}}
 *{box-sizing:border-box}html,body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.35 system-ui,sans-serif;-webkit-text-size-adjust:100%}
-header{position:sticky;top:0;z-index:5;background:var(--card);border-bottom:1px solid var(--line);padding:6px 10px;display:flex;gap:6px;align-items:center}
+#gora{position:sticky;top:0;z-index:6}header{background:var(--card);border-bottom:1px solid var(--line);padding:6px 10px;display:flex;gap:6px;align-items:center}
 header h1{font-size:15px;margin:0;flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 button,select,input,textarea{font:inherit;color:inherit}
 button{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:8px 12px;min-height:42px}
@@ -16,7 +16,7 @@ main{padding:10px;max-width:760px;margin:0 auto}
 #pas{display:flex;gap:6px;overflow-x:auto;padding:8px 10px;background:var(--card);border-bottom:1px solid var(--line)}
 #pas .m{flex:0 0 auto;width:64px;height:84px;border:2px solid var(--line);border-radius:8px;padding:0;background:var(--bg) center/cover no-repeat;position:relative;overflow:hidden}
 #pas .m.cur{border-color:var(--acc);outline:2px solid var(--acc)}#pas .m b{position:absolute;right:2px;bottom:2px;background:var(--acc);color:var(--bg);border-radius:8px;font-size:12px;padding:0 6px}#pas .m.ma b{background:var(--ok)}
-#podglad{width:100%;max-height:42vh;object-fit:contain;background:#000;border-radius:8px;display:block}
+.pg{position:sticky;top:var(--gh,96px);z-index:4;height:var(--ph,42vh);overflow:hidden;background:#111;border-radius:8px;touch-action:none;margin-bottom:8px}.pg img{position:absolute;left:0;top:0;transform-origin:0 0;max-width:none;user-select:none;-webkit-user-drag:none;pointer-events:none}.pg .tb{position:absolute;right:4px;top:4px;display:flex;gap:4px;z-index:2}.pg .tb button{min-height:34px;min-width:38px;padding:2px 8px;background:#000a;color:#fff;border-color:#fff5;font-size:14px}
 .box{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:10px;margin:10px 0}
 .row{display:flex;gap:6px;flex-wrap:wrap;align-items:center}
 .pole{margin:8px 0}.pole label{display:block;font-size:13px;color:var(--mut)}.pole .w{display:flex;gap:4px}.pole input{flex:1;min-width:0;padding:9px;border:1px solid var(--line);border-radius:8px;background:var(--bg)}
@@ -26,13 +26,13 @@ details{margin:6px 0}summary{padding:8px 4px;font-weight:600}
 .kl{position:sticky;bottom:0;display:flex;gap:6px;background:var(--card);border-top:1px solid var(--line);padding:6px;justify-content:center}
 #toast{position:fixed;left:50%;bottom:70px;transform:translateX(-50%);background:var(--ink);color:var(--bg);padding:8px 14px;border-radius:10px;display:none;z-index:9}
 dialog{border:1px solid var(--line);border-radius:12px;background:var(--card);color:var(--ink);max-width:560px;width:94vw}dialog input,dialog select{width:100%;padding:9px;margin:2px 0 8px;border:1px solid var(--line);border-radius:8px;background:var(--bg)}
-nav{display:flex;background:var(--card);border-bottom:1px solid var(--line)}nav button{flex:1;border:0;border-radius:0;border-bottom:3px solid transparent;min-height:42px}nav button[aria-selected=true]{border-bottom-color:var(--acc);font-weight:600}
+[hidden]{display:none!important}nav{display:flex;background:var(--card);border-bottom:1px solid var(--line)}nav button{flex:1;border:0;border-radius:0;border-bottom:3px solid transparent;min-height:42px}nav button[aria-selected=true]{border-bottom-color:var(--acc);font-weight:600}
 .li{display:block;width:100%;text-align:left;margin:4px 0;padding:8px 10px}.li small{color:var(--mut);display:block}.li .ai{color:var(--uncl);font-size:12px}
 .pole.z label{font-weight:700;color:var(--ink)}pre.t{white-space:pre-wrap;font:13px/1.35 ui-monospace,monospace;background:var(--bg);padding:8px;border-radius:8px}
 #szuk{width:100%;padding:10px;border:1px solid var(--line);border-radius:10px;background:var(--card)}
 </style></head><body>
-<header><h1>Multitool mini · /*NAZWA*/</h1><span class="muted" id="lic"></span><button id="bFoto" class="pri sm">＋ Zdjęcia</button><button id="bMenu" class="sm">⋮</button></header>
-<nav role="tablist"><button id="tB" role="tab" aria-selected="true">Baza</button><button id="tS" role="tab" aria-selected="false">Skany</button></nav>
+<div id="gora"><header><h1>Multitool mini · /*NAZWA*/</h1><span class="muted" id="lic"></span><button id="bFoto" class="pri sm">＋ Zdjęcia</button><button id="bMenu" class="sm">⋮</button></header>
+<nav role="tablist"><button id="tB" role="tab" aria-selected="true">Baza</button><button id="tS" role="tab" aria-selected="false">Skany</button></nav></div>
 <div id="pas" role="list" aria-label="Skany" hidden></div>
 <main id="main"></main>
 <div class="kl" id="kl" hidden><button id="kPrev">‹ Skan</button><button id="kAkt" class="pri">＋ Akt</button><button id="kNext">Skan ›</button></div>
@@ -68,6 +68,24 @@ async function dodajZdjecia(L, przypisz) { let n = 0, d = 0, ost = null; for (co
   toast('Dodano ' + n + (d ? ', pominięto ' + d + ' (już są – ta sama suma)' : '')); if (przypisz && ost) { const e = edit(przypisz.rok, przypisz.nr, true); e.h = ost; await zapisz('akty', e); } if (!przypisz && ost) cur = ost; rys(); }
 const porzadek = () => Object.values(MEM.skany).sort((a, b) => (a.dodano || 0) - (b.dodano || 0) || a.name.localeCompare(b.name, 'pl', {numeric: true}));
 const aktyTegoSkanu = h => Object.values(MEM.akty).filter(e => e.h === h).sort((a, b) => a.rok - b.rok || parseInt(a.nr) - parseInt(b.nr));
+/* ---- przeglądarka skanu: przypięta u góry, przeciąganie, szczypanie, +/−, „Akt” (obcięcie do obszaru aktu), „Całość”, ⇕ (wysokość) ---- */
+const WYS = [30, 40, 60]; let wys = (() => { try { const v = localStorage.getItem('mmWys'); return v == null ? 1 : +v; } catch (e) { return 1; } })(); if (!(wys in WYS)) wys = 1; document.documentElement.style.setProperty('--ph', WYS[wys] + 'vh');
+function przegladarka(s, ro) {
+  const c = el('div', {class: 'pg', role: 'img', 'aria-label': 'Skan ' + s.name}), img = el('img', {src: url(s), alt: '', draggable: 'false'}), st = {s: 1, x: 0, y: 0}, P = new Map(); let g0 = null;
+  const W = () => c.clientWidth || 360, Hh = () => c.clientHeight || 300, IH = () => W() * ((img.naturalHeight || 7) / (img.naturalWidth || 10));
+  const ogr = () => { const w = W() * st.s, hh = IH() * st.s; st.x = w <= W() ? (W() - w) / 2 : Math.min(0, Math.max(W() - w, st.x)); st.y = hh <= Hh() ? 0 : Math.min(0, Math.max(Hh() - hh, st.y)); };
+  const ap = () => { ogr(); img.style.width = W() + 'px'; img.style.transform = 'translate(' + st.x + 'px,' + st.y + 'px) scale(' + st.s + ')'; };
+  const calosc = () => { st.s = Math.min(1, Hh() / IH()); st.x = 0; st.y = 0; ap(); };
+  const akt = () => { if (!ro) return calosc(); st.s = Math.min(8, Math.max(1, 1 / ro[2])); st.x = -ro[0] * W() * st.s; st.y = -ro[1] * IH() * st.s; ap(); };
+  const zoom = (f, cx, cy) => { const ns = Math.min(10, Math.max(0.3, st.s * f)); st.x = cx - (cx - st.x) * ns / st.s; st.y = cy - (cy - st.y) * ns / st.s; st.s = ns; ap(); };
+  const tb = el('div', {class: 'tb'}, ro ? el('button', {onclick: akt, 'aria-label': 'Pokaż obszar aktu'}, 'Akt') : '', el('button', {onclick: calosc, 'aria-label': 'Pokaż cały skan'}, 'Całość'), el('button', {onclick: () => zoom(1.4, W() / 2, Hh() / 2), 'aria-label': 'Przybliż'}, '+'), el('button', {onclick: () => zoom(1 / 1.4, W() / 2, Hh() / 2), 'aria-label': 'Oddal'}, '−'),
+    el('button', {onclick: () => { wys = (wys + 1) % WYS.length; document.documentElement.style.setProperty('--ph', WYS[wys] + 'vh'); try { localStorage.setItem('mmWys', wys); } catch (e) {} setTimeout(ap, 30); }, 'aria-label': 'Zmień wysokość podglądu'}, '⇕'));
+  c.onpointerdown = e => { if (e.target.closest('.tb')) return; c.setPointerCapture(e.pointerId); P.set(e.pointerId, {x: e.clientX, y: e.clientY}); g0 = null; };
+  c.onpointermove = e => { const q = P.get(e.pointerId); if (!q) return; const r = c.getBoundingClientRect(); if (P.size === 1) { st.x += e.clientX - q.x; st.y += e.clientY - q.y; q.x = e.clientX; q.y = e.clientY; ap(); }
+    else if (P.size === 2) { q.x = e.clientX; q.y = e.clientY; const [a, b] = [...P.values()], d = Math.hypot(a.x - b.x, a.y - b.y), mx = (a.x + b.x) / 2 - r.left, my = (a.y + b.y) / 2 - r.top; if (g0) zoom(d / g0, mx, my); g0 = d; } };
+  c.onpointerup = c.onpointercancel = e => { P.delete(e.pointerId); g0 = null; }; c.ondblclick = e => { const r = c.getBoundingClientRect(); if (st.s < 1.6) zoom(2.2, e.clientX - r.left, e.clientY - r.top); else akt(); };
+  c.onwheel = e => { e.preventDefault(); const r = c.getBoundingClientRect(); zoom(e.deltaY < 0 ? 1.15 : 1 / 1.15, e.clientX - r.left, e.clientY - r.top); };
+  img.onload = akt; c.append(img, tb); new ResizeObserver(() => { if (c.clientWidth) ap(); }).observe(c); c.pg = {akt, calosc, zoom, st}; return c; }
 /* ---- widok ---- */
 function rys() { $('lic').textContent = BAZA.length + ' aktów · ' + Object.values(MEM.akty).filter(maZmiany).length + ' zmian · ' + Object.keys(MEM.skany).length + ' skanów';
   $('tB').setAttribute('aria-selected', tab === 'baza'); $('tS').setAttribute('aria-selected', tab === 'skany'); $('pas').hidden = tab !== 'skany' || !Object.keys(MEM.skany).length; $('kl').hidden = tab !== 'skany' || !Object.keys(MEM.skany).length;
@@ -89,19 +107,16 @@ function widokSkanow(m) {
   if (!P.length) return void m.append(el('div', {class: 'box'}, el('p', {}, 'Dodaj zdjęcia z pobranych plików (przycisk „＋ Zdjęcia”, można zaznaczyć kilka). Plik nie jest zmieniany ani zmniejszany – dzięki temu jego suma kontrolna na komputerze będzie taka sama.'), el('p', {class: 'muted'}, 'Skan możesz przypisać do aktu z bazy („Baza” → akt → Skan) albo tu: „＋ Akt na skanie”.')));
   if (!cur || !MEM.skany[cur]) cur = P[0].h;
   P.forEach((s, i) => { const b = el('button', {class: 'm' + (s.h === cur ? ' cur' : '') + (aktyTegoSkanu(s.h).length ? ' ma' : ''), 'aria-label': 'Skan ' + (i + 1) + ': ' + s.name, onclick: () => { cur = s.h; rys(); }}, el('b', {}, aktyTegoSkanu(s.h).length || i + 1)); b.style.backgroundImage = 'url(' + url(s) + ')'; pas.append(b); });
-  const s = MEM.skany[cur], img = el('img', {id: 'podglad', alt: 'Skan ' + s.name, src: url(s)}); img.onclick = () => dlgPelny(s);
-  m.append(img, el('p', {class: 'muted'}, s.name + ' · ' + Math.round(s.size / 1024) + ' KB · suma ' + s.h + ' (stuknij obraz = powiększenie)'));
+  const s = MEM.skany[cur]; m.append(przegladarka(s, null), el('p', {class: 'muted'}, s.name + ' · ' + Math.round(s.size / 1024) + ' KB · suma ' + s.h));
   const bar = el('div', {class: 'akt'}); aktyTegoSkanu(cur).forEach(e => bar.append(el('button', {class: maZmiany(e) ? 'ok' : '', onclick: () => { otwarty = {rok: e.rok, nr: e.nr}; rys(); }}, e.rok + ' / ' + e.nr + ' ' + (nazwa(e.rok, e.nr) || '')))); m.append(bar);
 }
 const OST = () => { try { return JSON.parse(localStorage.getItem('mmOst_' + TYP) || '{}'); } catch (e) { return {}; } };
 function formularz(rok, nr) {
   const b = baza(rok, nr), e0 = () => edit(rok, nr, true), box = el('div', {class: 'box'}); let ostFocus = null;
-  box.append(el('div', {class: 'row'}, el('button', {class: 'sm', onclick: () => { otwarty = null; rys(); }}, '‹ Lista'), el('b', {style: 'flex:1'}, POLA.nazwa + ' ' + rok + ' nr ' + nr + (b && b.ai ? ' · odczyt AI' : '') + (b ? '' : ' · nowy')), !b ? el('button', {class: 'sm', onclick: async () => { if (!confirm('Usunąć ten nowy akt z telefonu?')) return; const k = klucz(rok, nr); delete MEM.akty[k]; await usun('akty', k); otwarty = null; rys(); }}, 'Usuń') : ''));
-  const sk = edit(rok, nr), sh = sk && sk.h && MEM.skany[sk.h]; box.append(el('div', {class: 'row'}, el('span', {class: 'muted'}, 'Skan: ' + (sh ? sh.name + ' (' + sh.h + ')' : sk && sk.h ? sk.h + ' (bez obrazu na tym telefonie)' : b && b.s ? b.s + ' (z bazy)' : 'brak')), el('button', {class: 'sm', onclick: () => dlgSkan(rok, nr)}, 'Skan…')));
-  if (sh) { const im = el('img', {id: 'podglad', alt: 'Skan', src: url(sh)}); im.onclick = () => dlgPelny(sh); box.append(im); }
+  const sk = edit(rok, nr), sh = sk && sk.h && MEM.skany[sk.h];
+  box.append(el('div', {class: 'row'}, el('button', {class: 'sm', onclick: () => { otwarty = null; rys(); }}, '‹ Lista'), el('b', {style: 'flex:1'}, rok + ' / ' + nr + (b && b.ai ? ' · odczyt AI' : '') + (b ? '' : ' · nowy')), el('button', {class: 'sm', onclick: () => dlgSkan(rok, nr)}, 'Skan…'), !b ? el('button', {class: 'sm', onclick: async () => { if (!confirm('Usunąć ten nowy akt z telefonu?')) return; const k = klucz(rok, nr); delete MEM.akty[k]; await usun('akty', k); otwarty = null; rys(); }}, 'Usuń') : ''));
+  if (!sh) box.append(el('p', {class: 'muted'}, 'Skan: ' + (sk && sk.h ? sk.h + ' (bez obrazu na tym telefonie – dodaj plik przyciskiem „Skan…”)' : b && b.s ? b.s + ' (z bazy, bez obrazu na telefonie)' : 'brak – „Skan…” przypisze zdjęcie')));
   box.append(el('div', {class: 'row'}, el('span', {class: 'muted'}, 'Wstaw w aktywne pole:'), ...['[_]', '[-]'].map(z => el('button', {class: 'sm', onmousedown: ev => ev.preventDefault(), onclick: () => { if (ostFocus) { ostFocus.value = z; ostFocus.dispatchEvent(new Event('input')); } }}, z)), el('span', {class: 'muted'}, '[_] nie podano w akcie · [-] nie dotyczy · ? = niepewne')));
-  if (b && b.t) box.append(el('details', {}, el('summary', {}, 'Tekst aktu (odczyt)'), el('pre', {class: 't'}, b.t)));
-  if (b && b.o) box.append(el('details', {}, el('summary', {}, 'Odczyt Haiku (do porównania)'), el('pre', {class: 't'}, Object.entries(b.o).map(([k, v]) => k + ': ' + v).join('\n'))));
   POLA.bloki.forEach((g, gi) => { const sum = el('summary', {}), d = el('details', {open: gi === 0}, sum); const licz = () => { sum.textContent = g.t + ' (' + g.pola.filter(p => wart(rok, nr, p.id)).length + '/' + g.pola.length + ')'; }; licz();
     g.pola.forEach(p => { const w = el('div', {class: 'pole' + (niep(rok, nr, p.id) ? ' u' : '')}), inp = el('input', {value: wart(rok, nr, p.id), autocomplete: 'off', autocapitalize: 'sentences', 'aria-label': etyk(p)}), lab = el('label', {}, etyk(p));
       const zm = () => { const e = edit(rok, nr), x = e && e.f[p.id], bv = (b && b.f[p.id]) || '', bu = !!(b && b.u.includes(p.id)); w.classList.toggle('z', !!x && (x.v !== bv || !!x.u !== bu)); };
@@ -109,7 +124,9 @@ function formularz(rok, nr) {
       inp.oninput = ustaw; inp.onfocus = () => { ostFocus = inp; };
       const q = el('button', {class: 'q', 'aria-pressed': String(niep(rok, nr, p.id)), title: 'niepewny odczyt', onclick: () => { w.classList.toggle('u'); q.setAttribute('aria-pressed', String(w.classList.contains('u'))); ustaw(); }}, '?'); zm();
       w.append(lab, el('div', {class: 'w'}, inp, q)); d.append(w); }); box.append(d); });
-  box.append(el('p', {class: 'muted'}, 'Zapis automatyczny (w tej przeglądarce). Zmienione pola są pogrubione. Pamiętaj o eksporcie: „⋮” → Eksport paczki.')); return box; }
+  if (b && b.t) box.append(el('details', {}, el('summary', {}, 'Tekst aktu (odczyt)'), el('pre', {class: 't'}, b.t)));
+  if (b && b.o) box.append(el('details', {}, el('summary', {}, 'Odczyt Haiku (do porównania)'), el('pre', {class: 't'}, Object.entries(b.o).map(([k, v]) => k + ': ' + v).join('\n'))));
+  box.append(el('p', {class: 'muted'}, 'Zapis automatyczny (w tej przeglądarce). Zmienione pola są pogrubione. Pamiętaj o eksporcie: „⋮” → Eksport paczki.')); return el('div', {}, sh ? przegladarka(sh, b && b.ro) : '', box); }
 const tZ = {}; function zapiszAkt(e) { clearTimeout(tZ[e.id]); tZ[e.id] = setTimeout(() => { delete tZ[e.id]; if (!maZmiany(e) && !e.h) { delete MEM.akty[e.id]; usun('akty', e.id); } else zapisz('akty', e); }, 400); }
 const splucz = () => Object.keys(tZ).forEach(k => { clearTimeout(tZ[k]); delete tZ[k]; const e = MEM.akty[k]; if (e) { if (!maZmiany(e) && !e.h) usun('akty', k); else zapisz('akty', e); } });
 addEventListener('pagehide', splucz); document.addEventListener('visibilitychange', () => { if (document.hidden) splucz(); });
@@ -146,5 +163,6 @@ $('bFoto').onclick = () => $('fFoto').click(); $('fFoto').onchange = e => { cons
 $('fImp').onchange = e => { const f = e.target.files[0]; e.target.value = ''; if (f) importuj(f); }; $('bMenu').onclick = menu; $('kAkt').onclick = () => dlgAkt(cur);
 $('tB').onclick = () => { tab = 'baza'; otwarty = null; rys(); }; $('tS').onclick = () => { tab = 'skany'; otwarty = null; rys(); };
 $('kPrev').onclick = () => { const P = porzadek(), i = P.findIndex(s => s.h === cur); if (i > 0) { cur = P[i - 1].h; rys(); } }; $('kNext').onclick = () => { const P = porzadek(), i = P.findIndex(s => s.h === cur); if (i >= 0 && P[i + 1]) { cur = P[i + 1].h; rys(); } };
+const gh = () => document.documentElement.style.setProperty('--gh', $('gora').offsetHeight + 'px'); addEventListener('resize', gh); new ResizeObserver(gh).observe($('gora')); gh();
 (async () => { try { DB = await idb(); (await wszystko('skany')).forEach(s => MEM.skany[s.h] = s); (await wszystko('akty')).forEach(a => MEM.akty[a.id] = a); if (navigator.storage && navigator.storage.persist) navigator.storage.persist(); } catch (e) { toast('Brak pamięci przeglądarki – dane nie zapiszą się po zamknięciu'); DB = null; } rys(); })();
 </script></body></html>
