@@ -1,0 +1,420 @@
+{
+ "zgon": {
+  "nazwa": "Zgon",
+  "bloki": [
+   {
+    "t": "Zmarły",
+    "pola": [
+     {
+      "id": "deceased_last_name",
+      "label": "Nazwisko"
+     },
+     {
+      "id": "deceased_first_name",
+      "label": "Imię"
+     },
+     {
+      "id": "deceased_maiden_name",
+      "label": "Nazwisko rodowe"
+     },
+     {
+      "id": "deceased_sex",
+      "label": "Płeć (M/K)"
+     },
+     {
+      "id": "age",
+      "label": "Wiek"
+     },
+     {
+      "id": "deceased_status",
+      "label": "Stan"
+     },
+     {
+      "id": "deceased_spouse",
+      "label": "Małżonek"
+     },
+     {
+      "id": "profession",
+      "label": "Zawód"
+     }
+    ]
+   },
+   {
+    "t": "Data i miejsce",
+    "pola": [
+     {
+      "id": "death_date",
+      "label": "Data zgonu (RRRR-MM-DD)"
+     },
+     {
+      "id": "death_time",
+      "label": "death_time"
+     },
+     {
+      "id": "death_place",
+      "label": "Miejsce zgonu"
+     },
+     {
+      "id": "house",
+      "label": "Nr domu"
+     },
+     {
+      "id": "deceased_birth_place",
+      "label": "Miejsce urodzenia"
+     },
+     {
+      "id": "deceased_residence",
+      "label": "Zamieszkanie"
+     }
+    ]
+   },
+   {
+    "t": "Rodzice",
+    "pola": [
+     {
+      "id": "father_first_name",
+      "label": "Ojciec – imię"
+     },
+     {
+      "id": "father_last_name",
+      "label": "Ojciec – nazwisko"
+     },
+     {
+      "id": "mother_first_name",
+      "label": "Matka – imię"
+     },
+     {
+      "id": "mother_last_name",
+      "label": "Matka – nazwisko rodowe"
+     },
+     {
+      "id": "parents_raw",
+      "label": "Rodzice (z rubryki przyczyny)"
+     }
+    ]
+   },
+   {
+    "t": "Przyczyna i akt",
+    "pola": [
+     {
+      "id": "cause_of_death",
+      "label": "Przyczyna zgonu / choroba"
+     },
+     {
+      "id": "act_date",
+      "label": "Data aktu (spisania)"
+     },
+     {
+      "id": "informant1",
+      "label": "Świadek 1"
+     },
+     {
+      "id": "informant2",
+      "label": "Świadek 2"
+     },
+     {
+      "id": "officiant",
+      "label": "Duchowny"
+     },
+     {
+      "id": "notes",
+      "label": "Uwagi"
+     }
+    ]
+   }
+  ]
+ },
+ "malzenstwo": {
+  "nazwa": "Małżeństwo",
+  "bloki": [
+   {
+    "t": "Akt",
+    "pola": [
+     {
+      "id": "marriage_date",
+      "label": "Data aktu (RRRR-MM-DD)"
+     },
+     {
+      "id": "margin_place",
+      "label": "Miejscowość (margines)"
+     }
+    ]
+   },
+   {
+    "t": "Margines – imiona młodych",
+    "pola": [
+     {
+      "id": "margin_groom_first_name",
+      "label": "Margines: pan młody – imię"
+     },
+     {
+      "id": "margin_groom_last_name",
+      "label": "Margines: pan młody – nazwisko"
+     },
+     {
+      "id": "margin_bride_first_name",
+      "label": "Margines: panna młoda – imię"
+     },
+     {
+      "id": "margin_bride_last_name",
+      "label": "Margines: panna młoda – nazwisko"
+     }
+    ]
+   },
+   {
+    "t": "Świadek 1",
+    "pola": [
+     {
+      "id": "witness1_first_name",
+      "label": "Świadek 1 – imię"
+     },
+     {
+      "id": "witness1_last_name",
+      "label": "Świadek 1 – nazwisko"
+     },
+     {
+      "id": "witness1_profession",
+      "label": "Świadek 1 – zawód"
+     },
+     {
+      "id": "witness1_residence",
+      "label": "Świadek 1 – zamieszkanie"
+     }
+    ]
+   },
+   {
+    "t": "Świadek 2",
+    "pola": [
+     {
+      "id": "witness2_first_name",
+      "label": "Świadek 2 – imię"
+     },
+     {
+      "id": "witness2_last_name",
+      "label": "Świadek 2 – nazwisko"
+     },
+     {
+      "id": "witness2_profession",
+      "label": "Świadek 2 – zawód"
+     },
+     {
+      "id": "witness2_residence",
+      "label": "Świadek 2 – zamieszkanie"
+     }
+    ]
+   },
+   {
+    "t": "Pan młody",
+    "pola": [
+     {
+      "id": "groom_first_name",
+      "label": "Pan młody – imię"
+     },
+     {
+      "id": "groom_last_name",
+      "label": "Pan młody – nazwisko"
+     },
+     {
+      "id": "groom_status",
+      "label": "Pan młody – stan"
+     },
+     {
+      "id": "groom_prev_spouse_first_name",
+      "label": "Pan młody – po kim, imię"
+     },
+     {
+      "id": "groom_prev_spouse_last_name",
+      "label": "Pan młody – po kim, nazwisko rodowe"
+     },
+     {
+      "id": "groom_profession",
+      "label": "Pan młody – zawód"
+     },
+     {
+      "id": "groom_age",
+      "label": "Pan młody – wiek"
+     },
+     {
+      "id": "groom_birth_place",
+      "label": "Pan młody – miejsce urodzenia"
+     },
+     {
+      "id": "groom_residence",
+      "label": "Pan młody – zamieszkanie"
+     },
+     {
+      "id": "groom_father_first_name",
+      "label": "Pan młody: ojciec – imię"
+     },
+     {
+      "id": "groom_father_last_name",
+      "label": "Pan młody: ojciec – nazwisko"
+     },
+     {
+      "id": "groom_father_alive",
+      "label": "Pan młody: ojciec żyje?"
+     },
+     {
+      "id": "groom_mother_first_name",
+      "label": "Pan młody: matka – imię"
+     },
+     {
+      "id": "groom_mother_last_name",
+      "label": "Pan młody: matka – nazwisko rodowe"
+     },
+     {
+      "id": "groom_mother_alive",
+      "label": "Pan młody: matka żyje?"
+     }
+    ]
+   },
+   {
+    "t": "Panna młoda",
+    "pola": [
+     {
+      "id": "bride_first_name",
+      "label": "Panna młoda – imię"
+     },
+     {
+      "id": "bride_last_name",
+      "label": "Panna młoda – nazwisko"
+     },
+     {
+      "id": "bride_status",
+      "label": "Panna młoda – stan"
+     },
+     {
+      "id": "bride_prev_spouse_first_name",
+      "label": "Panna młoda – po kim, imię"
+     },
+     {
+      "id": "bride_prev_spouse_last_name",
+      "label": "Panna młoda – po kim, nazwisko rodowe"
+     },
+     {
+      "id": "bride_profession",
+      "label": "Panna młoda – zawód"
+     },
+     {
+      "id": "bride_age",
+      "label": "Panna młoda – wiek"
+     },
+     {
+      "id": "bride_birth_place",
+      "label": "Panna młoda – miejsce urodzenia"
+     },
+     {
+      "id": "bride_residence",
+      "label": "Panna młoda – zamieszkanie"
+     },
+     {
+      "id": "bride_father_first_name",
+      "label": "Panna młoda: ojciec – imię"
+     },
+     {
+      "id": "bride_father_last_name",
+      "label": "Panna młoda: ojciec – nazwisko"
+     },
+     {
+      "id": "bride_father_alive",
+      "label": "Panna młoda: ojciec żyje?"
+     },
+     {
+      "id": "bride_mother_first_name",
+      "label": "Panna młoda: matka – imię"
+     },
+     {
+      "id": "bride_mother_last_name",
+      "label": "Panna młoda: matka – nazwisko rodowe"
+     },
+     {
+      "id": "bride_mother_alive",
+      "label": "Panna młoda: matka żyje?"
+     }
+    ]
+   },
+   {
+    "t": "Zakończenie aktu",
+    "pola": [
+     {
+      "id": "officiant",
+      "label": "Duchowny (ksiądz)"
+     },
+     {
+      "id": "margin_notes",
+      "label": "Adnotacje i uwagi (margines, stemple, zgon, kolejne małżeństwo…)"
+     }
+    ]
+   }
+  ]
+ },
+ "chrzest": {
+  "nazwa": "Chrzest",
+  "bloki": [
+   {
+    "t": "Dziecko",
+    "pola": [
+     {
+      "id": "child_last_name",
+      "label": "Dziecko – nazwisko"
+     },
+     {
+      "id": "child_first_name",
+      "label": "Dziecko – imiona"
+     },
+     {
+      "id": "child_birth_place",
+      "label": "Miejscowość"
+     }
+    ]
+   },
+   {
+    "t": "Ojciec",
+    "pola": [
+     {
+      "id": "father_first_name",
+      "label": "Ojciec – imiona"
+     },
+     {
+      "id": "father_last_name",
+      "label": "Ojciec – nazwisko"
+     },
+     {
+      "id": "father_age",
+      "label": "Ojciec – wiek"
+     }
+    ]
+   },
+   {
+    "t": "Matka",
+    "pola": [
+     {
+      "id": "mother_first_name",
+      "label": "Matka – imiona"
+     },
+     {
+      "id": "mother_last_name",
+      "label": "Matka – nazwisko"
+     },
+     {
+      "id": "mother_age",
+      "label": "Matka – wiek"
+     }
+    ]
+   },
+   {
+    "t": "Indeks",
+    "pola": [
+     {
+      "id": "index_month",
+      "label": "Miesiąc (indeks)"
+     },
+     {
+      "id": "notes_org",
+      "label": "Uwagi (indeks)"
+     }
+    ]
+   }
+  ]
+ }
+}

@@ -23,6 +23,7 @@ function kopPole(x){ if (!x || typeof x !== 'object' || Array.isArray(x)) return
 function kopAkt(x){ if (!x || typeof x !== 'object' || Array.isArray(x)) return null; const o = {};
   if (x.done !== undefined) { if (typeof x.done !== 'boolean') return null; o.done = x.done; } if (x.lubAck !== undefined) { if (typeof x.lubAck !== 'boolean') return null; o.lubAck = x.lubAck; }
   for (const k of ['scan', 'scanH', 'notesOrg']) if (x[k] !== undefined) { if (!kopStr(x[k], 5000)) return null; o[k] = x[k]; }
+  if (x.scanSz !== undefined) { if (!Number.isInteger(x.scanSz) || x.scanSz < 0 || x.scanSz > 4e9) return null; o.scanSz = x.scanSz; }
   if (x.roi !== undefined && x.roi !== null) { const r = x.roi; if (typeof r !== 'object' || !['x', 'y', 'w', 'h'].every(k => typeof r[k] === 'number' && isFinite(r[k]))) return null; o.roi = {x: r.x, y: r.y, w: r.w, h: r.h}; }
   if (x.fr !== undefined) { if (!x.fr || typeof x.fr !== 'object' || Array.isArray(x.fr)) return null; o.fr = {}; for (const k in x.fr) { const L = x.fr[k]; if (KOP_ZAKAZ.has(k) || !Array.isArray(L) || L.length > 20 || !L.every(r => Array.isArray(r) && r.length === 4 && r.every(n => typeof n === 'number' && isFinite(n) && n >= 0 && n <= 1))) return null; o.fr[k] = L.map(r => r.slice()); } }
   if (x.par !== undefined) { if (!x.par || typeof x.par !== 'object') return null; o.par = {}; ['father', 'mother'].forEach(k => { if (x.par[k]) o.par[k] = 1; }); }

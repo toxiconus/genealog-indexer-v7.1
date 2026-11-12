@@ -40,10 +40,10 @@ async function skpHash(f){ try { const b = await f.arrayBuffer(), d = await cryp
 // suma zapisana dla aktu: ręczne przypisanie (S.acts[id].scanH) albo suma z danych (D.scanHash po kluczu skanu)
 const skpSuma = a => (S.acts[a.id] && S.acts[a.id].scanH) || (D.scanHash || {})[a.file] || '';
 // indeks suma → plik (SK.hashMap), liczony w tle. Liczy sumy tylko plików, których nazwa (bez rozszerzenia) pasuje do skanu któregoś aktu z sumą (rozstrzyga pliki o tej samej nazwie w różnych folderach)
-// albo – gdy wczytano niewiele plików (≤ 300, np. pojedynczy skan z telefonu) – wszystkich (rozpoznaje zmienioną nazwę). Cały duży folder nie jest czytany.
+// albo mają taki sam rozmiar jak skan z paczki z telefonu (scanSz – tani filtr, rozpoznaje też zmienioną nazwę w dużym folderze) albo – gdy wczytano niewiele plików (≤ 300, np. pojedynczy skan z telefonu) – wszystkich (rozpoznaje zmienioną nazwę). Cały duży folder nie jest czytany.
 async function skpHashIndeks(){ const A = (D.wszystkie || []).filter(a => !a.parafia && skpSuma(a)); if (!A.length || !SK.pliki.length) return 0;
-  const stemy = new Set(A.map(a => skanStem(skanSciezka(a) || '')).filter(Boolean)), wszystkie = SK.pliki.length <= 300, M = {};
-  for (const f of SK.pliki) { if (!wszystkie && !stemy.has(skanStem(f.name))) continue; const k = f.size + '|' + f.lastModified; const h0 = (SK.hashCache = SK.hashCache || {})[k] || (SK.hashCache[k] = await skpHash(f)); if (h0) (M[h0] = M[h0] || []).push(f); }
+  const stemy = new Set(A.map(a => skanStem(skanSciezka(a) || '')).filter(Boolean)), roz = new Set(A.map(a => S.acts[a.id] && S.acts[a.id].scanSz).filter(Boolean)), wszystkie = SK.pliki.length <= 300, M = {};
+  for (const f of SK.pliki) { if (!wszystkie && !stemy.has(skanStem(f.name)) && !roz.has(f.size)) continue; const k = f.size + '|' + f.lastModified; const h0 = (SK.hashCache = SK.hashCache || {})[k] || (SK.hashCache[k] = await skpHash(f)); if (h0) (M[h0] = M[h0] || []).push(f); }
   SK.hashMap = M; return Object.keys(M).length; }
 // plik o sumie zapisanej przy akcie; przy kilku (kopie) pierwszy, a `pref` pozwala wybrać ten z listy kandydatów
 function skpZnajdzPoSumie(a, pref){ const h0 = skpSuma(a), L = h0 && SK.hashMap ? SK.hashMap[h0] : null; if (!L || !L.length) return null; return (pref && L.find(f => pref.includes(f))) || L[0]; }

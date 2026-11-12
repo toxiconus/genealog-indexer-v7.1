@@ -21,7 +21,7 @@ function stRekordy(){ const R = {pola: {}, teksty: {}, akty: {}, decyzje: {}, hi
   for (const id in S.acts) { const a = S.acts[id] || {}, ak = {};
     for (const f in (a.f || {})) { const k = id + '|' + f, x = Object.assign({}, a.f[f]); if (!('baza' in x)) { if (!(k in ST_BAZA) && AM[id]) ST_BAZA[k] = stBazaWart(AM[id], f); if (k in ST_BAZA) x.baza = ST_BAZA[k]; } R.pola[k] = x; }
     if (a.text != null) R.teksty[id] = String(a.text);
-    ['done', 'scan', 'scanH', 'roi', 'par', 'hid', 'notesOrg', 'lubAck', 'qs', 'fr'].forEach(p => { if (a[p] !== undefined && !(p === 'done' && !a.done)) ak[p] = a[p]; }); if (Object.keys(ak).length) R.akty[id] = ak; }
+    ['done', 'scan', 'scanH', 'scanSz', 'roi', 'par', 'hid', 'notesOrg', 'lubAck', 'qs', 'fr'].forEach(p => { if (a[p] !== undefined && !(p === 'done' && !a.done)) ak[p] = a[p]; }); if (Object.keys(ak).length) R.akty[id] = ak; }
   (S.hist || []).forEach(e => R.historia[e.n] = e); (S.decyz || []).forEach(d => R.decyzje[d.n] = d); R.slowniki.fixes = S.fixes || {}; if ((S.nowe || []).length) R.slowniki.noweAkty = S.nowe;
   const u = {}; ST_UST.forEach(k => { if (S[k] !== undefined) u[k] = S[k]; }); R.meta.ustawienia = u; R.meta.seeded = S.seeded || {}; R.meta.histN = S.histN || 0; return R; }
 const stPodpis = v => JSON.stringify(v);
