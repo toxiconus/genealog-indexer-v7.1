@@ -99,3 +99,8 @@ Enter (następne pole), Alt+J / Alt+K (następny / poprzedni akt), Ctrl+Enter (n
 - Karta propozycji ma rozwijaną tabelę „obok siebie” (akt, rola, imię, nazwisko, wiek, stan, zawód, miejsce, rodzice, małżonek) z podświetleniem zgodności/różnic (`osAtryb`, `osPorownanieHtml`).
 - Przycisk „Skany obok siebie” otwiera okno z dwoma skanami (klik = powiększenie) i przyciskami „Otwórz akt” (`osSkanyObok`).
 - Test: `node test/test_krok11_obok.cjs`.
+
+## Krok 12 – Pisownia nazwisk w czasie (Menu ▾)
+- Moduł `ui_pisownia.js`: zapisy nazwisk (i rodowych) ze wszystkich aktów, grupowane kluczem wariantu + klasami z rejestru; tabela zapis × dekada, wykrywanie przełomu dominującego zapisu, filtr po nazwisku (klucz, podciąg, Levenshtein ≤2).
+- Komórka → lista aktów → zaznacz 2 → „Skany obok siebie”; przyciski „Potwierdź wariant” / „Rozdziel” zapisują decyzje (`wariant_nazwiska` / `odrzuc_wariant`) w dzienniku.
+- Test: `node test/test_krok12_pisownia.cjs`.

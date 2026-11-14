@@ -55,7 +55,7 @@ function menuInit(){ const M = $('menu'); $('bMenu').onclick = () => { M.hidden 
   $('mImpDop').onclick = () => { M.hidden = true; $('fCsv').dataset.ovw = ''; $('fCsv').click(); }; $('mImpZast').onclick = () => { M.hidden = true; $('fCsv').dataset.ovw = '1'; $('fCsv').click(); };
   $('fCsv').onchange = e => { if (e.target.files[0]) menuImportCsv(e.target.files[0], !!e.target.dataset.ovw); e.target.value = ''; };
   migrZgUiInit(); osInit();
-  $('mMigawki').onclick = () => { M.hidden = true; menuMigawki(); }; $('mKolejka').onclick = () => { M.hidden = true; menuKolejka(); };
+  $('mMigawki').onclick = () => { M.hidden = true; menuMigawki(); }; $('mKolejka').onclick = () => { M.hidden = true; menuKolejka(); }; $('mPisownia').onclick = () => { M.hidden = true; pisownia(); };
   $('mAuto').onclick = async () => { M.hidden = true; try { toast(await kopiaAutoWybierz() ? 'Autozapis włączony' : 'Ta przeglądarka nie obsługuje autozapisu – użyj kopii pełnej'); } catch (e) { toast('Anulowano'); } };
   window.addEventListener('beforeunload', e => { if (ST_ZMIANY) { e.preventDefault(); e.returnValue = ''; } }); }
 
