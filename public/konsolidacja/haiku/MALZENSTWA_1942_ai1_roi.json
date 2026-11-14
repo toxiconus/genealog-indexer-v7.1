@@ -1,0 +1,146 @@
+[
+ {
+  "id": "ai1-m1942-001",
+  "plik": "M3744_067",
+  "strona": "lewa",
+  "roi": {
+   "x": 0.02,
+   "y": 0.06,
+   "w": 0.47,
+   "h": 0.88
+  },
+  "uwaga": "przybliżone"
+ },
+ {
+  "id": "ai1-m1942-002",
+  "plik": "M3744_067",
+  "strona": "prawa",
+  "roi": {
+   "x": 0.51,
+   "y": 0.06,
+   "w": 0.47,
+   "h": 0.88
+  },
+  "uwaga": "przybliżone"
+ },
+ {
+  "id": "ai1-m1942-003",
+  "plik": "M3744_068",
+  "strona": "lewa",
+  "roi": {
+   "x": 0.02,
+   "y": 0.06,
+   "w": 0.47,
+   "h": 0.88
+  },
+  "uwaga": "przybliżone"
+ },
+ {
+  "id": "ai1-m1942-004",
+  "plik": "M3744_068",
+  "strona": "prawa",
+  "roi": {
+   "x": 0.51,
+   "y": 0.06,
+   "w": 0.47,
+   "h": 0.88
+  },
+  "uwaga": "przybliżone"
+ },
+ {
+  "id": "ai1-m1942-005",
+  "plik": "M3744_069",
+  "strona": "lewa",
+  "roi": {
+   "x": 0.02,
+   "y": 0.06,
+   "w": 0.47,
+   "h": 0.88
+  },
+  "uwaga": "przybliżone"
+ },
+ {
+  "id": "ai1-m1942-006",
+  "plik": "M3744_069",
+  "strona": "prawa",
+  "roi": {
+   "x": 0.51,
+   "y": 0.06,
+   "w": 0.47,
+   "h": 0.88
+  },
+  "uwaga": "przybliżone"
+ },
+ {
+  "id": "ai1-m1942-007",
+  "plik": "M3744_070",
+  "strona": "lewa",
+  "roi": {
+   "x": 0.02,
+   "y": 0.06,
+   "w": 0.47,
+   "h": 0.88
+  },
+  "uwaga": "przybliżone"
+ },
+ {
+  "id": "ai1-m1942-008",
+  "plik": "M3744_070",
+  "strona": "prawa",
+  "roi": {
+   "x": 0.51,
+   "y": 0.06,
+   "w": 0.47,
+   "h": 0.88
+  },
+  "uwaga": "przybliżone"
+ },
+ {
+  "id": "ai1-m1942-009",
+  "plik": "M3744_071",
+  "strona": "lewa",
+  "roi": {
+   "x": 0.02,
+   "y": 0.06,
+   "w": 0.47,
+   "h": 0.88
+  },
+  "uwaga": "przybliżone"
+ },
+ {
+  "id": "ai1-m1942-010",
+  "plik": "M3744_071",
+  "strona": "prawa",
+  "roi": {
+   "x": 0.51,
+   "y": 0.06,
+   "w": 0.47,
+   "h": 0.88
+  },
+  "uwaga": "przybliżone"
+ },
+ {
+  "id": "ai1-m1942-011",
+  "plik": "M3744_072",
+  "strona": "lewa",
+  "roi": {
+   "x": 0.02,
+   "y": 0.06,
+   "w": 0.47,
+   "h": 0.88
+  },
+  "uwaga": "przybliżone"
+ },
+ {
+  "id": "ai1-m1942-012",
+  "plik": "M3744_072",
+  "strona": "prawa",
+  "roi": {
+   "x": 0.51,
+   "y": 0.06,
+   "w": 0.47,
+   "h": 0.88
+  },
+  "uwaga": "przybliżone"
+ }
+]

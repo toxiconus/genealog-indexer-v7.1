@@ -1,0 +1,7 @@
+085;L: akt 1943/23 | P: akt 1943/24
+086;L: akt 1943/25 | P: akt 1943/26
+087;L: strona pusta (biala wklejka, bez tresci) | P: akt 1943/28 (akt 1943/27 nie wystepuje na skanach 085-091)
+088;L: akt 1943/29 | P: akt 1943/30
+089;L: akt 1943/31 | P: akt 1943/32
+090;L: protokol zamkniecia 1943 (32 akty) + poczatek rejestru alfabetycznego zaslubionych 1943 (lp 1-10) | P: rejestr alfabetyczny 1943 (lp 11-32), podpis dziekana
+091;L: akt 1944/1 (naglowek 'Akta zaslubionych w 1944 roku') | P: akt 1944/2

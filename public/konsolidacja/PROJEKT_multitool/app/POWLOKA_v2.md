@@ -88,3 +88,9 @@ Enter (następne pole), Alt+J / Alt+K (następny / poprzedni akt), Ctrl+Enter (n
 ## Zatwierdzenie całego aktu (2026-11-14)
 - „Zatwierdź i dalej” w mini zatwierdza wszystkie pola aktu naraz: pola bez „?” jako pewne, z „?” jako niepewne (toast podaje liczby).
 - Paczka zatwierdzonego aktu zawiera teraz WSZYSTKIE niepuste pola (także nieedytowane wartości AI); Multitool przy imporcie oznacza je ok / niepewne. Test: `test/test_krok10b_zatw.cjs`.
+
+## Małżeństwa 1937–1944 (2026-11-14)
+- 183 nowe akty (Haiku, księga USC Szastarka, 103 skany) w bazie: 1937/26–27, 1938 (26), 1939 (16), 1940 (51), 1941 (25), 1942 (12), 1943 (31; brak 27), 1944/1–20. Brakuje 1937/1–25 (inna część księgi). Razem w mini małżeństw 928 aktów.
+- Odczyty: `haiku/MALZ_1937-44/cz01–cz15_*` (surowe), scalone pliki per rok `haiku/MALZENSTWA_<rok>_ai1_*` (1944: `_cz2_` = akty 1–20). Skrypty: `scal_1937-44.py` (lata z ciągłości numeracji, dedup, normalizacja imion/nazwisk wg bazy → `normalizacja_log.csv`, zbiór skanów z sumami), `plan_nazw_skanow.py` (plan nazw i folderów rocznikowych + `przenies_skany.ps1`).
+- Nazwy skanów: `lub.blin.M.<rok>.<nr aktów>.usc-szast.jpg` w folderach `Małżeństwa\<rok> USC`; strona na styku lat trafia do obu folderów (kopia).
+- Testy dostosowane do nowej liczby aktów.
