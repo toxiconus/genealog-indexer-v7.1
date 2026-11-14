@@ -1,0 +1,7 @@
+036;L: akt 1944/20 (Pardak - Tomito) | P: akt 1944/21 (Bucoń - Baran)
+037;L: akt 1944/22 (Szubstarski - Pasternak) | P: akt 1944/23 (Kasica - Kędziora)
+038;L: akt 1944/24 (Bajdas - Ogon) | P: akt 1944/25 (Kiełb - Machul)
+039;L: akt 1944/26 (Kraweć - Samol) | P: akt 1944/27 (Szabat - Borowska)
+040;L: akt 1944/28 (Łukasik - Wieleba) | P: akt 1944/29 (Żurawski - Szabat)
+041;L: akt 1944/30 (Wereski - Sułowska) | P: akt 1944/31 (Kosidło - Kieścior)
+042;L: akt 1944/32 (Hołody - Chajzer) | P: akt 1944/33 (Kosidło - Ogon)

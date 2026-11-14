@@ -1,0 +1,7 @@
+022;L: akt 1939/10 (Andrejczak - Samol) | P: akt 1939/11 (Janik - Chmiel)
+023;L: akt 1939/12 (Kacyński - Samol) | P: akt 1939/13 (Tylus - Sudło)
+024;L: akt 1939/14 (Krawczyk - Nikolas) | P: akt 1939/15 (Jędrzejczak - Staszowska)
+025;L: akt 1939/16 (Wieleba - Kozyra) | P: protokół zamknięcia 1939 (16 aktów) + rejestr alfabetyczny 1939 (poz. 1-10)
+026;L: rejestr alfabetyczny 1939 (poz. 11-16) + potwierdzenie zgodności z duplikatem, Blinów 15.01.1940 | P: akt 1940/1 (Serwatka - Struski)
+027;L: akt 1940/2 (Kopiwoda - Rybacz) | P: akt 1940/3 (Korzyra - Tylus)
+028;L: akt 1940/4 (Michałek - Kosidło) | P: akt 1940/5 (Boczek - Felek)
