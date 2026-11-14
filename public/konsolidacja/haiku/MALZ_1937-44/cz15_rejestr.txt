@@ -1,0 +1,8 @@
+﻿098;L: akt 1944/15 (Świś Antoni - Hoś Stefania, Brzozówka)
+098;P: akt 1944/16 (Sastasek Jan - Mistło Janina, Szastarka/Brzozówka)
+099;L: akt 1944/17 (Pawłasek Władysław - Ściónek Bronisława, Blinów)
+099;P: akt 1944/18 (Łach Wojciech - Szyrka Ludmiła, Kacyniec/Brzozówka)
+100;L: akt 1944/19 (Kędziora Bronisław - Jędrzejczak Stefania, Blinów)
+100;P: akt 1944/20 (Kosidło Władysław - Pudło Eugenia, Brzozówka)
+101;L: protokół zamknięcia księgi (100 kart, parafia Rzym. Kat. Blinów), Janów-Lubelski 8 listopada 193? (rok nieczytelny), podpis dziekana janowskiego
+101;P: pusta (biała karta)
