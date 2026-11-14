@@ -1,0 +1,14 @@
+050;L: akt 1940/48 (Pudło Stefan z Feliksą Boczek)
+050;P: akt 1940/49 (Barbarzak Michał z Leontyną Pudło)
+051;L: akt 1940/50 (Gierał Teofil z Feliksą Gnat)
+051;P: akt 1940/51 (Krawczyk Jan z Marianną Pizoń)
+052;L: protokół zamknięcia 1940 (51 aktów zaślubionych, 31.12.1940) | rejestr alfabetyczny 1940, lp 1-9
+052;P: rejestr alfabetyczny 1940, lp 10-39
+053;L: rejestr alfabetyczny 1940, lp 40-51 | potwierdzenie zgodności z duplikatem (Blinów, 15.01.1941)
+053;P: akt 1941/1 (Andrzejczak Franciszek ze Stefanią Pawlaszek)
+054;L: akt 1941/2 (Woś Józef ze Stanisławą Rębacz)
+054;P: akt 1941/3 (Strąk Anatol ze Stefanią Lenart)
+055;L: akt 1941/4 (Kosidło Bartłomiej z Katarzyną Kiełb)
+055;P: akt 1941/5 (Bucoń Jan z Wandą Reszka)
+056;L: akt 1941/6 (Kędziora Bronisław z Czesławą Kędziora)
+056;P: akt 1941/7 (Kosidło Leon z Janiną Kędziora)
