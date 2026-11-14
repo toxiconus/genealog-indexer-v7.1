@@ -14,6 +14,12 @@ const { chromium } = require('playwright'), assert = require('assert'), path = r
  // podpowiedzi
  await p.evaluate(() => document.querySelectorAll('details').forEach(d => d.open = true)); const im = await p.$('.pole:has(input[aria-label*="Pan młody – imię"]) input'); await im.evaluate(e => { e.focus(); e.value = 'W'; e.dispatchEvent(new Event('input')); });
  const ch = await p.$$eval('.pole:has(input[aria-label*="Pan młody – imię"]) .sug .ch', a => a.map(x => x.textContent)); assert(ch.length >= 3 && ch.every(x => /^W/i.test(x)), 'podpowiedzi: ' + ch);
+ // podobne + auto-zwijanie
+ await im.evaluate(e => { e.focus(); e.value = 'Wojciec'; e.dispatchEvent(new Event('input')); e.blur(); });
+ const sim = await p.$$eval('.pole:has(input[aria-label*="Pan młody – imię"]) .sim .ch', a => a.map(x => x.textContent)); assert(sim.some(x => /^Wojciech/.test(x)), 'podobne: ' + sim);
+ await p.evaluate(() => document.querySelector('.pole:has(input[aria-label*="Pan młody – imię"]) .sim .ch').click());
+ assert(await p.$eval('.pole:has(input[aria-label*="Pan młody – imię"])', e => e.classList.contains('zw')), 'pole zwinięte po potwierdzeniu');
+ await p.evaluate(() => document.querySelector('.pole.zw .zwv').click()); assert(!await p.$eval('.pole:has(input[aria-label*="Pan młody – imię"])', e => e.classList.contains('zw')), 'rozwija po kliknięciu');
  // margines vs akt
  const zg = await p.$$eval('.chk.ok, .chk.ne', a => a.map(x => x.textContent)); console.log('kontrola:', zg.slice(0, 4));
  assert(er.length === 0, er.join()); console.log('OK'); await b.close(); })().catch(e => { console.error(e); process.exit(1); });

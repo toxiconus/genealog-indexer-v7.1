@@ -80,3 +80,7 @@ Enter (następne pole), Alt+J / Alt+K (następny / poprzedni akt), Ctrl+Enter (n
 - **Ukrywanie**: „Ukryj pola już wypełnione (pewne)” (w formularzu) i „Ukryj zatwierdzone akty” (na liście); ustawienia zapamiętane.
 - **† Zgon na marginesie** (małżeństwa, też w Multitoolu: pola `groom_death_margin`, `bride_death_margin`, kolumny CSV po `margin_notes`): osobne pola dla pana i panny młodej, z przyciskiem „wstaw z uwag” (z odczytu Haiku).
 - Test: `test/test_krok10_pomoce.cjs`.
+
+## Mini: podobne z bazy i auto‑zwijanie (2026-11-14)
+- Pod polem imienia/nazwiska/miejscowości: „✓ w bazie (n×)” gdy wartość występuje w bazie, a gdy nie – „czy chodzi o:” z podobnymi wpisami (odległość ≤2); kliknięcie podstawia wartość i potwierdza.
+- Pole potwierdzone (wybrana podpowiedź/podobna lub wpisana i opuszczona wartość, nie niepewna) zwija się do jednej linii „etykieta: wartość ✎”; dotknięcie rozwija. Zwijanie nie jest zapisywane w danych.
