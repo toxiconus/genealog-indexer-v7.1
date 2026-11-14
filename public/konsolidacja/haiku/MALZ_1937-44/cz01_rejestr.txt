@@ -1,0 +1,7 @@
+001;L: strona pusta | P: akt 1937/26 (początek strony: "Dalszy ciąg aktów zaślubionych w 1937 roku")
+002;L: akt 1937/27 | P: protokół zamknięcia 1937 (27 aktów, 31.12.1937) + początek rejestru alfabetycznego 1937 (poz. 1-10)
+003;L: rejestr alfabetyczny 1937 cd. (poz. 11-27), adnotacja sprawdzenia z duplikatem, 11.01.1938 | P: akt 1938/1
+004;L: akt 1938/2 | P: akt 1938/3
+005;L: akt 1938/4 | P: akt 1938/5
+006;L: akt 1938/6 | P: akt 1938/7
+007;L: akt 1938/8 | P: akt 1938/9
