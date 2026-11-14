@@ -1533,7 +1533,7 @@ function miniRozpoznaj(txt){ const w = {ok: false, blad: '', akty: [], skany: {}
 function miniStosuj(w){ const R = {zatw: 0, dodane: 0, zmienione: 0, uzupelnione: 0, pol: 0, konflikty: 0, skany: 0, innySkan: 0, blad: ''};
   for (const x of w.akty) { let id = x.id; if (!id) { const r = nowyDodaj(x.typ, String(x.rok), x.nr); if (!r.ok) { if (r.istnieje) id = r.istnieje; else { R.blad = r.blad; break; } } else { id = r.id; R.dodane++; } }
     const a = AM[id], s = st(id); let n = 0;
-    Object.entries(x.pola).forEach(([k, o]) => { const cur = String(getv(a, k) ?? '').trim(); if (cur === o.v) return; if (cur && !(o.b !== undefined && cur === o.b)) { R.konflikty++; return; } s.f[k] = {v: o.v, src: 'edit', ok: !!x.zatw && !o.u, unc: !!o.u}; n++; if (cur) R.zmienione++; });
+    Object.entries(x.pola).forEach(([k, o]) => { const cur = String(getv(a, k) ?? '').trim(); if (cur === o.v) { if (x.zatw && cur && s.f[k] === undefined) { s.f[k] = {v: cur, src: 'edit', ok: !o.u, unc: !!o.u}; n++; } else if (x.zatw && s.f[k] && !o.u && !s.f[k].ok) { s.f[k].ok = true; n++; } return; } if (cur && !(o.b !== undefined && cur === o.b)) { R.konflikty++; return; } s.f[k] = {v: o.v, src: 'edit', ok: !!x.zatw && !o.u, unc: !!o.u}; n++; if (cur) R.zmienione++; });
     if (n && x.stan === 'jest') R.uzupelnione++; R.pol += n; if (x.zatw && !s.done) { s.done = true; R.zatw++; }
     if (x.h && !s.scanH) { if (x.skan.nazwa && !s.scan) s.scan = x.skan.nazwa; s.scanH = x.h; if (x.skan.rozmiar) s.scanSz = x.skan.rozmiar; R.skany++; } else if (x.h && s.scanH !== x.h) R.innySkan++; }
   return R; }

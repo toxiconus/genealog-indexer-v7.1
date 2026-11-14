@@ -84,3 +84,7 @@ Enter (następne pole), Alt+J / Alt+K (następny / poprzedni akt), Ctrl+Enter (n
 ## Mini: podobne z bazy i auto‑zwijanie (2026-11-14)
 - Pod polem imienia/nazwiska/miejscowości: „✓ w bazie (n×)” gdy wartość występuje w bazie, a gdy nie – „czy chodzi o:” z podobnymi wpisami (odległość ≤2); kliknięcie podstawia wartość i potwierdza.
 - Pole potwierdzone (wybrana podpowiedź/podobna lub wpisana i opuszczona wartość, nie niepewna) zwija się do jednej linii „etykieta: wartość ✎”; dotknięcie rozwija. Zwijanie nie jest zapisywane w danych.
+
+## Zatwierdzenie całego aktu (2026-11-14)
+- „Zatwierdź i dalej” w mini zatwierdza wszystkie pola aktu naraz: pola bez „?” jako pewne, z „?” jako niepewne (toast podaje liczby).
+- Paczka zatwierdzonego aktu zawiera teraz WSZYSTKIE niepuste pola (także nieedytowane wartości AI); Multitool przy imporcie oznacza je ok / niepewne. Test: `test/test_krok10b_zatw.cjs`.

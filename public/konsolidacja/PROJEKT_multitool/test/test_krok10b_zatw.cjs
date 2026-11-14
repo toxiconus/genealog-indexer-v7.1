@@ -1,0 +1,9 @@
+/* Test: zatwierdzenie aktu w mini wysyła WSZYSTKIE pola (pewne = ok, z „?” = niepewne) i Multitool je przyjmuje. */
+const { chromium } = require('playwright'), assert = require('assert'), path = require('path');
+(async () => { const b = await chromium.launch(), p = await b.newPage(), er = []; p.on('pageerror', e => er.push(e.message));
+ await p.goto('file://' + path.join(__dirname, '..', 'app', 'multitool_mini_malzenstwa.html')); await p.waitForSelector('#lista .li');
+ const pk = await p.evaluate(async () => { otwarty = {rok: 1944, nr: '23'}; rys(); const e = edit(1944, '23', true); e.f.groom_residence = {v: 'Blinów?', u: true}; e.zatw = true; await zapisz('akty', e); const P = paczka(); return P; });
+ const pa = pk.akty.find(x => x.rok === 1944 && x.nr === '23'), ks = Object.keys(pa.pola); assert(ks.length > 15, 'wszystkie pola: ' + ks.length); assert(pa.pola.groom_residence.u === 1 && !pa.pola.groom_last_name.u);
+ const m = await b.newPage(); await m.goto('file://' + path.join(__dirname, '..', 'app', 'multitool_v1.html')); await m.waitForFunction('GOTOWE===true', null, {timeout: 60000});
+ const r = await m.evaluate(pk => { const ww = miniRozpoznaj(JSON.stringify(Object.assign({}, pk, {akty: [pk.akty.find(x => x.rok === 1944 && x.nr === '23')]}))); if (!ww.ok) return {blad: ww.blad}; const R0 = miniStosuj(ww); const f = Object.values(S.acts).find(x => x.f && x.f.groom_residence && /Blin/.test(x.f.groom_residence.v) && x.f.groom_residence.unc).f; return {ok: Object.values(f).filter(x => x.ok).length, unc: Object.values(f).filter(x => x.unc).length}; }, pk).catch(e => ({blad: String(e)}));
+ console.log(JSON.stringify(r)); assert(!r.blad, r.blad); assert(r.ok > 10 && r.unc >= 1, 'zatwierdzone pola'); assert(er.length === 0, er.join()); console.log('OK'); await b.close(); })().catch(e => { console.error(e.message); process.exit(1); });
