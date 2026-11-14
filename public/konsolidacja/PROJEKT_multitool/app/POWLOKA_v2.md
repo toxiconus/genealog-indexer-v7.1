@@ -94,3 +94,8 @@ Enter (następne pole), Alt+J / Alt+K (następny / poprzedni akt), Ctrl+Enter (n
 - Odczyty: `haiku/MALZ_1937-44/cz01–cz15_*` (surowe), scalone pliki per rok `haiku/MALZENSTWA_<rok>_ai1_*` (1944: `_cz2_` = akty 1–20). Skrypty: `scal_1937-44.py` (lata z ciągłości numeracji, dedup, normalizacja imion/nazwisk wg bazy → `normalizacja_log.csv`, zbiór skanów z sumami), `plan_nazw_skanow.py` (plan nazw i folderów rocznikowych + `przenies_skany.ps1`).
 - Nazwy skanów: `lub.blin.M.<rok>.<nr aktów>.usc-szast.jpg` w folderach `Małżeństwa\<rok> USC`; strona na styku lat trafia do obu folderów (kopia).
 - Testy dostosowane do nowej liczby aktów.
+
+## Krok 11 – dane i skany obok siebie na kartach propozycji (Osoby)
+- Karta propozycji ma rozwijaną tabelę „obok siebie” (akt, rola, imię, nazwisko, wiek, stan, zawód, miejsce, rodzice, małżonek) z podświetleniem zgodności/różnic (`osAtryb`, `osPorownanieHtml`).
+- Przycisk „Skany obok siebie” otwiera okno z dwoma skanami (klik = powiększenie) i przyciskami „Otwórz akt” (`osSkanyObok`).
+- Test: `node test/test_krok11_obok.cjs`.
